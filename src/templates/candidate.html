@@ -556,24 +556,56 @@
         </section>
 
         <section id="tab-radar" class="tab hidden space-y-6">
-          <div class="glass rounded-3xl p-5 flex flex-wrap items-center justify-between gap-4">
-            <div><div id="trendBadge" class="text-xs text-slate-500 font-medium"></div><div id="trendScenarioLabel" class="text-sm font-extrabold mt-0.5"></div></div>
-            <div class="seg"><button id="scModerate" onclick="setScenario('moderate')" class="on">🐢 Moderate</button><button id="scFast" onclick="setScenario('fast')">🚀 Fast disruption</button></div>
+        <div class="glass rounded-3xl p-5 flex flex-wrap items-center justify-between gap-4">
+          <div>
+            <div id="trendBadge" class="text-xs text-slate-500 font-medium"></div>
+            <div id="trendScenarioLabel" class="text-sm font-extrabold mt-0.5"></div>
           </div>
-          <div class="glass rounded-3xl p-6 space-y-3">
-            <label for="scenarioSlider" class="label">What-If: AI adoption scenario</label>
-            <input id="scenarioSlider" type="range" min="0" max="1" step="1" value="0" class="w-full" aria-describedby="scenarioHelp" onchange="setScenario(this.value === '1' ? 'fast' : 'moderate')" />
-            <p id="scenarioHelp" class="hint">Two benchmark scenarios: Moderate / Fast. Estimates, not predictions.</p>
-            <div id="analysisStatus" role="status" aria-live="polite"></div>
-            <div id="radarChart"></div>
+          <div class="flex items-center gap-3">
+            <button type="button" onclick="triggerDynamicRefresh(this)" class="btn btn-soft !py-2 !px-4 !text-xs flex items-center gap-1.5">
+              <span>🔄 Refresh Trends</span>
+            </button>
+            <div class="seg">
+              <button id="scModerate" onclick="setScenario('moderate')" class="on">🐢 Moderate</button>
+              <button id="scFast" onclick="setScenario('fast')">🚀 Fast disruption</button>
+            </div>
           </div>
-          <div class="grid md:grid-cols-2 gap-6">
-            <div class="tint tint-teal rounded-3xl p-6 space-y-4"><div class="text-sm font-extrabold text-teal-900">📈 Rising skills</div><div id="rising" class="space-y-4"></div></div>
-            <div class="tint tint-pink rounded-3xl p-6 space-y-4"><div class="text-sm font-extrabold text-rose-900">⚠️ Tasks at automation risk</div><div id="declining" class="space-y-4"></div></div>
-          </div>
+        </div>
 
-          <div id="anonStatsCard" class="glass rounded-3xl p-6 space-y-3" data-no-translate></div>
-          <div class="tint tint-indigo rounded-3xl p-6"><div class="text-sm font-extrabold text-indigo-900 mb-3">📰 Recent AI research signals</div><ul id="signals" class="space-y-2 text-xs text-slate-600"></ul></div>
+        <div class="glass rounded-3xl p-6 space-y-3">
+          <label for="scenarioSlider" class="label">What-If: AI adoption scenario</label>
+          <input id="scenarioSlider" type="range" min="0" max="1" step="1" value="0" class="w-full" aria-describedby="scenarioHelp" onchange="setScenario(this.value === '1' ? 'fast' : 'moderate')" />
+          <p id="scenarioHelp" class="hint">Two benchmark scenarios: Moderate / Fast. Estimates, not predictions.</p>
+          <div id="analysisStatus" role="status" aria-live="polite"></div>
+          <div id="radarChart"></div>
+        </div>
+
+        <div class="grid md:grid-cols-2 gap-6">
+          <div class="tint tint-teal rounded-3xl p-6 space-y-4">
+            <div class="text-sm font-extrabold text-teal-900">📈 Rising skills</div>
+            <div id="rising" class="space-y-4"></div>
+          </div>
+          <div class="tint tint-pink rounded-3xl p-6 space-y-4">
+            <div class="text-sm font-extrabold text-rose-900">⚠️ Tasks at automation risk</div>
+            <div id="declining" class="space-y-4"></div>
+          </div>
+        </div>
+
+        <div id="anonStatsCard" class="glass rounded-3xl p-6 space-y-3" data-no-translate></div>
+        
+        <div class="tint tint-indigo rounded-3xl p-6">
+          <div class="text-sm font-extrabold text-indigo-900 mb-3">📰 Recent AI research signals</div>
+          <ul id="signals" class="space-y-2 text-xs text-slate-600"></ul>
+        </div>
+
+        <div class="glass rounded-3xl p-5 space-y-2 border border-indigo-200/70" data-no-translate>
+          <div class="text-xs font-extrabold text-indigo-900 uppercase tracking-wider">📚 Data Sources &amp; Citations</div>
+          <ul class="space-y-1.5 text-xs text-slate-600 list-disc pl-4">
+            <li><b>JobStreet Malaysia Open Labour Index (2026):</b> Aggregated real-time job vacancy signals across 69,000+ postings[cite: 52].</li>
+            <li><b>World Economic Forum (WEF) Future of Jobs Report:</b> Benchmark technology adoption curves and AI disruption velocity models.</li>
+            <li><b>UNESCO &amp; SDG 4 / 8 Frameworks:</b> Aligned with Quality Education and Decent Work &amp; Economic Growth guidelines.</li>
+          </ul>
+        </div>
         </section>
 
         <section id="tab-match" class="tab hidden space-y-5">
