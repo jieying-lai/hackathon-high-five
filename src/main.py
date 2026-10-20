@@ -19,7 +19,7 @@ import hr_engine
 import job_index
 import questionnaire_engine
 from ai_matcher import load_json, match_user_to_roles
-from auth_db import authenticate_user, init_db, register_user
+from auth_db import (authenticate_user, get_user_by_uid, init_db, register_user, update_user_password, update_user_profile)
 from trend_signals import get_trend_radar
 from utils import format_greeting
 
@@ -91,7 +91,48 @@ def api_logout():
 
 @app.route("/api/auth/me", methods=["GET"])
 def api_me():
-    return jsonify({"user": session.get("user")})
+    user = session.get("user")
+    if user and user.get("unique_uid"):
+        fresh = get_user_by_uid(user["unique_uid"])
+        if fresh:
+            session["user"] = fresh
+            return jsonify({"user": fresh})
+    return jsonify({"user": user})
+
+
+@app.route("/api/auth/profile", methods=["PUT"])
+def api_update_profile():
+    user = session.get("user")
+    if not user:
+        return jsonify({"ok": False, "message": "Please sign in first."}), 401
+    data = request.get_json(force=True) or {}
+    ok, msg, updated_user = update_user_profile(
+        unique_uid=user["unique_uid"],
+        full_name=data.get("full_name"),
+        email=data.get("email"),
+        role_details=data.get("role_details"),
+    )
+    if not ok:
+        return jsonify({"ok": False, "message": msg}), 400
+    session["user"] = updated_user
+    return jsonify({"ok": True, "message": msg, "user": updated_user})
+
+
+@app.route("/api/auth/password", methods=["PUT"])
+def api_update_password():
+    user = session.get("user")
+    if not user:
+        return jsonify({"ok": False, "message": "Please sign in first."}), 401
+    data = request.get_json(force=True) or {}
+    ok, msg = update_user_password(
+        unique_uid=user["unique_uid"],
+        current_password=data.get("current_password", ""),
+        new_password=data.get("new_password", ""),
+        confirm_password=data.get("confirm_password", ""),
+    )
+    if not ok:
+        return jsonify({"ok": False, "message": msg}), 400
+    return jsonify({"ok": True, "message": msg})
 
 
 # ------------------------------------------------------------------ Lumi Mascot AI Chatbot APIs

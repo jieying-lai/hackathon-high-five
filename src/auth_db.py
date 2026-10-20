@@ -239,3 +239,106 @@ def authenticate_user(email: str, password: str) -> tuple[bool, str, dict | None
         "consent_timestamp": row["consent_timestamp"],
     }
     return True, "Signed in successfully!", user_info
+
+
+def get_user_by_uid(unique_uid: str) -> dict | None:
+    """Fetch complete public user account info by unique_uid."""
+    conn = get_db_connection()
+    cur = conn.cursor()
+    cur.execute("SELECT * FROM users WHERE unique_uid = ?", (unique_uid,))
+    row = cur.fetchone()
+    conn.close()
+    if not row:
+        return None
+    return {
+        "id": row["id"],
+        "unique_uid": row["unique_uid"],
+        "full_name": row["full_name"],
+        "email": row["email"],
+        "role": row["role"],
+        "role_details": json.loads(row["role_details_json"] or "{}"),
+        "pdpa_consent": bool(row["pdpa_consent"]),
+        "consent_timestamp": row["consent_timestamp"],
+        "created_at": row["created_at"],
+    }
+
+
+def update_user_profile(unique_uid: str, full_name: str = None, email: str = None,
+                        role_details: dict = None) -> tuple[bool, str, dict | None]:
+    """Update profile details (name, email, and role_details) for a user account."""
+    user = get_user_by_uid(unique_uid)
+    if not user:
+        return False, "Account not found.", None
+
+    new_name = (full_name if full_name is not None else user["full_name"]).strip()
+    new_email = (email if email is not None else user["email"]).strip().lower()
+
+    if len(new_name) < 2:
+        return False, "Full name must be at least 2 characters.", None
+
+    if not EMAIL_REGEX.match(new_email):
+        return False, "Please enter a valid email address.", None
+
+    conn = get_db_connection()
+    cur = conn.cursor()
+
+    # Check email uniqueness if email is changed
+    if new_email != user["email"].lower():
+        cur.execute("SELECT id FROM users WHERE email = ? AND unique_uid != ?", (new_email, unique_uid))
+        if cur.fetchone():
+            conn.close()
+            return False, "This email address is already in use by another account.", None
+
+    # Merge role_details
+    current_rd = user["role_details"] or {}
+    if role_details is not None:
+        current_rd.update(role_details)
+
+    cur.execute(
+        """
+        UPDATE users
+        SET full_name = ?, email = ?, role_details_json = ?
+        WHERE unique_uid = ?
+        """,
+        (new_name, new_email, json.dumps(current_rd), unique_uid),
+    )
+    conn.commit()
+    conn.close()
+
+    updated_user = get_user_by_uid(unique_uid)
+    return True, "Profile updated successfully!", updated_user
+
+
+def update_user_password(unique_uid: str, current_password: str, new_password: str,
+                         confirm_password: str) -> tuple[bool, str]:
+    """Verify current password and set a new strong password."""
+    if not current_password or not new_password:
+        return False, "Please enter both your current password and a new password."
+
+    if new_password != confirm_password:
+        return False, "New passwords do not match. Please verify and re-type."
+
+    ok_pw, pw_msg = validate_password_strength(new_password)
+    if not ok_pw:
+        return False, pw_msg
+
+    conn = get_db_connection()
+    cur = conn.cursor()
+    cur.execute("SELECT password_hash FROM users WHERE unique_uid = ?", (unique_uid,))
+    row = cur.fetchone()
+
+    if not row:
+        conn.close()
+        return False, "Account not found."
+
+    if not check_password_hash(row["password_hash"], current_password):
+        conn.close()
+        return False, "Current password is incorrect. Please try again."
+
+    new_hash = generate_password_hash(new_password)
+    cur.execute("UPDATE users SET password_hash = ? WHERE unique_uid = ?", (new_hash, unique_uid))
+    conn.commit()
+    conn.close()
+
+    return True, "Password updated successfully!"
+
