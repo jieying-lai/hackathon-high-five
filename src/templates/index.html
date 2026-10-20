@@ -246,5 +246,56 @@
 <script src="/static/js/portal-i18n.js"></script>
 <script src="/static/js/auth-i18n.js"></script>
 <script src="/static/js/member3.js?v=20261020-questionnaire-1"></script>
+<script>
+    function openAuth(mode, role) {
+      
+    }
+    async function quickLogin(kind) {
+      
+    }
+
+   
+
+    
+    function saveUserWorkspaceProgress(stepKey, stepData) {
+        let userProgress = JSON.parse(localStorage.getItem('careerlens_progress') || '{}');
+        userProgress[stepKey] = {
+            data: stepData,
+            updatedAt: new Date().toISOString()
+        };
+        localStorage.setItem('careerlens_progress', JSON.stringify(userProgress));
+        console.log("💾 Progress persisted locally:", stepKey);
+    }
+
+   
+    async function triggerDynamicRefresh(buttonElement) {
+        const originalText = buttonElement.innerHTML;
+        buttonElement.disabled = true;
+        buttonElement.innerHTML = "⏳ Syncing latest trends...";
+
+        try {
+            const response = await fetch('/api/refresh-trends', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' }
+            });
+            const result = await response.json();
+            
+            if (response.ok) {
+                showAlert("✅ Trend data successfully refreshed!");
+                saveUserWorkspaceProgress('last_trend_refresh', result);
+            } else {
+                showAlert("❌ Refresh failed: " + (result.message || 'Unknown error'));
+            }
+        } catch (err) {
+            showAlert("❌ Network connection exception, unable to refresh trends.");
+        } finally {
+            buttonElement.disabled = false;
+            buttonElement.innerHTML = originalText;
+        }
+    }
+  </script>
+  
+  <script src="/static/js/questionnaire-i18n.js"></script>
+ 
 </body>
 </html>
