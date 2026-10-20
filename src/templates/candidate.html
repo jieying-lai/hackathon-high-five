@@ -108,8 +108,21 @@
     <header class="portal-desktop-header glass">
       <a href="/" class="portal-brand"><img src="/static/brand/careerlens_logo_icon.svg" alt="" /><span>CareerLens AI<small>Talent Portal</small></span></a>
       <nav id="sideNav" class="desktop-navigation" aria-label="Section navigation"></nav>
-      <div class="portal-account"><button type="button" class="notification-button" data-notification-button onclick="showTab('notifications')" aria-label="Interview notifications" title="Interview notifications"><span aria-hidden="true">🔔</span><span class="notification-label">Interview notifications</span></button><div data-language-slot="desktop"></div><button type="button" onclick="openAccountModal()" class="portal-user text-left hover:opacity-85 transition cursor-pointer p-1 rounded-2xl hover:bg-white/60" title="View & Edit Account Profile"><div id="uAvatar" class="h-9 w-9 rounded-xl bg-gradient-to-br from-indigo-500 to-pink-500 text-white font-bold grid place-items-center shrink-0">U</div>
-            <div class="min-w-0 pr-1"><div id="uName" data-no-translate class="text-xs font-extrabold truncate">User</div><div id="uUid" data-no-translate class="text-[10px] font-mono text-slate-500 truncate"></div></div><span class="text-xs text-indigo-600 font-bold ml-0.5">⚙️</span></button><button onclick="signOut()" class="btn btn-soft">Sign out</button></div>
+      <div class="portal-account">
+        <button type="button" class="notification-button" data-notification-button onclick="showTab('notifications')" aria-label="Interview notifications" title="Interview notifications"><span aria-hidden="true">🔔</span><span class="notification-label">Interview notifications</span></button>
+        <div data-language-slot="desktop"></div>
+        <button type="button" onclick="openAccountModal()" class="portal-user text-left hover:opacity-90 transition cursor-pointer p-1.5 rounded-2xl hover:bg-white/80 border border-slate-200/90 shadow-xs flex items-center gap-2" title="View & Edit Account Profile">
+          <div id="uAvatar" class="h-9 w-9 rounded-xl bg-gradient-to-br from-indigo-500 to-pink-500 text-white font-bold grid place-items-center shrink-0">U</div>
+          <div class="min-w-0 pr-1">
+            <div class="flex items-center gap-1.5">
+              <span id="uName" data-no-translate class="text-xs font-extrabold truncate">User</span>
+              <span class="text-[9px] font-extrabold px-1.5 py-0.5 rounded-md bg-indigo-50 text-indigo-700 border border-indigo-200 shrink-0">Edit Profile ⚙️</span>
+            </div>
+            <div id="uUid" data-no-translate class="text-[10px] font-mono text-slate-500 truncate"></div>
+          </div>
+        </button>
+        <button onclick="signOut()" class="btn btn-soft">Sign out</button>
+      </div>
     </header>
 
     <div class="flex-1 min-w-0">
@@ -117,7 +130,7 @@
       <header class="portal-mobile-header sticky top-0 z-30 glass">
         <div class="flex items-center justify-between px-4 py-2.5">
           <div class="flex items-center gap-2"><img src="/static/brand/careerlens_logo_icon.svg" class="h-9 w-9 rounded-xl" alt="" /><b class="text-sm">Talent Portal</b></div>
-          <div class="portal-mobile-actions"><button type="button" class="notification-button" data-notification-button onclick="showTab('notifications')" aria-label="Interview notifications" title="Interview notifications"><span aria-hidden="true">🔔</span><span class="notification-label">Interview notifications</span></button><div data-language-slot="mobile"></div><button onclick="signOut()" class="btn btn-soft !py-1.5">Sign out</button></div>
+          <div class="portal-mobile-actions"><button type="button" onclick="openAccountModal()" class="btn btn-soft !py-1.5 !px-2.5 text-xs flex items-center gap-1 font-bold text-indigo-700 bg-indigo-50 border border-indigo-200" title="Edit Profile"><span>⚙️</span><span>Profile</span></button><button type="button" class="notification-button" data-notification-button onclick="showTab('notifications')" aria-label="Interview notifications" title="Interview notifications"><span aria-hidden="true">🔔</span></button><div data-language-slot="mobile"></div><button onclick="signOut()" class="btn btn-soft !py-1.5">Sign out</button></div>
         </div>
         <div class="mobile-nav-bar">
           <button id="navToggle" type="button" class="nav-toggle" aria-label="Toggle navigation" aria-expanded="false" aria-controls="topNav">
@@ -160,6 +173,59 @@
         </section>
 
         <section id="tab-profile" class="tab hidden space-y-6">
+
+          <!-- Account Profile & Personal Details Card -->
+          <div class="glass rounded-3xl p-6 sm:p-7 space-y-4 border-2 border-indigo-100 shadow-sm" data-no-translate>
+            <div class="flex flex-wrap items-center justify-between gap-4 border-b border-slate-200/70 pb-4">
+              <div class="flex items-center gap-3.5">
+                <div id="accCardAvatar" class="h-14 w-14 rounded-2xl bg-gradient-to-br from-indigo-500 to-pink-500 text-white font-black text-2xl grid place-items-center shadow">U</div>
+                <div>
+                  <div class="flex flex-wrap items-center gap-2">
+                    <h2 id="accCardName" class="text-xl font-extrabold text-slate-900">User</h2>
+                    <span id="accCardBadge" class="chip chip-indigo">Talent Account</span>
+                    <span class="chip chip-emerald">✓ Verified</span>
+                  </div>
+                  <div class="text-xs text-slate-500 mt-1 flex flex-wrap items-center gap-2">
+                    <span>ID: <b id="accCardUid" class="font-mono text-slate-700"></b></span>
+                    <span>•</span>
+                    <span>Email: <b id="accCardEmail" class="text-slate-700"></b></span>
+                    <span>•</span>
+                    <span>Joined: <span id="accCardJoined" class="text-slate-600"></span></span>
+                  </div>
+                </div>
+              </div>
+              <div class="flex items-center gap-2 shrink-0">
+                <button type="button" onclick="openAccountModal()" class="btn btn-primary !py-2.5 !px-5 flex items-center gap-2 shadow-sm font-bold hover:scale-[1.02] transition" title="Edit your account information">
+                  <span>✏️</span>
+                  <span>Edit Profile &amp; Information</span>
+                </button>
+                <button type="button" onclick="openAccountModal();setAccountModalTab('security');" class="btn btn-soft !py-2.5 !px-4 flex items-center gap-1.5 font-bold" title="Update password">
+                  <span>🔒</span>
+                  <span>Security &amp; Password</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Profile Overview Details Grid -->
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-1">
+              <div class="p-3.5 rounded-2xl bg-white/80 border border-slate-200/80 shadow-xs">
+                <div class="text-[10px] font-extrabold text-slate-400 uppercase tracking-wider">Current Role</div>
+                <div id="accCardRole" class="text-xs font-bold text-slate-800 mt-1 truncate">—</div>
+              </div>
+              <div class="p-3.5 rounded-2xl bg-white/80 border border-slate-200/80 shadow-xs">
+                <div class="text-[10px] font-extrabold text-slate-400 uppercase tracking-wider">Career Field</div>
+                <div id="accCardIndustry" class="text-xs font-bold text-slate-800 mt-1 truncate">—</div>
+              </div>
+              <div class="p-3.5 rounded-2xl bg-white/80 border border-slate-200/80 shadow-xs">
+                <div class="text-[10px] font-extrabold text-slate-400 uppercase tracking-wider">Preferred Mode</div>
+                <div id="accCardWorkMode" class="text-xs font-bold text-slate-800 mt-1 truncate">—</div>
+              </div>
+              <div class="p-3.5 rounded-2xl bg-white/80 border border-slate-200/80 shadow-xs">
+                <div class="text-[10px] font-extrabold text-slate-400 uppercase tracking-wider">Location</div>
+                <div id="accCardLocation" class="text-xs font-bold text-slate-800 mt-1 truncate">—</div>
+              </div>
+            </div>
+          </div>
 
           <div class="tint tint-teal rounded-3xl p-5 flex flex-wrap items-center justify-between gap-4" data-no-translate>
             <div class="flex items-start gap-3.5 max-w-3xl">
@@ -719,7 +785,7 @@
     const NAV = [
       { id: 'notifications', ico: '🔔', label: 'Interview notifications', eyebrow: 'Notifications', title: 'Interview notifications' },
       { id: 'dash', ico: '🏠', label: 'Dashboard', eyebrow: 'Overview', title: 'Your career dashboard' },
-      { id: 'profile', ico: '🧑‍💼', label: 'Profile & Skills', eyebrow: 'Professional background', title: 'Skills profile' },
+      { id: 'profile', ico: '👤', label: 'Account & Profile', eyebrow: 'Account & Professional Background', title: 'Account profile & skills vault' },
       { id: 'quest', ico: '📝', label: 'Questionnaire', eyebrow: 'Career preferences', title: 'Application questionnaire' },
       { id: 'radar', ico: '📡', label: 'AI Radar', eyebrow: 'Industry insights', title: 'Future skills radar' },
       { id: 'match', ico: '🎯', label: 'Role Matches', eyebrow: 'Career opportunities', title: 'Future-role matches' },
@@ -752,6 +818,21 @@
 
     /* ---------- navigation ---------- */
     
+
+    function renderAccountProfileCard() {
+      if (!user) return;
+      if (window.accCardAvatar) accCardAvatar.textContent = (user.full_name || 'U').charAt(0).toUpperCase();
+      if (window.accCardName) accCardName.textContent = user.full_name || 'User';
+      if (window.accCardUid) accCardUid.textContent = user.unique_uid || '';
+      if (window.accCardEmail) accCardEmail.textContent = user.email || '';
+      if (window.accCardJoined) accCardJoined.textContent = (user.created_at || '2026').replace(' UTC', '');
+      const rd = user.role_details || {};
+      if (window.accCardRole) accCardRole.textContent = rd.current_role || (cvRecord && cvRecord.structured_cv ? cvRecord.structured_cv.current_role : '') || 'Professional';
+      if (window.accCardIndustry) accCardIndustry.textContent = rd.industry || 'Finance & Accounting';
+      if (window.accCardWorkMode) accCardWorkMode.textContent = rd.preferred_work_mode || 'Hybrid';
+      if (window.accCardLocation) accCardLocation.textContent = rd.location || 'Kuala Lumpur';
+    }
+
     /* ---------- Account Profile View & Edit Modal ---------- */
     function openAccountModal() {
       if (!user) return;
@@ -816,6 +897,7 @@
       user = res.data.user;
       uName.textContent = user.full_name;
       uAvatar.textContent = user.full_name.charAt(0).toUpperCase();
+      renderAccountProfileCard();
       if (window.pName) pName.value = user.full_name;
       if (window.dashHello) dashHello.textContent = `${formatGreeting()}, ${user.full_name}`;
       toast('Account profile updated successfully!');
@@ -1985,6 +2067,7 @@
       if (!user) return;
       if (user.role === 'hr_company') { window.location.href = '/workspace'; return; }
       uAvatar.textContent = user.full_name.charAt(0).toUpperCase(); uName.textContent = user.full_name; uUid.textContent = user.unique_uid;
+      renderAccountProfileCard();
       try { answers = JSON.parse(localStorage.getItem(ansKey()) || '{}'); } catch (e) { answers = {}; }
 
       const p = await api('/api/personas'); personas = p.data || [];

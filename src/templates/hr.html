@@ -19,15 +19,28 @@
     <header class="portal-desktop-header sidebar-dark">
       <a href="/" class="portal-brand"><img src="/static/brand/careerlens_logo_icon.svg" alt="" /><span>CareerLens AI<small id="headerCompanyName" data-no-translate></small></span></a>
       <nav id="sideNav" class="desktop-navigation" aria-label="Section navigation"></nav>
-      <div class="portal-account"><button type="button" class="notification-button" data-notification-button onclick="openInterviewResponses()" aria-label="Interview notifications" title="Interview notifications"><span aria-hidden="true">🔔</span><span class="notification-label">Interview notifications</span></button><div data-language-slot="desktop"></div><button type="button" onclick="openAccountModal()" class="portal-user text-left hover:opacity-85 transition cursor-pointer p-1 rounded-2xl hover:bg-white/10" title="View & Edit Account Profile"><div id="uAvatar" class="h-9 w-9 rounded-xl bg-gradient-to-br from-teal-400 to-sky-500 text-white font-bold grid place-items-center shrink-0">U</div>
-            <div class="min-w-0 pr-1"><div id="uName" data-no-translate class="text-xs font-extrabold text-white truncate"></div><div id="uUid" data-no-translate class="text-[10px] font-mono text-slate-400 truncate"></div></div><span class="text-xs text-teal-300 font-bold ml-0.5">⚙️</span></button><button onclick="signOut()" class="btn btn-soft">Sign out</button></div>
+      <div class="portal-account">
+        <button type="button" class="notification-button" data-notification-button onclick="openInterviewResponses()" aria-label="Interview notifications" title="Interview notifications"><span aria-hidden="true">🔔</span><span class="notification-label">Interview notifications</span></button>
+        <div data-language-slot="desktop"></div>
+        <button type="button" onclick="openAccountModal()" class="portal-user text-left hover:opacity-90 transition cursor-pointer p-1.5 rounded-2xl hover:bg-white/10 border border-teal-500/30 flex items-center gap-2" title="View & Edit Account Profile">
+          <div id="uAvatar" class="h-9 w-9 rounded-xl bg-gradient-to-br from-teal-400 to-sky-500 text-white font-bold grid place-items-center shrink-0">U</div>
+          <div class="min-w-0 pr-1">
+            <div class="flex items-center gap-1.5">
+              <span id="uName" data-no-translate class="text-xs font-extrabold text-white truncate"></span>
+              <span class="text-[9px] font-extrabold px-1.5 py-0.5 rounded-md bg-teal-500/20 text-teal-200 border border-teal-400/30 shrink-0">Edit Profile ⚙️</span>
+            </div>
+            <div id="uUid" data-no-translate class="text-[10px] font-mono text-slate-400 truncate"></div>
+          </div>
+        </button>
+        <button onclick="signOut()" class="btn btn-soft">Sign out</button>
+      </div>
     </header>
 
     <div class="flex-1 min-w-0">
       <header class="portal-mobile-header sticky top-0 z-30 sidebar-dark">
         <div class="flex items-center justify-between px-4 py-2.5">
           <div class="flex items-center gap-2"><img src="/static/brand/careerlens_logo_icon.svg" class="h-9 w-9 rounded-xl" alt="" /><div class="text-sm text-white"><b>CareerLens AI</b><small id="mobileCompanyName" data-no-translate class="block text-xs"></small></div></div>
-          <div class="portal-mobile-actions"><button type="button" class="notification-button" data-notification-button onclick="openInterviewResponses()" aria-label="Interview notifications" title="Interview notifications"><span aria-hidden="true">🔔</span><span class="notification-label">Interview notifications</span></button><div data-language-slot="mobile"></div><button onclick="signOut()" class="btn !py-1.5 bg-white/10 text-white">Sign out</button></div>
+          <div class="portal-mobile-actions"><button type="button" onclick="openAccountModal()" class="btn !py-1 !px-2.5 text-xs bg-teal-500/20 text-teal-100 border border-teal-400/30 font-bold flex items-center gap-1" title="Company Profile"><span>⚙️</span><span>Profile</span></button><button type="button" class="notification-button" data-notification-button onclick="openInterviewResponses()" aria-label="Interview notifications" title="Interview notifications"><span aria-hidden="true">🔔</span></button><div data-language-slot="mobile"></div><button onclick="signOut()" class="btn !py-1.5 bg-white/10 text-white">Sign out</button></div>
         </div>
         <div class="mobile-nav-bar">
           <button id="navToggle" type="button" class="nav-toggle" aria-label="Toggle navigation" aria-expanded="false" aria-controls="topNav">
@@ -47,7 +60,39 @@
         </div>
 
         <section id="tab-overview" class="tab space-y-6">
-          <div class="flex justify-end"><button type="button" id="overviewRefresh" class="btn btn-soft" onclick="refreshOverview()">Refresh overview</button></div>
+          <!-- Employer Company Account & Profile Card -->
+          <div class="glass rounded-3xl p-6 space-y-4 border border-teal-200 shadow-sm" data-no-translate>
+            <div class="flex flex-wrap items-center justify-between gap-4">
+              <div class="flex items-center gap-3.5">
+                <div id="hrCardAvatar" class="h-12 w-12 rounded-2xl bg-gradient-to-br from-teal-500 to-sky-600 text-white font-black text-xl grid place-items-center shadow">🏢</div>
+                <div>
+                  <div class="flex flex-wrap items-center gap-2">
+                    <h2 id="hrCardName" class="text-xl font-extrabold text-slate-900">Employer Company</h2>
+                    <span class="chip chip-teal">Verified Employer</span>
+                    <span class="chip chip-emerald">Company Workspace</span>
+                  </div>
+                  <div class="text-xs text-slate-500 mt-1 flex flex-wrap items-center gap-2">
+                    <span>ID: <b id="hrCardUid" class="font-mono text-slate-700"></b></span>
+                    <span>•</span>
+                    <span>Login: <b id="hrCardEmail" class="text-slate-700"></b></span>
+                    <span>•</span>
+                    <span>Contact: <b id="hrCardContact" class="text-slate-700"></b></span>
+                  </div>
+                </div>
+              </div>
+              <div class="flex items-center gap-2 shrink-0">
+                <button type="button" onclick="openAccountModal()" class="btn btn-primary !py-2 !px-4 flex items-center gap-1.5 text-xs font-bold shadow-sm" title="Edit Company Account & Profile">
+                  <span>✏️</span>
+                  <span>Edit Company Profile</span>
+                </button>
+                <button type="button" onclick="openAccountModal();setAccountModalTab('security');" class="btn btn-soft !py-2 !px-3.5 text-xs flex items-center gap-1.5 font-bold" title="Update password">
+                  <span>🔒</span>
+                  <span>Password</span>
+                </button>
+                <button type="button" id="overviewRefresh" class="btn btn-soft !py-2 !px-3.5 text-xs" onclick="refreshOverview()">↻ Refresh</button>
+              </div>
+            </div>
+          </div>
 
           <div id="kpis" class="grid grid-cols-2 lg:grid-cols-4 gap-4"></div>
           <div class="grid lg:grid-cols-5 gap-6">
@@ -322,6 +367,18 @@
     }
     /* ---------- navigation ---------- */
     
+
+    function renderHrAccountCard() {
+      if (!user) return;
+      const rd = user.role_details || {};
+      const company = rd.company_name || user.full_name || 'Employer';
+      if (window.hrCardName) hrCardName.textContent = company;
+      if (window.hrCardUid) hrCardUid.textContent = user.unique_uid || '';
+      if (window.hrCardEmail) hrCardEmail.textContent = user.email || '';
+      if (window.hrCardContact) hrCardContact.textContent = rd.contact_person || user.full_name || 'HR Manager';
+      if (window.hrCardAvatar) hrCardAvatar.textContent = company.charAt(0).toUpperCase();
+    }
+
     /* ---------- Employer Account Profile View & Edit Modal ---------- */
     function openAccountModal() {
       if (!user) return;
