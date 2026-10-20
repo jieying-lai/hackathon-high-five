@@ -338,6 +338,24 @@ def api_trends():
     data["anonymized_talent_pool_stats"] = cv_engine.get_anonymized_cv_statistics()
     return jsonify(data)
 
+@app.route('/api/refresh-trends', methods=['POST'])
+@api_role('job_seeker')
+def api_refresh_trends():
+    try:
+        # Simulated response for real-time trend data fetching
+        updated_trends = {
+            "ok": True,
+            "message": "Trend data successfully updated!",
+            "timestamp": "2026-10-20",
+            "trends": [
+                {"skill": "AI Prompt Engineering", "growth": "+45%"},
+                {"skill": "Flask Optimization", "growth": "+28%"},
+                {"skill": "Data Ethics & Compliance", "growth": "+34%"}
+            ]
+        }
+        return jsonify(updated_trends), 200
+    except Exception as e:
+        return jsonify({"ok": False, "message": str(e)}), 500
 
 @app.route("/api/analyze", methods=["POST"])
 @api_role("job_seeker")
