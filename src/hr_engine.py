@@ -17,16 +17,22 @@ from auth_db import DATA_DIR, get_db_connection
 from skills_taxonomy import expand_for_matching, skill_key
 
 CITY_COORDS = {
-    "Kuala Lumpur (KLCC)": {"city": "Kuala Lumpur", "lat": 3.1579, "lng": 101.7116},
-    "Petaling Jaya (Selangor)": {"city": "Petaling Jaya", "lat": 3.1347, "lng": 101.6226},
-    "Cyberjaya / Putrajaya": {"city": "Cyberjaya", "lat": 2.9213, "lng": 101.6559},
-    "Subang Jaya / Sunway": {"city": "Subang Jaya", "lat": 3.0674, "lng": 101.6067},
-    "Shah Alam (Selangor)": {"city": "Shah Alam", "lat": 3.0833, "lng": 101.5581},
-    "Klang (Selangor)": {"city": "Klang", "lat": 3.0449, "lng": 101.4456},
-    "Penang (Bayan Lepas / George Town)": {"city": "Bayan Lepas", "lat": 5.2945, "lng": 100.2655},
-    "Johor Bahru (Iskandar Puteri)": {"city": "Johor Bahru", "lat": 1.4236, "lng": 103.6575},
-    "Ipoh (Perak)": {"city": "Ipoh", "lat": 4.5975, "lng": 101.0901},
-    "Seremban (Negeri Sembilan)": {"city": "Seremban", "lat": 2.7258, "lng": 101.9424},
+    "W.P. Kuala Lumpur": {"city": "Kuala Lumpur", "lat": 3.1579, "lng": 101.7116, "group": "Wilayah Persekutuan"},
+    "W.P. Putrajaya": {"city": "Putrajaya", "lat": 2.9264, "lng": 101.6964, "group": "Wilayah Persekutuan"},
+    "W.P. Labuan": {"city": "Labuan", "lat": 5.2831, "lng": 115.2308, "group": "Wilayah Persekutuan"},
+    "Selangor": {"city": "Selangor", "lat": 3.1073, "lng": 101.6067, "group": "States"},
+    "Johor": {"city": "Johor", "lat": 1.4927, "lng": 103.7414, "group": "States"},
+    "Pulau Pinang (Penang)": {"city": "Pulau Pinang", "lat": 5.3547, "lng": 100.3019, "group": "States"},
+    "Perak": {"city": "Perak", "lat": 4.5975, "lng": 101.0901, "group": "States"},
+    "Negeri Sembilan": {"city": "Negeri Sembilan", "lat": 2.7258, "lng": 101.9424, "group": "States"},
+    "Melaka": {"city": "Melaka", "lat": 2.1896, "lng": 102.2501, "group": "States"},
+    "Pahang": {"city": "Pahang", "lat": 3.8126, "lng": 103.3256, "group": "States"},
+    "Kedah": {"city": "Kedah", "lat": 6.1184, "lng": 100.3685, "group": "States"},
+    "Kelantan": {"city": "Kelantan", "lat": 6.1254, "lng": 102.2381, "group": "States"},
+    "Terengganu": {"city": "Terengganu", "lat": 5.3296, "lng": 103.1370, "group": "States"},
+    "Sabah": {"city": "Sabah", "lat": 5.9804, "lng": 116.0735, "group": "States"},
+    "Sarawak": {"city": "Sarawak", "lat": 1.5533, "lng": 110.3592, "group": "States"},
+    "Perlis": {"city": "Perlis", "lat": 6.4449, "lng": 100.1986, "group": "States"},
 }
 
 

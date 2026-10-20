@@ -21,46 +21,78 @@
       background: linear-gradient(135deg, #eef2ff 0%, #f0fdfa 100%);
       z-index: 1;
     }
-    .cl-pin {
+    .cl-user-pin-wrap {
+      position: relative;
+      width: 34px;
+      height: 42px;
       display: flex;
       align-items: center;
       justify-content: center;
-      border-radius: 9999px;
-      font-weight: 800;
-      font-size: 11px;
-      color: #fff;
-      box-shadow: 0 6px 16px rgba(15, 23, 42, 0.25);
-      border: 2.5px solid #fff;
-      transition: transform 0.15s ease, box-shadow 0.15s ease;
-      cursor: pointer;
-    }
-    .cl-pin:hover, .cl-pin.active {
-      transform: scale(1.22);
-      box-shadow: 0 8px 22px rgba(79, 70, 229, 0.45);
-      z-index: 999 !important;
-    }
-    .cl-user-pin {
-      width: 20px;
-      height: 20px;
-      border-radius: 9999px;
-      background: #0d9488;
-      border: 3px solid #fff;
-      box-shadow: 0 0 0 6px rgba(13, 148, 136, 0.28), 0 4px 10px rgba(15, 23, 42, 0.35);
+      filter: drop-shadow(0 6px 12px rgba(15, 23, 42, 0.35));
       cursor: grab;
+      transition: transform 0.15s ease;
+    }
+    .cl-user-pin-wrap:hover {
+      transform: translateY(-2px) scale(1.06);
     }
     .loc-suggest-dropdown {
       position: absolute;
       left: 0;
       right: 0;
       top: calc(100% + 6px);
-      background: rgba(255, 255, 255, 0.98);
+      background: rgba(255, 255, 255, 0.99);
       backdrop-filter: blur(16px);
       border: 1px solid rgba(99, 102, 241, 0.25);
       border-radius: 1rem;
       box-shadow: 0 18px 38px -10px rgba(15, 23, 42, 0.22);
       z-index: 60;
-      max-height: 280px;
+      max-height: 260px;
       overflow-y: auto;
+    }
+    .cl-select {
+      appearance: none;
+      -webkit-appearance: none;
+      background-color: rgba(255, 255, 255, 0.95);
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%234f46e5' stroke-width='2.2'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 0.75rem center;
+      background-size: 0.95rem;
+      border: 1px solid rgba(148, 163, 184, 0.45);
+      border-radius: 0.85rem;
+      padding: 0.55rem 2.25rem 0.55rem 0.85rem;
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: #1e293b;
+      box-shadow: 0 2px 6px rgba(15, 23, 42, 0.04);
+      transition: border-color 0.15s ease, box-shadow 0.15s ease;
+      cursor: pointer;
+    }
+    .cl-select:hover {
+      border-color: rgba(99, 102, 241, 0.55);
+    }
+    .cl-select:focus {
+      outline: none;
+      border-color: #4f46e5;
+      box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.15);
+    }
+    .job-card-applied {
+      background: linear-gradient(135deg, #fef9c3 0%, #fde68a 100%) !important;
+      border: 2px solid #eab308 !important;
+      box-shadow: 0 12px 28px -8px rgba(234, 179, 8, 0.35) !important;
+    }
+    .badge-applied-red {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.25rem;
+      padding: 0.2rem 0.65rem;
+      border-radius: 9999px;
+      background: #fee2e2;
+      border: 1.5px solid #ef4444;
+      color: #dc2626 !important;
+      font-size: 11px;
+      font-weight: 900;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
     }
   </style>
 </head>
@@ -253,36 +285,35 @@
         </section>
 
         <section id="tab-jobs" class="tab hidden space-y-6" data-no-translate>
-          <!-- Card 1: Location Identification, Condo/Street Map Search & Radius Range Control -->
+          <!-- Card 1: Location & Search Radius -->
           <div class="glass rounded-3xl p-6 space-y-5">
-            <!-- Row 1: Identified Address Banner + GPS & Quick City Preset -->
+            <!-- Row 1: Current Location + Formal Location Controls -->
             <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
               <div class="flex items-start gap-3.5 min-w-0">
                 <div class="h-11 w-11 rounded-2xl bg-gradient-to-br from-teal-500 to-indigo-600 text-white grid place-items-center text-lg shadow shrink-0">📍</div>
-                <div class="min-w-0 space-y-1">
+                <div class="min-w-0">
                   <div class="flex flex-wrap items-center gap-2">
-                    <span class="text-base font-extrabold text-slate-900">Your Location &amp; Radius Discovery</span>
-                    <span id="locActiveChip" class="chip chip-teal">📍 Kuala Lumpur (KLCC)</span>
-                    <span id="datasetStatsChip" class="chip chip-indigo !text-[10px]">68,447 MY Jobs · 20,514 Companies</span>
+                    <span class="text-base font-extrabold text-slate-900">Selected Location</span>
+                    <span id="locActiveChip" class="chip chip-teal">📍 W.P. Kuala Lumpur</span>
                   </div>
-                  <div id="locFullAddress" class="text-xs text-slate-500 truncate" title="Identified map address">
-                    Kuala Lumpur City Centre (3.1579, 101.7116) — Use GPS, search any condo/building below, or drag your teal map pin
+                  <div id="locFullAddress" class="text-xs text-slate-500 truncate mt-1">
+                    Kuala Lumpur City Centre
                   </div>
                 </div>
               </div>
               <div class="flex flex-wrap items-center gap-2.5 shrink-0">
-                <button type="button" onclick="detectGpsLocation()" id="btnDetectGps" class="btn btn-primary !py-2 !px-3.5 !text-xs">
-                  🛰️ Identify My GPS Address
+                <button type="button" onclick="detectGpsLocation()" id="btnDetectGps" class="btn btn-primary !py-2 !px-4 !text-xs">
+                  📍 Use Current Location
                 </button>
-                <select id="cityPresetSelect" onchange="selectManualCity(this.value)" class="input !w-auto !py-2 !text-xs" title="Quick jump to major city"></select>
+                <select id="cityPresetSelect" onchange="selectManualCity(this.value)" class="cl-select min-w-[210px]" aria-label="Select State or Wilayah Persekutuan"></select>
               </div>
             </div>
 
-            <!-- Row 2: Manual Map Search (Condo / Apartment / Street / Landmark from OpenStreetMap Malaysia) -->
-            <div class="grid lg:grid-cols-12 gap-4 items-center pt-4 border-t border-slate-200/70">
-              <div class="lg:col-span-7 relative">
+            <!-- Row 2: Search Specific Building / Condo / Street + Scope Toggle -->
+            <div class="grid lg:grid-cols-12 gap-4 items-end pt-4 border-t border-slate-200/70">
+              <div class="lg:col-span-8 relative">
                 <label class="block text-[11px] font-extrabold uppercase tracking-wider text-slate-500 mb-1.5">
-                  🔎 Enter Condo, Building, Street, or Area (Validated with Map Resources)
+                  Search Building, Condo, Street, or Area
                 </label>
                 <div class="flex items-center gap-2">
                   <div class="relative flex-1">
@@ -293,36 +324,122 @@
                       oninput="onLocSearchInput(this.value)"
                       onkeydown="if(event.key==='Enter'){event.preventDefault();runManualPlaceSearch();}"
                       class="input !py-2.5 !pr-8 !text-xs"
-                      placeholder="e.g. Banyan Mont Kiara, PV128 Setapak, Sunway Geo, Mount Austin JB, Bangsar South..."
+                      placeholder="Enter condo, building, street, or area (e.g. Banyan Mont Kiara, PV128 Setapak, Mount Austin)..."
                     />
                     <button
                       id="locSearchClearBtn"
                       type="button"
                       onclick="clearLocSearchInput()"
                       class="hidden absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 text-xs font-bold"
-                      title="Clear search">✕</button>
+                      title="Clear">✕</button>
                   </div>
                   <button type="button" onclick="runManualPlaceSearch()" class="btn btn-soft !py-2.5 !px-4 !text-xs shrink-0">
-                    📍 Search Map
+                    Search
                   </button>
                 </div>
-                <!-- Autocomplete suggestions dropdown from OpenStreetMap + Malaysia Geo Index -->
                 <div id="locSuggestBox" class="loc-suggest-dropdown hidden"></div>
               </div>
 
-              <!-- Scope & Sort Controls neatly aligned on the right -->
-              <div class="lg:col-span-5 flex flex-col sm:flex-row lg:justify-end items-stretch sm:items-end gap-2.5">
-                <div class="flex-1 sm:flex-initial">
+              <div class="lg:col-span-4 flex lg:justify-end">
+                <div class="w-full sm:w-auto">
                   <label class="block text-[11px] font-extrabold uppercase tracking-wider text-slate-500 mb-1.5">Display Scope</label>
                   <div class="seg w-full sm:w-auto">
                     <button type="button" id="btnMapMatched" onclick="setJobScope('relevant')" class="on !text-xs">🎯 Matched Only</button>
                     <button type="button" id="btnMapAll" onclick="setJobScope('all')" class="!text-xs">🌐 View All Nearby</button>
                   </div>
                 </div>
-                <div>
-                  <label class="block text-[11px] font-extrabold uppercase tracking-wider text-slate-500 mb-1.5">Sort Results</label>
-                  <select id="jobSortSelect" onchange="setJobSort(this.value)" class="input !w-full sm:!w-auto !py-2 !text-xs">
-                    <option value="match">Sort: Best CV Match</option>
+              </div>
+            </div>
+
+            <!-- Row 3: Search Radius Slider -->
+            <div class="tint tint-indigo rounded-2xl p-4 space-y-2">
+              <div class="flex flex-wrap items-center justify-between gap-2">
+                <div class="flex items-center gap-2">
+                  <span class="text-xs font-extrabold text-slate-800">Search Radius:</span>
+                  <span id="radiusValueLabel" class="chip chip-indigo !text-xs !font-black">10 km</span>
+                </div>
+                <div class="flex items-center gap-1.5">
+                  <button type="button" onclick="setRadiusKm(5)" class="chip chip-slate cursor-pointer !text-[10px]">5 km</button>
+                  <button type="button" onclick="setRadiusKm(10)" class="chip chip-slate cursor-pointer !text-[10px]">10 km</button>
+                  <button type="button" onclick="setRadiusKm(20)" class="chip chip-slate cursor-pointer !text-[10px]">20 km</button>
+                  <button type="button" onclick="setRadiusKm(35)" class="chip chip-slate cursor-pointer !text-[10px]">35 km</button>
+                  <button type="button" onclick="setRadiusKm(50)" class="chip chip-slate cursor-pointer !text-[10px]">50 km</button>
+                </div>
+              </div>
+              <input
+                id="radiusSlider"
+                type="range"
+                min="5"
+                max="100"
+                step="5"
+                value="10"
+                oninput="previewRadiusCircle(this.value)"
+                onchange="commitRadiusChange(this.value)"
+                class="w-full accent-indigo-600 cursor-pointer h-2 rounded-lg"
+              />
+              <div class="flex justify-between text-[10px] font-bold text-slate-400 px-0.5">
+                <span>5 km</span>
+                <span>25 km</span>
+                <span>50 km</span>
+                <span>75 km</span>
+                <span>100 km</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card 2: Interactive Map + Selected Company Details -->
+          <div class="glass rounded-3xl p-6 space-y-4">
+            <div class="flex flex-wrap items-center justify-between gap-3">
+              <div class="flex flex-wrap items-center gap-2">
+                <h2 class="text-base font-extrabold text-slate-900">🗺️ Nearby Hiring Companies</h2>
+                <span id="compCountBadge" class="chip chip-indigo">0 companies</span>
+                <span id="rangeSummaryBadge" class="chip chip-emerald !text-[11px]">0 matched</span>
+              </div>
+              <div class="flex flex-wrap items-center gap-4 text-xs">
+                <span class="inline-flex items-center gap-1.5 font-bold text-slate-700">📍 Your Location</span>
+                <span class="inline-flex items-center gap-1.5 font-bold text-slate-700"><span class="inline-block w-2.5 h-2.5 rounded-full bg-emerald-500"></span>CV-Matched</span>
+                <span class="inline-flex items-center gap-1.5 font-bold text-slate-700"><span class="inline-block w-2.5 h-2.5 rounded-full bg-indigo-500"></span>Other Sectors</span>
+              </div>
+            </div>
+
+            <div class="grid lg:grid-cols-12 gap-5 items-stretch">
+              <div class="lg:col-span-7">
+                <div id="companyMap" class="cl-map-wrap"></div>
+              </div>
+              <div class="lg:col-span-5 flex flex-col lg:h-[420px]">
+                <div id="mapSideCard" class="tint tint-indigo rounded-2xl p-6 flex-1 flex flex-col justify-between overflow-y-auto"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card 3: Clean Filter Bar + Open Job Vacancies Grid -->
+          <div id="jobsSectionCard" class="space-y-4">
+            <div class="glass rounded-3xl p-5 space-y-4">
+              <div class="flex flex-wrap items-center justify-between gap-3">
+                <div class="flex flex-wrap items-center gap-2">
+                  <h2 class="text-base font-extrabold text-slate-900">💼 Open Job Vacancies</h2>
+                  <span id="jobsShowingBadge" class="chip chip-teal !text-[11px]">Loading...</span>
+                  <button type="button" id="clearCompFilterBtn" onclick="setCompanyDotFilter('')" class="chip chip-amber !text-[11px] hidden cursor-pointer">✕ Clear Company Filter</button>
+                </div>
+                <div class="seg">
+                  <button type="button" id="btnRelJobs" onclick="setJobScope('relevant')" class="on">🎯 Matched Roles</button>
+                  <button type="button" id="btnAllJobs" onclick="setJobScope('all')">🌐 All Nearby Roles</button>
+                </div>
+              </div>
+
+              <!-- Clean 3-Column Filter & Sort Bar (No messy category pills) -->
+              <div class="grid sm:grid-cols-12 gap-3 pt-3 border-t border-slate-200/70 items-center">
+                <div class="sm:col-span-6">
+                  <input id="jobSearchInput" oninput="debouncedJobSearch()" class="input !py-2 !text-xs" placeholder="🔍 Search by job title, skill, or company..." />
+                </div>
+                <div class="sm:col-span-3">
+                  <select id="catFilterSelect" onchange="setCompanyCategory(this.value)" class="cl-select w-full" aria-label="Filter by job sector">
+                    <option value="All">All Job Sectors</option>
+                  </select>
+                </div>
+                <div class="sm:col-span-3">
+                  <select id="jobSortSelect" onchange="setJobSort(this.value)" class="cl-select w-full" aria-label="Sort job vacancies">
+                    <option value="match">Sort: Best Match</option>
                     <option value="distance">Sort: Nearest Distance</option>
                     <option value="salary">Sort: Highest Salary</option>
                   </select>
@@ -330,111 +447,10 @@
               </div>
             </div>
 
-            <!-- Row 3: Interactive Distance Radius Drag Slider (5 km - 100 km) -->
-            <div class="tint tint-indigo rounded-2xl p-4 flex flex-col md:flex-row md:items-center justify-between gap-4">
-              <div class="flex-1 space-y-2">
-                <div class="flex flex-wrap items-center justify-between gap-2">
-                  <div class="flex items-center gap-2">
-                    <span class="text-xs font-extrabold text-slate-800">📏 Search Radius Circle:</span>
-                    <span id="radiusValueLabel" class="chip chip-indigo !text-xs !font-black">10 km</span>
-                    <span class="text-[11px] text-slate-500 hidden sm:inline">Drag slider to resize the map circle dynamically</span>
-                  </div>
-                  <div class="flex items-center gap-1">
-                    <button type="button" onclick="setRadiusKm(5)" class="chip chip-slate cursor-pointer !text-[10px]">5 km</button>
-                    <button type="button" onclick="setRadiusKm(10)" class="chip chip-slate cursor-pointer !text-[10px]">10 km</button>
-                    <button type="button" onclick="setRadiusKm(20)" class="chip chip-slate cursor-pointer !text-[10px]">20 km</button>
-                    <button type="button" onclick="setRadiusKm(35)" class="chip chip-slate cursor-pointer !text-[10px]">35 km</button>
-                    <button type="button" onclick="setRadiusKm(50)" class="chip chip-slate cursor-pointer !text-[10px]">50 km</button>
-                  </div>
-                </div>
-                <input
-                  id="radiusSlider"
-                  type="range"
-                  min="5"
-                  max="100"
-                  step="5"
-                  value="10"
-                  oninput="previewRadiusCircle(this.value)"
-                  onchange="commitRadiusChange(this.value)"
-                  class="w-full accent-indigo-600 cursor-pointer h-2 rounded-lg"
-                />
-                <div class="flex justify-between text-[10px] font-bold text-slate-400 px-0.5">
-                  <span>5 km (Walk / Condo Area)</span>
-                  <span>15 km (Suburb)</span>
-                  <span>30 km (Metro)</span>
-                  <span>50 km (Region)</span>
-                  <span>100 km (State)</span>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Card 2: Interactive Dot Map + Equal-Height Selected Company Panel -->
-          <div class="glass rounded-3xl p-6 space-y-4">
-            <div class="flex flex-wrap items-center justify-between gap-3">
-              <div class="flex flex-wrap items-center gap-2">
-                <h2 class="text-base font-extrabold text-slate-900">🗺️ Nearby Hiring Companies Map</h2>
-                <span id="compCountBadge" class="chip chip-indigo">0 companies</span>
-                <span id="rangeSummaryBadge" class="chip chip-emerald !text-[11px]">0 matched in range</span>
-              </div>
-              <div class="flex flex-wrap items-center gap-3 text-[11px]">
-                <span class="inline-flex items-center gap-1.5 font-bold text-slate-600"><span class="inline-block w-2.5 h-2.5 rounded-full bg-teal-600"></span>You (Drag Pin)</span>
-                <span class="inline-flex items-center gap-1.5 font-bold text-slate-600"><span class="inline-block w-2.5 h-2.5 rounded-full bg-emerald-500"></span>CV-Matched Dot</span>
-                <span class="inline-flex items-center gap-1.5 font-bold text-slate-600"><span class="inline-block w-2.5 h-2.5 rounded-full bg-indigo-500"></span>Other Sector Dot</span>
-                <button type="button" onclick="zoomMapNearMe()" class="btn btn-soft !py-1 !px-2.5 !text-[11px]">🎯 Center Circle</button>
-                <button type="button" onclick="fitAllMapPins()" class="btn btn-soft !py-1 !px-2.5 !text-[11px]">🌐 Fit Dots</button>
-              </div>
-            </div>
-
-            <!-- Equal 420px height 12-col layout so Map and Right Panel align neatly -->
-            <div class="grid lg:grid-cols-12 gap-5 items-stretch">
-              <div class="lg:col-span-7">
-                <div id="companyMap" class="cl-map-wrap"></div>
-              </div>
-              <div class="lg:col-span-5 flex flex-col justify-between gap-3 lg:h-[420px]">
-                <div id="mapSideCard" class="tint tint-indigo rounded-2xl p-5 flex-1 flex flex-col justify-between overflow-y-auto"></div>
-                <div class="glass rounded-2xl p-3 space-y-1.5 shrink-0">
-                  <div class="flex items-center justify-between text-[10px] font-extrabold uppercase tracking-wider text-slate-400 px-1">
-                    <span>Nearby Company Dots (Click to inspect)</span>
-                    <span>Top 24 in circle</span>
-                  </div>
-                  <div id="mapQuickList" class="flex flex-wrap gap-1.5 max-h-20 overflow-y-auto pr-1"></div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Card 3: Filter Bar + Clean 2-Column Open Job Vacancies Grid -->
-          <div class="space-y-4">
-            <div class="glass rounded-3xl p-5 space-y-4">
-              <div class="flex flex-wrap items-center justify-between gap-3">
-                <div>
-                  <div class="flex flex-wrap items-center gap-2">
-                    <h2 class="text-base font-extrabold text-slate-900">💼 Open Job Vacancies in Range</h2>
-                    <span id="jobsShowingBadge" class="chip chip-teal !text-[11px]">Loading...</span>
-                    <button type="button" id="clearCompFilterBtn" onclick="setCompanyDotFilter('')" class="chip chip-amber !text-[11px] hidden cursor-pointer">✕ Clear Company Filter</button>
-                  </div>
-                  <p class="text-xs text-slate-500 mt-0.5">Showing roles inside your selected radius circle. Click Apply on any role to configure your sharing permissions.</p>
-                </div>
-                <div class="seg">
-                  <button type="button" id="btnRelJobs" onclick="setJobScope('relevant')" class="on">🎯 Matched in Circle</button>
-                  <button type="button" id="btnAllJobs" onclick="setJobScope('all')">🌐 All Nearby in Circle</button>
-                </div>
-              </div>
-
-              <!-- Keyword & Sector Filter Bar neatly integrated above the cards -->
-              <div class="grid sm:grid-cols-12 gap-3 pt-3 border-t border-slate-200/70 items-center">
-                <div class="sm:col-span-5">
-                  <input id="jobSearchInput" oninput="debouncedJobSearch()" class="input !py-2 !text-xs" placeholder="🔍 Filter roles by title, skill, company, or keyword..." />
-                </div>
-                <div id="catFilterBar" class="sm:col-span-7 flex items-center gap-1.5 overflow-x-auto hidden-scroll py-0.5"></div>
-              </div>
-            </div>
-
             <div id="jobsGrid" class="grid lg:grid-cols-2 gap-4 items-stretch"></div>
 
             <div id="loadMoreJobsWrap" class="text-center pt-2 hidden">
-              <button type="button" onclick="loadMoreJobs()" class="btn btn-soft !py-2.5 !px-6 !text-xs">Load More Nearby Jobs ↓</button>
+              <button type="button" onclick="loadMoreJobs()" class="btn btn-soft !py-2.5 !px-6 !text-xs">Load More Jobs ↓</button>
             </div>
           </div>
         </section>
@@ -593,7 +609,7 @@
     ];
 
     let user = null, personas = [], cvRecord = null, samplePdfs = [], jobsList = [], companiesList = [], categoriesList = [], activeApplyJob = null;
-    let userLocation = { label: 'Kuala Lumpur (KLCC)', lat: 3.1579, lng: 101.7116, city: 'Kuala Lumpur (KLCC)', presets: [] };
+    let userLocation = { label: 'W.P. Kuala Lumpur', address: 'Kuala Lumpur City Centre', lat: 3.1579, lng: 101.7116, city: 'W.P. Kuala Lumpur', presets: [] };
     let selectedCategory = 'All', jobScope = 'relevant';
     let leafletMap = null, leafletMarkers = [], userMarker = null, activeCompanyId = null, filteredCompsCache = [];
     let skills = [], scenario = 'moderate', trend = null, roles = [], aiQuestions = [], selected = 0;
@@ -856,6 +872,14 @@
     let radiusCircle = null, activeDotCircle = null, searchDebounceTimer = null, leafletRenderer = null;
     let locSuggestDebounce = null, locSuggestedPlaces = [];
 
+    const MALAYSIA_STATES_WILAYAH = [
+      { group: 'Wilayah Persekutuan', items: ['W.P. Kuala Lumpur', 'W.P. Putrajaya', 'W.P. Labuan'] },
+      { group: 'States (Negeri)', items: [
+        'Selangor', 'Johor', 'Pulau Pinang (Penang)', 'Perak', 'Negeri Sembilan',
+        'Melaka', 'Pahang', 'Kedah', 'Kelantan', 'Terengganu', 'Sabah', 'Sarawak', 'Perlis'
+      ]}
+    ];
+
     async function loadJobs(append = false) {
       if (!append) jobsOffset = 0;
       const params = new URLSearchParams();
@@ -891,15 +915,15 @@
         if (prevAddr) userLocation.address = prevAddr;
         window._careerLensUserLocation = userLocation;
       }
-      if (r.data.dataset && window.datasetStatsChip) {
-        datasetStatsChip.textContent = `${Number(r.data.dataset.jobs || 68447).toLocaleString()} MY Jobs · ${Number(r.data.dataset.companies || 20514).toLocaleString()} Companies`;
-      }
       renderLocationControls();
       renderCategoryPills();
       renderSummaryBadges();
       if (!append) {
         filteredCompsCache = companiesList;
         renderCompaniesMap(companiesList);
+      } else if (activeCompanyId) {
+        const activeComp = companiesList.find(c => c.id === activeCompanyId);
+        if (activeComp) renderMapSideCard(activeComp);
       }
       renderJobs(jobsList);
     }
@@ -914,16 +938,16 @@
       const matched = Number(jobsSummary.matched_in_range || 0).toLocaleString();
       const shown = Number(jobsSummary.shown_jobs || jobsList.length).toLocaleString();
       if (window.rangeSummaryBadge) {
-        rangeSummaryBadge.textContent = `${matched} CV-matched / ${inRange} jobs within ${radiusKm} km`;
+        rangeSummaryBadge.textContent = `${matched} matched / ${inRange} roles in ${radiusKm} km`;
       }
       if (window.jobsShowingBadge) {
         jobsShowingBadge.textContent = selectedCompanyName
-          ? `${shown} roles @ ${selectedCompanyName}`
-          : `${shown} ${jobScope === 'all' ? 'open' : 'CV-matched'} roles in ${radiusKm} km`;
+          ? `${shown} role(s) at ${selectedCompanyName}`
+          : `${shown} ${jobScope === 'all' ? 'open' : 'matched'} roles (${radiusKm} km)`;
       }
       if (window.clearCompFilterBtn) {
         clearCompFilterBtn.classList.toggle('hidden', !selectedCompanyName);
-        if (selectedCompanyName) clearCompFilterBtn.textContent = `✕ ${selectedCompanyName.slice(0, 22)}`;
+        if (selectedCompanyName) clearCompFilterBtn.textContent = `✕ Company: ${selectedCompanyName.slice(0, 26)}`;
       }
       if (window.loadMoreJobsWrap) {
         loadMoreJobsWrap.classList.toggle('hidden', !jobsHasMore);
@@ -933,22 +957,21 @@
     function renderLocationControls() {
       if (window.locActiveChip) locActiveChip.textContent = `📍 ${userLocation.label}`;
       if (window.locFullAddress) {
-        const coordStr = userLocation.lat && userLocation.lng
-          ? `(${Number(userLocation.lat).toFixed(4)}, ${Number(userLocation.lng).toFixed(4)})`
-          : '';
-        locFullAddress.textContent = userLocation.address
-          ? `${userLocation.address} ${coordStr}`
-          : `${userLocation.label} ${coordStr} — Use GPS, search any condo/building below, or drag your teal map pin`;
+        locFullAddress.textContent = userLocation.address || userLocation.label;
       }
       if (window.radiusValueLabel) radiusValueLabel.textContent = `${radiusKm} km`;
       if (window.radiusSlider) radiusSlider.value = radiusKm;
-      if (window.cityPresetSelect && (userLocation.presets || []).length) {
-        cityPresetSelect.innerHTML = `<option value="">Quick city jump...</option>` +
-          userLocation.presets.map(c => `<option value="${esc(c)}" ${c === userLocation.city ? 'selected' : ''}>${esc(c)}</option>`).join('');
+      if (window.cityPresetSelect) {
+        cityPresetSelect.innerHTML = `<option value="">Select State / Wilayah...</option>` +
+          MALAYSIA_STATES_WILAYAH.map(g =>
+            `<optgroup label="${esc(g.group)}">` +
+            g.items.map(st => `<option value="${esc(st)}" ${st === userLocation.city ? 'selected' : ''}>${esc(st)}</option>`).join('') +
+            `</optgroup>`
+          ).join('');
       }
     }
 
-    /* ---------- Manual Condo / Building / Street Map Search ---------- */
+    /* ---------- Manual Condo / Building / Street Search ---------- */
     function onLocSearchInput(val) {
       const q = (val || '').trim();
       if (window.locSearchClearBtn) locSearchClearBtn.classList.toggle('hidden', !q);
@@ -964,7 +987,7 @@
       if (!q || q.length < 2) return;
       if (window.locSuggestBox && !autoPickFirst) {
         locSuggestBox.classList.remove('hidden');
-        locSuggestBox.innerHTML = `<div class="px-4 py-3 text-xs text-slate-500 flex items-center gap-2"><span>🔎</span><span>Searching OpenStreetMap Malaysia &amp; local geo index for <b>${esc(q)}</b>...</span></div>`;
+        locSuggestBox.innerHTML = `<div class="px-4 py-3 text-xs text-slate-500 flex items-center gap-2"><span>🔎</span><span>Searching locations for <b>${esc(q)}</b>...</span></div>`;
       }
       const r = await api(`/api/geocode/search?q=${encodeURIComponent(q)}`);
       if (!r.ok) return;
@@ -980,7 +1003,7 @@
       if (!window.locSuggestBox) return;
       if (!locSuggestedPlaces.length) {
         locSuggestBox.classList.remove('hidden');
-        locSuggestBox.innerHTML = `<div class="px-4 py-3 text-xs text-slate-500">No map location matched "<b>${esc(q)}</b>" in Malaysia. Try adding suburb or city name (e.g., <i>Setapak</i>, <i>Mont Kiara</i>, <i>Johor Bahru</i>).</div>`;
+        locSuggestBox.innerHTML = `<div class="px-4 py-3 text-xs text-slate-500">No matching location found for "<b>${esc(q)}</b>". Try entering the area or street name.</div>`;
         return;
       }
       locSuggestBox.classList.remove('hidden');
@@ -990,13 +1013,9 @@
           onclick="selectSuggestedPlace(${i})"
           class="w-full text-left px-4 py-2.5 hover:bg-indigo-50/80 transition flex items-start justify-between gap-3 border-b border-slate-100 last:border-b-0">
           <div class="min-w-0">
-            <div class="text-xs font-extrabold text-slate-900 flex items-center gap-1.5">
-              <span>📍 ${esc(p.label)}</span>
-              <span class="chip ${p.source === 'OpenStreetMap Malaysia' ? 'chip-teal' : 'chip-indigo'} !text-[9px] !py-0 !px-1.5">${esc(p.source || 'Map')}</span>
-            </div>
-            <div class="text-[11px] text-slate-500 truncate mt-0.5">${esc(p.address || p.label)}</div>
+            <div class="text-xs font-extrabold text-slate-900">📍 ${esc(p.label || p.short_label)}</div>
+            <div class="text-[11px] text-slate-500 truncate mt-0.5">${esc(p.address || p.full_address || p.label)}</div>
           </div>
-          <span class="text-[10px] font-mono text-slate-400 shrink-0 mt-0.5">${Number(p.lat).toFixed(4)}, ${Number(p.lng).toFixed(4)}</span>
         </button>
       `).join('');
     }
@@ -1008,19 +1027,19 @@
       userLocation.lat = Number(p.lat);
       userLocation.lng = Number(p.lng);
       userLocation.city = '';
-      userLocation.label = p.label || 'Selected Map Location';
-      userLocation.address = p.address || p.label;
-      if (window.locSearchInput) locSearchInput.value = p.label;
+      userLocation.label = p.label || p.short_label || 'Selected Location';
+      userLocation.address = p.address || p.full_address || userLocation.label;
+      if (window.locSearchInput) locSearchInput.value = userLocation.label;
       if (window.locSearchClearBtn) locSearchClearBtn.classList.remove('hidden');
       selectedCompanyName = '';
-      toast(`📍 Map locked: ${userLocation.label}`);
+      toast(`Location set to ${userLocation.label}`);
       loadJobs(false).then(() => zoomMapNearMe());
     }
 
     function runManualPlaceSearch() {
       const q = (window.locSearchInput ? locSearchInput.value : '').trim();
       if (!q) {
-        toast('Type a condo, building, street, or area name first.', 'err');
+        toast('Please enter a building, street, or area name.', 'err');
         return;
       }
       if (locSuggestedPlaces.length) {
@@ -1047,7 +1066,7 @@
       }
     });
 
-    async function reverseIdentifyCoords(lat, lng, sourceTag = 'GPS') {
+    async function reverseIdentifyCoords(lat, lng, sourceTag = 'Location') {
       userLocation.lat = Number(Number(lat).toFixed(5));
       userLocation.lng = Number(Number(lng).toFixed(5));
       userLocation.city = '';
@@ -1055,14 +1074,14 @@
       try {
         const r = await api(`/api/geocode/reverse?lat=${userLocation.lat}&lng=${userLocation.lng}`);
         if (r.ok && r.data) {
-          userLocation.label = r.data.label || `${sourceTag} (${userLocation.lat}, ${userLocation.lng})`;
-          userLocation.address = r.data.address || userLocation.label;
+          userLocation.label = r.data.label || r.data.short_label || sourceTag;
+          userLocation.address = r.data.address || r.data.full_address || userLocation.label;
           if (window.locSearchInput) locSearchInput.value = userLocation.label;
           if (window.locSearchClearBtn) locSearchClearBtn.classList.remove('hidden');
-          toast(`📍 ${sourceTag} Address Identified: ${userLocation.label}`);
+          toast(`Location updated: ${userLocation.label}`);
         }
       } catch (_) {
-        userLocation.label = `${sourceTag} (${userLocation.lat}, ${userLocation.lng})`;
+        userLocation.label = sourceTag;
       }
       await loadJobs(false);
       zoomMapNearMe();
@@ -1094,9 +1113,32 @@
       loadJobs(false);
     }
 
-    function setCompanyDotFilter(compName) {
+    async function setCompanyDotFilter(compName) {
       selectedCompanyName = compName || '';
-      loadJobs(false);
+      await loadJobs(false);
+      if (activeCompanyId) {
+        const activeComp = companiesList.find(c => c.id === activeCompanyId);
+        if (activeComp) renderMapSideCard(activeComp);
+      }
+    }
+
+    async function filterJobsByCompanyId(compId) {
+      const comp = filteredCompsCache.find(c => c.id === compId) || companiesList.find(c => c.id === compId);
+      if (!comp) return;
+      if (selectedCompanyName === comp.name) {
+        selectedCompanyName = '';
+        await loadJobs(false);
+        renderMapSideCard(comp);
+        return;
+      }
+      selectedCompanyName = comp.name;
+      selectedCategory = 'All';
+      if (window.catFilterSelect) catFilterSelect.value = 'All';
+      await loadJobs(false);
+      renderMapSideCard(comp);
+      toast(`Showing open roles at ${comp.name}`);
+      const sec = document.getElementById('jobsSectionCard');
+      if (sec) sec.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
 
     function debouncedJobSearch() {
@@ -1108,10 +1150,10 @@
     }
 
     function renderCategoryPills() {
-      if (!window.catFilterBar) return;
+      if (!window.catFilterSelect) return;
       const cats = ['All', ...categoriesList];
-      catFilterBar.innerHTML = cats.map(c =>
-        `<button type="button" onclick="setCompanyCategory('${esc(c)}')" class="chip ${selectedCategory === c ? 'chip-indigo !border-indigo-500 ring-1 ring-indigo-400' : 'chip-slate'} cursor-pointer whitespace-nowrap">${esc(c)}</button>`
+      catFilterSelect.innerHTML = cats.map(c =>
+        `<option value="${esc(c)}" ${selectedCategory === c ? 'selected' : ''}>${c === 'All' ? 'All Job Sectors' : esc(c)}</option>`
       ).join('');
     }
 
@@ -1121,7 +1163,7 @@
         userLocation.lng = Number(act.lng);
         userLocation.city = act.city || '';
         userLocation.label = act.label_loc || act.city || 'Selected Location';
-        userLocation.address = `${userLocation.label} — Selected via Lumi AI`;
+        userLocation.address = userLocation.label;
       }
       if (act.radius) {
         radiusKm = Number(act.radius);
@@ -1137,7 +1179,7 @@
     window.setCompanyCategory = function(cat) {
       selectedCategory = cat || 'All';
       selectedCompanyName = '';
-      renderCategoryPills();
+      if (window.catFilterSelect) catFilterSelect.value = selectedCategory;
       loadJobs(false);
     };
 
@@ -1155,7 +1197,7 @@
       if (!cityVal) return;
       userLocation.city = cityVal;
       userLocation.label = cityVal;
-      userLocation.address = `${cityVal}, Malaysia`;
+      userLocation.address = cityVal;
       userLocation.lat = null;
       userLocation.lng = null;
       selectedCompanyName = '';
@@ -1165,18 +1207,17 @@
 
     function detectGpsLocation() {
       if (!navigator.geolocation) {
-        return toast('Browser GPS is unavailable — please search your condo/street or pick a city.', 'err');
+        return toast('Location services are unavailable in this browser.', 'err');
       }
-      if (window.btnDetectGps) btnDetectGps.textContent = '🛰️ Identifying GPS...';
-      toast('Requesting live GPS coordinates & street address...');
+      if (window.btnDetectGps) btnDetectGps.textContent = '📍 Detecting Location...';
       navigator.geolocation.getCurrentPosition(
         async pos => {
-          if (window.btnDetectGps) btnDetectGps.textContent = '🛰️ Identify My GPS Address';
-          await reverseIdentifyCoords(pos.coords.latitude, pos.coords.longitude, 'GPS');
+          if (window.btnDetectGps) btnDetectGps.textContent = '📍 Use Current Location';
+          await reverseIdentifyCoords(pos.coords.latitude, pos.coords.longitude, 'Current Location');
         },
         () => {
-          if (window.btnDetectGps) btnDetectGps.textContent = '🛰️ Identify My GPS Address';
-          toast('GPS permission denied — type your condo, building, or street in the search box.', 'err');
+          if (window.btnDetectGps) btnDetectGps.textContent = '📍 Use Current Location';
+          toast('Location access was declined. Please search your address or select a state.', 'err');
         },
         { enableHighAccuracy: true, timeout: 8000 }
       );
@@ -1204,12 +1245,12 @@
           center: [userLocation.lat || 3.1579, userLocation.lng || 101.7116],
           zoom: radiusZoomLevel(radiusKm),
           zoomControl: true,
+          attributionControl: false,
           preferCanvas: true,
           renderer: leafletRenderer,
         });
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
           maxZoom: 18,
-          attribution: '&copy; OpenStreetMap',
         }).addTo(leafletMap);
       }
       return leafletMap;
@@ -1218,7 +1259,7 @@
     function renderCompaniesMap(list) {
       const totalComps = Number(jobsSummary.companies_on_map || list.length);
       if (window.compCountBadge) {
-        compCountBadge.textContent = `${totalComps.toLocaleString()} compan${totalComps === 1 ? 'y' : 'ies'} in ${radiusKm} km`;
+        compCountBadge.textContent = `${totalComps.toLocaleString()} compan${totalComps === 1 ? 'y' : 'ies'} (${radiusKm} km)`;
       }
 
       const map = ensureLeafletMap();
@@ -1243,35 +1284,42 @@
           interactive: false,
         }).addTo(map);
 
+        const pinSvg = `
+          <div class="cl-user-pin-wrap" title="Your Location (Drag to reposition)">
+            <svg width="34" height="42" viewBox="0 0 34 42" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M17 1C8.163 1 1 8.163 1 17C1 28.25 17 41 17 41C17 41 33 28.25 33 17C33 8.163 25.837 1 17 1Z" fill="#e11d48" stroke="#ffffff" stroke-width="2.5"/>
+              <circle cx="17" cy="16.5" r="6" fill="#ffffff"/>
+            </svg>
+          </div>`;
+
         userMarker = L.marker([uLat, uLng], {
           draggable: true,
           icon: L.divIcon({
             className: '',
-            html: `<div class="cl-user-pin" title="Drag me to any condo or street!"></div>`,
-            iconSize: [20, 20],
-            iconAnchor: [10, 10],
+            html: pinSvg,
+            iconSize: [34, 42],
+            iconAnchor: [17, 41],
           }),
-        }).addTo(map).bindTooltip(`📍 You: ${esc(userLocation.label)} (${radiusKm} km circle — drag pin to move)`, { direction: 'top', offset: [0, -8] });
+        }).addTo(map).bindTooltip(`📍 ${esc(userLocation.label)} (${radiusKm} km)`, { direction: 'top', offset: [0, -36] });
 
         userMarker.on('dragend', async e => {
           const pos = e.target.getLatLng();
-          if ( pos ) {
-            await reverseIdentifyCoords(pos.lat, pos.lng, 'Pinned');
+          if (pos) {
+            await reverseIdentifyCoords(pos.lat, pos.lng, 'Pinned Location');
           }
         });
       }
 
       if (!list.length) {
         if (window.mapSideCard) {
-          mapSideCard.innerHTML = `<div class="text-xs text-slate-500 my-auto text-center py-8 space-y-2">
+          mapSideCard.innerHTML = `<div class="text-xs text-slate-500 my-auto text-center py-8 space-y-3">
             <div>No ${jobScope === 'relevant' ? 'CV-matched ' : ''}hiring companies within <b>${radiusKm} km</b> of <b>${esc(userLocation.label)}</b>.</div>
-            <div class="flex flex-wrap justify-center gap-2 pt-1">
-              <button type="button" onclick="setRadiusKm(Math.min(100, radiusKm + 20))" class="btn btn-soft !py-1 !px-3 !text-xs">Expand to ${Math.min(100, radiusKm + 20)} km</button>
-              ${jobScope === 'relevant' ? `<button type="button" onclick="setJobScope('all')" class="btn btn-primary !py-1 !px-3 !text-xs">🌐 View All Nearby</button>` : ''}
+            <div class="flex flex-wrap justify-center gap-2">
+              <button type="button" onclick="setRadiusKm(Math.min(100, radiusKm + 20))" class="btn btn-soft !py-1.5 !px-3.5 !text-xs">Expand to ${Math.min(100, radiusKm + 20)} km</button>
+              ${jobScope === 'relevant' ? `<button type="button" onclick="setJobScope('all')" class="btn btn-primary !py-1.5 !px-3.5 !text-xs">🌐 View All Nearby</button>` : ''}
             </div>
           </div>`;
         }
-        if (window.mapQuickList) mapQuickList.innerHTML = '';
         return;
       }
 
@@ -1284,7 +1332,7 @@
           const isMatched = c.matched > 0;
           const color = isMatched ? '#10b981' : '#6366f1';
           const radiusPx = Math.min(10, 5 + Math.log2(c.jobs + 1));
-          const dot = L.circleMarker([c.lat, c.lng], {
+          const marker = L.circleMarker([c.lat, c.lng], {
             renderer: leafletRenderer,
             radius: radiusPx,
             fillColor: color,
@@ -1293,22 +1341,21 @@
             fillOpacity: 0.9,
           }).addTo(map);
 
-          dot.bindTooltip(
-            `<b>${esc(c.name)}</b><br/>${esc(c.category)} · ${c.distance_km} km · <b>${c.jobs} role${c.jobs > 1 ? 's' : ''}</b>`,
+          marker.bindTooltip(
+            `<b>${esc(c.name)}</b><br/>${esc(c.location || '')} · ${c.distance_km} km · <b>${c.jobs} role${c.jobs > 1 ? 's' : ''}</b>`,
             { direction: 'top', offset: [0, -6] }
           );
 
-          dot.on('mouseover', () => highlightCompanyOnMap(c.id, false));
-          dot.on('click', () => highlightCompanyOnMap(c.id, true));
-          dot._compId = c.id;
-          leafletMarkers.push(dot);
+          marker.on('mouseover', () => highlightCompanyOnMap(c.id, false));
+          marker.on('click', () => highlightCompanyOnMap(c.id, true));
+          marker._compId = c.id;
+          leafletMarkers.push(marker);
         });
       }
 
       const activeComp = list.find(c => c.id === activeCompanyId) || list[0];
       drawActiveDotRing(activeComp);
       renderMapSideCard(activeComp);
-      renderMapQuickList(list.slice(0, 24));
     }
 
     function drawActiveDotRing(comp) {
@@ -1333,7 +1380,6 @@
         leafletMap.flyTo([comp.lat, comp.lng], Math.max(leafletMap.getZoom(), 13), { duration: 0.4 });
       }
       renderMapSideCard(comp);
-      renderMapQuickList(filteredCompsCache.slice(0, 24));
     }
 
     function zoomMapNearMe() {
@@ -1347,75 +1393,52 @@
       }
     }
 
-    function fitAllMapPins() {
-      if (!leafletMap) return;
-      if (radiusCircle && !filteredCompsCache.length) {
-        return leafletMap.fitBounds(radiusCircle.getBounds(), { padding: [20, 20] });
-      }
-      const pts = [
-        [userLocation.lat || 3.1579, userLocation.lng || 101.7116],
-        ...filteredCompsCache.slice(0, 300).map(c => [c.lat, c.lng]),
-      ];
-      leafletMap.fitBounds(pts, { padding: [24, 24] });
-    }
-
     function renderMapSideCard(c) {
       if (!window.mapSideCard || !c) return;
       const roles = c.roles || c.featured_roles || [];
       const isMatched = (c.matched || 0) > 0;
+      const isFilteredToThis = selectedCompanyName && selectedCompanyName === c.name;
       mapSideCard.innerHTML = `
-        <div class="space-y-3">
-          <div class="flex flex-wrap items-center justify-between gap-1.5">
+        <div class="space-y-4">
+          <div class="flex flex-wrap items-center justify-between gap-2">
             <span class="chip chip-indigo !text-[10px]">${esc(c.category)}</span>
-            <span class="chip ${c.distance_km <= 15 ? 'chip-emerald' : 'chip-slate'} !text-[10px]">📍 ${c.distance_km} km away</span>
+            <span class="chip ${c.distance_km <= 15 ? 'chip-emerald' : 'chip-slate'} !text-[10px]">${c.distance_km} km away</span>
           </div>
           <div>
-            <h3 class="text-base font-extrabold text-slate-900 leading-snug">${esc(c.name)}</h3>
-            <div class="text-xs text-slate-500 mt-0.5">${esc(c.location || '')} · <b>${c.jobs || 1} open role${(c.jobs || 1) > 1 ? 's' : ''}</b></div>
+            <h3 class="text-lg font-extrabold text-slate-900 leading-snug">${esc(c.name)}</h3>
+            <div class="text-xs font-medium text-slate-600 mt-1">📍 ${esc(c.location || 'Malaysia')}</div>
+            <div class="text-xs text-slate-500 mt-1"><b>${c.jobs || 1} open role${(c.jobs || 1) > 1 ? 's' : ''}</b> available at this company</div>
           </div>
-          <div class="space-y-1.5">
-            <div class="text-[10px] font-extrabold uppercase tracking-wider text-slate-400">Open roles at this location</div>
+          <div class="space-y-2">
+            <div class="text-[10px] font-extrabold uppercase tracking-wider text-slate-400">Available Positions</div>
             <div class="flex flex-wrap gap-1.5">
-              ${roles.map(r => `<span class="chip chip-teal !text-[10px]">${esc(r)}</span>`).join('')}
+              ${roles.map(r => `<span class="chip chip-teal !text-[11px]">${esc(r)}</span>`).join('')}
             </div>
           </div>
         </div>
-        <div class="pt-3 mt-3 border-t border-indigo-200/60 flex flex-wrap items-center justify-between gap-2">
+        <div class="pt-4 mt-4 border-t border-indigo-200/60 flex flex-wrap items-center justify-between gap-2">
           <span class="text-xs font-extrabold ${isMatched ? 'text-emerald-700' : 'text-slate-500'}">
-            ${isMatched ? `✓ ${c.matched} CV-matched role${c.matched > 1 ? 's' : ''} (${c.best_score}% top fit)` : 'Other sector employer'}
+            ${isMatched ? `✓ ${c.matched} CV-matched role${c.matched > 1 ? 's' : ''} (${c.best_score}% fit)` : 'Open to all applicants'}
           </span>
-          <div class="flex items-center gap-1.5">
-            <button type="button" onclick='setCompanyDotFilter(${JSON.stringify(c.name)})' class="btn btn-primary !py-1.5 !px-3 !text-xs">
-              Show Company Jobs (${c.jobs || 1}) →
-            </button>
-          </div>
+          <button
+            type="button"
+            onclick="filterJobsByCompanyId('${esc(c.id)}')"
+            class="btn ${isFilteredToThis ? 'btn-soft' : 'btn-primary'} !py-2 !px-4 !text-xs">
+            ${isFilteredToThis ? '✕ Clear Company Filter' : `Show Company Jobs (${c.jobs || 1}) ↓`}
+          </button>
         </div>
       `;
-    }
-
-    function renderMapQuickList(list) {
-      if (!window.mapQuickList) return;
-      mapQuickList.innerHTML = list.map(c => `
-        <button
-          type="button"
-          onmouseenter="highlightCompanyOnMap('${esc(c.id)}', false)"
-          onclick="highlightCompanyOnMap('${esc(c.id)}', true)"
-          class="chip ${c.id === activeCompanyId ? 'chip-indigo !border-indigo-500 ring-1 ring-indigo-400' : (c.matched > 0 ? 'chip-emerald' : 'chip-slate')} !text-[11px] cursor-pointer transition">
-          <span class="inline-block w-2 h-2 rounded-full ${c.matched > 0 ? 'bg-emerald-500' : 'bg-indigo-500'} mr-1"></span>
-          ${esc(c.name.split(' ').slice(0, 2).join(' '))} · ${c.distance_km}km
-        </button>
-      `).join('');
     }
 
     /* ---------- Clean Open Job Vacancies Cards ---------- */
     function renderJobs(list = jobsList) {
       if (!window.jobsGrid) return;
       if (!list.length) {
-        jobsGrid.innerHTML = `<div class="glass rounded-3xl p-8 text-center text-sm text-slate-500 col-span-2 space-y-2">
-          <div>No ${jobScope === 'relevant' ? 'CV-matched ' : ''}vacancies within <b>${radiusKm} km</b> for this filter.</div>
-          <div class="flex flex-wrap justify-center gap-2 pt-1">
-            <button onclick="setRadiusKm(Math.min(100, radiusKm + 20))" class="btn btn-soft !py-1.5 !px-3.5 !text-xs">Expand Radius to ${Math.min(100, radiusKm + 20)} km</button>
-            <button onclick="setJobScope('all');setCompanyCategory('All')" class="btn btn-primary !py-1.5 !px-3.5 !text-xs">🌐 View All Nearby Roles →</button>
+        jobsGrid.innerHTML = `<div class="glass rounded-3xl p-8 text-center text-sm text-slate-500 col-span-2 space-y-3">
+          <div>No ${jobScope === 'relevant' ? 'CV-matched ' : ''}vacancies found within <b>${radiusKm} km</b>.</div>
+          <div class="flex flex-wrap justify-center gap-2">
+            <button type="button" onclick="setRadiusKm(Math.min(100, radiusKm + 20))" class="btn btn-soft !py-1.5 !px-3.5 !text-xs">Expand Radius to ${Math.min(100, radiusKm + 20)} km</button>
+            <button type="button" onclick="setJobScope('all');setCompanyCategory('All')" class="btn btn-primary !py-1.5 !px-3.5 !text-xs">🌐 View All Nearby Roles →</button>
           </div>
         </div>`;
         return;
@@ -1423,12 +1446,12 @@
       jobsGrid.innerHTML = list.map((v, idx) => {
         const app = v.application || {};
         const score = v.match_score ?? 0;
-        const distText = v.distance_km !== undefined ? ` · 📍 ${v.distance_km} km` : '';
+        const distText = v.distance_km !== undefined ? ` · ${v.distance_km} km away` : '';
         const salText = (v.salary_min && v.salary_max)
           ? `${rm(v.salary_min)} – ${rm(v.salary_max)}`
           : (v.salary_min ? `${rm(v.salary_min)}+` : 'Salary Undisclosed');
         const statusChip = app.applied
-          ? `<span class="chip chip-emerald !text-[10px]">✓ Applied</span>`
+          ? `<span class="badge-applied-red">✓ APPLIED</span>`
           : v.is_relevant_to_cv
           ? `<span class="chip chip-emerald !text-[10px]">★ CV Match</span>`
           : `<span class="chip chip-slate !text-[10px]">${esc(v.employment_type || v.work_mode || 'Full time')}</span>`;
@@ -1437,54 +1460,52 @@
         const jobKey = v.key || v.jobstreet_id || String(v.id);
 
         return `
-          <article class="glass rounded-3xl p-5 flex flex-col justify-between gap-4 lift ${app.applied ? 'ring-2 ring-teal-400/80' : ''}">
+          <article class="glass rounded-3xl p-5 flex flex-col justify-between gap-4 lift ${app.applied ? 'job-card-applied' : ''}">
             <div class="space-y-3">
-              <!-- Clean Header -->
+              <!-- Header: Title, Company Name, and Address on the line below Company Name -->
               <div class="flex items-start justify-between gap-3">
-                <div class="flex items-center gap-3 min-w-0">
-                  <div class="ring !w-12 !h-12 shrink-0" style="--p:${score};--c:${ringColor(score)}">
+                <div class="flex items-start gap-3 min-w-0">
+                  <div class="ring !w-12 !h-12 shrink-0 mt-0.5" style="--p:${score};--c:${ringColor(score)}">
                     <span class="!w-9 !h-9 !text-[11px]">${score}%</span>
                   </div>
                   <div class="min-w-0">
                     <h3 class="text-base font-extrabold text-slate-900 truncate" title="${esc(v.title)}">${esc(v.title)}</h3>
-                    <div class="text-xs text-slate-500 truncate mt-0.5">
-                      <span class="font-semibold text-slate-700">${esc(v.company_name)}</span> · ${esc(v.location || 'Malaysia')}${distText}
-                    </div>
+                    <div class="text-xs font-bold text-slate-800 truncate mt-0.5">${esc(v.company_name)}</div>
+                    <div class="text-xs text-slate-500 truncate mt-0.5">📍 ${esc(v.location || 'Malaysia')}${distText}</div>
                   </div>
                 </div>
                 <div class="text-right shrink-0">
-                  <div class="text-xs font-extrabold text-teal-700 whitespace-nowrap">${salText}</div>
-                  <div class="mt-1 flex justify-end">${statusChip}</div>
+                  <div class="text-xs font-extrabold text-teal-800 whitespace-nowrap">${salText}</div>
+                  <div class="mt-1.5 flex justify-end">${statusChip}</div>
                 </div>
               </div>
 
-              ${v.description_snippet ? `<p class="text-[11px] text-slate-500 truncate">${esc(v.description_snippet)}</p>` : ''}
-              <!-- Compact Meta & Skills -->
-              <div class="flex flex-wrap items-center gap-1.5 pt-0.5">
+              <!-- Clean Meta & Skills -->
+              <div class="flex flex-wrap items-center gap-1.5 pt-1">
                 <span class="chip chip-indigo !text-[10px]">${esc(v.company_category || v.department || 'General')}</span>
                 <span class="chip chip-slate !text-[10px]">${esc(v.employment_type || v.work_mode || 'Full time')}</span>
-                ${reqSkills.slice(0, 6).map(s => {
+                ${reqSkills.slice(0, 4).map(s => {
                   const hit = matchedReq.includes(s);
                   return `<span class="chip ${hit ? 'chip-emerald' : 'chip-amber'} !text-[10px]">${hit ? '✓ ' : ''}${esc(s)}</span>`;
                 }).join('')}
               </div>
             </div>
 
-            <!-- Clean Footer (without 'Private until you apply' text) -->
+            <!-- Action Footer -->
             ${app.applied ? `
-              <div class="tint tint-teal rounded-2xl px-3.5 py-2.5 flex flex-wrap items-center justify-between gap-2 text-xs">
-                <div class="text-[11px] text-slate-600">
-                  <b class="text-teal-900">CV Shared</b> · Status: <b>${esc(app.hr_decision || 'Pending')}</b>
+              <div class="rounded-2xl px-3.5 py-2.5 bg-white/80 border border-amber-400/80 flex flex-wrap items-center justify-between gap-2 text-xs">
+                <div class="text-[11px] text-slate-700">
+                  <b class="text-red-600 font-black uppercase">Applied</b> · Status: <b>${esc(app.hr_decision || 'Pending Review')}</b>
                 </div>
                 <div class="flex items-center gap-1.5">
-                  <button onclick="openApplyModalByKey('${esc(jobKey)}')" class="btn btn-soft !py-1 !px-2.5 !text-[11px]">Permissions</button>
-                  ${v.id ? `<button onclick="withdrawJobApplication(${v.id})" class="btn btn-danger !py-1 !px-2.5 !text-[11px]">Withdraw</button>` : ''}
+                  <button type="button" onclick="openApplyModalByKey('${esc(jobKey)}')" class="btn btn-soft !py-1 !px-2.5 !text-[11px]">Permissions</button>
+                  ${v.id ? `<button type="button" onclick="withdrawJobApplication(${v.id})" class="btn btn-danger !py-1 !px-2.5 !text-[11px]">Withdraw</button>` : ''}
                 </div>
               </div>
             ` : `
               <div class="flex items-center justify-between pt-3 border-t border-slate-200/60">
-                <span class="text-[11px] text-slate-400">${esc(v.subcategory || v.company_category || '')}</span>
-                <button onclick="openApplyModalByKey('${esc(jobKey)}')" class="btn btn-primary !py-1.5 !px-3.5 !text-xs">Apply &amp; Share CV →</button>
+                <span class="text-[11px] text-slate-500 truncate pr-2">${esc(v.subcategory || v.company_category || '')}</span>
+                <button type="button" onclick="openApplyModalByKey('${esc(jobKey)}')" class="btn btn-primary !py-1.5 !px-4 !text-xs shrink-0">Apply →</button>
               </div>
             `}
           </article>`;
