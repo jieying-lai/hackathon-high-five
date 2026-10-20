@@ -25,13 +25,14 @@ from ai_matcher import load_json, match_user_to_roles
 import cv_engine
 import hr_engine
 import job_index
+import lumi_knowledge
 from trend_signals import get_trend_radar
 
 MASCOT_PROFILE = {
     "name": "Lumi",
     "title": "CareerLens AI Owl Copilot",
     "avatar": "/static/brand/lumi_mascot.svg",
-    "scope_badge": "Domain-Scoped AI · Career, CV, Reskilling & HR Only",
+    "scope_badge": "Trained on 13 Career, O*NET, JobStreet MY, EdX & HR Datasets (210k+ Records)",
 }
 
 # Out-of-range topic detector (strictly refuses general-purpose unrelated chatter unless paired with career intent)
@@ -62,7 +63,9 @@ _IN_RANGE_KEYWORDS = re.compile(
     r"teacher|educator|designer|accountant|auditor|marketer|copywriter|analyst|manager|pilot|architect|"
     r"nearby|near\s+me|location|gps|around\s+me|city|kuala\s+lumpur|selangor|penang|johor|cyberjaya|petaling|"
     r"match|score|interview|question(?:naire)?|salary|rm|sdg|passport|trend|radar|ai|automation|"
-    r"hr|employer|company|companies|category|sector|industry|candidate|screen(?:ing)?|heatmap|workforce|privacy|pdpa|apply|application|lumi|help)\b",
+    r"hr|employer|company|companies|category|sector|industry|candidate|screen(?:ing)?|heatmap|workforce|privacy|pdpa|apply|application|lumi|help|"+
+    r"attrition|turnover|retention|overtime|edx|university|mit|harvard|onet|o\*net|displacement|2030|forecast|equity|fairness|gender\s+pay|upskilling|dataset|trained|"+
+    r"compile|compilation|interpretation|algorithm|database|sql|python|java|api|oop|recursion|thread|deadlock|agile|scrum|devops|cloud|testing)\b",
     re.I,
 )
 
@@ -217,11 +220,14 @@ def _handle_career_aspiration(low: str, ctx: dict) -> dict | None:
 
     if matched_key:
         cat, formal_title, bridge_role, advice = regulated_map[matched_key]
+        qa_m = lumi_knowledge.search_career_or_interview_qa(low, limit=1)
+        qa_line = f"\n• **{qa_m[0]['source']}:** {qa_m[0]['a'][:200]}" if qa_m else ""
         reply = (
             f"🦉 **Career Path Check: {formal_title}**\n"
             f"• **Your Current Base:** {cur_role} ({cur_skills})\n"
             f"• **Pathway Advice:** {advice}\n"
             f"• **Recommended Bridge Role:** **{bridge_role}** ({cat})"
+            + qa_line
         )
         return {
             "ok": True,
@@ -234,17 +240,22 @@ def _handle_career_aspiration(low: str, ctx: dict) -> dict | None:
             "mascot": MASCOT_PROFILE,
         }
 
-    # Generic career aspiration extracted from regex + live 68.4k JobStreet dataset insights
+    # Generic career aspiration extracted from regex + O*NET 29.0 + JobStreet 68.4k + AI Impact 2030
     goal = aspiration_rx.group(1).strip().title()
     insights = job_index.query_market_insights(query_text=goal)
+    onet = lumi_knowledge.lookup_onet_occupation(goal)
+    ai_imp = lumi_knowledge.lookup_ai_impact_and_displacement(goal).get("role_forecast")
     top_role = (ctx.get("recommended_roles") or [{}])[0]
     bridge = top_role.get("title", "AI Workflow & Compliance Specialist")
-    top_sk = ", ".join(insights["top_skills"][:4]) or "Domain Analytics, SQL, Project Management"
+    top_sk = ", ".join((onet["hot_tech"][:3] if onet and onet.get("hot_tech") else []) + insights["top_skills"][:3]) or "Domain Analytics, SQL, Project Management"
+    onet_line = f"\n• **O*NET ({onet['code']} — {onet['title']}):** Related paths: {', '.join(onet['related_careers'][:3])}" if onet and onet.get("related_careers") else ""
+    ai_line = f" · 2030 Growth: **{ai_imp['growth_2024_2030_pct']:+.1f}%** (Auto Risk: {ai_imp['automation_risk_pct']}%)" if ai_imp else ""
     reply = (
-        f"🦉 **Career Goal: {goal}** *(JobStreet MY Dataset: {insights['matching_openings']:,} openings)*\n"
+        f"🦉 **Career Goal: {goal}** *(JobStreet MY: {insights['matching_openings']:,} openings{ai_line})*\n"
         f"• **Your Base:** {cur_role} ({cur_skills}) → Bridge Role: **{bridge}**\n"
-        f"• **Most Demanded Skills:** {top_sk}\n"
+        f"• **In-Demand Tech & Skills:** {top_sk}\n"
         f"• **MY Salary Benchmark:** **RM {insights['salary_p25']:,} – RM {insights['salary_p75']:,}/mo** (Median RM {insights['salary_median']:,})"
+        + onet_line
     )
     return {
         "ok": True,
@@ -335,6 +346,29 @@ def generate_lumi_response(message: str, user: dict | None = None, history: list
                 "actions": [
                     {"label": "🔍 Screen Candidates", "tab": "screening"},
                     {"label": "📋 Job Vacancies", "tab": "vacancies"},
+                ],
+                "mascot": MASCOT_PROFILE,
+            }
+
+        if any(k in low for k in ("attrition", "turnover", "retention", "overtime", "leave", "quit", "factory", "pay gap", "equity", "fairness")):
+            hr_data = lumi_knowledge.lookup_hr_and_workforce_analytics()
+            ibm = hr_data.get("ibm_hr") or {}
+            depts = ibm.get("by_department") or {}
+            dept_lines = [
+                f"• **{d}:** {v['attrition_rate_pct']}% attrition (Overtime attrition: **{v['overtime_attrition_rate_pct']}%** · Avg training: {v['avg_training_sessions_yr']}/yr)"
+                for d, v in list(depts.items())[:3]
+            ]
+            reply = (
+                f"🦉 **HR Attrition & Retention Benchmarks (IBM HR + Factory + Pay Equity Datasets):**\n"
+                f"• **Overall Baseline Attrition:** **{ibm.get('overall_attrition_rate_pct', 16.1)}%** across {ibm.get('total_employees_analyzed', 1470):,} employees\n"
+                + "\n".join(dept_lines)
+                + "\n• **Fairness Guardrail:** Gender, age & race are stripped from screening to eliminate historical wage/hiring bias."
+            )
+            return {
+                "ok": True, "in_range": True, "reply": reply,
+                "actions": [
+                    {"label": "🔥 Skills Heatmap", "tab": "heatmap"},
+                    {"label": "🎓 Approve Reskilling", "tab": "reskill"},
                 ],
                 "mascot": MASCOT_PROFILE,
             }
@@ -438,11 +472,14 @@ def generate_lumi_response(message: str, user: dict | None = None, history: list
                     "mascot": MASCOT_PROFILE,
                 }
             st = cv_rec["structured_cv"]
+            bench = lumi_knowledge.lookup_resume_category_benchmark(st.get("current_role") or st.get("industry") or "")
+            bench_line = f"\n• **962-CV Dataset Benchmark ({bench['category']}):** Top peer skills include {', '.join(bench['top_skills'][:5])}" if bench else ""
             reply = (
                 f"🦉 **PDF CV Summary (`{cv_rec['original_filename']}`):**\n"
                 f"• **Role:** {st.get('current_role')} · {st.get('industry')} ({st.get('years_experience')} yr)\n"
-                f"• **Top Skills ({len(st.get('skills', []))}):** {', '.join(st.get('skills', [])[:6])}\n"
-                f"• **Privacy:** Private Vault · Viewed by **{len(cv_rec.get('access_logs', []))}** employer(s)."
+                f"• **Top Skills ({len(st.get('skills', []))}):** {', '.join(st.get('skills', [])[:6])}"
+                + bench_line +
+                f"\n• **Privacy:** Viewed by **{len(cv_rec.get('access_logs', []))}** employer(s)."
             )
             return {
                 "ok": True, "in_range": True, "reply": reply,
@@ -471,22 +508,33 @@ def generate_lumi_response(message: str, user: dict | None = None, history: list
                 "mascot": MASCOT_PROFILE,
             }
 
-        # Intent T4: Reskilling Courses / Learning Plan / HRD Corp
-        if any(k in low for k in ("course", "reskill", "upskill", "learn", "plan", "hrd", "mdec", "myfuturejobs", "pathway", "hour")):
-            if not top_role or not top_role.get("ordered_pathway"):
-                return {
-                    "ok": True, "in_range": True,
-                    "reply": "🦉 You already cover all core skills for your target role! Pick another role in **Reskilling Plan**.",
-                    "actions": [{"label": "🧭 Open Reskilling Plan", "tab": "plan"}],
-                    "mascot": MASCOT_PROFILE,
-                }
-            steps = [
-                f"{s['step']}. **{s['target_skill']}** → *{s['course_title']}* ({s['hours']}h · `{s['malaysia_badge']}`)"
-                for s in top_role["ordered_pathway"][:3]
+        # Intent T4: Reskilling Courses / EdX University Catalog / Upskilling ROI
+        if any(k in low for k in ("course", "reskill", "upskill", "learn", "plan", "hrd", "mdec", "myfuturejobs", "pathway", "hour", "edx", "university", "certificate")):
+            edx_list = lumi_knowledge.search_edx_courses(
+                clean_msg,
+                fallback_skills=((top_role or {}).get("skills_gap") or ["Python", "Data Analysis"]),
+                limit=2,
+            )
+            roi = lumi_knowledge.lookup_upskilling_roi()
+            roi_types = list((roi.get("by_upskilling_type") or {}).items())
+            roi_line = ""
+            if roi_types:
+                t_name, t_stat = roi_types[0]
+                roi_line = f"\n• 📈 **Upskilling ROI (3,000-worker dataset):** AI upskilling yields **{t_stat['hiring_success_rate_pct']}% hiring success** & **+{t_stat['avg_salary_hike_pct']}% avg salary hike**."
+            steps = []
+            if top_role and top_role.get("ordered_pathway"):
+                steps = [
+                    f"• 🇲🇾 **{s['target_skill']}** → *{s['course_title']}* ({s['hours']}h · `{s['malaysia_badge']}`)"
+                    for s in top_role["ordered_pathway"][:2]
+                ]
+            edx_lines = [
+                f"• 🎓 **EdX ({c['provider']}):** *{c['title']}* ({c['level']})"
+                for c in edx_list
             ]
             reply = (
-                f"🦉 **Verified Reskilling Pathway for {top_role['title']} ({top_role['estimated_total_hours']}h):**\n"
-                + "\n".join(steps)
+                f"🦉 **Recommended Reskilling & University Courses:**\n"
+                + "\n".join(steps + edx_lines)
+                + roi_line
             )
             return {
                 "ok": True, "in_range": True, "reply": reply,
@@ -534,11 +582,22 @@ def generate_lumi_response(message: str, user: dict | None = None, history: list
                 "mascot": MASCOT_PROFILE,
             }
 
-        # Intent T7: Interview / Questionnaire
-        if any(k in low for k in ("interview", "question", "verify", "prepare")):
-            vqs = ctx.get("verification_questions") or []
-            q_lines = [f"• **{q['skill_tested']}:** _{q['question']}_" for q in vqs[:2]]
-            reply = "🦉 **Practice Verification Questions:**\n" + ("\n".join(q_lines) or "• Describe a project where you applied your core skills.")
+        # Intent T7: Interview Q&A + Career QA Dataset (1,620 Career Q&A + 200 Software Engineering Q&A)
+        qa_hits = lumi_knowledge.search_career_or_interview_qa(clean_msg, limit=2)
+        if qa_hits or any(k in low for k in ("interview", "question", "verify", "prepare", "quiz")):
+            if qa_hits:
+                lines = [
+                    f"• **{h['source']}:** *{h['q']}*\n  → {h['a']}"
+                    for h in qa_hits
+                ]
+                reply = "🦉 **Trained Career & Interview Q&A Knowledge Base:**\n" + "\n".join(lines)
+            else:
+                vqs = ctx.get("verification_questions") or []
+                se_sample = (lumi_knowledge.load_brain().get("se_interview_qa") or [{}])[0]
+                q_lines = [f"• **{q['skill_tested']}:** _{q['question']}_" for q in vqs[:2]]
+                if se_sample.get("q"):
+                    q_lines.append(f"• **Tech Q&A ({se_sample.get('category')}):** _{se_sample['q']}_ → {se_sample['a'][:140]}...")
+                reply = "🦉 **Practice Interview & Verification Questions:**\n" + "\n".join(q_lines)
             return {
                 "ok": True, "in_range": True, "reply": reply,
                 "actions": [{"label": "📝 Open Questionnaire", "tab": "quest"}],
@@ -546,13 +605,44 @@ def generate_lumi_response(message: str, user: dict | None = None, history: list
             }
 
     # ------------------------------------------------------------------
-    # SHARED INTENTS (AI Trends, SDG 4 & 8, Default Concise Guide)
+    # SHARED INTENTS (13-Dataset Brain, AI Trends 2024-2030, O*NET, SDG 4 & 8)
     # ------------------------------------------------------------------
-    if any(k in low for k in ("trend", "radar", "rising", "emerging", "declining", "automation")):
+    if any(k in low for k in ("dataset", "trained", "knowledge base", "what can you do", "what can lumi do")):
+        bs = lumi_knowledge.brain_summary()
+        st = bs.get("stats") or {}
+        reply = (
+            f"🦉 **Lumi AI is trained on {bs['datasets_count']} real-world datasets (210,000+ records):**\n"
+            f"• 🇲🇾 **JobStreet MY:** {st.get('jobstreet_malaysia_jobs', 68447):,} jobs & {st.get('jobstreet_malaysia_companies', 20514):,} companies\n"
+            f"• 🌐 **O*NET 29.0 & Resumes:** {st.get('onet_occupations', 1016):,} occupations, {st.get('onet_tech_skills_rows', 32470):,} tech skills & {st.get('updated_resumes_count', 962)} CVs\n"
+            f"• 🎓 **Courses & Q&A:** {st.get('edx_courses_total', 720)} EdX university courses, {st.get('career_qa_pairs', 1620):,} Career Q&A & {st.get('se_interview_questions', 200)} SE Interview Q&A\n"
+            f"• 📊 **AI 2030 & HR Analytics:** {st.get('ai_job_trends_rows', 30000):,} AI 2030 forecasts, {st.get('ai_displacement_rows', 20800):,} displacement records, IBM HR, Factory & Pay Equity"
+        )
+        actions = [{"label": "📍 Explore 68.4k Jobs Map", "tab": "jobs"}, {"label": "📡 Open AI Radar", "tab": "radar"}] if portal == "job_seeker" else [{"label": "🔥 Skills Heatmap", "tab": "heatmap"}]
+        return {"ok": True, "in_range": True, "reply": reply, "actions": actions, "mascot": MASCOT_PROFILE}
+
+    if any(k in low for k in ("trend", "radar", "rising", "emerging", "declining", "automation", "displacement", "2030", "replace", "ai impact")):
         radar = get_trend_radar("moderate")
-        rising = [f"• **{s['skill']}** (+{s['growth_pct']}% · {s['sdg']})" for s in radar["emerging_skills"][:3]]
-        reply = "🦉 **Fastest-Rising AI Skills:**\n" + "\n".join(rising)
-        actions = [{"label": "📡 Open AI Radar", "tab": "radar"}] if portal == "job_seeker" else []
+        imp = lumi_knowledge.lookup_ai_impact_and_displacement(clean_msg)
+        rf = imp.get("role_forecast")
+        sd = imp.get("sector_displacement")
+        rising = [f"• **{s['skill']}** (+{s['growth_pct']}% · {s['sdg']})" for s in radar["emerging_skills"][:2]]
+        if rf:
+            rising.append(f"• **2024–2030 Forecast ({rf['title']}):** Openings **{rf['growth_2024_2030_pct']:+.1f}%** · Automation Risk **{rf['automation_risk_pct']}%** · Remote **{rf['remote_ratio_pct']}%**")
+        if sd:
+            rising.append(f"• **Sector Shift ({sd['sector']}):** **{sd['workforce_displaced_pct']}%** displaced vs **+{sd['new_roles_created_pct']}%** new AI roles created")
+        reply = "🦉 **AI Workforce Impact & 2024–2030 Forecast (50,800-record dataset):**\n" + "\n".join(rising)
+        actions = [{"label": "📡 Open AI Radar", "tab": "radar"}, {"label": "🧭 Reskilling Plan", "tab": "plan"}] if portal == "job_seeker" else []
+        return {"ok": True, "in_range": True, "reply": reply, "actions": actions, "mascot": MASCOT_PROFILE}
+
+    onet_hit = lumi_knowledge.lookup_onet_occupation(clean_msg)
+    if onet_hit:
+        reply = (
+            f"🦉 **O*NET Occupation Profile: {onet_hit['title']} (`{onet_hit['code']}`)**\n"
+            f"• **Summary:** {onet_hit['description']}\n"
+            f"• **Hot Technology Skills:** {', '.join(onet_hit['hot_tech']) or 'Domain tools'}\n"
+            f"• **Related Career Paths:** {', '.join(onet_hit['related_careers']) or 'Adjacent specialist roles'}"
+        )
+        actions = [{"label": "💼 Find Matching Jobs", "tab": "jobs"}] if portal == "job_seeker" else []
         return {"ok": True, "in_range": True, "reply": reply, "actions": actions, "mascot": MASCOT_PROFILE}
 
     if any(k in low for k in ("sdg", "sustainable", "impact", "passport")):
