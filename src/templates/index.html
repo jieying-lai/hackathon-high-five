@@ -3,7 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>CareerLens AI — Future-Ready Workforce & Reskilling Platform</title>
+  <title>CareerLens AI — Workforce Intelligence & Reskilling</title>
+  <link rel="icon" type="image/svg+xml" href="/static/brand/careerlens_logo_icon.svg" />
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
@@ -13,543 +14,441 @@
       color: #0f172a;
       overflow-x: hidden;
     }
-    /* Luminous White Base with Colorful Pastel Aurora Blobs */
     .aurora-bg {
       position: fixed;
       inset: 0;
       z-index: -1;
       background:
-        radial-gradient(circle at 12% 18%, rgba(244, 114, 182, 0.28), transparent 38%),
-        radial-gradient(circle at 86% 14%, rgba(99, 102, 241, 0.26), transparent 40%),
-        radial-gradient(circle at 78% 82%, rgba(45, 212, 191, 0.25), transparent 42%),
-        radial-gradient(circle at 22% 78%, rgba(251, 191, 36, 0.22), transparent 38%),
-        radial-gradient(circle at 50% 48%, rgba(168, 85, 247, 0.16), transparent 45%),
-        linear-gradient(135deg, #ffffff 0%, #f1f5f9 50%, #fdf4ff 100%);
+        radial-gradient(circle at 12% 18%, rgba(244, 114, 182, 0.25), transparent 38%),
+        radial-gradient(circle at 86% 14%, rgba(99, 102, 241, 0.24), transparent 40%),
+        radial-gradient(circle at 78% 82%, rgba(45, 212, 191, 0.22), transparent 42%),
+        radial-gradient(circle at 22% 78%, rgba(251, 191, 36, 0.20), transparent 38%),
+        linear-gradient(135deg, #ffffff 0%, #f1f5f9 55%, #fdf4ff 100%);
     }
-    /* Frosted Glassmorphism Cards */
     .glass-card {
-      background: rgba(255, 255, 255, 0.68);
+      background: rgba(255, 255, 255, 0.72);
       backdrop-filter: blur(24px) saturate(180%);
       -webkit-backdrop-filter: blur(24px) saturate(180%);
-      border: 1px solid rgba(255, 255, 255, 0.9);
-      box-shadow: 0 20px 50px rgba(99, 102, 241, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.95);
+      border: 1px solid rgba(255, 255, 255, 0.92);
+      box-shadow: 0 18px 45px rgba(99, 102, 241, 0.07), inset 0 1px 0 rgba(255, 255, 255, 0.95);
     }
     .glass-pink {
-      background: linear-gradient(135deg, rgba(255, 255, 255, 0.78), rgba(253, 242, 248, 0.68));
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.84), rgba(253, 242, 248, 0.72));
       backdrop-filter: blur(20px);
       border: 1px solid rgba(244, 114, 182, 0.35);
-      box-shadow: 0 14px 36px rgba(236, 72, 153, 0.08);
     }
     .glass-indigo {
-      background: linear-gradient(135deg, rgba(255, 255, 255, 0.8), rgba(238, 242, 255, 0.7));
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.84), rgba(238, 242, 255, 0.74));
       backdrop-filter: blur(20px);
       border: 1px solid rgba(129, 140, 248, 0.35);
-      box-shadow: 0 14px 36px rgba(99, 102, 241, 0.09);
     }
     .glass-teal {
-      background: linear-gradient(135deg, rgba(255, 255, 255, 0.8), rgba(240, 253, 250, 0.7));
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.84), rgba(240, 253, 250, 0.74));
       backdrop-filter: blur(20px);
-      border: 1px solid rgba(45, 212, 191, 0.4);
-      box-shadow: 0 14px 36px rgba(20, 184, 166, 0.08);
+      border: 1px solid rgba(45, 212, 191, 0.38);
     }
     .glass-amber {
-      background: linear-gradient(135deg, rgba(255, 255, 255, 0.82), rgba(255, 251, 235, 0.72));
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.85), rgba(255, 251, 235, 0.75));
       backdrop-filter: blur(20px);
       border: 1px solid rgba(251, 191, 36, 0.4);
-      box-shadow: 0 14px 36px rgba(245, 158, 11, 0.08);
     }
     .glass-input {
-      background: rgba(255, 255, 255, 0.82);
-      border: 1px solid rgba(203, 213, 225, 0.85);
+      background: rgba(255, 255, 255, 0.88);
+      border: 1px solid rgba(203, 213, 225, 0.9);
       transition: all 0.2s ease;
     }
     .glass-input:focus {
       background: #ffffff;
       border-color: #6366f1;
-      box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.16);
+      box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15);
       outline: none;
     }
   </style>
 </head>
 <body class="min-h-screen relative">
-  <!-- Luminous White + Colorful Aurora Glass Background -->
   <div class="aurora-bg"></div>
 
-  <!-- TOP NAVIGATION BAR -->
+  <!-- ========================================================================= -->
+  <!-- TOP HEADER & MAIN NAVIGATION BAR                                          -->
+  <!-- ========================================================================= -->
   <header class="sticky top-0 z-40 glass-card border-b border-white/80">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 py-3 flex flex-wrap items-center justify-between gap-3">
-      <!-- Brand Logo in Header -->
-      <div onclick="showSection('landing')" class="flex items-center gap-3.5 cursor-pointer group">
-        <img src="/static/brand/careerlens_logo_icon.svg" alt="CareerLens AI Logo" class="h-12 w-12 rounded-2xl shadow-md shadow-indigo-500/15 group-hover:scale-105 transition" />
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 py-3 flex flex-wrap items-center justify-between gap-4">
+      <!-- Brand Logo -->
+      <div onclick="handleLogoClick()" class="flex items-center gap-3 cursor-pointer group">
+        <img src="/static/brand/careerlens_logo_icon.svg" alt="CareerLens AI" class="h-11 w-11 rounded-2xl shadow-sm group-hover:scale-105 transition" />
         <div>
-          <div class="flex items-center gap-2">
-            <span class="font-extrabold text-xl tracking-tight bg-gradient-to-r from-indigo-700 via-purple-600 to-pink-600 bg-clip-text text-transparent">CareerLens AI</span>
-            <span class="text-[11px] font-bold px-2.5 py-0.5 rounded-full bg-indigo-50 text-indigo-700 border border-indigo-200">Domain 1 · Aiversecity</span>
-          </div>
-          <p class="text-[11px] text-slate-500 font-medium">AI-Trend Radar · Explainable Matching · SDG Reskilling & HR Mobility</p>
+          <span class="font-extrabold text-xl tracking-tight bg-gradient-to-r from-indigo-700 via-purple-600 to-pink-600 bg-clip-text text-transparent">CareerLens AI</span>
+          <p class="text-[11px] text-slate-500 font-medium">Future-Ready Workforce & Reskilling</p>
         </div>
       </div>
 
-      <!-- Right Nav Controls (Changes when logged in vs logged out) -->
-      <div id="navLoggedOut" class="flex flex-wrap items-center gap-2.5">
-        <button onclick="showSection('landing')" class="text-xs font-semibold text-slate-600 hover:text-indigo-600 px-3 py-2 rounded-xl transition">Platform Overview</button>
-        <button onclick="openAuthView('login')" class="text-xs font-bold text-indigo-700 bg-white/80 hover:bg-white border border-indigo-200 px-4 py-2 rounded-xl shadow-sm transition">Sign In</button>
-        <button onclick="openAuthView('register')" class="text-xs font-bold text-white bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-500 hover:opacity-95 px-4 py-2 rounded-xl shadow-md shadow-indigo-500/20 transition">Create Account</button>
+      <!-- CENTER NAVIGATION TABS (Visible when inside Workspace) -->
+      <nav id="workspaceNavTabs" class="hidden flex flex-wrap items-center gap-1.5 bg-slate-100/80 p-1.5 rounded-2xl border border-white">
+        <button id="navFunc1" onclick="switchFunctionTab(1)" class="px-3.5 py-2 rounded-xl text-xs font-bold bg-white text-indigo-700 shadow-sm transition">
+          1. Profile & Skills
+        </button>
+        <button id="navFunc2" onclick="switchFunctionTab(2)" class="px-3.5 py-2 rounded-xl text-xs font-bold text-slate-600 hover:text-slate-900 transition">
+          2. AI Skills Radar
+        </button>
+        <button id="navFunc3" onclick="switchFunctionTab(3)" class="px-3.5 py-2 rounded-xl text-xs font-bold text-slate-600 hover:text-slate-900 transition">
+          3. Role Matching
+        </button>
+        <button id="navFunc4" onclick="switchFunctionTab(4)" class="px-3.5 py-2 rounded-xl text-xs font-bold text-slate-600 hover:text-slate-900 transition">
+          4. Reskilling Plan
+        </button>
+        <button id="navFunc5" onclick="switchFunctionTab(5)" class="px-3.5 py-2 rounded-xl text-xs font-bold text-pink-700 hover:bg-white/60 transition">
+          🏢 HR Overview
+        </button>
+      </nav>
+
+      <!-- Right Controls (Logged Out) -->
+      <div id="navLoggedOut" class="flex items-center gap-2.5">
+        <button onclick="openAuthView('login')" class="text-xs font-bold text-indigo-700 bg-white/85 hover:bg-white border border-indigo-200 px-4 py-2 rounded-xl shadow-sm transition">Sign In</button>
+        <button onclick="openAuthView('register')" class="text-xs font-bold text-white bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-500 hover:opacity-95 px-4 py-2 rounded-xl shadow-md shadow-indigo-500/20 transition">Register</button>
       </div>
 
-      <!-- Logged-in User Pill -->
-      <div id="navLoggedIn" class="hidden flex flex-wrap items-center gap-3">
-        <div class="flex items-center gap-2.5 bg-white/85 border border-indigo-100 rounded-2xl px-3.5 py-1.5 shadow-sm">
+      <!-- Right Controls (Logged In) -->
+      <div id="navLoggedIn" class="hidden flex items-center gap-2.5">
+        <div class="flex items-center gap-2 bg-white/85 border border-indigo-100 rounded-2xl px-3 py-1.5 shadow-sm">
           <div id="userAvatar" class="h-7 w-7 rounded-xl bg-gradient-to-br from-indigo-500 to-pink-500 text-white text-xs font-bold flex items-center justify-center">U</div>
           <div class="text-left">
             <div class="flex items-center gap-1.5">
               <span id="navUserName" class="text-xs font-bold text-slate-800">User</span>
-              <span id="navUserUid" class="text-[10px] font-mono font-bold bg-indigo-50 text-indigo-700 border border-indigo-200 px-1.5 py-0.5 rounded">CL-2026-0000</span>
+              <span id="navUserUid" class="text-[10px] font-mono font-bold bg-indigo-50 text-indigo-700 border border-indigo-200 px-1.5 py-0.5 rounded">CL-2026</span>
             </div>
             <div id="navUserRoleBadge" class="text-[10px] text-slate-500">Job Seeker</div>
           </div>
         </div>
-        <button onclick="openTermsModal()" class="text-xs font-semibold text-slate-600 hover:text-indigo-600 bg-white/70 border border-slate-200 px-3 py-1.5 rounded-xl transition">🛡️ PDPA & Data Info</button>
-        <button onclick="handleLogout()" class="text-xs font-bold text-rose-600 bg-rose-50 hover:bg-rose-100 border border-rose-200 px-3.5 py-1.5 rounded-xl transition">Sign Out</button>
+        <button onclick="handleLogout()" class="text-xs font-bold text-rose-600 bg-rose-50 hover:bg-rose-100 border border-rose-200 px-3 py-2 rounded-xl transition">Sign Out</button>
       </div>
     </div>
   </header>
 
   <!-- ========================================================================= -->
-  <!-- VIEW 1: HERO TITLE & PLATFORM INTRODUCTION (LANDING PAGE)                 -->
+  <!-- VIEW 1: CLEAN LANDING INTRO PAGE                                          -->
   <!-- ========================================================================= -->
-  <section id="landingSection" class="max-w-7xl mx-auto px-4 sm:px-6 py-10 space-y-12">
-    <!-- Hero Glass Banner -->
-    <div class="glass-card rounded-3xl p-8 sm:p-12 relative overflow-hidden">
+  <section id="landingSection" class="max-w-6xl mx-auto px-4 sm:px-6 py-12 space-y-10">
+    <div class="glass-card rounded-3xl p-8 sm:p-12">
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
         <div class="lg:col-span-8 space-y-5">
-          <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-gradient-to-r from-indigo-500/10 via-purple-500/10 to-pink-500/10 border border-indigo-300/50 text-xs font-bold text-indigo-700">
-            <span>🌟 SDC Hackathon 2026 · The Aiversecity Future-Ready Workforce Domain</span>
+          <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-indigo-50 border border-indigo-200 text-xs font-bold text-indigo-700">
+            <span>✨ AI Workforce Navigation & Reskilling Platform</span>
           </div>
           <h1 class="text-3xl sm:text-5xl font-extrabold tracking-tight text-slate-900 leading-tight">
-            From <span class="bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-500 bg-clip-text text-transparent">“Who I Am Today”</span> to <span class="bg-gradient-to-r from-teal-600 to-indigo-600 bg-clip-text text-transparent">“Where I Thrive in the AI Era”</span>
+            Discover Your Future Role in the <span class="bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-500 bg-clip-text text-transparent">AI Era</span>
           </h1>
-          <p class="text-sm sm:text-base text-slate-600 leading-relaxed">
-            <strong>CareerLens AI</strong> is a dual-lens workforce intelligence platform for <strong>Job Seekers</strong> and <strong>Enterprise HR / L&D Teams</strong>. We track live AI & job-market signals, compute explainable future-role matches with transferable skill matrices, generate personalized skill-verification questions, and build verified reskilling pathways mapped to the <strong>17 UN Sustainable Development Goals (SDGs)</strong>.
+          <p class="text-sm sm:text-base text-slate-600 leading-relaxed max-w-2xl">
+            Map your current skills, track live AI market trends, get matched to high-growth roles with transparent scores, and follow a personalized reskilling pathway aligned with the UN SDGs.
           </p>
 
-          <!-- Primary CTA Buttons -->
           <div class="flex flex-wrap items-center gap-3 pt-2">
             <button onclick="openAuthView('register')" class="px-6 py-3 rounded-2xl font-bold text-sm text-white bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-500 shadow-lg shadow-indigo-500/25 hover:opacity-95 transition">
-              🚀 Register Account (Job Seeker / HR)
+              Get Started — Create Account
             </button>
-            <button onclick="openAuthView('login')" class="px-6 py-3 rounded-2xl font-bold text-sm text-indigo-700 bg-white/90 hover:bg-white border border-indigo-200 shadow-sm transition">
-              🔐 Sign In to Existing Account
-            </button>
-            <button onclick="quickDemoLogin('job_seeker')" class="px-4 py-3 rounded-2xl font-semibold text-xs text-teal-800 glass-teal hover:opacity-90 transition">
-              ⚡ Instant Judge Demo (Job Seeker)
-            </button>
-            <button onclick="quickDemoLogin('hr_company')" class="px-4 py-3 rounded-2xl font-semibold text-xs text-purple-800 glass-pink hover:opacity-90 transition">
-              🏢 Instant Judge Demo (HR / Company)
+            <button onclick="openAuthView('login')" class="px-6 py-3 rounded-2xl font-bold text-sm text-indigo-700 bg-white hover:bg-slate-50 border border-indigo-200 shadow-sm transition">
+              Sign In
             </button>
           </div>
         </div>
 
-        <!-- Right Hero Brand Emblem Showcase (Pure Design Display, No Download Buttons) -->
         <div class="lg:col-span-4 flex flex-col items-center justify-center glass-indigo rounded-3xl p-7 text-center space-y-3">
-          <img src="/static/brand/careerlens_logo_icon.svg" alt="CareerLens AI Emblem" class="w-40 h-40 drop-shadow-xl" />
-          <div>
-            <div class="text-base font-extrabold bg-gradient-to-r from-indigo-700 via-purple-600 to-pink-600 bg-clip-text text-transparent">CareerLens AI</div>
-            <p class="text-[11px] text-slate-500 font-medium mt-0.5">Optical Skill Lens · Rising Pathway · AI North Star</p>
-          </div>
-        </div>
-      </div>
-
-      <!-- Malaysia Problem Context Statistics Strip -->
-      <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-10 pt-8 border-t border-slate-200/70">
-        <div class="glass-indigo rounded-2xl p-4">
-          <div class="text-2xl font-extrabold text-indigo-700">56% vs 26%</div>
-          <div class="text-xs font-semibold text-slate-700 mt-0.5">Malaysia AI Training Gap</div>
-          <p class="text-[11px] text-slate-500 mt-1">56% of Malaysian professionals use AI at work, yet only 26% received formal training (Hays Asia 2025).</p>
-        </div>
-        <div class="glass-pink rounded-2xl p-4">
-          <div class="text-2xl font-extrabold text-pink-600">600,000+ Workers</div>
-          <div class="text-xs font-semibold text-slate-700 mt-0.5">Reskilling Needed in 3–5 Years</div>
-          <p class="text-[11px] text-slate-500 mt-1">MOSTI estimates over 600,000 Malaysian workers require structured reskilling pathways as AI evolves.</p>
-        </div>
-        <div class="glass-teal rounded-2xl p-4">
-          <div class="text-2xl font-extrabold text-teal-700">SDG 4 & SDG 8</div>
-          <div class="text-xs font-semibold text-slate-700 mt-0.5">Sustainable Workforce Impact</div>
-          <p class="text-[11px] text-slate-500 mt-1">Every recommended role & course connects directly to UN SDG sub-targets (4.3, 4.4, 8.2, 8.5, 9.5, 10.2, 12.6).</p>
+          <img src="/static/brand/careerlens_logo_icon.svg" alt="CareerLens AI" class="w-36 h-36 drop-shadow-xl" />
+          <div class="text-base font-extrabold bg-gradient-to-r from-indigo-700 via-purple-600 to-pink-600 bg-clip-text text-transparent">CareerLens AI</div>
+          <p class="text-xs text-slate-500">Smart Career Matching & Workforce Mobility</p>
         </div>
       </div>
     </div>
 
-    <!-- 4 Colorful Frosted Glass Feature Cards -->
-    <div class="space-y-4">
-      <div class="text-center max-w-2xl mx-auto">
-        <h2 class="text-2xl font-extrabold text-slate-900">Complete End-to-End Architecture</h2>
-        <p class="text-xs sm:text-sm text-slate-500 mt-1">Covering all 6 Domain 1 Must-Haves + CareerLens AI Employer Heatmap & Skill Verification</p>
+    <!-- 4 Core Functions Preview Strip -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+      <div class="glass-indigo rounded-3xl p-6 space-y-2">
+        <span class="text-xs font-extrabold text-indigo-600 uppercase">Step 01</span>
+        <h3 class="font-extrabold text-base text-slate-900">Skills Profile Intake</h3>
+        <p class="text-xs text-slate-600">Capture your experience, work preferences, and verify practical depth with AI questions.</p>
       </div>
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
-        <div class="glass-indigo rounded-3xl p-5 space-y-2">
-          <div class="h-10 w-10 rounded-2xl bg-indigo-600/15 text-indigo-700 flex items-center justify-center font-bold text-lg">01</div>
-          <h3 class="font-bold text-sm text-slate-900">AI Profile & Skill Quiz</h3>
-          <p class="text-xs text-slate-600">Extracts structured skills from CVs and generates 3 tailored follow-up questions to verify practical depth and transferable potential.</p>
-        </div>
-        <div class="glass-pink rounded-3xl p-5 space-y-2">
-          <div class="h-10 w-10 rounded-2xl bg-pink-500/15 text-pink-600 flex items-center justify-center font-bold text-lg">02</div>
-          <h3 class="font-bold text-sm text-slate-900">Live AI-Trend Radar & What-If</h3>
-          <p class="text-xs text-slate-600">Pulls dated signals from ArXiv CS.AI & market benchmarks, with a live slider modeling Moderate vs. Fast AI Disruption scenarios.</p>
-        </div>
-        <div class="glass-teal rounded-3xl p-5 space-y-2">
-          <div class="h-10 w-10 rounded-2xl bg-teal-500/15 text-teal-700 flex items-center justify-center font-bold text-lg">03</div>
-          <h3 class="font-bold text-sm text-slate-900">Explainable Role Match & Pathway</h3>
-          <p class="text-xs text-slate-600">Transparent score breakdown (+Core, +Transferable, -Gap) paired with verified Coursera, DeepLearning.AI & 🇲🇾 HRD Corp courses.</p>
-        </div>
-        <div class="glass-amber rounded-3xl p-5 space-y-2">
-          <div class="h-10 w-10 rounded-2xl bg-amber-500/15 text-amber-700 flex items-center justify-center font-bold text-lg">04</div>
-          <h3 class="font-bold text-sm text-slate-900">HR Workforce Heatmap & PDPA</h3>
-          <p class="text-xs text-slate-600">Dedicated Employer Portal showing company-wide skill-gap heatmaps, fairness-audited screening, and PDPA-compliant data controls.</p>
-        </div>
+      <div class="glass-pink rounded-3xl p-6 space-y-2">
+        <span class="text-xs font-extrabold text-pink-600 uppercase">Step 02</span>
+        <h3 class="font-extrabold text-base text-slate-900">AI Skills Radar</h3>
+        <p class="text-xs text-slate-600">Monitor rising skills and automation risks across Moderate vs. Fast AI adoption scenarios.</p>
+      </div>
+      <div class="glass-teal rounded-3xl p-6 space-y-2">
+        <span class="text-xs font-extrabold text-teal-700 uppercase">Step 03</span>
+        <h3 class="font-extrabold text-base text-slate-900">Future-Role Matching</h3>
+        <p class="text-xs text-slate-600">Compare best-fit future roles with explainable match scores and skill-gap breakdowns.</p>
+      </div>
+      <div class="glass-amber rounded-3xl p-6 space-y-2">
+        <span class="text-xs font-extrabold text-amber-700 uppercase">Step 04</span>
+        <h3 class="font-extrabold text-base text-slate-900">Reskilling & SDG Plan</h3>
+        <p class="text-xs text-slate-600">Follow an ordered learning plan using verified courses and HRD Corp programmes.</p>
       </div>
     </div>
   </section>
 
   <!-- ========================================================================= -->
-  <!-- VIEW 2: AUTHENTICATION PORTAL (LOGIN + VALIDATED REGISTER + SSO + PDPA)   -->
+  <!-- VIEW 2: AUTHENTICATION (SIGN IN & REGISTER)                               -->
   <!-- ========================================================================= -->
-  <section id="authSection" class="hidden max-w-4xl mx-auto px-4 sm:px-6 py-8">
+  <section id="authSection" class="hidden max-w-3xl mx-auto px-4 sm:px-6 py-8">
     <div class="glass-card rounded-3xl p-6 sm:p-10 space-y-6">
-      <!-- Top Auth Switcher Tabs -->
       <div class="flex flex-wrap items-center justify-between gap-4 border-b border-slate-200/80 pb-4">
         <div>
-          <h2 id="authHeaderTitle" class="text-2xl font-extrabold text-slate-900">Welcome to CareerLens AI</h2>
-          <p id="authHeaderSub" class="text-xs text-slate-500 mt-0.5">Sign in or register a verified account with unique data governance ID</p>
+          <h2 class="text-2xl font-extrabold text-slate-900">Account Access</h2>
+          <p class="text-xs text-slate-500 mt-0.5">Sign in or register as a Job Seeker or HR / Company Representative</p>
         </div>
-        <div class="flex rounded-2xl bg-slate-100/90 p-1 border border-slate-200/80 text-xs font-bold">
-          <button id="authTabLoginBtn" onclick="openAuthView('login')" class="px-4 py-2 rounded-xl bg-white text-indigo-700 shadow-sm transition">🔐 Sign In</button>
-          <button id="authTabRegBtn" onclick="openAuthView('register')" class="px-4 py-2 rounded-xl text-slate-600 hover:text-slate-900 transition">✨ Register Account</button>
+        <div class="flex rounded-2xl bg-slate-100 p-1 border border-slate-200 text-xs font-bold">
+          <button id="authTabLoginBtn" onclick="openAuthView('login')" class="px-4 py-2 rounded-xl bg-white text-indigo-700 shadow-sm transition">Sign In</button>
+          <button id="authTabRegBtn" onclick="openAuthView('register')" class="px-4 py-2 rounded-xl text-slate-600 hover:text-slate-900 transition">Register</button>
         </div>
       </div>
 
-      <!-- Alert Banner for Validation / Auth Messages -->
       <div id="authAlertBox" class="hidden rounded-2xl p-3.5 text-xs font-semibold border"></div>
 
-      <!-- ------------------------------------------------------------------- -->
-      <!-- LOGIN FORM                                                          -->
-      <!-- ------------------------------------------------------------------- -->
+      <!-- SIGN IN FORM -->
       <div id="loginFormPane" class="grid grid-cols-1 md:grid-cols-12 gap-8 items-start">
         <div class="md:col-span-7 space-y-4">
           <div>
-            <label class="block text-xs font-bold text-slate-700 mb-1">Registered Email Address *</label>
-            <input id="loginEmail" type="email" placeholder="e.g., aisha.demo@careerlens.my" class="glass-input w-full rounded-xl px-3.5 py-2.5 text-xs text-slate-800" />
+            <label class="block text-xs font-bold text-slate-700 mb-1">Email Address</label>
+            <input id="loginEmail" type="email" placeholder="name@domain.com" class="glass-input w-full rounded-xl px-3.5 py-2.5 text-xs text-slate-800" />
           </div>
           <div>
-            <label class="block text-xs font-bold text-slate-700 mb-1">Password *</label>
+            <label class="block text-xs font-bold text-slate-700 mb-1">Password</label>
             <input id="loginPassword" type="password" placeholder="Enter your password" class="glass-input w-full rounded-xl px-3.5 py-2.5 text-xs text-slate-800" />
           </div>
-          <button onclick="submitLogin()" class="w-full py-3 rounded-xl font-bold text-xs text-white bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-500 shadow-md shadow-indigo-500/20 hover:opacity-95 transition">
-            Sign In with Email & Password
+          <button onclick="submitLogin()" class="w-full py-3 rounded-xl font-bold text-xs text-white bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-500 shadow-md hover:opacity-95 transition">
+            Sign In
           </button>
 
-          <div class="relative flex py-2 items-center">
+          <div class="relative flex py-1.5 items-center">
             <div class="flex-grow border-t border-slate-200"></div>
-            <span class="flex-shrink mx-3 text-[11px] text-slate-400 font-medium">OR CONTINUE WITH SSO / DEMO</span>
+            <span class="flex-shrink mx-3 text-[11px] text-slate-400 font-medium">OR</span>
             <div class="flex-grow border-t border-slate-200"></div>
           </div>
 
-          <!-- Simulated Google / Work Email SSO Modal Trigger -->
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+          <div class="grid grid-cols-2 gap-2.5">
             <button onclick="openSsoModal('Google')" class="flex items-center justify-center gap-2 py-2.5 px-3 rounded-xl bg-white hover:bg-slate-50 border border-slate-200 text-xs font-semibold text-slate-700 shadow-sm transition">
-              <span>🌐</span> Continue with Google
+              <span>🌐</span> Google
             </button>
-            <button onclick="openSsoModal('Microsoft Work SSO')" class="flex items-center justify-center gap-2 py-2.5 px-3 rounded-xl bg-white hover:bg-slate-50 border border-slate-200 text-xs font-semibold text-slate-700 shadow-sm transition">
-              <span>🏢</span> Microsoft Work Account
+            <button onclick="openSsoModal('Microsoft')" class="flex items-center justify-center gap-2 py-2.5 px-3 rounded-xl bg-white hover:bg-slate-50 border border-slate-200 text-xs font-semibold text-slate-700 shadow-sm transition">
+              <span>🏢</span> Microsoft
             </button>
           </div>
         </div>
 
-        <!-- Judge Quick Demo Accounts Card -->
+        <!-- Quick Demo Access -->
         <div class="md:col-span-5 glass-indigo rounded-2xl p-5 space-y-3">
-          <div class="text-xs font-extrabold text-indigo-800 uppercase tracking-wider">⚡ 1-Click Judge & Team Testing</div>
-          <p class="text-[11px] text-slate-600 leading-relaxed">
-            For hackathon judging and demo smoothness, we pre-seeded 2 verified SQLite accounts (hashed with <code class="bg-white/80 px-1 rounded">PBKDF2-SHA256</code>) plus simulated Google SSO so judges never get blocked by external OAuth redirects:
-          </p>
-          <div class="space-y-2 pt-1">
+          <div class="text-xs font-extrabold text-indigo-900">Quick Demo Accounts</div>
+          <div class="space-y-2">
             <button onclick="quickDemoLogin('job_seeker')" class="w-full text-left bg-white/90 hover:bg-white border border-indigo-200 rounded-xl p-3 transition shadow-sm">
-              <div class="flex items-center justify-between">
-                <span class="font-bold text-xs text-indigo-700">👤 Job Seeker Demo Account</span>
-                <span class="text-[10px] font-mono bg-indigo-50 text-indigo-600 px-1.5 py-0.5 rounded">CL-JS-2026-1042</span>
-              </div>
-              <div class="text-[11px] text-slate-500 mt-0.5">aisha.demo@careerlens.my · Junior Financial Auditor</div>
+              <div class="font-bold text-xs text-indigo-700">👤 Job Seeker Demo</div>
+              <div class="text-[11px] text-slate-500 mt-0.5">Aisha Rahman · Financial Auditor</div>
             </button>
             <button onclick="quickDemoLogin('hr_company')" class="w-full text-left bg-white/90 hover:bg-white border border-pink-200 rounded-xl p-3 transition shadow-sm">
-              <div class="flex items-center justify-between">
-                <span class="font-bold text-xs text-pink-700">🏢 HR / Company Demo Account</span>
-                <span class="text-[10px] font-mono bg-pink-50 text-pink-600 px-1.5 py-0.5 rounded">CL-HR-2026-8801</span>
-              </div>
-              <div class="text-[11px] text-slate-500 mt-0.5">hr.demo@nexussme.my · Nexus Digital & Finance Sdn Bhd</div>
+              <div class="font-bold text-xs text-pink-700">🏢 HR / Employer Demo</div>
+              <div class="text-[11px] text-slate-500 mt-0.5">Daniel Tan · Nexus Digital Sdn Bhd</div>
             </button>
           </div>
         </div>
       </div>
 
-      <!-- ------------------------------------------------------------------- -->
-      <!-- REGISTRATION FORM (FULL VALIDATION + ROLE DETAILS + PDPA TERMS)     -->
-      <!-- ------------------------------------------------------------------- -->
-      <div id="registerFormPane" class="hidden space-y-6">
-        <!-- Unique Data Governance ID Preview Banner -->
-        <div class="glass-teal rounded-2xl p-4 flex flex-wrap items-center justify-between gap-3">
-          <div class="space-y-0.5">
-            <div class="text-xs font-extrabold text-teal-900">🆔 Unique Data Governance ID & PBKDF2 Password Hashing</div>
-            <p class="text-[11px] text-teal-800">Every registered account is assigned a unique identifier for anonymized skill-matching, audit logging, and PDPA data deletion requests.</p>
-          </div>
-          <span id="regPreviewUidBadge" class="text-xs font-mono font-bold bg-white/90 text-teal-800 border border-teal-300 px-3 py-1.5 rounded-xl shadow-sm">
-            Auto-ID: CL-JS-2026-XXXX
-          </span>
-        </div>
-
-        <!-- Step A: Choose Account Role (Job Seeker vs HR/Company) -->
+      <!-- REGISTER FORM -->
+      <div id="registerFormPane" class="hidden space-y-5">
+        <!-- 1. Role Selection -->
         <div>
-          <label class="block text-xs font-extrabold text-slate-700 uppercase tracking-wider mb-2">1. Select Your Account Role *</label>
+          <label class="block text-xs font-extrabold text-slate-700 uppercase tracking-wider mb-2">1. Choose Account Role *</label>
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-            <div id="roleCardSeeker" onclick="selectRegRole('job_seeker')" class="cursor-pointer glass-indigo border-2 border-indigo-500 rounded-2xl p-4 transition">
+            <div id="roleCardSeeker" onclick="selectRegRole('job_seeker')" class="cursor-pointer glass-indigo border-2 border-indigo-500 rounded-2xl p-3.5 transition">
               <div class="flex items-center justify-between">
-                <span class="font-extrabold text-sm text-indigo-900">👤 Job Seeker / Talent</span>
-                <span class="text-[10px] font-bold bg-indigo-600 text-white px-2 py-0.5 rounded-full">Individual Lens</span>
+                <span class="font-extrabold text-xs text-indigo-900">👤 Job Seeker / Talent</span>
+                <span class="text-[10px] font-mono font-bold bg-white text-indigo-700 px-2 py-0.5 rounded">CL-JS-2026</span>
               </div>
-              <p class="text-[11px] text-slate-600 mt-1">For working adults at risk of AI displacement, fresh graduates, and career switchers seeking future roles & reskilling pathways.</p>
+              <p class="text-[11px] text-slate-600 mt-1">Individual career matching & reskilling pathway.</p>
             </div>
-            <div id="roleCardHr" onclick="selectRegRole('hr_company')" class="cursor-pointer bg-white/60 border border-slate-200 hover:border-pink-400 rounded-2xl p-4 transition">
+            <div id="roleCardHr" onclick="selectRegRole('hr_company')" class="cursor-pointer bg-white/60 border border-slate-200 hover:border-pink-400 rounded-2xl p-3.5 transition">
               <div class="flex items-center justify-between">
-                <span class="font-extrabold text-sm text-slate-800">🏢 HR / Company Representative</span>
-                <span class="text-[10px] font-bold bg-pink-100 text-pink-700 px-2 py-0.5 rounded-full">Employer Lens</span>
+                <span class="font-extrabold text-xs text-slate-800">🏢 HR / Company Representative</span>
+                <span class="text-[10px] font-mono font-bold bg-pink-50 text-pink-700 px-2 py-0.5 rounded">CL-HR-2026</span>
               </div>
-              <p class="text-[11px] text-slate-600 mt-1">For HR managers, L&D leads, and SME owners planning company-wide workforce reskilling heatmaps and fair candidate screening.</p>
+              <p class="text-[11px] text-slate-600 mt-1">Company workforce skill-gap heatmap & screening.</p>
             </div>
           </div>
           <input id="regRoleInput" type="hidden" value="job_seeker" />
         </div>
 
-        <!-- Step B: Core Identity & Validated Credentials -->
-        <div>
-          <label class="block text-xs font-extrabold text-slate-700 uppercase tracking-wider mb-2">2. Core Account Credentials (All Validated) *</label>
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div>
-              <label class="block text-xs font-bold text-slate-700 mb-1">Full Name (Real / Synthetic Persona Name) *</label>
-              <input id="regFullName" oninput="validateRegLive()" type="text" placeholder="e.g., Nurul Izzah / Marcus Lim" class="glass-input w-full rounded-xl px-3.5 py-2.5 text-xs text-slate-800" />
-              <p id="errFullName" class="text-[11px] text-slate-400 mt-1">Minimum 2 characters required.</p>
+        <!-- 2. Account Credentials -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label class="block text-xs font-bold text-slate-700 mb-1">Full Name *</label>
+            <input id="regFullName" oninput="validateRegLive()" type="text" placeholder="Enter your full name" class="glass-input w-full rounded-xl px-3.5 py-2.5 text-xs text-slate-800" />
+            <p id="errFullName" class="text-[11px] text-slate-400 mt-1">Minimum 2 characters.</p>
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-slate-700 mb-1">Email Address *</label>
+            <input id="regEmail" oninput="validateRegLive()" type="email" placeholder="name@company.com" class="glass-input w-full rounded-xl px-3.5 py-2.5 text-xs text-slate-800" />
+            <p id="errEmail" class="text-[11px] text-slate-400 mt-1">Must be a valid unregistered email.</p>
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-slate-700 mb-1">Password *</label>
+            <input id="regPassword" oninput="validateRegLive()" type="password" placeholder="Min 8 chars, A-Z, a-z, 0-9, symbol" class="glass-input w-full rounded-xl px-3.5 py-2.5 text-xs text-slate-800" />
+            <div class="grid grid-cols-2 gap-1 mt-1.5 text-[10px] text-slate-500">
+              <div id="pwRuleLen">⚪ 8+ Characters</div>
+              <div id="pwRuleUpper">⚪ Uppercase (A-Z)</div>
+              <div id="pwRuleLower">⚪ Lowercase (a-z)</div>
+              <div id="pwRuleNum">⚪ Number (0-9)</div>
+              <div id="pwRuleSym" class="col-span-2">⚪ Special Symbol (!@#$%^&*)</div>
             </div>
-            <div>
-              <label class="block text-xs font-bold text-slate-700 mb-1">Valid Unregistered Work / Personal Email *</label>
-              <input id="regEmail" oninput="validateRegLive()" type="email" placeholder="e.g., name@company.com.my" class="glass-input w-full rounded-xl px-3.5 py-2.5 text-xs text-slate-800" />
-              <p id="errEmail" class="text-[11px] text-slate-400 mt-1">Must be a valid, unregistered email format.</p>
-            </div>
-            <div>
-              <label class="block text-xs font-bold text-slate-700 mb-1">Password (Hashed with PBKDF2-SHA256) *</label>
-              <input id="regPassword" oninput="validateRegLive()" type="password" placeholder="Min 8 chars, A-Z, a-z, 0-9, symbol" class="glass-input w-full rounded-xl px-3.5 py-2.5 text-xs text-slate-800" />
-              <!-- Live Password Rules Checklist -->
-              <div class="grid grid-cols-2 gap-1 mt-2 text-[10px] text-slate-500">
-                <div id="pwRuleLen">⚪ 8+ Characters</div>
-                <div id="pwRuleUpper">⚪ Uppercase (A-Z)</div>
-                <div id="pwRuleLower">⚪ Lowercase (a-z)</div>
-                <div id="pwRuleNum">⚪ Number (0-9)</div>
-                <div id="pwRuleSym" class="col-span-2">⚪ Special Symbol (!@#$%^&*)</div>
-              </div>
-            </div>
-            <div>
-              <label class="block text-xs font-bold text-slate-700 mb-1">Re-enter Password to Confirm *</label>
-              <input id="regConfirmPassword" oninput="validateRegLive()" type="password" placeholder="Re-enter the exact same password" class="glass-input w-full rounded-xl px-3.5 py-2.5 text-xs text-slate-800" />
-              <p id="errConfirmPw" class="text-[11px] text-slate-400 mt-1">Please enter your password twice to confirm.</p>
-            </div>
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-slate-700 mb-1">Confirm Password *</label>
+            <input id="regConfirmPassword" oninput="validateRegLive()" type="password" placeholder="Re-enter password" class="glass-input w-full rounded-xl px-3.5 py-2.5 text-xs text-slate-800" />
+            <p id="errConfirmPw" class="text-[11px] text-slate-400 mt-1">Enter password twice to verify.</p>
           </div>
         </div>
 
-        <!-- Step C1: Conditional Profile Details for JOB SEEKER -->
-        <div id="regSeekerDetailsPane" class="glass-indigo rounded-2xl p-5 space-y-4">
-          <div class="text-xs font-extrabold text-indigo-900 uppercase tracking-wider">3A. Job Seeker / Talent Career Details</div>
+        <!-- 3A. Job Seeker Details -->
+        <div id="regSeekerDetailsPane" class="glass-indigo rounded-2xl p-4 space-y-3">
+          <div class="text-xs font-extrabold text-indigo-900">Job Seeker Profile Details</div>
           <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs">
             <div>
-              <label class="font-bold text-slate-700 block mb-1">Current Career Status *</label>
+              <label class="font-bold text-slate-700 block mb-1">Career Status</label>
               <select id="seekerType" class="glass-input w-full rounded-xl px-3 py-2 text-slate-800">
-                <option value="Fresh Graduate">🎓 Fresh Graduate (应届毕业生)</option>
-                <option value="Working Adult Upskilling">💼 Working Professional Upskilling (在职提升)</option>
-                <option value="Career Switcher / At Risk">🔄 Career Switcher / AI Displacement Risk (转行者)</option>
+                <option value="Fresh Graduate">Fresh Graduate</option>
+                <option value="Working Professional">Working Professional</option>
+                <option value="Career Switcher">Career Switcher</option>
               </select>
             </div>
             <div>
-              <label class="font-bold text-slate-700 block mb-1">Primary Industry / Background *</label>
+              <label class="font-bold text-slate-700 block mb-1">Industry Sector</label>
               <select id="seekerIndustry" class="glass-input w-full rounded-xl px-3 py-2 text-slate-800">
-                <option value="Finance & Accounting">🏦 Finance & Accounting</option>
-                <option value="Marketing & PR">📢 Marketing & PR</option>
-                <option value="IT & Software">💻 IT & Software</option>
-                <option value="HR & Administration">👥 HR & Administration</option>
+                <option value="Finance & Accounting">Finance & Accounting</option>
+                <option value="Marketing & PR">Marketing & PR</option>
+                <option value="IT & Software">IT & Software</option>
+                <option value="HR & Administration">HR & Administration</option>
               </select>
             </div>
             <div>
-              <label class="font-bold text-slate-700 block mb-1">Current / Target Job Title *</label>
+              <label class="font-bold text-slate-700 block mb-1">Current / Target Role</label>
               <input id="seekerCurrentRole" type="text" value="Junior Financial Analyst" class="glass-input w-full rounded-xl px-3 py-2 text-slate-800" />
             </div>
             <div>
-              <label class="font-bold text-slate-700 block mb-1">Highest Education Level</label>
+              <label class="font-bold text-slate-700 block mb-1">Education Level</label>
               <select id="seekerEducation" class="glass-input w-full rounded-xl px-3 py-2 text-slate-800">
                 <option value="Bachelor's Degree">Bachelor's Degree</option>
-                <option value="TVET / Diploma">TVET / Polytechnic Diploma</option>
+                <option value="TVET / Diploma">TVET / Diploma</option>
                 <option value="Master's / Postgraduate">Master's / Postgraduate</option>
-                <option value="Bootcamp / Self-Taught">Professional Certificate / Self-Taught</option>
               </select>
             </div>
             <div>
-              <label class="font-bold text-slate-700 block mb-1">Work Mode Preference</label>
+              <label class="font-bold text-slate-700 block mb-1">Work Mode</label>
               <select id="seekerWorkMode" class="glass-input w-full rounded-xl px-3 py-2 text-slate-800">
-                <option value="Hybrid">Hybrid (Flexible Commute)</option>
-                <option value="Remote">Remote (Malaysia / SEA)</option>
+                <option value="Hybrid">Hybrid</option>
+                <option value="Remote">Remote</option>
                 <option value="On-site">On-site</option>
               </select>
             </div>
             <div>
-              <label class="font-bold text-slate-700 block mb-1">Location / State</label>
+              <label class="font-bold text-slate-700 block mb-1">Location</label>
               <select id="seekerLocation" class="glass-input w-full rounded-xl px-3 py-2 text-slate-800">
                 <option value="Kuala Lumpur">Kuala Lumpur</option>
-                <option value="Selangor (PJ / Subang / Cyberjaya)">Selangor (PJ / Subang / Cyberjaya)</option>
+                <option value="Selangor">Selangor</option>
                 <option value="Penang">Penang</option>
                 <option value="Johor Bahru">Johor Bahru</option>
-                <option value="Sabah / Sarawak">Sabah / Sarawak</option>
               </select>
             </div>
           </div>
         </div>
 
-        <!-- Step C2: Conditional Organization Details for HR / COMPANY REPRESENTATIVE -->
-        <div id="regHrDetailsPane" class="hidden glass-pink rounded-2xl p-5 space-y-4">
-          <div class="text-xs font-extrabold text-pink-900 uppercase tracking-wider">3B. HR / Employer Organization & Workforce Details *</div>
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5 text-xs">
+        <!-- 3B. HR / Company Details -->
+        <div id="regHrDetailsPane" class="hidden glass-pink rounded-2xl p-4 space-y-3">
+          <div class="text-xs font-extrabold text-pink-900">Company & HR Representative Details *</div>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
             <div>
-              <label class="font-bold text-slate-700 block mb-1">Select Partner Company or Enter Custom *</label>
+              <label class="font-bold text-slate-700 block mb-1">Select Company or Custom *</label>
               <select id="hrCompanyPreset" onchange="syncHrCompanyPreset()" class="glass-input w-full rounded-xl px-3 py-2 text-slate-800">
-                <option value="Nexus Digital & Finance Sdn Bhd">Nexus Digital & Finance Sdn Bhd (FinTech / Audit)</option>
-                <option value="Aura Creative & Media Group MY">Aura Creative & Media Group MY (Marketing & PR)</option>
-                <option value="Pacific Smart Logistics Sdn Bhd">Pacific Smart Logistics Sdn Bhd (Supply Chain)</option>
-                <option value="MediCare Wellness Malaysia">MediCare Wellness Malaysia (Healthcare)</option>
-                <option value="custom">➕ Enter Custom Company Name...</option>
+                <option value="Nexus Digital & Finance Sdn Bhd">Nexus Digital & Finance Sdn Bhd</option>
+                <option value="Aura Creative & Media Group MY">Aura Creative & Media Group MY</option>
+                <option value="Pacific Smart Logistics Sdn Bhd">Pacific Smart Logistics Sdn Bhd</option>
+                <option value="custom">+ Enter Custom Company Name...</option>
               </select>
             </div>
             <div>
-              <label class="font-bold text-slate-700 block mb-1">Official Company Name *</label>
-              <input id="hrCompanyName" type="text" value="Nexus Digital & Finance Sdn Bhd" placeholder="Enter your company name" class="glass-input w-full rounded-xl px-3 py-2 text-slate-800" />
+              <label class="font-bold text-slate-700 block mb-1">Company Name *</label>
+              <input id="hrCompanyName" type="text" value="Nexus Digital & Finance Sdn Bhd" class="glass-input w-full rounded-xl px-3 py-2 text-slate-800" />
             </div>
             <div>
-              <label class="font-bold text-slate-700 block mb-1">Your HR / Management Job Title *</label>
-              <input id="hrJobTitle" type="text" value="HR & Workforce Reskilling Manager" placeholder="e.g., Talent Acquisition Lead / L&D Manager" class="glass-input w-full rounded-xl px-3 py-2 text-slate-800" />
+              <label class="font-bold text-slate-700 block mb-1">Your HR Job Title *</label>
+              <input id="hrJobTitle" type="text" value="HR & L&D Manager" class="glass-input w-full rounded-xl px-3 py-2 text-slate-800" />
             </div>
             <div>
-              <label class="font-bold text-slate-700 block mb-1">Company Workforce Size *</label>
+              <label class="font-bold text-slate-700 block mb-1">Company Size</label>
               <select id="hrCompanySize" class="glass-input w-full rounded-xl px-3 py-2 text-slate-800">
-                <option value="1–10 Employees (Micro SME)">1–10 Employees (Micro SME)</option>
-                <option value="11–50 Employees (Small Enterprise)">11–50 Employees (Small Enterprise)</option>
-                <option value="51–250 Employees (Medium Enterprise)" selected>51–250 Employees (Medium Enterprise)</option>
-                <option value="250+ Employees (Large Enterprise)">250+ Employees (Large Enterprise)</option>
+                <option value="1–10 (Micro SME)">1–10 (Micro SME)</option>
+                <option value="11–50 (Small Enterprise)">11–50 (Small Enterprise)</option>
+                <option value="51–250 (Medium Enterprise)" selected>51–250 (Medium Enterprise)</option>
+                <option value="250+ (Large Enterprise)">250+ (Large Enterprise)</option>
               </select>
             </div>
             <div>
-              <label class="font-bold text-slate-700 block mb-1">Company Industry Sector *</label>
+              <label class="font-bold text-slate-700 block mb-1">Industry Sector</label>
               <select id="hrCompanyIndustry" class="glass-input w-full rounded-xl px-3 py-2 text-slate-800">
-                <option value="Finance & Accounting">🏦 Finance, Banking & Accounting</option>
-                <option value="Marketing & PR">📢 Marketing, Media & E-Commerce</option>
-                <option value="IT & Software">💻 Technology, AI & Software</option>
-                <option value="HR & Administration">👥 HR, Consulting & Operations</option>
+                <option value="Finance & Accounting">Finance & Accounting</option>
+                <option value="Marketing & PR">Marketing & PR</option>
+                <option value="IT & Software">IT & Software</option>
+                <option value="HR & Administration">HR & Administration</option>
               </select>
             </div>
             <div>
-              <label class="font-bold text-slate-700 block mb-1">Primary HR Platform Objective *</label>
+              <label class="font-bold text-slate-700 block mb-1">Primary Focus</label>
               <select id="hrReskillingFocus" class="glass-input w-full rounded-xl px-3 py-2 text-slate-800">
-                <option value="Internal Team Skills-Gap Heatmap & Reskilling">Internal Team Skills-Gap Heatmap & Reskilling</option>
-                <option value="Fairness-Audited Transferable Skill Screening">Fairness-Audited Transferable Skill Screening</option>
-                <option value="HRD Corp Claimable Training Allocation">HRD Corp Claimable Training Allocation</option>
+                <option value="Workforce Reskilling">Workforce Reskilling</option>
+                <option value="Talent Screening">Talent Screening</option>
+                <option value="HRD Corp Training">HRD Corp Training</option>
               </select>
             </div>
           </div>
         </div>
 
-        <!-- Step D: Mandatory Privacy Data, PDPA 2010 & AI Fairness Terms & Conditions -->
-        <div class="bg-white/80 border border-slate-200 rounded-2xl p-4 space-y-2">
-          <div class="flex items-start gap-2.5">
-            <input id="regPdpaConsent" type="checkbox" class="mt-1 h-4 w-4 rounded border-slate-300 text-indigo-600 focus:ring-indigo-500" />
-            <label for="regPdpaConsent" class="text-xs text-slate-700 leading-relaxed">
-              I agree to the <button type="button" onclick="openTermsModal()" class="font-bold text-indigo-600 underline hover:text-indigo-800">Privacy Data Governance, Malaysia PDPA 2010 & Responsible AI Terms & Conditions</button>. I understand that:
-              <ul class="list-disc list-inside text-[11px] text-slate-500 mt-1 space-y-0.5">
-                <li>My account is assigned a unique Data Governance ID (<code class="bg-slate-100 px-1 rounded">CL-2026-XXXX</code>) and my password is encrypted via <code class="bg-slate-100 px-1 rounded">PBKDF2-SHA256</code>.</li>
-                <li>CV & skill data are used strictly for explainable career matching, skill-gap analysis, and reskilling recommendations.</li>
-                <li>Age, gender, ethnicity, and protected personal attributes are never used to penalize or auto-reject candidates.</li>
-              </ul>
-            </label>
-          </div>
+        <!-- 4. Privacy & PDPA Terms Checkbox -->
+        <div class="bg-white/80 border border-slate-200 rounded-2xl p-3.5 flex items-start gap-2.5">
+          <input id="regPdpaConsent" type="checkbox" class="mt-0.5 h-4 w-4 rounded border-slate-300 text-indigo-600" />
+          <label for="regPdpaConsent" class="text-xs text-slate-700">
+            I agree to the <button type="button" onclick="openTermsModal()" class="font-bold text-indigo-600 underline">Privacy Data Usage, PDPA & Fair AI Terms & Conditions</button>.
+          </label>
         </div>
 
-        <button onclick="submitRegistration()" class="w-full py-3.5 rounded-2xl font-extrabold text-sm text-white bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-500 shadow-lg shadow-indigo-500/25 hover:opacity-95 transition">
-          ✨ Complete Registration & Enter CareerLens AI Workspace
+        <button onclick="submitRegistration()" class="w-full py-3 rounded-2xl font-extrabold text-sm text-white bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-500 shadow-lg hover:opacity-95 transition">
+          Create Account
         </button>
       </div>
     </div>
   </section>
 
   <!-- ========================================================================= -->
-  <!-- VIEW 3: MAIN APPLICATION WORKSPACE (WHITE + COLORFUL GLASSMORPHISM)       -->
+  <!-- VIEW 3: ORGANIZED WORKSPACE (SEPARATE TABS FOR EACH OF THE 4 FUNCTIONS)   -->
   <!-- ========================================================================= -->
-  <main id="workspaceSection" class="hidden max-w-7xl mx-auto px-4 sm:px-6 py-6 space-y-6">
-    <!-- Top Workspace Control Bar -->
-    <div class="glass-card rounded-3xl p-4 sm:p-5 flex flex-wrap items-center justify-between gap-4">
-      <!-- Active Account Context Banner with Custom Logo -->
-      <div class="flex items-center gap-3.5">
-        <img src="/static/brand/careerlens_logo_icon.svg" alt="CareerLens AI" class="h-12 w-12 rounded-2xl shadow-sm" />
-        <div>
-          <div class="flex flex-wrap items-center gap-2">
-            <h2 id="wsWelcomeTitle" class="font-extrabold text-sm sm:text-base text-slate-900">Workspace</h2>
-            <span id="wsUidBadge" class="text-[11px] font-mono font-bold bg-indigo-50 text-indigo-700 border border-indigo-200 px-2 py-0.5 rounded-lg">ID: CL-JS-2026-1042</span>
-            <span id="wsHashBadge" class="text-[10px] font-mono bg-emerald-50 text-emerald-700 border border-emerald-200 px-2 py-0.5 rounded-lg">🔒 PBKDF2 Hashed</span>
-          </div>
-          <p id="wsSubContext" class="text-xs text-slate-500 mt-0.5">Active Profile · PDPA Consent Verified</p>
-        </div>
-      </div>
+  <main id="workspaceSection" class="hidden max-w-6xl mx-auto px-4 sm:px-6 py-6 space-y-6">
 
-      <!-- What-If Scenario Selector (Must-Have #6) -->
-      <div class="flex items-center gap-2.5 glass-amber rounded-2xl px-3.5 py-2">
-        <span class="text-xs font-extrabold text-amber-900">⚡ What-If Scenario:</span>
-        <select id="scenarioSelect" onchange="runFullAnalysis()" class="bg-white/90 text-xs font-bold text-slate-800 border border-amber-300 rounded-xl px-2.5 py-1.5 focus:outline-none">
-          <option value="moderate">🐢 Moderate AI Adoption (Co-Pilot Era)</option>
-          <option value="fast">🚀 Fast AI Disruption (Aggressive Automation)</option>
-        </select>
-      </div>
-
-      <!-- Lens Switcher (Individual Talent vs Employer HR Heatmap) -->
-      <div class="flex rounded-2xl bg-slate-200/70 p-1 border border-white text-xs font-bold">
-        <button id="tabIndividualBtn" onclick="switchTab('individual')" class="px-4 py-2 rounded-xl bg-white text-indigo-700 shadow-sm transition">👤 Individual Talent Lens</button>
-        <button id="tabHrBtn" onclick="switchTab('hr')" class="px-4 py-2 rounded-xl text-slate-600 hover:text-slate-900 transition">🏢 Employer HR Heatmap Lens</button>
-      </div>
-    </div>
-
-    <!-- --------------------------------------------------------------------- -->
-    <!-- LENS 1: INDIVIDUAL TALENT RESKILLING WORKSPACE                        -->
-    <!-- --------------------------------------------------------------------- -->
-    <div id="individualView" class="space-y-6">
+    <!-- ===================================================================== -->
+    <!-- FUNCTION TAB 1: SKILLS PROFILE INTAKE & AI VERIFICATION QUIZ          -->
+    <!-- ===================================================================== -->
+    <div id="funcTab1" class="space-y-6">
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
-        <!-- STEP 1: Profile & Skills Intake -->
-        <section class="lg:col-span-5 glass-card rounded-3xl p-6 space-y-4">
-          <div class="flex items-center justify-between">
-            <h3 class="text-xs font-extrabold uppercase tracking-wider text-indigo-600">Step 1 · Skills Profile Intake</h3>
-            <span class="text-[11px] font-bold text-emerald-700 bg-emerald-50 border border-emerald-200 px-2.5 py-0.5 rounded-full">Synthetic Profiles Ready</span>
-          </div>
-
-          <!-- 1-Click Synthetic Personas -->
-          <div>
-            <label class="text-xs font-semibold text-slate-600 block mb-1.5">Switch Synthetic Demo Persona (Non-IT & Tech):</label>
-            <div id="personaButtons" class="grid grid-cols-1 sm:grid-cols-3 gap-2"></div>
-          </div>
-
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+        <!-- Left: Profile Form -->
+        <div class="lg:col-span-7 glass-card rounded-3xl p-6 sm:p-8 space-y-5">
+          <div class="flex items-center justify-between border-b border-slate-200/70 pb-3">
             <div>
-              <label class="font-bold text-slate-700 block mb-1">Candidate Name</label>
-              <input id="inputName" type="text" class="glass-input w-full rounded-xl px-3 py-2 text-slate-800 font-medium" />
+              <span class="text-[11px] font-extrabold uppercase tracking-wider text-indigo-600">Function 01</span>
+              <h2 class="text-xl font-extrabold text-slate-900">Skills Profile Intake</h2>
+            </div>
+            <div id="personaButtons" class="flex flex-wrap gap-1.5"></div>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
+            <div>
+              <label class="font-bold text-slate-700 block mb-1">Full Name</label>
+              <input id="inputName" type="text" class="glass-input w-full rounded-xl px-3.5 py-2.5 text-slate-800 font-medium" />
             </div>
             <div>
               <label class="font-bold text-slate-700 block mb-1">Industry Sector</label>
-              <select id="inputIndustry" class="glass-input w-full rounded-xl px-3 py-2 text-slate-800 font-medium">
+              <select id="inputIndustry" class="glass-input w-full rounded-xl px-3.5 py-2.5 text-slate-800 font-medium">
                 <option value="Finance & Accounting">🏦 Finance & Accounting</option>
                 <option value="Marketing & PR">📢 Marketing & PR</option>
                 <option value="IT & Software">💻 IT & Software</option>
@@ -558,11 +457,11 @@
             </div>
             <div>
               <label class="font-bold text-slate-700 block mb-1">Current Role</label>
-              <input id="inputRole" type="text" class="glass-input w-full rounded-xl px-3 py-2 text-slate-800 font-medium" />
+              <input id="inputRole" type="text" class="glass-input w-full rounded-xl px-3.5 py-2.5 text-slate-800 font-medium" />
             </div>
             <div>
-              <label class="font-bold text-slate-700 block mb-1">Work Mode Preference</label>
-              <select id="inputWorkMode" class="glass-input w-full rounded-xl px-3 py-2 text-slate-800 font-medium">
+              <label class="font-bold text-slate-700 block mb-1">Preferred Work Mode</label>
+              <select id="inputWorkMode" class="glass-input w-full rounded-xl px-3.5 py-2.5 text-slate-800 font-medium">
                 <option value="Hybrid">Hybrid (Malaysia)</option>
                 <option value="Remote">Remote (Global / SEA)</option>
                 <option value="On-site">On-site</option>
@@ -571,119 +470,177 @@
           </div>
 
           <div class="text-xs">
-            <label class="font-bold text-slate-700 block mb-1">Extracted CV Skills (comma-separated):</label>
-            <textarea id="inputSkills" rows="2" class="glass-input w-full rounded-xl px-3 py-2 text-slate-800 font-medium"></textarea>
+            <label class="font-bold text-slate-700 block mb-1">Your Skills (comma-separated):</label>
+            <textarea id="inputSkills" rows="3" class="glass-input w-full rounded-xl px-3.5 py-2.5 text-slate-800 font-medium"></textarea>
           </div>
 
-          <button onclick="runFullAnalysis()" class="w-full py-3 rounded-2xl font-extrabold text-xs text-white bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-500 shadow-md shadow-indigo-500/20 hover:opacity-95 transition">
-            🔍 Run AI Trend Match, Explainable Breakdown & Pathway
-          </button>
-        </section>
-
-        <!-- STEP 2: Updatable AI-Trend Signal Layer -->
-        <section class="lg:col-span-7 glass-card rounded-3xl p-6 space-y-4">
-          <div class="flex flex-wrap items-center justify-between gap-2">
-            <div>
-              <h3 class="text-xs font-extrabold uppercase tracking-wider text-purple-600">Step 2 · Live AI-Trend Signal Layer</h3>
-              <p id="trendSourceBadge" class="text-[11px] text-slate-500 font-medium mt-0.5">Loading live signal metadata...</p>
-            </div>
-            <span id="trendStatusPill" class="text-[11px] font-bold px-3 py-0.5 rounded-full bg-teal-50 text-teal-700 border border-teal-200">LIVE SIGNAL</span>
+          <div class="flex justify-end pt-2">
+            <button onclick="saveProfileAndGoRadar()" class="px-6 py-3 rounded-2xl font-extrabold text-xs text-white bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-500 shadow-md hover:opacity-95 transition">
+              Update Profile & Continue to AI Skills Radar →
+            </button>
           </div>
+        </div>
 
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div class="glass-teal rounded-2xl p-4">
-              <h4 class="text-xs font-extrabold text-teal-900 mb-2.5">📈 Rising Future Skills Forecast</h4>
-              <div id="emergingSkillsList" class="space-y-2.5 text-xs"></div>
-            </div>
-            <div class="glass-pink rounded-2xl p-4">
-              <h4 class="text-xs font-extrabold text-rose-900 mb-2.5">⚠️ Routine Tasks at Automation Risk</h4>
-              <div id="decliningTasksList" class="space-y-2.5 text-xs"></div>
-            </div>
+        <!-- Right: AI Personalized Skill Verification Questions -->
+        <div class="lg:col-span-5 glass-pink rounded-3xl p-6 sm:p-8 space-y-4">
+          <div class="border-b border-pink-200/60 pb-3">
+            <span class="text-[11px] font-extrabold uppercase tracking-wider text-pink-600">AI Skill Check</span>
+            <h3 class="text-lg font-extrabold text-slate-900">Personalized Verification Questions</h3>
           </div>
-
-          <div class="glass-indigo rounded-2xl p-3.5">
-            <h4 class="text-[11px] font-extrabold text-indigo-900 mb-1">📰 Latest Updatable AI Research Signals (ArXiv CS.AI Feed):</h4>
-            <ul id="arxivPapersList" class="text-[11px] text-slate-600 space-y-1 list-disc list-inside"></ul>
-          </div>
-        </section>
-      </div>
-
-      <!-- STEP 3 & 4: Explainable Role Matches + Ordered Reskilling Pathway + Personalized Quiz -->
-      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
-        <section class="lg:col-span-7 space-y-4">
-          <div class="flex items-center justify-between px-1">
-            <h3 class="text-xs font-extrabold uppercase tracking-wider text-indigo-600">Step 3 · Explainable Future-Role Matches & Skills Gap</h3>
-            <span class="text-[11px] font-bold bg-teal-50 text-teal-700 border border-teal-200 px-3 py-0.5 rounded-full">⚖️ Fairness Audited: Age/Gender/Race Excluded</span>
-          </div>
-          <div id="rolesContainer" class="space-y-4"></div>
-        </section>
-
-        <section class="lg:col-span-5 space-y-6">
-          <!-- Ordered Reskilling Pathway -->
-          <div class="glass-card rounded-3xl p-6 space-y-4">
-            <div class="flex items-center justify-between">
-              <h3 class="text-xs font-extrabold uppercase tracking-wider text-teal-700">Step 4 · Personalised Reskilling Pathway</h3>
-              <span id="pathwayHoursBadge" class="text-xs font-extrabold text-amber-700 bg-amber-50 border border-amber-200 px-2.5 py-0.5 rounded-full"></span>
-            </div>
-            <p class="text-xs text-slate-500">Grounded strictly in verified MOOCs & 🇲🇾 <strong>HRD Corp / MDEC</strong> programmes (zero hallucinated URLs):</p>
-            <div id="pathwayContainer" class="space-y-3"></div>
-          </div>
-
-          <!-- CareerLens AI Personalized Skill Verification Questions -->
-          <div class="glass-pink rounded-3xl p-6 space-y-3">
-            <h3 class="text-xs font-extrabold uppercase tracking-wider text-pink-700">🎯 CareerLens AI · Personalized Skill Verification</h3>
-            <p class="text-xs text-slate-600">AI-generated follow-up questions tailored to your CV to verify practical project depth:</p>
-            <div id="quizContainer" class="space-y-2.5 text-xs"></div>
-          </div>
-        </section>
+          <div id="quizContainer" class="space-y-3 text-xs"></div>
+        </div>
       </div>
     </div>
 
-    <!-- --------------------------------------------------------------------- -->
-    <!-- LENS 2: EMPLOYER / HR WORKFORCE HEATMAP & SCREENING VIEW              -->
-    <!-- --------------------------------------------------------------------- -->
-    <div id="hrView" class="hidden space-y-6">
-      <div class="glass-card rounded-3xl p-6 sm:p-8 space-y-5">
-        <div class="flex flex-wrap items-center justify-between gap-3">
+    <!-- ===================================================================== -->
+    <!-- FUNCTION TAB 2: LIVE AI-TREND SIGNAL RADAR & WHAT-IF SCENARIO         -->
+    <!-- ===================================================================== -->
+    <div id="funcTab2" class="hidden space-y-6">
+      <div class="glass-card rounded-3xl p-6 sm:p-8 space-y-6">
+        <div class="flex flex-wrap items-center justify-between gap-4 border-b border-slate-200/70 pb-4">
           <div>
-            <div class="flex items-center gap-2">
-              <h2 class="text-lg font-extrabold text-slate-900">🏢 Employer / HR Workforce Skills-Gap Heatmap & Candidate Screening</h2>
+            <span class="text-[11px] font-extrabold uppercase tracking-wider text-purple-600">Function 02</span>
+            <h2 class="text-xl font-extrabold text-slate-900">Future Skills & AI Trend Radar</h2>
+            <p id="trendSourceBadge" class="text-xs text-slate-500 mt-0.5"></p>
+          </div>
+
+          <!-- What-If Scenario Switcher -->
+          <div class="flex items-center gap-2.5 glass-amber rounded-2xl px-4 py-2">
+            <span class="text-xs font-extrabold text-amber-900">⚡ Scenario:</span>
+            <select id="scenarioSelect" onchange="runFullAnalysis()" class="bg-white text-xs font-bold text-slate-800 border border-amber-300 rounded-xl px-3 py-1.5 focus:outline-none">
+              <option value="moderate">🐢 Moderate AI Adoption</option>
+              <option value="fast">🚀 Fast AI Disruption</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div class="glass-teal rounded-2xl p-5 space-y-3">
+            <h3 class="text-sm font-extrabold text-teal-900">📈 Rising Future Skills</h3>
+            <div id="emergingSkillsList" class="space-y-3 text-xs"></div>
+          </div>
+          <div class="glass-pink rounded-2xl p-5 space-y-3">
+            <h3 class="text-sm font-extrabold text-rose-900">⚠️ Declining / Automatable Routine Tasks</h3>
+            <div id="decliningTasksList" class="space-y-3 text-xs"></div>
+          </div>
+        </div>
+
+        <div class="glass-indigo rounded-2xl p-4">
+          <h4 class="text-xs font-extrabold text-indigo-900 mb-2">📰 Recent AI Research Signals (ArXiv CS.AI Feed)</h4>
+          <ul id="arxivPapersList" class="text-xs text-slate-600 space-y-1.5 list-disc list-inside"></ul>
+        </div>
+
+        <div class="flex justify-between pt-2">
+          <button onclick="switchFunctionTab(1)" class="px-5 py-2.5 rounded-xl font-bold text-xs text-slate-600 bg-white border border-slate-200 hover:bg-slate-50 transition">
+            ← Back to Profile
+          </button>
+          <button onclick="switchFunctionTab(3)" class="px-6 py-2.5 rounded-xl font-extrabold text-xs text-white bg-gradient-to-r from-indigo-600 to-pink-500 shadow-md hover:opacity-95 transition">
+            Next: View Future-Role Matches →
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===================================================================== -->
+    <!-- FUNCTION TAB 3: EXPLAINABLE FUTURE-ROLE MATCHING & SKILLS GAP         -->
+    <!-- ===================================================================== -->
+    <div id="funcTab3" class="hidden space-y-6">
+      <div class="glass-card rounded-3xl p-6 sm:p-8 space-y-5">
+        <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-200/70 pb-4">
+          <div>
+            <span class="text-[11px] font-extrabold uppercase tracking-wider text-indigo-600">Function 03</span>
+            <h2 class="text-xl font-extrabold text-slate-900">Future-Role Matches & Skills Gap</h2>
+          </div>
+          <span class="text-xs font-bold bg-teal-50 text-teal-700 border border-teal-200 px-3 py-1 rounded-full">⚖️ Fairness Audited</span>
+        </div>
+
+        <div id="rolesContainer" class="grid grid-cols-1 md:grid-cols-2 gap-5"></div>
+
+        <div class="flex justify-between pt-2">
+          <button onclick="switchFunctionTab(2)" class="px-5 py-2.5 rounded-xl font-bold text-xs text-slate-600 bg-white border border-slate-200 hover:bg-slate-50 transition">
+            ← Back to AI Radar
+          </button>
+          <button onclick="switchFunctionTab(4)" class="px-6 py-2.5 rounded-xl font-extrabold text-xs text-white bg-gradient-to-r from-indigo-600 to-teal-500 shadow-md hover:opacity-95 transition">
+            Next: View Personalised Reskilling Pathway →
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===================================================================== -->
+    <!-- FUNCTION TAB 4: PERSONALISED RESKILLING PATHWAY & SDG IMPACT          -->
+    <!-- ===================================================================== -->
+    <div id="funcTab4" class="hidden space-y-6">
+      <div class="glass-card rounded-3xl p-6 sm:p-8 space-y-6">
+        <div class="flex flex-wrap items-center justify-between gap-3 border-b border-slate-200/70 pb-4">
+          <div>
+            <span class="text-[11px] font-extrabold uppercase tracking-wider text-teal-700">Function 04</span>
+            <h2 id="pathwayRoleTitle" class="text-xl font-extrabold text-slate-900">Personalised Reskilling Pathway</h2>
+          </div>
+          <div class="flex items-center gap-2">
+            <select id="pathwayRoleSelector" onchange="renderPathway(this.value)" class="glass-input text-xs font-bold text-slate-800 rounded-xl px-3 py-2"></select>
+            <span id="pathwayHoursBadge" class="text-xs font-extrabold text-amber-800 bg-amber-50 border border-amber-200 px-3 py-1.5 rounded-xl"></span>
+          </div>
+        </div>
+
+        <!-- SDG Contribution Banner for Selected Role -->
+        <div id="pathwaySdgBanner" class="grid grid-cols-1 sm:grid-cols-2 gap-4"></div>
+
+        <!-- Ordered Course Cards -->
+        <div id="pathwayContainer" class="grid grid-cols-1 md:grid-cols-3 gap-4"></div>
+
+        <div class="flex justify-between pt-2">
+          <button onclick="switchFunctionTab(3)" class="px-5 py-2.5 rounded-xl font-bold text-xs text-slate-600 bg-white border border-slate-200 hover:bg-slate-50 transition">
+            ← Back to Role Matches
+          </button>
+          <button onclick="switchFunctionTab(5)" class="px-5 py-2.5 rounded-xl font-bold text-xs text-pink-700 bg-pink-50 border border-pink-200 hover:bg-pink-100 transition">
+            🏢 View Employer HR Heatmap →
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===================================================================== -->
+    <!-- FUNCTION TAB 5: EMPLOYER / HR WORKFORCE HEATMAP                       -->
+    <!-- ===================================================================== -->
+    <div id="funcTab5" class="hidden space-y-6">
+      <div class="glass-card rounded-3xl p-6 sm:p-8 space-y-5">
+        <div class="flex flex-wrap items-center justify-between gap-3 border-b border-slate-200/70 pb-4">
+          <div>
+            <span class="text-[11px] font-extrabold uppercase tracking-wider text-pink-600">Employer Portal</span>
+            <div class="flex items-center gap-2 mt-0.5">
+              <h2 class="text-xl font-extrabold text-slate-900">Workforce Skills-Gap Heatmap</h2>
               <span id="hrViewCompanyBadge" class="text-xs font-bold bg-pink-50 text-pink-700 border border-pink-200 px-3 py-0.5 rounded-full">Nexus Digital & Finance Sdn Bhd</span>
             </div>
-            <p class="text-xs text-slate-500 mt-1">Helps HR & L&D managers identify transferable skills, verify missing competencies, and plan HRD Corp reskilling across teams (SDG 4.3 & SDG 8.5).</p>
           </div>
-          <span class="text-xs font-bold bg-indigo-50 text-indigo-700 border border-indigo-200 px-3.5 py-1.5 rounded-xl">👨‍⚖️ Human-in-the-Loop Final Decision</span>
+          <span class="text-xs font-bold bg-indigo-50 text-indigo-700 border border-indigo-200 px-3.5 py-1.5 rounded-xl">👨‍⚖️ Human-in-the-Loop Decision</span>
         </div>
 
-        <!-- Department Skill Gap Summary Bars -->
         <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
           <div class="glass-indigo rounded-2xl p-4">
-            <div class="text-xs font-bold text-slate-600">Team AI Literacy Coverage</div>
-            <div class="text-2xl font-extrabold text-indigo-700 mt-1">68% Ready</div>
-            <div class="text-[11px] text-slate-500 mt-0.5">Strong domain foundations; 32% gap in LLM & workflow automation.</div>
+            <div class="text-xs font-bold text-slate-600">Team AI Readiness</div>
+            <div class="text-2xl font-extrabold text-indigo-700 mt-1">68%</div>
           </div>
           <div class="glass-teal rounded-2xl p-4">
-            <div class="text-xs font-bold text-slate-600">Internal Mobility Potential</div>
-            <div class="text-2xl font-extrabold text-teal-700 mt-1">3 / 3 Retained</div>
-            <div class="text-[11px] text-slate-500 mt-0.5">100% of at-risk staff can transition via 16–36h reskilling tracks.</div>
+            <div class="text-xs font-bold text-slate-600">Internal Talent Retention</div>
+            <div class="text-2xl font-extrabold text-teal-700 mt-1">3 / 3 Staff</div>
           </div>
           <div class="glass-amber rounded-2xl p-4">
-            <div class="text-xs font-bold text-slate-600">Fairness & PDPA Compliance</div>
-            <div class="text-2xl font-extrabold text-amber-700 mt-1">100% Audited</div>
-            <div class="text-[11px] text-slate-500 mt-0.5">Missing CV skills marked as "To Confirm" rather than auto-rejected.</div>
+            <div class="text-xs font-bold text-slate-600">Fairness & PDPA Status</div>
+            <div class="text-2xl font-extrabold text-amber-700 mt-1">100% Verified</div>
           </div>
         </div>
 
-        <div class="overflow-x-auto bg-white/80 rounded-2xl border border-slate-200/80 shadow-sm">
+        <div class="overflow-x-auto bg-white/85 rounded-2xl border border-slate-200/80 shadow-sm">
           <table class="w-full text-left border-collapse text-xs">
             <thead>
               <tr class="border-b border-slate-200 text-slate-500 bg-slate-50/80">
-                <th class="py-3.5 px-4 font-bold">Candidate / Employee</th>
+                <th class="py-3.5 px-4 font-bold">Employee / Candidate</th>
                 <th class="py-3.5 px-4 font-bold">Current Role</th>
-                <th class="py-3.5 px-4 font-bold">Recommended Future Role</th>
-                <th class="py-3.5 px-4 font-bold">Explainable Match</th>
-                <th class="py-3.5 px-4 font-bold">Skills Gap (To Confirm / Train)</th>
-                <th class="py-3.5 px-4 font-bold">Recommended HR Action</th>
+                <th class="py-3.5 px-4 font-bold">Target Future Role</th>
+                <th class="py-3.5 px-4 font-bold">Match Score</th>
+                <th class="py-3.5 px-4 font-bold">Priority Skills Gap</th>
+                <th class="py-3.5 px-4 font-bold">HR Action</th>
               </tr>
             </thead>
             <tbody class="divide-y divide-slate-200/60 text-slate-700">
@@ -691,68 +648,56 @@
                 <td class="py-3.5 px-4 font-bold text-slate-900">Aisha Rahman <span class="block text-[10px] font-mono text-slate-400">CL-JS-2026-1042</span></td>
                 <td class="py-3.5 px-4">Junior Financial Auditor</td>
                 <td class="py-3.5 px-4 text-indigo-700 font-bold">AI Financial Compliance & ESG Auditor</td>
-                <td class="py-3.5 px-4"><span class="bg-emerald-100 text-emerald-800 font-bold px-2.5 py-1 rounded-lg">82% Match</span></td>
-                <td class="py-3.5 px-4 text-rose-600 font-medium">Python Data Analysis, AI Risk Model Auditing</td>
-                <td class="py-3.5 px-4"><span class="bg-indigo-600 text-white font-semibold px-3 py-1.5 rounded-xl shadow-sm inline-block">Approve 36h HRD Corp Reskilling</span></td>
+                <td class="py-3.5 px-4"><span class="bg-emerald-100 text-emerald-800 font-bold px-2.5 py-1 rounded-lg">82%</span></td>
+                <td class="py-3.5 px-4 text-rose-600 font-medium">Python Data Analysis, AI Risk Auditing</td>
+                <td class="py-3.5 px-4"><span class="bg-indigo-600 text-white font-semibold px-3 py-1.5 rounded-xl">Approve 36h HRD Corp Track</span></td>
               </tr>
               <tr class="hover:bg-indigo-50/40 transition">
                 <td class="py-3.5 px-4 font-bold text-slate-900">Jason Lim <span class="block text-[10px] font-mono text-slate-400">CL-JS-2026-2091</span></td>
                 <td class="py-3.5 px-4">Digital Copywriter</td>
                 <td class="py-3.5 px-4 text-indigo-700 font-bold">Generative AI Marketing Architect</td>
-                <td class="py-3.5 px-4"><span class="bg-emerald-100 text-emerald-800 font-bold px-2.5 py-1 rounded-lg">80% Match</span></td>
-                <td class="py-3.5 px-4 text-rose-600 font-medium">Prompt Engineering, AI Workflow Automation</td>
-                <td class="py-3.5 px-4"><span class="bg-purple-600 text-white font-semibold px-3 py-1.5 rounded-xl shadow-sm inline-block">Assign 16h MDEC Track</span></td>
+                <td class="py-3.5 px-4"><span class="bg-emerald-100 text-emerald-800 font-bold px-2.5 py-1 rounded-lg">80%</span></td>
+                <td class="py-3.5 px-4 text-rose-600 font-medium">Prompt Engineering, Workflow Automation</td>
+                <td class="py-3.5 px-4"><span class="bg-purple-600 text-white font-semibold px-3 py-1.5 rounded-xl">Assign 16h MDEC Track</span></td>
               </tr>
               <tr class="hover:bg-indigo-50/40 transition">
                 <td class="py-3.5 px-4 font-bold text-slate-900">Kavin Raj <span class="block text-[10px] font-mono text-slate-400">CL-JS-2026-3318</span></td>
                 <td class="py-3.5 px-4">CS Fresh Graduate</td>
                 <td class="py-3.5 px-4 text-indigo-700 font-bold">AI Agent & RAG Systems Engineer</td>
-                <td class="py-3.5 px-4"><span class="bg-emerald-100 text-emerald-800 font-bold px-2.5 py-1 rounded-lg">85% Match</span></td>
+                <td class="py-3.5 px-4"><span class="bg-emerald-100 text-emerald-800 font-bold px-2.5 py-1 rounded-lg">85%</span></td>
                 <td class="py-3.5 px-4 text-rose-600 font-medium">LangChain/LlamaIndex, Vector DB & RAG</td>
-                <td class="py-3.5 px-4"><span class="bg-teal-600 text-white font-semibold px-3 py-1.5 rounded-xl shadow-sm inline-block">Schedule Human Review & Quiz</span></td>
+                <td class="py-3.5 px-4"><span class="bg-teal-600 text-white font-semibold px-3 py-1.5 rounded-xl">Schedule Human Review</span></td>
               </tr>
             </tbody>
           </table>
         </div>
       </div>
     </div>
+
   </main>
 
   <!-- ========================================================================= -->
   <!-- MODAL 1: PRIVACY DATA, PDPA 2010 & AI FAIRNESS TERMS & CONDITIONS         -->
   <!-- ========================================================================= -->
   <div id="termsModal" class="hidden fixed inset-0 z-50 bg-slate-900/40 backdrop-blur-sm flex items-center justify-center p-4">
-    <div class="glass-card bg-white/95 rounded-3xl max-w-2xl w-full p-6 sm:p-8 space-y-4 max-h-[85vh] overflow-y-auto shadow-2xl">
+    <div class="glass-card bg-white/95 rounded-3xl max-w-xl w-full p-6 sm:p-8 space-y-4 shadow-2xl">
       <div class="flex items-center justify-between border-b border-slate-200 pb-3">
-        <h3 class="text-lg font-extrabold text-slate-900">🛡️ Privacy Data Governance, Malaysia PDPA & AI Fairness Terms</h3>
-        <button onclick="closeTermsModal()" class="text-slate-400 hover:text-slate-700 font-bold text-lg">✕</button>
+        <h3 class="text-base font-extrabold text-slate-900">🛡️ Privacy Data Usage, PDPA & Fair AI Terms</h3>
+        <button onclick="closeTermsModal()" class="text-slate-400 hover:text-slate-700 font-bold">✕</button>
       </div>
       <div class="space-y-3 text-xs text-slate-600 leading-relaxed">
-        <div class="glass-indigo rounded-2xl p-3.5">
-          <div class="font-bold text-indigo-900">1. Explicit Purpose of Data Collection & Unique ID Assignment</div>
-          <p class="mt-1">Every registered user receives a unique Data Governance ID (<code class="bg-white px-1 rounded">CL-JS-2026-XXXX</code> or <code class="bg-white px-1 rounded">CL-HR-2026-XXXX</code>). Uploaded CVs, skills, and questionnaire responses are processed strictly to compute explainable career match scores, identify skill gaps, and recommend verified reskilling courses.</p>
-        </div>
-        <div class="glass-teal rounded-2xl p-3.5">
-          <div class="font-bold text-teal-900">2. Password Encryption & Storage Security (Malaysia PDPA 2010)</div>
-          <p class="mt-1">Passwords are never stored in plain text. CareerLens AI hashes all passwords using salted <code class="bg-white px-1 rounded">PBKDF2-SHA256</code> before storing in our local SQLite database (<code class="bg-white px-1 rounded">careerlens.db</code>). In accordance with Hackathon Domain 1 rules, demo profiles use synthetic or open data only.</p>
-        </div>
-        <div class="glass-pink rounded-2xl p-3.5">
-          <div class="font-bold text-pink-900">3. Responsible AI, Anti-Bias & Human-in-the-Loop Guarantee</div>
-          <p class="mt-1">Protected personal attributes (age, gender, ethnicity, religion, marital status) are strictly excluded from scoring algorithms. Unstated skills on a CV are flagged as <em>"Pending Verification"</em> via follow-up questions rather than automatic rejection. Final career and hiring decisions always remain with humans.</p>
-        </div>
-        <div class="glass-amber rounded-2xl p-3.5">
-          <div class="font-bold text-amber-900">4. User Control, Retention & Right to Deletion</div>
-          <p class="mt-1">Users and employers retain full ownership of their profile data and may export their SDG Career Passport or request immediate deletion/reset of their session data at any time.</p>
-        </div>
+        <p><strong>1. Unique ID & Data Usage:</strong> Each registered account receives a unique Data ID (<code class="bg-slate-100 px-1 rounded">CL-2026-XXXX</code>). Profile and skill inputs are used solely to generate career matches, skill gaps, and learning pathways.</p>
+        <p><strong>2. Security & Encryption:</strong> Passwords are encrypted using salted <code class="bg-slate-100 px-1 rounded">PBKDF2-SHA256</code> hashing in compliance with Malaysia PDPA 2010 principles.</p>
+        <p><strong>3. Fair & Human-Centred AI:</strong> Age, gender, ethnicity, and personal attributes are never used for scoring. Final career and hiring decisions remain under human control.</p>
       </div>
-      <div class="flex justify-end gap-2 pt-2">
-        <button onclick="acceptTermsFromModal()" class="px-5 py-2.5 rounded-xl bg-gradient-to-r from-indigo-600 to-pink-500 text-white font-bold text-xs shadow">I Understand & Accept Terms</button>
+      <div class="flex justify-end pt-2">
+        <button onclick="acceptTermsFromModal()" class="px-5 py-2.5 rounded-xl bg-gradient-to-r from-indigo-600 to-pink-500 text-white font-bold text-xs">Accept Terms</button>
       </div>
     </div>
   </div>
 
   <!-- ========================================================================= -->
-  <!-- MODAL 2: SIMULATED GOOGLE / MICROSOFT SSO PICKER                          -->
+  <!-- MODAL 2: SSO ACCOUNT PICKER                                               -->
   <!-- ========================================================================= -->
   <div id="ssoModal" class="hidden fixed inset-0 z-50 bg-slate-900/40 backdrop-blur-sm flex items-center justify-center p-4">
     <div class="glass-card bg-white/95 rounded-3xl max-w-md w-full p-6 space-y-4 shadow-2xl">
@@ -760,44 +705,69 @@
         <h3 id="ssoModalTitle" class="text-base font-extrabold text-slate-900">Continue with SSO</h3>
         <button onclick="closeSsoModal()" class="text-slate-400 hover:text-slate-700 font-bold">✕</button>
       </div>
-      <p class="text-xs text-slate-500">Select a verified account to sign in instantly (Simulated SSO for seamless hackathon judging on Replit):</p>
       <div class="space-y-2.5">
         <button onclick="quickDemoLogin('job_seeker'); closeSsoModal();" class="w-full text-left p-3.5 rounded-2xl bg-indigo-50/70 hover:bg-indigo-100/80 border border-indigo-200 transition">
-          <div class="font-bold text-xs text-slate-900">Aisha Rahman (Job Seeker Profile)</div>
-          <div class="text-[11px] text-slate-500">aisha.demo@careerlens.my · ID: CL-JS-2026-1042</div>
+          <div class="font-bold text-xs text-slate-900">Aisha Rahman (Job Seeker)</div>
+          <div class="text-[11px] text-slate-500">aisha.demo@careerlens.my</div>
         </button>
         <button onclick="quickDemoLogin('hr_company'); closeSsoModal();" class="w-full text-left p-3.5 rounded-2xl bg-pink-50/70 hover:bg-pink-100/80 border border-pink-200 transition">
-          <div class="font-bold text-xs text-slate-900">Daniel Tan — HR Lead @ Nexus Digital Sdn Bhd</div>
-          <div class="text-[11px] text-slate-500">hr.demo@nexussme.my · ID: CL-HR-2026-8801</div>
+          <div class="font-bold text-xs text-slate-900">Daniel Tan (HR @ Nexus Digital Sdn Bhd)</div>
+          <div class="text-[11px] text-slate-500">hr.demo@nexussme.my</div>
         </button>
       </div>
     </div>
   </div>
 
-  <!-- Browser Tab Favicon using Custom Logo -->
-  <script>
-    (function() {
-      const link = document.createElement('link');
-      link.rel = 'icon';
-      link.type = 'image/svg+xml';
-      link.href = '/static/brand/careerlens_logo_icon.svg';
-      document.head.appendChild(link);
-    })();
-  </script>
   <script>
     let personas = [];
     let currentRoles = [];
     let currentUser = null;
 
-    // Navigation between Landing, Auth, and Workspace
+    function handleLogoClick() {
+      if (currentUser) {
+        showSection('workspace');
+        switchFunctionTab(1);
+      } else {
+        showSection('landing');
+      }
+    }
+
     function showSection(sec) {
       document.getElementById('landingSection').classList.add('hidden');
       document.getElementById('authSection').classList.add('hidden');
       document.getElementById('workspaceSection').classList.add('hidden');
+      document.getElementById('workspaceNavTabs').classList.add('hidden');
+
       if (sec === 'landing') document.getElementById('landingSection').classList.remove('hidden');
       if (sec === 'auth') document.getElementById('authSection').classList.remove('hidden');
-      if (sec === 'workspace') document.getElementById('workspaceSection').classList.remove('hidden');
+      if (sec === 'workspace') {
+        document.getElementById('workspaceSection').classList.remove('hidden');
+        document.getElementById('workspaceNavTabs').classList.remove('hidden');
+      }
       window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // Switch between the 5 organized Workspace Function Tabs
+    function switchFunctionTab(tabIndex) {
+      for (let i = 1; i <= 5; i++) {
+        const pane = document.getElementById(`funcTab${i}`);
+        const btn = document.getElementById(`navFunc${i}`);
+        if (i === tabIndex) {
+          pane.classList.remove('hidden');
+          btn.className = 'px-3.5 py-2 rounded-xl text-xs font-bold bg-white text-indigo-700 shadow-sm transition';
+        } else {
+          pane.classList.add('hidden');
+          btn.className = i === 5
+            ? 'px-3.5 py-2 rounded-xl text-xs font-bold text-pink-700 hover:bg-white/60 transition'
+            : 'px-3.5 py-2 rounded-xl text-xs font-bold text-slate-600 hover:text-slate-900 transition';
+        }
+      }
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function saveProfileAndGoRadar() {
+      runFullAnalysis();
+      switchFunctionTab(2);
     }
 
     function openAuthView(mode) {
@@ -839,20 +809,17 @@
       const hrCard = document.getElementById('roleCardHr');
       const seekerPane = document.getElementById('regSeekerDetailsPane');
       const hrPane = document.getElementById('regHrDetailsPane');
-      const uidBadge = document.getElementById('regPreviewUidBadge');
 
       if (role === 'job_seeker') {
-        seekerCard.className = 'cursor-pointer glass-indigo border-2 border-indigo-500 rounded-2xl p-4 transition';
-        hrCard.className = 'cursor-pointer bg-white/60 border border-slate-200 hover:border-pink-400 rounded-2xl p-4 transition';
+        seekerCard.className = 'cursor-pointer glass-indigo border-2 border-indigo-500 rounded-2xl p-3.5 transition';
+        hrCard.className = 'cursor-pointer bg-white/60 border border-slate-200 hover:border-pink-400 rounded-2xl p-3.5 transition';
         seekerPane.classList.remove('hidden');
         hrPane.classList.add('hidden');
-        uidBadge.textContent = 'Auto-ID: CL-JS-2026-XXXX';
       } else {
-        hrCard.className = 'cursor-pointer glass-pink border-2 border-pink-500 rounded-2xl p-4 transition';
-        seekerCard.className = 'cursor-pointer bg-white/60 border border-slate-200 hover:border-indigo-400 rounded-2xl p-4 transition';
+        hrCard.className = 'cursor-pointer glass-pink border-2 border-pink-500 rounded-2xl p-3.5 transition';
+        seekerCard.className = 'cursor-pointer bg-white/60 border border-slate-200 hover:border-indigo-400 rounded-2xl p-3.5 transition';
         seekerPane.classList.add('hidden');
         hrPane.classList.remove('hidden');
-        uidBadge.textContent = 'Auto-ID: CL-HR-2026-XXXX';
       }
     }
 
@@ -867,7 +834,6 @@
       }
     }
 
-    // Live Registration Field Validation
     function validateRegLive() {
       const name = document.getElementById('regFullName').value.trim();
       const email = document.getElementById('regEmail').value.trim();
@@ -875,23 +841,13 @@
       const cpw = document.getElementById('regConfirmPassword').value;
 
       const errName = document.getElementById('errFullName');
-      if (name.length >= 2) {
-        errName.textContent = '✅ Valid full name';
-        errName.className = 'text-[11px] text-emerald-600 font-semibold mt-1';
-      } else {
-        errName.textContent = 'Minimum 2 characters required.';
-        errName.className = 'text-[11px] text-slate-400 mt-1';
-      }
+      errName.textContent = name.length >= 2 ? '✅ Valid full name' : 'Minimum 2 characters.';
+      errName.className = name.length >= 2 ? 'text-[11px] text-emerald-600 font-semibold mt-1' : 'text-[11px] text-slate-400 mt-1';
 
       const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
       const errEmail = document.getElementById('errEmail');
-      if (emailRegex.test(email)) {
-        errEmail.textContent = '✅ Valid email format';
-        errEmail.className = 'text-[11px] text-emerald-600 font-semibold mt-1';
-      } else {
-        errEmail.textContent = 'Must be a valid email (e.g. name@domain.com).';
-        errEmail.className = 'text-[11px] text-slate-400 mt-1';
-      }
+      errEmail.textContent = emailRegex.test(email) ? '✅ Valid email format' : 'Must be a valid unregistered email.';
+      errEmail.className = emailRegex.test(email) ? 'text-[11px] text-emerald-600 font-semibold mt-1' : 'text-[11px] text-slate-400 mt-1';
 
       const setRule = (id, ok, label) => {
         const el = document.getElementById(id);
@@ -906,13 +862,8 @@
 
       const errCpw = document.getElementById('errConfirmPw');
       if (cpw.length > 0) {
-        if (pw === cpw) {
-          errCpw.textContent = '✅ Passwords match';
-          errCpw.className = 'text-[11px] text-emerald-600 font-semibold mt-1';
-        } else {
-          errCpw.textContent = '❌ Passwords do not match';
-          errCpw.className = 'text-[11px] text-rose-600 font-semibold mt-1';
-        }
+        errCpw.textContent = pw === cpw ? '✅ Passwords match' : '❌ Passwords do not match';
+        errCpw.className = pw === cpw ? 'text-[11px] text-emerald-600 font-semibold mt-1' : 'text-[11px] text-rose-600 font-semibold mt-1';
       }
     }
 
@@ -934,20 +885,18 @@
         reskilling_focus: document.getElementById('hrReskillingFocus').value,
       };
 
-      const payload = {
-        full_name: document.getElementById('regFullName').value,
-        email: document.getElementById('regEmail').value,
-        password: document.getElementById('regPassword').value,
-        confirm_password: document.getElementById('regConfirmPassword').value,
-        role,
-        role_details,
-        pdpa_consent: document.getElementById('regPdpaConsent').checked,
-      };
-
       const res = await fetch('/api/auth/register', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload)
+        body: JSON.stringify({
+          full_name: document.getElementById('regFullName').value,
+          email: document.getElementById('regEmail').value,
+          password: document.getElementById('regPassword').value,
+          confirm_password: document.getElementById('regConfirmPassword').value,
+          role,
+          role_details,
+          pdpa_consent: document.getElementById('regPdpaConsent').checked,
+        })
       });
       const data = await res.json();
       if (!data.ok) {
@@ -959,12 +908,13 @@
 
     async function submitLogin() {
       hideAuthAlert();
-      const email = document.getElementById('loginEmail').value;
-      const password = document.getElementById('loginPassword').value;
       const res = await fetch('/api/auth/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, password })
+        body: JSON.stringify({
+          email: document.getElementById('loginEmail').value,
+          password: document.getElementById('loginPassword').value,
+        })
       });
       const data = await res.json();
       if (!data.ok) {
@@ -996,20 +946,14 @@
 
       const isHr = user.role === 'hr_company';
       const rd = user.role_details || {};
-      const roleText = isHr
-        ? `🏢 ${rd.hr_job_title || 'HR Lead'} @ ${rd.company_name || 'Enterprise'}`
-        : `👤 ${rd.seeker_type || 'Job Seeker'} · ${rd.industry || 'Talent'}`;
-
-      document.getElementById('navUserRoleBadge').textContent = roleText;
-      document.getElementById('wsWelcomeTitle').textContent = `Welcome, ${user.full_name}`;
-      document.getElementById('wsUidBadge').textContent = `Unique ID: ${user.unique_uid}`;
-      document.getElementById('wsSubContext').textContent = `${roleText} · PDPA Consent Logged (${user.consent_timestamp})`;
+      document.getElementById('navUserRoleBadge').textContent = isHr
+        ? `🏢 ${rd.company_name || 'HR Portal'}`
+        : `👤 ${rd.seeker_type || 'Job Seeker'}`;
 
       if (isHr && rd.company_name) {
         document.getElementById('hrViewCompanyBadge').textContent = `${rd.company_name} (${rd.company_size || 'SME'})`;
       }
 
-      // Populate profile intake if job seeker
       if (!isHr) {
         document.getElementById('inputName').value = user.full_name;
         if (rd.industry) document.getElementById('inputIndustry').value = rd.industry;
@@ -1018,7 +962,7 @@
       }
 
       showSection('workspace');
-      switchTab(isHr ? 'hr' : 'individual');
+      switchFunctionTab(isHr ? 5 : 1);
       runFullAnalysis();
     }
 
@@ -1030,7 +974,6 @@
       showSection('landing');
     }
 
-    // Modals
     function openTermsModal() { document.getElementById('termsModal').classList.remove('hidden'); }
     function closeTermsModal() { document.getElementById('termsModal').classList.add('hidden'); }
     function acceptTermsFromModal() {
@@ -1043,38 +986,17 @@
     }
     function closeSsoModal() { document.getElementById('ssoModal').classList.add('hidden'); }
 
-    // Workspace Tabs
-    function switchTab(tab) {
-      const indView = document.getElementById('individualView');
-      const hrView = document.getElementById('hrView');
-      const indBtn = document.getElementById('tabIndividualBtn');
-      const hrBtn = document.getElementById('tabHrBtn');
-      if (tab === 'individual') {
-        indView.classList.remove('hidden');
-        hrView.classList.add('hidden');
-        indBtn.className = 'px-4 py-2 rounded-xl bg-white text-indigo-700 shadow-sm transition';
-        hrBtn.className = 'px-4 py-2 rounded-xl text-slate-600 hover:text-slate-900 transition';
-      } else {
-        indView.classList.add('hidden');
-        hrView.classList.remove('hidden');
-        hrBtn.className = 'px-4 py-2 rounded-xl bg-white text-indigo-700 shadow-sm transition';
-        indBtn.className = 'px-4 py-2 rounded-xl text-slate-600 hover:text-slate-900 transition';
-      }
-    }
-
     async function initApp() {
       const res = await fetch('/api/personas');
       personas = await res.json();
       const btnContainer = document.getElementById('personaButtons');
       btnContainer.innerHTML = personas.map((p, idx) => `
-        <button onclick="selectPersona(${idx})" class="text-left bg-white/85 hover:bg-white border border-indigo-100 rounded-2xl p-2.5 shadow-sm transition">
-          <div class="font-bold text-xs text-slate-900 truncate">${p.name.split(' (')[0]}</div>
-          <div class="text-[10px] text-indigo-600 font-medium truncate">${p.current_role}</div>
+        <button onclick="selectPersona(${idx})" class="text-xs font-bold bg-indigo-50 hover:bg-indigo-100 text-indigo-700 border border-indigo-200 rounded-xl px-3 py-1.5 transition">
+          ${p.name.split(' (')[0]}
         </button>
       `).join('');
       selectPersona(0);
 
-      // Check existing session
       const meRes = await fetch('/api/auth/me');
       const meData = await meRes.json();
       if (meData.user) {
@@ -1085,7 +1007,7 @@
     function selectPersona(idx) {
       const p = personas[idx];
       if (!p) return;
-      document.getElementById('inputName').value = p.name;
+      document.getElementById('inputName').value = p.name.split(' (')[0];
       document.getElementById('inputIndustry').value = p.industry;
       document.getElementById('inputRole').value = p.current_role;
       document.getElementById('inputWorkMode').value = p.work_mode_preference;
@@ -1096,13 +1018,12 @@
     async function runFullAnalysis() {
       const scenario = document.getElementById('scenarioSelect').value;
 
-      // 1. Fetch Live Trend Signal Layer
+      // Function 2: Trend Signal Layer
       const trendRes = await fetch(`/api/trends?scenario=${scenario}`);
       const trendData = await trendRes.json();
 
       document.getElementById('trendSourceBadge').textContent =
-        `📌 Source: ${trendData.signal_metadata.source_name}  |  📅 Updated: ${trendData.signal_metadata.last_updated}`;
-      document.getElementById('trendStatusPill').textContent = trendData.signal_metadata.live_status;
+        `Source: ${trendData.signal_metadata.source_name} · Updated: ${trendData.signal_metadata.last_updated}`;
 
       document.getElementById('emergingSkillsList').innerHTML = trendData.emerging_skills.map(s => `
         <div>
@@ -1132,7 +1053,7 @@
         <li><span class="font-bold text-indigo-700">[${p.published}]</span> ${p.title}</li>
       `).join('');
 
-      // 2. Analyze Profile & Match Roles
+      // Function 1, 3, 4: Profile Analysis, Role Match & Reskilling Plan
       const profile = {
         name: document.getElementById('inputName').value,
         industry: document.getElementById('inputIndustry').value,
@@ -1150,6 +1071,7 @@
       currentRoles = matchData.recommended_roles;
 
       renderRoles(currentRoles);
+      populatePathwaySelector(currentRoles);
       renderPathway(0);
       renderQuiz(matchData.verification_questions);
     }
@@ -1157,62 +1079,81 @@
     function renderRoles(roles) {
       const container = document.getElementById('rolesContainer');
       container.innerHTML = roles.map((r, idx) => `
-        <div onclick="renderPathway(${idx})" class="cursor-pointer glass-card hover:border-indigo-400 border-2 ${idx === 0 ? 'border-indigo-500' : 'border-white/90'} rounded-3xl p-5 space-y-3.5 transition">
-          <div class="flex flex-wrap items-start justify-between gap-2">
-            <div>
-              <span class="text-[10px] font-extrabold uppercase px-2.5 py-0.5 rounded-full bg-indigo-50 text-indigo-700 border border-indigo-200">${r.industry}</span>
-              <h4 class="text-base font-extrabold text-slate-900 mt-1">${idx + 1}. ${r.title}</h4>
+        <div class="glass-indigo rounded-3xl p-5 space-y-4 flex flex-col justify-between">
+          <div class="space-y-3">
+            <div class="flex items-start justify-between gap-2">
+              <div>
+                <span class="text-[10px] font-extrabold uppercase px-2.5 py-0.5 rounded-full bg-white text-indigo-700 border border-indigo-200">${r.industry}</span>
+                <h4 class="text-base font-extrabold text-slate-900 mt-1.5">${idx + 1}. ${r.title}</h4>
+              </div>
+              <div class="text-right">
+                <div class="text-2xl font-extrabold text-indigo-700">${r.match_score}%</div>
+                <div class="text-[10px] font-bold text-slate-500">Match Score</div>
+              </div>
             </div>
-            <div class="text-right">
-              <div class="text-2xl font-extrabold bg-gradient-to-r from-indigo-600 to-teal-600 bg-clip-text text-transparent">${r.match_score}% <span class="text-xs font-semibold text-slate-500">Match</span></div>
-              <div class="text-[11px] font-bold text-amber-600">Market Demand Signal: ${r.demand_outlook}/100</div>
+
+            <div class="grid grid-cols-2 gap-2 text-[11px]">
+              <div class="bg-white/90 p-2 rounded-xl border border-indigo-100">Core Skills: <span class="text-emerald-600 font-extrabold">+${r.explainable_breakdown.core_skills_match_pct}%</span></div>
+              <div class="bg-white/90 p-2 rounded-xl border border-indigo-100">Transferable: <span class="text-indigo-600 font-extrabold">+${r.explainable_breakdown.transferable_skills_pct}%</span></div>
+              <div class="bg-white/90 p-2 rounded-xl border border-indigo-100">Sector Fit: <span class="text-purple-600 font-extrabold">+${r.explainable_breakdown.industry_alignment_pct}%</span></div>
+              <div class="bg-white/90 p-2 rounded-xl border border-indigo-100">Work Mode: <span class="text-teal-600 font-extrabold">+${r.explainable_breakdown.work_mode_fit_pct}%</span></div>
+            </div>
+
+            <div class="text-xs">
+              <span class="text-slate-500 font-bold block mb-1">Skills Gap:</span>
+              ${r.skills_gap.map(g => `<span class="inline-block bg-rose-50 text-rose-700 border border-rose-200 font-semibold px-2 py-0.5 rounded-lg mr-1 mb-1 text-[11px]">❌ ${g}</span>`).join('')}
             </div>
           </div>
 
-          <!-- Explainable Breakdown Bar -->
-          <div class="glass-indigo rounded-2xl p-3.5 text-xs space-y-2">
-            <div class="font-extrabold text-indigo-950">🔍 Explainable Match Score Breakdown:</div>
-            <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 text-[11px]">
-              <div class="bg-white/90 p-2 rounded-xl border border-indigo-100 font-medium text-slate-700">✅ Core Skills: <span class="text-emerald-600 font-extrabold">+${r.explainable_breakdown.core_skills_match_pct}%</span></div>
-              <div class="bg-white/90 p-2 rounded-xl border border-indigo-100 font-medium text-slate-700">🔄 Transferable: <span class="text-indigo-600 font-extrabold">+${r.explainable_breakdown.transferable_skills_pct}%</span></div>
-              <div class="bg-white/90 p-2 rounded-xl border border-indigo-100 font-medium text-slate-700">🏢 Sector Fit: <span class="text-purple-600 font-extrabold">+${r.explainable_breakdown.industry_alignment_pct}%</span></div>
-              <div class="bg-white/90 p-2 rounded-xl border border-indigo-100 font-medium text-slate-700">📍 Work Mode: <span class="text-teal-600 font-extrabold">+${r.explainable_breakdown.work_mode_fit_pct}%</span></div>
-            </div>
-          </div>
-
-          <!-- Skills Gap & SDG Mapping -->
-          <div class="flex flex-wrap items-center justify-between gap-2 text-xs">
-            <div>
-              <span class="text-slate-500 font-bold">Skills Gap to Reskill: </span>
-              ${r.skills_gap.map(g => `<span class="inline-block bg-rose-50 text-rose-700 border border-rose-200 font-semibold px-2.5 py-0.5 rounded-lg mr-1 mb-1">❌ ${g}</span>`).join('')}
-            </div>
-            <div class="flex flex-wrap gap-1">
-              ${r.sdg_tags.map(s => `<span title="${s.reason}" class="bg-emerald-50 text-emerald-800 border border-emerald-200 px-2.5 py-0.5 rounded-lg text-[11px] font-bold">🌱 ${s.code}: ${s.name}</span>`).join('')}
-            </div>
-          </div>
+          <button onclick="selectRoleForPathway(${idx})" class="w-full py-2.5 rounded-xl bg-white hover:bg-indigo-600 hover:text-white text-indigo-700 border border-indigo-200 font-bold text-xs transition shadow-sm">
+            View Reskilling Plan for This Role →
+          </button>
         </div>
       `).join('');
+    }
+
+    function populatePathwaySelector(roles) {
+      const sel = document.getElementById('pathwayRoleSelector');
+      sel.innerHTML = roles.map((r, idx) => `<option value="${idx}">${r.title} (${r.match_score}%)</option>`).join('');
+    }
+
+    function selectRoleForPathway(idx) {
+      document.getElementById('pathwayRoleSelector').value = idx;
+      renderPathway(idx);
+      switchFunctionTab(4);
     }
 
     function renderPathway(roleIdx) {
       const role = currentRoles[roleIdx];
       if (!role) return;
-      document.getElementById('pathwayHoursBadge').textContent = `⏳ Est. Total: ${role.estimated_total_hours} Hours`;
+      document.getElementById('pathwayRoleTitle').textContent = `Reskilling Plan: ${role.title}`;
+      document.getElementById('pathwayHoursBadge').textContent = `⏳ Total: ${role.estimated_total_hours} Hours`;
+
+      document.getElementById('pathwaySdgBanner').innerHTML = role.sdg_tags.map(s => `
+        <div class="glass-teal rounded-2xl p-3.5 text-xs">
+          <div class="font-extrabold text-teal-900">🌱 ${s.code} · ${s.name}</div>
+          <p class="text-[11px] text-slate-600 mt-0.5">${s.reason}</p>
+        </div>
+      `).join('');
+
       const container = document.getElementById('pathwayContainer');
       if (!role.ordered_pathway.length) {
-        container.innerHTML = `<div class="text-xs font-bold text-emerald-700">🎉 You already match all core skills for ${role.title}!</div>`;
+        container.innerHTML = `<div class="col-span-3 text-sm font-bold text-emerald-700">🎉 You already match all core skills for ${role.title}!</div>`;
         return;
       }
       container.innerHTML = role.ordered_pathway.map(step => `
-        <div class="glass-teal rounded-2xl p-4 space-y-1.5 text-xs">
-          <div class="flex items-center justify-between">
-            <span class="font-extrabold text-indigo-700">${step.phase} · ${step.target_skill}</span>
-            <span class="text-[10px] font-bold bg-amber-100 text-amber-800 px-2 py-0.5 rounded-lg">${step.hours} hrs · ${step.cost_type}</span>
+        <div class="glass-indigo rounded-2xl p-5 flex flex-col justify-between space-y-3 text-xs">
+          <div class="space-y-1.5">
+            <div class="flex items-center justify-between">
+              <span class="font-extrabold text-indigo-700">${step.phase}</span>
+              <span class="text-[10px] font-bold bg-amber-100 text-amber-800 px-2 py-0.5 rounded-lg">${step.hours} hrs · ${step.cost_type}</span>
+            </div>
+            <div class="text-sm font-extrabold text-slate-900">${step.target_skill}</div>
+            <div class="text-slate-600 font-medium">${step.course_title} (${step.provider})</div>
           </div>
-          <div class="font-bold text-slate-900">${step.course_title} <span class="text-slate-500 font-normal">(${step.provider})</span></div>
-          <div class="flex items-center justify-between pt-1">
-            <span class="text-[11px] font-bold text-teal-800">${step.malaysia_badge} · ${step.sdg}</span>
-            <a href="${step.url}" target="_blank" rel="noopener" class="text-indigo-600 hover:underline font-extrabold">Open Verified Course ↗</a>
+          <div class="pt-2 border-t border-indigo-100 flex items-center justify-between">
+            <span class="text-[11px] font-bold text-teal-700">${step.malaysia_badge}</span>
+            <a href="${step.url}" target="_blank" rel="noopener" class="text-indigo-600 hover:underline font-extrabold">Start Course ↗</a>
           </div>
         </div>
       `).join('');
@@ -1220,10 +1161,9 @@
 
     function renderQuiz(questions) {
       document.getElementById('quizContainer').innerHTML = questions.map((q, i) => `
-        <div class="bg-white/85 border border-pink-200/80 rounded-2xl p-3.5 space-y-1 shadow-sm">
-          <div class="text-[11px] font-extrabold text-pink-700">Q${i + 1} · Skill Verification: ${q.skill_tested}</div>
+        <div class="bg-white/90 border border-pink-200/80 rounded-2xl p-3.5 space-y-1 shadow-sm">
+          <div class="text-[11px] font-extrabold text-pink-700">Q${i + 1} · ${q.skill_tested}</div>
           <div class="text-slate-800 font-medium">${q.question}</div>
-          <div class="text-[10px] text-slate-500">${q.purpose}</div>
         </div>
       `).join('');
     }
