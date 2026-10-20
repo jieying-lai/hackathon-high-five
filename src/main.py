@@ -32,6 +32,8 @@ from utils import format_greeting
 app = Flask(__name__, template_folder="templates", static_folder="static")
 app.secret_key = os.getenv("FLASK_SECRET_KEY") or secrets.token_hex(32)
 app.config.update(
+    # Pick up edited pages on refresh without enabling the debug server.
+    TEMPLATES_AUTO_RELOAD=True,
     MAX_CONTENT_LENGTH=9 * 1024 * 1024,  # 8 MB PDF plus multipart overhead
     SESSION_COOKIE_HTTPONLY=True,
     SESSION_COOKIE_SAMESITE="Lax",

@@ -515,7 +515,7 @@
               </div>
             <div class="space-y-3 pt-2 border-t border-slate-200/70">
               <div class="w-full">
-                <input id="jobSearchInput" oninput="filterJobsAndCompanies()" class="input !py-2" placeholder="🔍 Search any role, skill, company, or sector..." />
+                <input id="mapJobSearchInput" oninput="filterJobsAndCompanies(this.value)" class="input !py-2" placeholder="🔍 Search any role, skill, company, or sector..." />
               </div>
               <div id="catFilterBar" class="flex flex-wrap items-center gap-2 py-1"></div>
             </div>
@@ -564,7 +564,7 @@
               <!-- Clean 3-Column Filter & Sort Bar (No messy category pills) -->
               <div class="grid sm:grid-cols-12 gap-3 pt-3 border-t border-slate-200/70 items-center">
                 <div class="sm:col-span-6">
-                  <input id="jobSearchInput" oninput="debouncedJobSearch()" class="input !py-2 !text-xs" placeholder="🔍 Search by job title, skill, or company..." />
+                  <input id="jobSearchInput" oninput="debouncedJobSearch(this.value)" class="input !py-2 !text-xs" placeholder="🔍 Search by job title, skill, or company..." />
                 </div>
                 <div class="sm:col-span-3">
                   <select id="catFilterSelect" onchange="setCompanyCategory(this.value)" class="cl-select w-full" aria-label="Filter by job sector">
@@ -1488,7 +1488,7 @@
       params.set('mode', jobScope === 'all' ? 'all' : 'matched');
       params.set('sort', jobSortBy);
       if (selectedCategory && selectedCategory !== 'All') params.set('category', selectedCategory);
-      const q = (window.jobSearchInput ? jobSearchInput.value : '').trim();
+      const q = String(document.getElementById('jobSearchInput')?.value ?? '').trim();
       if (q) params.set('q', q);
       if (selectedCompanyName) params.set('company', selectedCompanyName);
       params.set('offset', jobsOffset);
@@ -1736,11 +1736,20 @@
       if (sec) sec.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
 
-    function debouncedJobSearch() {
+    function syncJobSearchInputs(value) {
+      const query = String(value ?? '');
+      ['jobSearchInput', 'mapJobSearchInput'].forEach(id => {
+        const input = document.getElementById(id);
+        if (input) input.value = query;
+      });
+    }
+
+    function debouncedJobSearch(value) {
+      if (value !== undefined) syncJobSearchInputs(value);
       clearTimeout(searchDebounceTimer);
       searchDebounceTimer = setTimeout(() => {
         selectedCompanyName = '';
-        loadJobs(false);
+        loadJobs(false).catch(error => toast(error.message || 'Could not search jobs. Please retry.', 'err'));
       }, 240);
     }
 
@@ -1764,8 +1773,8 @@
         radiusKm = Number(act.radius);
         if (window.radiusSlider) radiusSlider.value = radiusKm;
       }
-      if (window.jobSearchInput && act.query !== undefined) {
-        jobSearchInput.value = act.query || '';
+      if (act.query !== undefined) {
+        syncJobSearchInputs(act.query);
       }
       selectedCompanyName = '';
       loadJobs(false).then(() => zoomMapNearMe());
@@ -1818,8 +1827,8 @@
       );
     }
 
-    function filterJobsAndCompanies() {
-      debouncedJobSearch();
+    function filterJobsAndCompanies(value) {
+      debouncedJobSearch(value);
     }
 
     function radiusZoomLevel(km) {
