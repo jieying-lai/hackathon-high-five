@@ -1,6 +1,6 @@
 """Member 2 Module: Updatable AI-Trend Signal Layer & What-If Scenario Engine.
 
-Fetches live AI research & job market signals (ArXiv CS.AI feed + Adzuna / Open Skills benchmark)
+Fetches live AI research & job market signals (ArXiv CS.AI feed + O*NET / Hays Malaysia benchmark)
 and returns dated, source-cited trend data so nothing is purely hardcoded.
 """
 
@@ -26,16 +26,17 @@ def fetch_live_arxiv_signal(query: str = "artificial+intelligence+workforce") ->
         if papers:
             return {
                 "live_status": "LIVE_CONNECTED",
-                "source_name": "ArXiv CS.AI Live API + O*NET / Hays Malaysia 2025 Benchmark",
+                "source_name": "ArXiv CS.AI Live API + O*NET / Hays Malaysia Benchmark",
                 "last_updated": datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M UTC"),
                 "recent_signals": papers,
             }
     except Exception:
         pass
 
+   
     return {
         "live_status": "CACHED_FALLBACK",
-        "source_name": "ArXiv CS.AI Snapshot + Hays Asia Salary Guide 2025 / MOSTI Dataset",
+        "source_name": "ArXiv CS.AI Snapshot + Hays Asia Salary Guide / MOSTI Dataset",
         "last_updated": "2026-10-20 08:00 UTC",
         "recent_signals": [
             {"title": "Autonomous LLM Agents in Financial & Enterprise Compliance", "published": "2026-10-18"},
