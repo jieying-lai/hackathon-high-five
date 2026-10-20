@@ -158,6 +158,67 @@ async function signOut() {
   async function mountWidget() {
     if (!document.body || document.getElementById('lumiFab')) return;
 
+    const wrap = document.createElement('div');
+    // Translate widget controls while preserving conversation content.
+    wrap.innerHTML = `
+      <!-- Floating Cute Mascot Launcher Button -->
+      <button id="lumiFab" onclick="toggleLumiChat()" class="lumi-fab" title="Chat with Lumi — Domain-Scoped CareerLens AI Mascot">
+        <div class="lumi-fab-avatar">
+          <img src="/static/brand/lumi_mascot.svg" alt="Lumi Mascot" class="w-11 h-11" />
+        </div>
+        <div class="text-left pr-1">
+          <div class="flex items-center gap-1.5">
+            <span id="lumiFabLabel" class="text-xs font-extrabold text-slate-800">Ask Lumi AI</span>
+            <span class="h-2 w-2 rounded-full bg-emerald-500 animate-pulse"></span>
+          </div>
+          <div class="text-[10px] font-semibold text-indigo-600">Career &amp; HR Copilot</div>
+        </div>
+      </button>
+
+      <!-- Lumi Chat Panel -->
+      <aside id="lumiPanel" class="lumi-panel hidden" aria-label="Lumi AI Copilot">
+        <div class="lumi-header flex items-center justify-between gap-3">
+          <div class="flex items-center gap-2.5">
+            <div class="h-11 w-11 rounded-2xl bg-white/95 p-1 shadow grid place-items-center shrink-0">
+              <img src="/static/brand/lumi_mascot.svg" alt="Lumi" class="w-9 h-9" />
+            </div>
+            <div>
+              <div class="flex items-center gap-1.5">
+                <span class="font-extrabold text-sm">Lumi · AI Owl Copilot</span>
+                <span class="text-[9px] font-bold px-2 py-0.5 rounded-full bg-white/20 border border-white/30">Scoped AI</span>
+              </div>
+              <div class="text-[10px] text-white/85">Trained strictly on CV, Reskilling &amp; Fair HR</div>
+            </div>
+          </div>
+          <button onclick="toggleLumiChat(false)" class="h-7 w-7 rounded-xl bg-white/15 hover:bg-white/25 text-white font-bold text-xs grid place-items-center">✕</button>
+        </div>
+
+        <!-- Scope Notice Strip -->
+        <div class="px-3.5 py-1.5 bg-indigo-50/90 border-b border-indigo-100 flex items-center justify-between text-[10px] text-indigo-900 font-semibold">
+          <span>🛡️ Domain-Trained: Answers Career/HR queries only</span>
+          <button onclick="sendLumiMessage('What is the weather or a pizza recipe?')" class="underline text-rose-600 font-bold" title="Test out-of-scope guardrail">Test Guardrail</button>
+        </div>
+
+        <!-- Messages Container -->
+        <div data-no-translate id="lumiMsgList" class="flex-1 p-3.5 space-y-3 overflow-y-auto"></div>
+
+        <!-- Typing Indicator -->
+        <div id="lumiTyping" class="hidden px-4 py-1.5 text-[11px] font-bold text-indigo-600 flex items-center gap-1.5">
+          <span>🦉 Lumi is analysing your live workspace data...</span>
+        </div>
+
+        <!-- Quick Prompts Carousel -->
+        <div id="lumiQuickBar" class="px-3 py-2 border-t border-slate-200/70 bg-white/70 flex gap-1.5 overflow-x-auto hidden-scroll"></div>
+
+        <!-- Input Bar -->
+        <form onsubmit="event.preventDefault();sendLumiMessage();" class="p-3 bg-white/95 border-t border-slate-200/80 flex items-center gap-2">
+          <input id="lumiInput" type="text" class="input !py-2 !text-xs flex-1" placeholder="Ask about your PDF CV, role match, courses, or HR..." maxlength="280" />
+          <button type="submit" class="btn btn-primary !py-2 !px-3.5 !text-xs">Send</button>
+        </form>
+      </aside>
+    `;
+    document.body.appendChild(wrap);
+
     try {
       const res = await fetch('/api/chat/context');
       const ctx = await res.json();

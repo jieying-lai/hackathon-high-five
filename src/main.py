@@ -479,10 +479,17 @@ def api_hr_application_pdf(app_id):
     )
 
 
+@app.route("/api/hr/candidate-comparison", methods=["GET"])
+@api_role("hr_company")
+def api_candidate_comparison():
+    from candidate_comparison import comparison
+    return jsonify(ok=True, **comparison(_owner(), request.args.get("demo") == "1"))
+
+
 @app.route("/api/hr/heatmap", methods=["GET"])
 @api_role("hr_company")
 def api_hr_heatmap():
-    return jsonify({"ok": True, **hr_engine.get_heatmap(), "assignments": hr_engine.list_assignments(_owner())})
+    return jsonify({"ok": True, **hr_engine.get_heatmap(_owner()), "assignments": hr_engine.list_assignments(_owner())})
 
 
 @app.route("/api/hr/assignments", methods=["POST"])

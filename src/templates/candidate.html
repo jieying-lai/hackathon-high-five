@@ -14,6 +14,7 @@
     .cl-map-wrap {
       position: relative;
       height: 420px;
+      block-size: clamp(16rem, 45svh, 30rem);
       width: 100%;
       border-radius: 1.25rem;
       overflow: hidden;
@@ -97,8 +98,9 @@
       text-transform: uppercase;
     }
   </style>
+  <link rel="stylesheet" href="/static/css/responsive.css?v=20261020-minimal-2" />
 </head>
-<body class="min-h-screen">
+<body class="responsive-ui responsive-talent min-h-screen">
   <div class="aurora"></div><div class="blob b1"></div><div class="blob b2"></div>
 
   <div class="flex flex-col min-h-screen">
@@ -386,6 +388,11 @@
                 <span>75 km</span>
                 <span>100 km</span>
               </div>
+            <div class="space-y-3 pt-2 border-t border-slate-200/70">
+              <div class="w-full">
+                <input id="jobSearchInput" oninput="filterJobsAndCompanies()" class="input !py-2" placeholder="🔍 Search any role, skill, company, or sector..." />
+              </div>
+              <div id="catFilterBar" class="flex flex-wrap items-center gap-2 py-1"></div>
             </div>
           </div>
 
@@ -582,8 +589,7 @@
     </div>
   </div>
 
-  
-  <!-- User Account Settings & Profile Modal -->
+<!-- User Account Settings & Profile Modal -->
   <div id="accountModalWrap" class="hidden" data-no-translate>
     <div class="overlay" onclick="closeAccountModal(event)">
       <div class="modal p-6 sm:p-8 space-y-5 max-w-xl w-full max-h-[90vh] overflow-y-auto" onclick="event.stopPropagation()">
@@ -706,21 +712,22 @@
   </div>
 
   <script src="/static/js/common.js?v=20261020-formal-lumi"></script>
+
   <script src="/static/js/interviews.js?v=20261020-4"></script>
   <script src="/static/js/questionnaire.js?v=20261020-auto-role"></script>
   <script>
     const NAV = [
       { id: 'notifications', ico: '🔔', label: 'Interview notifications', eyebrow: 'Notifications', title: 'Interview notifications' },
       { id: 'dash', ico: '🏠', label: 'Dashboard', eyebrow: 'Overview', title: 'Your career dashboard' },
-      { id: 'profile', ico: '🧑‍💼', label: 'Profile & Skills', eyebrow: 'Function 01', title: 'Skills profile' },
-      { id: 'quest', ico: '📝', label: 'Questionnaire', eyebrow: 'Function 02', title: 'Application questionnaire' },
-      { id: 'radar', ico: '📡', label: 'AI Radar', eyebrow: 'Function 03', title: 'Future skills radar' },
-      { id: 'match', ico: '🎯', label: 'Role Matches', eyebrow: 'Function 04', title: 'Future-role matches' },
-      { id: 'plan', ico: '🧭', label: 'Reskilling Plan', eyebrow: 'Function 05', title: 'Personalised reskilling plan' },
-      { id: 'passport', ico: '🌱', label: 'SDG Passport', eyebrow: 'Function 06', title: 'Your SDG career passport' },
+      { id: 'profile', ico: '🧑‍💼', label: 'Profile & Skills', eyebrow: 'Professional background', title: 'Skills profile' },
+      { id: 'quest', ico: '📝', label: 'Questionnaire', eyebrow: 'Career preferences', title: 'Application questionnaire' },
+      { id: 'radar', ico: '📡', label: 'AI Radar', eyebrow: 'Industry insights', title: 'Future skills radar' },
+      { id: 'match', ico: '🎯', label: 'Role Matches', eyebrow: 'Career opportunities', title: 'Future-role matches' },
+      { id: 'plan', ico: '🧭', label: 'Reskilling Plan', eyebrow: 'Learning & development', title: 'Personalised reskilling plan' },
+      { id: 'passport', ico: '🌱', label: 'SDG Passport', eyebrow: 'Sustainable career impact', title: 'Your SDG career passport' },
     ];
     const EXTRA_TABS = {
-      jobs: { id: 'jobs', ico: '📍', label: 'Nearby Jobs & Map', eyebrow: 'Location & Consent-Gated Apply', title: 'Nearby hiring companies & open roles' },
+      jobs: { id: 'jobs', ico: '📍', label: 'Nearby Jobs & Map', eyebrow: 'Explore employers', title: 'Nearby hiring companies & open roles' },
     };
     const COMMON_Q = [
       { id: 'c1', text: 'Are you a fresh graduate, working, or changing career?', type: 'select' },
@@ -2002,7 +2009,7 @@
     init();
   </script>
 <script src="/static/js/questionnaire-i18n.js"></script>
-<script src="/static/js/portal-i18n.js"></script>
+<script src="/static/js/portal-i18n.js?v=20261020-locale-audit"></script>
 <script src="/static/js/member3.js?v=20261020-questionnaire-1"></script>
 </body>
 </html>

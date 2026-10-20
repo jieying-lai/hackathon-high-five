@@ -1,0 +1,28 @@
+const fs=require('node:fs'),vm=require('node:vm'),assert=require('node:assert/strict');
+(async()=>{
+ const {parseHTML}=await import(process.env.CAREERLENS_DOM_MODULE);
+ const {document}=parseHTML(fs.readFileSync('src/templates/hr.html','utf8'));
+ const vacancy={id:1,required_skills:['Audit'],preferred_skills:[],title:'Auditor',status:'Open',salary_min:4000,salary_max:6000,work_mode:'Hybrid'};
+ const summary={vacancy,summary:{average_score:80,total:2,by_action:{'Priority human review':2}}};
+ let failScreen=false;
+ const c={localStorage:{getItem(){return null}},document,window:{scrollTo(){}},console,esc:String,buildPortalNavigation(){},setPortalNavigation(){},api:async url=>url==='/api/auth/me'?{ok:true,data:{user:{full_name:'HR Test',unique_uid:'HR-TEST',role_details:{company_name:'Test Company'}}}}:url.startsWith('/api/hr/candidate-comparison')?{ok:true,data:{vacancies:[vacancy],candidates:[],education_categories:['SPM / UEC','Undergraduate','Master','Doctor','Intern / Trainee','Other / To confirm']}}:url==='/api/hr/heatmap'?{ok:true,data:{employees:[],assignments:[],team_readiness:0}}:url.endsWith('/screen')?{ok:!failScreen,data:summary}:{ok:true,data:{vacancies:[vacancy]}},loadInvitations(){}};
+ document.querySelectorAll('[id]').forEach(el=>c[el.id]=el);vm.createContext(c);
+ const inline=[...fs.readFileSync('src/templates/hr.html','utf8').matchAll(/<script>([\s\S]*?)<\/script>/g)].map(m=>m[1]).join('\n').replace(/\binit\(\);\s*$/,'');
+ vm.runInContext(fs.readFileSync('src/static/js/candidate-comparison.js','utf8'),c);
+ vm.runInContext(inline,c);
+ await vm.runInContext('init()',c);
+ assert.equal(c.uName.textContent,'HR Test');
+ assert.equal(document.querySelector('.company-footer'),null);
+ assert.equal(document.querySelector('.employer-workspace-context'),null);
+ assert.equal(c.headerCompanyName.textContent,'Test Company');
+ assert.equal(c.mobileCompanyName.textContent,'Test Company');
+ assert.doesNotMatch(document.body.textContent,/CareerLens connects multiple companies/);
+ assert.ok(c.educationChart.querySelector('svg'));
+ assert.doesNotMatch(c.comparisonStatus.textContent,/Could not/);
+ assert.ok(c.pgTitle.textContent.length>0);
+ assert.match(c.ovVacancies.textContent,/Auditor/);assert.match(c.ovPipeline.textContent,/Priority human review/);assert.match(c.ovPipelineTitle.textContent,/Auditor/);
+ failScreen=true;await vm.runInContext('refreshOverview()',c);
+ assert.match(c.ovVacancies.textContent,/Auditor/);assert.match(c.ovPipeline.textContent,/Could not load/);
+ failScreen=false;await vm.runInContext('refreshOverview()',c);assert.match(c.ovPipeline.textContent,/Priority human review/);
+ console.log('Overview restores vacancies and screening; screening failure keeps vacancies; retry recovers.');
+})();

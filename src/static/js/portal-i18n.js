@@ -5,6 +5,334 @@
   else root.portalI18n = api;
 })(typeof window === 'undefined' ? globalThis : window, function () {
   const rows = `
+Trained strictly on CV, Reskilling & Fair HR|Dilatih khusus untuk CV, latihan semula & HR adil|专注于简历、技能提升与公平招聘
+Chat with Lumi — Domain-Scoped CareerLens AI Mascot|Berbual dengan Lumi — pembantu AI khusus CareerLens|与 Lumi 对话 — CareerLens 专业 AI 助手
+Lumi AI Copilot|Pembantu AI Lumi|Lumi AI 助手
+Test out-of-scope guardrail|Uji perlindungan luar skop|测试超出服务范围的保护
+Ask about your PDF CV, role match, courses, or HR...|Tanya tentang CV PDF, padanan jawatan, kursus atau HR...|询问 PDF 简历、岗位匹配、课程或人力资源问题……
+AI is unavailable. Please retry.|AI tidak tersedia. Sila cuba lagi.|AI 暂不可用，请重试。
+
+My Profile|Profil Saya|我的资料
+Explore Careers|Terokai Kerjaya|探索职业
+My Growth|Perkembangan Saya|我的成长
+Nearby Jobs & Map|Pekerjaan Berdekatan & Peta|附近岗位与地图
+Nearby hiring companies & open roles|Syarikat berdekatan yang mengambil pekerja & jawatan kosong|附近招聘企业与开放岗位
+Hiring|Pengambilan Pekerja|招聘管理
+Candidate Development|Pembangunan Calon|候选人发展
+Our Portals|Portal Kami|我们的门户
+Menu|Menu|菜单
+Main navigation|Navigasi utama|主导航
+Section navigation|Navigasi bahagian|页面导航
+Toggle navigation|Buka/tutup navigasi|展开或收起导航
+All basic fields are required. Choose your field before selecting a role.|Semua medan asas wajib diisi. Pilih bidang sebelum memilih jawatan.|所有基本资料均为必填。请先选择行业，再选择岗位。
+Generate questions using your uploaded CV summary and chosen role. Your CV summary and basic answers are sent to Google Gemini when you press Generate.|Jana soalan berdasarkan ringkasan CV dan jawatan pilihan. Ringkasan CV dan jawapan asas dihantar ke Google Gemini apabila anda menekan Jana.|根据已上传的简历摘要和目标岗位生成问题。点击生成时，简历摘要和基本回答将发送至 Google Gemini。
+AI executive summary extracted from your PDF CV...|Ringkasan AI yang diekstrak daripada CV PDF anda...|从 PDF 简历提取的 AI 摘要……
+🔍 Search any role, skill, company, or sector...|🔍 Cari jawatan, kemahiran, syarikat atau sektor...|🔍 搜索岗位、技能、公司或行业……
+Highlight why you are interested in this role...|Nyatakan sebab anda berminat dengan jawatan ini...|说明你对这个岗位感兴趣的原因……
+Accountant|Akauntan|会计师
+Accounts Assistant|Pembantu Akaun|会计助理
+Tax Associate|Eksekutif Percukaian|税务专员
+Payroll Executive|Eksekutif Penggajian|薪资专员
+Financial Analyst|Penganalisis Kewangan|财务分析师
+Management Accountant|Akauntan Pengurusan|管理会计师
+Software Engineer|Jurutera Perisian|软件工程师
+Frontend Developer|Pembangun Bahagian Hadapan|前端开发人员
+Backend Developer|Pembangun Bahagian Belakang|后端开发人员
+QA Engineer|Jurutera Jaminan Kualiti|质量保证工程师
+Data Analyst|Penganalisis Data|数据分析师
+Cybersecurity Analyst|Penganalisis Keselamatan Siber|网络安全分析师
+IT Support Specialist|Pakar Sokongan IT|IT 支持专员
+Cloud Engineer|Jurutera Awan|云计算工程师
+Marketing Executive|Eksekutif Pemasaran|市场营销专员
+Digital Marketing Specialist|Pakar Pemasaran Digital|数字营销专员
+Content Writer|Penulis Kandungan|内容撰稿人
+Public Relations Executive|Eksekutif Perhubungan Awam|公共关系专员
+SEO Specialist|Pakar SEO|搜索引擎优化专员
+Recruiter|Perekrut|招聘专员
+HR Analyst|Penganalisis Sumber Manusia|人力资源分析师
+Office Administrator|Pentadbir Pejabat|办公室行政人员
+Learning & Development Executive|Eksekutif Pembelajaran & Pembangunan|学习与发展专员
+Civil Engineer|Jurutera Awam|土木工程师
+Mechanical Engineer|Jurutera Mekanikal|机械工程师
+Electrical Engineer|Jurutera Elektrik|电气工程师
+Process Engineer|Jurutera Proses|工艺工程师
+Quality Engineer|Jurutera Kualiti|质量工程师
+Healthcare|Penjagaan Kesihatan|医疗保健
+Registered Nurse|Jururawat Berdaftar|注册护士
+Pharmacist|Ahli Farmasi|药剂师
+Medical Laboratory Technologist|Juruteknologi Makmal Perubatan|医学检验技师
+Healthcare Administrator|Pentadbir Penjagaan Kesihatan|医疗行政人员
+Teacher|Guru|教师
+Lecturer|Pensyarah|讲师
+Training Executive|Eksekutif Latihan|培训专员
+Instructional Designer|Pereka Bentuk Pengajaran|教学设计师
+Sales & Retail|Jualan & Peruncitan|销售与零售
+Sales Executive|Eksekutif Jualan|销售专员
+Account Manager|Pengurus Akaun Pelanggan|客户经理
+Retail Supervisor|Penyelia Peruncitan|零售主管
+Customer Success Executive|Eksekutif Kejayaan Pelanggan|客户成功专员
+Hospitality & Tourism|Hospitaliti & Pelancongan|酒店与旅游
+Hotel Executive|Eksekutif Hotel|酒店行政专员
+Front Office Executive|Eksekutif Kaunter Hadapan|前台专员
+Travel Consultant|Perunding Pelancongan|旅游顾问
+Food & Beverage Supervisor|Penyelia Makanan & Minuman|餐饮主管
+Logistics & Supply Chain|Logistik & Rantaian Bekalan|物流与供应链
+Logistics Executive|Eksekutif Logistik|物流专员
+Procurement Executive|Eksekutif Perolehan|采购专员
+Supply Chain Analyst|Penganalisis Rantaian Bekalan|供应链分析师
+Warehouse Supervisor|Penyelia Gudang|仓库主管
+Banking & Insurance|Perbankan & Insurans|银行与保险
+Banking Operations Executive|Eksekutif Operasi Perbankan|银行运营专员
+Credit Analyst|Penganalisis Kredit|信贷分析师
+Insurance Claims Executive|Eksekutif Tuntutan Insurans|保险理赔专员
+Risk Analyst|Penganalisis Risiko|风险分析师
+Design & Creative|Reka Bentuk & Kreatif|设计与创意
+Graphic Designer|Pereka Grafik|平面设计师
+UI/UX Designer|Pereka UI/UX|用户界面与体验设计师
+Product Designer|Pereka Produk|产品设计师
+Video Editor|Penyunting Video|视频剪辑师
+Legal|Perundangan|法律
+Legal Associate|Peguam Bersekutu|法律专员
+Paralegal|Pembantu Guaman|律师助理
+Compliance Executive|Eksekutif Pematuhan|合规专员
+Manufacturing|Pembuatan|制造业
+Production Executive|Eksekutif Pengeluaran|生产专员
+Production Planner|Perancang Pengeluaran|生产计划员
+Quality Assurance Executive|Eksekutif Jaminan Kualiti|质量保证专员
+Manufacturing Technician|Juruteknik Pembuatan|制造技术员
+Agriculture|Pertanian|农业
+Agricultural Officer|Pegawai Pertanian|农业专员
+Farm Supervisor|Penyelia Ladang|农场主管
+Agronomist|Ahli Agronomi|农艺师
+Agricultural Technician|Juruteknik Pertanian|农业技术员
+Construction & Property|Pembinaan & Hartanah|建筑与房地产
+Quantity Surveyor|Juruukur Bahan|工料测量师
+Site Supervisor|Penyelia Tapak|工地主管
+Property Executive|Eksekutif Hartanah|物业专员
+Building Manager|Pengurus Bangunan|楼宇经理
+Below RM 3,000|Bawah RM 3,000|低于 RM 3,000
+Johor|Johor|柔佛
+Kedah|Kedah|吉打
+Kelantan|Kelantan|吉兰丹
+Melaka|Melaka|马六甲
+Negeri Sembilan|Negeri Sembilan|森美兰
+Pahang|Pahang|彭亨
+Pulau Pinang|Pulau Pinang|槟城
+Penang|Pulau Pinang|槟城
+Perak|Perak|霹雳
+Perlis|Perlis|玻璃市
+Sabah|Sabah|沙巴
+Sarawak|Sarawak|砂拉越
+Terengganu|Terengganu|登嘉楼
+Selangor|Selangor|雪兰莪
+Kuala Lumpur|Kuala Lumpur|吉隆坡
+Johor Bahru|Johor Bahru|新山
+W.P. Kuala Lumpur|W.P. Kuala Lumpur|吉隆坡联邦直辖区
+W.P. Putrajaya|W.P. Putrajaya|布城联邦直辖区
+Kuala Lumpur (KLCC)|Kuala Lumpur (KLCC)|吉隆坡（KLCC）
+User|Pengguna|用户
+PDPA Protected|Dilindungi PDPA|受 PDPA 保护
+PDF-Only Upload|Muat Naik PDF Sahaja|仅支持上传 PDF
+only for anonymised statistical trend analysis and your personal job/reskilling recommendations|hanya untuk analisis trend statistik tanpa identiti dan cadangan pekerjaan/latihan semula peribadi anda|仅用于匿名统计趋势分析及你的个性化岗位与技能提升推荐
+. Employers|. Majikan|。雇主
+cannot|tidak boleh|无法
+1. Upload your PDF CV|1. Muat naik CV PDF anda|1. 上传 PDF 简历
+.PDF ONLY|PDF SAHAJA|仅限 PDF
+Drop your PDF CV here or|Letakkan CV PDF anda di sini atau|将 PDF 简历拖到此处，或
+browse|pilih fail|浏览文件
+Synthetic sample PDF CVs (for instant testing)|Contoh CV PDF sintetik (untuk ujian segera)|模拟 PDF 简历（用于快速测试）
+1-click AI parse or download|Hurai dengan AI atau muat turun dengan satu klik|一键 AI 解析或下载
+Employer CV access log|Log akses CV oleh majikan|雇主简历访问记录
+Every company view of your CV is audited here|Setiap akses syarikat kepada CV anda direkodkan di sini|每次企业查看你的简历，都会在此记录
+2. AI-Organised CV Summary|2. Ringkasan CV Disusun AI|2. AI 整理的简历摘要
+Stored in private vault|Disimpan dalam simpanan peribadi|存储于私人文件库
+Upload a PDF CV on the left to extract your structured profile|Muat naik CV PDF di sebelah kiri untuk mengekstrak profil berstruktur|在左侧上传 PDF 简历以提取结构化资料
+👁️ View Original PDF|👁️ Lihat PDF Asal|👁️ 查看原始 PDF
+✨ AI Executive Summary (Captured from PDF)|✨ Ringkasan AI (Daripada PDF)|✨ AI 简历摘要（从 PDF 提取）
+Qualification level|Tahap kelayakan|学历等级
+Years of experience|Tahun pengalaman|工作年限
+💼 Work Experience|💼 Pengalaman Kerja|💼 工作经历
+🎓 Education|🎓 Pendidikan|🎓 教育背景
+🚀 Key Projects|🚀 Projek Utama|🚀 主要项目
+🛰️ Use My GPS|🛰️ Gunakan GPS Saya|🛰️ 使用我的定位
+🗺️ Nearby Hiring Companies Map|🗺️ Peta Syarikat Berdekatan yang Mengambil Pekerja|🗺️ 附近招聘企业地图
+You|Anda|你
+CV-Matched Sector|Sektor Sepadan CV|与简历匹配的行业
+Other Sector|Sektor Lain|其他行业
+🎯 Zoom Near Me|🎯 Zum Berdekatan Saya|🎯 查看我的附近
+🌐 Fit All|🌐 Papar Semua|🌐 显示全部
+Hover or click to inspect on map|Tuding atau klik untuk melihat pada peta|悬停或点击以在地图上查看
+💼 Open Job Vacancies|💼 Jawatan Kosong Terbuka|💼 开放招聘岗位
+🔒 Consent-Gated Apply|🔒 Permohonan dengan Persetujuan|🔒 授权后申请
+Detailed role openings. Employers only receive your CV when you click Apply.|Butiran jawatan kosong. Majikan hanya menerima CV apabila anda mengklik Mohon.|查看岗位详情。只有点击申请后，雇主才会收到你的简历。
+🎯 Matched to My CV|🎯 Sepadan dengan CV Saya|🎯 与我的简历匹配
+🌐 All Open Roles|🌐 Semua Jawatan Terbuka|🌐 所有开放岗位
+Consent-Gated Application|Permohonan dengan Persetujuan|授权申请
+Apply for Role|Mohon Jawatan|申请岗位
+🔒 Choose what to share with this employer:|🔒 Pilih maklumat untuk dikongsi dengan majikan ini:|🔒 选择向该雇主分享的内容：
+Share AI-Organised CV Summary|Kongsi Ringkasan CV Disusun AI|分享 AI 整理的简历摘要
+Allow employer to view Original Uploaded PDF CV|Benarkan majikan melihat CV PDF asal yang dimuat naik|允许雇主查看上传的原始 PDF 简历
+Expected salary (RM)|Gaji dijangka (RM)|期望薪资（RM）
+Notice period / availability|Tempoh notis / ketersediaan|离职通知期／可入职时间
+Brief note to hiring manager (optional)|Nota ringkas kepada pengurus pengambilan (pilihan)|给招聘经理的简短留言（选填）
+Cancel|Batal|取消
+⬇ PDF|⬇ PDF|⬇ PDF
+No employer has viewed your CV.|Tiada majikan melihat CV anda.|尚无雇主查看你的简历。
+No entries extracted|Tiada entri diekstrak|未提取到记录
+Classified Profile:|Profil Dikategorikan:|资料分类：
+No employer has viewed your CV yet. Your CV stays private until you apply.|Belum ada majikan melihat CV anda. CV kekal peribadi sehingga anda memohon.|尚无雇主查看你的简历。申请前，简历保持私密。
+No skills yet — upload a PDF CV or add below.|Belum ada kemahiran — muat naik CV PDF atau tambah di bawah.|尚无技能，请上传 PDF 简历或在下方添加。
+Switch city...|Tukar bandar...|切换城市……
+No hiring companies match this filter. Try clearing the search or sector filter.|Tiada syarikat sepadan. Cuba kosongkan carian atau penapis sektor.|没有符合条件的招聘企业。请尝试清除搜索或行业筛选。
+Open hiring roles|Jawatan terbuka|开放招聘岗位
+Show all open roles across all sectors →|Papar semua jawatan terbuka dalam semua sektor →|查看所有行业的开放岗位 →
+✓ Applied|✓ Telah Memohon|✓ 已申请
+★ CV Match|★ Padanan CV|★ 简历匹配
+CV Shared|CV Dikongsi|简历已分享
+· Status:|· Status:|· 状态：
+Permissions|Kebenaran|授权范围
+Withdraw|Tarik Balik|撤回
+🔒 Private until you apply|🔒 Peribadi sehingga anda memohon|🔒 申请前保持私密
+Save your profile to generate matches.|Simpan profil untuk menjana padanan.|保存资料后生成岗位匹配。
+Zero PII Exposed|Tiada Maklumat Peribadi Didedahkan|未披露个人身份信息
+No opted-in CVs yet|Belum ada CV dengan persetujuan|暂无已授权简历
+Save your profile to generate your passport.|Simpan profil untuk menjana pasport anda.|保存资料后生成职业护照。
+No PDF uploaded yet|Belum ada PDF dimuat naik|尚未上传 PDF
+Upload a .pdf CV to unlock AI extraction and job applications|Muat naik CV .pdf untuk pengekstrakan AI dan permohonan pekerjaan|上传 PDF 简历以启用 AI 提取与岗位申请
+✓ Stored in Private Vault|✓ Disimpan dalam Simpanan Peribadi|✓ 已存入私人文件库
+Passport|Pasport|职业护照
+Create or select a vacancy to screen candidates.|Cipta atau pilih jawatan kosong untuk menyaring calon.|创建或选择招聘岗位以筛选候选人。
+Organised CV|CV Tersusun|整理后的简历
+Original PDF|PDF Asal|原始 PDF
+🔓 Candidate Applied · CV Access Granted|🔓 Calon Memohon · Akses CV Dibenarkan|🔓 候选人已申请 · 已获简历访问权限
+This candidate explicitly applied to|Calon ini telah memohon secara jelas kepada|该候选人已主动申请
+📋 View AI-Organised CV Summary|📋 Lihat Ringkasan CV Disusun AI|📋 查看 AI 整理的简历摘要
+Organised CV not shared|CV tersusun tidak dikongsi|未分享整理后的简历
+📄 Open Original PDF CV ↗|📄 Buka CV PDF Asal ↗|📄 打开原始 PDF 简历 ↗
+🔒 Original PDF withheld by candidate|🔒 PDF asal tidak dikongsi oleh calon|🔒 候选人未授权分享原始 PDF
+Audit Logged|Audit Direkodkan|已记录审计日志
+Original PDF withheld|PDF asal tidak dikongsi|未分享原始 PDF
+✨ AI Executive Summary (Captured from Candidate PDF)|✨ Ringkasan AI (Daripada PDF Calon)|✨ AI 简历摘要（从候选人 PDF 提取）
+Contact (Shared via Application)|Maklumat Hubungan (Dikongsi melalui Permohonan)|联系方式（通过申请授权分享）
+PDF Document Verification|Pengesahan Dokumen PDF|PDF 文件验证
+🔒 Access to this CV has been recorded in the candidate's PDPA transparency log.|🔒 Akses CV ini telah direkodkan dalam log ketelusan PDPA calon.|🔒 本次简历访问已记录在候选人的 PDPA 透明度日志中。
+🛡️ Out-of-Scope Guardrail|🛡️ Perlindungan Luar Skop|🛡️ 超出服务范围保护
+🦉 Lumi AI · In-Scope|🦉 Lumi AI · Dalam Skop|🦉 Lumi AI · 服务范围内
+Ask Lumi AI|Tanya Lumi AI|咨询 Lumi AI
+Lumi · AI Owl Copilot|Lumi · Pembantu AI Burung Hantu|Lumi · AI 猫头鹰助手
+Scoped AI|AI Berfokus|专用 AI 助手
+🛡️ Domain-Trained: Answers Career/HR queries only|🛡️ Terlatih Khusus: Menjawab soalan kerjaya/HR sahaja|🛡️ 专业领域：仅回答职业与人力资源问题
+Test Guardrail|Uji Perlindungan|测试范围保护
+🦉 Lumi is analysing your live workspace data...|🦉 Lumi sedang menganalisis data ruang kerja anda...|🦉 Lumi 正在分析当前工作区数据……
+Send|Hantar|发送
+Could not update|Tidak dapat mengemas kini|更新失败
+Your browser could not save this draft. Keep this page open.|Pelayar tidak dapat menyimpan draf. Pastikan halaman ini kekal terbuka.|浏览器无法保存草稿，请保持此页面打开。
+Could not load the questionnaire. Please refresh and retry.|Tidak dapat memuatkan soal selidik. Sila muat semula dan cuba lagi.|无法加载问卷，请刷新后重试。
+Your CV or basic information changed. Generate fresh questions to continue.|CV atau maklumat asas berubah. Jana soalan baharu untuk meneruskan.|简历或基本资料已改变，请重新生成问题以继续。
+Upload your PDF CV in Profile & Skills first.|Muat naik CV PDF dalam Profil & Kemahiran dahulu.|请先在个人资料与技能页面上传 PDF 简历。
+Choose your field first.|Pilih bidang anda dahulu.|请先选择行业。
+Reading your CV and preparing a response…|Membaca CV dan menyediakan respons…|正在读取简历并准备回复……
+Finding your best matching role…|Mencari jawatan paling sepadan…|正在寻找最适合你的岗位……
+Suggestion unavailable. You can still choose your role.|Cadangan tidak tersedia. Anda masih boleh memilih jawatan.|暂时无法提供推荐，你仍可自行选择岗位。
+Retry|Cuba Lagi|重试
+Please enter at least 10 characters for every answer.|Sila masukkan sekurang-kurangnya 10 aksara bagi setiap jawapan.|每个回答请至少输入 10 个字符。
+Questionnaire saved on this device. You can return to edit it at any time.|Soal selidik disimpan pada peranti ini. Anda boleh kembali untuk mengedit pada bila-bila masa.|问卷已保存到此设备，可随时返回编辑。
+Upload your CV to receive a role suggestion.|Muat naik CV untuk mendapatkan cadangan jawatan.|上传简历以获取岗位推荐。
+Choose a field to see your suggested role.|Pilih bidang untuk melihat cadangan jawatan.|选择行业以查看推荐岗位。
+No suitable role found in this field.|Tiada jawatan sesuai ditemui dalam bidang ini.|该行业中暂未找到合适岗位。
+Request stopped or timed out. Your draft is saved. Please retry.|Permintaan dihentikan atau tamat masa. Draf disimpan. Sila cuba lagi.|请求已停止或超时。草稿已保存，请重试。
+Career & HR Copilot|Pembantu Kerjaya & HR|职业与人力资源助手
+
+High match|Padanan tinggi|高匹配
+★ High match|★ Padanan tinggi|★ 高匹配
+Gold highlight: match score 85% or above. HR review required.|Sorotan emas: skor padanan 85% atau lebih. Semakan HR diperlukan.|金色标记：匹配度达到 85% 及以上，仍需 HR 审核。
+
+Professional background|Latar belakang profesional|个人职业背景
+Career preferences|Pilihan kerjaya|职业方向与偏好
+Industry insights|Wawasan industri|行业趋势洞察
+Career opportunities|Peluang kerjaya|职业机会探索
+Learning & development|Pembelajaran & pembangunan|学习与技能提升
+Sustainable career impact|Impak kerjaya lestari|职业发展与可持续影响
+Explore employers|Terokai majikan|探索招聘企业
+Hiring insights|Wawasan pengambilan|招聘洞察
+Vacancy management|Pengurusan jawatan kosong|招聘职位管理
+Applicant assessment|Penilaian pemohon|申请者评估
+Skills & qualifications|Kemahiran & kelayakan|技能与资质分析
+Candidate development|Pembangunan calon|候选人成长与培养
+
+Scrollable data table|Jadual data boleh ditatal|可横向滚动的数据表格
+
+CareerLens connects multiple companies and candidates. You are managing the employer workspace shown above.|CareerLens menghubungkan pelbagai syarikat dan calon. Anda mengurus ruang kerja majikan yang ditunjukkan di atas.|CareerLens 连接多家公司与求职者。您当前管理的是上方标示的雇主工作区。
+
+Company workspace|Ruang kerja syarikat|公司工作区
+Manage only your company’s vacancies and applicants.|Urus jawatan dan pemohon syarikat anda sahaja.|在此仅管理当前公司的职位与申请者。
+Published under your current company workspace.|Disiarkan di bawah ruang kerja syarikat semasa.|职位将发布在当前公司工作区名下。
+
+Hiring snapshot|Ringkasan pengambilan|招聘摘要
+Average match score|Purata skor padanan|平均匹配度
+Qualifications to confirm|Kelayakan perlu disahkan|资质待确认人数
+Priority interview check|Semakan utama temu duga|面试优先确认项
+Not listed in CV; ask for a project example.|Tidak disenaraikan dalam CV; minta contoh projek.|简历未列出，建议询问具体项目实例。
+Calculated from current filters; missing skills need interview confirmation.|Dikira daripada penapis semasa; kemahiran yang tiada perlu disahkan dalam temu duga.|根据当前筛选计算；简历未列出的技能需通过面试确认。
+
+IT Department|Jabatan IT|资讯科技部
+Finance & Audit Department|Jabatan Kewangan & Audit|财务与审计部
+Marketing Department|Jabatan Pemasaran|市场营销部
+Compliance Department|Jabatan Pematuhan|合规部
+Human Resources Department|Jabatan Sumber Manusia|人力资源部
+Sustainability Department|Jabatan Kelestarian|可持续发展部
+Data Privacy & Compliance Analyst|Penganalisis Privasi Data & Pematuhan|数据隐私与合规分析师
+
+Top 3 CV skill coverage|Liputan kemahiran CV 3 calon terbaik|前三名岗位技能覆盖率
+
+Candidate Skills & Qualifications Comparison|Perbandingan Kemahiran & Kelayakan Calon|候选人技能与资质对比
+Include labelled demo candidates|Sertakan calon demo berlabel|包含已标注的演示候选人
+Field / Industry|Bidang / Industri|业务领域
+Position|Jawatan|目标岗位
+Experience years|Tahun pengalaman|相关经验年数
+Education Qualification|Kelayakan pendidikan|学历门槛
+Any experience|Sebarang pengalaman|不限经验
+Any qualification|Sebarang kelayakan|不限学历
+Doctor|Kedoktoran|博士
+Master|Sarjana|硕士
+Undergraduate|Sarjana muda|本科
+SPM / UEC|SPM / UEC|SPM／UEC
+Intern / Trainee|Pelatih|实习／培训生
+Other / To confirm|Lain-lain / Perlu disahkan|其他／待确认
+Sort by|Susun mengikut|排序方式
+Match score|Skor padanan|匹配度
+Experience: high to low|Pengalaman: tinggi ke rendah|经验：从高到低
+Education: high to low|Pendidikan: tinggi ke rendah|学历：从高到低
+Name or skill|Nama atau kemahiran|姓名或技能
+Matching candidates|Calon sepadan|符合条件的候选人
+All positions|Semua jawatan|全部岗位
+All fields|Semua bidang|全部领域
+Education distribution|Taburan pendidikan|学历分布
+CV evidence for required skills|Bukti CV untuk kemahiran diperlukan|岗位技能简历覆盖情况
+Number of filtered candidates listing each skill; not a proficiency assessment.|Bilangan calon ditapis yang menyenaraikan kemahiran; bukan penilaian kecekapan.|显示筛选后简历列出各技能的人数，不代表已验证的熟练度。
+Department / Position|Jabatan / Jawatan|部门／岗位
+Education / Institution / Major|Pendidikan / Institusi / Pengkhususan|学历／院校／专业
+CV details|Butiran CV|简历详情
+Skills & experience|Kemahiran & pengalaman|技能与经历
+Hard skills|Kemahiran teknikal|硬技能
+Soft skills|Kemahiran insaniah|软技能
+No candidates match these filters.|Tiada calon sepadan dengan penapis ini.|没有符合当前筛选条件的候选人。
+No comparison data.|Tiada data perbandingan.|暂无对比数据。
+No candidate for this position.|Tiada calon untuk kedudukan ini.|该名次暂无候选人。
+Top 3 candidate recommendations|Cadangan 3 calon terbaik|前三名候选人推荐
+Ranking follows comparison filters and selected vacancy. Scores use job criteria; equal scores use candidate ID for stable ordering. HR makes the final decision.|Kedudukan mengikut penapis dan jawatan terpilih. Skor menggunakan kriteria kerja; seri disusun mengikut ID calon. HR membuat keputusan akhir.|排名随对比筛选和职位更新。分数依据岗位条件，同分按候选人编号稳定排序，由 HR 最终决定。
+Missing CV details need confirmation. Experience is CV-stated, not independently verified. Intern / Trainee is a status, not a degree; highest known qualification takes precedence.|Butiran CV yang tiada perlu disahkan. Pengalaman dinyatakan dalam CV dan belum disahkan. Pelatih ialah status, bukan ijazah; kelayakan tertinggi diutamakan.|简历缺失信息需确认，经验年数来自简历且未经独立验证。实习／培训生属于状态，统计优先使用已知最高学历。
+Loading comparison…|Memuatkan perbandingan…|正在加载对比数据…
+Demo mode: synthetic candidates are labelled.|Mod demo: calon sintetik dilabelkan.|演示模式：合成候选人已明确标注。
+Only candidates who applied to your company and shared their CV summary.|Hanya calon yang memohon kepada syarikat anda dan berkongsi ringkasan CV.|仅显示投递本公司职位且授权分享简历摘要的候选人。
+Could not load comparison. Please retry.|Gagal memuatkan perbandingan. Cuba lagi.|无法加载对比数据，请重试。
+Application|Permohonan|真实投递
+Demo|Demo|演示数据
+
+Refresh overview|Muat semula gambaran keseluruhan|刷新概览
+Could not load screening pipeline. Please refresh.|Gagal memuatkan aliran saringan. Muat semula.|无法加载筛选流程，请刷新概览。
+Could not load vacancies. Please refresh.|Gagal memuatkan jawatan kosong. Muat semula.|无法加载招聘职位，请刷新概览。
+
 Default test candidate|Calon ujian lalai|默认测试候选人
 Invite default candidate|Jemput calon lalai|邀请默认候选人
 Test the invitation flow with the default candidate account.|Uji aliran jemputan dengan akaun calon lalai.|使用默认候选人账号测试邀请与回复流程。
@@ -304,6 +632,18 @@ Describe a problem you solved that was blocking your team's delivery.|Terangkan 
     if (!i) return text;
     const row = dictionary.get(text);
     if (row) return row[i];
+    let dynamic = text.match(/^(\d+) (?:views?|companies|company)$/);
+    if (dynamic) return `${dynamic[1]} ${/view/.test(text) ? (i===2?'次查看':'paparan') : (i===2?'家公司':'syarikat')}`;
+    dynamic = text.match(/^(\d+) of (\d+) answered · draft saved on this device$/);
+    if (dynamic) return i===2 ? `已回答 ${dynamic[1]} / ${dynamic[2]} 题 · 草稿已保存到此设备` : `${dynamic[1]} daripada ${dynamic[2]} dijawab · draf disimpan pada peranti ini`;
+    dynamic = text.match(/^Preparing a response… (\d+)s$/);
+    if (dynamic) return i===2 ? `正在准备回复……${dynamic[1]} 秒` : `Menyediakan respons… ${dynamic[1]}s`;
+    dynamic = text.match(/^Still working on your CV \((\d+)s\). You can go back; your draft is saved\.$/);
+    if (dynamic) return i===2 ? `仍在处理简历（${dynamic[1]} 秒）。你可以返回，草稿已保存。` : `Masih memproses CV (${dynamic[1]}s). Anda boleh kembali; draf disimpan.`;
+    dynamic = text.match(/^Ready · Generated by (.+)$/);
+    if (dynamic) return i===2 ? `已就绪 · 由 ${dynamic[1]} 生成` : `Sedia · Dijana oleh ${dynamic[1]}`;
+    dynamic = text.match(/^(.*?)(\s*\*)$/);
+    if (dynamic) return translate(dynamic[1],language) + dynamic[2];
     const feature = text.match(/^Function (\d{2})$/);
     if(feature) return i===2 ? `功能 ${feature[1]}` : `Fungsi ${feature[1]}`;
     const skillQuestion=text.match(/^Your CV does not mention (.+)\. Have you used it in a project or at work\? Please describe your role\.$/);
