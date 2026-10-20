@@ -1,0 +1,646 @@
+{
+"Alam Damai": [
+3.06471,
+101.74073
+],
+"Alam Damai, Kuala Lumpur": [
+3.06471,
+101.74073
+],
+"Alma, Penang": [
+5.33341,
+100.48147
+],
+"Alor Gajah District": [
+2.37963,
+102.33735
+],
+"Alor Gajah, Melaka": [
+2.38345,
+102.21078
+],
+"Alor Setar, Kedah": [
+6.12319,
+100.3684
+],
+"Ampang": [
+3.15026,
+101.76021
+],
+"Ampang Tinggi, Negeri Sembilan": [
+2.73946,
+102.21062
+],
+"Ampang, Kuala Lumpur": [
+3.16181,
+101.73537
+],
+"Ampang, Selangor": [
+3.15051,
+101.76007
+],
+"Ara Damansara, Selangor": [
+3.10842,
+101.58665
+],
+"Ayer Itam, Penang": [
+5.40636,
+100.28273
+],
+"Ayer Keroh, Melaka": [
+2.25599,
+102.29154
+],
+"Bachang, Melaka": [
+2.23843,
+102.24844
+],
+"Bachok": [
+5.99512,
+102.38674
+],
+"Bachok, Kelantan": [
+5.99512,
+102.38674
+],
+"Bagan Datuk District": [
+5.40391,
+100.30863
+],
+"Bahau, Negeri Sembilan": [
+2.81136,
+102.40389
+],
+"Balakong, Selangor": [
+3.02913,
+101.74721
+],
+"Balik Pulau, Penang": [
+5.35108,
+100.23533
+],
+"Baling District": [
+5.67603,
+100.91618
+],
+"Bandar Amanjaya, Kedah": [
+5.63464,
+100.54664
+],
+"Bandar Baharu": [
+5.1673,
+100.58493
+],
+"Bandar Baru Bangi, Selangor": [
+2.95408,
+101.781
+],
+"Bandar Baru Klang, Selangor": [
+3.0616,
+101.4653
+],
+"Bandar Baru Mergong, Kedah": [
+6.12805,
+100.34475
+],
+"Bandar Baru Nilai, Negeri Sembilan": [
+2.8154,
+101.7856
+],
+"Bandar Baru Selayang, Selangor": [
+3.25602,
+101.65726
+],
+"Bandar Baru Sentul": [
+3.18704,
+101.69739
+],
+"Bandar Botanic, Selangor": [
+2.98815,
+101.43993
+],
+"Bandar Bukit Puchong, Selangor": [
+2.98491,
+101.62602
+],
+"Bandar Bukit Tinggi, Selangor": [
+2.99324,
+101.44588
+],
+"Bandar Cassia, Penang": [
+5.2441,
+100.43958
+],
+"Bandar Dato'Onn, Johor": [
+1.5606,
+103.73711
+],
+"Bandar Enstek, Negeri Sembilan": [
+2.75745,
+101.7675
+],
+"Bandar Hilir, Melaka": [
+2.19274,
+102.24976
+],
+"Bandar Kinrara, Selangor": [
+3.04597,
+101.64629
+],
+"Bandar Mahkota Cheras, Selangor": [
+3.05686,
+101.7898
+],
+"Bandar Malaysia": [
+3.13955,
+101.72087
+],
+"Bandar Malaysia, Kuala Lumpur": [
+3.13955,
+101.72087
+],
+"Bandar Marang, Terengganu": [
+5.20666,
+103.20339
+],
+"Bandar Menjalara": [
+3.19413,
+101.62723
+],
+"Bandar Menjalara, Kuala Lumpur": [
+3.19413,
+101.62723
+],
+"Bandar Meru Raya, Perak": [
+4.67057,
+101.07679
+],
+"Bandar Perda, Penang": [
+5.37049,
+100.43607
+],
+"Bandar Puteri Puchong, Selangor": [
+3.01768,
+101.62455
+],
+"Bandar Putra Kulai, Johor": [
+1.66171,
+103.63888
+],
+"Bandar Rimbayu, Selangor": [
+2.93239,
+101.54006
+],
+"Bandar Saujana Putra, Selangor": [
+2.95225,
+101.57976
+],
+"Bandar Sri Damansara, Selangor": [
+3.19349,
+101.61276
+],
+"Bandar Sri Permaisuri": [
+3.10116,
+101.71087
+],
+"Bandar Sri Permaisuri, Kuala Lumpur": [
+3.10116,
+101.71087
+],
+"Bandar Sri Sendayan, Negeri Sembilan": [
+2.67913,
+101.86738
+],
+"Bandar Sultan Suleiman, Selangor": [
+3.03121,
+101.37935
+],
+"Bandar Sunway, Selangor": [
+3.07138,
+101.60897
+],
+"Bandar Tasik Selatan": [
+3.07616,
+101.71124
+],
+"Bandar Tasik Selatan, Kuala Lumpur": [
+3.0761,
+101.71145
+],
+"Bandar Tenggara, Johor": [
+1.86375,
+103.62191
+],
+"Bandar Tun Razak, Kuala Lumpur": [
+3.08963,
+101.71241
+],
+"Bandar Utama, Selangor": [
+3.14686,
+101.61869
+],
+"Bangi, Selangor": [
+2.90396,
+101.78609
+],
+"Bangsar": [
+3.12761,
+101.6791
+],
+"Bangsar Baru": [
+3.13061,
+101.67131
+],
+"Bangsar Baru, Kuala Lumpur": [
+3.13061,
+101.67131
+],
+"Bangsar South": [
+3.11297,
+101.66673
+],
+"Bangsar South, Kuala Lumpur": [
+3.11297,
+101.66673
+],
+"Bangsar, Kuala Lumpur": [
+3.12756,
+101.67907
+],
+"Banting, Selangor": [
+2.80276,
+101.49568
+],
+"Batang Kali, Selangor": [
+3.4624,
+101.65502
+],
+"Batang Padang District": [
+4.0402,
+101.11122
+],
+"Batu Arang, Selangor": [
+3.31878,
+101.47214
+],
+"Batu Berendam, Melaka": [
+2.25075,
+102.25421
+],
+"Batu Caves, Selangor": [
+3.23782,
+101.68116
+],
+"Batu Ferringhi, Penang": [
+5.47089,
+100.24859
+],
+"Batu Gajah, Perak": [
+4.45973,
+101.04956
+],
+"Batu Kawan, Penang": [
+5.2626,
+100.43046
+],
+"Batu Kikir, Negeri Sembilan": [
+2.82898,
+102.31695
+],
+"Batu Maung, Penang": [
+5.28599,
+100.28127
+],
+"Batu Pahat District": [
+1.93374,
+103.18758
+],
+"Batu Pahat District, Johor": [
+1.96681,
+103.22359
+],
+"Batu Pahat, Johor": [
+1.93333,
+103.0
+],
+"Batu Rakit, Terengganu": [
+5.4632,
+103.02831
+],
+"Bayan Baru, Penang": [
+5.32488,
+100.28523
+],
+"Bayan Lepas, Penang": [
+5.29481,
+100.2596
+],
+"Beaufort District": [
+5.34549,
+115.74699
+],
+"Beaufort, Sabah": [
+5.29112,
+115.67247
+],
+"Belaga, Sarawak": [
+2.66092,
+114.38165
+],
+"Beluran District": [
+5.89675,
+117.5587
+],
+"Bentong District": [
+3.52556,
+101.90962
+],
+"Bentong, Pahang": [
+3.36247,
+102.01727
+],
+"Bera": [
+3.23667,
+102.54177
+],
+"Beranang, Selangor": [
+2.87461,
+101.87199
+],
+"Bercham, Perak": [
+4.63758,
+101.1298
+],
+"Bertam, Penang": [
+5.51691,
+100.44254
+],
+"Bestari Jaya, Selangor": [
+3.37801,
+101.41022
+],
+"Besut": [
+5.58333,
+102.5
+],
+"Besut, Terengganu": [
+5.58333,
+102.5
+],
+"Betong Division": [
+1.41159,
+111.52803
+],
+"Bidor, Perak": [
+4.11389,
+101.28836
+],
+"Bintangor, Sarawak": [
+2.16844,
+111.63604
+],
+"Bintulu Division": [
+3.17998,
+113.49988
+],
+"Bintulu Division, Sarawak": [
+3.17998,
+113.49988
+],
+"Bintulu, Sarawak": [
+3.18743,
+113.04728
+],
+"Bongawan, Sabah": [
+5.54028,
+115.85581
+],
+"Brickfields": [
+3.12886,
+101.68455
+],
+"Brickfields, Kuala Lumpur": [
+3.12886,
+101.68455
+],
+"Bukit Baru, Melaka": [
+2.21761,
+102.27341
+],
+"Bukit Bendera, Penang": [
+5.42465,
+100.26889
+],
+"Bukit Beruntung, Selangor": [
+3.42433,
+101.55671
+],
+"Bukit Besi, Terengganu": [
+4.81008,
+103.19376
+],
+"Bukit Bintang": [
+3.1461,
+101.71148
+],
+"Bukit Bintang, Kuala Lumpur": [
+3.14607,
+101.71149
+],
+"Bukit Damansara": [
+3.1524,
+101.65845
+],
+"Bukit Damansara, Kuala Lumpur": [
+3.1524,
+101.65845
+],
+"Bukit Indah, Johor": [
+1.48007,
+103.65956
+],
+"Bukit Jalil": [
+3.05335,
+101.68029
+],
+"Bukit Jalil, Kuala Lumpur": [
+3.05335,
+101.68029
+],
+"Bukit Jelutong, Selangor": [
+3.10017,
+101.53745
+],
+"Bukit Katil, Melaka": [
+2.22915,
+102.29838
+],
+"Bukit Kayu Hitam, Kedah": [
+6.50534,
+100.42077
+],
+"Bukit Kiara": [
+3.14044,
+101.6449
+],
+"Bukit Mertajam, Penang": [
+5.36425,
+100.46099
+],
+"Bukit Minyak, Penang": [
+5.30837,
+100.4445
+],
+"Bukit Payong, Terengganu": [
+5.23352,
+103.10128
+],
+"Bukit Raja, Selangor": [
+3.06935,
+101.46991
+],
+"Bukit Rambai, Melaka": [
+2.25376,
+102.18031
+],
+"Bukit Rimau, Selangor": [
+3.00221,
+101.52599
+],
+"Bukit Selambau, Kedah": [
+5.68298,
+100.63451
+],
+"Bukit Tengah, Penang": [
+5.36853,
+100.41973
+],
+"Bukit Tinggi, Pahang": [
+3.44263,
+102.56763
+],
+"Bukit Tunku": [
+3.17043,
+101.67895
+],
+"Bundusan, Sabah": [
+5.94693,
+116.10345
+],
+"Butterworth, Penang": [
+5.4082,
+100.36972
+],
+"Cameron Highlands": [
+4.47108,
+101.37517
+],
+"Cameron Highlands, Pahang": [
+4.47108,
+101.37517
+],
+"Chemor, Perak": [
+4.71947,
+101.12104
+],
+"Cheng, Melaka": [
+2.27011,
+102.21709
+],
+"Chenor, Pahang": [
+3.47991,
+102.59231
+],
+"Cheras": [
+3.09919,
+101.73742
+],
+"Cheras Batu 9, Selangor": [
+3.07308,
+101.76269
+],
+"Cheras, Kuala Lumpur": [
+3.09919,
+101.73742
+],
+"Cheras, Selangor": [
+3.07308,
+101.76269
+],
+"Chow Kit": [
+3.16741,
+101.69837
+],
+"Chow Kit, Kuala Lumpur": [
+3.16741,
+101.69837
+],
+"Chukai, Terengganu": [
+4.21931,
+103.42252
+],
+"Cyberjaya, Selangor": [
+2.93389,
+101.64556
+],
+"Damansara Damai, Selangor": [
+3.19976,
+101.59287
+],
+"Damansara Jaya, Selangor": [
+3.1265,
+101.61755
+],
+"Damansara Perdana, Selangor": [
+3.1701,
+101.60482
+],
+"Damansara Utama, Selangor": [
+3.13806,
+101.62312
+],
+"Damansara, Selangor": [
+3.13788,
+101.59669
+],
+"Danau Kota, Kuala Lumpur": [
+3.20382,
+101.71871
+],
+"Dengkil, Selangor": [
+2.86802,
+101.67563
+],
+"Desa Pandan, Kuala Lumpur": [
+3.14827,
+101.73807
+],
+"Desa Parkcity": [
+3.18638,
+101.63182
+],
+"Desa Parkcity, Kuala Lumpur": [
+3.18638,
+101.63182
+],
+"Desa Petaling": [
+3.08419,
+101.70355
+],
+"Desa Petaling, Kuala Lumpur": [
+3.08419,
+101.70355
+],
+"Desaru, Johor": [
+1.541,
+104.2643
+],
+"Donggongon, Sabah": [
+5.90651,
+116.08907
+],
+"Dungun": [
+4.7644,
+103.41845
+]
+}

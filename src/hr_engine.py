@@ -156,45 +156,8 @@ def init_hr_tables():
                         (f"VAC-2026-{cur.lastrowid:03d}", cur.lastrowid))
         conn.commit()
 
-    # Seed real Malaysian job postings from Kaggle JobStreet Malaysia All Job Dataset (azraimohamad/jobstreet-all-job-dataset)
-    try:
-        js_postings = _load("jobstreet_malaysia_postings.json")
-        existing_js_uids = {
-            r["owner_uid"]
-            for r in cur.execute("SELECT owner_uid FROM vacancies WHERE owner_uid LIKE 'JS-%'").fetchall()
-        }
-        inserted_js = False
-        for jp in js_postings:
-            js_id = jp["jobstreet_id"]
-            if js_id in existing_js_uids:
-                continue
-            cur.execute(
-                """INSERT INTO vacancies (vacancy_uid, owner_uid, title, department, work_mode, location,
-                   salary_min, salary_max, min_years, education_level, required_skills_json, preferred_skills_json,
-                   status, created_at)
-                   VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)""",
-                (
-                    js_id,
-                    js_id,
-                    jp["title"],
-                    jp["department"],
-                    jp["work_mode"],
-                    jp["location"],
-                    jp["salary_min"],
-                    jp["salary_max"],
-                    jp["min_years"],
-                    jp["education_level"],
-                    json.dumps(jp["required_skills"]),
-                    json.dumps(jp["preferred_skills"]),
-                    "Open",
-                    _now(),
-                ),
-            )
-            inserted_js = True
-        if inserted_js:
-            conn.commit()
-    except Exception:
-        pass
+    # Real JobStreet Malaysia postings (69k) are served from src/data/jobstreet_index.json.gz by job_index.py;
+    # a posting is only materialised into `vacancies` when a candidate applies to it.
 
     conn.close()
 
@@ -424,7 +387,7 @@ def list_open_vacancies_for_seeker(candidate_uid: str) -> list[dict]:
         SELECT v.*, u.role_details_json, u.full_name AS hr_name
           FROM vacancies v
           LEFT JOIN users u ON u.unique_uid = v.owner_uid
-         WHERE v.status = 'Open'
+         WHERE v.status = 'Open' AND COALESCE(v.vacancy_uid, '') NOT LIKE 'JS-%'
          ORDER BY v.id DESC
         """
     ).fetchall()

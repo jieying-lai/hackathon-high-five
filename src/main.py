@@ -16,6 +16,7 @@ from flask import Flask, jsonify, redirect, render_template, request, send_file,
 import chatbot_engine
 import cv_engine
 import hr_engine
+import job_index
 from ai_matcher import load_json, match_user_to_roles
 from auth_db import authenticate_user, init_db, register_user
 from trend_signals import get_trend_radar
@@ -198,27 +199,62 @@ def api_cv_me_pdf():
 @app.route("/api/jobs", methods=["GET"])
 @api_role("job_seeker")
 def api_jobs_list():
+    """Radius search over 69k real JobStreet Malaysia postings + employer-portal vacancies."""
     lat = request.args.get("lat", type=float)
     lng = request.args.get("lng", type=float)
     city = request.args.get("city", "")
-    category = request.args.get("category", "")
-    q = request.args.get("q", "")
-    nearby = hr_engine.list_nearby_companies_and_jobs(
+    resolved_label = "Kuala Lumpur (KLCC)"
+    u_lat, u_lng = 3.1579, 101.7116
+    if city and city in hr_engine.CITY_COORDS:
+        resolved_label = city
+        u_lat, u_lng = hr_engine.CITY_COORDS[city]["lat"], hr_engine.CITY_COORDS[city]["lng"]
+    elif lat is not None and lng is not None:
+        u_lat, u_lng = lat, lng
+        nearest = min(hr_engine.CITY_COORDS, key=lambda k: hr_engine.haversine_km(
+            u_lat, u_lng, hr_engine.CITY_COORDS[k]["lat"], hr_engine.CITY_COORDS[k]["lng"]))
+        resolved_label = f"My GPS · near {hr_engine.CITY_COORDS[nearest]['city']}"
+
+    employer_vacancies = hr_engine.list_open_vacancies_for_seeker(_owner())
+    res = job_index.search_nearby(
         candidate_uid=_owner(),
-        lat=lat,
-        lng=lng,
-        city_preset=city or None,
-        category=category,
-        query=q,
+        lat=u_lat,
+        lng=u_lng,
+        radius_km=request.args.get("radius", 10, type=float),
+        mode=request.args.get("mode", "matched"),
+        category=request.args.get("category", ""),
+        query=request.args.get("q", ""),
+        company=request.args.get("company", ""),
+        sort_by=request.args.get("sort", "match"),
+        offset=max(0, request.args.get("offset", 0, type=int)),
+        limit=min(100, max(1, request.args.get("limit", 40, type=int))),
+        employer_vacancies=employer_vacancies,
     )
-    return jsonify({
+    res.update({
         "ok": True,
-        "jobs": nearby["vacancies"],
-        "companies": nearby["companies"],
-        "categories": nearby["categories"],
-        "user_location": nearby["user_location"],
-        "has_cv": cv_engine.get_user_cv(_owner()) is not None,
+        "user_location": {"label": resolved_label, "lat": u_lat, "lng": u_lng,
+                          "city": city if city in hr_engine.CITY_COORDS else "",
+                          "presets": list(hr_engine.CITY_COORDS.keys())},
     })
+    return jsonify(res)
+
+
+@app.route("/api/jobs/js/<js_uid>/apply", methods=["POST"])
+@api_role("job_seeker")
+def api_jobs_apply_jobstreet(js_uid):
+    """Apply to a real JobStreet posting (materialised on demand, then consent-gated apply)."""
+    vid = job_index.materialize_vacancy(js_uid)
+    if not vid:
+        return jsonify({"ok": False, "message": "Job posting not found."}), 404
+    user = session["user"]
+    ok, msg, app_info = cv_engine.apply_to_vacancy(
+        candidate_uid=user["unique_uid"],
+        candidate_name=user["full_name"],
+        vacancy_id=vid,
+        payload=request.get_json(force=True) or {},
+    )
+    if not ok:
+        return jsonify({"ok": False, "message": msg}), 400
+    return jsonify({"ok": True, "message": msg, "application": app_info, "vacancy_id": vid})
 
 
 @app.route("/api/jobs/<int:vid>/apply", methods=["POST"])

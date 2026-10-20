@@ -252,19 +252,20 @@
           </div>
         </section>
 
-        <!-- ============ BROWSE & APPLY JOBS + GPS INTERACTIVE MAP ============ -->
+        <!-- ============ BROWSE & APPLY JOBS + GPS INTERACTIVE MAP (68,447 REAL JOBSTREET MY POSTINGS) ============ -->
         <section id="tab-jobs" class="tab hidden space-y-6" data-no-translate>
-          <!-- GPS Location & Global Search Bar -->
+          <!-- GPS Location, Drag Radius Slider & Global Search Bar -->
           <div class="glass rounded-3xl p-5 space-y-4">
             <div class="flex flex-wrap items-center justify-between gap-3">
               <div class="flex items-center gap-3">
                 <div class="h-10 w-10 rounded-2xl bg-gradient-to-br from-teal-500 to-indigo-600 text-white grid place-items-center text-lg shadow">📍</div>
                 <div>
-                  <div class="flex items-center gap-2">
-                    <span class="text-sm font-extrabold">Your Location &amp; Nearby Map Discovery</span>
+                  <div class="flex flex-wrap items-center gap-2">
+                    <span class="text-sm font-extrabold">Your Location &amp; Radius Discovery</span>
                     <span id="locActiveChip" class="chip chip-teal">Kuala Lumpur (KLCC)</span>
+                    <span id="datasetStatsChip" class="chip chip-slate !text-[10px]">68,447 Malaysia Jobs · 20,514 Companies</span>
                   </div>
-                  <div class="text-[11px] text-slate-500">Zoom &amp; hover any pin on the map to preview short company details on the side</div>
+                  <div class="text-[11px] text-slate-500">Drag the distance slider to resize the map circle — shows CV-matched dots first unless you select View All Nearby</div>
                 </div>
               </div>
               <div class="flex flex-wrap items-center gap-2">
@@ -273,64 +274,105 @@
               </div>
             </div>
 
+            <!-- Interactive Drag Range Line (km) + Sort + Matched vs View All Nearby -->
+            <div class="tint tint-indigo rounded-2xl p-3.5 grid lg:grid-cols-12 gap-4 items-center">
+              <div class="lg:col-span-6 space-y-1.5">
+                <div class="flex items-center justify-between text-xs">
+                  <span class="font-extrabold text-slate-700">📏 Search Radius Circle: <span id="radiusValueLabel" class="text-indigo-600 font-black">10 km</span></span>
+                  <div class="flex items-center gap-1">
+                    <button onclick="setRadiusKm(5)" class="chip chip-slate !text-[10px] !py-0.5 !px-2 cursor-pointer">5km</button>
+                    <button onclick="setRadiusKm(10)" class="chip chip-slate !text-[10px] !py-0.5 !px-2 cursor-pointer">10km</button>
+                    <button onclick="setRadiusKm(20)" class="chip chip-slate !text-[10px] !py-0.5 !px-2 cursor-pointer">20km</button>
+                    <button onclick="setRadiusKm(35)" class="chip chip-slate !text-[10px] !py-0.5 !px-2 cursor-pointer">35km</button>
+                    <button onclick="setRadiusKm(50)" class="chip chip-slate !text-[10px] !py-0.5 !px-2 cursor-pointer">50km</button>
+                    <button onclick="setRadiusKm(100)" class="chip chip-slate !text-[10px] !py-0.5 !px-2 cursor-pointer">100km</button>
+                  </div>
+                </div>
+                <input id="radiusSlider" type="range" min="5" max="100" step="5" value="10"
+                  oninput="previewRadiusCircle(this.value)" onchange="commitRadiusChange(this.value)"
+                  class="w-full accent-indigo-600 cursor-pointer h-2 bg-indigo-200 rounded-lg" />
+              </div>
+
+              <div class="lg:col-span-3 flex items-center gap-2">
+                <span class="text-xs font-bold text-slate-600 whitespace-nowrap">Sort by:</span>
+                <select id="jobSortSelect" onchange="setJobSort(this.value)" class="input !py-1.5 !text-xs">
+                  <option value="match">🎯 Best CV Match</option>
+                  <option value="distance">📍 Nearest Distance (km)</option>
+                  <option value="salary">💰 Highest Salary</option>
+                </select>
+              </div>
+
+              <div class="lg:col-span-3 flex justify-end">
+                <div class="seg w-full sm:w-auto justify-center">
+                  <button id="btnMapMatched" onclick="setJobScope('relevant')" class="on !text-[11px]">🎯 Matched Only</button>
+                  <button id="btnMapAll" onclick="setJobScope('all')" class="!text-[11px]">🌐 View All Nearby</button>
+                </div>
+              </div>
+            </div>
+
             <!-- Search any role / field + Category filter pills -->
-            <div class="grid sm:grid-cols-12 gap-3 pt-2 border-t border-slate-200/70">
-              <div class="sm:col-span-5">
-                <input id="jobSearchInput" oninput="filterJobsAndCompanies()" class="input !py-2" placeholder="🔍 Search any role, skill, company, or sector..." />
+            <div class="grid sm:grid-cols-12 gap-3 pt-1">
+              <div class="sm:col-span-5 flex items-center gap-2">
+                <input id="jobSearchInput" oninput="debouncedJobSearch()" class="input !py-2" placeholder="🔍 Search role, skill, or company within radius..." />
+                <button id="clearCompFilterBtn" onclick="setCompanyDotFilter('')" class="btn btn-soft !py-2 !px-2.5 !text-xs hidden whitespace-nowrap">✕ Clear Company</button>
               </div>
               <div id="catFilterBar" class="sm:col-span-7 flex items-center gap-1.5 overflow-x-auto hidden-scroll py-0.5"></div>
             </div>
           </div>
 
-          <!-- Section 1: Interactive Map + Side Short Details Panel -->
+          <!-- Section 1: Interactive Dot Map + Radius Circle + Side Details Panel -->
           <div class="glass rounded-3xl p-5 space-y-4">
             <div class="flex flex-wrap items-center justify-between gap-2">
-              <div class="flex items-center gap-2.5">
+              <div class="flex flex-wrap items-center gap-2">
                 <h2 class="text-base font-extrabold">🗺️ Nearby Hiring Companies Map</h2>
-                <span id="compCountBadge" class="chip chip-indigo">0 companies</span>
+                <span id="compCountBadge" class="chip chip-indigo">0 companies in range</span>
+                <span id="rangeSummaryBadge" class="chip chip-emerald !text-[10px]">0 matched roles</span>
               </div>
               <div class="flex flex-wrap items-center gap-2 text-[11px]">
                 <span class="inline-flex items-center gap-1.5 font-bold text-slate-600"><span class="inline-block w-2.5 h-2.5 rounded-full bg-teal-600"></span>You</span>
-                <span class="inline-flex items-center gap-1.5 font-bold text-slate-600"><span class="inline-block w-2.5 h-2.5 rounded-full bg-emerald-500"></span>CV-Matched Sector</span>
-                <span class="inline-flex items-center gap-1.5 font-bold text-slate-600"><span class="inline-block w-2.5 h-2.5 rounded-full bg-indigo-500"></span>Other Sector</span>
-                <button onclick="zoomMapNearMe()" class="btn btn-soft !py-1 !px-2.5 !text-[11px]">🎯 Zoom Near Me</button>
-                <button onclick="fitAllMapPins()" class="btn btn-soft !py-1 !px-2.5 !text-[11px]">🌐 Fit All</button>
+                <span class="inline-flex items-center gap-1.5 font-bold text-slate-600"><span class="inline-block w-2.5 h-2.5 rounded-full bg-emerald-500"></span>CV-Matched Dot</span>
+                <span class="inline-flex items-center gap-1.5 font-bold text-slate-600"><span class="inline-block w-2.5 h-2.5 rounded-full bg-indigo-500"></span>Other Hiring Dot</span>
+                <button onclick="zoomMapNearMe()" class="btn btn-soft !py-1 !px-2.5 !text-[11px]">🎯 Zoom Circle</button>
+                <button onclick="fitAllMapPins()" class="btn btn-soft !py-1 !px-2.5 !text-[11px]">🌐 Fit Dots</button>
               </div>
             </div>
 
             <div class="grid lg:grid-cols-12 gap-5 items-stretch">
-              <!-- Left: Zoomable Map -->
+              <!-- Left: Zoomable Map with Radius Circle & Company Dots -->
               <div class="lg:col-span-7">
                 <div id="companyMap" class="cl-map-wrap"></div>
               </div>
 
-              <!-- Right: Hovered / Selected Pin Short Details Panel -->
+              <!-- Right: Hovered / Selected Dot Short Details Panel -->
               <div class="lg:col-span-5 flex flex-col justify-between gap-3">
                 <div id="mapSideCard" class="tint tint-indigo rounded-2xl p-5 flex-1 flex flex-col justify-between"></div>
                 <div class="space-y-1.5">
-                  <div class="text-[10px] font-extrabold uppercase tracking-wider text-slate-400 px-1">Hover or click to inspect on map</div>
+                  <div class="text-[10px] font-extrabold uppercase tracking-wider text-slate-400 px-1">Top nearby companies in circle (hover or click dot)</div>
                   <div id="mapQuickList" class="flex flex-wrap gap-1.5 max-h-24 overflow-y-auto pr-1"></div>
                 </div>
               </div>
             </div>
           </div>
 
-          <!-- Section 2: Clean Open Job Vacancies (Pic 2 Refined) -->
+          <!-- Section 2: Clean Open Job Vacancies -->
           <div class="space-y-3">
             <div class="flex flex-wrap items-center justify-between gap-3 px-1">
               <div>
-                <div class="flex items-center gap-2">
-                  <h2 class="text-base font-extrabold text-slate-900">💼 Open Job Vacancies</h2>
-                  <span class="chip chip-emerald !text-[10px]">🔒 Consent-Gated Apply</span>
+                <div class="flex flex-wrap items-center gap-2">
+                  <h2 class="text-base font-extrabold text-slate-900">💼 Open Job Vacancies in Range</h2>
+                  <span id="jobsShowingBadge" class="chip chip-indigo !text-[10px]">0 roles</span>
                 </div>
-                <p class="text-xs text-slate-500">Detailed role openings. Employers only receive your CV when you click Apply.</p>
+                <p id="jobsSubtleDesc" class="text-xs text-slate-500">Showing CV-matched job openings inside your selected distance circle. Switch to View All Nearby to browse every sector.</p>
               </div>
               <div class="seg">
-                <button id="btnRelJobs" onclick="setJobScope('relevant')" class="on">🎯 Matched to My CV</button>
-                <button id="btnAllJobs" onclick="setJobScope('all')">🌐 All Open Roles</button>
+                <button id="btnRelJobs" onclick="setJobScope('relevant')" class="on">🎯 Matched in Range</button>
+                <button id="btnAllJobs" onclick="setJobScope('all')">🌐 View All Nearby</button>
               </div>
             </div>
             <div id="jobsGrid" class="grid lg:grid-cols-2 gap-4"></div>
+            <div id="loadMoreJobsWrap" class="hidden pt-2 text-center">
+              <button onclick="loadMoreJobs()" class="btn btn-soft !px-6 !py-2.5 text-xs font-extrabold">Load More Roles in Range ↓</button>
+            </div>
           </div>
         </section>
 
@@ -740,34 +782,128 @@
       }
     }
 
-    /* ---------- Browse & Apply Jobs + Interactive Map ---------- */
-    async function loadJobs() {
+    /* ---------- Browse & Apply Jobs + Interactive Radius Dot Map (68,447 JobStreet MY Postings) ---------- */
+    let radiusKm = 10, jobSortBy = 'match', selectedCompanyName = '', jobsOffset = 0, jobsHasMore = false, jobsSummary = {};
+    let radiusCircle = null, activeDotCircle = null, searchDebounceTimer = null, leafletRenderer = null;
+
+    async function loadJobs(append = false) {
+      if (!append) jobsOffset = 0;
       const params = new URLSearchParams();
       if (userLocation.lat && userLocation.lng) {
         params.set('lat', userLocation.lat);
         params.set('lng', userLocation.lng);
       }
       if (userLocation.city) params.set('city', userLocation.city);
+      params.set('radius', radiusKm);
+      params.set('mode', jobScope === 'all' ? 'all' : 'matched');
+      params.set('sort', jobSortBy);
+      if (selectedCategory && selectedCategory !== 'All') params.set('category', selectedCategory);
+      const q = (window.jobSearchInput ? jobSearchInput.value : '').trim();
+      if (q) params.set('q', q);
+      if (selectedCompanyName) params.set('company', selectedCompanyName);
+      params.set('offset', jobsOffset);
+      params.set('limit', 40);
+
       const r = await api(`/api/jobs?${params.toString()}`);
       if (!r.ok) return;
-      jobsList = r.data.jobs || [];
-      companiesList = r.data.companies || [];
+
+      const incomingJobs = r.data.jobs || [];
+      jobsList = append ? [...jobsList, ...incomingJobs] : incomingJobs;
+      companiesList = r.data.dots || [];
       categoriesList = r.data.categories || [];
+      jobsHasMore = Boolean(r.data.has_more);
+      jobsSummary = r.data.summary || {};
+
       if (r.data.user_location) {
         userLocation = { ...userLocation, ...r.data.user_location };
         window._careerLensUserLocation = userLocation;
       }
+      if (r.data.dataset && window.datasetStatsChip) {
+        datasetStatsChip.textContent = `${Number(r.data.dataset.jobs || 68447).toLocaleString()} MY Jobs · ${Number(r.data.dataset.companies || 20514).toLocaleString()} Companies`;
+      }
       renderLocationControls();
       renderCategoryPills();
-      filterJobsAndCompanies();
+      renderSummaryBadges();
+      if (!append) {
+        filteredCompsCache = companiesList;
+        renderCompaniesMap(companiesList);
+      }
+      renderJobs(jobsList);
+    }
+
+    function loadMoreJobs() {
+      jobsOffset = jobsList.length;
+      loadJobs(true);
+    }
+
+    function renderSummaryBadges() {
+      const inRange = Number(jobsSummary.jobs_in_range || 0).toLocaleString();
+      const matched = Number(jobsSummary.matched_in_range || 0).toLocaleString();
+      const shown = Number(jobsSummary.shown_jobs || jobsList.length).toLocaleString();
+      if (window.rangeSummaryBadge) {
+        rangeSummaryBadge.textContent = `${matched} CV-matched / ${inRange} jobs within ${radiusKm} km`;
+      }
+      if (window.jobsShowingBadge) {
+        jobsShowingBadge.textContent = selectedCompanyName
+          ? `${shown} roles @ ${selectedCompanyName}`
+          : `${shown} ${jobScope === 'all' ? 'open' : 'CV-matched'} roles in ${radiusKm} km`;
+      }
+      if (window.clearCompFilterBtn) {
+        clearCompFilterBtn.classList.toggle('hidden', !selectedCompanyName);
+        if (selectedCompanyName) clearCompFilterBtn.textContent = `✕ ${selectedCompanyName.slice(0, 22)}`;
+      }
+      if (window.loadMoreJobsWrap) {
+        loadMoreJobsWrap.classList.toggle('hidden', !jobsHasMore);
+      }
     }
 
     function renderLocationControls() {
       if (window.locActiveChip) locActiveChip.textContent = `📍 ${userLocation.label}`;
+      if (window.radiusValueLabel) radiusValueLabel.textContent = `${radiusKm} km`;
+      if (window.radiusSlider) radiusSlider.value = radiusKm;
       if (window.cityPresetSelect && (userLocation.presets || []).length) {
         cityPresetSelect.innerHTML = `<option value="">Switch city...</option>` +
           userLocation.presets.map(c => `<option value="${esc(c)}" ${c === userLocation.city ? 'selected' : ''}>${esc(c)}</option>`).join('');
       }
+    }
+
+    function previewRadiusCircle(val) {
+      const km = Number(val) || 15;
+      if (window.radiusValueLabel) radiusValueLabel.textContent = `${km} km`;
+      if (radiusCircle && leafletMap) {
+        radiusCircle.setRadius(km * 1000);
+      }
+    }
+
+    function commitRadiusChange(val) {
+      radiusKm = Number(val) || 15;
+      selectedCompanyName = '';
+      previewRadiusCircle(radiusKm);
+      loadJobs(false).then(() => zoomMapNearMe());
+    }
+
+    function setRadiusKm(km) {
+      radiusKm = Number(km) || 15;
+      if (window.radiusSlider) radiusSlider.value = radiusKm;
+      commitRadiusChange(radiusKm);
+    }
+
+    function setJobSort(sortVal) {
+      jobSortBy = sortVal || 'match';
+      loadJobs(false);
+    }
+
+    function setCompanyDotFilter(compName) {
+      selectedCompanyName = compName || '';
+      loadJobs(false);
+    }
+
+    function debouncedJobSearch() {
+      clearTimeout(searchDebounceTimer);
+      searchDebounceTimer = setTimeout(() => {
+        selectedCompanyName = '';
+        loadJobs(false);
+      }, 240);
     }
 
     function renderCategoryPills() {
@@ -780,15 +916,19 @@
 
     window.setCompanyCategory = function(cat) {
       selectedCategory = cat || 'All';
+      selectedCompanyName = '';
       renderCategoryPills();
-      filterJobsAndCompanies();
+      loadJobs(false);
     };
 
     function setJobScope(scope) {
-      jobScope = scope;
-      if (window.btnRelJobs) btnRelJobs.className = scope === 'relevant' ? 'on' : '';
-      if (window.btnAllJobs) btnAllJobs.className = scope === 'all' ? 'on' : '';
-      filterJobsAndCompanies();
+      jobScope = scope === 'all' ? 'all' : 'relevant';
+      selectedCompanyName = '';
+      if (window.btnRelJobs) btnRelJobs.className = jobScope === 'relevant' ? 'on' : '';
+      if (window.btnAllJobs) btnAllJobs.className = jobScope === 'all' ? 'on' : '';
+      if (window.btnMapMatched) btnMapMatched.className = jobScope === 'relevant' ? 'on !text-[11px]' : '!text-[11px]';
+      if (window.btnMapAll) btnMapAll.className = jobScope === 'all' ? 'on !text-[11px]' : '!text-[11px]';
+      loadJobs(false);
     }
 
     function selectManualCity(cityVal) {
@@ -796,8 +936,9 @@
       userLocation.city = cityVal;
       userLocation.lat = null;
       userLocation.lng = null;
+      selectedCompanyName = '';
       toast(`Location set to ${cityVal}`);
-      loadJobs();
+      loadJobs(false).then(() => zoomMapNearMe());
     }
 
     function detectGpsLocation() {
@@ -810,8 +951,9 @@
           userLocation.lat = Number(pos.coords.latitude.toFixed(4));
           userLocation.lng = Number(pos.coords.longitude.toFixed(4));
           userLocation.city = '';
+          selectedCompanyName = '';
           toast(`GPS locked (${userLocation.lat}, ${userLocation.lng})`);
-          loadJobs();
+          loadJobs(false).then(() => zoomMapNearMe());
         },
         () => {
           toast('GPS permission denied or unavailable — select your city manually on the right.', 'err');
@@ -821,40 +963,29 @@
     }
 
     function filterJobsAndCompanies() {
-      const q = (window.jobSearchInput ? jobSearchInput.value : '').trim().toLowerCase();
-      const cat = selectedCategory;
+      debouncedJobSearch();
+    }
 
-      const filteredComps = companiesList.filter(c => {
-        if (cat !== 'All' && c.category !== cat) return false;
-        if (!q) return true;
-        const hay = `${c.name} ${c.category} ${c.sub_sector} ${c.city} ${c.district} ${(c.featured_roles || []).join(' ')} ${(c.core_skills_sought || []).join(' ')}`.toLowerCase();
-        return hay.includes(q);
-      });
-      filteredCompsCache = filteredComps;
-      renderCompaniesMap(filteredComps);
-
-      const filteredJobs = jobsList.filter(v => {
-        if (cat !== 'All' && v.company_category !== cat && v.department !== cat) return false;
-        if (q) {
-          const hay = `${v.title} ${v.company_name} ${v.department} ${v.company_category} ${v.location} ${(v.required_skills || []).join(' ')} ${(v.preferred_skills || []).join(' ')}`.toLowerCase();
-          return hay.includes(q);
-        }
-        if (jobScope === 'relevant' && cat === 'All') {
-          return Boolean(v.is_relevant_to_cv);
-        }
-        return true;
-      });
-      renderJobs(filteredJobs);
+    function radiusZoomLevel(km) {
+      if (km <= 5) return 13;
+      if (km <= 10) return 12;
+      if (km <= 20) return 11;
+      if (km <= 35) return 10;
+      if (km <= 60) return 9;
+      return 8;
     }
 
     function ensureLeafletMap() {
       const mapEl = document.getElementById('companyMap');
       if (!mapEl || typeof window.L === 'undefined') return null;
       if (!leafletMap) {
+        leafletRenderer = L.canvas({ padding: 0.5 });
         leafletMap = L.map(mapEl, {
           center: [userLocation.lat || 3.1579, userLocation.lng || 101.7116],
-          zoom: 11,
+          zoom: radiusZoomLevel(radiusKm),
           zoomControl: true,
+          preferCanvas: true,
+          renderer: leafletRenderer,
         });
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
           maxZoom: 18,
@@ -865,12 +996,52 @@
     }
 
     function renderCompaniesMap(list) {
+      const totalComps = Number(jobsSummary.companies_on_map || list.length);
       if (window.compCountBadge) {
-        compCountBadge.textContent = `${list.length} compan${list.length === 1 ? 'y' : 'ies'}`;
+        compCountBadge.textContent = `${totalComps.toLocaleString()} compan${totalComps === 1 ? 'y' : 'ies'} in ${radiusKm} km`;
       }
+
+      const map = ensureLeafletMap();
+      const uLat = userLocation.lat || 3.1579;
+      const uLng = userLocation.lng || 101.7116;
+
+      if (map) {
+        leafletMarkers.forEach(m => map.removeLayer(m));
+        leafletMarkers = [];
+        if (activeDotCircle) { map.removeLayer(activeDotCircle); activeDotCircle = null; }
+        if (userMarker) map.removeLayer(userMarker);
+        if (radiusCircle) map.removeLayer(radiusCircle);
+
+        // Draw dynamic radius circle around user's location
+        radiusCircle = L.circle([uLat, uLng], {
+          radius: radiusKm * 1000,
+          color: '#4f46e5',
+          weight: 2,
+          dashArray: '6, 6',
+          fillColor: '#6366f1',
+          fillOpacity: 0.08,
+          interactive: false,
+        }).addTo(map);
+
+        userMarker = L.marker([uLat, uLng], {
+          icon: L.divIcon({
+            className: '',
+            html: `<div class="cl-user-pin" title="Your location: ${esc(userLocation.label)}"></div>`,
+            iconSize: [18, 18],
+            iconAnchor: [9, 9],
+          }),
+        }).addTo(map).bindTooltip(`📍 You (${esc(userLocation.label)}) · ${radiusKm} km circle`, { direction: 'top', offset: [0, -8] });
+      }
+
       if (!list.length) {
         if (window.mapSideCard) {
-          mapSideCard.innerHTML = `<div class="text-xs text-slate-500 my-auto text-center py-8">No hiring companies match this filter. Try clearing the search or sector filter.</div>`;
+          mapSideCard.innerHTML = `<div class="text-xs text-slate-500 my-auto text-center py-8 space-y-2">
+            <div>No ${jobScope === 'relevant' ? 'CV-matched ' : ''}hiring companies within <b>${radiusKm} km</b>.</div>
+            <div class="flex flex-wrap justify-center gap-2 pt-1">
+              <button onclick="setRadiusKm(Math.min(100, radiusKm + 20))" class="btn btn-soft !py-1 !px-3 !text-xs">Expand to ${Math.min(100, radiusKm + 20)} km</button>
+              ${jobScope === 'relevant' ? `<button onclick="setJobScope('all')" class="btn btn-primary !py-1 !px-3 !text-xs">🌐 View All Nearby</button>` : ''}
+            </div>
+          </div>`;
         }
         if (window.mapQuickList) mapQuickList.innerHTML = '';
         return;
@@ -880,141 +1051,165 @@
         activeCompanyId = list[0].id;
       }
 
-      const map = ensureLeafletMap();
       if (map) {
-        leafletMarkers.forEach(m => map.removeLayer(m));
-        leafletMarkers = [];
-        if (userMarker) map.removeLayer(userMarker);
-
-        const uLat = userLocation.lat || 3.1579;
-        const uLng = userLocation.lng || 101.7116;
-        userMarker = L.marker([uLat, uLng], {
-          icon: L.divIcon({
-            className: '',
-            html: `<div class="cl-user-pin" title="Your location: ${esc(userLocation.label)}"></div>`,
-            iconSize: [18, 18],
-            iconAnchor: [9, 9],
-          }),
-        }).addTo(map).bindTooltip(`📍 You (${esc(userLocation.label)})`, { direction: 'top', offset: [0, -8] });
-
-        list.forEach((c, idx) => {
-          const isMatched = Boolean(c.is_cv_matched);
-          const bg = isMatched ? '#10b981' : '#6366f1';
-          const marker = L.marker([c.lat, c.lng], {
-            icon: L.divIcon({
-              className: '',
-              html: `<div id="pin-${esc(c.id)}" class="cl-pin ${c.id === activeCompanyId ? 'active' : ''}" style="width:32px;height:32px;background:${bg}">${idx + 1}</div>`,
-              iconSize: [32, 32],
-              iconAnchor: [16, 16],
-            }),
+        list.forEach(c => {
+          const isMatched = c.matched > 0;
+          const color = isMatched ? '#10b981' : '#6366f1';
+          const radiusPx = Math.min(10, 5 + Math.log2(c.jobs + 1));
+          const dot = L.circleMarker([c.lat, c.lng], {
+            renderer: leafletRenderer,
+            radius: radiusPx,
+            fillColor: color,
+            color: '#ffffff',
+            weight: 1.5,
+            fillOpacity: 0.9,
           }).addTo(map);
 
-          marker.bindTooltip(`<b>${esc(c.name)}</b><br/>${esc(c.category)} · ${c.distance_km} km`, {
-            direction: 'top',
-            offset: [0, -14],
-          });
+          dot.bindTooltip(
+            `<b>${esc(c.name)}</b><br/>${esc(c.category)} · ${c.distance_km} km · <b>${c.jobs} role${c.jobs > 1 ? 's' : ''}</b>`,
+            { direction: 'top', offset: [0, -6] }
+          );
 
-          marker.on('mouseover', () => highlightCompanyOnMap(c.id, false));
-          marker.on('click', () => highlightCompanyOnMap(c.id, true));
-          leafletMarkers.push(marker);
+          dot.on('mouseover', () => highlightCompanyOnMap(c.id, false));
+          dot.on('click', () => highlightCompanyOnMap(c.id, true));
+          dot._compId = c.id;
+          leafletMarkers.push(dot);
         });
       }
 
-      renderMapSideCard(list.find(c => c.id === activeCompanyId) || list[0]);
-      renderMapQuickList(list);
+      const activeComp = list.find(c => c.id === activeCompanyId) || list[0];
+      drawActiveDotRing(activeComp);
+      renderMapSideCard(activeComp);
+      renderMapQuickList(list.slice(0, 24));
+    }
+
+    function drawActiveDotRing(comp) {
+      if (!leafletMap || !comp) return;
+      if (activeDotCircle) leafletMap.removeLayer(activeDotCircle);
+      activeDotCircle = L.circleMarker([comp.lat, comp.lng], {
+        radius: 12,
+        fillColor: comp.matched > 0 ? '#10b981' : '#6366f1',
+        color: '#0f172a',
+        weight: 2.5,
+        fillOpacity: 0.25,
+        interactive: false,
+      }).addTo(leafletMap);
     }
 
     function highlightCompanyOnMap(compId, pan = false) {
       activeCompanyId = compId;
       const comp = filteredCompsCache.find(c => c.id === compId) || companiesList.find(c => c.id === compId);
       if (!comp) return;
-      document.querySelectorAll('.cl-pin').forEach(el => el.classList.toggle('active', el.id === `pin-${compId}`));
+      drawActiveDotRing(comp);
       if (pan && leafletMap && comp.lat && comp.lng) {
-        leafletMap.flyTo([comp.lat, comp.lng], Math.max(leafletMap.getZoom(), 13), { duration: 0.45 });
+        leafletMap.flyTo([comp.lat, comp.lng], Math.max(leafletMap.getZoom(), 13), { duration: 0.4 });
       }
       renderMapSideCard(comp);
-      renderMapQuickList(filteredCompsCache);
+      renderMapQuickList(filteredCompsCache.slice(0, 24));
     }
 
     function zoomMapNearMe() {
       if (!leafletMap) return;
-      leafletMap.flyTo([userLocation.lat || 3.1579, userLocation.lng || 101.7116], 12, { duration: 0.5 });
+      const uLat = userLocation.lat || 3.1579;
+      const uLng = userLocation.lng || 101.7116;
+      if (radiusCircle) {
+        leafletMap.fitBounds(radiusCircle.getBounds(), { padding: [18, 18] });
+      } else {
+        leafletMap.flyTo([uLat, uLng], radiusZoomLevel(radiusKm), { duration: 0.45 });
+      }
     }
 
     function fitAllMapPins() {
-      if (!leafletMap || !filteredCompsCache.length) return;
+      if (!leafletMap) return;
+      if (radiusCircle && !filteredCompsCache.length) {
+        return leafletMap.fitBounds(radiusCircle.getBounds(), { padding: [20, 20] });
+      }
       const pts = [
         [userLocation.lat || 3.1579, userLocation.lng || 101.7116],
-        ...filteredCompsCache.map(c => [c.lat, c.lng]),
+        ...filteredCompsCache.slice(0, 300).map(c => [c.lat, c.lng]),
       ];
-      leafletMap.fitBounds(pts, { padding: [28, 28] });
+      leafletMap.fitBounds(pts, { padding: [24, 24] });
     }
 
     function renderMapSideCard(c) {
       if (!window.mapSideCard || !c) return;
+      const roles = c.roles || c.featured_roles || [];
+      const isMatched = (c.matched || 0) > 0;
       mapSideCard.innerHTML = `
         <div class="space-y-3">
           <div class="flex flex-wrap items-center justify-between gap-1.5">
             <span class="chip chip-indigo !text-[10px]">${esc(c.category)}</span>
-            <span class="chip ${c.distance_km <= 20 ? 'chip-emerald' : 'chip-slate'} !text-[10px]">📍 ${c.distance_km} km</span>
+            <span class="chip ${c.distance_km <= 15 ? 'chip-emerald' : 'chip-slate'} !text-[10px]">📍 ${c.distance_km} km away</span>
           </div>
           <div>
             <h3 class="text-base font-extrabold text-slate-900 leading-snug">${esc(c.name)}</h3>
-            <div class="text-xs text-slate-500 mt-0.5">${esc(c.district)}, ${esc(c.city)} · ${esc(c.sub_sector || '')}</div>
+            <div class="text-xs text-slate-500 mt-0.5">${esc(c.location || '')} · <b>${c.jobs || 1} open role${(c.jobs || 1) > 1 ? 's' : ''}</b></div>
           </div>
-          <p class="text-xs text-slate-600 leading-relaxed">${esc(c.summary)}</p>
           <div class="space-y-1.5">
-            <div class="text-[10px] font-extrabold uppercase tracking-wider text-slate-400">Open hiring roles</div>
+            <div class="text-[10px] font-extrabold uppercase tracking-wider text-slate-400">Open roles at this location</div>
             <div class="flex flex-wrap gap-1.5">
-              ${(c.featured_roles || []).map(r => `<span class="chip chip-teal !text-[10px]">${esc(r)}</span>`).join('')}
+              ${roles.map(r => `<span class="chip chip-teal !text-[10px]">${esc(r)}</span>`).join('')}
             </div>
           </div>
         </div>
-        <div class="pt-3 mt-3 border-t border-indigo-200/60 flex items-center justify-between gap-2">
-          <span class="text-xs font-extrabold ${c.is_cv_matched ? 'text-emerald-700' : 'text-slate-500'}">
-            ${c.is_cv_matched ? `✓ ${c.cv_relevance_pct}% CV skill fit` : 'Cross-sector opportunity'}
+        <div class="pt-3 mt-3 border-t border-indigo-200/60 flex flex-wrap items-center justify-between gap-2">
+          <span class="text-xs font-extrabold ${isMatched ? 'text-emerald-700' : 'text-slate-500'}">
+            ${isMatched ? `✓ ${c.matched} CV-matched role${c.matched > 1 ? 's' : ''} (${c.best_score}% top fit)` : 'Other sector employer'}
           </span>
-          <button onclick="setCompanyCategory('${esc(c.category)}');setJobScope('all')" class="btn btn-primary !py-1.5 !px-3 !text-xs">
-            Filter Sector Jobs →
-          </button>
+          <div class="flex items-center gap-1.5">
+            <button onclick='setCompanyDotFilter(${JSON.stringify(c.name)})' class="btn btn-primary !py-1.5 !px-3 !text-xs">
+              Show Company Jobs (${c.jobs || 1}) →
+            </button>
+          </div>
         </div>
       `;
     }
 
     function renderMapQuickList(list) {
       if (!window.mapQuickList) return;
-      mapQuickList.innerHTML = list.map((c, idx) => `
+      mapQuickList.innerHTML = list.map(c => `
         <button
           onmouseenter="highlightCompanyOnMap('${esc(c.id)}', false)"
           onclick="highlightCompanyOnMap('${esc(c.id)}', true)"
-          class="chip ${c.id === activeCompanyId ? 'chip-indigo !border-indigo-500 ring-1 ring-indigo-400' : 'chip-slate'} !text-[11px] cursor-pointer transition">
-          <b>${idx + 1}.</b> ${esc(c.name.split(' ')[0])} · ${c.distance_km}km
+          class="chip ${c.id === activeCompanyId ? 'chip-indigo !border-indigo-500 ring-1 ring-indigo-400' : (c.matched > 0 ? 'chip-emerald' : 'chip-slate')} !text-[11px] cursor-pointer transition">
+          <span class="inline-block w-2 h-2 rounded-full ${c.matched > 0 ? 'bg-emerald-500' : 'bg-indigo-500'} mr-1"></span>
+          ${esc(c.name.split(' ').slice(0, 2).join(' '))} · ${c.distance_km}km
         </button>
       `).join('');
     }
 
-    /* ---------- Clean Open Job Vacancies Cards (Pic 2 Refined) ---------- */
+    /* ---------- Clean Open Job Vacancies Cards ---------- */
     function renderJobs(list = jobsList) {
       if (!window.jobsGrid) return;
       if (!list.length) {
-        jobsGrid.innerHTML = `<div class="glass rounded-3xl p-8 text-center text-sm text-slate-500 col-span-2">
-          No vacancies in this filter. <button onclick="setJobScope('all');setCompanyCategory('All')" class="text-indigo-600 font-extrabold underline ml-1">Show all open roles across all sectors →</button>
+        jobsGrid.innerHTML = `<div class="glass rounded-3xl p-8 text-center text-sm text-slate-500 col-span-2 space-y-2">
+          <div>No ${jobScope === 'relevant' ? 'CV-matched ' : ''}vacancies within <b>${radiusKm} km</b> for this filter.</div>
+          <div class="flex flex-wrap justify-center gap-2 pt-1">
+            <button onclick="setRadiusKm(Math.min(100, radiusKm + 20))" class="btn btn-soft !py-1.5 !px-3.5 !text-xs">Expand Radius to ${Math.min(100, radiusKm + 20)} km</button>
+            <button onclick="setJobScope('all');setCompanyCategory('All')" class="btn btn-primary !py-1.5 !px-3.5 !text-xs">🌐 View All Nearby Roles →</button>
+          </div>
         </div>`;
         return;
       }
-      jobsGrid.innerHTML = list.map(v => {
+      jobsGrid.innerHTML = list.map((v, idx) => {
         const app = v.application || {};
         const score = v.match_score ?? 0;
-        const distText = v.distance_km !== undefined ? ` · ${v.distance_km} km` : '';
+        const distText = v.distance_km !== undefined ? ` · 📍 ${v.distance_km} km` : '';
+        const salText = (v.salary_min && v.salary_max)
+          ? `${rm(v.salary_min)} – ${rm(v.salary_max)}`
+          : (v.salary_min ? `${rm(v.salary_min)}+` : 'Salary Undisclosed');
         const statusChip = app.applied
           ? `<span class="chip chip-emerald !text-[10px]">✓ Applied</span>`
           : v.is_relevant_to_cv
-          ? `<span class="chip chip-indigo !text-[10px]">★ CV Match</span>`
-          : `<span class="chip chip-slate !text-[10px]">${esc(v.work_mode)}</span>`;
+          ? `<span class="chip chip-emerald !text-[10px]">★ CV Match</span>`
+          : `<span class="chip chip-slate !text-[10px]">${esc(v.employment_type || v.work_mode || 'Full time')}</span>`;
+        const reqSkills = v.required_skills || [];
+        const matchedReq = v.matched_required || [];
+        const jobKey = v.key || v.jobstreet_id || String(v.id);
 
         return `
           <article class="glass rounded-3xl p-5 flex flex-col justify-between gap-4 lift ${app.applied ? 'ring-2 ring-teal-400/80' : ''}">
-            <div class="space-y-3.5">
+            <div class="space-y-3">
               <!-- Clean Header -->
               <div class="flex items-start justify-between gap-3">
                 <div class="flex items-center gap-3 min-w-0">
@@ -1022,14 +1217,14 @@
                     <span class="!w-9 !h-9 !text-[11px]">${score}%</span>
                   </div>
                   <div class="min-w-0">
-                    <h3 class="text-base font-extrabold text-slate-900 truncate">${esc(v.title)}</h3>
+                    <h3 class="text-base font-extrabold text-slate-900 truncate" title="${esc(v.title)}">${esc(v.title)}</h3>
                     <div class="text-xs text-slate-500 truncate mt-0.5">
                       <span class="font-semibold text-slate-700">${esc(v.company_name)}</span> · ${esc(v.location || 'Malaysia')}${distText}
                     </div>
                   </div>
                 </div>
                 <div class="text-right shrink-0">
-                  <div class="text-xs font-extrabold text-teal-700 whitespace-nowrap">${rm(v.salary_min)} – ${rm(v.salary_max)}</div>
+                  <div class="text-xs font-extrabold text-teal-700 whitespace-nowrap">${salText}</div>
                   <div class="mt-1 flex justify-end">${statusChip}</div>
                 </div>
               </div>
@@ -1037,53 +1232,57 @@
               ${v.description_snippet ? `<p class="text-[11px] text-slate-500 truncate">${esc(v.description_snippet)}</p>` : ''}
               <!-- Compact Meta & Skills -->
               <div class="flex flex-wrap items-center gap-1.5 pt-0.5">
-                ${v.jobstreet_id ? `<span class="chip chip-teal !text-[10px]" title="Kaggle JobStreet Malaysia All Job Dataset (${esc(v.jobstreet_id)})">JobStreet MY</span>` : ''}
-                <span class="chip chip-slate !text-[10px]">${esc(v.work_mode)}</span>
-                <span class="chip chip-slate !text-[10px]">${v.min_years}+ yr exp</span>
-                ${v.required_skills.map(s => {
-                  const hit = v.matched_required.includes(s);
+                <span class="chip chip-indigo !text-[10px]">${esc(v.company_category || v.department || 'General')}</span>
+                <span class="chip chip-slate !text-[10px]">${esc(v.employment_type || v.work_mode || 'Full time')}</span>
+                ${reqSkills.slice(0, 6).map(s => {
+                  const hit = matchedReq.includes(s);
                   return `<span class="chip ${hit ? 'chip-emerald' : 'chip-amber'} !text-[10px]">${hit ? '✓ ' : ''}${esc(s)}</span>`;
                 }).join('')}
               </div>
             </div>
 
-            <!-- Clean Footer -->
+            <!-- Clean Footer (without 'Private until you apply' text) -->
             ${app.applied ? `
               <div class="tint tint-teal rounded-2xl px-3.5 py-2.5 flex flex-wrap items-center justify-between gap-2 text-xs">
                 <div class="text-[11px] text-slate-600">
                   <b class="text-teal-900">CV Shared</b> · Status: <b>${esc(app.hr_decision || 'Pending')}</b>
                 </div>
                 <div class="flex items-center gap-1.5">
-                  <button onclick="openApplyModal(${v.id})" class="btn btn-soft !py-1 !px-2.5 !text-[11px]">Permissions</button>
-                  <button onclick="withdrawJobApplication(${v.id})" class="btn btn-danger !py-1 !px-2.5 !text-[11px]">Withdraw</button>
+                  <button onclick="openApplyModalByKey('${esc(jobKey)}')" class="btn btn-soft !py-1 !px-2.5 !text-[11px]">Permissions</button>
+                  ${v.id ? `<button onclick="withdrawJobApplication(${v.id})" class="btn btn-danger !py-1 !px-2.5 !text-[11px]">Withdraw</button>` : ''}
                 </div>
               </div>
             ` : `
               <div class="flex items-center justify-between pt-3 border-t border-slate-200/60">
-                <span class="text-[11px] text-slate-400">🔒 Private until you apply</span>
-                <button onclick="openApplyModal(${v.id})" class="btn btn-primary !py-1.5 !px-3.5 !text-xs">Apply &amp; Share CV →</button>
+                <span class="text-[11px] text-slate-400">${esc(v.subcategory || v.company_category || '')}</span>
+                <button onclick="openApplyModalByKey('${esc(jobKey)}')" class="btn btn-primary !py-1.5 !px-3.5 !text-xs">Apply &amp; Share CV →</button>
               </div>
             `}
           </article>`;
       }).join('');
     }
 
-    function openApplyModal(vid) {
+    function openApplyModalByKey(jobKey) {
       if (!cvRecord) {
         toast('Please upload your PDF CV first before applying.', 'err');
         showTab('profile');
         return;
       }
-      const job = jobsList.find(j => j.id === vid);
+      const job = jobsList.find(j => (j.key || j.jobstreet_id || String(j.id)) === String(jobKey));
       if (!job) return;
       activeApplyJob = job;
       amTitle.textContent = `${job.title} · ${job.company_name}`;
-      amMeta.textContent = `${job.vacancy_uid} · ${rm(job.salary_min)} – ${rm(job.salary_max)} · ${job.work_mode}`;
+      const salText = (job.salary_min && job.salary_max) ? `${rm(job.salary_min)} – ${rm(job.salary_max)}` : 'Salary Negotiable';
+      amMeta.textContent = `${job.vacancy_uid || job.jobstreet_id} · ${salText} · ${job.location || 'Malaysia'}`;
       const app = job.application || {};
       amShareOrg.checked = app.applied ? Boolean(app.share_organised_cv) : true;
       amSharePdf.checked = app.applied ? Boolean(app.share_original_pdf) : true;
       amNote.value = app.cover_note || '';
       applyModalWrap.classList.remove('hidden');
+    }
+
+    function openApplyModal(vid) {
+      openApplyModalByKey(vid);
     }
 
     function closeApplyModal() {
@@ -1093,7 +1292,10 @@
 
     async function submitJobApplication() {
       if (!activeApplyJob) return;
-      const { ok, data } = await postJson(`/api/jobs/${activeApplyJob.id}/apply`, {
+      const endpoint = activeApplyJob.id
+        ? `/api/jobs/${activeApplyJob.id}/apply`
+        : `/api/jobs/js/${encodeURIComponent(activeApplyJob.jobstreet_id || activeApplyJob.key)}/apply`;
+      const { ok, data } = await postJson(endpoint, {
         share_organised_cv: amShareOrg.checked,
         share_original_pdf: amSharePdf.checked,
         salary_expectation: Number(amSalary.value || 5000),
@@ -1103,7 +1305,7 @@
       if (!ok || !data.ok) return toast(data.message || 'Could not submit application.', 'err');
       toast(data.message);
       closeApplyModal();
-      await loadJobs();
+      await loadJobs(false);
       await loadMyCv();
       if (current === 'dash') renderDash();
     }
@@ -1113,7 +1315,7 @@
       const r = await api(`/api/jobs/${vid}/apply`, { method: 'DELETE' });
       if (!r.ok) return toast(r.data.message || 'Could not withdraw.', 'err');
       toast(r.data.message);
-      await loadJobs();
+      await loadJobs(false);
       await loadMyCv();
     }
 

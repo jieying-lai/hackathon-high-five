@@ -3,6 +3,7 @@ __pycache__/
 *.py[cod]
 *.db
 src/data/uploads/
+data_raw/
 venv/
 .venv/
 work/
