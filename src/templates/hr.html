@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Employer Portal · CareerLens AI</title>
+  <link rel="icon" type="image/svg+xml" href="/static/brand/careerlens_logo_icon.svg" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/static/css/theme.css" />
+</head>
+<body class="hr min-h-scrn">
+  <div class="aurora"></div><div class="blob b1"></div><div class="blob b2"></div>
+
+  <div class="flex min-h-scrn">
+    <!-- Dark sidebar (desktop) -->
+    <aside class="hidden lg:flex flex-col w-72 shrink-0 p-4 sticky top-0 h-scrn">
+      <div class="sidebar-dark rounded-3xl p-4 flex flex-col h-full shadow-2xl">
+        <div class="flex items-center gap-3 px-1 pb-4 border-b border-white/10">
+          <img src="/static/brand/careerlens_logo_icon.svg" alt="" class="h-11 w-11 rounded-2xl" />
+          <div><div class="font-extrabold text-lg text-white">CareerLens AI</div><span class="chip !bg-teal-400/20 !text-teal-200 !border-teal-300/40 !text-[10px]">Employer Portal</span></div>
+        </div>
+        <div class="mt-4 rounded-2xl bg-white/5 border border-white/10 p-3">
+          <div class="text-[10px] uppercase tracking-wider text-teal-300 font-bold">Company</div>
+          <div id="coName" class="text-sm font-extrabold text-white leading-snug"></div>
+          <div id="coMeta" class="text-[11px] text-slate-400"></div>
+        </div>
+        <nav id="sideNav" class="mt-4 space-y-1.5 flex-1"></nav>
+        <div class="rounded-2xl bg-white/5 border border-white/10 p-3">
+          <div class="flex items-center gap-2.5">
+            <div id="uAvatar" class="h-9 w-9 rounded-xl bg-gradient-to-br from-teal-400 to-sky-500 text-white font-bold grid place-items-center">U</div>
+            <div class="min-w-0"><div id="uName" class="text-xs font-extrabold text-white truncate"></div><div id="uUid" class="text-[10px] font-mono text-slate-400 truncate"></div></div>
+          </div>
+          <button onclick="signOut()" class="btn w-full mt-3 !py-2 bg-white/10 text-white hover:bg-white/20">Sign out</button>
+        </div>
+      </div>
+    </aside>
+
+    <div class="flex-1 min-w-0">
+      <header class="lg:hidden sticky top-0 z-30 sidebar-dark">
+        <div class="flex items-center justify-between px-4 py-2.5">
+          <div class="flex items-center gap-2"><img src="/static/brand/careerlens_logo_icon.svg" class="h-9 w-9 rounded-xl" alt="" /><b class="text-sm text-white">Employer Portal</b></div>
+          <button onclick="signOut()" class="btn !py-1.5 bg-white/10 text-white">Sign out</button>
+        </div>
+        <nav id="topNav" class="flex gap-1.5 px-3 pb-2 overflow-x-auto hidden-scroll"></nav>
+      </header>
+
+      <main class="p-4 sm:p-6 lg:p-8 max-w-7xl mx-auto space-y-6">
+        <div class="flex flex-wrap items-end justify-between gap-3">
+          <div><div id="pgEyebrow" class="text-[11px] font-extrabold uppercase tracking-wider text-teal-700"></div>
+            <h1 id="pgTitle" class="text-2xl sm:text-3xl font-extrabold tracking-tight"></h1></div>
+          <span class="chip chip-indigo">👨‍⚖️ Humans make the final decision</span>
+        </div>
+
+        <!-- ============ OVERVIEW ============ -->
+        <section id="tab-overview" class="tab space-y-6">
+          <div id="kpis" class="grid grid-cols-2 lg:grid-cols-4 gap-4"></div>
+          <div class="grid lg:grid-cols-5 gap-6">
+            <div class="lg:col-span-3 glass rounded-3xl p-6 space-y-4">
+              <div class="flex items-center justify-between"><div class="text-sm font-extrabold">Open vacancies</div><button onclick="showTab('vacancies')" class="text-xs font-bold text-teal-700">Manage →</button></div>
+              <div id="ovVacancies" class="space-y-3"></div>
+            </div>
+            <div class="lg:col-span-2 space-y-6">
+              <div class="tint tint-teal rounded-3xl p-6"><div class="text-sm font-extrabold mb-1">Screening pipeline</div><div id="ovPipelineTitle" class="text-[11px] text-slate-500 mb-4"></div><div id="ovPipeline" class="space-y-3"></div></div>
+              <div class="tint tint-indigo rounded-3xl p-6 space-y-2.5">
+                <div class="text-sm font-extrabold">Responsible AI checks</div>
+                <div class="flex flex-wrap gap-2">
+                  <span class="chip chip-emerald">✓ Job-relevant criteria only</span><span class="chip chip-emerald">✓ Protected attributes excluded</span>
+                  <span class="chip chip-emerald">✓ CV gaps = “To confirm”</span><span class="chip chip-emerald">✓ Explainable scores</span><span class="chip chip-emerald">✓ HR final decision</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ============ VACANCIES ============ -->
+        <section id="tab-vacancies" class="tab hidden">
+          <div class="grid lg:grid-cols-12 gap-6">
+            <div class="lg:col-span-5 glass rounded-3xl p-6 space-y-4 self-start">
+              <div class="text-sm font-extrabold">Create a job vacancy</div>
+              <div><label class="label">Position *</label><input id="vTitle" class="input" placeholder="e.g. Software Developer" /></div>
+              <div class="grid grid-cols-2 gap-3">
+                <div><label class="label">Department</label><input id="vDept" class="input" placeholder="Engineering" /></div>
+                <div><label class="label">Location</label><input id="vLoc" class="input" placeholder="Kuala Lumpur" /></div>
+                <div><label class="label">Work mode *</label><select id="vMode" class="input"><option>Hybrid</option><option>Remote</option><option>On-site</option></select></div>
+                <div><label class="label">Min. relevant years *</label><input id="vYears" type="number" min="0" max="40" value="1" class="input" /></div>
+                <div><label class="label">Salary min (RM) *</label><input id="vMin" type="number" min="0" value="4000" class="input" /></div>
+                <div><label class="label">Salary max (RM) *</label><input id="vMax" type="number" min="0" value="6000" class="input" /></div>
+              </div>
+              <div><label class="label">Minimum education *</label><select id="vEdu" class="input"><option>Diploma / TVET</option><option selected>Bachelor's Degree</option><option>Master's / Postgraduate</option></select></div>
+              <div><label class="label">Required skills * <span class="text-slate-400 font-medium">· Enter to add</span></label><div id="reqChips" class="flex flex-wrap gap-1.5 mb-2"></div><input id="reqInput" class="input" placeholder="Skill directly needed for the job" /></div>
+              <div><label class="label">Preferred skills <span class="text-slate-400 font-medium">· optional</span></label><div id="prefChips" class="flex flex-wrap gap-1.5 mb-2"></div><input id="prefInput" class="input" placeholder="Nice-to-have skill" /></div>
+              <p class="hint">Use only criteria that relate directly to the role.</p>
+              <button onclick="createVacancy()" class="btn btn-hr w-full py-3">Create vacancy</button>
+            </div>
+            <div class="lg:col-span-7 space-y-4"><div id="vacList" class="space-y-4"></div></div>
+          </div>
+        </section>
+
+        <!-- ============ SCREENING ============ -->
+        <section id="tab-screening" class="tab hidden space-y-5">
+          <div class="glass rounded-3xl p-5 flex flex-wrap items-center justify-between gap-4">
+            <div class="flex items-center gap-3"><span class="text-xs font-bold text-slate-500">Vacancy</span><select id="scVacancy" onchange="loadScreen(this.value)" class="input !w-auto min-w-[16rem]"></select></div>
+            <div id="typeFilter" class="seg"></div>
+          </div>
+          <div id="scSummary" class="grid grid-cols-2 lg:grid-cols-4 gap-4"></div>
+          <div class="glass rounded-3xl overflow-hidden">
+            <div class="overflow-x-auto"><table class="w-full text-left text-xs">
+              <thead><tr class="bg-slate-50/80 text-slate-500 border-b border-slate-200"><th class="py-3 px-4 w-12">#</th><th class="py-3 px-4">Candidate</th><th class="py-3 px-4">Relevant exp.</th><th class="py-3 px-4 min-w-[9rem]">Match</th><th class="py-3 px-4">To confirm</th><th class="py-3 px-4">Suggested action</th><th class="py-3 px-4">HR decision</th><th class="py-3 px-4"></th></tr></thead>
+              <tbody id="scRows" class="divide-y divide-slate-200/60"></tbody>
+            </table></div>
+          </div>
+          <div id="fairNote" class="text-[11px] text-slate-500 px-1"></div>
+        </section>
+
+        <!-- ============ HEATMAP ============ -->
+        <section id="tab-heatmap" class="tab hidden space-y-5">
+          <div id="hmKpis" class="grid grid-cols-2 lg:grid-cols-4 gap-4"></div>
+          <div class="glass rounded-3xl p-5 space-y-4">
+            <div class="flex flex-wrap items-center justify-between gap-3">
+              <div class="flex items-center gap-3"><span class="text-xs font-bold text-slate-500">Department</span><select id="hmDept" onchange="renderHeatmap()" class="input !w-auto"></select></div>
+              <div class="flex flex-wrap items-center gap-2 text-[11px] font-bold"><span class="heat heat-0 !h-6 !min-w-0 px-2">0 None</span><span class="heat heat-1 !h-6 !min-w-0 px-2">1 Basic</span><span class="heat heat-2 !h-6 !min-w-0 px-2">2 Proficient</span><span class="heat heat-3 !h-6 !min-w-0 px-2">3 Advanced</span><span class="text-slate-400">Target: 2</span></div>
+            </div>
+            <div class="overflow-x-auto"><table class="w-full text-xs border-separate" style="border-spacing:.35rem">
+              <thead id="hmHead"></thead><tbody id="hmBody"></tbody><tfoot id="hmFoot"></tfoot>
+            </table></div>
+          </div>
+        </section>
+
+        <!-- ============ RESKILL ============ -->
+        <section id="tab-reskill" class="tab hidden">
+          <div class="grid lg:grid-cols-3 gap-6">
+            <div class="lg:col-span-2 space-y-4"><div id="rkCards" class="space-y-4"></div></div>
+            <div class="space-y-4 self-start lg:sticky lg:top-6">
+              <div class="tint tint-teal rounded-3xl p-6 space-y-3"><div class="text-sm font-extrabold">Approved training</div><div id="rkSummary"></div></div>
+              <div class="tint tint-indigo rounded-3xl p-6 space-y-3"><div class="text-sm font-extrabold">SDG contribution</div><div id="rkSdg" class="flex flex-wrap gap-2"></div></div>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <!-- Candidate insight slide-over -->
+  <div id="insightWrap" class="hidden">
+    <div class="overlay !items-stretch !justify-end !p-0" onclick="closeInsight()"></div>
+    <aside id="insight" class="slideover p-6 sm:p-8 space-y-6"></aside>
+  </div>
+
+  <script src="/static/js/common.js"></script>
+  <script>
+    const NAV = [
+      { id: 'overview', ico: '📊', label: 'Overview', eyebrow: 'Employer portal', title: 'Hiring & workforce overview' },
+      { id: 'vacancies', ico: '📋', label: 'Job Vacancies', eyebrow: 'Step 1', title: 'Job vacancies' },
+      { id: 'screening', ico: '🔍', label: 'Candidate Screening', eyebrow: 'Step 2', title: 'Candidate screening' },
+      { id: 'heatmap', ico: '🔥', label: 'Skills Heatmap', eyebrow: 'Workforce', title: 'Workforce skills-gap heatmap' },
+      { id: 'reskill', ico: '🎓', label: 'Reskilling Plans', eyebrow: 'Workforce', title: 'Reskilling plans' },
+    ];
+    const TONE = { emerald: 'chip-emerald', indigo: 'chip-indigo', amber: 'chip-amber', slate: 'chip-slate' };
+    const DECISIONS = ['Pending', 'Shortlist', 'Needs review', 'Hold'];
+    const TYPES = ['All', 'Fresh Graduate', 'Experienced Worker', 'Career Changer'];
+
+    let user = null, vacancies = [], scrn = null, selectedVid = null, typeFilter = 'All', heat = null, assignments = [];
+    let reqSkills = [], prefSkills = [], decisions = {}, current = 'overview', loaded = {};
+
+    const scoreClass = s => s >= 85 ? 'emerald' : s >= 70 ? '' : s >= 55 ? 'teal' : 'rose';
+    const ringColor = s => s >= 85 ? '#10b981' : s >= 70 ? '#0ea5e9' : s >= 55 ? '#f59e0b' : '#94a3b8';
+    const rm = n => 'RM ' + Number(n).toLocaleString();
+    const decKey = (v, c) => `${v}|${c}`;
+
+    /* ---------- navigation ---------- */
+    function buildNav() {
+      document.getElementById('sideNav').innerHTML = NAV.map(n => `<button data-tab="${n.id}" onclick="showTab('${n.id}')" class="nav-item"><span class="ico">${n.ico}</span>${n.label}</button>`).join('');
+      document.getElementById('topNav').innerHTML = NAV.map(n => `<button data-tab="${n.id}" onclick="showTab('${n.id}')" class="nav-item !w-auto whitespace-nowrap !py-2"><span>${n.ico}</span>${n.label}</button>`).join('');
+    }
+    async function showTab(id) {
+      current = id;
+      document.querySelectorAll('.tab').forEach(t => t.classList.add('hidden'));
+      const el = document.getElementById('tab-' + id); el.classList.remove('hidden'); el.classList.add('fade-in');
+      document.querySelectorAll('[data-tab]').forEach(b => b.classList.toggle('active', b.dataset.tab === id));
+      const n = NAV.find(x => x.id === id);
+      pgEyebrow.textContent = n.eyebrow; pgTitle.textContent = n.title;
+      if (id === 'overview') renderOverview();
+      if (id === 'screening') { renderScreenSelect(); if (selectedVid && !scrn) await loadScreen(selectedVid); else renderScreen(); }
+      if (id === 'heatmap' || id === 'reskill') { if (!heat) await loadHeat(); id === 'heatmap' ? renderHeatmap() : renderReskill(); }
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    /* ---------- vacancies ---------- */
+    function chipHtml(list, which) { return list.map((s, i) => `<span class="chip chip-teal">${esc(s)}<button onclick="removeSkill('${which}',${i})" aria-label="Remove">×</button></span>`).join(''); }
+    function renderChips() { reqChips.innerHTML = chipHtml(reqSkills, 'req'); prefChips.innerHTML = chipHtml(prefSkills, 'pref'); }
+    function removeSkill(which, i) { (which === 'req' ? reqSkills : prefSkills).splice(i, 1); renderChips(); }
+    function addSkill(which, v) {
+      v = v.trim(); if (!v || v.length > 60) return;
+      const arr = which === 'req' ? reqSkills : prefSkills;
+      if (!arr.some(s => s.toLowerCase() === v.toLowerCase())) arr.push(v);
+      renderChips();
+    }
+    async function loadVacancies() {
+      const r = await api('/api/hr/vacancies'); vacancies = r.data.vacancies || [];
+      const open = vacancies.filter(v => v.status === 'Open');
+      if (!selectedVid || !vacancies.some(v => v.id === Number(selectedVid))) selectedVid = (open[0] || vacancies[0] || {}).id || null;
+      renderVacancies();
+    }
+    function renderVacancies() {
+      vacList.innerHTML = vacancies.length ? vacancies.map(v => `
+        <article class="glass rounded-3xl p-6 space-y-4 lift">
+          <div class="flex flex-wrap items-start justify-between gap-3">
+            <div><div class="flex flex-wrap gap-1.5 mb-1"><span class="chip chip-slate font-mono">${esc(v.vacancy_uid)}</span><span class="chip ${v.status === 'Open' ? 'chip-emerald' : 'chip-slate'}">${esc(v.status)}</span></div>
+              <h3 class="text-lg font-extrabold">${esc(v.title)}</h3><div class="text-xs text-slate-500">${esc(v.department || 'General')} · ${esc(v.location || 'Malaysia')}</div></div>
+            <div class="text-right"><div class="text-sm font-extrabold text-teal-700">${rm(v.salary_min)} – ${rm(v.salary_max)}</div><div class="text-[11px] text-slate-500">${esc(v.work_mode)} · ${v.min_years}+ yrs · ${esc(v.education_level)}</div></div>
+          </div>
+          <div class="space-y-2"><div class="flex flex-wrap gap-1.5">${v.required_skills.map(s => `<span class="chip chip-teal">${esc(s)}</span>`).join('')}</div>
+            ${v.preferred_skills.length ? `<div class="flex flex-wrap gap-1.5">${v.preferred_skills.map(s => `<span class="chip chip-slate">+ ${esc(s)}</span>`).join('')}</div>` : ''}</div>
+          <div class="flex flex-wrap gap-2 pt-1">
+            <button onclick="screenVacancy(${v.id})" class="btn btn-hr !py-2">Screen candidates →</button>
+            <button onclick="toggleStatus(${v.id},'${v.status === 'Open' ? 'Closed' : 'Open'}')" class="btn btn-soft !py-2">${v.status === 'Open' ? 'Close' : 'Reopen'}</button>
+            <button onclick="deleteVacancy(${v.id})" class="btn btn-danger !py-2">Delete</button>
+          </div>
+        </article>`).join('')
+        : '<div class="glass rounded-3xl p-10 text-center text-sm text-slate-500">No vacancies yet. Create your first one on the left.</div>';
+    }
+    async function createVacancy() {
+      const { data } = await postJson('/api/hr/vacancies', {
+        title: vTitle.value, department: vDept.value, location: vLoc.value, work_mode: vMode.value, min_years: vYears.value,
+        salary_min: vMin.value, salary_max: vMax.value, education_level: vEdu.value, required_skills: reqSkills, preferred_skills: prefSkills });
+      if (!data.ok) return toast(data.message, 'err');
+      toast('Vacancy created'); vTitle.value = ''; vDept.value = ''; vLoc.value = ''; reqSkills = []; prefSkills = []; renderChips();
+      selectedVid = data.vacancy.id; scrn = null; await loadVacancies();
+    }
+    async function toggleStatus(id, status) { await postJson(`/api/hr/vacancies/${id}/status`, { status }); toast(`Vacancy ${status.toLowerCase()}`); await loadVacancies(); }
+    async function deleteVacancy(id) {
+      if (!confirm('Delete this vacancy?')) return;
+      await api(`/api/hr/vacancies/${id}`, { method: 'DELETE' }); scrn = null; toast('Vacancy deleted'); await loadVacancies();
+    }
+    async function screenVacancy(id) { selectedVid = id; scrn = null; await showTab('screening'); }
+
+    /* ---------- screening ---------- */
+    function renderScreenSelect() {
+      scVacancy.innerHTML = vacancies.length ? vacancies.map(v => `<option value="${v.id}" ${v.id === Number(selectedVid) ? 'selected' : ''}>${esc(v.title)} · ${esc(v.vacancy_uid)}${v.status === 'Closed' ? ' (closed)' : ''}</option>`).join('') : '<option>No vacancies</option>';
+      document.getElementById('typeFilter').innerHTML = TYPES.map(t => `<button onclick="setType('${t}')" class="${t === typeFilter ? 'on' : ''}">${t === 'Experienced Worker' ? 'Experienced' : t}</button>`).join('');
+    }
+    function setType(t) { typeFilter = t; renderScreenSelect(); renderScreen(); }
+    async function loadScreen(id) {
+      if (!id || isNaN(Number(id))) { scrn = null; return renderScreen(); }
+      selectedVid = Number(id); const r = await api(`/api/hr/vacancies/${id}/screen`);
+      scrn = r.ok ? r.data : null; renderScreen();
+    }
+    function renderScreen() {
+      if (!scrn) { scSummary.innerHTML = ''; scRows.innerHTML = '<tr><td colspan="8" class="p-10 text-center text-slate-500">Create or select a vacancy to scrn candidates.</td></tr>'; fairNote.textContent = ''; return; }
+      const sum = scrn.summary.by_action;
+      const tiles = [['Candidates', scrn.summary.total, 'indigo'], ['Priority review', sum['Priority human review'] || 0, 'teal'], ['Confirm skills', sum['Confirm skills with follow-up'] || 0, 'sky'], ['Average match', scrn.summary.average_score + '%', 'amber']];
+      scSummary.innerHTML = tiles.map(t => `<div class="tint tint-${t[2]} rounded-2xl p-4"><div class="text-[11px] font-bold text-slate-500">${t[0]}</div><div class="text-3xl font-extrabold mt-1">${t[1]}</div></div>`).join('');
+      const rows = scrn.results.filter(r => typeFilter === 'All' || r.type === typeFilter);
+      scRows.innerHTML = rows.length ? rows.map((r, i) => {
+        const dec = decisions[decKey(scrn.vacancy.id, r.candidate_id)] || 'Pending';
+        return `<tr class="hover:bg-teal-50/40 transition">
+          <td class="py-3.5 px-4 font-extrabold text-slate-400">${i + 1}</td>
+          <td class="py-3.5 px-4"><div class="font-extrabold text-sm">${esc(r.name)}</div><div class="flex items-center gap-1.5 mt-0.5"><span class="chip chip-slate">${esc(r.type)}</span><span class="text-[10px] font-mono text-slate-400">${esc(r.candidate_id)}</span></div></td>
+          <td class="py-3.5 px-4 font-bold">${r.years === 0 ? 'Fresh graduate' : r.years + ' yr' + (r.years > 1 ? 's' : '')}</td>
+          <td class="py-3.5 px-4"><div class="flex items-center gap-2"><span class="font-extrabold text-sm w-10">${r.score}%</span><div class="bar flex-1 ${r.score >= 85 ? 'emerald' : r.score >= 70 ? 'teal' : r.score >= 55 ? '' : 'rose'}"><i style="width:${r.score}%"></i></div></div></td>
+          <td class="py-3.5 px-4">${r.to_confirm.length ? `<div class="flex flex-wrap gap-1">${r.to_confirm.slice(0, 2).map(s => `<span class="chip chip-amber">${esc(s)}</span>`).join('')}${r.to_confirm.length > 2 ? `<span class="chip chip-slate">+${r.to_confirm.length - 2}</span>` : ''}</div>` : '<span class="chip chip-emerald">All covered</span>'}</td>
+          <td class="py-3.5 px-4"><span class="chip ${TONE[r.tone]}">${esc(r.action)}</span></td>
+          <td class="py-3.5 px-4"><select class="input !py-1.5 !text-[11px] !w-auto" onchange="setDecision('${r.candidate_id}',this.value)">${DECISIONS.map(d => `<option ${d === dec ? 'selected' : ''}>${d}</option>`).join('')}</select></td>
+          <td class="py-3.5 px-4"><button onclick="openInsight('${r.candidate_id}')" class="btn btn-soft !py-1.5">Insight</button></td></tr>`;
+      }).join('') : '<tr><td colspan="8" class="p-8 text-center text-slate-500">No candidates in this group.</td></tr>';
+      fairNote.textContent = '⚖️ ' + scrn.fairness_note;
+    }
+    function setDecision(cid, value) {
+      decisions[decKey(scrn.vacancy.id, cid)] = value; localStorage.setItem(`cl_hr_dec_${user.unique_uid}`, JSON.stringify(decisions));
+      toast(`Marked “${value}”`);
+    }
+
+    /* ---------- candidate insight ---------- */
+    function openInsight(cid) {
+      const r = scrn.results.find(x => x.candidate_id === cid); if (!r) return;
+      const dec = decisions[decKey(scrn.vacancy.id, cid)] || 'Pending';
+      insight.innerHTML = `
+        <div class="flex items-start justify-between gap-3"><div><div class="text-[11px] font-extrabold uppercase tracking-wider text-teal-700">Candidate insight</div>
+          <h2 class="text-2xl font-extrabold">${esc(r.name)}</h2><div class="flex flex-wrap gap-1.5 mt-1"><span class="chip chip-slate">${esc(r.type)}</span><span class="chip chip-slate font-mono">${esc(r.candidate_id)}</span><span class="chip chip-pink">Synthetic profile</span></div></div>
+          <button onclick="closeInsight()" class="text-slate-400 hover:text-slate-700 text-xl font-bold">✕</button></div>
+        <div class="tint tint-teal rounded-2xl p-4 flex items-center gap-4"><div class="ring" style="--p:${r.score};--c:${ringColor(r.score)}"><span>${r.score}%</span></div>
+          <div><div class="text-[11px] font-bold text-slate-500">Match for ${esc(scrn.vacancy.title)}</div><span class="chip ${TONE[r.tone]} mt-1">${esc(r.action)}</span></div></div>
+        <div class="space-y-2.5"><div class="text-xs font-extrabold">Why this score</div>${r.breakdown.map(b => `<div><div class="flex justify-between text-[11px] mb-0.5"><span class="font-bold text-slate-600">${b.label}</span><span class="font-extrabold">${b.pts}/${b.max}</span></div><div class="bar teal"><i style="width:${Math.round(100 * b.pts / b.max)}%"></i></div></div>`).join('')}</div>
+        <div><div class="text-xs font-extrabold mb-2">Strengths backed by CV evidence</div><div class="flex flex-wrap gap-1.5">${[...r.matched_required, ...r.matched_preferred].map(s => `<span class="chip chip-emerald">✓ ${esc(s)}</span>`).join('') || '<span class="text-xs text-slate-400">None matched yet</span>'}</div></div>
+        <div class="tint tint-amber rounded-2xl p-4"><div class="text-xs font-extrabold mb-1">To confirm</div><p class="text-[11px] text-slate-600 mb-2">Not on the CV does not mean the candidate cannot do it. Ask first.</p>
+          <div class="flex flex-wrap gap-1.5">${r.to_confirm.map(s => `<span class="chip chip-amber">${esc(s)}</span>`).join('') || '<span class="chip chip-emerald">Everything required is evidenced</span>'}</div></div>
+        <div class="grid grid-cols-2 gap-3 text-xs"><div class="bg-white/80 rounded-xl p-3 border"><div class="text-slate-400 text-[10px] font-bold">Salary expectation</div><div class="font-extrabold">${rm(r.salary_expectation)}</div><div class="text-[11px] text-slate-500">${esc(r.salary_fit)}</div></div>
+          <div class="bg-white/80 rounded-xl p-3 border"><div class="text-slate-400 text-[10px] font-bold">Availability · Mode</div><div class="font-extrabold">${esc(r.available_in)}</div><div class="text-[11px] text-slate-500">${r.work_modes.map(esc).join(' / ')} · ${esc(r.location)}</div></div></div>
+        <div><div class="text-xs font-extrabold mb-1">Career motivation</div><p class="text-xs text-slate-600">${esc(r.motivation)}</p></div>
+        <div><div class="text-xs font-extrabold mb-1">Projects on CV</div><ul class="list-disc pl-4 text-xs text-slate-600 space-y-0.5">${r.projects.map(p => `<li>${esc(p)}</li>`).join('')}</ul></div>
+        <div class="space-y-2"><div class="flex items-center justify-between"><div class="text-xs font-extrabold">Suggested follow-up questions <span class="text-slate-400 font-medium">· editable</span></div><button onclick="copyQuestions()" class="btn btn-soft !py-1">Copy</button></div>
+          ${r.follow_up_questions.map(q => `<textarea rows="2" class="input fq">${esc(q)}</textarea>`).join('')}</div>
+        <div class="border-t pt-4 space-y-2"><div class="text-xs font-extrabold">Your decision</div><div class="flex flex-wrap gap-2">
+          ${['Shortlist', 'Needs review', 'Hold'].map(d => `<button onclick="decideFromInsight('${r.candidate_id}','${d}')" class="btn ${d === dec ? 'btn-hr' : 'btn-soft'}">${d}</button>`).join('')}</div>
+          <p class="hint">AI suggests; a person decides.</p></div>`;
+      insightWrap.classList.remove('hidden');
+    }
+    function closeInsight() { insightWrap.classList.add('hidden'); }
+    function decideFromInsight(cid, d) { setDecision(cid, d); renderScreen(); openInsight(cid); }
+    async function copyQuestions() {
+      const text = [...document.querySelectorAll('.fq')].map((t, i) => `${i + 1}. ${t.value}`).join('\n');
+      try { await navigator.clipboard.writeText(text); toast('Questions copied'); } catch (e) { toast('Copy failed', 'err'); }
+    }
+
+    /* ---------- heatmap ---------- */
+    async function loadHeat() { const r = await api('/api/hr/heatmap'); heat = r.data; assignments = heat.assignments || []; }
+    function renderHeatmap() {
+      if (!heat) return;
+      const depts = ['All departments', ...heat.departments];
+      if (!hmDept.options.length) hmDept.innerHTML = depts.map(d => `<option>${esc(d)}</option>`).join('');
+      const dept = hmDept.value || depts[0];
+      const emps = heat.employees.filter(e => dept === 'All departments' || e.department === dept);
+      const worst = [...heat.skill_summary].sort((a, b) => a.coverage - b.coverage)[0];
+      const below = heat.employees.filter(e => e.readiness < 60).length;
+      hmKpis.innerHTML = [['Team AI readiness', heat.team_readiness + '%', 'teal'], ['Biggest gap', esc(worst.skill), 'amber'], ['Staff below 60% ready', below, 'pink'], ['Employees tracked', heat.employees.length, 'indigo']]
+        .map(k => `<div class="tint tint-${k[2]} rounded-2xl p-4"><div class="text-[11px] font-bold text-slate-500">${k[0]}</div><div class="text-2xl font-extrabold mt-1 leading-tight">${k[1]}</div></div>`).join('');
+      hmHead.innerHTML = `<tr><th class="text-left text-[11px] text-slate-500 font-bold px-2">Employee</th>${heat.skills.map(s => `<th class="text-[10px] text-slate-500 font-bold px-1 align-bottom w-24">${esc(s)}</th>`).join('')}<th class="text-[11px] text-slate-500 font-bold px-2 min-w-[7rem]">Readiness</th></tr>`;
+      hmBody.innerHTML = emps.map(e => `<tr><td class="px-2 py-1"><div class="font-extrabold">${esc(e.name)}</div><div class="text-[10px] text-slate-500">${esc(e.role)}</div></td>
+        ${heat.skills.map(s => { const lv = e.levels[s] || 0; return `<td><div class="heat heat-${lv}" title="${esc(s)}: ${lv}">${lv}</div></td>`; }).join('')}
+        <td class="px-2"><div class="flex items-center gap-2"><b class="w-9">${e.readiness}%</b><div class="bar flex-1 ${e.readiness >= 70 ? 'emerald' : e.readiness >= 45 ? 'teal' : 'rose'}"><i style="width:${e.readiness}%"></i></div></div></td></tr>`).join('');
+      hmFoot.innerHTML = `<tr><td class="px-2 pt-2 text-[11px] font-extrabold text-slate-600">Team coverage (≥ target)</td>${heat.skill_summary.map(s => `<td class="pt-2"><div class="text-center font-extrabold text-xs ${s.coverage >= 60 ? 'text-emerald-600' : s.coverage >= 30 ? 'text-amber-600' : 'text-rose-600'}">${s.coverage}%</div></td>`).join('')}<td></td></tr>`;
+    }
+
+    /* ---------- reskilling ---------- */
+    const hasAssign = (emp, skill) => assignments.some(a => a.employee_id === emp && a.skill === skill);
+    function renderReskill() {
+      if (!heat) return;
+      const needing = heat.employees.filter(e => e.recommendations.length).sort((a, b) => a.readiness - b.readiness);
+      rkCards.innerHTML = needing.map(e => `
+        <article class="glass rounded-3xl p-5 space-y-3">
+          <div class="flex items-center gap-4"><div class="ring !w-14 !h-14" style="--p:${e.readiness};--c:${ringColor(e.readiness)}"><span class="!w-11 !h-11 !text-xs">${e.readiness}</span></div>
+            <div class="flex-1 min-w-0"><div class="text-sm font-extrabold">${esc(e.name)}</div><div class="text-[11px] text-slate-500">${esc(e.role)} · ${esc(e.department)}</div></div></div>
+          <div class="space-y-2">${e.recommendations.map(r => { const on = hasAssign(e.id, r.skill); return `
+            <div class="flex flex-wrap items-center justify-between gap-3 rounded-2xl bg-white/80 border border-white p-3">
+              <div class="min-w-0"><div class="text-xs font-extrabold">${esc(r.skill)} <span class="chip chip-rose ml-1">gap ${r.gap}</span></div>
+                <div class="text-[11px] text-slate-600 mt-0.5">${esc(r.course_title)} · ${esc(r.provider)}</div>
+                <div class="flex gap-1.5 mt-1.5 flex-wrap"><span class="chip chip-amber">${r.hours} h · ${esc(r.cost_type)}</span><span class="chip chip-teal">${esc(r.badge)}</span><span class="chip chip-emerald">${esc(r.sdg)}</span><a href="${esc(r.url)}" target="_blank" rel="noopener" class="text-[11px] font-bold text-sky-600 hover:underline">View ↗</a></div></div>
+              <button onclick="toggleAssign('${e.id}','${esc(r.skill)}',${on})" class="btn ${on ? 'btn-soft' : 'btn-hr'} !py-2">${on ? '✓ Approved · Revoke' : 'Approve'}</button></div>`; }).join('')}</div>
+        </article>`).join('') || '<div class="glass rounded-3xl p-10 text-center text-sm text-slate-500">No verified reskilling recommendations right now.</div>';
+      const hours = assignments.reduce((s, a) => s + (a.hours || 0), 0);
+      rkSummary.innerHTML = `<div class="text-4xl font-extrabold">${assignments.length}</div><div class="text-xs text-slate-500">course${assignments.length === 1 ? '' : 's'} approved · ${hours} learning hours</div>
+        <div class="space-y-1.5 pt-2">${assignments.slice(0, 5).map(a => `<div class="text-[11px] bg-white/80 rounded-xl px-3 py-1.5 border"><b>${esc(empName(a.employee_id))}</b> · ${esc(a.skill)}</div>`).join('')}</div>`;
+      const sdg = {}; assignments.forEach(a => { if (a.sdg) sdg[a.sdg] = (sdg[a.sdg] || 0) + 1; });
+      rkSdg.innerHTML = Object.keys(sdg).length ? Object.entries(sdg).map(([k, v]) => `<span class="chip chip-emerald">🌱 ${esc(k)} × ${v}</span>`).join('') : '<span class="text-xs text-slate-500">Approve training to see SDG impact.</span>';
+    }
+    const empName = id => (heat.employees.find(e => e.id === id) || {}).name || id;
+    async function toggleAssign(emp, skill, on) {
+      const r = on ? await postJson('/api/hr/assignments', { employee_id: emp, skill }, 'DELETE') : await postJson('/api/hr/assignments', { employee_id: emp, skill });
+      if (!r.ok) return toast(r.data.message || 'Could not update', 'err');
+      toast(on ? 'Approval revoked' : 'Training approved'); await loadHeat(); renderReskill();
+    }
+
+    /* ---------- overview ---------- */
+    function renderOverview() {
+      const open = vacancies.filter(v => v.status === 'Open');
+      const avg = scrn ? scrn.summary.average_score + '%' : '—';
+      kpis.innerHTML = [['Open vacancies', open.length, 'teal'], ['Candidate pool', 10, 'indigo'], ['Avg match', avg, 'sky'], ['Team AI readiness', heat ? heat.team_readiness + '%' : '—', 'amber']]
+        .map(k => `<div class="tint tint-${k[2]} rounded-2xl p-5"><div class="text-[11px] font-bold text-slate-500">${k[0]}</div><div class="text-3xl font-extrabold mt-1">${k[1]}</div></div>`).join('');
+      ovVacancies.innerHTML = open.length ? open.map(v => `<div class="flex items-center gap-4 p-3 rounded-2xl bg-white/70 border border-white">
+          <div class="h-11 w-11 rounded-2xl bg-gradient-to-br from-teal-400 to-sky-500 text-white grid place-items-center font-extrabold">${esc(v.title.charAt(0))}</div>
+          <div class="min-w-0 flex-1"><div class="text-sm font-extrabold truncate">${esc(v.title)}</div><div class="text-[11px] text-slate-500">${rm(v.salary_min)} – ${rm(v.salary_max)} · ${esc(v.work_mode)}</div></div>
+          <button onclick="screenVacancy(${v.id})" class="btn btn-hr !py-1.5">Screen</button></div>`).join('')
+        : '<div class="text-sm text-slate-500">No open vacancies. Create one to start screening.</div>';
+      if (scrn) {
+        ovPipelineTitle.textContent = scrn.vacancy.title;
+        const sum = scrn.summary.by_action, total = scrn.summary.total || 1;
+        ovPipeline.innerHTML = ['Priority human review', 'Confirm skills with follow-up', 'Consider for junior / adjacent role', 'Keep in talent pool'].map(k => `<div><div class="flex justify-between text-[11px] mb-1"><span class="font-bold text-slate-600">${k}</span><b>${sum[k] || 0}</b></div><div class="bar teal"><i style="width:${Math.round(100 * (sum[k] || 0) / total)}%"></i></div></div>`).join('');
+      } else { ovPipelineTitle.textContent = ''; ovPipeline.innerHTML = '<div class="text-xs text-slate-500">Screen a vacancy to see the pipeline.</div>'; }
+    }
+
+    /* ---------- init ---------- */
+    async function init() {
+      buildNav();
+      const me = await api('/api/auth/me'); user = me.data.user; if (!user) return;
+      const rd = user.role_details || {};
+      coName.textContent = rd.company_name || 'Your company'; coMeta.textContent = [rd.company_size, rd.hr_job_title].filter(Boolean).join(' · ');
+      uAvatar.textContent = user.full_name.charAt(0).toUpperCase(); uName.textContent = user.full_name; uUid.textContent = user.unique_uid;
+      try { decisions = JSON.parse(localStorage.getItem(`cl_hr_dec_${user.unique_uid}`) || '{}'); } catch (e) { decisions = {}; }
+      reqInput.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ',') { e.preventDefault(); addSkill('req', reqInput.value); reqInput.value = ''; } });
+      prefInput.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ',') { e.preventDefault(); addSkill('pref', prefInput.value); prefInput.value = ''; } });
+      renderChips();
+      await loadVacancies();
+      if (selectedVid) { const r = await api(`/api/hr/vacancies/${selectedVid}/screen`); scrn = r.ok ? r.data : null; }
+      loadHeat().then(() => { if (current === 'overview') renderOverview(); });
+      showTab('overview');
+    }
+    init();
+  </script>
+</body>
+</html>

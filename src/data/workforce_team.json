@@ -1,0 +1,22 @@
+{
+  "skills": ["AI Literacy", "Prompt Engineering", "Python Data Analysis", "Workflow Automation", "AI Risk & Compliance", "Data Privacy (PDPA)", "ESG Reporting"],
+  "target_level": 2,
+  "employees": [
+    {"id": "EMP-101", "name": "Aisha Rahman", "department": "Audit & Assurance", "role": "Junior Financial Auditor",
+     "levels": {"AI Literacy": 1, "Prompt Engineering": 1, "Python Data Analysis": 1, "Workflow Automation": 0, "AI Risk & Compliance": 1, "Data Privacy (PDPA)": 2, "ESG Reporting": 1}},
+    {"id": "EMP-102", "name": "Jason Lim", "department": "Marketing", "role": "Digital Copywriter",
+     "levels": {"AI Literacy": 2, "Prompt Engineering": 1, "Python Data Analysis": 0, "Workflow Automation": 1, "AI Risk & Compliance": 0, "Data Privacy (PDPA)": 1, "ESG Reporting": 0}},
+    {"id": "EMP-103", "name": "Kavin Raj", "department": "Engineering", "role": "Graduate Software Engineer",
+     "levels": {"AI Literacy": 3, "Prompt Engineering": 2, "Python Data Analysis": 2, "Workflow Automation": 2, "AI Risk & Compliance": 1, "Data Privacy (PDPA)": 1, "ESG Reporting": 0}},
+    {"id": "EMP-104", "name": "Farah Aziz", "department": "Finance", "role": "Accounts Executive",
+     "levels": {"AI Literacy": 1, "Prompt Engineering": 0, "Python Data Analysis": 0, "Workflow Automation": 1, "AI Risk & Compliance": 1, "Data Privacy (PDPA)": 2, "ESG Reporting": 1}},
+    {"id": "EMP-105", "name": "Ravi Menon", "department": "Operations", "role": "Operations Planner",
+     "levels": {"AI Literacy": 1, "Prompt Engineering": 1, "Python Data Analysis": 1, "Workflow Automation": 2, "AI Risk & Compliance": 0, "Data Privacy (PDPA)": 1, "ESG Reporting": 1}},
+    {"id": "EMP-106", "name": "Chloe Ng", "department": "Human Resources", "role": "HR Executive",
+     "levels": {"AI Literacy": 2, "Prompt Engineering": 1, "Python Data Analysis": 0, "Workflow Automation": 1, "AI Risk & Compliance": 1, "Data Privacy (PDPA)": 3, "ESG Reporting": 0}},
+    {"id": "EMP-107", "name": "Zul Hakim", "department": "Audit & Assurance", "role": "Senior Auditor",
+     "levels": {"AI Literacy": 2, "Prompt Engineering": 1, "Python Data Analysis": 1, "Workflow Automation": 1, "AI Risk & Compliance": 2, "Data Privacy (PDPA)": 2, "ESG Reporting": 2}},
+    {"id": "EMP-108", "name": "Mei Xuan", "department": "Marketing", "role": "Social Media Executive",
+     "levels": {"AI Literacy": 2, "Prompt Engineering": 2, "Python Data Analysis": 0, "Workflow Automation": 1, "AI Risk & Compliance": 0, "Data Privacy (PDPA)": 1, "ESG Reporting": 0}}
+  ]
+}

@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Talent Portal · CareerLens AI</title>
+  <link rel="icon" type="image/svg+xml" href="/static/brand/careerlens_logo_icon.svg" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/static/css/theme.css" />
+</head>
+<body class="min-h-screen">
+  <div class="aurora"></div><div class="blob b1"></div><div class="blob b2"></div>
+
+  <div class="flex min-h-screen">
+    <!-- Sidebar (desktop) -->
+    <aside class="hidden lg:flex flex-col w-72 shrink-0 p-4 sticky top-0 h-screen">
+      <div class="glass rounded-3xl p-4 flex flex-col h-full">
+        <div class="flex items-center gap-3 px-1 pb-4 border-b border-slate-200/70">
+          <img src="/static/brand/careerlens_logo_icon.svg" alt="" class="h-11 w-11 rounded-2xl" />
+          <div><div class="font-extrabold text-lg bg-gradient-to-r from-indigo-700 to-pink-600 bg-clip-text text-transparent">CareerLens AI</div>
+            <span class="chip chip-indigo !text-[10px]">Talent Portal</span></div>
+        </div>
+        <nav id="sideNav" class="mt-4 space-y-1.5 flex-1"></nav>
+        <div class="tint tint-indigo rounded-2xl p-3 mt-3">
+          <div class="flex items-center gap-2.5">
+            <div id="uAvatar" class="h-9 w-9 rounded-xl bg-gradient-to-br from-indigo-500 to-pink-500 text-white font-bold grid place-items-center">U</div>
+            <div class="min-w-0"><div id="uName" class="text-xs font-extrabold truncate">User</div><div id="uUid" class="text-[10px] font-mono text-slate-500 truncate"></div></div>
+          </div>
+          <button onclick="signOut()" class="btn btn-soft w-full mt-3 !py-2">Sign out</button>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main -->
+    <div class="flex-1 min-w-0">
+      <!-- Mobile top bar -->
+      <header class="lg:hidden sticky top-0 z-30 glass">
+        <div class="flex items-center justify-between px-4 py-2.5">
+          <div class="flex items-center gap-2"><img src="/static/brand/careerlens_logo_icon.svg" class="h-9 w-9 rounded-xl" alt="" /><b class="text-sm">Talent Portal</b></div>
+          <button onclick="signOut()" class="btn btn-soft !py-1.5">Sign out</button>
+        </div>
+        <nav id="topNav" class="flex gap-1.5 px-3 pb-2 overflow-x-auto hidden-scroll"></nav>
+      </header>
+
+      <main class="p-4 sm:p-6 lg:p-8 max-w-6xl mx-auto space-y-6">
+        <div class="flex flex-wrap items-end justify-between gap-3">
+          <div><div id="pgEyebrow" class="text-[11px] font-extrabold uppercase tracking-wider text-indigo-600"></div>
+            <h1 id="pgTitle" class="text-2xl sm:text-3xl font-extrabold tracking-tight"></h1></div>
+          <div id="pgActions"></div>
+        </div>
+
+        <!-- ============ DASHBOARD ============ -->
+        <section id="tab-dash" class="tab space-y-6">
+          <div class="glass rounded-3xl p-6 sm:p-8 relative overflow-hidden">
+            <div class="absolute -right-10 -top-10 h-48 w-48 rounded-full bg-gradient-to-br from-pink-300/50 to-indigo-300/50 blur-2xl"></div>
+            <div class="relative space-y-1"><div class="text-sm text-slate-500 font-semibold">Welcome back</div>
+              <h2 id="dashHello" class="text-2xl font-extrabold"></h2>
+              <p id="dashSub" class="text-sm text-slate-600"></p></div>
+            <div id="journey" class="relative mt-6 grid grid-cols-2 sm:grid-cols-5 gap-3"></div>
+          </div>
+          <div id="kpis" class="grid grid-cols-2 lg:grid-cols-4 gap-4"></div>
+          <div class="grid lg:grid-cols-5 gap-6">
+            <div id="dashTop" class="lg:col-span-3 glass rounded-3xl p-6"></div>
+            <div class="lg:col-span-2 tint tint-pink rounded-3xl p-6 space-y-3">
+              <div class="text-[11px] font-extrabold uppercase tracking-wider text-pink-600">Next step</div>
+              <div id="nextStep" class="space-y-3"></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ============ PROFILE ============ -->
+        <section id="tab-profile" class="tab hidden">
+          <div class="glass rounded-3xl p-6 sm:p-8 space-y-6">
+            <div class="flex flex-wrap items-center justify-between gap-3 border-b border-slate-200/70 pb-4">
+              <div><div class="text-sm font-extrabold">Your details</div><div class="text-xs text-slate-500">Demo personas use synthetic data only</div></div>
+              <div id="personaBtns" class="flex flex-wrap gap-2"></div>
+            </div>
+            <div class="grid sm:grid-cols-2 gap-4">
+              <div><label class="label">Full name</label><input id="pName" class="input" /></div>
+              <div><label class="label">Industry</label><select id="pIndustry" class="input"><option>Finance & Accounting</option><option>Marketing & PR</option><option>IT & Software</option><option>HR & Administration</option></select></div>
+              <div><label class="label">Current role</label><input id="pRole" class="input" /></div>
+              <div><label class="label">Work mode</label><select id="pMode" class="input"><option>Hybrid</option><option>Remote</option><option>On-site</option></select></div>
+            </div>
+            <div>
+              <label class="label">Skills <span class="text-slate-400 font-medium">· press Enter to add</span></label>
+              <div id="skillChips" class="flex flex-wrap gap-2 mb-2.5"></div>
+              <input id="skillInput" class="input" placeholder="Type a skill, e.g. Financial Auditing" list="skillSuggest" />
+              <datalist id="skillSuggest"></datalist>
+            </div>
+            <div class="flex justify-end"><button onclick="saveProfile()" class="btn btn-primary">Save & analyse →</button></div>
+          </div>
+        </section>
+
+        <!-- ============ QUESTIONNAIRE ============ -->
+        <section id="tab-quest" class="tab hidden space-y-6">
+          <div class="glass rounded-3xl p-6 flex items-center gap-5">
+            <div id="qRing" class="ring"><span>0%</span></div>
+            <div class="flex-1"><div class="text-sm font-extrabold">Application questionnaire</div><div id="qProgText" class="text-xs text-slate-500"></div>
+              <div class="bar mt-2"><i id="qBar" style="width:0%"></i></div></div>
+          </div>
+          <div class="grid lg:grid-cols-2 gap-6">
+            <div class="glass rounded-3xl p-6 space-y-4"><div class="text-sm font-extrabold">Common questions</div><div id="commonQ" class="space-y-4"></div></div>
+            <div class="tint tint-pink rounded-3xl p-6 space-y-4"><div class="flex items-center justify-between"><div class="text-sm font-extrabold">Personalised for your CV</div><span class="chip chip-pink">AI-generated</span></div><div id="aiQ" class="space-y-4"></div></div>
+          </div>
+        </section>
+
+        <!-- ============ RADAR ============ -->
+        <section id="tab-radar" class="tab hidden space-y-6">
+          <div class="glass rounded-3xl p-5 flex flex-wrap items-center justify-between gap-4">
+            <div><div id="trendBadge" class="text-xs text-slate-500 font-medium"></div><div id="trendScenarioLabel" class="text-sm font-extrabold mt-0.5"></div></div>
+            <div class="seg"><button id="scModerate" onclick="setScenario('moderate')" class="on">🐢 Moderate</button><button id="scFast" onclick="setScenario('fast')">🚀 Fast disruption</button></div>
+          </div>
+          <div class="grid md:grid-cols-2 gap-6">
+            <div class="tint tint-teal rounded-3xl p-6 space-y-4"><div class="text-sm font-extrabold text-teal-900">📈 Rising skills</div><div id="rising" class="space-y-4"></div></div>
+            <div class="tint tint-pink rounded-3xl p-6 space-y-4"><div class="text-sm font-extrabold text-rose-900">⚠️ Tasks at automation risk</div><div id="declining" class="space-y-4"></div></div>
+          </div>
+          <div class="tint tint-indigo rounded-3xl p-6"><div class="text-sm font-extrabold text-indigo-900 mb-3">📰 Recent AI research signals</div><ul id="signals" class="space-y-2 text-xs text-slate-600"></ul></div>
+        </section>
+
+        <!-- ============ MATCHES ============ -->
+        <section id="tab-match" class="tab hidden space-y-5">
+          <div class="flex flex-wrap gap-2"><span class="chip chip-emerald">⚖️ Fairness audited</span><span class="chip chip-slate">Scores are estimates</span></div>
+          <div id="roleCards" class="grid lg:grid-cols-2 gap-5"></div>
+        </section>
+
+        <!-- ============ PLAN ============ -->
+        <section id="tab-plan" class="tab hidden space-y-6">
+          <div class="glass rounded-3xl p-5 flex flex-wrap items-center justify-between gap-3">
+            <div class="flex items-center gap-3"><span class="text-xs font-bold text-slate-500">Target role</span><select id="planRole" onchange="selectRole(this.value,false)" class="input !w-auto"></select></div>
+            <div id="planStats" class="flex gap-2"></div>
+          </div>
+          <div class="grid lg:grid-cols-3 gap-6">
+            <div class="lg:col-span-2 glass rounded-3xl p-6"><div class="text-sm font-extrabold mb-5">Step-by-step path</div><div id="timeline" class="timeline space-y-5"></div></div>
+            <div class="space-y-4"><div class="text-[11px] font-extrabold uppercase tracking-wider text-teal-700">SDG alignment</div><div id="planSdg" class="space-y-4"></div></div>
+          </div>
+        </section>
+
+        <!-- ============ PASSPORT ============ -->
+        <section id="tab-passport" class="tab hidden">
+          <div id="passport" class="max-w-2xl mx-auto"></div>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <script src="/static/js/common.js"></script>
+  <script>
+    const NAV = [
+      { id: 'dash', ico: '🏠', label: 'Dashboard', eyebrow: 'Overview', title: 'Your career dashboard' },
+      { id: 'profile', ico: '🧑‍💼', label: 'Profile & Skills', eyebrow: 'Function 01', title: 'Skills profile' },
+      { id: 'quest', ico: '📝', label: 'Questionnaire', eyebrow: 'Function 01', title: 'Application questionnaire' },
+      { id: 'radar', ico: '📡', label: 'AI Radar', eyebrow: 'Function 02', title: 'Future skills radar' },
+      { id: 'match', ico: '🎯', label: 'Role Matches', eyebrow: 'Function 03', title: 'Future-role matches' },
+      { id: 'plan', ico: '🧭', label: 'Reskilling Plan', eyebrow: 'Function 04', title: 'Personalised reskilling plan' },
+      { id: 'passport', ico: '🌱', label: 'SDG Passport', eyebrow: 'Impact', title: 'Your SDG career passport' },
+    ];
+    const COMMON_Q = [
+      { id: 'c1', text: 'Are you a fresh graduate, working, or changing career?', type: 'select', options: ['Fresh Graduate', 'Working Professional', 'Career Changer'] },
+      { id: 'c2', text: 'Which role or field are you aiming for?', type: 'text' },
+      { id: 'c3', text: 'Why does this role interest you?', type: 'text' },
+      { id: 'c4', text: 'Preferred location and work arrangement?', type: 'select', options: ['Kuala Lumpur · Hybrid', 'Selangor · Hybrid', 'Remote (Malaysia)', 'On-site (any city)'] },
+      { id: 'c5', text: 'Expected monthly salary range?', type: 'select', options: ['RM 3,000 – 4,000', 'RM 4,000 – 6,000', 'RM 6,000 – 8,000', 'RM 8,000+'] },
+      { id: 'c6', text: 'How soon can you start?', type: 'select', options: ['Immediately', '2 weeks', '1 month', '2+ months'] },
+      { id: 'c7', text: 'Do you prefer independent or team work? Why?', type: 'text' },
+      { id: 'c8', text: 'Where do you want to be in 3–5 years?', type: 'text' },
+    ];
+
+    let user = null, personas = [], skills = [], scenario = 'moderate', trend = null, roles = [], aiQuestions = [], selected = 0;
+    let analysed = false; const visited = new Set(['dash']); let answers = {}; let current = 'dash';
+
+    const ringColor = s => s >= 80 ? '#10b981' : s >= 60 ? '#6366f1' : '#f59e0b';
+
+    /* ---------- navigation ---------- */
+    function buildNav() {
+      document.getElementById('sideNav').innerHTML = NAV.map(n =>
+        `<button data-tab="${n.id}" onclick="showTab('${n.id}')" class="nav-item"><span class="ico">${n.ico}</span>${n.label}</button>`).join('');
+      document.getElementById('topNav').innerHTML = NAV.map(n =>
+        `<button data-tab="${n.id}" onclick="showTab('${n.id}')" class="nav-item !w-auto whitespace-nowrap !py-2"><span>${n.ico}</span>${n.label}</button>`).join('');
+    }
+    function showTab(id) {
+      current = id; visited.add(id);
+      document.querySelectorAll('.tab').forEach(t => t.classList.add('hidden'));
+      const el = document.getElementById('tab-' + id); el.classList.remove('hidden'); el.classList.add('fade-in');
+      document.querySelectorAll('[data-tab]').forEach(b => b.classList.toggle('active', b.dataset.tab === id));
+      const n = NAV.find(x => x.id === id);
+      document.getElementById('pgEyebrow').textContent = n.eyebrow; document.getElementById('pgTitle').textContent = n.title;
+      if (id === 'dash') renderDash(); if (id === 'passport') renderPassport();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    /* ---------- profile ---------- */
+    function renderSkills() {
+      document.getElementById('skillChips').innerHTML = skills.length
+        ? skills.map((s, i) => `<span class="chip chip-indigo">${esc(s)}<button onclick="removeSkill(${i})" aria-label="Remove">×</button></span>`).join('')
+        : '<span class="text-xs text-slate-400">No skills yet — add some below.</span>';
+    }
+    function removeSkill(i) { skills.splice(i, 1); renderSkills(); }
+    function addSkill(v) {
+      v = v.trim(); if (!v || v.length > 60) return;
+      if (!skills.some(s => s.toLowerCase() === v.toLowerCase())) skills.push(v);
+      renderSkills();
+    }
+    function selectPersona(i) {
+      const p = personas[i]; if (!p) return;
+      pName.value = p.name.split(' (')[0]; pIndustry.value = p.industry; pRole.value = p.current_role; pMode.value = p.work_mode_preference;
+      skills = [...p.skills]; renderSkills();
+    }
+    async function saveProfile() {
+      if (!pName.value.trim()) return toast('Please enter your name.', 'err');
+      if (!skills.length) return toast('Add at least one skill.', 'err');
+      await runAnalysis(); toast('Profile analysed'); showTab('radar');
+    }
+
+    /* ---------- analysis ---------- */
+    async function runAnalysis() {
+      const profile = { name: pName.value, industry: pIndustry.value, current_role: pRole.value, work_mode_preference: pMode.value, skills };
+      const [t, m] = await Promise.all([
+        api(`/api/trends?scenario=${scenario}`),
+        postJson('/api/analyze', { profile, scenario }),
+      ]);
+      trend = t.data; roles = m.data.recommended_roles || []; aiQuestions = m.data.verification_questions || [];
+      if (selected >= roles.length) selected = 0;
+      analysed = true;
+      renderRadar(); renderRoles(); renderPlanSelect(); renderPlan(); renderQuestionnaire();
+      if (current === 'dash') renderDash();
+    }
+    async function setScenario(s) {
+      scenario = s;
+      scModerate.className = s === 'moderate' ? 'on' : ''; scFast.className = s === 'fast' ? 'on' : '';
+      await runAnalysis();
+    }
+
+    /* ---------- dashboard ---------- */
+    function renderDash() {
+      const top = roles[0], role = roles[selected];
+      dashHello.textContent = user ? user.full_name : '';
+      dashSub.textContent = analysed ? 'Here is where you stand today and what to do next.' : 'Complete your profile to unlock matches and a learning plan.';
+      const answered = answeredCount();
+      const steps = [
+        { label: 'Profile', tab: 'profile', done: analysed },
+        { label: 'Questionnaire', tab: 'quest', done: answered >= 4 },
+        { label: 'AI Radar', tab: 'radar', done: visited.has('radar') },
+        { label: 'Matches', tab: 'match', done: visited.has('match') },
+        { label: 'Plan', tab: 'plan', done: visited.has('plan') },
+      ];
+      journey.innerHTML = steps.map((s, i) => `
+        <button onclick="showTab('${s.tab}')" class="text-left tint ${s.done ? 'tint-teal' : 'tint-indigo'} rounded-2xl p-3 lift">
+          <div class="flex items-center gap-2"><span class="step-dot ${s.done ? 'bg-emerald-500 text-white' : 'bg-white text-slate-500 border'}">${s.done ? '✓' : i + 1}</span>
+          <div class="text-xs font-extrabold">${s.label}</div></div></button>`).join('');
+      kpis.innerHTML = [
+        ['Best match', top ? top.match_score + '%' : '—', top ? esc(top.title) : 'Run analysis', 'indigo'],
+        ['Skills in gap', role ? role.skills_gap.length : '—', 'for selected role', 'pink'],
+        ['Learning hours', role ? role.estimated_total_hours : '—', 'verified courses', 'amber'],
+        ['SDGs linked', role ? role.sdg_tags.length : '—', 'for selected role', 'teal'],
+      ].map(k => `<div class="tint tint-${k[3]} rounded-2xl p-4"><div class="text-[11px] font-bold text-slate-500">${k[0]}</div>
+        <div class="text-3xl font-extrabold mt-1">${k[1]}</div><div class="text-[11px] text-slate-500 truncate">${k[2]}</div></div>`).join('');
+      dashTop.innerHTML = top ? `
+        <div class="flex items-center justify-between mb-4"><div class="text-sm font-extrabold">Top future-role matches</div><button onclick="showTab('match')" class="text-xs font-bold text-indigo-600">See all →</button></div>
+        <div class="space-y-3">${roles.slice(0, 3).map((r, i) => `
+          <div class="flex items-center gap-4 p-3 rounded-2xl bg-white/70 border border-white">
+            <div class="ring !w-14 !h-14" style="--p:${r.match_score};--c:${ringColor(r.match_score)}"><span class="!w-11 !h-11 !text-xs">${r.match_score}</span></div>
+            <div class="min-w-0 flex-1"><div class="text-sm font-extrabold truncate">${esc(r.title)}</div><div class="text-[11px] text-slate-500">${esc(r.industry)} · ${r.skills_gap.length} skills to build</div></div>
+            <button onclick="selectRole(${i},true)" class="btn btn-soft !py-1.5">Plan</button></div>`).join('')}</div>`
+        : '<div class="text-sm text-slate-500">No matches yet.</div>';
+      const nxt = !analysed ? ['Complete your profile', 'profile', 'Add your skills to get started.']
+        : answered < 4 ? ['Answer the questionnaire', 'quest', 'Help us verify your practical depth.']
+        : !visited.has('match') ? ['Review your role matches', 'match', 'See why each role fits you.']
+        : !visited.has('plan') ? ['Open your reskilling plan', 'plan', 'Follow an ordered, verified learning path.']
+        : ['View your SDG passport', 'passport', 'See the impact of your chosen path.'];
+      nextStep.innerHTML = `<div class="text-lg font-extrabold">${nxt[0]}</div><p class="text-xs text-slate-600">${nxt[2]}</p>
+        <button onclick="showTab('${nxt[1]}')" class="btn btn-primary">Continue →</button>`;
+    }
+
+    /* ---------- questionnaire ---------- */
+    const ansKey = () => `cl_answers_${user ? user.unique_uid : 'guest'}`;
+    function answeredCount() { return Object.values(answers).filter(v => String(v).trim()).length; }
+    function setAnswer(id, v) { answers[id] = v; localStorage.setItem(ansKey(), JSON.stringify(answers)); updateQProgress(); }
+    function updateQProgress() {
+      const total = COMMON_Q.length + aiQuestions.length, done = answeredCount(), pct = total ? Math.round(100 * done / total) : 0;
+      qRing.style.setProperty('--p', pct); qRing.querySelector('span').textContent = pct + '%';
+      qProgText.textContent = `${done} of ${total} answered · saved on this device`; qBar.style.width = pct + '%';
+    }
+    function renderQuestionnaire() {
+      commonQ.innerHTML = COMMON_Q.map((q, i) => {
+        const val = answers[q.id] || '';
+        const field = q.type === 'select'
+          ? `<select class="input" onchange="setAnswer('${q.id}',this.value)"><option value="">Select…</option>${q.options.map(o => `<option ${o === val ? 'selected' : ''}>${esc(o)}</option>`).join('')}</select>`
+          : `<textarea rows="2" class="input" oninput="setAnswer('${q.id}',this.value)">${esc(val)}</textarea>`;
+        return `<div><label class="label">${i + 1}. ${q.text}</label>${field}</div>`;
+      }).join('');
+      aiQ.innerHTML = aiQuestions.map((q, i) => {
+        const id = 'ai' + i;
+        return `<div><label class="label"><span class="chip chip-pink mr-1">${esc(q.skill_tested)}</span>${esc(q.question)}</label>
+          <textarea rows="3" class="input" oninput="setAnswer('${id}',this.value)">${esc(answers[id] || '')}</textarea></div>`;
+      }).join('');
+      updateQProgress();
+    }
+
+    /* ---------- radar ---------- */
+    function renderRadar() {
+      if (!trend) return;
+      const m = trend.signal_metadata;
+      trendBadge.textContent = `Source: ${m.source_name} · Updated ${m.last_updated} · ${m.live_status.replace('_', ' ')}`;
+      trendScenarioLabel.textContent = trend.scenario_label;
+      rising.innerHTML = trend.emerging_skills.map(s => `<div><div class="flex justify-between text-xs mb-1"><b>${esc(s.skill)}</b><span class="font-extrabold text-teal-700">+${s.growth_pct}% <span class="text-slate-400">${esc(s.sdg)}</span></span></div><div class="bar teal"><i style="width:${Math.min(100, s.growth_pct)}%"></i></div></div>`).join('');
+      declining.innerHTML = trend.declining_tasks.map(t => `<div><div class="flex justify-between text-xs mb-1"><b>${esc(t.task)}</b><span class="font-extrabold text-rose-600">${t.automation_risk_pct}%</span></div><div class="bar rose"><i style="width:${t.automation_risk_pct}%"></i></div></div>`).join('');
+      signals.innerHTML = m.recent_signals.map(p => `<li class="flex gap-2"><span class="chip chip-indigo shrink-0">${esc(p.published)}</span><span>${esc(p.title)}</span></li>`).join('');
+    }
+
+    /* ---------- matches ---------- */
+    function renderRoles() {
+      const parts = [['Core skills', 'core_skills_match_pct', 50], ['Transferable', 'transferable_skills_pct', 25], ['Sector fit', 'industry_alignment_pct', 15], ['Work mode', 'work_mode_fit_pct', 10]];
+      roleCards.innerHTML = roles.map((r, i) => `
+        <article class="glass rounded-3xl p-6 space-y-4 lift ${i === 0 ? 'ring-2 ring-indigo-300' : ''}">
+          <div class="flex items-start gap-4">
+            <div class="ring" style="--p:${r.match_score};--c:${ringColor(r.match_score)}"><span>${r.match_score}%</span></div>
+            <div class="min-w-0 flex-1"><div class="flex flex-wrap gap-1.5 mb-1">${i === 0 ? '<span class="chip chip-emerald">★ Best match</span>' : ''}<span class="chip chip-indigo">${esc(r.industry)}</span></div>
+              <h3 class="text-base font-extrabold leading-snug">${esc(r.title)}</h3>
+              <div class="text-[11px] text-slate-500 mt-0.5">Market demand ${r.demand_outlook}/100 · ${r.work_modes.map(esc).join(', ')}</div></div>
+          </div>
+          <div class="space-y-2">${parts.map(p => `<div><div class="flex justify-between text-[11px] mb-0.5"><span class="font-bold text-slate-600">${p[0]}</span><span class="font-extrabold">${r.explainable_breakdown[p[1]]}/${p[2]}</span></div><div class="bar"><i style="width:${Math.round(100 * r.explainable_breakdown[p[1]] / p[2])}%"></i></div></div>`).join('')}</div>
+          <div class="space-y-2">
+            ${r.matched_core_skills.length ? `<div class="flex flex-wrap gap-1.5">${r.matched_core_skills.map(s => `<span class="chip chip-emerald">✓ ${esc(s)}</span>`).join('')}</div>` : ''}
+            <div class="flex flex-wrap gap-1.5">${r.skills_gap.map(s => `<span class="chip chip-rose">${esc(s)}</span>`).join('') || '<span class="chip chip-emerald">No skill gap</span>'}</div>
+          </div>
+          <div class="flex items-center justify-between pt-1"><div class="flex gap-1.5 flex-wrap">${r.sdg_tags.map(s => `<span class="chip chip-teal" title="${esc(s.reason)}">🌱 ${esc(s.code)}</span>`).join('')}</div>
+            <button onclick="selectRole(${i},true)" class="btn btn-primary !py-2">Reskilling plan →</button></div>
+        </article>`).join('');
+    }
+
+    /* ---------- plan ---------- */
+    function renderPlanSelect() { planRole.innerHTML = roles.map((r, i) => `<option value="${i}" ${i === selected ? 'selected' : ''}>${esc(r.title)} · ${r.match_score}%</option>`).join(''); }
+    function selectRole(i, go) { selected = Number(i); planRole.value = selected; renderPlan(); if (go) showTab('plan'); else if (current === 'dash') renderDash(); }
+    function renderPlan() {
+      const r = roles[selected]; if (!r) return;
+      planStats.innerHTML = `<span class="chip chip-amber">⏳ ${r.estimated_total_hours} hours</span><span class="chip chip-indigo">${r.ordered_pathway.length} steps</span>`;
+      timeline.innerHTML = r.ordered_pathway.length ? r.ordered_pathway.map(s => `
+        <div class="relative pl-12"><span class="step-dot absolute left-0 top-0 bg-gradient-to-br from-indigo-500 to-pink-500 text-white">${s.step}</span>
+          <div class="tint tint-indigo rounded-2xl p-4 space-y-2">
+            <div class="flex flex-wrap items-center justify-between gap-2"><span class="text-[11px] font-extrabold text-indigo-600">${esc(s.phase)} · ${esc(s.difficulty)}</span><span class="chip chip-amber">${s.hours} h · ${esc(s.cost_type)}</span></div>
+            <div class="text-sm font-extrabold">${esc(s.target_skill)}</div>
+            <div class="text-xs text-slate-600">${esc(s.course_title)} · <i>${esc(s.provider)}</i></div>
+            <div class="flex items-center justify-between pt-1"><div class="flex gap-1.5 flex-wrap"><span class="chip chip-teal">${esc(s.malaysia_badge)}</span><span class="chip chip-emerald">${esc(s.sdg)}</span></div>
+              <a href="${esc(s.url)}" target="_blank" rel="noopener" class="text-xs font-extrabold text-indigo-600 hover:underline">Open course ↗</a></div>
+          </div></div>`).join('') : '<div class="text-sm font-bold text-emerald-700">🎉 You already cover every core skill for this role.</div>';
+      planSdg.innerHTML = r.sdg_tags.map(s => `<div class="tint tint-teal rounded-2xl p-4"><div class="text-sm font-extrabold text-teal-900">🌱 ${esc(s.code)}</div><div class="text-xs font-bold">${esc(s.name)}</div><p class="text-[11px] text-slate-600 mt-1">${esc(s.reason)}</p></div>`).join('');
+    }
+
+    /* ---------- passport ---------- */
+    function renderPassport() {
+      const r = roles[selected];
+      passport.innerHTML = r ? `
+        <div class="rounded-[2rem] p-1 bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 shadow-2xl">
+          <div class="rounded-[1.9rem] bg-white/95 p-8 space-y-6">
+            <div class="flex items-center justify-between"><div class="flex items-center gap-3"><img src="/static/brand/careerlens_logo_icon.svg" class="h-12 w-12 rounded-2xl" alt="" /><div><div class="text-[11px] font-extrabold uppercase tracking-wider text-indigo-600">SDG Career Passport</div><div class="text-lg font-extrabold">${esc(user.full_name)}</div></div></div><span class="chip chip-indigo font-mono">${esc(user.unique_uid)}</span></div>
+            <div class="tint tint-indigo rounded-2xl p-5"><div class="text-[11px] font-bold text-slate-500">Target role</div><div class="text-xl font-extrabold">${esc(r.title)}</div>
+              <div class="flex gap-4 mt-2 text-xs"><span><b>${r.match_score}%</b> match</span><span><b>${r.estimated_total_hours}h</b> to close gap</span><span><b>${r.ordered_pathway.length}</b> courses</span></div></div>
+            <div><div class="text-xs font-extrabold mb-2">Contribution to the SDGs</div><div class="grid sm:grid-cols-2 gap-3">${r.sdg_tags.map(s => `<div class="tint tint-teal rounded-2xl p-3"><div class="text-sm font-extrabold">🌱 ${esc(s.code)}</div><div class="text-[11px] text-slate-600">${esc(s.reason)}</div></div>`).join('')}</div></div>
+            <div><div class="text-xs font-extrabold mb-2">Skills to build</div><div class="flex flex-wrap gap-1.5">${r.skills_gap.map(s => `<span class="chip chip-rose">${esc(s)}</span>`).join('') || '<span class="chip chip-emerald">None — fully matched</span>'}</div></div>
+            <div class="text-[10px] text-slate-400">Estimates only. Demo data is synthetic; not a guarantee of employment or salary.</div>
+          </div></div>
+        <div class="text-center mt-4"><button onclick="window.print()" class="btn btn-soft">🖨️ Print / save as PDF</button></div>`
+        : '<div class="glass rounded-3xl p-8 text-center text-sm text-slate-500">Complete your profile to generate your passport.</div>';
+    }
+
+    /* ---------- init ---------- */
+    async function init() {
+      buildNav();
+      const me = await api('/api/auth/me'); user = me.data.user;
+      if (!user) return;
+      if (user.role === 'hr_company') { window.location.href = '/workspace'; return; }
+      uAvatar.textContent = user.full_name.charAt(0).toUpperCase(); uName.textContent = user.full_name; uUid.textContent = user.unique_uid;
+      try { answers = JSON.parse(localStorage.getItem(ansKey()) || '{}'); } catch (e) { answers = {}; }
+      const p = await api('/api/personas'); personas = p.data || [];
+      personaBtns.innerHTML = personas.map((x, i) => `<button onclick="selectPersona(${i})" class="chip chip-indigo hover:bg-indigo-100 cursor-pointer">${esc(x.name.split(' (')[0])}</button>`).join('');
+      skillSuggest.innerHTML = [...new Set(personas.flatMap(x => x.skills))].map(s => `<option value="${esc(s)}">`).join('');
+      skillInput.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ',') { e.preventDefault(); addSkill(skillInput.value); skillInput.value = ''; } });
+      const rd = user.role_details || {};
+      const match = personas.findIndex(x => x.industry === rd.industry);
+      selectPersona(match >= 0 ? match : 0);
+      pName.value = user.full_name; if (rd.current_role) pRole.value = rd.current_role; if (rd.preferred_work_mode) pMode.value = rd.preferred_work_mode;
+      await runAnalysis(); showTab('dash');
+    }
+    init();
+  </script>
+</body>
+</html>
