@@ -1,0 +1,340 @@
+{
+  "roles": {
+    "Finance & Accounting": [
+      "Accountant",
+      "Accounts Executive",
+      "Accounts Assistant",
+      "Financial Auditor",
+      "Tax Associate",
+      "Payroll Executive",
+      "Financial Analyst",
+      "Management Accountant"
+    ],
+    "IT & Software": [
+      "Software Engineer",
+      "Frontend Developer",
+      "Backend Developer",
+      "QA Engineer",
+      "Data Analyst",
+      "Cybersecurity Analyst",
+      "IT Support Specialist",
+      "Cloud Engineer"
+    ],
+    "Marketing & PR": [
+      "Marketing Executive",
+      "Digital Marketing Specialist",
+      "Content Writer",
+      "Social Media Executive",
+      "Public Relations Executive",
+      "SEO Specialist"
+    ],
+    "HR & Administration": [
+      "HR Executive",
+      "Recruiter",
+      "HR Analyst",
+      "Office Administrator",
+      "Learning & Development Executive"
+    ],
+    "Engineering": [
+      "Civil Engineer",
+      "Mechanical Engineer",
+      "Electrical Engineer",
+      "Process Engineer",
+      "Quality Engineer"
+    ],
+    "Healthcare": [
+      "Registered Nurse",
+      "Pharmacist",
+      "Medical Laboratory Technologist",
+      "Healthcare Administrator"
+    ],
+    "Education": [
+      "Teacher",
+      "Lecturer",
+      "Training Executive",
+      "Instructional Designer"
+    ],
+    "Sales & Retail": [
+      "Sales Executive",
+      "Account Manager",
+      "Retail Supervisor",
+      "Customer Success Executive"
+    ],
+    "Hospitality & Tourism": [
+      "Hotel Executive",
+      "Front Office Executive",
+      "Travel Consultant",
+      "Food & Beverage Supervisor"
+    ],
+    "Logistics & Supply Chain": [
+      "Logistics Executive",
+      "Procurement Executive",
+      "Supply Chain Analyst",
+      "Warehouse Supervisor"
+    ],
+    "Banking & Insurance": [
+      "Banking Operations Executive",
+      "Credit Analyst",
+      "Insurance Claims Executive",
+      "Risk Analyst"
+    ],
+    "Design & Creative": [
+      "Graphic Designer",
+      "UI/UX Designer",
+      "Product Designer",
+      "Video Editor"
+    ],
+    "Legal": [
+      "Legal Associate",
+      "Paralegal",
+      "Compliance Executive"
+    ],
+    "Manufacturing": [
+      "Production Executive",
+      "Production Planner",
+      "Quality Assurance Executive",
+      "Manufacturing Technician"
+    ],
+    "Agriculture": [
+      "Agricultural Officer",
+      "Farm Supervisor",
+      "Agronomist",
+      "Agricultural Technician"
+    ],
+    "Construction & Property": [
+      "Quantity Surveyor",
+      "Site Supervisor",
+      "Property Executive",
+      "Building Manager"
+    ]
+  },
+  "regions": {
+    "Johor": [
+      "Johor Bahru",
+      "Batu Pahat",
+      "Kluang",
+      "Kota Tinggi",
+      "Kulai",
+      "Mersing",
+      "Muar",
+      "Pontian",
+      "Segamat",
+      "Tangkak"
+    ],
+    "Kedah": [
+      "Kota Setar",
+      "Kuala Muda",
+      "Kulim",
+      "Langkawi",
+      "Kubang Pasu",
+      "Baling",
+      "Bandar Baharu",
+      "Padang Terap",
+      "Pendang",
+      "Pokok Sena",
+      "Sik",
+      "Yan"
+    ],
+    "Kelantan": [
+      "Kota Bharu",
+      "Bachok",
+      "Gua Musang",
+      "Jeli",
+      "Kuala Krai",
+      "Machang",
+      "Pasir Mas",
+      "Pasir Puteh",
+      "Tanah Merah",
+      "Tumpat"
+    ],
+    "Melaka": [
+      "Melaka Tengah",
+      "Alor Gajah",
+      "Jasin"
+    ],
+    "Negeri Sembilan": [
+      "Seremban",
+      "Port Dickson",
+      "Jempol",
+      "Jelebu",
+      "Kuala Pilah",
+      "Rembau",
+      "Tampin"
+    ],
+    "Pahang": [
+      "Kuantan",
+      "Bentong",
+      "Bera",
+      "Cameron Highlands",
+      "Jerantut",
+      "Lipis",
+      "Maran",
+      "Pekan",
+      "Raub",
+      "Rompin",
+      "Temerloh"
+    ],
+    "Pulau Pinang": [
+      "Timur Laut",
+      "Barat Daya",
+      "Seberang Perai Utara",
+      "Seberang Perai Tengah",
+      "Seberang Perai Selatan"
+    ],
+    "Perak": [
+      "Kinta",
+      "Larut, Matang dan Selama",
+      "Manjung",
+      "Hilir Perak",
+      "Hulu Perak",
+      "Kampar",
+      "Kerian",
+      "Kuala Kangsar",
+      "Batang Padang",
+      "Perak Tengah",
+      "Muallim",
+      "Bagan Datuk"
+    ],
+    "Perlis": [
+      "Kangar",
+      "Arau",
+      "Padang Besar"
+    ],
+    "Sabah": [
+      "Kota Kinabalu",
+      "Sandakan",
+      "Tawau",
+      "Lahad Datu",
+      "Keningau",
+      "Semporna",
+      "Papar",
+      "Penampang",
+      "Tuaran",
+      "Ranau",
+      "Kota Belud",
+      "Kota Marudu",
+      "Kudat",
+      "Beaufort",
+      "Beluran",
+      "Kinabatangan",
+      "Kuala Penyu",
+      "Kunak",
+      "Nabawan",
+      "Pitas",
+      "Putatan",
+      "Sipitang",
+      "Tambunan",
+      "Tenom",
+      "Tongod",
+      "Telupid",
+      "Kalabakan"
+    ],
+    "Sarawak": [
+      "Kuching",
+      "Miri",
+      "Sibu",
+      "Bintulu",
+      "Samarahan",
+      "Sri Aman",
+      "Betong",
+      "Sarikei",
+      "Mukah",
+      "Kapit",
+      "Limbang",
+      "Serian"
+    ],
+    "Selangor": [
+      "Petaling",
+      "Klang",
+      "Gombak",
+      "Hulu Langat",
+      "Sepang",
+      "Kuala Langat",
+      "Kuala Selangor",
+      "Hulu Selangor",
+      "Sabak Bernam"
+    ],
+    "Terengganu": [
+      "Kuala Terengganu",
+      "Kuala Nerus",
+      "Kemaman",
+      "Dungun",
+      "Besut",
+      "Hulu Terengganu",
+      "Marang",
+      "Setiu"
+    ],
+    "W.P. Kuala Lumpur": [
+      "Bukit Bintang",
+      "Titiwangsa",
+      "Setiawangsa",
+      "Wangsa Maju",
+      "Batu",
+      "Kepong",
+      "Segambut",
+      "Lembah Pantai",
+      "Seputeh",
+      "Cheras",
+      "Bandar Tun Razak"
+    ],
+    "W.P. Putrajaya": [
+      "Presint 1–5",
+      "Presint 6–10",
+      "Presint 11–15",
+      "Presint 16–20"
+    ],
+    "W.P. Labuan": [
+      "Victoria",
+      "Rancha-Rancha",
+      "Layang-Layangan",
+      "Batu Arang",
+      "Bebuloh",
+      "Other area"
+    ]
+  },
+  "choices": {
+    "c1": [
+      "Fresh Graduate",
+      "Working Professional",
+      "Career Changer"
+    ],
+    "c3": [
+      "Use my current skills",
+      "Career growth",
+      "Better salary",
+      "Career change",
+      "Interest in this profession"
+    ],
+    "cMode": [
+      "On-site",
+      "Hybrid",
+      "Remote"
+    ],
+    "c5": [
+      "Below RM 3,000",
+      "RM 3,000 – 4,000",
+      "RM 4,000 – 6,000",
+      "RM 6,000 – 8,000",
+      "RM 8,000+",
+      "Prefer to discuss"
+    ],
+    "c6": [
+      "Immediately",
+      "2 weeks",
+      "1 month",
+      "2+ months"
+    ],
+    "c7": [
+      "Independent work",
+      "Team work",
+      "A mix of both"
+    ],
+    "c8": [
+      "Develop specialist expertise",
+      "Move into management",
+      "Change career field",
+      "Start a business",
+      "Still exploring"
+    ]
+  }
+}

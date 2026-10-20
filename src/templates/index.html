@@ -7,12 +7,11 @@
   <link rel="icon" type="image/svg+xml" href="/static/brand/careerlens_logo_icon.svg" />
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/static/css/theme.css" />
+  <link rel="stylesheet" href="/static/css/theme.css?v=20261020-questionnaire-1" />
 </head>
 <body class="min-h-screen">
   <div class="aurora"></div><div class="blob b1"></div><div class="blob b2"></div>
 
-  <!-- Header -->
   <header class="landing-header sticky top-0 z-40 glass">
     <div class="max-w-6xl mx-auto px-4 sm:px-6 py-3 flex items-center justify-between gap-4">
       <a href="/" class="landing-brand flex items-center gap-3">
@@ -22,17 +21,21 @@
           <div class="text-[11px] text-slate-500 font-medium">Future-Ready Workforce & Reskilling</div>
         </div>
       </a>
+      <nav class="homepage-navigation" aria-label="Main navigation"><a class="nav-item" href="#home-intro">Overview</a><a class="nav-item" href="#home-portals">Our Portals</a></nav>
       <div class="landing-actions flex items-center gap-2">
         <div data-language-slot></div>
         <button onclick="openAuth('login')" class="btn btn-soft">Sign In</button>
         <button onclick="openAuth('register')" class="btn btn-primary">Create Account</button>
       </div>
     </div>
+    <div class="homepage-mobile-controls">
+      <button id="homeNavToggle" type="button" class="nav-toggle" aria-controls="homeNav" aria-expanded="false" aria-label="Toggle navigation"><span class="hamburger" aria-hidden="true"><i></i><i></i><i></i></span>Menu</button>
+      <nav id="homeNav" class="mobile-nav" aria-label="Main navigation" hidden><a class="nav-item" href="#home-intro">Overview</a><a class="nav-item" href="#home-portals">Our Portals</a><button class="nav-item" onclick="openAuth('login')">Sign In</button><button class="nav-item" onclick="openAuth('register')">Create Account</button></nav>
+    </div>
   </header>
 
-  <!-- ============ LANDING ============ -->
   <main id="landing" class="max-w-6xl mx-auto px-4 sm:px-6 py-10 space-y-12">
-    <section class="glass rounded-[2rem] p-8 sm:p-14 fade-in">
+    <section id="home-intro" class="glass rounded-[2rem] p-8 sm:p-14 fade-in">
       <div class="grid lg:grid-cols-12 gap-10 items-center">
         <div class="lg:col-span-7 space-y-6">
           <span class="chip chip-indigo">✨ AI workforce navigation</span>
@@ -56,8 +59,7 @@
       </div>
     </section>
 
-    <!-- Two separate portals -->
-    <section class="grid md:grid-cols-2 gap-6">
+    <section id="home-portals" class="grid md:grid-cols-2 gap-6">
       <div class="tint tint-indigo rounded-3xl p-7 lift space-y-4">
         <div class="flex items-center gap-3"><div class="h-12 w-12 rounded-2xl bg-gradient-to-br from-indigo-500 to-pink-500 grid place-items-center text-xl text-white">👤</div>
           <div><div class="text-[11px] font-extrabold uppercase tracking-wider text-indigo-600">For individuals</div><h3 class="text-lg font-extrabold">Talent Portal</h3></div></div>
@@ -73,7 +75,6 @@
     </section>
   </main>
 
-  <!-- ============ AUTH ============ -->
   <main id="auth" class="hidden max-w-3xl mx-auto px-4 sm:px-6 py-8">
     <div class="glass rounded-[2rem] p-6 sm:p-10 space-y-6 fade-in">
       <div class="flex flex-wrap items-center justify-between gap-4 border-b border-slate-200/70 pb-4">
@@ -82,7 +83,6 @@
       </div>
       <div id="alertBox" class="hidden rounded-2xl p-3.5 text-xs font-bold border bg-rose-50 text-rose-700 border-rose-200"></div>
 
-      <!-- Sign in -->
       <div id="loginPane" class="grid md:grid-cols-12 gap-8 items-start">
         <div class="md:col-span-7 space-y-4">
           <div><label class="label">Email address</label><input id="loginEmail" type="email" class="input" placeholder="name@domain.com" /></div>
@@ -103,7 +103,6 @@
         </div>
       </div>
 
-      <!-- Register -->
       <div id="registerPane" class="hidden space-y-5">
         <div>
           <label class="label uppercase tracking-wider">1 · Account type *</label>
@@ -159,7 +158,6 @@
     </div>
   </main>
 
-  <!-- Terms modal -->
   <div id="termsModal" class="hidden overlay"><div class="glass bg-white/95 rounded-3xl max-w-lg w-full p-7 space-y-4">
     <div class="flex justify-between items-center border-b pb-3"><h3 class="font-extrabold">🛡️ Privacy, PDPA & Fair-AI</h3><button onclick="toggleTerms(false)" class="text-slate-400 font-bold">✕</button></div>
     <ul class="space-y-2.5 text-xs text-slate-600 leading-relaxed list-disc pl-4">
@@ -171,7 +169,6 @@
     <div class="flex justify-end"><button onclick="document.getElementById('regConsent').checked=true;toggleTerms(false)" class="btn btn-primary">Accept</button></div>
   </div></div>
 
-  <!-- SSO modal -->
   <div id="ssoModal" class="hidden overlay"><div class="glass bg-white/95 rounded-3xl max-w-md w-full p-6 space-y-4">
     <div class="flex justify-between items-center border-b pb-3"><h3 id="ssoTitle" class="font-extrabold">Continue with SSO</h3><button onclick="document.getElementById('ssoModal').classList.add('hidden')" class="text-slate-400 font-bold">✕</button></div>
     <p class="text-xs text-slate-500">Demo SSO — pick an account to continue.</p>
@@ -179,7 +176,7 @@
     <button onclick="quickLogin('hr_company')" class="w-full text-left p-3.5 rounded-2xl bg-teal-50 hover:bg-teal-100 border border-teal-200"><div class="font-bold text-xs">Daniel Tan · Employer</div><div class="text-[11px] text-slate-500">hr.demo@nexussme.my</div></button>
   </div></div>
 
-  <script src="/static/js/common.js"></script>
+  <script src="/static/js/common.js?v=20261020-questionnaire-1"></script>
   <script>
     function openAuth(mode, role) {
       document.getElementById('landing').classList.add('hidden');
@@ -248,6 +245,6 @@
 <script src="/static/js/questionnaire-i18n.js"></script>
 <script src="/static/js/portal-i18n.js"></script>
 <script src="/static/js/auth-i18n.js"></script>
-<script src="/static/js/member3.js?v=20261020-6"></script>
+<script src="/static/js/member3.js?v=20261020-questionnaire-1"></script>
 </body>
 </html>

@@ -16,6 +16,7 @@ from flask import Flask, jsonify, redirect, render_template, request, send_file,
 import chatbot_engine
 import cv_engine
 import hr_engine
+import questionnaire_engine
 from ai_matcher import load_json, match_user_to_roles
 from auth_db import authenticate_user, init_db, register_user
 from trend_signals import get_trend_radar
@@ -120,6 +121,29 @@ def api_chat():
 # ------------------------------------------------------------------ Talent Portal APIs
 def _owner():
     return session["user"]["unique_uid"]
+
+
+@app.route('/api/questionnaire/catalog')
+@api_role('job_seeker')
+def questionnaire_catalog():
+    return jsonify(**questionnaire_engine.CATALOG, provider=questionnaire_engine.questionnaire_provider())
+
+
+@app.route('/api/questionnaire/<action>', methods=['POST'])
+@api_role('job_seeker')
+def questionnaire_generate(action):
+    if action not in ('questions', 'recommendations'):
+        return jsonify(ok=False, message='Unknown questionnaire action.'), 404
+    payload = request.get_json(silent=True)
+    if not isinstance(payload, dict):
+        return jsonify(ok=False, message='Invalid questionnaire request.'), 400
+    try:
+        result = questionnaire_engine.generate(
+            cv_engine.get_user_cv(_owner()), payload.get('field'),
+            payload.get('answers'), payload.get('language', 'en'), action)
+        return jsonify(ok=True, **result)
+    except questionnaire_engine.QuestionnaireError as exc:
+        return jsonify(ok=False, message=str(exc)), exc.status
 
 
 @app.route("/api/personas", methods=["GET"])

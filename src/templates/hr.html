@@ -7,42 +7,34 @@
   <link rel="icon" type="image/svg+xml" href="/static/brand/careerlens_logo_icon.svg" />
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/static/css/theme.css" />
+  <link rel="stylesheet" href="/static/css/theme.css?v=20261020-questionnaire-1" />
 </head>
 <body class="hr min-h-screen">
   <div class="aurora"></div><div class="blob b1"></div><div class="blob b2"></div>
 
-  <div class="flex min-h-screen">
-    <!-- Dark sidebar (desktop) -->
-    <aside class="hidden lg:flex flex-col w-72 shrink-0 p-4 sticky top-0 h-screen">
-      <div class="sidebar-dark rounded-3xl p-4 flex flex-col h-full shadow-2xl">
-        <div class="flex items-center gap-3 px-1 pb-4 border-b border-white/10">
-          <img src="/static/brand/careerlens_logo_icon.svg" alt="" class="h-11 w-11 rounded-2xl" />
-          <div><div class="font-extrabold text-lg text-white">CareerLens AI</div><span class="chip !bg-teal-400/20 !text-teal-200 !border-teal-300/40 !text-[10px]">Employer Portal</span></div>
-        </div>
-        <div class="mt-4 rounded-2xl bg-white/5 border border-white/10 p-3">
-          <div class="text-[10px] uppercase tracking-wider text-teal-300 font-bold">Company</div>
-          <div id="coName" data-no-translate class="text-sm font-extrabold text-white leading-snug"></div>
-          <div id="coMeta" class="text-[11px] text-slate-400"></div>
-        </div>
-        <nav id="sideNav" class="mt-4 space-y-1.5 flex-1"></nav>
-        <div class="rounded-2xl bg-white/5 border border-white/10 p-3">
-          <div class="flex items-center gap-2.5">
-            <div id="uAvatar" class="h-9 w-9 rounded-xl bg-gradient-to-br from-teal-400 to-sky-500 text-white font-bold grid place-items-center">U</div>
-            <div class="min-w-0"><div id="uName" data-no-translate class="text-xs font-extrabold text-white truncate"></div><div id="uUid" data-no-translate class="text-[10px] font-mono text-slate-400 truncate"></div></div>
-          </div>
-          <button onclick="signOut()" class="btn w-full mt-3 !py-2 bg-white/10 text-white hover:bg-white/20">Sign out</button>
-        </div>
-      </div>
-    </aside>
+  <div class="flex flex-col min-h-screen">
+
+    <header class="portal-desktop-header sidebar-dark">
+      <a href="/" class="portal-brand"><img src="/static/brand/careerlens_logo_icon.svg" alt="" /><span>CareerLens AI<small>Employer Portal</small></span></a>
+      <nav id="sideNav" class="desktop-navigation" aria-label="Section navigation"></nav>
+      <div class="portal-account"><button type="button" class="notification-button" data-notification-button onclick="openInterviewResponses()" aria-label="Interview notifications" title="Interview notifications"><span aria-hidden="true">🔔</span><span class="notification-label">Interview notifications</span></button><div data-language-slot="desktop"></div><div class="portal-user"><div id="uAvatar" class="h-9 w-9 rounded-xl bg-gradient-to-br from-teal-400 to-sky-500 text-white font-bold grid place-items-center">U</div>
+            <div class="min-w-0"><div id="uName" data-no-translate class="text-xs font-extrabold text-white truncate"></div><div id="uUid" data-no-translate class="text-[10px] font-mono text-slate-400 truncate"></div></div></div><button onclick="signOut()" class="btn btn-soft">Sign out</button></div>
+    </header>
 
     <div class="flex-1 min-w-0">
-      <header class="lg:hidden sticky top-0 z-30 sidebar-dark">
+      <header class="portal-mobile-header sticky top-0 z-30 sidebar-dark">
         <div class="flex items-center justify-between px-4 py-2.5">
           <div class="flex items-center gap-2"><img src="/static/brand/careerlens_logo_icon.svg" class="h-9 w-9 rounded-xl" alt="" /><b class="text-sm text-white">Employer Portal</b></div>
-          <button onclick="signOut()" class="btn !py-1.5 bg-white/10 text-white">Sign out</button>
+          <div class="portal-mobile-actions"><button type="button" class="notification-button" data-notification-button onclick="openInterviewResponses()" aria-label="Interview notifications" title="Interview notifications"><span aria-hidden="true">🔔</span><span class="notification-label">Interview notifications</span></button><div data-language-slot="mobile"></div><button onclick="signOut()" class="btn !py-1.5 bg-white/10 text-white">Sign out</button></div>
         </div>
-        <nav id="topNav" class="flex gap-1.5 px-3 pb-2 overflow-x-auto hidden-scroll"></nav>
+        <div class="mobile-nav-bar">
+          <button id="navToggle" type="button" class="nav-toggle" aria-label="Toggle navigation" aria-expanded="false" aria-controls="topNav">
+            <span class="hamburger" aria-hidden="true"><i></i><i></i><i></i></span>
+            <span>Menu</span>
+          </button>
+          <span id="mobileCurrentSection" class="mobile-current-section" aria-live="polite"></span>
+        </div>
+        <nav id="topNav" class="mobile-nav" aria-label="Section navigation" hidden></nav>
       </header>
 
       <main class="p-4 sm:p-6 lg:p-8 max-w-7xl mx-auto space-y-6">
@@ -52,7 +44,6 @@
           <span class="chip chip-indigo">👨‍⚖️ Humans make the final decision</span>
         </div>
 
-        <!-- ============ OVERVIEW ============ -->
         <section id="tab-overview" class="tab space-y-6">
           <div id="kpis" class="grid grid-cols-2 lg:grid-cols-4 gap-4"></div>
           <div class="grid lg:grid-cols-5 gap-6">
@@ -73,7 +64,6 @@
           </div>
         </section>
 
-        <!-- ============ VACANCIES ============ -->
         <section id="tab-vacancies" class="tab hidden">
           <div class="grid lg:grid-cols-12 gap-6">
             <div class="lg:col-span-5 glass rounded-3xl p-6 space-y-4 self-start">
@@ -97,7 +87,6 @@
           </div>
         </section>
 
-        <!-- ============ SCREENING ============ -->
         <section id="tab-screening" class="tab hidden space-y-5">
           <div class="glass rounded-3xl p-5 flex flex-wrap items-center justify-between gap-4">
             <div class="flex items-center gap-3"><span class="text-xs font-bold text-slate-500">Vacancy</span><select id="scVacancy" onchange="loadScreen(this.value)" class="input !w-auto min-w-[16rem]"></select></div>
@@ -113,7 +102,6 @@
           <div id="fairNote" class="text-[11px] text-slate-500 px-1"></div>
         </section>
 
-        <!-- ============ HEATMAP ============ -->
         <section id="tab-heatmap" class="tab hidden space-y-5">
           <p class="hint">Demo candidate CVs, shared with candidate screening. Listed skills are unverified; missing skills need confirmation. Real resume submissions are not connected yet.</p>
           <div class="glass rounded-3xl p-5 space-y-4">
@@ -132,7 +120,7 @@
               <thead id="hmHead"></thead><tbody id="hmBody"></tbody><tfoot id="hmFoot"></tfoot>
             </table></div>
           </div>
-          <section class="glass rounded-3xl p-6 space-y-3"><h2 class="font-extrabold">Interview responses</h2><button class="btn btn-soft" onclick="loadInvitations(true)">Refresh notifications</button><div id="latestInvitationReceipt" role="status"></div><div id="hrInvitations"></div></section>
+          <section id="interviewResponses" tabindex="-1" class="glass rounded-3xl p-6 space-y-3"><h2 class="font-extrabold">Interview responses</h2><button class="btn btn-soft" onclick="loadInvitations(true)">Refresh notifications</button><div id="latestInvitationReceipt" role="status"></div><div id="hrInvitations"></div></section>
           <section class="glass rounded-3xl p-6 space-y-4" aria-labelledby="hmSummaryTitle">
             <div class="tint tint-teal rounded-2xl p-4 space-y-2"><p class="font-bold">Default test candidate</p><p data-no-translate>Aisha Rahman</p><p class="text-sm">Test the invitation flow with the default candidate account.</p><button class="btn btn-hr" onclick="inviteCandidate('CL-JS-2026-1042')">Invite default candidate</button></div>
             <h2 id="hmSummaryTitle" class="text-lg font-extrabold">Candidate recommendation summary</h2>
@@ -141,7 +129,6 @@
           </section>
         </section>
 
-        <!-- ============ RESKILL ============ -->
         <section id="tab-reskill" class="tab hidden"><p class="hint mb-4">Confirm missing CV skills before recommending training.</p>
           <div class="grid lg:grid-cols-3 gap-6">
             <div class="lg:col-span-2 space-y-4"><div id="rkCards" class="space-y-4"></div></div>
@@ -171,20 +158,18 @@
     </form>
   </dialog>
 
-  <!-- Candidate insight slide-over -->
   <div id="insightWrap" class="hidden">
     <div class="overlay !items-stretch !justify-end !p-0" onclick="closeInsight()"></div>
     <aside id="insight" class="slideover p-6 sm:p-8 space-y-6"></aside>
   </div>
 
-  <!-- Organised CV & Original PDF Modal (Application-Gated) -->
   <div id="orgCvWrap" class="hidden" data-no-translate>
     <div class="overlay" onclick="closeOrgCvModal()">
       <div id="orgCvModal" class="modal p-6 sm:p-8 space-y-5 max-w-3xl w-full max-h-[88vh] overflow-y-auto" onclick="event.stopPropagation()"></div>
     </div>
   </div>
 
-  <script src="/static/js/common.js"></script>
+  <script src="/static/js/common.js?v=20261020-questionnaire-1"></script>
   <script>
     const NAV = [
       { id: 'overview', ico: '📊', label: 'Overview', eyebrow: 'Employer portal', title: 'Hiring & workforce overview' },
@@ -205,16 +190,21 @@
     const rm = n => 'RM ' + Number(n).toLocaleString();
     const decKey = (v, c) => `${v}|${c}`;
 
+    async function openInterviewResponses() {
+      await showTab('heatmap');
+      const section = document.getElementById('interviewResponses');
+      section.focus({preventScroll: true});
+      section.scrollIntoView({block: 'start', behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth'});
+    }
     /* ---------- navigation ---------- */
     function buildNav() {
-      document.getElementById('sideNav').innerHTML = NAV.map(n => `<button data-tab="${n.id}" onclick="showTab('${n.id}')" class="nav-item"><span class="ico">${n.ico}</span>${n.label}</button>`).join('');
-      document.getElementById('topNav').innerHTML = NAV.map(n => `<button data-tab="${n.id}" onclick="showTab('${n.id}')" class="nav-item !w-auto whitespace-nowrap !py-2"><span>${n.ico}</span>${n.label}</button>`).join('');
+      buildPortalNavigation(NAV, [{label: 'Overview', ids: ['overview']}, {label: 'Hiring', ids: ['vacancies', 'screening']}, {label: 'Candidate Development', ids: ['heatmap', 'reskill']}]);
     }
     async function showTab(id) {
       current = id;
       document.querySelectorAll('.tab').forEach(t => t.classList.add('hidden'));
       const el = document.getElementById('tab-' + id); el.classList.remove('hidden'); el.classList.add('fade-in');
-      document.querySelectorAll('[data-tab]').forEach(b => b.classList.toggle('active', b.dataset.tab === id));
+      setPortalNavigation(id);
       const n = NAV.find(x => x.id === id);
       pgEyebrow.textContent = n.eyebrow; pgTitle.textContent = n.title;
       if (id === 'overview') renderOverview();
@@ -636,6 +626,6 @@
   </script>
 <script src="/static/js/questionnaire-i18n.js"></script>
 <script src="/static/js/portal-i18n.js"></script>
-<script src="/static/js/member3.js?v=20261020-7"></script>
+<script src="/static/js/member3.js?v=20261020-questionnaire-1"></script>
 </body>
 </html>

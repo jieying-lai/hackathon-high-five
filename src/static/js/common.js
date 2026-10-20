@@ -1,4 +1,4 @@
-/* Shared helpers & Lumi Mascot AI Chatbox Widget for CareerLens AI pages. */
+
 function esc(value) {
   return String(value ?? '').replace(/[&<>"']/g, ch => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[ch]));
 }
@@ -6,7 +6,7 @@ function esc(value) {
 async function api(url, options) {
   const res = await fetch(url, options);
   let data = {};
-  try { data = await res.json(); } catch (e) { /* non-JSON response */ }
+  try { data = await res.json(); } catch (e) {  }
   if (res.status === 401) { window.location.href = '/'; }
   return { ok: res.ok, status: res.status, data };
 }
@@ -28,10 +28,6 @@ async function signOut() {
   window.location.href = '/';
 }
 
-/* ============================================================================
- * Lumi — Cute Mascot Domain-Scoped AI Chatbox Widget
- * Automatically mounts on Talent Portal, Employer Portal, and Landing Page.
- * ============================================================================ */
 (function initLumiChatbox() {
   let lumiOpen = false;
   let lumiHistory = [];
@@ -255,4 +251,127 @@ async function signOut() {
   } else {
     mountWidget();
   }
+})();
+
+function buildPortalNavigation(items, groups) {
+  const itemButton = item => `<button type="button" data-tab="${item.id}" onclick="showTab('${item.id}')" class="nav-item"><span aria-hidden="true">${item.ico}</span><span>${esc(item.label)}</span></button>`;
+  const available = group => group.ids.map(id => items.find(item => item.id === id)).filter(Boolean);
+  document.getElementById('sideNav').innerHTML = groups.map(group => {
+    const children = available(group);
+    if (children.length === 1) return itemButton(children[0]);
+    return `<details class="nav-group"><summary>${esc(group.label)}<span class="nav-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-panel">${children.map(itemButton).join('')}</div></details>`;
+  }).join('');
+  document.getElementById('topNav').innerHTML = groups.map(group => `<div class="mobile-nav-group"><div class="nav-group-label">${esc(group.label)}</div>${available(group).map(itemButton).join('')}</div>`).join('');
+}
+
+function closePortalMenu(restoreFocus = false) {
+  const toggle = document.getElementById('navToggle');
+  const nav = document.getElementById('topNav');
+  if (!toggle || !nav) return;
+  nav.hidden = true;
+  toggle.setAttribute('aria-expanded', 'false');
+  if (restoreFocus) toggle.focus();
+}
+
+function setPortalNavigation(id) {
+  const nav = document.getElementById('topNav');
+  const restoreFocus = nav && nav.contains(document.activeElement);
+  document.querySelectorAll('#sideNav [data-tab], #topNav [data-tab]').forEach(button => {
+    const selected = button.dataset.tab === id;
+    button.classList.toggle('active', selected);
+    if (selected) button.setAttribute('aria-current', 'page');
+    else button.removeAttribute('aria-current');
+  });
+  document.querySelectorAll('[data-notification-button]').forEach(button => {
+    const selected = id === 'notifications';
+    button.classList.toggle('active', selected);
+    if (selected) button.setAttribute('aria-current', 'page');
+    else button.removeAttribute('aria-current');
+  });
+  const selected = document.querySelector('#sideNav .active') || (id === 'notifications' ? document.querySelector('[data-notification-button]') : null);
+  const label = document.getElementById('mobileCurrentSection');
+  if (label && selected) label.textContent = selected.textContent.trim();
+  document.querySelectorAll('.nav-group').forEach(group => {
+    group.classList.toggle('has-current', Boolean(group.querySelector('.active')));
+    if (group.contains(document.activeElement)) group.querySelector('summary').focus();
+    group.open = false;
+  });
+  closePortalMenu(restoreFocus);
+}
+
+(function initPortalNavigation() {
+  function mount() {
+    const toggle = document.getElementById('navToggle');
+    const nav = document.getElementById('topNav');
+    if (!toggle || !nav) return;
+    const groups = () => [...document.querySelectorAll('.nav-group')];
+    document.addEventListener('toggle', event => {
+      const group = event.target;
+      if (group.matches('.nav-group') && group.open) groups().forEach(other => { if (other !== group) other.open = false; });
+    }, true);
+    document.addEventListener('click', event => {
+      groups().forEach(group => { if (!group.contains(event.target)) group.open = false; });
+    });
+    document.addEventListener('focusin', event => {
+      groups().forEach(group => { if (!group.contains(event.target)) group.open = false; });
+    });
+    document.addEventListener('keydown', event => {
+      if (event.key === 'Escape') groups().forEach(group => {
+        if (group.open) { group.open = false; group.querySelector('summary').focus(); }
+      });
+    });
+    toggle.addEventListener('click', () => {
+      const open = toggle.getAttribute('aria-expanded') !== 'true';
+      nav.hidden = !open;
+      toggle.setAttribute('aria-expanded', String(open));
+    });
+    document.addEventListener('keydown', event => {
+      if (event.key === 'Escape' && !nav.hidden) closePortalMenu(true);
+    });
+    document.addEventListener('click', event => {
+      if (!toggle.closest('header').contains(event.target)) closePortalMenu();
+    });
+    document.addEventListener('focusin', event => {
+      if (!toggle.closest('header').contains(event.target)) closePortalMenu();
+    });
+    window.matchMedia('(min-width: 1280px)').addEventListener('change', event => {
+      if (event.matches) closePortalMenu();
+    });
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', mount);
+  else mount();
+})();
+
+(function initHomepageNavigation() {
+  function mount() {
+    const toggle = document.getElementById('homeNavToggle');
+    const nav = document.getElementById('homeNav');
+    if (!toggle || !nav) return;
+    function close(restoreFocus = false) {
+      nav.hidden = true;
+      toggle.setAttribute('aria-expanded', 'false');
+      if (restoreFocus) toggle.focus();
+    }
+    toggle.addEventListener('click', () => {
+      nav.hidden = !nav.hidden;
+      toggle.setAttribute('aria-expanded', String(!nav.hidden));
+    });
+    nav.addEventListener('click', event => { if (event.target.closest('a,button')) close(true); });
+    document.addEventListener('click', event => { if (!toggle.closest('header').contains(event.target)) close(); });
+    document.addEventListener('focusin', event => { if (!toggle.closest('header').contains(event.target)) close(); });
+    document.addEventListener('keydown', event => { if (event.key === 'Escape' && !nav.hidden) close(true); });
+    window.matchMedia('(min-width: 1280px)').addEventListener('change', () => close());
+    const links = [...document.querySelectorAll('.homepage-navigation a, #homeNav a')];
+    const observer = new IntersectionObserver(entries => {
+      const visible = entries.filter(entry => entry.isIntersecting).sort((a,b) => b.intersectionRatio-a.intersectionRatio)[0];
+      if (!visible) return;
+      links.forEach(link => {
+        const active = link.hash === '#' + visible.target.id;
+        link.classList.toggle('active', active);
+        if (active) link.setAttribute('aria-current', 'location'); else link.removeAttribute('aria-current');
+      });
+    }, {rootMargin: '-140px 0px -20% 0px', threshold: [0, .25, .5]});
+    document.querySelectorAll('#home-intro, #home-portals').forEach(section => observer.observe(section));
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', mount); else mount();
 })();
