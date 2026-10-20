@@ -440,33 +440,7 @@ def generate_lumi_response(message: str, user: dict | None = None, history: list
                 "mascot": MASCOT_PROFILE,
             }
 
-        # Intent T4: Best Future-Role Match / Skill Gaps
-        if any(k in low for k in ("match", "future role", "best role", "missing", "gap", "score", "career")):
-            if not top_role:
-                return {
-                    "ok": True, "in_range": True,
-                    "reply": "🦉 Upload your PDF CV first so I can calculate your explainable future-role match scores!",
-                    "actions": [{"label": "📄 Upload PDF CV", "tab": "profile"}],
-                    "mascot": MASCOT_PROFILE,
-                }
-            bd = top_role["explainable_breakdown"]
-            reply = (
-                f"🦉 **Your #1 Future-Role Match: {top_role['title']} ({top_role['match_score']}%)**\n\n"
-                f"• **Explainable Score Breakdown:** Core Skills `{bd['core_skills_match_pct']}/50` · "
-                f"Transferable `{bd['transferable_skills_pct']}/25` · Sector `{bd['industry_alignment_pct']}/15` · Work Mode `{bd['work_mode_fit_pct']}/10`\n"
-                f"• **Matched Skills:** {', '.join(top_role['matched_core_skills']) or 'Transferable foundation'}\n"
-                f"• **Skills to Build ({len(top_role['skills_gap'])}):** {', '.join(top_role['skills_gap']) or 'None — 100% covered!'}"
-            )
-            return {
-                "ok": True, "in_range": True, "reply": reply,
-                "actions": [
-                    {"label": "🎯 View All Role Matches", "tab": "match"},
-                    {"label": "🧭 Open Reskilling Plan", "tab": "plan"},
-                ],
-                "mascot": MASCOT_PROFILE,
-            }
-
-        # Intent T5: Reskilling Courses / Learning Plan / HRD Corp
+        # Intent T4: Reskilling Courses / Learning Plan / HRD Corp
         if any(k in low for k in ("course", "reskill", "upskill", "learn", "plan", "hrd", "mdec", "myfuturejobs", "pathway", "hour")):
             if not top_role or not top_role.get("ordered_pathway"):
                 return {
@@ -489,6 +463,32 @@ def generate_lumi_response(message: str, user: dict | None = None, history: list
                 "actions": [
                     {"label": "🧭 View Step-by-Step Plan", "tab": "plan"},
                     {"label": "🌱 View SDG Passport", "tab": "passport"},
+                ],
+                "mascot": MASCOT_PROFILE,
+            }
+
+        # Intent T5: Best Future-Role Match / Skill Gaps
+        if any(k in low for k in ("match", "future role", "best role", "missing", "gap", "score", "career")):
+            if not top_role:
+                return {
+                    "ok": True, "in_range": True,
+                    "reply": "🦉 Upload your PDF CV first so I can calculate your explainable future-role match scores!",
+                    "actions": [{"label": "📄 Upload PDF CV", "tab": "profile"}],
+                    "mascot": MASCOT_PROFILE,
+                }
+            bd = top_role["explainable_breakdown"]
+            reply = (
+                f"🦉 **Your #1 Future-Role Match: {top_role['title']} ({top_role['match_score']}%)**\n\n"
+                f"• **Explainable Score Breakdown:** Core Skills `{bd['core_skills_match_pct']}/50` · "
+                f"Transferable `{bd['transferable_skills_pct']}/25` · Sector `{bd['industry_alignment_pct']}/15` · Work Mode `{bd['work_mode_fit_pct']}/10`\n"
+                f"• **Matched Skills:** {', '.join(top_role['matched_core_skills']) or 'Transferable foundation'}\n"
+                f"• **Skills to Build ({len(top_role['skills_gap'])}):** {', '.join(top_role['skills_gap']) or 'None — 100% covered!'}"
+            )
+            return {
+                "ok": True, "in_range": True, "reply": reply,
+                "actions": [
+                    {"label": "🎯 View All Role Matches", "tab": "match"},
+                    {"label": "🧭 Open Reskilling Plan", "tab": "plan"},
                 ],
                 "mascot": MASCOT_PROFILE,
             }
