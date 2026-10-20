@@ -1,37 +1,72 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 220" width="100%" height="100%" fill="none">
   <defs>
     <linearGradient id="lh_aurora" x1="15" y1="15" x2="195" y2="195" gradientUnits="userSpaceOnUse">
-      <stop offset="0%" stop-color="#4F46E5" />
-      <stop offset="50%" stop-color="#9333EA" />
+      <stop offset="0%" stop-color="#6366F1" />
+      <stop offset="50%" stop-color="#8B5CF6" />
       <stop offset="100%" stop-color="#EC4899" />
     </linearGradient>
-    <linearGradient id="lh_teal" x1="35" y1="175" x2="180" y2="40" gradientUnits="userSpaceOnUse">
-      <stop offset="0%" stop-color="#14B8A6" />
-      <stop offset="55%" stop-color="#6366F1" />
-      <stop offset="100%" stop-color="#EC4899" />
-    </linearGradient>
-    <linearGradient id="lh_text" x1="230" y1="60" x2="620" y2="140" gradientUnits="userSpaceOnUse">
-      <stop offset="0%" stop-color="#1E1B4B" />
+    <linearGradient id="lh_text" x1="225" y1="60" x2="620" y2="140" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#0F172A" />
       <stop offset="55%" stop-color="#4F46E5" />
-      <stop offset="100%" stop-color="#DB2777" />
+      <stop offset="100%" stop-color="#EC4899" />
     </linearGradient>
+    <linearGradient id="lh_gold" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#FDE047" />
+      <stop offset="100%" stop-color="#F59E0B" />
+    </linearGradient>
+    <filter id="lh_shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="8" stdDeviation="10" flood-color="#6366F1" flood-opacity="0.25" />
+    </filter>
   </defs>
 
-  <!-- Left Icon Group -->
-  <g id="Figma_Logo_Mark" transform="translate(10, 10)">
-    <rect x="10" y="10" width="180" height="180" rx="46" fill="url(#lh_aurora)" />
-    <rect x="16" y="16" width="168" height="168" rx="40" fill="#FFFFFF" fill-opacity="0.9" />
-    <circle cx="96" cy="104" r="50" stroke="#E2E8F0" stroke-width="12" />
-    <path d="M 132 69 A 50 50 0 1 0 138 132" stroke="url(#lh_aurora)" stroke-width="14" stroke-linecap="round" />
-    <circle cx="96" cy="104" r="30" stroke="url(#lh_teal)" stroke-width="3.5" stroke-dasharray="7 5" />
-    <path d="M 64 128 Q 90 126 105 98 T 145 55" stroke="url(#lh_teal)" stroke-width="8.5" stroke-linecap="round" fill="none" />
-    <path d="M 126 53 L 148 52 L 147 74" stroke="#14B8A6" stroke-width="8.5" stroke-linecap="round" stroke-linejoin="round" fill="none" />
-    <path d="M 156 34 C 156 43 159 46 168 46 C 159 46 156 49 156 58 C 156 49 153 46 144 46 C 153 46 156 43 156 34 Z" fill="#EC4899" />
-    <circle cx="96" cy="104" r="9.5" fill="#4F46E5" stroke="#FFFFFF" stroke-width="3.5" />
+  <!-- Left Cute Logo Mark (Cute Owl in Squircle) -->
+  <g id="Cute_Logo_Mark" transform="translate(10, 10)" filter="url(#lh_shadow)">
+    <!-- Squircle Background -->
+    <rect x="10" y="10" width="180" height="180" rx="48" fill="url(#lh_aurora)" />
+    <rect x="15" y="15" width="170" height="170" rx="44" fill="#FFFFFF" fill-opacity="0.94" stroke="#FFFFFF" stroke-width="1.5" />
+    
+    <!-- Ambient glow -->
+    <circle cx="50" cy="50" r="30" fill="#F472B6" opacity="0.25" />
+    <circle cx="150" cy="140" r="34" fill="#2DD4BF" opacity="0.25" />
+
+    <!-- Cute Owl Ears -->
+    <path d="M54 70 C42 38, 66 32, 80 52 Z" fill="#6366F1" />
+    <path d="M57 66 C49 45, 65 40, 74 54 Z" fill="#FDA4AF" />
+    <path d="M146 70 C158 38, 134 32, 120 52 Z" fill="#6366F1" />
+    <path d="M143 66 C151 45, 135 40, 126 54 Z" fill="#FDA4AF" />
+
+    <!-- Chubby Body -->
+    <ellipse cx="100" cy="105" rx="55" ry="48" fill="#6366F1" />
+    <path d="M58 88 C58 68, 80 60, 100 74 C120 60, 142 68, 142 88 C142 122, 122 142, 100 142 C78 142, 58 122, 58 88 Z" fill="#FFFFFF" />
+
+    <!-- Cheeks -->
+    <ellipse cx="70" cy="110" rx="7.5" ry="4.5" fill="#FB7185" opacity="0.6" />
+    <ellipse cx="130" cy="110" rx="7.5" ry="4.5" fill="#FB7185" opacity="0.6" />
+
+    <!-- Left Anime Eye -->
+    <circle cx="81" cy="95" r="11.5" fill="#0F172A" />
+    <circle cx="78" cy="91" r="4.5" fill="#FFFFFF" />
+    <circle cx="85" cy="99" r="2" fill="#A5B4FC" />
+
+    <!-- Tiny Beak -->
+    <path d="M95 101 Q100 97 105 101 L100 109 Z" fill="url(#lh_gold)" />
+
+    <!-- Right Eye with Smart Optical Lens -->
+    <circle cx="119" cy="95" r="11.5" fill="#0F172A" />
+    <circle cx="116" cy="91" r="4.5" fill="#FFFFFF" />
+    <circle cx="123" cy="99" r="2" fill="#2DD4BF" />
+    <circle cx="119" cy="95" r="19" fill="#2DD4BF" fill-opacity="0.3" stroke="#0D9488" stroke-width="3.5" />
+    <path d="M109 83 C113 80, 119 79, 125 82" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" />
+
+    <!-- Top Star Twinkle -->
+    <path d="M100 30 L102 36 L108 38 L102 40 L100 46 L98 40 L92 38 L98 36 Z" fill="url(#lh_gold)" />
+    <!-- Mini Feet -->
+    <ellipse cx="86" cy="150" rx="6.5" ry="3.5" fill="url(#lh_gold)" />
+    <ellipse cx="114" cy="150" rx="6.5" ry="3.5" fill="url(#lh_gold)" />
   </g>
 
   <!-- Right Wordmark & Tagline Group -->
-  <g id="Figma_Typography_Lockup">
+  <g id="Typography_Lockup">
     <text x="225" y="112" font-family="'Plus Jakarta Sans', 'Inter', 'Segoe UI', sans-serif" font-size="64" font-weight="800" letter-spacing="-1.5" fill="url(#lh_text)">CareerLens</text>
     
     <!-- AI Pill Badge -->
@@ -39,9 +74,9 @@
     <text x="642" y="105" text-anchor="middle" font-family="'Plus Jakarta Sans', 'Inter', sans-serif" font-size="36" font-weight="800" fill="#FFFFFF">AI</text>
 
     <!-- Subtitle -->
-    <text x="228" y="152" font-family="'Plus Jakarta Sans', 'Inter', sans-serif" font-size="17" font-weight="700" letter-spacing="3.5" fill="#64748B">FUTURE-READY WORKFORCE · SDG RESKILLING</text>
+    <text x="228" y="152" font-family="'Plus Jakarta Sans', 'Inter', sans-serif" font-size="16" font-weight="700" letter-spacing="3" fill="#64748B">FUTURE-READY WORKFORCE · SDG CAREER NAVIGATOR</text>
     
-    <!-- Team High Five Tag -->
+    <!-- Team Tag -->
     <rect x="228" y="168" width="245" height="28" rx="14" fill="#F1F5F9" stroke="#CBD5E1" stroke-width="1" />
     <text x="350" y="186" text-anchor="middle" font-family="'Plus Jakarta Sans', 'Inter', sans-serif" font-size="12" font-weight="700" fill="#475569">SDC HACKATHON 2026 · TEAM HIGH FIVE</text>
   </g>
