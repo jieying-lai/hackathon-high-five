@@ -530,14 +530,53 @@
           </div>
         </section>
 
-        <section id="tab-quest" class="tab hidden space-y-6">
+       <section id="tab-quest" class="tab hidden space-y-6">
+          <!-- Progress Ring Header -->
           <div class="glass rounded-3xl p-6 flex items-center gap-5">
             <div id="qRing" class="ring"><span>0%</span></div>
-            <div class="flex-1"><div class="text-sm font-extrabold">Application questionnaire</div><div id="qProgText" class="text-xs text-slate-500"></div>
-              <div class="bar mt-2"><i id="qBar" style="width:0%"></i></div></div>
+            <div class="flex-1">
+              <div class="text-sm font-extrabold">Application Questionnaire &amp; Skill Verification</div>
+              <div id="qProgText" class="text-xs text-slate-500"></div>
+              <div class="bar mt-2"><i id="qBar" style="width:0%"></i></div>
+            </div>
           </div>
+
+          <!-- Dedicated 3 AI Skill Verification Questions Module -->
+          <div class="glass rounded-3xl p-6 space-y-5" data-no-translate>
+            <div class="flex flex-wrap items-center justify-between gap-3 border-b border-slate-200/70 pb-4">
+              <div>
+                <div class="flex items-center gap-2">
+                  <span class="chip chip-indigo">✨ AI Verification</span>
+                  <span class="chip chip-teal">3 Skill Questions</span>
+                </div>
+                <h3 class="text-base font-extrabold text-slate-900 mt-1">3 AI Verification Questions</h3>
+                <p class="text-xs text-slate-500">Targeted scenarios generated based on your uploaded CV and target role.</p>
+              </div>
+              <button id="btnGenerate3Q" type="button" onclick="generate3AiVerificationQuestions()" class="btn btn-primary !py-2 !px-4 !text-xs">
+                ⚡ Generate My 3 Questions
+              </button>
+            </div>
+
+            <div id="ai3QuestionsContainer" class="space-y-4">
+              <div class="text-xs text-slate-400 text-center py-4">
+                Click "Generate My 3 Questions" above to load customized skill verification scenarios.
+              </div>
+            </div>
+
+            <div id="ai3SubmitBox" class="hidden flex items-center justify-between pt-3 border-t border-slate-200/70">
+              <span id="ai3StatusMsg" class="text-xs font-bold text-slate-500"></span>
+              <button type="button" onclick="submit3AiVerificationAnswers()" class="btn btn-primary !py-2 !px-4 !text-xs">
+                Submit Answers &amp; Get Score →
+              </button>
+            </div>
+          </div>
+
+          <!-- Step 1: Basic Common Questions -->
           <form id="questionnaireBasics" class="glass rounded-3xl p-6 space-y-5" onsubmit="event.preventDefault();continueQuestionnaire()">
-            <div><h2 class="font-extrabold">1 · Common questions</h2><p class="text-xs text-slate-500 mt-1">All basic fields are required. Choose your field before selecting a role.</p></div>
+            <div>
+              <h2 class="font-extrabold">1 · Common questions</h2>
+              <p class="text-xs text-slate-500 mt-1">All basic fields are required. Choose your field before selecting a role.</p>
+            </div>
             <div id="commonQ" class="questionnaire-fields"></div>
             <div id="roleRecommendationPanel" class="role-suggestion-panel">
               <div id="roleRecommendationStatus" role="status" aria-live="polite"></div>
@@ -545,12 +584,22 @@
             </div>
             <button type="submit" class="btn btn-primary">Continue to CV questions →</button>
           </form>
+
+          <!-- Step 2: Personalized CV Questions -->
           <div id="questionnairePersonal" class="hidden tint tint-pink rounded-3xl p-6 space-y-5">
-            <div class="flex flex-wrap items-center justify-between gap-3"><h2 id="personalQuestionsTitle" tabindex="-1" class="font-extrabold">2 · Personalised for your CV</h2><button class="btn btn-soft" type="button" onclick="backToQuestionnaireBasics()">← Back to basic information</button></div>
-            <p id="questionnaireProviderDescription" class="text-xs text-slate-600">Generate questions using your uploaded CV summary and chosen role. Your CV summary and basic answers are sent to Google Gemini when you press Generate.</p>
+            <div class="flex flex-wrap items-center justify-between gap-3">
+              <h2 id="personalQuestionsTitle" tabindex="-1" class="font-extrabold">2 · Personalised for your CV</h2>
+              <button class="btn btn-soft" type="button" onclick="backToQuestionnaireBasics()">← Back to basic information</button>
+            </div>
+            <p id="questionnaireProviderDescription" class="text-xs text-slate-600">
+              Generate questions using your uploaded CV summary and chosen role. Your CV summary and basic answers are sent to Google Gemini when you press Generate.
+            </p>
             <button id="generateQuestionsButton" type="button" class="btn btn-primary" onclick="generateQuestionnaireQuestions()">Generate my CV questions</button>
             <div id="questionnaireAIStatus" role="status" aria-live="polite"></div>
-            <form id="questionnaireAIForm" onsubmit="event.preventDefault();completeQuestionnaire()" class="space-y-4"><div id="aiQ" class="space-y-4"></div><button id="completeQuestionnaireButton" type="submit" class="hidden btn btn-primary">Save questionnaire</button></form>
+            <form id="questionnaireAIForm" onsubmit="event.preventDefault();completeQuestionnaire()" class="space-y-4">
+              <div id="aiQ" class="space-y-4"></div>
+              <button id="completeQuestionnaireButton" type="submit" class="hidden btn btn-primary">Save questionnaire</button>
+            </form>
             <div id="questionnaireSavedStatus" role="status" aria-live="polite"></div>
           </div>
         </section>
@@ -2126,5 +2175,74 @@
 <script src="/static/js/questionnaire-i18n.js"></script>
 <script src="/static/js/portal-i18n.js?v=20261020-locale-audit"></script>
 <script src="/static/js/member3.js?v=20261020-questionnaire-1"></script>
+<script>
+  let generatedVerificationQ = [];
+
+async function generate3AiVerificationQuestions() {
+    const btn = document.getElementById('btnGenerate3Q');
+    const container = document.getElementById('ai3QuestionsContainer');
+    
+    btn.disabled = true;
+    btn.innerHTML = "⏳ Generating...";
+    container.innerHTML = `<div class="text-xs text-indigo-600 font-bold text-center py-6">Analyzing CV and generating 3 targeted verification scenarios...</div>`;
+
+    try {
+        const res = await postJson('/api/questionnaire/generate-3-verification-questions', {
+            target_role: (document.getElementById('pRole') ? pRole.value : '') || "Professional",
+            skills: skills || []
+        });
+
+        if (res.ok && res.data.questions) {
+            generatedVerificationQ = res.data.questions;
+            render3AiQuestions(generatedVerificationQ);
+            document.getElementById('ai3SubmitBox').classList.remove('hidden');
+            toast("3 AI Verification questions successfully generated!");
+        } else {
+            container.innerHTML = `<div class="text-xs text-rose-600 font-bold text-center py-4">Failed to generate questions. Please try again.</div>`;
+        }
+    } catch (err) {
+        container.innerHTML = `<div class="text-xs text-rose-600 font-bold text-center py-4">Network error while generating questions.</div>`;
+    } finally {
+        btn.disabled = false;
+        btn.innerHTML = "⚡ Regenerate Questions";
+    }
+}
+
+function render3AiQuestions(questions) {
+    const container = document.getElementById('ai3QuestionsContainer');
+    container.innerHTML = questions.map((q, idx) => `
+        <div class="tint tint-indigo rounded-2xl p-4 space-y-2 border border-indigo-100">
+            <div class="flex items-center justify-between">
+                <span class="text-[11px] font-extrabold uppercase tracking-wider text-indigo-700">Question ${idx + 1} of 3 · ${esc(q.category || 'Skill Test')}</span>
+                <span class="chip chip-indigo !text-[10px]">${esc(q.difficulty || 'Medium')}</span>
+            </div>
+            <p class="text-xs font-bold text-slate-800">${esc(q.question_text)}</p>
+            <textarea id="ai3Ans_${idx}" rows="2" class="input !bg-white text-xs" placeholder="Type your answer or practical approach here..."></textarea>
+        </div>
+    `).join('');
+}
+
+async function submit3AiVerificationAnswers() {
+    const answers = generatedVerificationQ.map((q, idx) => {
+        const input = document.getElementById(`ai3Ans_${idx}`);
+        return { question: q.question_text, answer: input ? input.value : '' };
+    });
+
+    const statusMsg = document.getElementById('ai3StatusMsg');
+    statusMsg.textContent = "⏳ Submitting answers...";
+
+    const res = await postJson('/api/questionnaire/submit-3-verification-answers', { answers });
+    
+    if (res.ok) {
+        statusMsg.innerHTML = `<span class="text-emerald-600 font-bold">✅ Verification score: ${res.data.verification_score}/100</span>`;
+        if (typeof saveUserWorkspaceProgress === 'function') {
+            saveUserWorkspaceProgress('ai_verification_complete', res.data);
+        }
+        toast("Verification answers evaluated!");
+    } else {
+        statusMsg.innerHTML = `<span class="text-rose-600 font-bold">❌ Submission failed. Try again.</span>`;
+    }
+}
+</script>
 </body>
 </html>
