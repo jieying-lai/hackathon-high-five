@@ -1,0 +1,53 @@
+/* Minimal responsive corrections. Original theme, typography, spacing and desktop composition are retained. */
+.responsive-ui :is(main,section,article,form,.grid,.flex){min-width:0}
+.responsive-ui :is(.grid,.flex)>*{min-width:0}
+.responsive-ui :is(input,select,textarea){max-width:100%;min-width:0}
+.responsive-ui :is(img,video,canvas){max-width:100%}
+.responsive-ui .table-scroll{max-width:100%;min-width:0;overflow-x:auto;overscroll-behavior-x:contain}
+.responsive-ui .table-scroll table{min-width:50rem}
+.responsive-ui .overlay>div,.responsive-ui dialog{max-height:calc(100vh - 2rem);max-height:calc(100dvh - 2rem);overflow-y:auto;max-width:calc(100vw - 1.5rem)}
+.responsive-ui dialog{width:min(32rem,calc(100% - 1.5rem));margin:auto}
+.responsive-ui .slideover{max-width:100vw;height:100vh;height:100dvh;overflow-y:auto}
+@media(max-width:79.99rem){
+ .responsive-ui .portal-mobile-header>div:first-child{flex-wrap:wrap}
+ .responsive-ui .portal-mobile-actions{flex-wrap:wrap;max-width:100%}
+ .responsive-ui .landing-header>div:first-child{flex-wrap:wrap}
+ .responsive-ui .landing-actions{flex-wrap:wrap;max-width:100%}
+}
+@media(max-width:47.99rem){
+ .responsive-ui .truncate{white-space:normal;overflow:visible;text-overflow:clip;overflow-wrap:anywhere}
+ .responsive-ui :is(h1,h2,h3,p,label,summary,.btn,.chip){overflow-wrap:anywhere}
+ .responsive-ui .btn{white-space:normal;max-width:100%}
+ .responsive-ui .seg{flex-wrap:wrap;max-width:100%}
+ .responsive-ui .seg>button{min-width:0;white-space:normal;flex:1 1 auto}
+ .responsive-ui .comparison-filters{grid-template-columns:repeat(auto-fit,minmax(min(100%,12rem),1fr))}
+ .responsive-ui .education-chart{grid-template-columns:repeat(auto-fit,minmax(min(100%,10rem),1fr))}
+ .responsive-ui #home-intro img{height:auto}
+ .responsive-ui .lumi-panel{width:min(410px,calc(100% - 1.5rem));right:.75rem;max-height:calc(100dvh - 7rem)}
+ .responsive-ui #lumiMsgList{min-height:0}
+ .responsive-ui .toast{max-width:calc(100% - 2rem);overflow-wrap:anywhere}
+ .responsive-ui .vacancy-picker{width:100%;min-width:0;max-width:100%}
+ .responsive-ui #tab-screening>div:first-child>div:first-child{flex:1 1 100%;flex-wrap:wrap}
+ .responsive-ui #tab-screening>div:first-child>div:first-child select{flex:1 1 100%}
+ .responsive-ui #jobsGrid article>div:first-child>div:first-child{flex-wrap:wrap}
+ .responsive-ui #jobsGrid article .whitespace-nowrap{white-space:normal}
+}
+@media(max-width:23.99rem){
+ .responsive-ui main .grid[class~="grid-cols-2"]{grid-template-columns:minmax(0,1fr)}
+ .responsive-ui .portal-mobile-header>div:first-child>div:first-child{flex-basis:100%}
+ .responsive-ui .portal-mobile-actions{margin-left:auto}
+ .responsive-ui .landing-actions{flex-shrink:1}
+}
+
+/* Keep short screening actions intact; let the table's own region scroll instead. */
+.responsive-ui #scRows .screening-actions{width:max-content;min-width:max-content;flex-wrap:nowrap}
+.responsive-ui #scRows .screening-actions .btn{flex:none;width:max-content;min-width:max-content;max-width:none;white-space:nowrap;overflow-wrap:normal;word-break:normal}
+
+/* Job-match emphasis uses the same 85% threshold as priority human review. */
+.responsive-employer #scRows .screening-high-match{background:linear-gradient(100deg,#fef3c7dc,#fffbebad 65%,#fef9edb0)}
+.responsive-employer #scRows .screening-high-match:hover{background:linear-gradient(100deg,#fde68aaa,#fef3c7a0)}
+.responsive-employer #scRows .screening-high-match>td:first-child{box-shadow:inset .25rem 0 #d97706;color:#92400e}
+.responsive-employer #scRows .screening-high-match>td:nth-child(4) .font-extrabold{color:#92400e}
+.responsive-employer #scRows .screening-high-match .bar>i{background:linear-gradient(90deg,#d97706,#eab308)}
+.responsive-employer .screening-highlight-badge{color:#854d0e;background:#fef3c7;border-color:#eab308}
+.responsive-employer .screening-highlight-key{display:inline-block;width:.7rem;height:.7rem;margin-right:.4rem;background:#fbbf24;border:1px solid #d97706;border-radius:.2rem}

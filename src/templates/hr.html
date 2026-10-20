@@ -8,14 +8,16 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/static/css/theme.css?v=20261020-questionnaire-1" />
+  <link rel="stylesheet" href="/static/css/candidate-comparison.css?v=6" />
+  <link rel="stylesheet" href="/static/css/responsive.css?v=20261020-minimal-4" />
 </head>
-<body class="hr min-h-screen">
+<body class="responsive-ui responsive-employer hr min-h-screen company-comparison-portal">
   <div class="aurora"></div><div class="blob b1"></div><div class="blob b2"></div>
 
   <div class="flex flex-col min-h-screen">
 
     <header class="portal-desktop-header sidebar-dark">
-      <a href="/" class="portal-brand"><img src="/static/brand/careerlens_logo_icon.svg" alt="" /><span>CareerLens AI<small>Employer Portal</small></span></a>
+      <a href="/" class="portal-brand"><img src="/static/brand/careerlens_logo_icon.svg" alt="" /><span>CareerLens AI<small id="headerCompanyName" data-no-translate></small></span></a>
       <nav id="sideNav" class="desktop-navigation" aria-label="Section navigation"></nav>
       <div class="portal-account"><button type="button" class="notification-button" data-notification-button onclick="openInterviewResponses()" aria-label="Interview notifications" title="Interview notifications"><span aria-hidden="true">🔔</span><span class="notification-label">Interview notifications</span></button><div data-language-slot="desktop"></div><div class="portal-user"><div id="uAvatar" class="h-9 w-9 rounded-xl bg-gradient-to-br from-teal-400 to-sky-500 text-white font-bold grid place-items-center">U</div>
             <div class="min-w-0"><div id="uName" data-no-translate class="text-xs font-extrabold text-white truncate"></div><div id="uUid" data-no-translate class="text-[10px] font-mono text-slate-400 truncate"></div></div></div><button onclick="signOut()" class="btn btn-soft">Sign out</button></div>
@@ -24,7 +26,7 @@
     <div class="flex-1 min-w-0">
       <header class="portal-mobile-header sticky top-0 z-30 sidebar-dark">
         <div class="flex items-center justify-between px-4 py-2.5">
-          <div class="flex items-center gap-2"><img src="/static/brand/careerlens_logo_icon.svg" class="h-9 w-9 rounded-xl" alt="" /><b class="text-sm text-white">Employer Portal</b></div>
+          <div class="flex items-center gap-2"><img src="/static/brand/careerlens_logo_icon.svg" class="h-9 w-9 rounded-xl" alt="" /><div class="text-sm text-white"><b>CareerLens AI</b><small id="mobileCompanyName" data-no-translate class="block text-xs"></small></div></div>
           <div class="portal-mobile-actions"><button type="button" class="notification-button" data-notification-button onclick="openInterviewResponses()" aria-label="Interview notifications" title="Interview notifications"><span aria-hidden="true">🔔</span><span class="notification-label">Interview notifications</span></button><div data-language-slot="mobile"></div><button onclick="signOut()" class="btn !py-1.5 bg-white/10 text-white">Sign out</button></div>
         </div>
         <div class="mobile-nav-bar">
@@ -45,6 +47,8 @@
         </div>
 
         <section id="tab-overview" class="tab space-y-6">
+          <div class="flex justify-end"><button type="button" id="overviewRefresh" class="btn btn-soft" onclick="refreshOverview()">Refresh overview</button></div>
+
           <div id="kpis" class="grid grid-cols-2 lg:grid-cols-4 gap-4"></div>
           <div class="grid lg:grid-cols-5 gap-6">
             <div class="lg:col-span-3 glass rounded-3xl p-6 space-y-4">
@@ -62,12 +66,17 @@
               </div>
             </div>
           </div>
+          <section id="overviewRanking" class="glass rounded-3xl p-6 space-y-4">
+            <div class="flex flex-wrap justify-between items-center gap-3"><h2 class="text-lg font-extrabold">Top 3 candidate recommendations</h2><label>Vacancy<select id="podiumVacancy" class="input" onchange="selectComparisonVacancy(this.value)"></select></label></div>
+            <p class="hint">Ranking follows comparison filters and selected vacancy. Scores use job criteria; equal scores use candidate ID for stable ordering. HR makes the final decision.</p>
+            <div id="overviewPodium" class="podium" aria-live="polite"></div>
+          </section>
         </section>
 
         <section id="tab-vacancies" class="tab hidden">
           <div class="grid lg:grid-cols-12 gap-6">
             <div class="lg:col-span-5 glass rounded-3xl p-6 space-y-4 self-start">
-              <div class="text-sm font-extrabold">Create a job vacancy</div>
+              <div class="text-sm font-extrabold">Create a job vacancy</div><p class="hint">Published under your current company workspace.</p>
               <div><label class="label">Position *</label><input id="vTitle" class="input" placeholder="e.g. Software Developer" /></div>
               <div class="grid grid-cols-2 gap-3">
                 <div><label class="label">Department</label><input id="vDept" class="input" placeholder="Engineering" /></div>
@@ -89,44 +98,47 @@
 
         <section id="tab-screening" class="tab hidden space-y-5">
           <div class="glass rounded-3xl p-5 flex flex-wrap items-center justify-between gap-4">
-            <div class="flex items-center gap-3"><span class="text-xs font-bold text-slate-500">Vacancy</span><select id="scVacancy" onchange="loadScreen(this.value)" class="input !w-auto min-w-[16rem]"></select></div>
+            <div class="flex items-center gap-3"><span class="text-xs font-bold text-slate-500">Vacancy</span><select id="scVacancy" onchange="loadScreen(this.value)" class="input vacancy-picker"></select></div>
             <div id="typeFilter" class="seg"></div>
           </div>
           <div id="scSummary" class="grid grid-cols-2 lg:grid-cols-4 gap-4"></div>
           <div class="glass rounded-3xl overflow-hidden">
-            <div class="overflow-x-auto"><table class="w-full text-left text-xs">
+            <div class="overflow-x-auto table-scroll" tabindex="0" role="region" aria-label="Scrollable data table"><table class="w-full text-left text-xs">
               <thead><tr class="bg-slate-50/80 text-slate-500 border-b border-slate-200"><th class="py-3 px-4 w-12">#</th><th class="py-3 px-4">Candidate</th><th class="py-3 px-4">Relevant exp.</th><th class="py-3 px-4 min-w-[9rem]">Match</th><th class="py-3 px-4">To confirm</th><th class="py-3 px-4">Suggested action</th><th class="py-3 px-4">HR decision</th><th class="py-3 px-4"></th></tr></thead>
               <tbody id="scRows" class="divide-y divide-slate-200/60"></tbody>
             </table></div>
           </div>
+          <p class="hint"><span class="screening-highlight-key" aria-hidden="true"></span>Gold highlight: match score 85% or above. HR review required.</p>
           <div id="fairNote" class="text-[11px] text-slate-500 px-1"></div>
         </section>
 
         <section id="tab-heatmap" class="tab hidden space-y-5">
-          <p class="hint">Demo candidate CVs, shared with candidate screening. Listed skills are unverified; missing skills need confirmation. Real resume submissions are not connected yet.</p>
+          <p id="comparisonStatus" class="hint" role="status"></p>
           <div class="glass rounded-3xl p-5 space-y-4">
-            <div id="hmPresets" class="flex flex-wrap gap-2"></div>
-            <div class="flex flex-wrap gap-3 items-center"><label for="hmSearch">Find candidate</label><input id="hmSearch" class="input !w-auto" placeholder="Name or role" oninput="renderHeatmap()"><button class="btn btn-soft" onclick="resetHeatFilters()">Reset comparison</button></div>
-            <details><summary class="cursor-pointer font-bold">Choose candidates</summary><div id="hmPeople" class="flex flex-wrap gap-3 pt-3"></div></details>
-            <details open><summary class="cursor-pointer font-bold">Choose skills</summary><div id="hmSkills" class="flex flex-wrap gap-3 pt-3"></div></details>
+            <label class="flex items-center gap-2"><input id="comparisonDemo" type="checkbox" onchange="CompanyComparison.load()">Include labelled demo candidates</label>
+            <form id="comparisonFilters" class="comparison-filters" onsubmit="return false">
+              <label>Department<select id="compareDepartment" class="input" onchange="CompanyComparison.set('department',this.value)"></select></label>
+              <label>Position<select id="comparePosition" class="input" onchange="selectComparisonVacancy(this.value)"></select></label>
+              <label>Experience years<select class="input" onchange="CompanyComparison.set('years',this.value)"><option value="0">Any experience</option><option value="1">1+</option><option value="3">3+</option><option value="5">5+</option><option value="10">10+</option></select></label>
+              <label>Education Qualification<select class="input" onchange="CompanyComparison.set('education',this.value)"><option value="0">Any qualification</option><option value="4">Doctor</option><option value="3">Master</option><option value="2">Undergraduate</option><option value="1">SPM / UEC</option></select></label>
+              <label>Sort by<select class="input" onchange="CompanyComparison.set('sort',this.value)"><option value="match">Match score</option><option value="experience">Experience: high to low</option><option value="education">Education: high to low</option></select></label>
+              <div class="comparison-search-row">
+                <label>Find candidate<input class="input" placeholder="Name or skill" oninput="CompanyComparison.set('query',this.value)"></label>
+                <button type="button" class="btn btn-soft" onclick="CompanyComparison.reset()">Reset comparison</button>
+              </div>
+            </form>
+            <p><span>Matching candidates</span>: <b id="comparisonCount" data-no-translate>0</b></p>
+            <p class="hint">Missing CV details need confirmation. Experience is CV-stated, not independently verified. Intern / Trainee is a status, not a degree; highest known qualification takes precedence.</p>
           </div>
-          <div id="hmKpis" class="grid grid-cols-2 lg:grid-cols-4 gap-4"></div>
-          <div class="glass rounded-3xl p-5 space-y-4">
-            <div class="flex flex-wrap items-center justify-between gap-3">
-              <div class="flex items-center gap-3"><span class="text-xs font-bold text-slate-500">Field</span><select id="hmDept" onchange="renderHeatmap()" class="input !w-auto"></select></div>
-              <div class="text-xs text-slate-500">Listed in CV · To confirm</div>
-            </div>
-            <div class="overflow-x-auto"><table class="w-full text-xs border-separate" style="border-spacing:.35rem;table-layout:fixed">
-              <thead id="hmHead"></thead><tbody id="hmBody"></tbody><tfoot id="hmFoot"></tfoot>
-            </table></div>
+          <div class="comparison-chart-layout">
+            <div class="comparison-left-stack"><section class="glass rounded-3xl p-6"><h2 class="font-bold mb-3">Education distribution</h2><div id="educationChart" class="education-chart"></div></section>
+            <section class="glass rounded-3xl p-6"><h2 class="font-bold mb-3">Hiring snapshot</h2><div id="comparisonSnapshot" class="space-y-3"></div><p class="hint mt-3">Calculated from current filters; missing skills need interview confirmation.</p></section></div>
+            <section class="glass rounded-3xl p-6"><h2 class="font-bold mb-3">CV evidence for required skills</h2><p class="hint mb-4">Number of filtered candidates listing each skill; not a proficiency assessment.</p><div id="comparisonSkills" class="space-y-3"></div></section>
           </div>
+          <div class="glass rounded-3xl p-5 overflow-x-auto table-scroll" tabindex="0" role="region" aria-label="Scrollable data table"><table class="comparison-table"><thead><tr><th>Candidate</th><th>Department / Position</th><th>Experience years</th><th>Education / Institution / Major</th><th>Match score</th><th>CV details</th></tr></thead><tbody id="comparisonRows"></tbody></table></div>
           <section id="interviewResponses" tabindex="-1" class="glass rounded-3xl p-6 space-y-3"><h2 class="font-extrabold">Interview responses</h2><button class="btn btn-soft" onclick="loadInvitations(true)">Refresh notifications</button><div id="latestInvitationReceipt" role="status"></div><div id="hrInvitations"></div></section>
-          <section class="glass rounded-3xl p-6 space-y-4" aria-labelledby="hmSummaryTitle">
-            <div class="tint tint-teal rounded-2xl p-4 space-y-2"><p class="font-bold">Default test candidate</p><p data-no-translate>Aisha Rahman</p><p class="text-sm">Test the invitation flow with the default candidate account.</p><button class="btn btn-hr" onclick="inviteCandidate('CL-JS-2026-1042')">Invite default candidate</button></div>
-            <h2 id="hmSummaryTitle" class="text-lg font-extrabold">Candidate recommendation summary</h2>
-            <p class="text-sm text-slate-500">Based on selected CV skills only. Top three positions include ties. Confirm skills in an interview; HR makes the final decision.</p>
-            <div id="hmRecommendation" class="grid md:grid-cols-2 xl:grid-cols-3 gap-4" aria-live="polite"></div>
-          </section>
+        </section>
+
         </section>
 
         <section id="tab-reskill" class="tab hidden"><p class="hint mb-4">Confirm missing CV skills before recommending training.</p>
@@ -142,8 +154,9 @@
     </div>
   </div>
 
+  <script src="/static/js/candidate-comparison.js?v=4"></script>
   <script src="/static/js/interviews.js?v=20261020-4"></script>
-  <dialog id="interviewDialog" class="rounded-3xl p-6 w-full max-w-lg shadow-xl" style="max-height:90vh;overflow:auto">
+  <dialog id="interviewDialog" class="rounded-3xl p-6 w-full max-w-lg shadow-xl" >
     <form id="interviewForm" class="space-y-4" onsubmit="sendInterview(event)">
       <div class="flex justify-between items-center"><h2 class="text-xl font-extrabold">Invite to interview</h2><button type="button" class="btn btn-soft" onclick="interviewDialog.close()" aria-label="Close">×</button></div>
       <p id="interviewCandidate" class="font-bold" data-no-translate></p>
@@ -169,14 +182,14 @@
     </div>
   </div>
 
-  <script src="/static/js/common.js?v=20261020-questionnaire-1"></script>
+  <script src="/static/js/common.js?v=20261020-locale-audit"></script>
   <script>
     const NAV = [
-      { id: 'overview', ico: '📊', label: 'Overview', eyebrow: 'Employer portal', title: 'Hiring & workforce overview' },
-      { id: 'vacancies', ico: '📋', label: 'Job Vacancies', eyebrow: 'Step 1', title: 'Job vacancies' },
-      { id: 'screening', ico: '🔍', label: 'Candidate Screening', eyebrow: 'Step 2', title: 'Candidate screening' },
-      { id: 'heatmap', ico: '🔥', label: 'Candidate skills comparison', eyebrow: 'Candidates', title: 'Candidate skills comparison' },
-      { id: 'reskill', ico: '🎓', label: 'Candidate learning suggestions', eyebrow: 'Candidates', title: 'Candidate learning suggestions' },
+      { id: 'overview', ico: '📊', label: 'Overview', eyebrow: 'Hiring insights', title: 'Hiring & workforce overview' },
+      { id: 'vacancies', ico: '📋', label: 'Job Vacancies', eyebrow: 'Vacancy management', title: 'Job vacancies' },
+      { id: 'screening', ico: '🔍', label: 'Candidate Screening', eyebrow: 'Applicant assessment', title: 'Candidate screening' },
+      { id: 'heatmap', ico: '🔥', label: 'Candidate Skills & Qualifications Comparison', eyebrow: 'Skills & qualifications', title: 'Candidate Skills & Qualifications Comparison' },
+      { id: 'reskill', ico: '🎓', label: 'Candidate learning suggestions', eyebrow: 'Candidate development', title: 'Candidate learning suggestions' },
     ];
     const TONE = { emerald: 'chip-emerald', indigo: 'chip-indigo', amber: 'chip-amber', slate: 'chip-slate' };
     const DECISIONS = ['Pending', 'Shortlist', 'Needs review', 'Hold'];
@@ -198,7 +211,7 @@
     }
     /* ---------- navigation ---------- */
     function buildNav() {
-      buildPortalNavigation(NAV, [{label: 'Overview', ids: ['overview']}, {label: 'Hiring', ids: ['vacancies', 'screening']}, {label: 'Candidate Development', ids: ['heatmap', 'reskill']}]);
+      buildPortalNavigation(NAV, [{label: 'Overview', ids: ['overview']}, {label: 'Hiring', ids: ['vacancies']}, {label: 'Candidate Screening', ids: ['screening']}, {label: 'Candidate Development', ids: ['heatmap', 'reskill']}]);
     }
     async function showTab(id) {
       current = id;
@@ -207,9 +220,10 @@
       setPortalNavigation(id);
       const n = NAV.find(x => x.id === id);
       pgEyebrow.textContent = n.eyebrow; pgTitle.textContent = n.title;
-      if (id === 'overview') renderOverview();
+      if (id === 'overview') { renderOverview(); await refreshOverview(); }
       if (id === 'screening') { renderScreenSelect(); if (selectedVid && !scrn) await loadScreen(selectedVid); else renderScreen(); }
-      if (id === 'heatmap' || id === 'reskill') { if (!heat) await loadHeat(); id === 'heatmap' ? renderHeatmap() : renderReskill(); }
+      if (id === 'heatmap') { await CompanyComparison.load(); await loadInvitations(true); }
+      if (id === 'reskill') { if (!heat) await loadHeat(); renderReskill(); }
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
@@ -224,17 +238,20 @@
       renderChips();
     }
     async function loadVacancies() {
-      const r = await api('/api/hr/vacancies'); vacancies = r.data.vacancies || [];
+      const r = await api('/api/hr/vacancies');
+      if (!r.ok || !Array.isArray(r.data.vacancies)) throw new Error('Vacancies unavailable');
+      vacancies = r.data.vacancies;
       const open = vacancies.filter(v => v.status === 'Open');
       if (!selectedVid || !vacancies.some(v => v.id === Number(selectedVid))) selectedVid = (open[0] || vacancies[0] || {}).id || null;
       renderVacancies();
+      if (current === 'overview') renderOverview();
     }
     function renderVacancies() {
       vacList.innerHTML = vacancies.length ? vacancies.map(v => `
         <article class="glass rounded-3xl p-6 space-y-4 lift">
           <div class="flex flex-wrap items-start justify-between gap-3">
             <div><div class="flex flex-wrap gap-1.5 mb-1"><span class="chip chip-slate font-mono">${esc(v.vacancy_uid)}</span><span class="chip ${v.status === 'Open' ? 'chip-emerald' : 'chip-slate'}">${esc(v.status)}</span></div>
-              <h3 class="text-lg font-extrabold">${esc(v.title)}</h3><div class="text-xs text-slate-500">${esc(v.department || 'General')} · ${esc(v.location || 'Malaysia')}</div></div>
+              <p class="text-xs font-bold text-teal-700" data-no-translate>${esc(v.company_name || user?.role_details?.company_name || '')}</p><h3 class="text-lg font-extrabold">${esc(v.title)}</h3><div class="text-xs text-slate-500">${esc(v.department || 'General')} · ${esc(v.location || 'Malaysia')}</div></div>
             <div class="text-right"><div class="text-sm font-extrabold text-teal-700">${rm(v.salary_min)} – ${rm(v.salary_max)}</div><div class="text-[11px] text-slate-500">${esc(v.work_mode)} · ${v.min_years}+ yrs · ${esc(v.education_level)}</div></div>
           </div>
           <div class="space-y-2"><div class="flex flex-wrap gap-1.5">${v.required_skills.map(s => `<span class="chip chip-teal">${esc(s)}</span>`).join('')}</div>
@@ -291,12 +308,13 @@
              ${r.share_organised_cv ? '<span class="chip chip-teal" data-no-translate>Organised CV</span>' : ''}
              ${r.share_original_pdf ? '<span class="chip chip-indigo" data-no-translate>Original PDF</span>' : ''}`
           : '';
-        return `<tr class="${r.is_applied_user ? 'bg-emerald-50/40' : ''} hover:bg-teal-50/40 transition">
+        return `<tr class="${r.score >= 85 ? 'screening-high-match' : ''} ${r.is_applied_user ? 'bg-emerald-50/40' : ''} hover:bg-teal-50/40 transition">
           <td class="py-3.5 px-4 font-extrabold text-slate-400">${i + 1}</td>
           <td class="py-3.5 px-4">
             <div class="font-extrabold text-sm" data-no-translate>${esc(r.name)}</div>
             <div class="flex flex-wrap items-center gap-1.5 mt-0.5">
               <span class="chip chip-slate">${esc(r.type)}</span>
+              ${r.score >= 85 ? '<span class="chip screening-highlight-badge">★ High match</span>' : ''}
               ${appliedBadges}
             </div>
           </td>
@@ -306,7 +324,7 @@
           <td class="py-3.5 px-4"><span class="chip ${TONE[r.tone]}">${esc(r.action)}</span></td>
           <td class="py-3.5 px-4"><select class="input !py-1.5 !text-[11px] !w-auto" onchange="setDecision('${r.candidate_id}',this.value)">${DECISIONS.map(d => `<option ${d === dec ? 'selected' : ''}>${d}</option>`).join('')}</select></td>
           <td class="py-3.5 px-4">
-            <div class="flex items-center gap-1.5">
+            <div class="screening-actions flex items-center gap-1.5">
               ${r.is_applied_user && r.share_organised_cv ? `<button onclick="openOrganisedCv(${r.application_id})" class="btn btn-hr !py-1.5 !px-2.5 !text-[11px]" data-no-translate>📄 CV</button>` : ''}
               <button onclick="openInsight('${r.candidate_id}')" class="btn btn-soft !py-1.5">Insight</button>
             </div>
@@ -466,66 +484,10 @@
 
     /* ---------- heatmap ---------- */
     async function loadHeat() { const r = await api('/api/hr/heatmap'); if (!r.ok || !Array.isArray(r.data.employees)) { toast('Team data unavailable. Please retry.', 'err'); return; } heat = r.data; assignments = (heat.assignments || []).filter(a => heat.employees.some(c => c.id === a.employee_id)); }
-    const heatPresets = {
-      'All industries': {departments: null, skills: null},
-      'Accounting & audit': {departments: ['Finance', 'Audit & Assurance'], skills: ['Financial Auditing', 'Financial Reporting', 'Risk Assessment', 'SQL Basics', 'Python Data Analysis']},
-      'Insurance': {departments: ['Insurance'], skills: ['Risk Assessment', 'Financial Reporting']},
-      'Technology': {departments: ['Engineering'], skills: ['Python', 'SQL', 'REST APIs', 'Git', 'React', 'Docker']}
-    };
-    let heatPreset = 'All industries', heatPeople = null, heatSkills = null;
-    function setHeatPreset(key) {
-      heatPreset = key; heatPeople = null;
-      heatSkills = new Set(heatPresets[key].skills || heat.skills);
-      hmDept.innerHTML = ''; hmSearch.value = ''; renderHeatmap();
+    async function selectComparisonVacancy(value) {
+      CompanyComparison.set('vacancy',value);
+      if (value) { selectedVid=Number(value); await refreshOverview(); }
     }
-    function resetHeatFilters() { setHeatPreset('All industries'); }
-    function toggleHeatChoice(kind, key, checked) {
-      const selection = kind === 'people' ? heatPeople : heatSkills;
-      checked ? selection.add(key) : selection.delete(key); renderHeatmap();
-    }
-    function renderHeatmap() {
-      if (!heat) return;
-      loadInvitations(true);
-      const preset = heatPresets[heatPreset];
-      const pool = heat.employees.filter(e => !preset.departments || preset.departments.includes(e.department));
-      if (!heatPeople) heatPeople = new Set(pool.map(e => e.id));
-      if (!heatSkills) heatSkills = new Set(heat.skills);
-      hmPresets.innerHTML = Object.keys(heatPresets).map((key, i) => `<button class="btn ${key === heatPreset ? 'btn-hr' : 'btn-soft'}" aria-pressed="${key === heatPreset}" onclick="setHeatPreset(Object.keys(heatPresets)[${i}])">${esc(key)}</button>`).join('');
-      if (!hmDept.options.length) hmDept.innerHTML = ['All departments', ...new Set(pool.map(e => e.department))].map(d => `<option value="${esc(d)}">${esc(d)}</option>`).join('');
-      hmPeople.innerHTML = pool.map(e => `<label class="chip"><input type="checkbox" ${heatPeople.has(e.id) ? 'checked' : ''} onchange="toggleHeatChoice('people', this.value, this.checked)" value="${esc(e.id)}"><span data-no-translate>${esc(e.name)}</span></label>`).join('');
-      hmSkills.innerHTML = heat.skills.map(s => `<label class="chip"><input type="checkbox" ${heatSkills.has(s) ? 'checked' : ''} onchange="toggleHeatChoice('skills', this.value, this.checked)" value="${esc(s)}"><span>${esc(s)}</span></label>`).join('');
-      const query = hmSearch.value.trim().toLocaleLowerCase();
-      const emps = pool.filter(e => heatPeople.has(e.id) && (!hmDept.value || hmDept.value === 'All departments' || e.department === hmDept.value) && `${e.name} ${e.role} ${window.careerLensLocale?.translate(e.role) || ''}`.toLocaleLowerCase().includes(query));
-      const skills = heat.skills.filter(s => heatSkills.has(s));
-      const level = (e,s) => Number.isFinite(e.levels[s]) ? e.levels[s] : null;
-      const readiness = e => { const values = skills.map(s => level(e,s) || 0); return values.length ? Math.round(100 * values.reduce((a,b) => a+b,0)/values.length) : null; };
-      const scores = emps.map(readiness).filter(v => v !== null);
-      const coverage = skills.map(skill => { const values = emps.map(e => level(e,skill) || 0); return {skill, value: values.length ? Math.round(100*values.filter(v => v >= heat.target_level).length/values.length) : null}; });
-      const worst = coverage.filter(s => s.value !== null).sort((a,b) => a.value-b.value)[0];
-      hmKpis.innerHTML = [['CV skill coverage', scores.length ? Math.round(scores.reduce((a,b)=>a+b,0)/scores.length)+'%' : '—', 'teal'], ['Most to confirm', esc(worst?.skill || '—'), 'amber'], ['Candidates below 60% coverage', scores.filter(v=>v<60).length, 'pink'], ['Candidates compared', emps.length, 'indigo']].map(k => `<div class="tint tint-${k[2]} rounded-2xl p-4"><div class="text-[11px] font-bold text-slate-500">${k[0]}</div><div class="text-2xl font-extrabold mt-1 leading-tight">${k[1]}</div></div>`).join('');
-      const table = hmHead.closest('table'); table.style.minWidth = (400+skills.length*125)+'px';
-      hmHead.innerHTML = `<tr><th style="width:230px;position:sticky;left:0;background:#f8fafc;z-index:2" class="text-left px-3">Candidate</th>${skills.map(s => `<th style="width:125px" class="px-2">${esc(s)}</th>`).join('')}<th style="width:150px">CV skill coverage</th></tr>`;
-      hmBody.innerHTML = !emps.length || !skills.length ? `<tr><td colspan="${skills.length+2}" class="p-8 text-center">No comparison data. Select candidates and skills or reset filters.</td></tr>` : emps.map(e => { const score=readiness(e); return `<tr><td style="position:sticky;left:0;background:#f8fafc;z-index:1" class="px-3 py-4"><div class="font-extrabold whitespace-nowrap" data-no-translate>${esc(e.name)}</div><div class="text-xs text-slate-500 mt-1">${esc(e.role)}</div><div class="text-xs text-slate-500">${esc(e.department)}</div></td>${skills.map(s => {const lv=level(e,s);return `<td><div class="heat ${lv===null?'heat-1':'heat-2'}">${lv===null?'To confirm':'Listed in CV'}</div></td>`;}).join('')}<td class="px-3"><b>${score===null?'—':score+'%'}</b></td></tr>`; }).join('');
-      hmFoot.innerHTML = `<tr><td class="px-3 py-3 font-bold">Candidates listing this skill</td>${coverage.map(s=>`<td class="text-center font-bold">${s.value===null?'—':s.value+'%'}</td>`).join('')}<td></td></tr>`;
-      const ranked = emps.map(e => ({candidate: e, matched: skills.filter(s => level(e,s) >= heat.target_level)}))
-        .filter(item => item.matched.length > 0).sort((a,b) => b.matched.length-a.matched.length);
-      const cutoff = ranked[Math.min(2, ranked.length-1)]?.matched.length || 0;
-      const recommended = skills.length ? ranked.filter(item => item.matched.length >= cutoff) : [];
-      hmRecommendation.innerHTML = recommended.map(item => {
-        const e = item.candidate, missing = skills.filter(s => !item.matched.includes(s));
-        const rank = 1 + ranked.filter(other => other.matched.length > item.matched.length).length;
-        const chips = list => list.map(skill => `<span class="chip">${esc(skill)}</span>`).join('');
-        return `<article class="rounded-2xl border border-teal-100 bg-white/80 p-5 space-y-3">
-          <div class="flex items-start justify-between gap-3"><h3 class="font-extrabold" data-no-translate>${esc(e.name)}</h3><span class="chip chip-teal" data-no-translate>#${rank}</span></div>
-          <div class="text-sm"><span>CV skill coverage</span><strong class="ml-2">${readiness(e)}%</strong><span class="ml-2" data-no-translate>(${item.matched.length}/${skills.length})</span></div>
-          <div><p class="text-xs font-bold mb-2">Recommendation evidence</p><div class="flex flex-wrap gap-1">${chips(item.matched)}</div></div>
-          <div><p class="text-xs font-bold mb-2">Confirm at interview</p><div class="flex flex-wrap gap-1">${missing.length ? chips(missing) : '<span class="text-sm">All selected skills are listed. Verify with project examples.</span>'}</div></div>
-          <button type="button" class="btn btn-hr" data-candidate-id="${esc(e.id)}" onclick="inviteCandidate(this.dataset.candidateId)">Invite to interview</button>
-        </article>`;
-      }).join('') || '<p class="text-sm text-slate-500">No recommendations for this selection. Choose candidates and skills with CV evidence.</p>';
-
-    }
-
     let interviewPerson = null;
     function inviteCandidate(id) {
       interviewPerson = heat?.employees.find(c => c.id === id);
@@ -589,6 +551,30 @@
     }
 
     /* ---------- overview ---------- */
+    let overviewLoading = false;
+    async function refreshOverview() {
+      if (overviewLoading) return;
+      overviewLoading = true;
+      const refresh = document.getElementById('overviewRefresh');
+      refresh.disabled = true;
+      try {
+        await loadVacancies();
+        scrn = null;
+        renderOverview();
+        if (selectedVid) {
+          try {
+            const r = await api(`/api/hr/vacancies/${selectedVid}/screen`);
+            if (!r.ok) throw new Error();
+            scrn = r.data;
+            renderOverview();
+          } catch {
+            ovPipeline.innerHTML = '<p>Could not load screening pipeline. Please refresh.</p>';
+          }
+        }
+      } catch {
+        ovVacancies.innerHTML = '<p>Could not load vacancies. Please refresh.</p>';
+      } finally { refresh.disabled = false; overviewLoading = false; }
+    }
     function renderOverview() {
       const open = vacancies.filter(v => v.status === 'Open');
       const avg = scrn ? scrn.summary.average_score + '%' : '—';
@@ -611,21 +597,28 @@
       buildNav();
       const me = await api('/api/auth/me'); user = me.data.user; if (!user) return;
       const rd = user.role_details || {};
-      coName.textContent = rd.company_name || 'Your company'; coMeta.textContent = [rd.company_size, rd.hr_job_title].filter(Boolean).join(' · ');
+      const companyLabel = rd.company_name || 'Your company';
+      document.getElementById('headerCompanyName').textContent = companyLabel;
+      document.getElementById('mobileCompanyName').textContent = companyLabel;
+      const companyName = document.getElementById('coName');
+      const companyMeta = document.getElementById('coMeta');
+      if (companyName) companyName.textContent = rd.company_name || 'Your company';
+      if (companyMeta) companyMeta.textContent = [rd.company_size, rd.hr_job_title].filter(Boolean).join(' · ');
       uAvatar.textContent = user.full_name.charAt(0).toUpperCase(); uName.textContent = user.full_name; uUid.textContent = user.unique_uid;
       try { decisions = JSON.parse(localStorage.getItem(`cl_hr_dec_${user.unique_uid}`) || '{}'); } catch (e) { decisions = {}; }
       reqInput.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ',') { e.preventDefault(); addSkill('req', reqInput.value); reqInput.value = ''; } });
       prefInput.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ',') { e.preventDefault(); addSkill('pref', prefInput.value); prefInput.value = ''; } });
       renderChips();
-      await loadVacancies();
-      if (selectedVid) { const r = await api(`/api/hr/vacancies/${selectedVid}/screen`); scrn = r.ok ? r.data : null; }
-      loadHeat().then(() => { if (current === 'overview') renderOverview(); });
-      showTab('overview');
+      document.getElementById('comparisonDemo').checked = user.unique_uid === 'CL-HR-2026-8801';
+      document.getElementById('comparisonDemo').parentElement.hidden = user.unique_uid !== 'CL-HR-2026-8801';
+      await showTab('overview');
+      await CompanyComparison.load();
+      loadHeat().then(() => { if (current === 'overview') renderOverview(); }).catch(() => {});
     }
     init();
   </script>
 <script src="/static/js/questionnaire-i18n.js"></script>
-<script src="/static/js/portal-i18n.js"></script>
+<script src="/static/js/portal-i18n.js?v=20261020-locale-audit"></script>
 <script src="/static/js/member3.js?v=20261020-questionnaire-1"></script>
 </body>
 </html>

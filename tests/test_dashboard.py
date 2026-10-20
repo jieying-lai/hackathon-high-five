@@ -50,6 +50,7 @@ class PortalAuthorization(unittest.TestCase):
         import main
         auth_db.init_db()
         main.hr_engine.init_hr_tables()
+        main.cv_engine.init_cv_tables()
         cls.app = main.app
 
     @classmethod
@@ -76,7 +77,7 @@ class PortalAuthorization(unittest.TestCase):
     def test_interview_claim_reply_and_owner_isolation(self):
         hr = self.app.test_client()
         with hr.session_transaction() as session:
-            session['user'] = {'role':'hr_company','unique_uid':'hr-invite','full_name':'HR'}
+            session['user'] = {'role':'hr_company','unique_uid':'CL-HR-2026-8801','full_name':'HR'}
         payload = {'candidate_id':'CL-JS-2026-1042','role':'Auditor','time':'2026-12-01T10:00','location':'Office','message':'Hello'}
         sent = hr.post('/api/hr/interviews',json=payload)
         self.assertEqual(sent.status_code,200)
@@ -115,7 +116,8 @@ class PortalAuthorization(unittest.TestCase):
         response = client.get('/api/hr/heatmap')
         self.assertEqual(response.status_code, 200)
         self.assertIsInstance(response.json['employees'], list)
-        self.assertTrue(response.json['skills'])
+        self.assertEqual(response.json['skills'],[])
+        self.assertEqual(response.json['employees'],[])
 
 
 if __name__ == '__main__':

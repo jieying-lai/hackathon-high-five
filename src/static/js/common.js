@@ -163,7 +163,7 @@ async function signOut() {
     if (!document.body || document.getElementById('lumiFab')) return;
 
     const wrap = document.createElement('div');
-    wrap.setAttribute('data-no-translate', '');
+    // Translate widget controls while preserving conversation content.
     wrap.innerHTML = `
       <!-- Floating Cute Mascot Launcher Button -->
       <button id="lumiFab" onclick="toggleLumiChat()" class="lumi-fab" title="Chat with Lumi — Domain-Scoped CareerLens AI Mascot">
@@ -204,7 +204,7 @@ async function signOut() {
         </div>
 
         <!-- Messages Container -->
-        <div id="lumiMsgList" class="flex-1 p-3.5 space-y-3 overflow-y-auto"></div>
+        <div data-no-translate id="lumiMsgList" class="flex-1 p-3.5 space-y-3 overflow-y-auto"></div>
 
         <!-- Typing Indicator -->
         <div id="lumiTyping" class="hidden px-4 py-1.5 text-[11px] font-bold text-indigo-600 flex items-center gap-1.5">

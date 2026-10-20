@@ -220,7 +220,6 @@ main [class*="overflow-x-auto"] { max-width: 100%; }
   .portal-mobile-actions { margin-left: auto; }
   .landing-header > div:first-child { gap: .5rem; }
   .landing-header .landing-brand > div > div:first-child { font-size: .85rem !important; }
-  main [class*="grid-cols-2"] { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 @media (max-width: 379px) {
   .portal-mobile-header > div:first-child img { width: 25px; height: 25px; }
@@ -228,7 +227,6 @@ main [class*="overflow-x-auto"] { max-width: 100%; }
   .portal-mobile-actions .btn { padding: .45rem; font-size: .65rem; }
   .notification-button { min-width: 34px; min-height: 38px; padding: .35rem; }
   .portal-mobile-header .language-toolbar.language-inline select { max-width: 50px; }
-  main [class*="grid-cols-2"] { grid-template-columns: minmax(0, 1fr); }
 }
 
 .questionnaire-fields { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.25rem; align-items: start; }
