@@ -1,5 +1,9 @@
 # CareerLens AI
 
+<p align="center">
+  <img src="src/static/brand/careerlens_logo_horizontal.svg" alt="CareerLens AI × Team High Five Logo" width="560" />
+</p>
+
 > An AI-powered workforce future-readiness platform that tracks live AI & job-market signals, matches talent to emerging roles with explainable scores and skills-gap breakdowns, and generates verified reskilling pathways mapped to the UN Sustainable Development Goals (SDGs).
 
 ---

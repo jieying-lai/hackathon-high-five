@@ -79,10 +79,8 @@
   <header class="sticky top-0 z-40 glass-card border-b border-white/80">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 py-3 flex flex-wrap items-center justify-between gap-3">
       <!-- Brand Logo -->
-      <div onclick="showSection('landing')" class="flex items-center gap-3 cursor-pointer">
-        <div class="h-10 w-10 rounded-2xl bg-gradient-to-tr from-indigo-600 via-purple-500 to-pink-500 flex items-center justify-center text-white font-extrabold text-lg shadow-md shadow-indigo-500/25">
-          CL
-        </div>
+      <div onclick="showSection('landing')" class="flex items-center gap-3 cursor-pointer group">
+        <img src="/static/brand/careerlens_logo_icon.svg" alt="CareerLens AI Logo" class="h-11 w-11 rounded-2xl shadow-md shadow-indigo-500/20 group-hover:scale-105 transition" />
         <div>
           <div class="flex items-center gap-2">
             <span class="font-extrabold text-lg tracking-tight bg-gradient-to-r from-indigo-700 via-purple-600 to-pink-600 bg-clip-text text-transparent">CareerLens AI</span>
@@ -93,8 +91,9 @@
       </div>
 
       <!-- Right Nav Controls (Changes when logged in vs logged out) -->
-      <div id="navLoggedOut" class="flex items-center gap-2.5">
+      <div id="navLoggedOut" class="flex flex-wrap items-center gap-2">
         <button onclick="showSection('landing')" class="text-xs font-semibold text-slate-600 hover:text-indigo-600 px-3 py-2 rounded-xl transition">Platform Overview</button>
+        <button onclick="openLogoKitModal()" class="text-xs font-bold text-purple-700 bg-purple-50/90 hover:bg-purple-100 border border-purple-200 px-3.5 py-2 rounded-xl transition">🎨 Figma Logo Kit</button>
         <button onclick="openAuthView('login')" class="text-xs font-bold text-indigo-700 bg-white/80 hover:bg-white border border-indigo-200 px-4 py-2 rounded-xl shadow-sm transition">Sign In</button>
         <button onclick="openAuthView('register')" class="text-xs font-bold text-white bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-500 hover:opacity-95 px-4 py-2 rounded-xl shadow-md shadow-indigo-500/20 transition">Create Account</button>
       </div>
@@ -123,30 +122,44 @@
   <section id="landingSection" class="max-w-7xl mx-auto px-4 sm:px-6 py-10 space-y-12">
     <!-- Hero Glass Banner -->
     <div class="glass-card rounded-3xl p-8 sm:p-12 relative overflow-hidden">
-      <div class="max-w-3xl space-y-5">
-        <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-gradient-to-r from-indigo-500/10 via-purple-500/10 to-pink-500/10 border border-indigo-300/50 text-xs font-bold text-indigo-700">
-          <span>🌟 SDC Hackathon 2026 · The Aiversecity Future-Ready Workforce Domain</span>
-        </div>
-        <h1 class="text-3xl sm:text-5xl font-extrabold tracking-tight text-slate-900 leading-tight">
-          From <span class="bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-500 bg-clip-text text-transparent">“Who I Am Today”</span> to <span class="bg-gradient-to-r from-teal-600 to-indigo-600 bg-clip-text text-transparent">“Where I Thrive in the AI Era”</span>
-        </h1>
-        <p class="text-sm sm:text-base text-slate-600 leading-relaxed">
-          <strong>CareerLens AI</strong> is a dual-lens workforce intelligence platform for <strong>Job Seekers</strong> and <strong>Enterprise HR / L&D Teams</strong>. We track live AI & job-market signals, compute explainable future-role matches with transferable skill matrices, generate personalized skill-verification questions, and build verified reskilling pathways mapped to the <strong>17 UN Sustainable Development Goals (SDGs)</strong>.
-        </p>
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+        <div class="lg:col-span-8 space-y-5">
+          <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-gradient-to-r from-indigo-500/10 via-purple-500/10 to-pink-500/10 border border-indigo-300/50 text-xs font-bold text-indigo-700">
+            <span>🌟 SDC Hackathon 2026 · The Aiversecity Future-Ready Workforce Domain</span>
+          </div>
+          <h1 class="text-3xl sm:text-5xl font-extrabold tracking-tight text-slate-900 leading-tight">
+            From <span class="bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-500 bg-clip-text text-transparent">“Who I Am Today”</span> to <span class="bg-gradient-to-r from-teal-600 to-indigo-600 bg-clip-text text-transparent">“Where I Thrive in the AI Era”</span>
+          </h1>
+          <p class="text-sm sm:text-base text-slate-600 leading-relaxed">
+            <strong>CareerLens AI</strong> is a dual-lens workforce intelligence platform for <strong>Job Seekers</strong> and <strong>Enterprise HR / L&D Teams</strong>. We track live AI & job-market signals, compute explainable future-role matches with transferable skill matrices, generate personalized skill-verification questions, and build verified reskilling pathways mapped to the <strong>17 UN Sustainable Development Goals (SDGs)</strong>.
+          </p>
 
-        <!-- Primary CTA Buttons -->
-        <div class="flex flex-wrap items-center gap-3 pt-2">
-          <button onclick="openAuthView('register')" class="px-6 py-3 rounded-2xl font-bold text-sm text-white bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-500 shadow-lg shadow-indigo-500/25 hover:opacity-95 transition">
-            🚀 Register Account (Job Seeker / HR)
-          </button>
-          <button onclick="openAuthView('login')" class="px-6 py-3 rounded-2xl font-bold text-sm text-indigo-700 bg-white/90 hover:bg-white border border-indigo-200 shadow-sm transition">
-            🔐 Sign In to Existing Account
-          </button>
-          <button onclick="quickDemoLogin('job_seeker')" class="px-4 py-3 rounded-2xl font-semibold text-xs text-teal-800 glass-teal hover:opacity-90 transition">
-            ⚡ Instant Judge Demo (Job Seeker)
-          </button>
-          <button onclick="quickDemoLogin('hr_company')" class="px-4 py-3 rounded-2xl font-semibold text-xs text-purple-800 glass-pink hover:opacity-90 transition">
-            🏢 Instant Judge Demo (HR / Company)
+          <!-- Primary CTA Buttons -->
+          <div class="flex flex-wrap items-center gap-3 pt-2">
+            <button onclick="openAuthView('register')" class="px-6 py-3 rounded-2xl font-bold text-sm text-white bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-500 shadow-lg shadow-indigo-500/25 hover:opacity-95 transition">
+              🚀 Register Account (Job Seeker / HR)
+            </button>
+            <button onclick="openAuthView('login')" class="px-6 py-3 rounded-2xl font-bold text-sm text-indigo-700 bg-white/90 hover:bg-white border border-indigo-200 shadow-sm transition">
+              🔐 Sign In to Existing Account
+            </button>
+            <button onclick="quickDemoLogin('job_seeker')" class="px-4 py-3 rounded-2xl font-semibold text-xs text-teal-800 glass-teal hover:opacity-90 transition">
+              ⚡ Instant Judge Demo (Job Seeker)
+            </button>
+            <button onclick="quickDemoLogin('hr_company')" class="px-4 py-3 rounded-2xl font-semibold text-xs text-purple-800 glass-pink hover:opacity-90 transition">
+              🏢 Instant Judge Demo (HR / Company)
+            </button>
+          </div>
+        </div>
+
+        <!-- Right Hero Brand Emblem Showcase -->
+        <div class="lg:col-span-4 flex flex-col items-center justify-center glass-indigo rounded-3xl p-6 text-center space-y-3">
+          <img src="/static/brand/careerlens_logo_icon.svg" alt="CareerLens AI Emblem" class="w-36 h-36 drop-shadow-xl" />
+          <div>
+            <div class="text-sm font-extrabold text-indigo-950">CareerLens AI · Team High Five</div>
+            <p class="text-[11px] text-slate-500 mt-0.5">Optical C-Lens · Rising Pathway · AI North Star</p>
+          </div>
+          <button onclick="openLogoKitModal()" class="text-xs font-bold text-indigo-700 bg-white/90 hover:bg-white border border-indigo-200 px-4 py-2 rounded-xl shadow-sm transition">
+            🎨 Open Figma Vector Logo Kit
           </button>
         </div>
       </div>
@@ -767,6 +780,68 @@
     </div>
   </div>
 
+  <!-- ========================================================================= -->
+  <!-- MODAL 3: FIGMA VECTOR LOGO & BRAND ASSET KIT                              -->
+  <!-- ========================================================================= -->
+  <div id="logoKitModal" class="hidden fixed inset-0 z-50 bg-slate-900/40 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="glass-card bg-white/95 rounded-3xl max-w-4xl w-full p-6 sm:p-8 space-y-5 max-h-[88vh] overflow-y-auto shadow-2xl">
+      <div class="flex items-center justify-between border-b border-slate-200 pb-3">
+        <div>
+          <h3 class="text-lg font-extrabold text-slate-900">🎨 CareerLens AI × Team High Five — Figma Vector Logo Kit</h3>
+          <p class="text-xs text-slate-500">100% layered SVG vectors. Click <strong>"Copy SVG to Paste in Figma"</strong> and press <kbd class="bg-slate-100 border px-1.5 py-0.5 rounded">Ctrl + V</kbd> directly inside Figma to edit every layer!</p>
+        </div>
+        <button onclick="closeLogoKitModal()" class="text-slate-400 hover:text-slate-700 font-bold text-lg">✕</button>
+      </div>
+
+      <div id="svgCopyToast" class="hidden rounded-xl bg-emerald-50 border border-emerald-300 text-emerald-800 text-xs font-bold p-3"></div>
+
+      <!-- Horizontal Full Lockup Preview -->
+      <div class="glass-indigo rounded-2xl p-5 space-y-3">
+        <div class="flex flex-wrap items-center justify-between gap-2">
+          <span class="text-xs font-extrabold text-indigo-900 uppercase tracking-wider">1. Primary Horizontal Brand Lockup (For Pitch Deck Cover & GitHub README)</span>
+          <div class="flex gap-2">
+            <button onclick="copySvgForFigma('/static/brand/careerlens_logo_horizontal.svg', 'Horizontal Brand Lockup')" class="text-xs font-bold bg-indigo-600 text-white px-3 py-1.5 rounded-xl hover:bg-indigo-500 transition">📋 Copy SVG to Paste in Figma</button>
+            <a href="/static/brand/careerlens_logo_horizontal.svg" download="careerlens_logo_horizontal.svg" class="text-xs font-bold bg-white text-indigo-700 border border-indigo-200 px-3 py-1.5 rounded-xl hover:bg-indigo-50 transition">⬇️ Download .SVG</a>
+          </div>
+        </div>
+        <div class="bg-white/90 rounded-2xl p-4 flex items-center justify-center border border-indigo-100">
+          <img src="/static/brand/careerlens_logo_horizontal.svg" alt="Horizontal Logo" class="max-h-32 w-auto" />
+        </div>
+      </div>
+
+      <!-- 2 Icon Variations -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div class="glass-pink rounded-2xl p-5 space-y-3">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-extrabold text-pink-900">2. App Icon (Frosted Aurora Glass)</span>
+            <div class="flex gap-1.5">
+              <button onclick="copySvgForFigma('/static/brand/careerlens_logo_icon.svg', 'Aurora App Icon')" class="text-[11px] font-bold bg-pink-600 text-white px-2.5 py-1 rounded-lg">📋 Copy for Figma</button>
+              <a href="/static/brand/careerlens_logo_icon.svg" download="careerlens_logo_icon.svg" class="text-[11px] font-bold bg-white text-pink-700 border border-pink-200 px-2.5 py-1 rounded-lg">⬇️ .SVG</a>
+            </div>
+          </div>
+          <div class="bg-white/90 rounded-2xl p-4 flex items-center justify-center border border-pink-100">
+            <img src="/static/brand/careerlens_logo_icon.svg" alt="App Icon" class="h-32 w-32" />
+          </div>
+          <p class="text-[11px] text-slate-600"><strong>Figma Layers:</strong> <code class="bg-white px-1 rounded">Figma_Layer_Outer_Frame</code>, <code class="bg-white px-1 rounded">Figma_Layer_Career_Lens</code>, <code class="bg-white px-1 rounded">Figma_Layer_Pathway_And_AI_Star</code></p>
+        </div>
+
+        <div class="glass-teal rounded-2xl p-5 space-y-3">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-extrabold text-teal-900">3. Team High Five Dark Emblem (5 Orbit Nodes)</span>
+            <div class="flex gap-1.5">
+              <button onclick="copySvgForFigma('/static/brand/careerlens_logo_dark_badge.svg', 'Team High Five Emblem')" class="text-[11px] font-bold bg-teal-600 text-white px-2.5 py-1 rounded-lg">📋 Copy for Figma</button>
+              <a href="/static/brand/careerlens_logo_dark_badge.svg" download="careerlens_logo_dark_badge.svg" class="text-[11px] font-bold bg-white text-teal-700 border border-teal-200 px-2.5 py-1 rounded-lg">⬇️ .SVG</a>
+            </div>
+          </div>
+          <div class="bg-slate-900 rounded-2xl p-4 flex items-center justify-center border border-teal-200">
+            <img src="/static/brand/careerlens_logo_dark_badge.svg" alt="Team High Five Emblem" class="h-32 w-32" />
+          </div>
+          <p class="text-[11px] text-slate-600">Features <strong>5 glowing orbit nodes</strong> symbolizing Team <strong>High Five</strong> & your 5-day hackathon sprint.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <script>
     let personas = [];
     let currentRoles = [];
@@ -1025,6 +1100,17 @@
       document.getElementById('ssoModal').classList.remove('hidden');
     }
     function closeSsoModal() { document.getElementById('ssoModal').classList.add('hidden'); }
+    function openLogoKitModal() { document.getElementById('logoKitModal').classList.remove('hidden'); }
+    function closeLogoKitModal() { document.getElementById('logoKitModal').classList.add('hidden'); }
+
+    async function copySvgForFigma(svgUrl, label) {
+      const res = await fetch(svgUrl);
+      const svgText = await res.text();
+      await navigator.clipboard.writeText(svgText);
+      const toast = document.getElementById('svgCopyToast');
+      toast.textContent = `✅ Copied "${label}" SVG code! Now open Figma and press Ctrl + V on your canvas to edit every vector layer.`;
+      toast.classList.remove('hidden');
+    }
 
     // Workspace Tabs
     function switchTab(tab) {
