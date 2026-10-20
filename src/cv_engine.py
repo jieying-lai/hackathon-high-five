@@ -356,11 +356,19 @@ def ensure_sample_pdfs() -> list[dict]:
 # ------------------------------------------------------------------ AI PDF CV Extraction & Summarization
 def _detect_education_level(text: str) -> str:
     low = text.lower()
-    if any(k in low for k in ("master", "mba", "msc", "postgraduate", "phd", "doctorate")):
+    if re.search(r"ph\.?d|doctorate|doctoral", low):
+        return "Doctor"
+    if any(k in low for k in ("master", "mba", "msc", "postgraduate")):
         return "Master's / Postgraduate"
-    if any(k in low for k in ("bachelor", "b.sc", "b.acc", "b.eng", "b.comm", "hons", "degree", "universiti", "university")):
+    if any(k in low for k in ("bachelor", "b.sc", "b.acc", "b.eng", "b.comm", "hons")):
         return "Bachelor's Degree"
-    return "Diploma / TVET"
+    if re.search(r"\b(spm|uec)\b", low):
+        return "SPM / UEC"
+    if re.search(r"diploma|tvet", low):
+        return "Diploma / TVET"
+    if re.search(r"intern|trainee", low):
+        return "Intern / Trainee"
+    return "To confirm"
 
 
 def _detect_industry(text: str, skills: list[str], fallback: str = "Finance & Accounting") -> str:
@@ -557,6 +565,11 @@ def parse_and_summarize_pdf_cv(pdf_bytes: bytes, filename: str, user_context: di
             "unless you explicitly apply to their vacancy."
         ),
     }
+    from candidate_comparison import structured_dimensions
+    structured.update(structured_dimensions(structured, raw_text))
+    structured["skills"] = list(dict.fromkeys(structured["hard_skills"] + structured["soft_skills"]))
+    structured["expanded_skills"] = expand_for_matching(structured["skills"])
+    structured["experience_known"] = bool(YEARS_RX.search(raw_text) or "intern" in raw_text.lower() or "fresh graduate" in raw_text.lower())
     return True, "PDF CV parsed and summarised by AI.", {
         "page_count": page_count,
         "raw_text": raw_text,

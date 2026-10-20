@@ -45,7 +45,7 @@ def haversine_km(lat1: float, lng1: float, lat2: float, lng2: float) -> float:
     a = math.sin(dp / 2) ** 2 + math.cos(p1) * math.cos(p2) * math.sin(dl / 2) ** 2
     return round(2 * r * math.atan2(math.sqrt(a), math.sqrt(1 - a)), 1)
 
-EDU_RANK = {"Diploma / TVET": 1, "Bachelor's Degree": 2, "Master's / Postgraduate": 3}
+EDU_RANK = {"To confirm": 0, "SPM / UEC": 0, "Diploma / TVET": 1, "Bachelor's Degree": 2, "Master's / Postgraduate": 3, "Doctor": 4}
 WORK_MODES = ("On-site", "Hybrid", "Remote")
 
 # Heatmap skill -> key in verified_courses.json. Skills without a verified course get no
@@ -164,6 +164,54 @@ def init_hr_tables():
 
     # Real JobStreet Malaysia postings (69k) are served from src/data/jobstreet_index.json.gz by job_index.py;
     # a posting is only materialised into `vacancies` when a candidate applies to it.
+    # The default employer is one company with internal departments, not industry tenants.
+    for old, new in [("Engineering", "IT Department"), ("IT & Software", "IT Department"),
+                     ("Audit & Assurance", "Finance & Audit Department"), ("Finance & Accounting", "Finance & Audit Department"),
+                     ("Marketing & PR", "Marketing Department"), ("Healthcare & Life Sciences", "Compliance Department"),
+                     ("HR & Administration", "Human Resources Department"), ("Green Economy & ESG", "Sustainability Department")]:
+        cur.execute("UPDATE vacancies SET department=? WHERE owner_uid=? AND department=?", (new, demo_owner, old))
+    cur.execute("UPDATE vacancies SET title='Data Privacy & Compliance Analyst' WHERE owner_uid=? AND title='Health Informatics & PDPA Analyst'", (demo_owner,))
+    conn.commit()
+
+    # Seed real Malaysian job postings from Kaggle JobStreet Malaysia All Job Dataset (azraimohamad/jobstreet-all-job-dataset)
+    try:
+        js_postings = _load("jobstreet_malaysia_postings.json")
+        existing_js_uids = {
+            r["owner_uid"]
+            for r in cur.execute("SELECT owner_uid FROM vacancies WHERE owner_uid LIKE 'JS-%'").fetchall()
+        }
+        inserted_js = False
+        for jp in js_postings:
+            js_id = jp["jobstreet_id"]
+            if js_id in existing_js_uids:
+                continue
+            cur.execute(
+                """INSERT INTO vacancies (vacancy_uid, owner_uid, title, department, work_mode, location,
+                   salary_min, salary_max, min_years, education_level, required_skills_json, preferred_skills_json,
+                   status, created_at)
+                   VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)""",
+                (
+                    js_id,
+                    js_id,
+                    jp["title"],
+                    jp["department"],
+                    jp["work_mode"],
+                    jp["location"],
+                    jp["salary_min"],
+                    jp["salary_max"],
+                    jp["min_years"],
+                    jp["education_level"],
+                    json.dumps(jp["required_skills"]),
+                    json.dumps(jp["preferred_skills"]),
+                    "Open",
+                    _now(),
+                ),
+            )
+            inserted_js = True
+        if inserted_js:
+            conn.commit()
+    except Exception:
+        pass
 
     conn.close()
 
@@ -614,12 +662,16 @@ def screen_candidates(owner_uid, vacancy_id):
 
 
 # ---------------------------------------------------------------- workforce
-def get_heatmap():
-    candidates = _load("candidates_pool.json")
+def get_heatmap(owner_uid="CL-HR-2026-8801"):
+    from candidate_comparison import comparison
+    scoped = comparison(owner_uid, demo=owner_uid == "CL-HR-2026-8801")
+    unique = {}
+    for candidate in scoped["candidates"]:
+        unique.setdefault(candidate["id"], candidate)
+    candidates = list(unique.values())
     skills = sorted({skill for c in candidates for skill in c["skills"]})
     target = 1
-    emps = [{**c, "department": "Finance" if any(s in c["skills"] for s in ["Financial Auditing", "Financial Reporting"]) else "Engineering",
-             "role": c["type"], "levels": {s: 1 for s in c["skills"]}} for c in candidates]
+    emps = [{**c, "role": c["position"], "levels": {s: 1 for s in c["skills"]}} for c in candidates]
     courses = _load("verified_courses.json")
 
     employees = []
@@ -634,7 +686,7 @@ def get_heatmap():
                 recs.append({"skill": s, "gap": g, "course_title": course["title"], "provider": course["provider"],
                              "hours": course["hours"], "cost_type": course["cost_type"],
                              "badge": course["malaysia_badge"], "sdg": course["sdg"], "url": course["url"]})
-        employees.append({**e, "readiness": round(100 * total / (len(skills))), "recommendations": recs[:3]})
+        employees.append({**e, "readiness": round(100 * total / max(1, len(skills))), "recommendations": recs[:3]})
 
     skill_summary = []
     for s in skills:
@@ -644,7 +696,7 @@ def get_heatmap():
                               "below_target": sum(1 for x in lv if x < target)})
     return {
         "skills": skills, "target_level": target, "employees": employees, "skill_summary": skill_summary,
-        "team_readiness": round(sum(e["readiness"] for e in employees) / len(employees)),
+        "team_readiness": round(sum(e["readiness"] for e in employees) / max(1, len(employees))),
         "departments": sorted({e["department"] for e in emps}),
     }
 
@@ -684,7 +736,16 @@ def revoke_training(owner_uid, employee_id, skill):
 
 
 def create_interview(owner, data):
-    candidate = next((c for c in _load("candidates_pool.json") if c["id"] == data.get("candidate_id")), None)
+    candidate = None
+    # Actual candidates must have applied to a vacancy owned by this employer.
+    with closing(get_db_connection()) as conn:
+        applicant = conn.execute("""SELECT a.candidate_uid,a.candidate_name FROM job_applications a
+            JOIN vacancies v ON v.id=a.vacancy_id WHERE v.owner_uid=? AND a.candidate_uid=? LIMIT 1""",
+            (owner["unique_uid"], data.get("candidate_id"))).fetchone()
+    if applicant:
+        candidate = {"id": applicant["candidate_uid"], "name": applicant["candidate_name"]}
+    elif owner["unique_uid"] == "CL-HR-2026-8801":
+        candidate = next((c for c in _load("candidates_pool.json") if c["id"] == data.get("candidate_id")), None)
     if not candidate:
         return None, "Candidate not found."
     values = [str(data.get(k, "")).strip() for k in ("role", "time", "location", "message")]

@@ -14,6 +14,7 @@
     .cl-map-wrap {
       position: relative;
       height: 420px;
+      block-size: clamp(16rem, 45svh, 30rem);
       width: 100%;
       border-radius: 1.25rem;
       overflow: hidden;
@@ -97,8 +98,9 @@
       text-transform: uppercase;
     }
   </style>
+  <link rel="stylesheet" href="/static/css/responsive.css?v=20261020-minimal-2" />
 </head>
-<body class="min-h-screen">
+<body class="responsive-ui responsive-talent min-h-screen">
   <div class="aurora"></div><div class="blob b1"></div><div class="blob b2"></div>
 
   <div class="flex flex-col min-h-screen">
@@ -106,8 +108,8 @@
     <header class="portal-desktop-header glass">
       <a href="/" class="portal-brand"><img src="/static/brand/careerlens_logo_icon.svg" alt="" /><span>CareerLens AI<small>Talent Portal</small></span></a>
       <nav id="sideNav" class="desktop-navigation" aria-label="Section navigation"></nav>
-      <div class="portal-account"><button type="button" class="notification-button" data-notification-button onclick="showTab('notifications')" aria-label="Interview notifications" title="Interview notifications"><span aria-hidden="true">🔔</span><span class="notification-label">Interview notifications</span></button><div data-language-slot="desktop"></div><div class="portal-user"><div id="uAvatar" class="h-9 w-9 rounded-xl bg-gradient-to-br from-indigo-500 to-pink-500 text-white font-bold grid place-items-center">U</div>
-            <div class="min-w-0"><div id="uName" data-no-translate class="text-xs font-extrabold truncate">User</div><div id="uUid" data-no-translate class="text-[10px] font-mono text-slate-500 truncate"></div></div></div><button onclick="signOut()" class="btn btn-soft">Sign out</button></div>
+      <div class="portal-account"><button type="button" class="notification-button" data-notification-button onclick="showTab('notifications')" aria-label="Interview notifications" title="Interview notifications"><span aria-hidden="true">🔔</span><span class="notification-label">Interview notifications</span></button><div data-language-slot="desktop"></div><button type="button" onclick="openAccountModal()" class="portal-user text-left hover:opacity-85 transition cursor-pointer p-1 rounded-2xl hover:bg-white/60" title="View & Edit Account Profile"><div id="uAvatar" class="h-9 w-9 rounded-xl bg-gradient-to-br from-indigo-500 to-pink-500 text-white font-bold grid place-items-center shrink-0">U</div>
+            <div class="min-w-0 pr-1"><div id="uName" data-no-translate class="text-xs font-extrabold truncate">User</div><div id="uUid" data-no-translate class="text-[10px] font-mono text-slate-500 truncate"></div></div><span class="text-xs text-indigo-600 font-bold ml-0.5">⚙️</span></button><button onclick="signOut()" class="btn btn-soft">Sign out</button></div>
     </header>
 
     <div class="flex-1 min-w-0">
@@ -386,6 +388,11 @@
                 <span>75 km</span>
                 <span>100 km</span>
               </div>
+            <div class="space-y-3 pt-2 border-t border-slate-200/70">
+              <div class="w-full">
+                <input id="jobSearchInput" oninput="filterJobsAndCompanies()" class="input !py-2" placeholder="🔍 Search any role, skill, company, or sector..." />
+              </div>
+              <div id="catFilterBar" class="flex flex-wrap items-center gap-2 py-1"></div>
             </div>
           </div>
 
@@ -614,22 +621,145 @@
     </div>
   </div>
 
+<!-- User Account Settings & Profile Modal -->
+  <div id="accountModalWrap" class="hidden" data-no-translate>
+    <div class="overlay" onclick="closeAccountModal(event)">
+      <div class="modal p-6 sm:p-8 space-y-5 max-w-xl w-full max-h-[90vh] overflow-y-auto" onclick="event.stopPropagation()">
+        <!-- Modal Header -->
+        <div class="flex items-start justify-between gap-3 border-b border-slate-200/70 pb-4">
+          <div class="flex items-center gap-3">
+            <div id="modalUserAvatar" class="h-12 w-12 rounded-2xl bg-gradient-to-br from-indigo-500 to-pink-500 text-white font-extrabold text-lg grid place-items-center shadow-md">U</div>
+            <div>
+              <div class="flex items-center gap-2">
+                <h3 class="text-xl font-extrabold text-slate-900">Account Profile &amp; Settings</h3>
+                <span id="modalRoleBadge" class="chip chip-indigo">Job Seeker</span>
+              </div>
+              <div class="text-xs text-slate-500 mt-0.5">User ID: <span id="modalUid" class="font-mono font-bold text-slate-700"></span> · Joined <span id="modalJoinedDate" class="text-slate-600"></span></div>
+            </div>
+          </div>
+          <button type="button" onclick="closeAccountModal()" class="text-slate-400 hover:text-slate-700 text-xl font-bold p-1">✕</button>
+        </div>
+
+        <!-- Tab Switcher (Profile vs Password) -->
+        <div class="seg w-full">
+          <button type="button" id="tabBtnAccountProfile" onclick="setAccountModalTab('profile')" class="on flex-1 text-xs">👤 Profile Information</button>
+          <button type="button" id="tabBtnAccountSecurity" onclick="setAccountModalTab('security')" class="flex-1 text-xs">🔒 Security &amp; Password</button>
+        </div>
+
+        <!-- Section 1: Edit Profile Details -->
+        <form id="formAccountProfile" class="space-y-4" onsubmit="event.preventDefault();submitAccountProfile();">
+          <div class="grid sm:grid-cols-2 gap-3.5">
+            <div>
+              <label class="label" for="accFullName">Full Name *</label>
+              <input id="accFullName" type="text" required class="input" placeholder="Your real name" />
+            </div>
+            <div>
+              <label class="label" for="accEmail">Email Address *</label>
+              <input id="accEmail" type="email" required class="input" placeholder="name@domain.com" />
+            </div>
+          </div>
+
+          <div class="grid sm:grid-cols-2 gap-3.5">
+            <div>
+              <label class="label" for="accCurrentRole">Current Role / Title</label>
+              <input id="accCurrentRole" type="text" class="input" placeholder="e.g. Financial Auditor / Software Dev" />
+            </div>
+            <div>
+              <label class="label" for="accIndustry">Career Field / Industry</label>
+              <select id="accIndustry" class="input">
+                <option value="Finance & Accounting">Finance &amp; Accounting</option>
+                <option value="IT & Software">IT &amp; Software</option>
+                <option value="Marketing & PR">Marketing &amp; PR</option>
+                <option value="HR & Administration">HR &amp; Administration</option>
+                <option value="Engineering & Manufacturing">Engineering &amp; Manufacturing</option>
+                <option value="Healthcare & Life Sciences">Healthcare &amp; Life Sciences</option>
+                <option value="Education & EdTech">Education &amp; EdTech</option>
+                <option value="General">Other / General</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="grid sm:grid-cols-3 gap-3.5">
+            <div>
+              <label class="label" for="accWorkMode">Preferred Work Mode</label>
+              <select id="accWorkMode" class="input">
+                <option value="Hybrid">Hybrid</option>
+                <option value="On-site">On-site</option>
+                <option value="Remote">Remote</option>
+              </select>
+            </div>
+            <div>
+              <label class="label" for="accEducation">Highest Education</label>
+              <select id="accEducation" class="input">
+                <option value="Diploma / TVET">Diploma / TVET</option>
+                <option value="Bachelor's Degree">Bachelor's Degree</option>
+                <option value="Master's / Postgraduate">Master's / Postgraduate</option>
+              </select>
+            </div>
+            <div>
+              <label class="label" for="accLocation">Location / City</label>
+              <input id="accLocation" type="text" class="input" placeholder="e.g. Kuala Lumpur, Selangor" />
+            </div>
+          </div>
+
+          <div class="tint tint-teal rounded-2xl p-3.5 text-xs text-slate-600 space-y-1">
+            <div class="font-extrabold text-teal-900 flex items-center gap-1.5">
+              <span>🛡️ PDPA Consent Verified</span>
+              <span class="chip chip-emerald !text-[9px]">Active</span>
+            </div>
+            <div>Your personal profile is protected under Malaysian PDPA regulations and is only shared with employers upon your explicit job application.</div>
+          </div>
+
+          <div class="flex items-center justify-end gap-2.5 pt-2 border-t border-slate-200/70">
+            <button type="button" onclick="closeAccountModal()" class="btn btn-soft !py-2 !px-4">Cancel</button>
+            <button type="submit" id="btnSaveAccountProfile" class="btn btn-primary !py-2 !px-5">Save Profile Changes →</button>
+          </div>
+        </form>
+
+        <!-- Section 2: Change Password -->
+        <form id="formAccountSecurity" class="space-y-4 hidden" onsubmit="event.preventDefault();submitAccountPassword();">
+          <div class="space-y-3">
+            <div>
+              <label class="label" for="accCurrPassword">Current Password *</label>
+              <input id="accCurrPassword" type="password" required class="input" placeholder="Enter current password" />
+            </div>
+            <div>
+              <label class="label" for="accNewPassword">New Password *</label>
+              <input id="accNewPassword" type="password" required class="input" placeholder="Min. 8 chars with uppercase, lowercase, number & symbol" />
+              <div class="text-[11px] text-slate-500 mt-1">Must be at least 8 characters with A-Z, a-z, 0-9, and a special character (!@#$%^&*).</div>
+            </div>
+            <div>
+              <label class="label" for="accConfirmPassword">Confirm New Password *</label>
+              <input id="accConfirmPassword" type="password" required class="input" placeholder="Re-type new password" />
+            </div>
+          </div>
+
+          <div class="flex items-center justify-end gap-2.5 pt-2 border-t border-slate-200/70">
+            <button type="button" onclick="closeAccountModal()" class="btn btn-soft !py-2 !px-4">Cancel</button>
+            <button type="submit" id="btnSaveAccountPassword" class="btn btn-primary !py-2 !px-5">Update Password →</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
   <script src="/static/js/common.js?v=20261020-formal-lumi"></script>
+
   <script src="/static/js/interviews.js?v=20261020-4"></script>
   <script src="/static/js/questionnaire.js?v=20261020-auto-role"></script>
   <script>
     const NAV = [
       { id: 'notifications', ico: '🔔', label: 'Interview notifications', eyebrow: 'Notifications', title: 'Interview notifications' },
       { id: 'dash', ico: '🏠', label: 'Dashboard', eyebrow: 'Overview', title: 'Your career dashboard' },
-      { id: 'profile', ico: '🧑‍💼', label: 'Profile & Skills', eyebrow: 'Function 01', title: 'Skills profile' },
-      { id: 'quest', ico: '📝', label: 'Questionnaire', eyebrow: 'Function 02', title: 'Application questionnaire' },
-      { id: 'radar', ico: '📡', label: 'AI Radar', eyebrow: 'Function 03', title: 'Future skills radar' },
-      { id: 'match', ico: '🎯', label: 'Role Matches', eyebrow: 'Function 04', title: 'Future-role matches' },
-      { id: 'plan', ico: '🧭', label: 'Reskilling Plan', eyebrow: 'Function 05', title: 'Personalised reskilling plan' },
-      { id: 'passport', ico: '🌱', label: 'SDG Passport', eyebrow: 'Function 06', title: 'Your SDG career passport' },
+      { id: 'profile', ico: '🧑‍💼', label: 'Profile & Skills', eyebrow: 'Professional background', title: 'Skills profile' },
+      { id: 'quest', ico: '📝', label: 'Questionnaire', eyebrow: 'Career preferences', title: 'Application questionnaire' },
+      { id: 'radar', ico: '📡', label: 'AI Radar', eyebrow: 'Industry insights', title: 'Future skills radar' },
+      { id: 'match', ico: '🎯', label: 'Role Matches', eyebrow: 'Career opportunities', title: 'Future-role matches' },
+      { id: 'plan', ico: '🧭', label: 'Reskilling Plan', eyebrow: 'Learning & development', title: 'Personalised reskilling plan' },
+      { id: 'passport', ico: '🌱', label: 'SDG Passport', eyebrow: 'Sustainable career impact', title: 'Your SDG career passport' },
     ];
     const EXTRA_TABS = {
-      jobs: { id: 'jobs', ico: '📍', label: 'Nearby Jobs & Map', eyebrow: 'Location & Consent-Gated Apply', title: 'Nearby hiring companies & open roles' },
+      jobs: { id: 'jobs', ico: '📍', label: 'Nearby Jobs & Map', eyebrow: 'Explore employers', title: 'Nearby hiring companies & open roles' },
     };
     const COMMON_Q = [
       { id: 'c1', text: 'Are you a fresh graduate, working, or changing career?', type: 'select' },
@@ -653,6 +783,107 @@
     const rm = n => 'RM ' + Number(n).toLocaleString();
 
     /* ---------- navigation ---------- */
+    
+    /* ---------- Account Profile View & Edit Modal ---------- */
+    function openAccountModal() {
+      if (!user) return;
+      populateAccountModal(user);
+      setAccountModalTab('profile');
+      accountModalWrap.classList.remove('hidden');
+    }
+
+    function closeAccountModal(e) {
+      if (e && e.target && e.target !== e.currentTarget) return;
+      accountModalWrap.classList.add('hidden');
+    }
+
+    function setAccountModalTab(tab) {
+      const isProf = tab === 'profile';
+      tabBtnAccountProfile.className = isProf ? 'on flex-1 text-xs' : 'flex-1 text-xs';
+      tabBtnAccountSecurity.className = !isProf ? 'on flex-1 text-xs' : 'flex-1 text-xs';
+      formAccountProfile.classList.toggle('hidden', !isProf);
+      formAccountSecurity.classList.toggle('hidden', isProf);
+    }
+
+    function populateAccountModal(u) {
+      modalUserAvatar.textContent = (u.full_name || 'U').charAt(0).toUpperCase();
+      modalUid.textContent = u.unique_uid || '';
+      modalRoleBadge.textContent = u.role === 'hr_company' ? 'HR / Employer' : 'Job Seeker';
+      modalJoinedDate.textContent = (u.created_at || '2026').replace(' UTC', '');
+
+      accFullName.value = u.full_name || '';
+      accEmail.value = u.email || '';
+      const rd = u.role_details || {};
+      accCurrentRole.value = rd.current_role || (cvRecord && cvRecord.structured_cv ? cvRecord.structured_cv.current_role : '') || '';
+      if (rd.industry) accIndustry.value = rd.industry;
+      if (rd.preferred_work_mode) accWorkMode.value = rd.preferred_work_mode;
+      if (rd.education_level) accEducation.value = rd.education_level;
+      accLocation.value = rd.location || (userLocation ? userLocation.label : 'Kuala Lumpur');
+    }
+
+    async function submitAccountProfile() {
+      btnSaveAccountProfile.disabled = true;
+      btnSaveAccountProfile.textContent = 'Saving...';
+      const payload = {
+        full_name: accFullName.value.trim(),
+        email: accEmail.value.trim(),
+        role_details: {
+          current_role: accCurrentRole.value.trim(),
+          industry: accIndustry.value,
+          preferred_work_mode: accWorkMode.value,
+          education_level: accEducation.value,
+          location: accLocation.value.trim(),
+        }
+      };
+      const res = await api('/api/auth/profile', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      });
+      btnSaveAccountProfile.disabled = false;
+      btnSaveAccountProfile.textContent = 'Save Profile Changes →';
+      if (!res.ok) {
+        return toast(res.data.message || 'Could not update profile', 'err');
+      }
+      user = res.data.user;
+      uName.textContent = user.full_name;
+      uAvatar.textContent = user.full_name.charAt(0).toUpperCase();
+      if (window.pName) pName.value = user.full_name;
+      if (window.dashHello) dashHello.textContent = `${formatGreeting()}, ${user.full_name}`;
+      toast('Account profile updated successfully!');
+      closeAccountModal();
+    }
+
+    async function submitAccountPassword() {
+      const cur = accCurrPassword.value;
+      const nw = accNewPassword.value;
+      const cf = accConfirmPassword.value;
+      if (!cur || !nw) return toast('Please enter all password fields.', 'err');
+      if (nw !== cf) return toast('New passwords do not match.', 'err');
+
+      btnSaveAccountPassword.disabled = true;
+      btnSaveAccountPassword.textContent = 'Updating...';
+      const res = await api('/api/auth/password', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          current_password: cur,
+          new_password: nw,
+          confirm_password: cf,
+        }),
+      });
+      btnSaveAccountPassword.disabled = false;
+      btnSaveAccountPassword.textContent = 'Update Password →';
+      if (!res.ok) {
+        return toast(res.data.message || 'Failed to update password', 'err');
+      }
+      accCurrPassword.value = '';
+      accNewPassword.value = '';
+      accConfirmPassword.value = '';
+      toast('Password updated successfully!');
+      closeAccountModal();
+    }
+
     function buildNav() {
       const renderItems = [
         NAV[0],
@@ -1810,7 +2041,7 @@
     init();
   </script>
 <script src="/static/js/questionnaire-i18n.js"></script>
-<script src="/static/js/portal-i18n.js"></script>
+<script src="/static/js/portal-i18n.js?v=20261020-locale-audit"></script>
 <script src="/static/js/member3.js?v=20261020-questionnaire-1"></script>
 </body>
 </html>
