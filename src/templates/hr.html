@@ -421,8 +421,30 @@
           <div class="text-xs font-extrabold mb-2">AI-Extracted Skills (${(st.skills || []).length})</div>
           <div class="flex flex-wrap gap-1.5">
             ${(st.skills || []).map(s => `<span class="chip chip-teal">${esc(s)}</span>`).join('')}
+            ${((st.parser_analytics && st.parser_analytics.lexicon_skills_extracted) || []).slice(0, 6).map(s => `<span class="chip chip-slate">+ ${esc(s)}</span>`).join('')}
           </div>
         </div>
+
+        ${st.parser_analytics ? `
+          <div class="tint tint-indigo rounded-2xl p-4 space-y-2.5">
+            <div class="flex flex-wrap items-center justify-between gap-2">
+              <div class="text-xs font-extrabold text-indigo-950">🧠 5-Pillar Behavioral Competency &amp; Measurable Impact (NLP Parser)</div>
+              <div class="flex gap-1.5">
+                <span class="chip chip-emerald">Competency ${st.parser_analytics.competency_score || 0}/100</span>
+                <span class="chip chip-indigo">Impact ${(st.parser_analytics.measurable_impact || {}).impact_score || 0}/100</span>
+              </div>
+            </div>
+            <div class="grid sm:grid-cols-5 gap-2">
+              ${(st.parser_analytics.competencies || []).map(c => `
+                <div class="bg-white/85 rounded-xl p-2.5 border border-indigo-100 space-y-1">
+                  <div class="flex justify-between text-[10px]"><span class="font-extrabold">${esc(c.label.split(' ')[0])}</span><b>${c.score_pct}%</b></div>
+                  <div class="bar teal"><i style="width:${c.score_pct}%"></i></div>
+                  <div class="text-[10px] text-slate-500 truncate">${(c.matched_verbs || []).slice(0, 2).map(esc).join(', ') || 'Confirm at interview'}</div>
+                </div>
+              `).join('')}
+            </div>
+          </div>
+        ` : ''}
 
         <div class="grid sm:grid-cols-3 gap-3">
           <div class="bg-white/85 rounded-2xl p-4 border border-slate-200/70 space-y-1.5">

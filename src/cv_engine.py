@@ -34,7 +34,12 @@ from fpdf import FPDF
 from pypdf import PdfReader
 
 from auth_db import DATA_DIR, get_db_connection
-from skills_taxonomy import expand_for_matching, extract_skills, skill_key
+from skills_taxonomy import (
+    analyze_resume_competencies_and_impact,
+    expand_for_matching,
+    extract_skills,
+    skill_key,
+)
 
 UPLOADS_DIR = os.path.join(DATA_DIR, "uploads")
 SAMPLE_PDF_DIR = os.path.join(os.path.dirname(__file__), "static", "sample_cvs")
@@ -291,8 +296,36 @@ def _build_pdf_bytes(spec: dict) -> bytes:
     return bytes(pdf.output())
 
 
+BENCHMARK_PDF_SPECS = [
+    {
+        "filename": "Benchmark_React_Developer_CV.pdf",
+        "label": "Anjani Priyadarshini · React JS Developer (Benchmark Dataset)",
+        "role": "React JS Developer",
+        "industry": "IT & Software",
+    },
+    {
+        "filename": "Benchmark_SQL_Developer_CV.pdf",
+        "label": "Anil Kumar · SQL & MSBI Database Developer (Benchmark Dataset)",
+        "role": "SQL Developer",
+        "industry": "IT & Software",
+    },
+    {
+        "filename": "Benchmark_Workday_HCM_CV.pdf",
+        "label": "Chinna Subbarayudu · Workday HCM Consultant (Benchmark Dataset)",
+        "role": "Workday HCM Consultant",
+        "industry": "HR & Administration",
+    },
+    {
+        "filename": "Benchmark_QA_Testing_Intern_CV.pdf",
+        "label": "Ravali P · QA & Software Testing Intern (Benchmark Dataset)",
+        "role": "QA Testing Intern",
+        "industry": "IT & Software",
+    },
+]
+
+
 def ensure_sample_pdfs() -> list[dict]:
-    """Ensure synthetic sample PDFs exist in `static/sample_cvs/` and return metadata."""
+    """Ensure synthetic and real benchmark sample PDFs exist in `static/sample_cvs/` and return metadata."""
     os.makedirs(SAMPLE_PDF_DIR, exist_ok=True)
     out = []
     for spec in SAMPLE_CV_SPECS:
@@ -307,6 +340,16 @@ def ensure_sample_pdfs() -> list[dict]:
             "role": spec["role"],
             "industry": spec["industry"],
         })
+    for bspec in BENCHMARK_PDF_SPECS:
+        bpath = os.path.join(SAMPLE_PDF_DIR, bspec["filename"])
+        if os.path.exists(bpath):
+            out.append({
+                "filename": bspec["filename"],
+                "label": bspec["label"],
+                "url": f"/static/sample_cvs/{bspec['filename']}",
+                "role": bspec["role"],
+                "industry": bspec["industry"],
+            })
     return out
 
 
@@ -479,9 +522,10 @@ def parse_and_summarize_pdf_cv(pdf_bytes: bytes, filename: str, user_context: di
             f"Key evidenced competencies include {top_sk}."
         )
 
+    parser_analytics = analyze_resume_competencies_and_impact(raw_text)
     ai_highlights = [
         f"Role & Sector: {current_role} in {industry} ({years} yr{'s' if years != 1 else ''} experience · {seeker_type})",
-        f"Qualification: {education_level} · Preferred arrangement: {work_mode} ({location})",
+        f"Predicted Profile: {parser_analytics['predicted_profile']['domain']} ({parser_analytics['predicted_profile']['confidence_pct']}% confidence) · Competency Score: {parser_analytics['competency_score']}/100",
         f"Verified Skill Signals ({len(skills)}): {', '.join(skills[:8]) if skills else 'General transferable skills'}",
     ]
 
@@ -506,6 +550,7 @@ def parse_and_summarize_pdf_cv(pdf_bytes: bytes, filename: str, user_context: di
         "certifications": cert_list,
         "page_count": page_count,
         "char_count": len(raw_text),
+        "parser_analytics": parser_analytics,
         "privacy_notice": (
             "Protected under CareerLens PDPA Shield: Used exclusively for anonymised aggregate skill trend "
             "statistics and your personal job/reskilling recommendations. Employers cannot view this CV "
@@ -626,6 +671,9 @@ def get_user_cv(owner_uid: str) -> dict | None:
     conn.close()
     if not row:
         return None
+    structured = json.loads(row["structured_cv_json"])
+    if "parser_analytics" not in structured:
+        structured["parser_analytics"] = analyze_resume_competencies_and_impact(row["raw_text"] or "")
     return {
         "owner_uid": row["owner_uid"],
         "original_filename": row["original_filename"],
@@ -635,7 +683,7 @@ def get_user_cv(owner_uid: str) -> dict | None:
         "allow_anon_stats": bool(row["allow_anon_stats"]),
         "uploaded_at": row["uploaded_at"],
         "updated_at": row["updated_at"],
-        "structured_cv": json.loads(row["structured_cv_json"]),
+        "structured_cv": structured,
         "pdf_url": "/api/cv/me/pdf",
         "applications_count": len(apps),
         "access_logs": [dict(lg) for lg in logs],
@@ -819,6 +867,8 @@ def get_application_cv_for_hr(hr_user: dict, application_id: int, access_type: s
     log_employer_cv_access(row["candidate_uid"], hr_user, row["vacancy_id"], row["vacancy_title"], access_type)
 
     structured = json.loads(cv_row["structured_cv_json"])
+    if "parser_analytics" not in structured:
+        structured["parser_analytics"] = analyze_resume_competencies_and_impact(cv_row["raw_text"] or "")
     return True, "Authorised via candidate job application.", {
         "application_id": row["id"],
         "application_uid": row["application_uid"],
