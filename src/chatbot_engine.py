@@ -24,6 +24,7 @@ import urllib.request
 from ai_matcher import load_json, match_user_to_roles
 import cv_engine
 import hr_engine
+import job_index
 from trend_signals import get_trend_radar
 
 MASCOT_PROFILE = {
@@ -124,22 +125,36 @@ def _build_live_context(user: dict | None, user_location: dict | None = None) ->
     match_res = match_user_to_roles(profile=profile, scenario="moderate")
 
     loc = user_location or {}
-    nearby = hr_engine.list_nearby_companies_and_jobs(
+    u_lat = loc.get("lat") or 3.1579
+    u_lng = loc.get("lng") or 101.7116
+    u_label = loc.get("label") or loc.get("city") or "Kuala Lumpur (KLCC)"
+    if loc.get("city") and loc["city"] in hr_engine.CITY_COORDS:
+        u_label = loc["city"]
+        u_lat = hr_engine.CITY_COORDS[loc["city"]]["lat"]
+        u_lng = hr_engine.CITY_COORDS[loc["city"]]["lng"]
+
+    emp_vacs = hr_engine.list_open_vacancies_for_seeker(uid)
+    js_nearby = job_index.search_nearby(
         candidate_uid=uid,
-        lat=loc.get("lat"),
-        lng=loc.get("lng"),
-        city_preset=loc.get("city"),
+        lat=float(u_lat),
+        lng=float(u_lng),
+        radius_km=float(loc.get("radius") or 10.0),
+        mode="matched",
+        limit=10,
+        employer_vacancies=emp_vacs,
     )
     return {
         "portal": "job_seeker",
         "user_name": user.get("full_name", "Talent"),
+        "uid": uid,
         "cv_record": cv_rec,
         "profile": profile,
         "recommended_roles": match_res.get("recommended_roles", []),
         "verification_questions": match_res.get("verification_questions", []),
-        "open_jobs": nearby["vacancies"],
-        "nearby_companies": nearby["companies"],
-        "user_location": nearby["user_location"],
+        "open_jobs": js_nearby["jobs"],
+        "nearby_companies": js_nearby["dots"],
+        "nearby_summary": js_nearby["summary"],
+        "user_location": {"label": u_label, "lat": float(u_lat), "lng": float(u_lng)},
         "courses": courses,
     }
 
@@ -219,15 +234,17 @@ def _handle_career_aspiration(low: str, ctx: dict) -> dict | None:
             "mascot": MASCOT_PROFILE,
         }
 
-    # Generic career aspiration extracted from regex
+    # Generic career aspiration extracted from regex + live 68.4k JobStreet dataset insights
     goal = aspiration_rx.group(1).strip().title()
+    insights = job_index.query_market_insights(query_text=goal)
     top_role = (ctx.get("recommended_roles") or [{}])[0]
     bridge = top_role.get("title", "AI Workflow & Compliance Specialist")
+    top_sk = ", ".join(insights["top_skills"][:4]) or "Domain Analytics, SQL, Project Management"
     reply = (
-        f"🦉 **Career Goal: {goal}**\n"
-        f"• **Starting Point:** {cur_role} ({cur_skills})\n"
-        f"• **Fastest AI-Era Bridge:** **{bridge}** ({top_role.get('match_score', 75)}% match) — combines your current strengths with verified upskilling.\n"
-        f"• Search **\"{goal}\"** in **Jobs & Nearby Companies** to see all hiring sectors."
+        f"🦉 **Career Goal: {goal}** *(JobStreet MY Dataset: {insights['matching_openings']:,} openings)*\n"
+        f"• **Your Base:** {cur_role} ({cur_skills}) → Bridge Role: **{bridge}**\n"
+        f"• **Most Demanded Skills:** {top_sk}\n"
+        f"• **MY Salary Benchmark:** **RM {insights['salary_p25']:,} – RM {insights['salary_p75']:,}/mo** (Median RM {insights['salary_median']:,})"
     )
     return {
         "ok": True,
@@ -356,27 +373,57 @@ def generate_lumi_response(message: str, user: dict | None = None, history: list
         if asp_res:
             return asp_res
 
-        # Intent T1: Nearby / Location / GPS Jobs & Companies ("nearby me have any suitable jobs based on my resume?")
-        if any(k in low for k in ("nearby", "near me", "around me", "location", "gps", "close to me", "suitable job", "company near", "companies near")):
-            near_comps = [c for c in companies if c["is_cv_matched"]][:2] or companies[:2]
-            rel_jobs = [j for j in jobs if j.get("is_relevant_to_cv")][:2] or jobs[:2]
+        # Intent T1: Nearby / Location / Radius Circle Jobs & Companies (68,447 JobStreet MY dataset)
+        if any(k in low for k in ("nearby", "near me", "around me", "location", "gps", "close to me", "suitable job", "company near", "companies near", "km", "radius")):
+            km_match = re.search(r"(\d{1,3})\s*km", low)
+            req_km = float(km_match.group(1)) if km_match else 10.0
+            live = job_index.search_nearby(
+                candidate_uid=ctx.get("uid", ""),
+                lat=loc_info.get("lat", 3.1579),
+                lng=loc_info.get("lng", 101.7116),
+                radius_km=req_km,
+                mode="matched",
+                limit=3,
+            )
+            summ = live["summary"]
+            top_dots = live["dots"][:2]
+            top_jobs = live["jobs"][:2]
             comp_lines = [
-                f"• 🏢 **{c['name']}** (*{c['category']}*) — **{c['distance_km']} km** from {loc_info['label']} · {c['cv_relevance_pct']}% CV fit"
-                for c in near_comps
+                f"• 🟢 **{c['name']}** (*{c['category']}*) — **{c['distance_km']} km** · {c['matched']} matched role(s) ({c['best_score']}% fit)"
+                for c in top_dots
             ]
             job_lines = [
-                f"• 💼 **{j['title']}** ({j['company_name']}) — **{j.get('match_score') or 0}% match** · {j.get('distance_km', 0)} km away"
-                for j in rel_jobs
+                f"• 💼 **{j['title']}** ({j['company_name']}) — **{j.get('match_score') or 0}% match** · {j.get('distance_km', 0)} km"
+                for j in top_jobs
             ]
             reply = (
-                f"🦉 **Nearby Matches around {loc_info['label']}:**\n"
+                f"🦉 **Within {int(req_km)} km of {loc_info['label']}:** **{summ['matched_in_range']:,} CV-matched roles** (out of {summ['jobs_in_range']:,} total jobs across {summ['companies_on_map']:,} companies)\n"
                 + "\n".join(comp_lines + job_lines)
             )
             return {
                 "ok": True, "in_range": True, "reply": reply,
                 "actions": [
-                    {"label": "📍 Open Nearby Jobs & GPS Map", "tab": "jobs"},
+                    {"label": f"🗺️ View {int(req_km)}km Radius Map", "tab": "jobs"},
                     {"label": "📄 My PDF CV", "tab": "profile"},
+                ],
+                "mascot": MASCOT_PROFILE,
+            }
+
+        # Intent T1b: Malaysian Salary & Market Demand Benchmarks (trained on 68.4k JobStreet postings)
+        if any(k in low for k in ("salary", "pay", "compensation", "wage", "how much", "market demand")):
+            role_q = re.sub(r"\b(what|is|the|salary|pay|for|a|an|in|malaysia|average|monthly|how|much|does|earn|make)\b", " ", low)
+            role_q = re.sub(r"\s+", " ", role_q).strip() or (ctx.get("profile") or {}).get("current_role", "")
+            ins = job_index.query_market_insights(query_text=role_q)
+            reply = (
+                f"🦉 **Malaysia Market Benchmark ({role_q.title() or 'All Sectors'}):**\n"
+                f"• **Monthly Salary Range:** **RM {ins['salary_p25']:,} – RM {ins['salary_p75']:,}** (Median **RM {ins['salary_median']:,}** · {ins['salary_sample_size']:,} dataset records)\n"
+                f"• **Active Openings:** **{ins['matching_openings']:,} jobs** · Top Skills: {', '.join(ins['top_skills'][:4])}"
+            )
+            return {
+                "ok": True, "in_range": True, "reply": reply,
+                "actions": [
+                    {"label": "💼 Browse Matching Jobs", "tab": "jobs"},
+                    {"label": "🧭 Upskill for Higher Pay", "tab": "plan"},
                 ],
                 "mascot": MASCOT_PROFILE,
             }

@@ -85,6 +85,68 @@ def stats():
     return {"jobs": len(idx["jobs"]), "companies": len(idx["companies"]), "source": idx.get("source", "")}
 
 
+def query_market_insights(query_text: str = "", category: str = "") -> dict:
+    """Mine real salary benchmarks, top demanded skills, and top hiring companies from the 68.4k JobStreet dataset."""
+    idx = load_index()
+    jobs = idx["jobs"]
+    q_toks = _tokens(query_text)
+    cat_low = (category or "").strip().lower()
+
+    matched_jobs = []
+    for i, j in enumerate(jobs):
+        if cat_low and cat_low not in idx["categories"][j[4]].lower():
+            continue
+        if q_toks:
+            tt = idx["title_tokens"][i]
+            if not (q_toks & tt) and query_text.lower() not in j[1].lower() and query_text.lower() not in idx["categories"][j[4]].lower():
+                continue
+        matched_jobs.append(j)
+
+    if not matched_jobs:
+        matched_jobs = jobs
+
+    salaries = []
+    skill_counts = {}
+    comp_counts = {}
+    loc_counts = {}
+    for j in matched_jobs:
+        smin, smax = j[7], j[8]
+        if smin >= 1000 and smax >= smin:
+            salaries.append((smin + smax) // 2)
+        for s_id in j[12]:
+            sk_name = idx["skills"][s_id]
+            skill_counts[sk_name] = skill_counts.get(sk_name, 0) + 1
+        c_name = idx["companies"][j[2]]
+        if c_name != "Confidential Employer":
+            comp_counts[c_name] = comp_counts.get(c_name, 0) + 1
+        l_name = idx["locations"][j[3]]
+        loc_counts[l_name] = loc_counts.get(l_name, 0) + 1
+
+    salaries.sort()
+    if salaries:
+        n = len(salaries)
+        p25 = salaries[max(0, int(n * 0.25))]
+        median = salaries[n // 2]
+        p75 = salaries[min(n - 1, int(n * 0.75))]
+    else:
+        p25, median, p75 = 3500, 4800, 6800
+
+    top_skills = [k for k, _ in sorted(skill_counts.items(), key=lambda kv: -kv[1])[:6]]
+    top_companies = [k for k, _ in sorted(comp_counts.items(), key=lambda kv: -kv[1])[:5]]
+    top_locations = [k for k, _ in sorted(loc_counts.items(), key=lambda kv: -kv[1])[:4]]
+
+    return {
+        "matching_openings": len(matched_jobs),
+        "salary_sample_size": len(salaries),
+        "salary_p25": int(round(p25, -1)),
+        "salary_median": int(round(median, -1)),
+        "salary_p75": int(round(p75, -1)),
+        "top_skills": top_skills,
+        "top_companies": top_companies,
+        "top_locations": top_locations,
+    }
+
+
 def _cv_profile(candidate_uid):
     conn = get_db_connection()
     row = conn.execute("SELECT structured_cv_json FROM user_cvs WHERE owner_uid = ?", (candidate_uid,)).fetchone()
