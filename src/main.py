@@ -13,6 +13,7 @@ from functools import wraps
 
 from flask import Flask, jsonify, redirect, render_template, request, send_file, session
 
+import chatbot_engine
 import cv_engine
 import hr_engine
 from ai_matcher import load_json, match_user_to_roles
@@ -89,6 +90,30 @@ def api_logout():
 @app.route("/api/auth/me", methods=["GET"])
 def api_me():
     return jsonify({"user": session.get("user")})
+
+
+# ------------------------------------------------------------------ Lumi Mascot AI Chatbot APIs
+@app.route("/api/chat/context", methods=["GET"])
+def api_chat_context():
+    user = session.get("user")
+    return jsonify({
+        "ok": True,
+        "mascot": chatbot_engine.MASCOT_PROFILE,
+        "quick_prompts": chatbot_engine.get_quick_prompts(user),
+        "portal": user["role"] if user else "guest",
+    })
+
+
+@app.route("/api/chat", methods=["POST"])
+def api_chat():
+    payload = request.get_json(force=True) or {}
+    user = session.get("user")
+    result = chatbot_engine.generate_lumi_response(
+        message=payload.get("message", ""),
+        user=user,
+        history=payload.get("history", []),
+    )
+    return jsonify(result), (200 if result.get("ok") else 400)
 
 
 # ------------------------------------------------------------------ Talent Portal APIs

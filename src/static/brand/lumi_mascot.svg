@@ -1,0 +1,91 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 220" width="220" height="220" fill="none">
+  <defs>
+    <!-- Soft outer glow -->
+    <filter id="lumiShadow" x="-15%" y="-15%" width="130%" height="135%">
+      <feDropShadow dx="0" dy="8" stdDeviation="8" flood-color="#6366F1" flood-opacity="0.28"/>
+    </filter>
+    <!-- Body gradient (Dreamy Lavender -> Indigo -> Rose) -->
+    <linearGradient id="bodyGrad" x1="25" y1="20" x2="190" y2="200" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#818CF8"/>
+      <stop offset="52%" stop-color="#6366F1"/>
+      <stop offset="100%" stop-color="#EC4899"/>
+    </linearGradient>
+    <!-- Belly / Face mask gradient (Frosty warm white) -->
+    <linearGradient id="faceGrad" x1="60" y1="60" x2="160" y2="175" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#FFFFFF"/>
+      <stop offset="100%" stop-color="#F5F3FF"/>
+    </linearGradient>
+    <!-- Mint-Cyan Monocle Lens -->
+    <linearGradient id="lensGrad" x1="115" y1="80" x2="175" y2="140" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#2DD4BF" stop-opacity="0.32"/>
+      <stop offset="100%" stop-color="#38BDF8" stop-opacity="0.18"/>
+    </linearGradient>
+    <!-- Gold-Amber Graduation / Compass Star -->
+    <linearGradient id="starGrad" x1="95" y1="12" x2="125" y2="42" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#FDE047"/>
+      <stop offset="100%" stop-color="#F59E0B"/>
+    </linearGradient>
+    <!-- Ear inner gradient -->
+    <linearGradient id="earGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#F472B6"/>
+      <stop offset="100%" stop-color="#C084FC"/>
+    </linearGradient>
+  </defs>
+
+  <g filter="url(#lumiShadow)">
+    <!-- Cute Owl / Bot Ears (Tufts) -->
+    <path d="M52 64 C40 36, 62 28, 78 48 Z" fill="url(#bodyGrad)"/>
+    <path d="M56 58 C49 41, 63 36, 73 49 Z" fill="url(#earGrad)"/>
+    <path d="M168 64 C180 36, 158 28, 142 48 Z" fill="url(#bodyGrad)"/>
+    <path d="M164 58 C171 41, 157 36, 147 49 Z" fill="url(#earGrad)"/>
+
+    <!-- Antenna + Glowing AI Compass Star on Head -->
+    <line x1="110" y1="44" x2="110" y2="28" stroke="#818CF8" stroke-width="5" stroke-linecap="round"/>
+    <path d="M110 10 L114.5 20.5 L125 25 L114.5 29.5 L110 40 L105.5 29.5 L95 25 L105.5 20.5 Z" fill="url(#starGrad)"/>
+    <circle cx="110" cy="25" r="3" fill="#FFFBEB"/>
+
+    <!-- Chubby Rounded Owl Body -->
+    <rect x="38" y="42" width="144" height="142" rx="68" fill="url(#bodyGrad)" stroke="#FFFFFF" stroke-width="4"/>
+
+    <!-- Cute Flapping Wings -->
+    <path d="M39 102 C18 108, 18 144, 42 152 C37 134, 37 118, 39 102 Z" fill="url(#bodyGrad)" stroke="#FFFFFF" stroke-width="3"/>
+    <path d="M181 102 C202 108, 202 144, 178 152 C183 134, 183 118, 181 102 Z" fill="url(#bodyGrad)" stroke="#FFFFFF" stroke-width="3"/>
+
+    <!-- Frosted White Heart-Shaped Owl Face & Belly -->
+    <path d="M54 96 C54 68, 82 58, 110 74 C138 58, 166 68, 166 96 C166 138, 144 168, 110 168 C76 168, 54 138, 54 96 Z" fill="url(#faceGrad)"/>
+
+    <!-- Rosy Kawaii Cheeks -->
+    <ellipse cx="69" cy="123" rx="10" ry="6" fill="#F472B6" fill-opacity="0.45"/>
+    <ellipse cx="151" cy="123" rx="10" ry="6" fill="#F472B6" fill-opacity="0.45"/>
+
+    <!-- Left Big Sparkling Eye -->
+    <circle cx="84" cy="104" r="16" fill="#1E1B4B"/>
+    <circle cx="79" cy="98" r="6" fill="#FFFFFF"/>
+    <circle cx="89" cy="109" r="3" fill="#A5B4FC"/>
+
+    <!-- Right Big Sparkling Eye -->
+    <circle cx="136" cy="104" r="16" fill="#1E1B4B"/>
+    <circle cx="131" cy="98" r="6" fill="#FFFFFF"/>
+    <circle cx="141" cy="109" r="3" fill="#5EEAD4"/>
+
+    <!-- Signature CareerLens AI Smart Monocle over Right Eye -->
+    <circle cx="136" cy="104" r="23" fill="url(#lensGrad)" stroke="#14B8A6" stroke-width="3.5"/>
+    <path d="M123 89 C128 85, 136 84, 143 87" stroke="#FFFFFF" stroke-width="2.5" stroke-linecap="round"/>
+    <!-- Monocle chain tassel -->
+    <path d="M158 112 Q166 125 162 138" stroke="#F59E0B" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+    <circle cx="162" cy="140" r="3" fill="#F59E0B"/>
+
+    <!-- Cute Golden Beak / Smile -->
+    <path d="M103 114 Q110 110 117 114 L110 125 Z" fill="#F59E0B"/>
+    <path d="M100 128 Q110 135 120 128" stroke="#4F46E5" stroke-width="2.6" stroke-linecap="round" fill="none"/>
+
+    <!-- Belly SDG Leaf / Career Badge -->
+    <rect x="88" y="142" width="44" height="18" rx="9" fill="#EEF2FF" stroke="#C7D2FE" stroke-width="1.5"/>
+    <circle cx="98" cy="151" r="4" fill="#10B981"/>
+    <text x="106" y="154.5" font-family="Plus Jakarta Sans, sans-serif" font-weight="800" font-size="9" fill="#4338CA">LUMI</text>
+
+    <!-- Cute Little Feet -->
+    <ellipse cx="88" cy="184" rx="12" ry="6" fill="#F59E0B"/>
+    <ellipse cx="132" cy="184" rx="12" ry="6" fill="#F59E0B"/>
+  </g>
+</svg>

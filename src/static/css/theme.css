@@ -105,3 +105,25 @@ body.hr .input:focus { border-color: #0d9488; box-shadow: 0 0 0 3px rgba(13,148,
 .toast.ok { background: #ecfdf5; color: #047857; border: 1px solid #a7f3d0; }
 .toast.err { background: #fff1f2; color: #be123c; border: 1px solid #fecdd3; }
 .hidden-scroll { scrollbar-width: none; } .hidden-scroll::-webkit-scrollbar { display: none; }
+.modal { background: rgba(255,255,255,.96); backdrop-filter: blur(24px); border-radius: 1.75rem; border: 1px solid #fff; box-shadow: 0 24px 60px rgba(15,23,42,.22); }
+
+/* ---------- Lumi Mascot AI Chatbox ---------- */
+.lumi-fab { position: fixed; right: 1.35rem; bottom: 1.35rem; z-index: 80; display: flex; align-items: center; gap: .6rem;
+  padding: .45rem .95rem .45rem .45rem; border-radius: 999px; background: rgba(255,255,255,.92); backdrop-filter: blur(20px);
+  border: 2px solid rgba(129,140,248,.55); box-shadow: 0 16px 36px rgba(99,102,241,.28); cursor: pointer; transition: all .25s ease; }
+.lumi-fab:hover { transform: translateY(-4px) scale(1.02); box-shadow: 0 22px 44px rgba(236,72,153,.32); border-color: #ec4899; }
+body.hr .lumi-fab { border-color: rgba(20,184,166,.55); box-shadow: 0 16px 36px rgba(13,148,136,.28); }
+.lumi-fab-avatar { width: 3.1rem; height: 3.1rem; border-radius: 50%; background: linear-gradient(135deg, #eef2ff, #fdf2f8);
+  display: grid; place-items: center; animation: lumiBob 3.2s ease-in-out infinite; flex: none; }
+@keyframes lumiBob { 0%,100% { transform: translateY(0) rotate(0deg) } 50% { transform: translateY(-4px) rotate(3deg) } }
+.lumi-panel { position: fixed; right: 1.35rem; bottom: 5.5rem; width: min(410px, calc(100vw - 1.8rem)); height: min(600px, calc(100vh - 7.5rem));
+  z-index: 85; display: flex; flex-direction: column; border-radius: 1.75rem; background: rgba(255,255,255,.92);
+  backdrop-filter: blur(26px) saturate(180%); -webkit-backdrop-filter: blur(26px) saturate(180%);
+  border: 1.5px solid rgba(255,255,255,.98); box-shadow: 0 24px 60px rgba(79,70,229,.22), 0 4px 16px rgba(15,23,42,.08);
+  overflow: hidden; animation: fadeIn .25s ease both; }
+.lumi-header { background: linear-gradient(135deg, rgba(79,70,229,.95), rgba(147,51,234,.92) 55%, rgba(236,72,153,.92)); color: #fff; padding: .9rem 1.1rem; }
+body.hr .lumi-header { background: linear-gradient(135deg, rgba(13,148,136,.96), rgba(2,132,199,.92) 58%, rgba(79,70,229,.92)); }
+.lumi-msg-bot { background: linear-gradient(135deg, #fff, #f5f3ff); border: 1px solid #e0e7ff; color: #1e293b; border-radius: 1.15rem 1.15rem 1.15rem .3rem; }
+.lumi-msg-guard { background: linear-gradient(135deg, #fff, #fff1f2); border: 1px solid #fecdd3; color: #881337; border-radius: 1.15rem 1.15rem 1.15rem .3rem; }
+.lumi-msg-user { background: linear-gradient(135deg, #4f46e5, #9333ea 60%, #ec4899); color: #fff; border-radius: 1.15rem 1.15rem .3rem 1.15rem; }
+body.hr .lumi-msg-user { background: linear-gradient(135deg, #0d9488, #0284c7 65%, #4f46e5); }
