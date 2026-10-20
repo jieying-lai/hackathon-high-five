@@ -98,6 +98,7 @@
       text-transform: uppercase;
     }
   </style>
+  <link rel="stylesheet" href="/static/css/profile.css?v=20261021-layout-1" />
   <link rel="stylesheet" href="/static/css/responsive.css?v=20261020-minimal-2" />
 </head>
 <body class="responsive-ui responsive-talent min-h-screen">
@@ -175,7 +176,7 @@
         <section id="tab-profile" class="tab hidden space-y-6">
 
           <!-- Account Profile & Personal Details Card -->
-          <div class="glass rounded-3xl p-6 sm:p-7 space-y-4 border-2 border-indigo-100 shadow-sm" data-no-translate>
+          <div class="profile-account-card glass rounded-3xl p-6 sm:p-7 space-y-4 border-2 border-indigo-100 shadow-sm" data-no-translate>
             <div class="flex flex-wrap items-center justify-between gap-4 border-b border-slate-200/70 pb-4">
               <div class="flex items-center gap-3.5">
                 <div id="accCardAvatar" class="h-14 w-14 rounded-2xl bg-gradient-to-br from-indigo-500 to-pink-500 text-white font-black text-2xl grid place-items-center shadow">U</div>
@@ -185,16 +186,14 @@
                     <span id="accCardBadge" class="chip chip-indigo">Talent Account</span>
                     <span class="chip chip-emerald">Account registered</span>
                   </div>
-                  <div class="text-xs text-slate-500 mt-1 flex flex-wrap items-center gap-2">
+                  <div class="profile-account-meta text-xs text-slate-500 mt-1">
                     <span>ID: <b id="accCardUid" class="font-mono text-slate-700"></b></span>
-                    <span>•</span>
                     <span>Email: <b id="accCardEmail" class="text-slate-700"></b></span>
-                    <span>•</span>
                     <span>Joined: <span id="accCardJoined" class="text-slate-600"></span></span>
                   </div>
                 </div>
               </div>
-              <div class="flex items-center gap-2 shrink-0">
+              <div class="profile-account-actions flex items-center gap-2">
                 <button type="button" onclick="openAccountModal()" class="btn btn-primary !py-2.5 !px-5 flex items-center gap-2 shadow-sm font-bold hover:scale-[1.02] transition" title="Edit your account information">
                   <span>✏️</span>
                   <span>Edit Profile &amp; Information</span>
@@ -207,7 +206,7 @@
             </div>
 
             <!-- Profile Overview Details Grid -->
-            <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-1">
+            <div class="profile-overview grid grid-cols-2 sm:grid-cols-4 gap-3 pt-1">
               <div class="p-3.5 rounded-2xl bg-white/80 border border-slate-200/80 shadow-xs">
                 <div class="text-[10px] font-extrabold text-slate-400 uppercase tracking-wider">Current Role</div>
                 <div id="accCardRole" class="text-xs font-bold text-slate-800 mt-1 truncate">—</div>
@@ -227,7 +226,7 @@
             </div>
           </div>
 
-          <div class="tint tint-teal rounded-3xl p-5 flex flex-wrap items-center justify-between gap-4" data-no-translate>
+          <div class="profile-privacy tint tint-teal rounded-3xl p-5 flex flex-wrap items-center justify-between gap-4" data-no-translate>
             <div class="flex items-start gap-3.5 max-w-3xl">
               <div class="h-11 w-11 rounded-2xl bg-teal-600 text-white grid place-items-center text-lg shrink-0 shadow">🔒</div>
               <div>
@@ -250,10 +249,9 @@
             <b>Hackathon demo — use fictional CVs only.</b> This prototype uses a local, rule-based PDF parser; it is not a trained AI model and does not verify qualifications. Do not upload real names, contact details, identity documents, or confidential information. Text-based PDFs work best; image-only scans need OCR before upload.
           </div>
 
-          <div class="grid lg:grid-cols-12 gap-6">
 
-            <div class="lg:col-span-5 space-y-5" data-no-translate>
-              <div class="glass rounded-3xl p-6 space-y-4">
+          <div class="profile-workflow">
+<div class="profile-upload glass rounded-3xl p-6 space-y-4">
                 <div class="flex items-center justify-between">
                   <div>
                     <div class="text-sm font-extrabold">1. Upload your PDF CV</div>
@@ -287,51 +285,14 @@
                   <div id="samplePdfList" class="space-y-2"></div>
                 </div>
               </div>
-
-              <div class="glass rounded-3xl p-6 space-y-3">
-                <div class="text-sm font-extrabold">Share with someone you choose</div>
-                <p class="text-xs text-slate-600">The recipient needs a CareerLens account. Only that signed-in account can open the link. No email is sent.</p>
-                <label class="label" for="nRecipient">Recipient account email</label><input id="nRecipient" type="email" required class="input" placeholder="mentor@example.com" />
-                <label class="flex gap-2 text-xs"><input id="nSummary" type="checkbox" /> Share reviewed summary, including contact details</label>
-                <label class="flex gap-2 text-xs"><input id="nPdf" type="checkbox" /> Share complete original PDF</label>
-                <label class="label" for="nExpiry">Access expires after</label><select id="nExpiry" class="input"><option value="1">1 day</option><option value="7" selected>7 days</option><option value="30">30 days</option></select>
-                <button id="namedShareBtn" onclick="createNamedShare()" class="btn btn-primary !text-xs">Create recipient access</button>
-                <p class="text-[11px] text-slate-500">Editing or replacing the CV ends existing grants. Revoking access cannot retract copies already saved by a recipient.</p>
-                <div id="namedSharesList" class="space-y-2"></div><div id="receivedSharesList" class="space-y-2"></div>
-                <details><summary class="text-xs font-bold cursor-pointer">Recent recipient access</summary><div id="namedShareEvents" class="mt-2 space-y-1"></div></details>
-              </div>
-
-              <!-- Employer Access Audit Log -->
-              <div class="glass rounded-3xl p-6 space-y-3">
-                <div class="flex items-center justify-between">
-                  <div>
-                    <div class="text-sm font-extrabold">Employer CV access log</div>
-                    <div class="text-[11px] text-slate-500">Recorded employer accesses through this app</div>
-                  </div>
-                  <span id="accessCountBadge" class="chip chip-slate">0 views</span>
-                </div>
-                <div id="accessLogList" class="space-y-2 max-h-52 overflow-y-auto pr-1"></div>
-              </div>
-              <div class="glass rounded-3xl p-6 space-y-3">
-                <div class="text-sm font-extrabold">3. Manage employer access</div>
-                <p class="text-xs text-slate-500">Each application grants access only to that vacancy's company account. Withdrawal blocks future access here; it cannot retract copies already downloaded.</p>
-                <div id="activeSharesList" class="space-y-3"></div>
-                <div class="flex flex-wrap gap-2 border-t border-slate-200 pt-3">
-                  <button id="exportCvBtn" onclick="exportMyCv()" class="btn btn-soft !text-xs" disabled>Export profile JSON</button>
-                  <button id="deleteCvBtn" onclick="deleteMyCv()" class="btn btn-danger !text-xs" disabled>Delete my vault</button>
-                </div>
-              </div>
-            </div>
-
-            <div class="lg:col-span-7 space-y-5">
-              <div class="glass rounded-3xl p-6 sm:p-7 space-y-5">
+<div class="profile-editor glass rounded-3xl p-6 sm:p-7 space-y-5">
                 <div class="flex flex-wrap items-start justify-between gap-3 border-b border-slate-200/70 pb-4">
                   <div>
                     <div class="flex items-center gap-2">
                       <span class="text-sm font-extrabold">2. Review your organised profile</span>
                       <span id="cvStatusChip" class="chip chip-amber">No PDF yet</span>
                     </div>
-                    <div id="cvFileMeta" class="text-xs text-slate-500 mt-0.5">Upload a PDF CV on the left to extract your structured profile</div>
+                    <div id="cvFileMeta" class="text-xs text-slate-500 mt-0.5">Upload a PDF CV above to extract your structured profile</div>
                   </div>
                   <div class="flex gap-2">
                     <a id="viewMyPdfBtn" href="/api/cv/me/pdf" target="_blank" rel="noopener" class="btn btn-soft !py-1.5 !text-xs hidden">👁️ View Original PDF</a>
@@ -354,7 +315,8 @@
                   <ul id="aiHighlights" class="space-y-1 text-[11px] text-slate-600 pt-1"></ul>
                 </div>
 
-                <div class="grid sm:grid-cols-2 gap-3.5">
+                <div class="profile-section-heading"><h3>Personal &amp; career details</h3><p>Check your contact information and work preferences.</p></div>
+                <div class="profile-fields grid sm:grid-cols-2 gap-3.5">
                   <div><label for="pName" class="label">Full name</label><input id="pName" maxlength="200" class="input" /></div>
                   <div><label for="pRole" class="label">Current role / headline</label><input id="pRole" maxlength="300" class="input" /></div>
                   <div><label for="pEmail" class="label">Email</label><input id="pEmail" type="email" maxlength="254" class="input" autocomplete="off" /></div>
@@ -367,7 +329,8 @@
                 </div>
 
                 <!-- Extracted Experience, Education, Projects -->
-                <div class="grid sm:grid-cols-2 gap-3">
+                <div class="profile-section-heading"><h3>Experience &amp; qualifications</h3><p>Keep each entry clear and supported by your CV.</p></div>
+                <div class="profile-history grid sm:grid-cols-2 gap-3">
                   <div class="bg-white/80 rounded-2xl p-3.5 border border-slate-200/70 space-y-1.5">
                     <label for="pExperience" class="text-[11px] font-extrabold text-indigo-700 uppercase">Work experience</label>
                     <textarea id="pExperience" rows="5" class="input !text-xs" placeholder="One entry per line"></textarea>
@@ -388,7 +351,7 @@
 
                 <div id="cvParserAnalytics" class="tint tint-teal rounded-2xl p-4 space-y-3 hidden" data-no-translate></div>
 
-                <div>
+                <div class="profile-skills">
                   <label for="skillInput" class="label">Skills <span class="text-slate-400 font-medium">· extracted mentions are not proof of proficiency</span></label>
                   <div id="skillChips" class="flex flex-wrap gap-2 mb-2.5"></div>
                   <input id="skillInput" class="input" placeholder="Add a skill and press Enter (e.g. Python Data Analysis)" list="skillSuggest" />
@@ -407,13 +370,47 @@
                 </label>
                 <div id="profileSaveStatus" class="text-xs font-semibold text-slate-600" role="status" aria-live="polite"></div>
 
-                <div class="flex flex-wrap items-center justify-between gap-3 pt-2 border-t border-slate-200/70">
+                <div class="profile-save-actions flex flex-wrap items-center justify-between gap-3 pt-2 border-t border-slate-200/70">
                   <button onclick="showTab('jobs')" class="btn btn-soft">💼 Browse & Apply Jobs →</button>
                   <button id="saveProfileBtn" onclick="saveProfile()" class="btn btn-primary" disabled>Save reviewed profile →</button>
                 </div>
               </div>
-            </div>
           </div>
+          <div class="profile-section-heading"><h2>Sharing &amp; access</h2><p>Choose who can view your CV and review their access below.</p></div>
+          <div class="profile-sharing-grid" data-no-translate>
+<div class="glass rounded-3xl p-6 space-y-3">
+                <div class="text-sm font-extrabold">Share with someone you choose</div>
+                <p class="text-xs text-slate-600">The recipient needs a CareerLens account. Only that signed-in account can open the link. No email is sent.</p>
+                <label class="label" for="nRecipient">Recipient account email</label><input id="nRecipient" type="email" required class="input" placeholder="mentor@example.com" />
+                <label class="flex gap-2 text-xs"><input id="nSummary" type="checkbox" /> Share reviewed summary, including contact details</label>
+                <label class="flex gap-2 text-xs"><input id="nPdf" type="checkbox" /> Share complete original PDF</label>
+                <label class="label" for="nExpiry">Access expires after</label><select id="nExpiry" class="input"><option value="1">1 day</option><option value="7" selected>7 days</option><option value="30">30 days</option></select>
+                <button id="namedShareBtn" onclick="createNamedShare()" class="btn btn-primary !text-xs">Create recipient access</button>
+                <p class="text-[11px] text-slate-500">Editing or replacing the CV ends existing grants. Revoking access cannot retract copies already saved by a recipient.</p>
+                <div id="namedSharesList" class="space-y-2"></div><div id="receivedSharesList" class="space-y-2"></div>
+                <details><summary class="text-xs font-bold cursor-pointer">Recent recipient access</summary><div id="namedShareEvents" class="mt-2 space-y-1"></div></details>
+              </div>
+<div class="glass rounded-3xl p-6 space-y-3">
+                <div class="text-sm font-extrabold">3. Manage employer access</div>
+                <p class="text-xs text-slate-500">Each application grants access only to that vacancy's company account. Withdrawal blocks future access here; it cannot retract copies already downloaded.</p>
+                <div id="activeSharesList" class="space-y-3"></div>
+                <div class="flex flex-wrap gap-2 border-t border-slate-200 pt-3">
+                  <button id="exportCvBtn" onclick="exportMyCv()" class="btn btn-soft !text-xs" disabled>Export profile JSON</button>
+                  <button id="deleteCvBtn" onclick="deleteMyCv()" class="btn btn-danger !text-xs" disabled>Delete my vault</button>
+                </div>
+              </div>
+          </div>
+<!-- Employer Access Audit Log -->
+              <div class="glass rounded-3xl p-6 space-y-3">
+                <div class="flex items-center justify-between">
+                  <div>
+                    <div class="text-sm font-extrabold">Employer CV access log</div>
+                    <div class="text-[11px] text-slate-500">Recorded employer accesses through this app</div>
+                  </div>
+                  <span id="accessCountBadge" class="chip chip-slate">0 views</span>
+                </div>
+                <div id="accessLogList" class="space-y-2 max-h-52 overflow-y-auto pr-1"></div>
+              </div>
         </section>
 
         <section id="tab-jobs" class="tab hidden space-y-6" data-no-translate>

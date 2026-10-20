@@ -1,0 +1,62 @@
+/* Profile-only layout: keep the review form spacious and sharing below it. */
+#tab-profile { --profile-gap: 28px; line-height: 1.65; }
+#tab-profile > * + * { margin-top: var(--profile-gap); }
+#tab-profile .glass { background: #fff; border: 1px solid #e2e8f0; box-shadow: 0 6px 24px rgb(15 23 42 / 3%); }
+#tab-profile .profile-workflow { display: grid; gap: var(--profile-gap); }
+#tab-profile .profile-account-card,
+#tab-profile .profile-editor,
+#tab-profile .profile-upload { padding: clamp(20px, 3vw, 36px); }
+#tab-profile .profile-account-card > div:first-child { align-items: flex-start; gap: 24px; }
+#tab-profile #accCardAvatar { flex-shrink: 0; }
+#tab-profile .profile-account-meta { display: grid; gap: 6px 24px; margin-top: 12px; overflow-wrap: anywhere; }
+#tab-profile .profile-account-actions { flex-wrap: wrap; gap: 12px; }
+#tab-profile .profile-overview { gap: 16px; padding-top: 12px; }
+#tab-profile .profile-overview > div { padding: 18px; box-shadow: none; background: #f8fafc; }
+#tab-profile .profile-overview .truncate { white-space: normal; overflow: visible; overflow-wrap: anywhere; font-size: 14px; margin-top: 8px; }
+#tab-profile .profile-privacy { align-items: flex-start; gap: 20px; padding: 24px; }
+#tab-profile .profile-privacy > label { flex-shrink: 1; white-space: normal; }
+#tab-profile p, #tab-profile .text-xs { font-size: 13px; line-height: 1.7; }
+#tab-profile .text-sm { font-size: 16px; }
+#tab-profile .label { margin-bottom: 8px; font-size: 13px; }
+#tab-profile .input { min-height: 46px; padding: 12px 14px; font-size: 14px !important; line-height: 1.6; }
+#tab-profile textarea.input { min-height: 150px; resize: vertical; }
+#tab-profile .profile-fields { gap: 24px; }
+#tab-profile .profile-history { gap: 24px; }
+#tab-profile .profile-history > div { padding: 20px; background: #f8fafc; }
+#tab-profile .profile-history label { display: block; margin-bottom: 12px; font-size: 12px; }
+#tab-profile .profile-section-heading { border-top: 1px solid #e2e8f0; padding-top: 26px; margin-top: 30px; }
+#tab-profile .profile-section-heading :is(h2,h3) { font-size: 17px; font-weight: 800; color: #0f172a; }
+#tab-profile .profile-section-heading p { color: #64748b; margin-top: 4px; }
+#tab-profile .profile-editor > * + * { margin-top: 24px; }
+#tab-profile .profile-editor > div:first-child > div:first-child > div:first-child { flex-wrap: wrap; gap: 12px; }
+#tab-profile #cvFileMeta { overflow-wrap: anywhere; margin-top: 8px; }
+#tab-profile #dropZone { padding: 28px; }
+#tab-profile #samplePdfList { display: grid; gap: 12px; grid-template-columns: repeat(auto-fit,minmax(min(100%,240px),1fr)); }
+#tab-profile #samplePdfList > * { margin: 0; flex-direction: column; align-items: stretch; gap: 16px; padding: 18px; }
+#tab-profile #samplePdfList .truncate { white-space: normal; overflow: visible; overflow-wrap: anywhere; }
+#tab-profile #samplePdfList > div > div:last-child { flex-wrap: wrap; gap: 8px; }
+#tab-profile #uploadStages { gap: 12px; }
+#tab-profile #uploadStages > li { padding: 12px 16px; }
+#tab-profile .profile-sharing-grid { display: grid; gap: var(--profile-gap); align-items: start; }
+#tab-profile .profile-sharing-grid > div { padding: 28px; }
+#tab-profile .profile-sharing-grid label:has(input[type="checkbox"]) { padding: 12px; background: #f8fafc; border-radius: 12px; align-items: flex-start; gap: 10px; }
+#tab-profile input[type="checkbox"] { flex-shrink: 0; width: 16px; height: 16px; margin-top: 3px; }
+#tab-profile .profile-skills { padding: 24px; border: 1px solid #e2e8f0; border-radius: 16px; }
+#tab-profile .profile-skills .label > span { display: block; margin-top: 4px; }
+#tab-profile .profile-save-actions { padding-top: 24px; gap: 16px; }
+#tab-profile .btn { min-height: 44px; white-space: normal; }
+@media (min-width: 768px) {
+  #tab-profile .profile-account-meta { grid-template-columns: auto auto; }
+  #tab-profile .profile-account-meta > span:nth-child(2) { grid-column: 1 / -1; grid-row: 2; }
+  #tab-profile .profile-sharing-grid { grid-template-columns: minmax(0,1fr) minmax(0,1fr); }
+}
+@media (max-width: 639px) {
+  #tab-profile { --profile-gap: 20px; }
+  #tab-profile .profile-account-actions, #tab-profile .profile-account-actions .btn { width: 100%; }
+  #tab-profile .profile-overview { grid-template-columns: minmax(0,1fr); }
+  #tab-profile .profile-history, #tab-profile .profile-fields { grid-template-columns: minmax(0,1fr); gap: 20px; }
+  #tab-profile .profile-sharing-grid > div, #tab-profile .profile-skills { padding: 20px; }
+  #tab-profile .profile-save-actions .btn { width: 100%; }
+  #tab-profile #uploadStages { grid-template-columns: minmax(0,1fr); gap: 6px; }
+  #tab-profile .profile-upload > div:first-child, #tab-profile .profile-upload > div:last-child > div:first-child { flex-wrap: wrap; gap: 8px; }
+}
