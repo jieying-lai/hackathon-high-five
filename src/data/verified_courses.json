@@ -1,0 +1,83 @@
+{
+  "Python Data Analysis": {
+    "title": "Data Analysis with Python",
+    "provider": "freeCodeCamp",
+    "hours": 12,
+    "cost_type": "Free",
+    "malaysia_badge": "Open Global Certificate",
+    "sdg": "SDG 4.4",
+    "url": "https://www.freecodecamp.org/learn/data-analysis-with-python/"
+  },
+  "AI Risk Model Auditing": {
+    "title": "AI & Law / Responsible AI Governance",
+    "provider": "Coursera (Lund University)",
+    "hours": 10,
+    "cost_type": "Free Audit / HRD Corp Eligible",
+    "malaysia_badge": "🇲🇾 HRD Corp Claimable Track",
+    "sdg": "SDG 8.2",
+    "url": "https://www.coursera.org/learn/ai-and-law"
+  },
+  "ESG & Carbon Reporting Standards": {
+    "title": "Introduction to Sustainability & ESG Reporting",
+    "provider": "Coursera (University of Illinois)",
+    "hours": 14,
+    "cost_type": "Free Audit",
+    "malaysia_badge": "Green Skills Priority",
+    "sdg": "SDG 12.6",
+    "url": "https://www.coursera.org/learn/sustainability"
+  },
+  "Prompt Engineering": {
+    "title": "ChatGPT Prompt Engineering for Developers",
+    "provider": "DeepLearning.AI",
+    "hours": 2,
+    "cost_type": "Free",
+    "malaysia_badge": "🇲🇾 MDEC Digital Skills",
+    "sdg": "SDG 4.4",
+    "url": "https://www.deeplearning.ai/short-courses/chatgpt-prompt-engineering-for-developers/"
+  },
+  "AI Workflow Automation (Make/Zapier)": {
+    "title": "AI Automation & No-Code Workflows for Business",
+    "provider": "DeepLearning.AI",
+    "hours": 6,
+    "cost_type": "Free / Low-Cost",
+    "malaysia_badge": "🇲🇾 HRD Corp Claimable Track",
+    "sdg": "SDG 8.2",
+    "url": "https://www.deeplearning.ai/short-courses/"
+  },
+  "AI Copyright & Ethics Governance": {
+    "title": "Ethics of Artificial Intelligence",
+    "provider": "Coursera (Politecnico di Milano)",
+    "hours": 8,
+    "cost_type": "Free Audit",
+    "malaysia_badge": "Responsible AI Badge",
+    "sdg": "SDG 10.2",
+    "url": "https://www.coursera.org/learn/ethics-of-ai"
+  },
+  "LLM Orchestration (LangChain/LlamaIndex)": {
+    "title": "LangChain for LLM Application Development",
+    "provider": "DeepLearning.AI",
+    "hours": 4,
+    "cost_type": "Free",
+    "malaysia_badge": "🇲🇾 MDEC Premier Digital Tech",
+    "sdg": "SDG 9.5",
+    "url": "https://www.deeplearning.ai/short-courses/langchain-for-llm-application-development/"
+  },
+  "Vector Databases & RAG": {
+    "title": "Building and Evaluating Advanced RAG Applications",
+    "provider": "DeepLearning.AI",
+    "hours": 4,
+    "cost_type": "Free",
+    "malaysia_badge": "Open Global Resource",
+    "sdg": "SDG 9.5",
+    "url": "https://www.deeplearning.ai/short-courses/building-evaluating-advanced-rag/"
+  },
+  "AI Guardrails & Evaluation": {
+    "title": "Quality and Safety for LLM Applications",
+    "provider": "DeepLearning.AI",
+    "hours": 3,
+    "cost_type": "Free",
+    "malaysia_badge": "🇲🇾 HRD Corp Claimable Track",
+    "sdg": "SDG 8.2",
+    "url": "https://www.deeplearning.ai/short-courses/quality-safety-llm-applications/"
+  }
+}

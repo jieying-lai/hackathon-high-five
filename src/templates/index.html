@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CareerLens AI — Future-Ready Workforce & Reskilling Platform (Domain 1)</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-slate-950 text-slate-100 min-h-screen font-sans">
+  <!-- Top Navbar -->
+  <header class="border-b border-slate-800 bg-slate-900/80 backdrop-blur sticky top-0 z-30">
+    <div class="max-w-7xl mx-auto px-4 py-3 flex flex-wrap items-center justify-between gap-4">
+      <div class="flex items-center gap-3">
+        <div class="h-10 w-10 rounded-xl bg-indigo-600 flex items-center justify-center font-bold text-lg shadow-lg shadow-indigo-600/30">CL</div>
+        <div>
+          <h1 class="font-bold text-lg tracking-tight text-white">CareerLens AI <span class="text-xs font-medium bg-indigo-500/20 text-indigo-300 border border-indigo-500/30 px-2 py-0.5 rounded-full ml-2">Domain 1 · Aiversecity</span></h1>
+          <p class="text-xs text-slate-400">AI-Trend Signal Radar · Explainable Role Matching · SDG Reskilling Pathways</p>
+        </div>
+      </div>
+
+      <!-- What-If Scenario Toggle (Must-Have #6: Handling Uncertainty) -->
+      <div class="flex items-center gap-3 bg-slate-800/90 border border-slate-700 rounded-xl px-3 py-1.5">
+        <span class="text-xs font-semibold text-amber-300">⚡ What-If AI Scenario:</span>
+        <select id="scenarioSelect" onchange="runFullAnalysis()" class="bg-slate-900 text-xs text-white border border-slate-600 rounded-lg px-2.5 py-1 focus:outline-none focus:border-indigo-500">
+          <option value="moderate">🐢 Moderate AI Adoption (Co-Pilot Era)</option>
+          <option value="fast">🚀 Fast AI Disruption (Aggressive Automation)</option>
+        </select>
+      </div>
+
+      <!-- Lens Switcher (Individual vs Employer HR Heatmap) -->
+      <div class="flex rounded-xl bg-slate-800 p-1 border border-slate-700 text-xs font-medium">
+        <button id="tabIndividualBtn" onclick="switchTab('individual')" class="px-3 py-1.5 rounded-lg bg-indigo-600 text-white transition">👤 Individual Talent Lens</button>
+        <button id="tabHrBtn" onclick="switchTab('hr')" class="px-3 py-1.5 rounded-lg text-slate-300 hover:text-white transition">🏢 Employer HR Heatmap Lens</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-7xl mx-auto px-4 py-6 space-y-6">
+    <!-- INDIVIDUAL TALENT VIEW -->
+    <div id="individualView" class="space-y-6">
+      <!-- Top Row: Step 1 Profile Intake + Step 2 Live AI Trend Signal Radar -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+        <!-- STEP 1: Profile Intake -->
+        <section class="lg:col-span-5 bg-slate-900 border border-slate-800 rounded-2xl p-5 space-y-4">
+          <div class="flex items-center justify-between">
+            <h2 class="text-sm font-bold uppercase tracking-wider text-indigo-400">Step 1 · Skills Profile Intake</h2>
+            <span class="text-[11px] text-emerald-400 bg-emerald-500/10 border border-emerald-500/30 px-2 py-0.5 rounded-md">Synthetic Data Ready</span>
+          </div>
+
+          <!-- 1-Click Demo Personas -->
+          <div>
+            <label class="text-xs text-slate-400 block mb-1.5">Load Demo Persona (Traditional & Tech Workers):</label>
+            <div id="personaButtons" class="grid grid-cols-1 sm:grid-cols-3 gap-2"></div>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+            <div>
+              <label class="text-slate-400 block mb-1">Name / Persona</label>
+              <input id="inputName" type="text" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-white" />
+            </div>
+            <div>
+              <label class="text-slate-400 block mb-1">Industry Sector</label>
+              <select id="inputIndustry" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-white">
+                <option value="Finance & Accounting">🏦 Finance & Accounting</option>
+                <option value="Marketing & PR">📢 Marketing & PR</option>
+                <option value="IT & Software">💻 IT & Software</option>
+                <option value="HR & Administration">👥 HR & Administration</option>
+              </select>
+            </div>
+            <div>
+              <label class="text-slate-400 block mb-1">Current Role</label>
+              <input id="inputRole" type="text" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-white" />
+            </div>
+            <div>
+              <label class="text-slate-400 block mb-1">Work Mode Preference</label>
+              <select id="inputWorkMode" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-white">
+                <option value="Hybrid">Hybrid (Malaysia)</option>
+                <option value="Remote">Remote (Global / SEA)</option>
+                <option value="On-site">On-site</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="text-xs">
+            <label class="text-slate-400 block mb-1">Current Skills (comma-separated — extracted from CV / Form):</label>
+            <textarea id="inputSkills" rows="2" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-white"></textarea>
+          </div>
+
+          <button onclick="runFullAnalysis()" class="w-full bg-indigo-600 hover:bg-indigo-500 text-white font-semibold text-xs py-2.5 rounded-xl shadow-lg shadow-indigo-600/30 transition">
+            🔍 Analyze Profile, Match Future Roles & Generate Reskilling Pathway
+          </button>
+        </section>
+
+        <!-- STEP 2: Updatable AI-Trend Signal Layer -->
+        <section class="lg:col-span-7 bg-slate-900 border border-slate-800 rounded-2xl p-5 space-y-4">
+          <div class="flex flex-wrap items-center justify-between gap-2">
+            <div>
+              <h2 class="text-sm font-bold uppercase tracking-wider text-indigo-400">Step 2 · Live AI-Trend Signal Layer</h2>
+              <p id="trendSourceBadge" class="text-[11px] text-slate-400 mt-0.5">Loading live signal metadata...</p>
+            </div>
+            <span id="trendStatusPill" class="text-[11px] px-2.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">LIVE API</span>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="bg-slate-950/60 border border-slate-800 rounded-xl p-3.5">
+              <h3 class="text-xs font-semibold text-emerald-400 mb-2">📈 Rising Future Skills Forecast</h3>
+              <div id="emergingSkillsList" class="space-y-2.5 text-xs"></div>
+            </div>
+            <div class="bg-slate-950/60 border border-slate-800 rounded-xl p-3.5">
+              <h3 class="text-xs font-semibold text-rose-400 mb-2">⚠️ Routine Tasks at Automation Risk</h3>
+              <div id="decliningTasksList" class="space-y-2.5 text-xs"></div>
+            </div>
+          </div>
+
+          <div class="bg-slate-950/60 border border-slate-800 rounded-xl p-3">
+            <h3 class="text-[11px] font-semibold text-slate-300 mb-1.5">📰 Latest Updatable AI Research Signals (ArXiv CS.AI Feed):</h3>
+            <ul id="arxivPapersList" class="text-[11px] text-slate-400 space-y-1 list-disc list-inside"></ul>
+          </div>
+        </section>
+      </div>
+
+      <!-- STEP 3 & 4: Explainable Role Matches + Ordered Reskilling Pathway + Personalized Quiz -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+        <!-- Left 7 cols: Ranked Future Roles & Explainable Breakdown -->
+        <section class="lg:col-span-7 space-y-4">
+          <div class="flex items-center justify-between">
+            <h2 class="text-sm font-bold uppercase tracking-wider text-indigo-400">Step 3 · Explainable Future-Role Matches & Skills Gap</h2>
+            <span id="fairnessBadge" class="text-[11px] bg-teal-500/10 text-teal-300 border border-teal-500/30 px-2.5 py-0.5 rounded-full">⚖️ Fairness Audited</span>
+          </div>
+          <div id="rolesContainer" class="space-y-4"></div>
+        </section>
+
+        <!-- Right 5 cols: Step 4 Ordered Reskilling Pathway & CareerLens 3-Q Skill Verification -->
+        <section class="lg:col-span-5 space-y-6">
+          <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 space-y-4">
+            <div class="flex items-center justify-between">
+              <h2 class="text-sm font-bold uppercase tracking-wider text-indigo-400">Step 4 · Personalised Reskilling Pathway</h2>
+              <span id="pathwayHoursBadge" class="text-xs font-semibold text-amber-300"></span>
+            </div>
+            <p class="text-xs text-slate-400">Grounded strictly in verified MOOCs & 🇲🇾 <strong>HRD Corp / MDEC</strong> programmes (zero hallucinated URLs):</p>
+            <div id="pathwayContainer" class="space-y-3"></div>
+          </div>
+
+          <!-- CareerLens AI Personalized Skill Verification Questions -->
+          <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 space-y-3">
+            <h2 class="text-sm font-bold uppercase tracking-wider text-indigo-400">🎯 CareerLens AI · Skill Verification Questions</h2>
+            <p class="text-xs text-slate-400">Generated from your profile to confirm practical depth and transferable readiness:</p>
+            <div id="quizContainer" class="space-y-2.5 text-xs"></div>
+          </div>
+        </section>
+      </div>
+    </div>
+
+    <!-- EMPLOYER / HR WORKFORCE HEATMAP VIEW (Bonus Good-to-Have) -->
+    <div id="hrView" class="hidden space-y-6">
+      <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 space-y-4">
+        <div class="flex flex-wrap items-center justify-between gap-2">
+          <div>
+            <h2 class="text-base font-bold text-white">🏢 Employer / HR Workforce Skills-Gap Heatmap & Internal Mobility View</h2>
+            <p class="text-xs text-slate-400">Helps HR & L&D managers reskill existing teams into future roles rather than replacing workers (Aligned with SDG 4.3 & SDG 8.5).</p>
+          </div>
+          <span class="text-xs bg-indigo-500/20 text-indigo-300 border border-indigo-500/30 px-3 py-1 rounded-full">Human-in-the-Loop Governance</span>
+        </div>
+
+        <div class="overflow-x-auto">
+          <table class="w-full text-left border-collapse text-xs">
+            <thead>
+              <tr class="border-b border-slate-800 text-slate-400">
+                <th class="py-3 px-4">Employee / Synthetic Profile</th>
+                <th class="py-3 px-4">Current Role</th>
+                <th class="py-3 px-4">Top Recommended Future Role</th>
+                <th class="py-3 px-4">Transferable Readiness</th>
+                <th class="py-3 px-4">Priority Skills Gap to Train</th>
+                <th class="py-3 px-4">HR Action (Human Decision)</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-800/70">
+              <tr>
+                <td class="py-3 px-4 font-semibold text-white">Aisha Rahman</td>
+                <td class="py-3 px-4 text-slate-300">Junior Financial Auditor</td>
+                <td class="py-3 px-4 text-indigo-300 font-medium">AI Financial Compliance & ESG Auditor</td>
+                <td class="py-3 px-4"><span class="bg-emerald-500/20 text-emerald-300 px-2 py-0.5 rounded">82% Match</span></td>
+                <td class="py-3 px-4 text-amber-300">Python Data Analysis, AI Risk Model Auditing</td>
+                <td class="py-3 px-4"><span class="bg-indigo-600/30 border border-indigo-500/40 text-indigo-200 px-2.5 py-1 rounded-lg">Approve HRD Corp 36h Reskilling</span></td>
+              </tr>
+              <tr>
+                <td class="py-3 px-4 font-semibold text-white">Jason Lim</td>
+                <td class="py-3 px-4 text-slate-300">Digital Copywriter</td>
+                <td class="py-3 px-4 text-indigo-300 font-medium">Generative AI Marketing Architect</td>
+                <td class="py-3 px-4"><span class="bg-emerald-500/20 text-emerald-300 px-2 py-0.5 rounded">80% Match</span></td>
+                <td class="py-3 px-4 text-amber-300">Prompt Engineering, AI Workflow Automation</td>
+                <td class="py-3 px-4"><span class="bg-indigo-600/30 border border-indigo-500/40 text-indigo-200 px-2.5 py-1 rounded-lg">Assign 16h MDEC Track</span></td>
+              </tr>
+              <tr>
+                <td class="py-3 px-4 font-semibold text-white">Kavin Raj</td>
+                <td class="py-3 px-4 text-slate-300">CS Fresh Graduate</td>
+                <td class="py-3 px-4 text-indigo-300 font-medium">AI Agent & RAG Systems Engineer</td>
+                <td class="py-3 px-4"><span class="bg-emerald-500/20 text-emerald-300 px-2 py-0.5 rounded">85% Match</span></td>
+                <td class="py-3 px-4 text-amber-300">LangChain/LlamaIndex, Vector DB & RAG</td>
+                <td class="py-3 px-4"><span class="bg-teal-600/30 border border-teal-500/40 text-teal-200 px-2.5 py-1 rounded-lg">Fast-Track Technical Interview</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    let personas = [];
+    let currentRoles = [];
+
+    function switchTab(tab) {
+      const indView = document.getElementById('individualView');
+      const hrView = document.getElementById('hrView');
+      const indBtn = document.getElementById('tabIndividualBtn');
+      const hrBtn = document.getElementById('tabHrBtn');
+      if (tab === 'individual') {
+        indView.classList.remove('hidden');
+        hrView.classList.add('hidden');
+        indBtn.className = 'px-3 py-1.5 rounded-lg bg-indigo-600 text-white transition';
+        hrBtn.className = 'px-3 py-1.5 rounded-lg text-slate-300 hover:text-white transition';
+      } else {
+        indView.classList.add('hidden');
+        hrView.classList.remove('hidden');
+        hrBtn.className = 'px-3 py-1.5 rounded-lg bg-indigo-600 text-white transition';
+        indBtn.className = 'px-3 py-1.5 rounded-lg text-slate-300 hover:text-white transition';
+      }
+    }
+
+    async function initApp() {
+      const res = await fetch('/api/personas');
+      personas = await res.json();
+      const btnContainer = document.getElementById('personaButtons');
+      btnContainer.innerHTML = personas.map((p, idx) => `
+        <button onclick="selectPersona(${idx})" class="text-left bg-slate-800 hover:bg-slate-700 border border-slate-700 rounded-xl p-2 transition">
+          <div class="font-semibold text-xs text-white truncate">${p.name.split(' (')[0]}</div>
+          <div class="text-[10px] text-indigo-300 truncate">${p.current_role}</div>
+        </button>
+      `).join('');
+      selectPersona(0);
+    }
+
+    function selectPersona(idx) {
+      const p = personas[idx];
+      document.getElementById('inputName').value = p.name;
+      document.getElementById('inputIndustry').value = p.industry;
+      document.getElementById('inputRole').value = p.current_role;
+      document.getElementById('inputWorkMode').value = p.work_mode_preference;
+      document.getElementById('inputSkills').value = p.skills.join(', ');
+      runFullAnalysis();
+    }
+
+    async function runFullAnalysis() {
+      const scenario = document.getElementById('scenarioSelect').value;
+
+      // 1. Fetch Live Trend Signal Layer
+      const trendRes = await fetch(`/api/trends?scenario=${scenario}`);
+      const trendData = await trendRes.json();
+
+      document.getElementById('trendSourceBadge').textContent =
+        `📌 Source: ${trendData.signal_metadata.source_name}  |  📅 Updated: ${trendData.signal_metadata.last_updated}`;
+      document.getElementById('trendStatusPill').textContent = trendData.signal_metadata.live_status;
+
+      document.getElementById('emergingSkillsList').innerHTML = trendData.emerging_skills.map(s => `
+        <div>
+          <div class="flex justify-between mb-0.5">
+            <span class="text-slate-200 font-medium">${s.skill}</span>
+            <span class="text-emerald-400 font-bold">+${s.growth_pct}% (${s.sdg})</span>
+          </div>
+          <div class="w-full bg-slate-800 h-1.5 rounded-full overflow-hidden">
+            <div class="bg-emerald-500 h-full" style="width: ${Math.min(100, s.growth_pct)}%"></div>
+          </div>
+        </div>
+      `).join('');
+
+      document.getElementById('decliningTasksList').innerHTML = trendData.declining_tasks.map(t => `
+        <div>
+          <div class="flex justify-between mb-0.5">
+            <span class="text-slate-300">${t.task}</span>
+            <span class="text-rose-400 font-bold">${t.automation_risk_pct}% Risk</span>
+          </div>
+          <div class="w-full bg-slate-800 h-1.5 rounded-full overflow-hidden">
+            <div class="bg-rose-500 h-full" style="width: ${t.automation_risk_pct}%"></div>
+          </div>
+        </div>
+      `).join('');
+
+      document.getElementById('arxivPapersList').innerHTML = trendData.signal_metadata.recent_signals.map(p => `
+        <li><span class="text-indigo-300">[${p.published}]</span> ${p.title}</li>
+      `).join('');
+
+      // 2. Analyze Profile & Match Roles
+      const profile = {
+        name: document.getElementById('inputName').value,
+        industry: document.getElementById('inputIndustry').value,
+        current_role: document.getElementById('inputRole').value,
+        work_mode_preference: document.getElementById('inputWorkMode').value,
+        skills: document.getElementById('inputSkills').value.split(',').map(s => s.trim()).filter(Boolean)
+      };
+
+      const matchRes = await fetch('/api/analyze', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ profile, scenario })
+      });
+      const matchData = await matchRes.json();
+      currentRoles = matchData.recommended_roles;
+
+      renderRoles(currentRoles);
+      renderPathway(0);
+      renderQuiz(matchData.verification_questions);
+    }
+
+    function renderRoles(roles) {
+      const container = document.getElementById('rolesContainer');
+      container.innerHTML = roles.map((r, idx) => `
+        <div onclick="renderPathway(${idx})" class="cursor-pointer bg-slate-900 hover:border-indigo-500/60 border ${idx === 0 ? 'border-indigo-500' : 'border-slate-800'} rounded-2xl p-4 space-y-3 transition">
+          <div class="flex flex-wrap items-start justify-between gap-2">
+            <div>
+              <span class="text-[10px] font-bold uppercase px-2 py-0.5 rounded bg-indigo-500/20 text-indigo-300">${r.industry}</span>
+              <h3 class="text-base font-bold text-white mt-1">${idx + 1}. ${r.title}</h3>
+            </div>
+            <div class="text-right">
+              <div class="text-2xl font-extrabold text-emerald-400">${r.match_score}% <span class="text-xs font-normal text-slate-400">Match</span></div>
+              <div class="text-[11px] text-amber-300">Market Demand Signal: ${r.demand_outlook}/100</div>
+            </div>
+          </div>
+
+          <!-- Explainable Breakdown Bar -->
+          <div class="bg-slate-950/80 border border-slate-800 rounded-xl p-3 text-xs space-y-1.5">
+            <div class="font-semibold text-slate-300">🔍 Explainable Match Score Breakdown:</div>
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 text-[11px]">
+              <div class="bg-slate-900 p-2 rounded border border-slate-800">✅ Core Skills: <span class="text-emerald-400 font-bold">+${r.explainable_breakdown.core_skills_match_pct}%</span></div>
+              <div class="bg-slate-900 p-2 rounded border border-slate-800">🔄 Transferable: <span class="text-indigo-400 font-bold">+${r.explainable_breakdown.transferable_skills_pct}%</span></div>
+              <div class="bg-slate-900 p-2 rounded border border-slate-800">🏢 Sector Fit: <span class="text-sky-400 font-bold">+${r.explainable_breakdown.industry_alignment_pct}%</span></div>
+              <div class="bg-slate-900 p-2 rounded border border-slate-800">📍 Work Mode: <span class="text-teal-400 font-bold">+${r.explainable_breakdown.work_mode_fit_pct}%</span></div>
+            </div>
+          </div>
+
+          <!-- Skills Gap & SDG Mapping -->
+          <div class="flex flex-wrap items-center justify-between gap-2 text-xs">
+            <div>
+              <span class="text-slate-400">Missing Skills Gap: </span>
+              ${r.skills_gap.map(g => `<span class="inline-block bg-rose-500/15 text-rose-300 border border-rose-500/30 px-2 py-0.5 rounded mr-1 mb-1">❌ ${g}</span>`).join('')}
+            </div>
+            <div class="flex flex-wrap gap-1">
+              ${r.sdg_tags.map(s => `<span title="${s.reason}" class="bg-emerald-500/15 text-emerald-300 border border-emerald-500/30 px-2 py-0.5 rounded text-[11px] font-medium">🌱 ${s.code}: ${s.name}</span>`).join('')}
+            </div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function renderPathway(roleIdx) {
+      const role = currentRoles[roleIdx];
+      if (!role) return;
+      document.getElementById('pathwayHoursBadge').textContent = `⏳ Est. Total: ${role.estimated_total_hours} Hours`;
+      const container = document.getElementById('pathwayContainer');
+      if (!role.ordered_pathway.length) {
+        container.innerHTML = `<div class="text-xs text-emerald-400">🎉 You already match all core skills for ${role.title}!</div>`;
+        return;
+      }
+      container.innerHTML = role.ordered_pathway.map(step => `
+        <div class="bg-slate-950/80 border border-slate-800 rounded-xl p-3.5 space-y-1.5 text-xs">
+          <div class="flex items-center justify-between">
+            <span class="font-bold text-indigo-400">${step.phase} · ${step.target_skill}</span>
+            <span class="text-[10px] bg-amber-500/20 text-amber-300 px-2 py-0.5 rounded">${step.hours} hrs · ${step.cost_type}</span>
+          </div>
+          <div class="font-semibold text-white">${step.course_title} <span class="text-slate-400 font-normal">(${step.provider})</span></div>
+          <div class="flex items-center justify-between pt-1">
+            <span class="text-[11px] text-emerald-300">${step.malaysia_badge} · ${step.sdg}</span>
+            <a href="${step.url}" target="_blank" rel="noopener" class="text-indigo-400 hover:underline font-medium">Open Verified Course ↗</a>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function renderQuiz(questions) {
+      document.getElementById('quizContainer').innerHTML = questions.map((q, i) => `
+        <div class="bg-slate-950/70 border border-slate-800 rounded-xl p-3 space-y-1">
+          <div class="text-[11px] font-bold text-indigo-300">Q${i + 1} · Testing: ${q.skill_tested}</div>
+          <div class="text-slate-200">${q.question}</div>
+          <div class="text-[10px] text-slate-500">${q.purpose}</div>
+        </div>
+      `).join('');
+    }
+
+    initApp();
+  </script>
+</body>
+</html>

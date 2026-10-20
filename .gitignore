@@ -1,0 +1,15 @@
+# Python
+__pycache__/
+*.py[cod]
+venv/
+.venv/
+
+# Environment
+.env
+
+# OS / Editor / Local Planning Docs
+.DS_Store
+.vscode/
+.idea/
+~$*
+SDC_Hackathon_2026_Master_Plan_and_Setup_Guide.docx

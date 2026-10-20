@@ -1,0 +1,41 @@
+[
+  {
+    "id": "accountant_aisha",
+    "name": "Aisha Rahman (Synthetic Profile)",
+    "persona_type": "Career Changer / At Risk of AI Displacement",
+    "industry": "Finance & Accounting",
+    "current_role": "Junior Financial Auditor",
+    "years_experience": 3,
+    "education": "B.Acc (Bachelor of Accounting), University of Malaya",
+    "work_mode_preference": "Hybrid",
+    "location": "Kuala Lumpur, Malaysia",
+    "skills": ["Financial Auditing", "Excel Pivot & Macros", "Tax Compliance", "SQL Basics", "Risk Assessment", "Financial Reporting"],
+    "summary": "3 years experience in statutory audit, invoice reconciliation, and corporate tax compliance. Looking to transition into AI-augmented financial risk and ESG sustainability analytics."
+  },
+  {
+    "id": "marketing_jason",
+    "name": "Jason Lim (Synthetic Profile)",
+    "persona_type": "Working Adult Upskilling",
+    "industry": "Marketing & PR",
+    "current_role": "Digital Copywriter & Social Media Executive",
+    "years_experience": 2,
+    "education": "B.A. in Mass Communication, Xiamen University Malaysia",
+    "work_mode_preference": "Remote",
+    "location": "Selangor, Malaysia",
+    "skills": ["Copywriting", "SEO Content Strategy", "Canva & Basic Design", "Google Analytics", "Social Media Campaigns", "Bilingual Communication"],
+    "summary": "Creative copywriter managing multi-channel campaigns. Wants to master Generative AI workflow automation and AI brand governance."
+  },
+  {
+    "id": "cs_grad_kavin",
+    "name": "Kavin Raj (Synthetic Profile)",
+    "persona_type": "Fresh Graduate",
+    "industry": "IT & Software",
+    "current_role": "Final-Year Computer Science Student",
+    "years_experience": 0,
+    "education": "B.Sc. in Computer Science, USM (Graduating 2026)",
+    "work_mode_preference": "Hybrid",
+    "location": "Penang / Kuala Lumpur",
+    "skills": ["Python", "SQL", "HTML/CSS/JS", "Git", "REST APIs", "Data Structures"],
+    "summary": "Built a university capstone web app using Python and SQL. Seeking a high-growth AI engineering or sustainability data role."
+  }
+]

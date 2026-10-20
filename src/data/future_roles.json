@@ -1,0 +1,58 @@
+[
+  {
+    "role_id": "ai_fin_compliance",
+    "title": "AI Financial Compliance & ESG Risk Auditor",
+    "industry": "Finance & Accounting",
+    "rising_demand_base": 88,
+    "fast_ai_boost": 8,
+    "work_modes": ["Hybrid", "Remote"],
+    "core_skills": ["Financial Auditing", "Risk Assessment", "Python Data Analysis", "AI Risk Model Auditing", "ESG & Carbon Reporting Standards"],
+    "transferable_from": ["Excel Pivot & Macros", "Tax Compliance", "SQL Basics", "Financial Reporting"],
+    "sdg_tags": [
+      {"code": "SDG 8.2", "name": "Decent Work & Economic Productivity", "reason": "Transitions routine auditors into high-value AI governance specialists."},
+      {"code": "SDG 12.6", "name": "Responsible Corporate Sustainability Reporting", "reason": "Uses AI to verify corporate ESG and carbon disclosures."}
+    ]
+  },
+  {
+    "role_id": "genai_growth_architect",
+    "title": "Generative AI Marketing & Workflow Architect",
+    "industry": "Marketing & PR",
+    "rising_demand_base": 85,
+    "fast_ai_boost": 10,
+    "work_modes": ["Remote", "Hybrid"],
+    "core_skills": ["Copywriting", "SEO Content Strategy", "Prompt Engineering", "AI Workflow Automation (Make/Zapier)", "AI Copyright & Ethics Governance"],
+    "transferable_from": ["Google Analytics", "Social Media Campaigns", "Bilingual Communication"],
+    "sdg_tags": [
+      {"code": "SDG 8.5", "name": "Full and Productive Employment", "reason": "Protects creative workers from displacement via human-AI co-creation."},
+      {"code": "SDG 10.2", "name": "Social & Economic Inclusion", "reason": "Enables multilingual inclusive outreach for local SMEs."}
+    ]
+  },
+  {
+    "role_id": "ai_agent_engineer",
+    "title": "AI Agent & RAG Systems Engineer",
+    "industry": "IT & Software",
+    "rising_demand_base": 94,
+    "fast_ai_boost": 5,
+    "work_modes": ["Remote", "Hybrid", "On-site"],
+    "core_skills": ["Python", "SQL", "REST APIs", "LLM Orchestration (LangChain/LlamaIndex)", "Vector Databases & RAG", "AI Guardrails & Evaluation"],
+    "transferable_from": ["HTML/CSS/JS", "Git", "Data Structures"],
+    "sdg_tags": [
+      {"code": "SDG 4.4", "name": "Skills for Employment & Decent Jobs", "reason": "Builds core digital infrastructure for Malaysia's AI economy."},
+      {"code": "SDG 9.5", "name": "Enhance Technological Capabilities", "reason": "Accelerates industrial innovation and safe AI deployment."}
+    ]
+  },
+  {
+    "role_id": "workforce_reskilling_architect",
+    "title": "AI Workforce Reskilling & People Analytics Specialist",
+    "industry": "HR & Administration",
+    "rising_demand_base": 84,
+    "fast_ai_boost": 9,
+    "work_modes": ["Hybrid", "On-site"],
+    "core_skills": ["Skills Architecture Mapping", "AI Bias & Fairness Auditing", "Change Management", "People Data Analytics"],
+    "transferable_from": ["Risk Assessment", "Bilingual Communication", "Excel Pivot & Macros"],
+    "sdg_tags": [
+      {"code": "SDG 4.3", "name": "Lifelong Technical & Vocational Learning", "reason": "Designs continuous reskilling pathways for workers at risk."},
+      {"code": "SDG 8.5", "name": "Decent Work for All", "reason": "Ensures fair, bias-free internal mobility."}
+    ]
+  }
+]
