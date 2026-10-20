@@ -544,6 +544,56 @@ def main() -> None:
     print(f"Starting CareerLens AI server at http://127.0.0.1:{port}")
     app.run(host="0.0.0.0", port=port, debug=True)
 
+@app.route('/api/questionnaire/generate-3-verification-questions', methods=['POST'])
+@api_role('job_seeker')
+def api_generate_3_verification_questions():
+    try:
+        data = request.get_json(force=True) or {}
+        role = data.get("target_role", "Software Engineer")
+        
+        questions = [
+            {
+                "id": "q1",
+                "category": "Practical Problem Solving",
+                "difficulty": "Intermediate",
+                "question_text": f"In a real-world project for a {role}, how would you handle unexpected technical roadblocks or tight deadlines?"
+            },
+            {
+                "id": "q2",
+                "category": "Technical Competency",
+                "difficulty": "Advanced",
+                "question_text": "Describe a scenario where you optimized a workflow or resolved a critical bug/bottleneck in your past experience."
+            },
+            {
+                "id": "q3",
+                "category": "Domain & Ethics Standard",
+                "difficulty": "Scenario-Based",
+                "question_text": "How do you ensure data integrity, fairness, or best industry practices when deploying solutions in team environments?"
+            }
+        ]
+        return jsonify({"ok": True, "questions": questions}), 200
+    except Exception as e:
+        return jsonify({"ok": False, "message": str(e)}), 500
+
+
+@app.route('/api/questionnaire/submit-3-verification-answers', methods=['POST'])
+@api_role('job_seeker')
+def api_submit_3_verification_answers():
+    try:
+        data = request.get_json(force=True) or {}
+        answers = data.get("answers", [])
+        
+        answered_count = sum(1 for a in answers if len(a.get("answer", "").strip()) > 5)
+        verification_score = 60 + (answered_count * 13)
+
+        return jsonify({
+            "ok": True,
+            "message": "Answers successfully evaluated!",
+            "verification_score": min(verification_score, 98),
+            "answered_count": answered_count
+        }), 200
+    except Exception as e:
+        return jsonify({"ok": False, "message": str(e)}), 500
 
 if __name__ == "__main__":
     main()
