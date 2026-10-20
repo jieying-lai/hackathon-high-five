@@ -147,6 +147,13 @@
     <aside id="insight" class="slideover p-6 sm:p-8 space-y-6"></aside>
   </div>
 
+  <!-- Organised CV & Original PDF Modal (Application-Gated) -->
+  <div id="orgCvWrap" class="hidden">
+    <div class="overlay" onclick="closeOrgCvModal()">
+      <div id="orgCvModal" class="modal p-6 sm:p-8 space-y-5 max-w-3xl w-full max-h-[88vh] overflow-y-auto" onclick="event.stopPropagation()"></div>
+    </div>
+  </div>
+
   <script src="/static/js/common.js"></script>
   <script>
     const NAV = [
@@ -247,22 +254,43 @@
       scrn = r.ok ? r.data : null; renderScreen();
     }
     function renderScreen() {
-      if (!scrn) { scSummary.innerHTML = ''; scRows.innerHTML = '<tr><td colspan="8" class="p-10 text-center text-slate-500">Create or select a vacancy to scrn candidates.</td></tr>'; fairNote.textContent = ''; return; }
+      if (!scrn) { scSummary.innerHTML = ''; scRows.innerHTML = '<tr><td colspan="8" class="p-10 text-center text-slate-500">Create or select a vacancy to screen candidates.</td></tr>'; fairNote.textContent = ''; return; }
       const sum = scrn.summary.by_action;
-      const tiles = [['Candidates', scrn.summary.total, 'indigo'], ['Priority review', sum['Priority human review'] || 0, 'teal'], ['Confirm skills', sum['Confirm skills with follow-up'] || 0, 'sky'], ['Average match', scrn.summary.average_score + '%', 'amber']];
+      const tiles = [
+        ['Total screened', scrn.summary.total, 'indigo'],
+        ['Direct applicants (CV shared)', scrn.summary.applied_count || 0, 'emerald'],
+        ['Priority review', sum['Priority human review'] || 0, 'teal'],
+        ['Average match', scrn.summary.average_score + '%', 'amber'],
+      ];
       scSummary.innerHTML = tiles.map(t => `<div class="tint tint-${t[2]} rounded-2xl p-4"><div class="text-[11px] font-bold text-slate-500">${t[0]}</div><div class="text-3xl font-extrabold mt-1">${t[1]}</div></div>`).join('');
       const rows = scrn.results.filter(r => typeFilter === 'All' || r.type === typeFilter);
       scRows.innerHTML = rows.length ? rows.map((r, i) => {
         const dec = decisions[decKey(scrn.vacancy.id, r.candidate_id)] || 'Pending';
-        return `<tr class="hover:bg-teal-50/40 transition">
+        const appliedBadges = r.is_applied_user
+          ? `<span class="chip chip-emerald">✓ Applied · ${esc(r.application_uid)}</span>
+             ${r.share_organised_cv ? '<span class="chip chip-teal">Organised CV</span>' : ''}
+             ${r.share_original_pdf ? '<span class="chip chip-indigo">Original PDF</span>' : ''}`
+          : '<span class="chip chip-slate">Anonymised benchmark pool</span>';
+        return `<tr class="${r.is_applied_user ? 'bg-emerald-50/40' : ''} hover:bg-teal-50/40 transition">
           <td class="py-3.5 px-4 font-extrabold text-slate-400">${i + 1}</td>
-          <td class="py-3.5 px-4"><div class="font-extrabold text-sm">${esc(r.name)}</div><div class="flex items-center gap-1.5 mt-0.5"><span class="chip chip-slate">${esc(r.type)}</span><span class="text-[10px] font-mono text-slate-400">${esc(r.candidate_id)}</span></div></td>
+          <td class="py-3.5 px-4">
+            <div class="font-extrabold text-sm">${esc(r.name)}</div>
+            <div class="flex flex-wrap items-center gap-1.5 mt-0.5">
+              <span class="chip chip-slate">${esc(r.type)}</span>
+              ${appliedBadges}
+            </div>
+          </td>
           <td class="py-3.5 px-4 font-bold">${r.years === 0 ? 'Fresh graduate' : r.years + ' yr' + (r.years > 1 ? 's' : '')}</td>
           <td class="py-3.5 px-4"><div class="flex items-center gap-2"><span class="font-extrabold text-sm w-10">${r.score}%</span><div class="bar flex-1 ${r.score >= 85 ? 'emerald' : r.score >= 70 ? 'teal' : r.score >= 55 ? '' : 'rose'}"><i style="width:${r.score}%"></i></div></div></td>
           <td class="py-3.5 px-4">${r.to_confirm.length ? `<div class="flex flex-wrap gap-1">${r.to_confirm.slice(0, 2).map(s => `<span class="chip chip-amber">${esc(s)}</span>`).join('')}${r.to_confirm.length > 2 ? `<span class="chip chip-slate">+${r.to_confirm.length - 2}</span>` : ''}</div>` : '<span class="chip chip-emerald">All covered</span>'}</td>
           <td class="py-3.5 px-4"><span class="chip ${TONE[r.tone]}">${esc(r.action)}</span></td>
           <td class="py-3.5 px-4"><select class="input !py-1.5 !text-[11px] !w-auto" onchange="setDecision('${r.candidate_id}',this.value)">${DECISIONS.map(d => `<option ${d === dec ? 'selected' : ''}>${d}</option>`).join('')}</select></td>
-          <td class="py-3.5 px-4"><button onclick="openInsight('${r.candidate_id}')" class="btn btn-soft !py-1.5">Insight</button></td></tr>`;
+          <td class="py-3.5 px-4">
+            <div class="flex items-center gap-1.5">
+              ${r.is_applied_user && r.share_organised_cv ? `<button onclick="openOrganisedCv(${r.application_id})" class="btn btn-hr !py-1.5 !px-2.5 !text-[11px]">📄 CV</button>` : ''}
+              <button onclick="openInsight('${r.candidate_id}')" class="btn btn-soft !py-1.5">Insight</button>
+            </div>
+          </td></tr>`;
       }).join('') : '<tr><td colspan="8" class="p-8 text-center text-slate-500">No candidates in this group.</td></tr>';
       fairNote.textContent = '⚖️ ' + scrn.fairness_note;
     }
@@ -271,14 +299,33 @@
       toast(`Marked “${value}”`);
     }
 
-    /* ---------- candidate insight ---------- */
+    /* ---------- candidate insight & application-gated CV viewer ---------- */
     function openInsight(cid) {
       const r = scrn.results.find(x => x.candidate_id === cid); if (!r) return;
       const dec = decisions[decKey(scrn.vacancy.id, cid)] || 'Pending';
+      const cvAccessBlock = r.is_applied_user ? `
+        <div class="tint tint-teal rounded-2xl p-4 space-y-2.5">
+          <div class="flex items-center justify-between">
+            <div class="text-xs font-extrabold text-teal-950">🔓 Candidate Applied · CV Access Granted</div>
+            <span class="chip chip-emerald font-mono">${esc(r.application_uid)}</span>
+          </div>
+          <p class="text-[11px] text-slate-600">This candidate explicitly applied to <b>${esc(scrn.vacancy.title)}</b> on ${esc(r.applied_at)} and consented to share their CV below.</p>
+          <div class="flex flex-wrap gap-2 pt-1">
+            ${r.share_organised_cv ? `<button onclick="openOrganisedCv(${r.application_id})" class="btn btn-hr !py-2 !text-xs">📋 View AI-Organised CV Summary</button>` : '<span class="chip chip-slate">Organised CV not shared</span>'}
+            ${r.share_original_pdf ? `<a href="/api/hr/applications/${r.application_id}/pdf" target="_blank" rel="noopener" class="btn btn-soft !py-2 !text-xs">📄 Open Original PDF CV ↗</a>` : '<span class="chip chip-slate">🔒 Original PDF withheld by candidate</span>'}
+          </div>
+        </div>
+      ` : `
+        <div class="tint tint-indigo rounded-2xl p-3.5 text-[11px] text-slate-600">
+          🔒 <b>Privacy Boundary Active:</b> This profile is from the anonymised synthetic benchmark pool. Personal organised CVs and original PDFs are only unlocked when a candidate explicitly applies to your vacancy.
+        </div>
+      `;
+
       insight.innerHTML = `
         <div class="flex items-start justify-between gap-3"><div><div class="text-[11px] font-extrabold uppercase tracking-wider text-teal-700">Candidate insight</div>
-          <h2 class="text-2xl font-extrabold">${esc(r.name)}</h2><div class="flex flex-wrap gap-1.5 mt-1"><span class="chip chip-slate">${esc(r.type)}</span><span class="chip chip-slate font-mono">${esc(r.candidate_id)}</span><span class="chip chip-pink">Synthetic profile</span></div></div>
+          <h2 class="text-2xl font-extrabold">${esc(r.name)}</h2><div class="flex flex-wrap gap-1.5 mt-1"><span class="chip chip-slate">${esc(r.type)}</span><span class="chip chip-slate font-mono">${esc(r.candidate_id)}</span>${r.is_applied_user ? '<span class="chip chip-emerald">✓ Verified Applicant</span>' : '<span class="chip chip-pink">Synthetic profile</span>'}</div></div>
           <button onclick="closeInsight()" class="text-slate-400 hover:text-slate-700 text-xl font-bold">✕</button></div>
+        ${cvAccessBlock}
         <div class="tint tint-teal rounded-2xl p-4 flex items-center gap-4"><div class="ring" style="--p:${r.score};--c:${ringColor(r.score)}"><span>${r.score}%</span></div>
           <div><div class="text-[11px] font-bold text-slate-500">Match for ${esc(scrn.vacancy.title)}</div><span class="chip ${TONE[r.tone]} mt-1">${esc(r.action)}</span></div></div>
         <div class="space-y-2.5"><div class="text-xs font-extrabold">Why this score</div>${r.breakdown.map(b => `<div><div class="flex justify-between text-[11px] mb-0.5"><span class="font-bold text-slate-600">${b.label}</span><span class="font-extrabold">${b.pts}/${b.max}</span></div><div class="bar teal"><i style="width:${Math.round(100 * b.pts / b.max)}%"></i></div></div>`).join('')}</div>
@@ -287,7 +334,7 @@
           <div class="flex flex-wrap gap-1.5">${r.to_confirm.map(s => `<span class="chip chip-amber">${esc(s)}</span>`).join('') || '<span class="chip chip-emerald">Everything required is evidenced</span>'}</div></div>
         <div class="grid grid-cols-2 gap-3 text-xs"><div class="bg-white/80 rounded-xl p-3 border"><div class="text-slate-400 text-[10px] font-bold">Salary expectation</div><div class="font-extrabold">${rm(r.salary_expectation)}</div><div class="text-[11px] text-slate-500">${esc(r.salary_fit)}</div></div>
           <div class="bg-white/80 rounded-xl p-3 border"><div class="text-slate-400 text-[10px] font-bold">Availability · Mode</div><div class="font-extrabold">${esc(r.available_in)}</div><div class="text-[11px] text-slate-500">${r.work_modes.map(esc).join(' / ')} · ${esc(r.location)}</div></div></div>
-        <div><div class="text-xs font-extrabold mb-1">Career motivation</div><p class="text-xs text-slate-600">${esc(r.motivation)}</p></div>
+        <div><div class="text-xs font-extrabold mb-1">Application note / motivation</div><p class="text-xs text-slate-600">${esc(r.motivation)}</p></div>
         <div><div class="text-xs font-extrabold mb-1">Projects on CV</div><ul class="list-disc pl-4 text-xs text-slate-600 space-y-0.5">${r.projects.map(p => `<li>${esc(p)}</li>`).join('')}</ul></div>
         <div class="space-y-2"><div class="flex items-center justify-between"><div class="text-xs font-extrabold">Suggested follow-up questions <span class="text-slate-400 font-medium">· editable</span></div><button onclick="copyQuestions()" class="btn btn-soft !py-1">Copy</button></div>
           ${r.follow_up_questions.map(q => `<textarea rows="2" class="input fq">${esc(q)}</textarea>`).join('')}</div>
@@ -298,6 +345,82 @@
     }
     function closeInsight() { insightWrap.classList.add('hidden'); }
     function decideFromInsight(cid, d) { setDecision(cid, d); renderScreen(); openInsight(cid); }
+
+    async function openOrganisedCv(appId) {
+      const r = await api(`/api/hr/applications/${appId}/cv`);
+      if (!r.ok || !r.data.ok) return toast(r.data.message || 'Access denied to CV.', 'err');
+      const ac = r.data.application_cv;
+      const st = ac.structured_cv || {};
+      orgCvModal.innerHTML = `
+        <div class="flex flex-wrap items-start justify-between gap-3 border-b border-slate-200/70 pb-4">
+          <div>
+            <div class="flex items-center gap-2">
+              <span class="chip chip-emerald font-mono">${esc(ac.application_uid)}</span>
+              <span class="chip chip-teal">Applied to ${esc(ac.vacancy_title)}</span>
+              <span class="chip chip-slate">Audit Logged</span>
+            </div>
+            <h3 class="text-2xl font-extrabold mt-1">${esc(st.full_name || ac.candidate_name)}</h3>
+            <div class="text-xs text-slate-500">${esc(st.current_role || '')} · ${esc(st.industry || '')} · ${st.years_experience || 0} yr(s) exp · ${esc(st.location || '')}</div>
+          </div>
+          <div class="flex items-center gap-2">
+            ${ac.share_original_pdf && ac.pdf_url ? `<a href="${esc(ac.pdf_url)}" target="_blank" rel="noopener" class="btn btn-hr !py-2 !text-xs">📄 Open Original PDF CV (${esc(ac.original_filename)}) ↗</a>` : '<span class="chip chip-slate">Original PDF withheld</span>'}
+            <button onclick="closeOrgCvModal()" class="text-slate-400 hover:text-slate-700 text-xl font-bold px-2">✕</button>
+          </div>
+        </div>
+
+        <div class="tint tint-teal rounded-2xl p-4 space-y-1.5">
+          <div class="text-[11px] font-extrabold uppercase tracking-wider text-teal-800">✨ AI Executive Summary (Captured from Candidate PDF)</div>
+          <p class="text-xs text-slate-700 leading-relaxed">${esc(st.executive_summary || '')}</p>
+        </div>
+
+        <div class="grid sm:grid-cols-3 gap-3 text-xs">
+          <div class="bg-white/85 rounded-2xl p-3.5 border border-slate-200/70">
+            <div class="text-[10px] font-bold text-slate-400 uppercase">Contact (Shared via Application)</div>
+            <div class="font-extrabold mt-0.5">${esc(st.email || '—')}</div>
+            <div class="text-slate-500">${esc(st.phone || '—')}</div>
+          </div>
+          <div class="bg-white/85 rounded-2xl p-3.5 border border-slate-200/70">
+            <div class="text-[10px] font-bold text-slate-400 uppercase">Qualification & Arrangement</div>
+            <div class="font-extrabold mt-0.5">${esc(st.education_level || '—')}</div>
+            <div class="text-slate-500">${esc(st.work_mode_preference || 'Hybrid')} · ${esc(st.seeker_type || '')}</div>
+          </div>
+          <div class="bg-white/85 rounded-2xl p-3.5 border border-slate-200/70">
+            <div class="text-[10px] font-bold text-slate-400 uppercase">PDF Document Verification</div>
+            <div class="font-extrabold mt-0.5 truncate">${esc(ac.original_filename)}</div>
+            <div class="text-slate-500 font-mono text-[10px]">${ac.page_count} page(s) · SHA ${esc(ac.file_sha256)}</div>
+          </div>
+        </div>
+
+        <div>
+          <div class="text-xs font-extrabold mb-2">AI-Extracted Skills (${(st.skills || []).length})</div>
+          <div class="flex flex-wrap gap-1.5">
+            ${(st.skills || []).map(s => `<span class="chip chip-teal">${esc(s)}</span>`).join('')}
+          </div>
+        </div>
+
+        <div class="grid sm:grid-cols-3 gap-3">
+          <div class="bg-white/85 rounded-2xl p-4 border border-slate-200/70 space-y-1.5">
+            <div class="text-xs font-extrabold text-teal-800">💼 Work Experience</div>
+            <ul class="list-disc pl-4 text-xs text-slate-600 space-y-1">${(st.work_experience || []).map(x => `<li>${esc(x)}</li>`).join('')}</ul>
+          </div>
+          <div class="bg-white/85 rounded-2xl p-4 border border-slate-200/70 space-y-1.5">
+            <div class="text-xs font-extrabold text-indigo-800">🎓 Education</div>
+            <ul class="list-disc pl-4 text-xs text-slate-600 space-y-1">${(st.education_history || []).map(x => `<li>${esc(x)}</li>`).join('')}</ul>
+          </div>
+          <div class="bg-white/85 rounded-2xl p-4 border border-slate-200/70 space-y-1.5">
+            <div class="text-xs font-extrabold text-pink-800">🚀 Key Projects</div>
+            <ul class="list-disc pl-4 text-xs text-slate-600 space-y-1">${(st.projects || []).map(x => `<li>${esc(x)}</li>`).join('')}</ul>
+          </div>
+        </div>
+
+        <div class="text-[11px] text-slate-400 flex items-center justify-between pt-2 border-t border-slate-200/70">
+          <span>🔒 Access to this CV has been recorded in the candidate's PDPA transparency log.</span>
+          <button onclick="closeOrgCvModal()" class="btn btn-soft !py-1.5">Close</button>
+        </div>
+      `;
+      orgCvWrap.classList.remove('hidden');
+    }
+    function closeOrgCvModal() { orgCvWrap.classList.add('hidden'); }
     async function copyQuestions() {
       const text = [...document.querySelectorAll('.fq')].map((t, i) => `${i + 1}. ${t.value}`).join('\n');
       try { await navigator.clipboard.writeText(text); toast('Questions copied'); } catch (e) { toast('Copy failed', 'err'); }

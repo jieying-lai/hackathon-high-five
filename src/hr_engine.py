@@ -10,6 +10,7 @@ import os
 from datetime import datetime, timezone
 
 from auth_db import DATA_DIR, get_db_connection
+from skills_taxonomy import expand_for_matching, skill_key
 
 EDU_RANK = {"Diploma / TVET": 1, "Bachelor's Degree": 2, "Master's / Postgraduate": 3}
 WORK_MODES = ("On-site", "Hybrid", "Remote")
@@ -226,9 +227,9 @@ def _follow_up_questions(c, to_confirm):
 
 
 def score_candidate(v, c):
-    req = {_norm(s): s for s in v["required_skills"]}
-    pref = {_norm(s): s for s in v["preferred_skills"]}
-    have = {_norm(s): s for s in c["skills"]}
+    req = {skill_key(s): s for s in v["required_skills"]}
+    pref = {skill_key(s): s for s in v["preferred_skills"]}
+    have = {skill_key(s): s for s in expand_for_matching(c["skills"])}
 
     matched_req = [req[k] for k in req if k in have]
     to_confirm = [req[k] for k in req if k not in have]  # absent from CV != "cannot do"
@@ -265,25 +266,162 @@ def score_candidate(v, c):
         "salary_expectation": sal, "salary_fit": sal_fit, "work_modes": c["work_modes"],
         "projects": c.get("projects", []), "motivation": c.get("motivation", ""),
         "follow_up_questions": _follow_up_questions(c, to_confirm),
+        "is_applied_user": bool(c.get("is_applied_user", False)),
+        "application_id": c.get("application_id"),
+        "application_uid": c.get("application_uid"),
+        "applied_at": c.get("applied_at"),
+        "share_organised_cv": bool(c.get("share_organised_cv", False)),
+        "share_original_pdf": bool(c.get("share_original_pdf", False)),
+        "executive_summary": c.get("executive_summary", ""),
     }
+
+
+def _applied_candidates_for_vacancy(vacancy_id: int) -> list[dict]:
+    """Load real Job Seeker applications for this vacancy (privacy-gated: only applicants appear)."""
+    conn = get_db_connection()
+    rows = conn.execute(
+        """
+        SELECT a.*, u.structured_cv_json
+          FROM job_applications a
+          JOIN user_cvs u ON u.owner_uid = a.candidate_uid
+         WHERE a.vacancy_id = ?
+         ORDER BY a.id DESC
+        """,
+        (vacancy_id,),
+    ).fetchall()
+    conn.close()
+    out = []
+    for r in rows:
+        try:
+            st = json.loads(r["structured_cv_json"])
+        except Exception:
+            continue
+        pref_mode = st.get("work_mode_preference") or "Hybrid"
+        work_modes = list({pref_mode, "Hybrid"})
+        out.append({
+            "id": r["candidate_uid"],
+            "name": st.get("full_name") or r["candidate_name"],
+            "type": st.get("seeker_type") or "Career Changer",
+            "years": int(st.get("years_experience") or 1),
+            "education": st.get("education_level") or "Bachelor's Degree",
+            "location": st.get("location") or "Kuala Lumpur",
+            "available_in": r["available_in"] or "1 month",
+            "salary_expectation": int(r["salary_expectation"] or 5000),
+            "work_modes": work_modes,
+            "skills": st.get("skills") or [],
+            "projects": st.get("projects") or [],
+            "motivation": r["cover_note"] or st.get("executive_summary") or "Applied with AI-organised PDF CV.",
+            "executive_summary": st.get("executive_summary") or "",
+            "is_applied_user": True,
+            "application_id": r["id"],
+            "application_uid": r["application_uid"],
+            "applied_at": r["applied_at"],
+            "share_organised_cv": bool(r["share_organised_cv"]),
+            "share_original_pdf": bool(r["share_original_pdf"]),
+        })
+    return out
+
+
+def list_open_vacancies_for_seeker(candidate_uid: str) -> list[dict]:
+    """List all Open company vacancies with live match score against the candidate's stored PDF CV."""
+    conn = get_db_connection()
+    vac_rows = conn.execute(
+        """
+        SELECT v.*, u.role_details_json, u.full_name AS hr_name
+          FROM vacancies v
+          LEFT JOIN users u ON u.unique_uid = v.owner_uid
+         WHERE v.status = 'Open'
+         ORDER BY v.id DESC
+        """
+    ).fetchall()
+    app_rows = conn.execute(
+        "SELECT * FROM job_applications WHERE candidate_uid = ?",
+        (candidate_uid,),
+    ).fetchall()
+    cv_row = conn.execute(
+        "SELECT structured_cv_json FROM user_cvs WHERE owner_uid = ?",
+        (candidate_uid,),
+    ).fetchone()
+    conn.close()
+
+    apps_by_vid = {r["vacancy_id"]: dict(r) for r in app_rows}
+    st = json.loads(cv_row["structured_cv_json"]) if cv_row else None
+
+    cand_obj = None
+    if st:
+        cand_obj = {
+            "id": candidate_uid,
+            "name": st.get("full_name") or "Candidate",
+            "type": st.get("seeker_type") or "Experienced Worker",
+            "years": int(st.get("years_experience") or 1),
+            "education": st.get("education_level") or "Bachelor's Degree",
+            "location": st.get("location") or "Kuala Lumpur",
+            "available_in": "1 month",
+            "salary_expectation": 5000,
+            "work_modes": [st.get("work_mode_preference") or "Hybrid"],
+            "skills": st.get("skills") or [],
+            "projects": st.get("projects") or [],
+            "motivation": st.get("executive_summary") or "",
+        }
+
+    out = []
+    for vr in vac_rows:
+        v = _vacancy_from_row(vr)
+        try:
+            rd = json.loads(vr["role_details_json"] or "{}")
+        except Exception:
+            rd = {}
+        v["company_name"] = rd.get("company_name") or "Nexus Digital & Finance Sdn Bhd"
+        v["company_industry"] = rd.get("company_industry") or v.get("department") or "Enterprise"
+
+        if cand_obj:
+            scored = score_candidate(v, cand_obj)
+            v["match_score"] = scored["score"]
+            v["matched_required"] = scored["matched_required"]
+            v["to_confirm"] = scored["to_confirm"]
+        else:
+            v["match_score"] = None
+            v["matched_required"] = []
+            v["to_confirm"] = v["required_skills"]
+
+        app_info = apps_by_vid.get(v["id"])
+        v["application"] = {
+            "applied": bool(app_info),
+            "application_uid": app_info["application_uid"] if app_info else None,
+            "applied_at": app_info["applied_at"] if app_info else None,
+            "share_organised_cv": bool(app_info["share_organised_cv"]) if app_info else True,
+            "share_original_pdf": bool(app_info["share_original_pdf"]) if app_info else True,
+            "hr_decision": app_info["hr_decision"] if app_info else None,
+            "cover_note": app_info["cover_note"] if app_info else "",
+        }
+        out.append(v)
+
+    return sorted(out, key=lambda x: (x["match_score"] is not None, x["match_score"] or 0), reverse=True)
 
 
 def screen_candidates(owner_uid, vacancy_id):
     v = get_vacancy(owner_uid, vacancy_id)
     if not v:
         return None
-    results = sorted((score_candidate(v, c) for c in _load("candidates_pool.json")),
-                     key=lambda r: r["score"], reverse=True)
+    applied = _applied_candidates_for_vacancy(vacancy_id)
+    synthetic_pool = _load("candidates_pool.json")
+    all_candidates = applied + synthetic_pool
+    results = sorted((score_candidate(v, c) for c in all_candidates),
+                     key=lambda r: (r.get("is_applied_user", False), r["score"]), reverse=True)
     summary = {}
     for r in results:
         summary[r["action"]] = summary.get(r["action"], 0) + 1
     return {
         "vacancy": v, "results": results,
-        "summary": {"by_action": summary, "total": len(results),
-                    "average_score": round(sum(r["score"] for r in results) / max(1, len(results)))},
-        "fairness_note": "Scored on job-relevant criteria only. Age, gender, ethnicity and other protected "
-                         "attributes are not collected or used. Missing CV items are marked 'To confirm', "
-                         "never auto-rejected. HR makes the final decision.",
+        "summary": {
+            "by_action": summary,
+            "total": len(results),
+            "applied_count": len(applied),
+            "average_score": round(sum(r["score"] for r in results) / max(1, len(results))),
+        },
+        "fairness_note": "Scored on job-relevant criteria only. Personal PDF CVs are strictly private and only "
+                         "visible here when a candidate explicitly applies to this vacancy. Missing CV items are "
+                         "marked 'To confirm', never auto-rejected. HR makes the final decision.",
     }
 
 
