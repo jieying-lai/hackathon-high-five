@@ -22,8 +22,11 @@ CITY_COORDS = {
     "Cyberjaya / Putrajaya": {"city": "Cyberjaya", "lat": 2.9213, "lng": 101.6559},
     "Subang Jaya / Sunway": {"city": "Subang Jaya", "lat": 3.0674, "lng": 101.6067},
     "Shah Alam (Selangor)": {"city": "Shah Alam", "lat": 3.0833, "lng": 101.5581},
+    "Klang (Selangor)": {"city": "Klang", "lat": 3.0449, "lng": 101.4456},
     "Penang (Bayan Lepas / George Town)": {"city": "Bayan Lepas", "lat": 5.2945, "lng": 100.2655},
     "Johor Bahru (Iskandar Puteri)": {"city": "Johor Bahru", "lat": 1.4236, "lng": 103.6575},
+    "Ipoh (Perak)": {"city": "Ipoh", "lat": 4.5975, "lng": 101.0901},
+    "Seremban (Negeri Sembilan)": {"city": "Seremban", "lat": 2.7258, "lng": 101.9424},
 }
 
 
@@ -152,6 +155,47 @@ def init_hr_tables():
             cur.execute("UPDATE vacancies SET vacancy_uid = ? WHERE id = ?",
                         (f"VAC-2026-{cur.lastrowid:03d}", cur.lastrowid))
         conn.commit()
+
+    # Seed real Malaysian job postings from Kaggle JobStreet Malaysia All Job Dataset (azraimohamad/jobstreet-all-job-dataset)
+    try:
+        js_postings = _load("jobstreet_malaysia_postings.json")
+        existing_js_uids = {
+            r["owner_uid"]
+            for r in cur.execute("SELECT owner_uid FROM vacancies WHERE owner_uid LIKE 'JS-%'").fetchall()
+        }
+        inserted_js = False
+        for jp in js_postings:
+            js_id = jp["jobstreet_id"]
+            if js_id in existing_js_uids:
+                continue
+            cur.execute(
+                """INSERT INTO vacancies (vacancy_uid, owner_uid, title, department, work_mode, location,
+                   salary_min, salary_max, min_years, education_level, required_skills_json, preferred_skills_json,
+                   status, created_at)
+                   VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)""",
+                (
+                    js_id,
+                    js_id,
+                    jp["title"],
+                    jp["department"],
+                    jp["work_mode"],
+                    jp["location"],
+                    jp["salary_min"],
+                    jp["salary_max"],
+                    jp["min_years"],
+                    jp["education_level"],
+                    json.dumps(jp["required_skills"]),
+                    json.dumps(jp["preferred_skills"]),
+                    "Open",
+                    _now(),
+                ),
+            )
+            inserted_js = True
+        if inserted_js:
+            conn.commit()
+    except Exception:
+        pass
+
     conn.close()
 
 
@@ -417,25 +461,49 @@ def list_open_vacancies_for_seeker(candidate_uid: str) -> list[dict]:
     companies = _load("companies_directory.json")
     comp_by_cat = {c["category"].lower(): c for c in companies}
     comp_by_city = {c["city"].lower(): c for c in companies}
+    try:
+        js_postings = _load("jobstreet_malaysia_postings.json")
+        js_by_id = {p["jobstreet_id"]: p for p in js_postings}
+    except Exception:
+        js_by_id = {}
 
     out = []
     for vr in vac_rows:
         v = _vacancy_from_row(vr)
-        try:
-            rd = json.loads(vr["role_details_json"] or "{}")
-        except Exception:
-            rd = {}
-        matched_comp = (
-            comp_by_cat.get((v.get("department") or "").lower())
-            or comp_by_city.get((v.get("location") or "").lower())
-            or companies[0]
-        )
-        v["company_name"] = matched_comp["name"] if v.get("department") in {c["category"] for c in companies} else (rd.get("company_name") or matched_comp["name"])
-        v["company_category"] = matched_comp["category"]
-        v["company_industry"] = matched_comp["sub_sector"]
-        v["company_district"] = matched_comp["district"]
-        v["lat"] = matched_comp["lat"]
-        v["lng"] = matched_comp["lng"]
+        js_meta = js_by_id.get(vr["owner_uid"]) or js_by_id.get(v.get("vacancy_uid") or "")
+        if js_meta:
+            v["company_name"] = js_meta["company_name"]
+            v["company_category"] = js_meta["department"]
+            v["company_industry"] = js_meta.get("subcategory") or js_meta["department"]
+            v["company_district"] = js_meta["location"]
+            v["lat"] = js_meta["lat"]
+            v["lng"] = js_meta["lng"]
+            v["jobstreet_id"] = js_meta["jobstreet_id"]
+            v["employment_type"] = js_meta.get("employment_type", "Full time")
+            v["subcategory"] = js_meta.get("subcategory", "")
+            v["description_snippet"] = js_meta.get("description_snippet", "")
+            v["dataset_source"] = "JobStreet Malaysia Dataset"
+        else:
+            try:
+                rd = json.loads(vr["role_details_json"] or "{}")
+            except Exception:
+                rd = {}
+            matched_comp = (
+                comp_by_cat.get((v.get("department") or "").lower())
+                or comp_by_city.get((v.get("location") or "").lower())
+                or companies[0]
+            )
+            v["company_name"] = matched_comp["name"] if v.get("department") in {c["category"] for c in companies} else (rd.get("company_name") or matched_comp["name"])
+            v["company_category"] = matched_comp["category"]
+            v["company_industry"] = matched_comp["sub_sector"]
+            v["company_district"] = matched_comp["district"]
+            v["lat"] = matched_comp["lat"]
+            v["lng"] = matched_comp["lng"]
+            v["jobstreet_id"] = None
+            v["employment_type"] = "Full time"
+            v["subcategory"] = matched_comp["sub_sector"]
+            v["description_snippet"] = ""
+            v["dataset_source"] = "Direct Employer Portal"
 
         if cand_obj:
             scored = score_candidate(v, cand_obj)

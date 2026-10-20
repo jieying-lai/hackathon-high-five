@@ -9,12 +9,30 @@
     "state": "WP Kuala Lumpur",
     "lat": 3.1579,
     "lng": 101.7116,
-    "work_modes": ["Hybrid", "On-site"],
+    "work_modes": [
+      "Hybrid",
+      "On-site"
+    ],
     "company_size": "51–250 Employees",
     "hiring_status": "Actively Hiring",
-    "open_domains": ["Audit & Assurance", "Engineering", "ESG Analytics"],
-    "featured_roles": ["AI Financial Compliance Analyst", "Software Developer", "Internal Risk Auditor"],
-    "core_skills_sought": ["Financial Auditing", "Risk Assessment", "Python Data Analysis", "SQL", "REST APIs", "Git"],
+    "open_domains": [
+      "Audit & Assurance",
+      "Engineering",
+      "ESG Analytics"
+    ],
+    "featured_roles": [
+      "AI Financial Compliance Analyst",
+      "Software Developer",
+      "Internal Risk Auditor"
+    ],
+    "core_skills_sought": [
+      "Financial Auditing",
+      "Risk Assessment",
+      "Python Data Analysis",
+      "SQL",
+      "REST APIs",
+      "Git"
+    ],
     "summary": "Mid-sized Malaysian financial advisory and digital assurance firm integrating AI compliance and automated audit workflows."
   },
   {
@@ -27,12 +45,32 @@
     "state": "Selangor",
     "lat": 2.9213,
     "lng": 101.6559,
-    "work_modes": ["Hybrid", "Remote"],
+    "work_modes": [
+      "Hybrid",
+      "Remote"
+    ],
     "company_size": "51–250 Employees",
     "hiring_status": "Actively Hiring",
-    "open_domains": ["Software Engineering", "LLM & RAG Systems", "DevOps"],
-    "featured_roles": ["Junior AI & Backend Developer", "Full-Stack React Engineer", "Cloud Data Engineer"],
-    "core_skills_sought": ["Python", "SQL", "REST APIs", "React", "Docker", "Git", "LLM Orchestration (LangChain/LlamaIndex)", "Vector Databases & RAG"],
+    "open_domains": [
+      "Software Engineering",
+      "LLM & RAG Systems",
+      "DevOps"
+    ],
+    "featured_roles": [
+      "Junior AI & Backend Developer",
+      "Full-Stack React Engineer",
+      "Cloud Data Engineer"
+    ],
+    "core_skills_sought": [
+      "Python",
+      "SQL",
+      "REST APIs",
+      "React",
+      "Docker",
+      "Git",
+      "LLM Orchestration (LangChain/LlamaIndex)",
+      "Vector Databases & RAG"
+    ],
     "summary": "MSC-status software studio building enterprise RAG assistants, cloud microservices, and data pipelines."
   },
   {
@@ -45,12 +83,31 @@
     "state": "Selangor",
     "lat": 3.1347,
     "lng": 101.6226,
-    "work_modes": ["Remote", "Hybrid"],
+    "work_modes": [
+      "Remote",
+      "Hybrid"
+    ],
     "company_size": "11–50 Employees",
     "hiring_status": "Actively Hiring",
-    "open_domains": ["Content Operations", "Performance SEO", "Brand Strategy"],
-    "featured_roles": ["AI Content Strategist & Copywriter", "Regional SEO Specialist", "Bilingual Social Media Lead"],
-    "core_skills_sought": ["Copywriting", "SEO Content Strategy", "Google Analytics", "Social Media Campaigns", "Prompt Engineering", "Canva & Basic Design", "Bilingual Communication"],
+    "open_domains": [
+      "Content Operations",
+      "Performance SEO",
+      "Brand Strategy"
+    ],
+    "featured_roles": [
+      "AI Content Strategist & Copywriter",
+      "Regional SEO Specialist",
+      "Bilingual Social Media Lead"
+    ],
+    "core_skills_sought": [
+      "Copywriting",
+      "SEO Content Strategy",
+      "Google Analytics",
+      "Social Media Campaigns",
+      "Prompt Engineering",
+      "Canva & Basic Design",
+      "Bilingual Communication"
+    ],
     "summary": "Award-winning regional digital agency combining human creative storytelling with AI-assisted content workflows."
   },
   {
@@ -63,12 +120,29 @@
     "state": "Selangor",
     "lat": 3.0674,
     "lng": 101.6067,
-    "work_modes": ["On-site", "Hybrid"],
+    "work_modes": [
+      "On-site",
+      "Hybrid"
+    ],
     "company_size": "250+ Employees",
     "hiring_status": "Actively Hiring",
-    "open_domains": ["Healthcare Informatics", "Clinical Governance", "Patient Data Privacy"],
-    "featured_roles": ["Health Informatics & Clinical Data Analyst", "Medical Compliance & PDPA Officer", "Hospital Operations Coordinator"],
-    "core_skills_sought": ["Data Privacy (PDPA)", "Risk Assessment", "Python Data Analysis", "Project Management", "SQL"],
+    "open_domains": [
+      "Healthcare Informatics",
+      "Clinical Governance",
+      "Patient Data Privacy"
+    ],
+    "featured_roles": [
+      "Health Informatics & Clinical Data Analyst",
+      "Medical Compliance & PDPA Officer",
+      "Hospital Operations Coordinator"
+    ],
+    "core_skills_sought": [
+      "Data Privacy (PDPA)",
+      "Risk Assessment",
+      "Python Data Analysis",
+      "Project Management",
+      "SQL"
+    ],
     "summary": "Leading healthcare & digital medicine group seeking clinical operations specialists, health data analysts, and PDPA compliance leads."
   },
   {
@@ -81,12 +155,30 @@
     "state": "Penang",
     "lat": 5.2945,
     "lng": 100.2655,
-    "work_modes": ["On-site", "Hybrid"],
+    "work_modes": [
+      "On-site",
+      "Hybrid"
+    ],
     "company_size": "250+ Employees",
     "hiring_status": "Actively Hiring",
-    "open_domains": ["Process Automation", "Embedded Software", "Supply Chain ESG"],
-    "featured_roles": ["Industrial AI Automation Engineer", "Supply Chain ESG & Carbon Analyst", "Embedded C++/Python Developer"],
-    "core_skills_sought": ["Python", "C++", "Linux", "ESG & Carbon Reporting Standards", "AI Workflow Automation (Make/Zapier)", "Project Management"],
+    "open_domains": [
+      "Process Automation",
+      "Embedded Software",
+      "Supply Chain ESG"
+    ],
+    "featured_roles": [
+      "Industrial AI Automation Engineer",
+      "Supply Chain ESG & Carbon Analyst",
+      "Embedded C++/Python Developer"
+    ],
+    "core_skills_sought": [
+      "Python",
+      "C++",
+      "Linux",
+      "ESG & Carbon Reporting Standards",
+      "AI Workflow Automation (Make/Zapier)",
+      "Project Management"
+    ],
     "summary": "Northern corridor advanced electronics and smart-factory hub hiring software, automation, and ESG sustainability talent."
   },
   {
@@ -99,12 +191,30 @@
     "state": "WP Kuala Lumpur",
     "lat": 3.1112,
     "lng": 101.6627,
-    "work_modes": ["Hybrid", "Remote"],
+    "work_modes": [
+      "Hybrid",
+      "Remote"
+    ],
     "company_size": "11–50 Employees",
     "hiring_status": "Actively Hiring",
-    "open_domains": ["People Analytics", "Talent Acquisition", "HRD Corp Reskilling"],
-    "featured_roles": ["People Data & Workforce Reskilling Partner", "Fair-AI Talent Acquisition Specialist", "Change Management Consultant"],
-    "core_skills_sought": ["Recruitment", "People Data Analytics", "Change Management", "Skills Architecture Mapping", "Data Privacy (PDPA)", "AI Bias & Fairness Auditing"],
+    "open_domains": [
+      "People Analytics",
+      "Talent Acquisition",
+      "HRD Corp Reskilling"
+    ],
+    "featured_roles": [
+      "People Data & Workforce Reskilling Partner",
+      "Fair-AI Talent Acquisition Specialist",
+      "Change Management Consultant"
+    ],
+    "core_skills_sought": [
+      "Recruitment",
+      "People Data Analytics",
+      "Change Management",
+      "Skills Architecture Mapping",
+      "Data Privacy (PDPA)",
+      "AI Bias & Fairness Auditing"
+    ],
     "summary": "Boutique Malaysian HR transformation consultancy helping SMEs map skills architectures and deploy HRD Corp training."
   },
   {
@@ -117,12 +227,29 @@
     "state": "Johor",
     "lat": 1.4236,
     "lng": 103.6575,
-    "work_modes": ["Hybrid", "On-site"],
+    "work_modes": [
+      "Hybrid",
+      "On-site"
+    ],
     "company_size": "51–250 Employees",
     "hiring_status": "Actively Hiring",
-    "open_domains": ["Carbon Accounting", "Cross-Border Finance", "Operations Analytics"],
-    "featured_roles": ["ESG & Carbon Compliance Specialist", "Regional Financial & Tax Analyst", "Operations Data Coordinator"],
-    "core_skills_sought": ["ESG & Carbon Reporting Standards", "Financial Reporting", "Tax Compliance", "Excel Pivot & Macros", "Power BI"],
+    "open_domains": [
+      "Carbon Accounting",
+      "Cross-Border Finance",
+      "Operations Analytics"
+    ],
+    "featured_roles": [
+      "ESG & Carbon Compliance Specialist",
+      "Regional Financial & Tax Analyst",
+      "Operations Data Coordinator"
+    ],
+    "core_skills_sought": [
+      "ESG & Carbon Reporting Standards",
+      "Financial Reporting",
+      "Tax Compliance",
+      "Excel Pivot & Macros",
+      "Power BI"
+    ],
     "summary": "Cross-border logistics and green trade operator in Iskandar Malaysia expanding its ESG reporting and finance team."
   },
   {
@@ -135,12 +262,725 @@
     "state": "Selangor",
     "lat": 3.0833,
     "lng": 101.5581,
-    "work_modes": ["Hybrid", "Remote"],
+    "work_modes": [
+      "Hybrid",
+      "Remote"
+    ],
     "company_size": "11–50 Employees",
     "hiring_status": "Actively Hiring",
-    "open_domains": ["Curriculum Design", "EdTech Engineering", "Bilingual Training"],
-    "featured_roles": ["AI Learning Experience Designer", "EdTech Web Developer", "Bilingual Programme Lead"],
-    "core_skills_sought": ["Prompt Engineering", "Bilingual Communication", "HTML/CSS/JS", "Project Management", "Copywriting"],
+    "open_domains": [
+      "Curriculum Design",
+      "EdTech Engineering",
+      "Bilingual Training"
+    ],
+    "featured_roles": [
+      "AI Learning Experience Designer",
+      "EdTech Web Developer",
+      "Bilingual Programme Lead"
+    ],
+    "core_skills_sought": [
+      "Prompt Engineering",
+      "Bilingual Communication",
+      "HTML/CSS/JS",
+      "Project Management",
+      "Copywriting"
+    ],
     "summary": "Malaysian EdTech platform partnering with universities and TVET colleges to deliver practical digital and AI bootcamps."
+  },
+  {
+    "id": "COMP-JS-09",
+    "name": "Coca-Cola Bottlers (Malaysia) Sdn Bhd",
+    "category": "Logistics & Supply Chain",
+    "sub_sector": "Manufacturing, Transport & Logistics · Purchasing, Procurement & Inventory",
+    "city": "Seremban",
+    "district": "Nilai / Seremban",
+    "lat": 2.706,
+    "lng": 101.9515,
+    "work_modes": [
+      "On-site",
+      "Hybrid"
+    ],
+    "featured_roles": [
+      "Procurement Executive (Contract)",
+      "procurement-executive"
+    ],
+    "core_skills_sought": [
+      "Financial Auditing",
+      "Bilingual Communication",
+      "Project Management",
+      "Excel Pivot & Macros",
+      "Documentation",
+      "Operations"
+    ],
+    "summary": "JobStreet Malaysia verified employer (JS-74630583) in Purchasing, Procurement & Inventory: Position Purpose Manage aspects of procurement including supplier management, contract management, and vendor performance tracking. Sup",
+    "sdg_focus": "SDG 8.5 · Decent Work & Productive Employment",
+    "jobstreet_id": "JS-74630583"
+  },
+  {
+    "id": "COMP-JS-10",
+    "name": "Acoustic & Lighting System Sdn Bhd",
+    "category": "Finance & Accounting",
+    "sub_sector": "Accounting · Bookkeeping & Small Practice Accounting",
+    "city": "Petaling Jaya",
+    "district": "Petaling District",
+    "lat": 3.1343,
+    "lng": 101.6472,
+    "work_modes": [
+      "On-site",
+      "Hybrid"
+    ],
+    "featured_roles": [
+      "Account Executive/ Assistant",
+      "executive-assistant"
+    ],
+    "core_skills_sought": [
+      "Financial Reporting",
+      "Bilingual Communication",
+      "Financial Auditing",
+      "Tax Compliance",
+      "Accounts Payable",
+      "Bank Reconciliation"
+    ],
+    "summary": "JobStreet Malaysia verified employer (JS-74660602) in Bookkeeping & Small Practice Accounting: We are looking for a Account Executive/ Assistant to join our team. What you will get when you join us: Fair work life balance – Mon to",
+    "sdg_focus": "SDG 8.5 · Decent Work & Productive Employment",
+    "jobstreet_id": "JS-74660602"
+  },
+  {
+    "id": "COMP-JS-11",
+    "name": "Shopee Mobile Malaysia Sdn Bhd",
+    "category": "Logistics & Supply Chain",
+    "sub_sector": "Manufacturing, Transport & Logistics · Analysis & Reporting",
+    "city": "Klang",
+    "district": "Klang District",
+    "lat": 3.0179,
+    "lng": 101.4411,
+    "work_modes": [
+      "On-site",
+      "Hybrid"
+    ],
+    "featured_roles": [
+      "Data Analyst - Asset Management, SPX Express",
+      "asset-management-analyst"
+    ],
+    "core_skills_sought": [
+      "Financial Auditing",
+      "Project Management",
+      "Excel Pivot & Macros",
+      "SQL",
+      "Plan",
+      "Operations"
+    ],
+    "summary": "JobStreet Malaysia verified employer (JS-74655679) in Analysis & Reporting: Performs detailed data analysis on existing spendings / consumptions of SPX and identifies cost saving areas. Plan out and rollout cost",
+    "sdg_focus": "SDG 8.5 · Decent Work & Productive Employment",
+    "jobstreet_id": "JS-74655679"
+  },
+  {
+    "id": "COMP-JS-12",
+    "name": "Sun Medical Systems Sdn Bhd",
+    "category": "Engineering & Green Tech",
+    "sub_sector": "Engineering · Electrical/Electronic Engineering",
+    "city": "Petaling Jaya",
+    "district": "Petaling District",
+    "lat": 3.1388,
+    "lng": 101.5977,
+    "work_modes": [
+      "On-site",
+      "Hybrid"
+    ],
+    "featured_roles": [
+      "Service Engineer",
+      "services-engineer"
+    ],
+    "core_skills_sought": [
+      "Bilingual Communication",
+      "Project Management",
+      "Risk Assessment",
+      "Python",
+      "Schedule",
+      "Training"
+    ],
+    "summary": "JobStreet Malaysia verified employer (JS-74657624) in Electrical/Electronic Engineering: You are important for troubleshooting, installation, maintenance and service repair needs on designated equipment. You are important fo",
+    "sdg_focus": "SDG 8.5 · Decent Work & Productive Employment",
+    "jobstreet_id": "JS-74657624"
+  },
+  {
+    "id": "COMP-JS-13",
+    "name": "HPMT Industries Sdn Bhd",
+    "category": "Finance & Accounting",
+    "sub_sector": "Accounting · Financial Accounting & Reporting",
+    "city": "Shah Alam",
+    "district": "Shah Alam / Subang Jaya",
+    "lat": 3.0558,
+    "lng": 101.5048,
+    "work_modes": [
+      "On-site",
+      "Hybrid"
+    ],
+    "featured_roles": [
+      "Accounts Executive",
+      "accounts-executive"
+    ],
+    "core_skills_sought": [
+      "Financial Auditing",
+      "Tax Compliance",
+      "Financial Reporting",
+      "Excel Pivot & Macros",
+      "Accounts Payable",
+      "Bank Reconciliation"
+    ],
+    "summary": "JobStreet Malaysia verified employer (JS-74661023) in Financial Accounting & Reporting: Job Responsibilities Manage accounts payable & receivable, month-end closing and other related duties Manage cash flow and bank reconci",
+    "sdg_focus": "SDG 8.5 · Decent Work & Productive Employment",
+    "jobstreet_id": "JS-74661023"
+  },
+  {
+    "id": "COMP-JS-14",
+    "name": "GENETEC TECHNOLOGY BERHAD",
+    "category": "Finance & Accounting",
+    "sub_sector": "Accounting · Financial Accounting & Reporting",
+    "city": "Kuala Lumpur",
+    "district": "Kajang/Bangi/Serdang",
+    "lat": 3.1579,
+    "lng": 101.6891,
+    "work_modes": [
+      "On-site",
+      "Hybrid"
+    ],
+    "featured_roles": [
+      "Accounts Executive",
+      "accounts-executive"
+    ],
+    "core_skills_sought": [
+      "Financial Reporting",
+      "Financial Auditing",
+      "Tax Compliance",
+      "Excel Pivot & Macros",
+      "Accounts Payable",
+      "Reporting"
+    ],
+    "summary": "JobStreet Malaysia verified employer (JS-74677110) in Financial Accounting & Reporting: To assist in overall acounting functions for the whole group. Duties & Responsibilities: To handle preparation of finance & management ",
+    "sdg_focus": "SDG 8.5 · Decent Work & Productive Employment",
+    "jobstreet_id": "JS-74677110"
+  },
+  {
+    "id": "COMP-JS-15",
+    "name": "MINSEC ENGINEERING SDN. BHD.",
+    "category": "Engineering & Green Tech",
+    "sub_sector": "Engineering · Project Engineering",
+    "city": "Petaling Jaya",
+    "district": "Petaling District",
+    "lat": 3.0668,
+    "lng": 101.5752,
+    "work_modes": [
+      "On-site",
+      "Hybrid"
+    ],
+    "featured_roles": [
+      "PURCHASING EXECUTIVE",
+      "purchasing-executive"
+    ],
+    "core_skills_sought": [
+      "Project Management",
+      "Risk Assessment",
+      "Python",
+      "ESG & Carbon Reporting Standards",
+      "Communication",
+      "Vendors"
+    ],
+    "summary": "JobStreet Malaysia verified employer (JS-74657915) in Project Engineering: PURCHASING EXECUTIVE Bachelor’s Degree in Business Administration, Supply Chain Management, or related field. 2-3 years related working",
+    "sdg_focus": "SDG 8.5 · Decent Work & Productive Employment",
+    "jobstreet_id": "JS-74657915"
+  },
+  {
+    "id": "COMP-JS-16",
+    "name": "KLK OLEO",
+    "category": "Finance & Accounting",
+    "sub_sector": "Accounting · Accounts Payable",
+    "city": "Selangor",
+    "district": "Petaling / Selangor",
+    "lat": 3.0778,
+    "lng": 101.496,
+    "work_modes": [
+      "On-site",
+      "Hybrid"
+    ],
+    "featured_roles": [
+      "Accounts Assistant (AP)",
+      "accounts-assistant"
+    ],
+    "core_skills_sought": [
+      "Financial Reporting",
+      "Bilingual Communication",
+      "Financial Auditing",
+      "Tax Compliance",
+      "Communication",
+      "Microsoft Word"
+    ],
+    "summary": "JobStreet Malaysia verified employer (JS-74662794) in Accounts Payable: ROLE AND RESPONSIBILITIES To verify invoices in the Readsoft system and check and post invoices into the SAP system promptly and accura",
+    "sdg_focus": "SDG 8.5 · Decent Work & Productive Employment",
+    "jobstreet_id": "JS-74662794"
+  },
+  {
+    "id": "COMP-JS-17",
+    "name": "Lein Hing Holdings Sdn Bhd",
+    "category": "HR & Administration",
+    "sub_sector": "Administration & Office Support · Administrative Assistants",
+    "city": "Kuala Lumpur",
+    "district": "KLCC / Bukit Bintang",
+    "lat": 3.1939,
+    "lng": 101.6936,
+    "work_modes": [
+      "On-site",
+      "Hybrid"
+    ],
+    "featured_roles": [
+      "Admin Assistant",
+      "administration-officer"
+    ],
+    "core_skills_sought": [
+      "Excel Pivot & Macros",
+      "Bilingual Communication",
+      "Recruitment",
+      "People Data Analytics",
+      "Communication",
+      "Excel"
+    ],
+    "summary": "JobStreet Malaysia verified employer (JS-74602737) in Administrative Assistants: RESPONSIBILITIES: Manager paperwork for Claim submission Assisting with a variety of administrative tasks like filing and general cleri",
+    "sdg_focus": "SDG 8.5 · Decent Work & Productive Employment",
+    "jobstreet_id": "JS-74602737"
+  },
+  {
+    "id": "COMP-JS-18",
+    "name": "AGENSI PEKERJAAN JS STAFFING SERVICES SDN BHD",
+    "category": "HR & Administration",
+    "sub_sector": "Administration & Office Support · Administrative Assistants",
+    "city": "Kuala Lumpur",
+    "district": "Bangsar South",
+    "lat": 3.1534,
+    "lng": 101.6846,
+    "work_modes": [
+      "On-site",
+      "Hybrid"
+    ],
+    "featured_roles": [
+      "Clerical Assistant (Educational Centre)",
+      "clerical-assistant"
+    ],
+    "core_skills_sought": [
+      "Recruitment",
+      "People Data Analytics",
+      "Change Management",
+      "Data Privacy (PDPA)",
+      "Training",
+      "Transport"
+    ],
+    "summary": "JobStreet Malaysia verified employer (JS-74677668) in Administrative Assistants: Educational Centre Established since 2019, total around 20 staffs Office near to KL Gateway Mall, reachable by public transport Respons",
+    "sdg_focus": "SDG 8.5 · Decent Work & Productive Employment",
+    "jobstreet_id": "JS-74677668"
+  },
+  {
+    "id": "COMP-JS-19",
+    "name": "CapitaLand Malaysia REIT Management Sdn. Bhd.",
+    "category": "Finance & Accounting",
+    "sub_sector": "Accounting · Analysis & Reporting",
+    "city": "Kuala Lumpur",
+    "district": "Kuala Lumpur City Centre",
+    "lat": 3.1399,
+    "lng": 101.7206,
+    "work_modes": [
+      "On-site",
+      "Hybrid"
+    ],
+    "featured_roles": [
+      "Finance Executive",
+      "finance-executive"
+    ],
+    "core_skills_sought": [
+      "Financial Auditing",
+      "Financial Reporting",
+      "Excel Pivot & Macros",
+      "Tax Compliance",
+      "Documentation",
+      "Communication"
+    ],
+    "summary": "JobStreet Malaysia verified employer (JS-74662105) in Analysis & Reporting: ​Job Responsibilities Financial Pre-Qualification Perform accounting ratio analysis based on the latest audited financial statement or ",
+    "sdg_focus": "SDG 8.5 · Decent Work & Productive Employment",
+    "jobstreet_id": "JS-74662105"
+  },
+  {
+    "id": "COMP-JS-20",
+    "name": "MODE FAIR SDN BHD",
+    "category": "IT & Software",
+    "sub_sector": "Information & Communication Technology · Security",
+    "city": "Kuala Lumpur",
+    "district": "KLCC / Bukit Bintang",
+    "lat": 3.1714,
+    "lng": 101.7026,
+    "work_modes": [
+      "Hybrid",
+      "On-site"
+    ],
+    "featured_roles": [
+      "Penetration Tester",
+      "penetration-tester"
+    ],
+    "core_skills_sought": [
+      "SQL",
+      "HTML/CSS/JS",
+      "Java",
+      "Linux",
+      "Cryptography",
+      "Javascript"
+    ],
+    "summary": "JobStreet Malaysia verified employer (JS-74676786) in Security: Overview: We are seeking an experienced Security Penetration Tester to join our Information Security team. This role is pivotal in iden",
+    "sdg_focus": "SDG 8.5 · Decent Work & Productive Employment",
+    "jobstreet_id": "JS-74676786"
+  },
+  {
+    "id": "COMP-JS-21",
+    "name": "Binastra Land Sdn Bhd",
+    "category": "Finance & Accounting",
+    "sub_sector": "Accounting · Bookkeeping & Small Practice Accounting",
+    "city": "Kuala Lumpur",
+    "district": "Bukit Jalil",
+    "lat": 3.1174,
+    "lng": 101.6711,
+    "work_modes": [
+      "On-site",
+      "Hybrid"
+    ],
+    "featured_roles": [
+      "Accounts Executive",
+      "accounts-executive"
+    ],
+    "core_skills_sought": [
+      "Financial Reporting",
+      "Financial Auditing",
+      "Tax Compliance",
+      "Excel Pivot & Macros",
+      "Communication",
+      "Analytical"
+    ],
+    "summary": "JobStreet Malaysia verified employer (JS-74661211) in Bookkeeping & Small Practice Accounting: Job Description Prepare of monthly project financial reports. Liaison with project's executive or person in-charge for progress claim, ",
+    "sdg_focus": "SDG 8.5 · Decent Work & Productive Employment",
+    "jobstreet_id": "JS-74661211"
+  },
+  {
+    "id": "COMP-JS-22",
+    "name": "Mazone Service",
+    "category": "HR & Administration",
+    "sub_sector": "Human Resources & Recruitment · Consulting & Generalist HR",
+    "city": "Penang",
+    "district": "George Town / Bayan Lepas",
+    "lat": 5.3871,
+    "lng": 100.3108,
+    "work_modes": [
+      "On-site",
+      "Hybrid"
+    ],
+    "featured_roles": [
+      "HR & Admin Executive",
+      "Human-Resources-and-Administration-Executive"
+    ],
+    "core_skills_sought": [
+      "Recruitment",
+      "People Data Analytics",
+      "Change Management",
+      "Data Privacy (PDPA)",
+      "Payroll",
+      "Communication"
+    ],
+    "summary": "JobStreet Malaysia verified employer (JS-74654698) in Consulting & Generalist HR: Office based in Penang - Bayan Baru Job Descriptions: Manage the recruitment and onboarding process, ensuring vacancies are filled with",
+    "sdg_focus": "SDG 8.5 · Decent Work & Productive Employment",
+    "jobstreet_id": "JS-74654698"
+  },
+  {
+    "id": "COMP-JS-23",
+    "name": "Alpha Automation (Selangor) Sdn Bhd",
+    "category": "HR & Administration",
+    "sub_sector": "Administration & Office Support · Administrative Assistants",
+    "city": "Shah Alam",
+    "district": "Shah Alam / Subang Jaya",
+    "lat": 3.0648,
+    "lng": 101.5273,
+    "work_modes": [
+      "On-site",
+      "Hybrid"
+    ],
+    "featured_roles": [
+      "Admin cum HR Executive",
+      "Human-Resources-and-Administration-Executive"
+    ],
+    "core_skills_sought": [
+      "Excel Pivot & Macros",
+      "Bilingual Communication",
+      "Recruitment",
+      "People Data Analytics",
+      "Plan",
+      "Communication"
+    ],
+    "summary": "JobStreet Malaysia verified employer (JS-74634385) in Administrative Assistants: Job Responsibilities: Support Senior Management to ensure office administrative tasks are completed Coordinate meetings, compile docume",
+    "sdg_focus": "SDG 8.5 · Decent Work & Productive Employment",
+    "jobstreet_id": "JS-74634385"
+  },
+  {
+    "id": "COMP-JS-24",
+    "name": "Chemopharm Sdn Bhd",
+    "category": "Marketing & PR",
+    "sub_sector": "Sales · Account & Relationship Management",
+    "city": "Kuala Lumpur",
+    "district": "Sarawak",
+    "lat": 3.1264,
+    "lng": 101.7071,
+    "work_modes": [
+      "Hybrid",
+      "On-site"
+    ],
+    "featured_roles": [
+      "Key Account Executive (Chemistry/Oil & Gas)",
+      "Key-Account-Executive"
+    ],
+    "core_skills_sought": [
+      "Bilingual Communication",
+      "Copywriting",
+      "SEO Content Strategy",
+      "Google Analytics",
+      "Communication",
+      "Technical"
+    ],
+    "summary": "JobStreet Malaysia verified employer (JS-74667994) in Account & Relationship Management: Join our dynamic team as a Key Account Executive for the Oil & Gas industry. We are seeking a results driven and strategic sales profes",
+    "sdg_focus": "SDG 8.5 · Decent Work & Productive Employment",
+    "jobstreet_id": "JS-74667994"
+  },
+  {
+    "id": "COMP-JS-25",
+    "name": "Direct Access Solutions Sdn. Bhd.",
+    "category": "IT & Software",
+    "sub_sector": "Information & Communication Technology · Engineering - Software",
+    "city": "Kuala Lumpur",
+    "district": "KLCC / Bukit Bintang",
+    "lat": 3.1669,
+    "lng": 101.6891,
+    "work_modes": [
+      "Hybrid",
+      "On-site"
+    ],
+    "featured_roles": [
+      "Operations Engineer",
+      "operations-engineer"
+    ],
+    "core_skills_sought": [
+      "Python",
+      "Linux",
+      "SQL",
+      "REST APIs",
+      "Shell",
+      "Communication"
+    ],
+    "summary": "JobStreet Malaysia verified employer (JS-74673679) in Engineering - Software: Job Responsibilities Responsible for ensuring the normal operation of servers Able to promptly address customer issues and provide time",
+    "sdg_focus": "SDG 8.5 · Decent Work & Productive Employment",
+    "jobstreet_id": "JS-74673679"
+  },
+  {
+    "id": "COMP-JS-26",
+    "name": "PROMPT ENGINEERING SDN. BHD.",
+    "category": "Engineering & Green Tech",
+    "sub_sector": "Engineering · Civil/Structural Engineering",
+    "city": "Penang",
+    "district": "Penang Island",
+    "lat": 5.3862,
+    "lng": 100.2929,
+    "work_modes": [
+      "On-site",
+      "Hybrid"
+    ],
+    "featured_roles": [
+      "Graduate Engineer (Civil and Structural)",
+      "engineer---civil--structural"
+    ],
+    "core_skills_sought": [
+      "Project Management",
+      "Risk Assessment",
+      "Python",
+      "ESG & Carbon Reporting Standards",
+      "Design",
+      "Technical"
+    ],
+    "summary": "JobStreet Malaysia verified employer (JS-74660462) in Civil/Structural Engineering: About us We are a subsidiary of an Australian owned Structural Engineering firm located in Georgetown Penang where headquarter is in Pe",
+    "sdg_focus": "SDG 8.5 · Decent Work & Productive Employment",
+    "jobstreet_id": "JS-74660462"
+  },
+  {
+    "id": "COMP-JS-27",
+    "name": "Boardroom Corporate Services Sdn Bhd",
+    "category": "IT & Software",
+    "sub_sector": "Information & Communication Technology · Testing & Quality Assurance",
+    "city": "Petaling Jaya",
+    "district": "Petaling District",
+    "lat": 3.0758,
+    "lng": 101.6157,
+    "work_modes": [
+      "Hybrid",
+      "On-site"
+    ],
+    "featured_roles": [
+      "IT QA Analyst",
+      "quality-assurance-analyst"
+    ],
+    "core_skills_sought": [
+      "SQL",
+      "Python",
+      "REST APIs",
+      "React",
+      "Queries",
+      "Plan"
+    ],
+    "summary": "JobStreet Malaysia verified employer (JS-74658568) in Testing & Quality Assurance: Work with stakeholders, business analysts, developers, and business representatives in a collaborative manner to drive out test scope. ",
+    "sdg_focus": "SDG 8.5 · Decent Work & Productive Employment",
+    "jobstreet_id": "JS-74658568"
+  },
+  {
+    "id": "COMP-JS-28",
+    "name": "SEEK",
+    "category": "IT & Software",
+    "sub_sector": "Information & Communication Technology · Other",
+    "city": "Kuala Lumpur",
+    "district": "KLCC / Bukit Bintang",
+    "lat": 3.1669,
+    "lng": 101.6891,
+    "work_modes": [
+      "Hybrid",
+      "On-site"
+    ],
+    "featured_roles": [
+      "Associate Data Engineer (Hybrid Working)",
+      "data-engineer"
+    ],
+    "core_skills_sought": [
+      "SQL",
+      "AWS",
+      "Recruitment",
+      "Python",
+      "Queries",
+      "Requests"
+    ],
+    "summary": "JobStreet Malaysia verified employer (JS-74668376) in Other: Company Description About SEEK SEEK’s portfolio of diverse businesses, which includes Jobstreet and Jobsdb in Asia, make a positive imp",
+    "sdg_focus": "SDG 8.5 · Decent Work & Productive Employment",
+    "jobstreet_id": "JS-74668376"
+  },
+  {
+    "id": "COMP-JS-29",
+    "name": "WINTOO TECHNOLOGY SDN. BHD.",
+    "category": "Marketing & PR",
+    "sub_sector": "Sales · Account & Relationship Management",
+    "city": "Kuala Lumpur",
+    "district": "Kepong",
+    "lat": 3.196,
+    "lng": 101.5951,
+    "work_modes": [
+      "Hybrid",
+      "On-site"
+    ],
+    "featured_roles": [
+      "Sales Executive (Management Trainee) - KEPONG",
+      "management-trainee"
+    ],
+    "core_skills_sought": [
+      "Copywriting",
+      "SEO Content Strategy",
+      "Google Analytics",
+      "Social Media Campaigns",
+      "Training",
+      "Sales"
+    ],
+    "summary": "JobStreet Malaysia verified employer (JS-74661191) in Account & Relationship Management: Job Description WINTOO now is looking at a pool of dedicated and responsible individuals to fill the position of Sales cum Management T",
+    "sdg_focus": "SDG 8.5 · Decent Work & Productive Employment",
+    "jobstreet_id": "JS-74661191"
+  },
+  {
+    "id": "COMP-JS-30",
+    "name": "VODATEL SDN. BHD.",
+    "category": "Marketing & PR",
+    "sub_sector": "Sales · Account & Relationship Management",
+    "city": "Kuala Lumpur",
+    "district": "KLCC / Bukit Bintang",
+    "lat": 3.1894,
+    "lng": 101.7026,
+    "work_modes": [
+      "Hybrid",
+      "On-site"
+    ],
+    "featured_roles": [
+      "CORPORATE SALES EXECUTIVE",
+      "corporate-sales-executive"
+    ],
+    "core_skills_sought": [
+      "Bilingual Communication",
+      "Copywriting",
+      "SEO Content Strategy",
+      "Google Analytics",
+      "Plan",
+      "Communication"
+    ],
+    "summary": "JobStreet Malaysia verified employer (JS-74668354) in Account & Relationship Management: Job Descriptions: · You will be responsible to expand business with new and existing customer · Increase customer base by prospecting a",
+    "sdg_focus": "SDG 8.5 · Decent Work & Productive Employment",
+    "jobstreet_id": "JS-74668354"
+  },
+  {
+    "id": "COMP-JS-31",
+    "name": "GREYWOLF NETWORKS SDN BHD",
+    "category": "IT & Software",
+    "sub_sector": "Information & Communication Technology · Web Development & Production",
+    "city": "Kuala Lumpur",
+    "district": "Bangsar South",
+    "lat": 3.1399,
+    "lng": 101.7071,
+    "work_modes": [
+      "Hybrid",
+      "On-site"
+    ],
+    "featured_roles": [
+      "Backend Developer",
+      "backend-developer"
+    ],
+    "core_skills_sought": [
+      "SQL",
+      "REST APIs",
+      "Git",
+      "React",
+      "Mysql",
+      "Javascript"
+    ],
+    "summary": "JobStreet Malaysia verified employer (JS-74658656) in Web Development & Production: Are you passionate about building robust and innovative backend solutions that power cutting-edge applications? Do you thrive on challe",
+    "sdg_focus": "SDG 8.5 · Decent Work & Productive Employment",
+    "jobstreet_id": "JS-74658656"
+  },
+  {
+    "id": "COMP-JS-32",
+    "name": "Payments Network Malaysia Sdn Bhd",
+    "category": "IT & Software",
+    "sub_sector": "Information & Communication Technology · Developers/Programmers",
+    "city": "Kuala Lumpur",
+    "district": "KLCC / Bukit Bintang",
+    "lat": 3.1444,
+    "lng": 101.6981,
+    "work_modes": [
+      "Hybrid",
+      "On-site"
+    ],
+    "featured_roles": [
+      "Front End Engineer",
+      "front-end-engineer"
+    ],
+    "core_skills_sought": [
+      "REST APIs",
+      "Git",
+      "React",
+      "HTML/CSS/JS",
+      "Interactive",
+      "Javascript"
+    ],
+    "summary": "JobStreet Malaysia verified employer (JS-74660390) in Developers/Programmers: Job Overview You will be responsible for designing, developing, testing, and debugging responsive web applications for the company. You",
+    "sdg_focus": "SDG 8.5 · Decent Work & Productive Employment",
+    "jobstreet_id": "JS-74660390"
   }
 ]

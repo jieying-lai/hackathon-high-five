@@ -1034,8 +1034,10 @@
                 </div>
               </div>
 
+              ${v.description_snippet ? `<p class="text-[11px] text-slate-500 truncate">${esc(v.description_snippet)}</p>` : ''}
               <!-- Compact Meta & Skills -->
-              <div class="flex flex-wrap items-center gap-1.5 pt-1">
+              <div class="flex flex-wrap items-center gap-1.5 pt-0.5">
+                ${v.jobstreet_id ? `<span class="chip chip-teal !text-[10px]" title="Kaggle JobStreet Malaysia All Job Dataset (${esc(v.jobstreet_id)})">JobStreet MY</span>` : ''}
                 <span class="chip chip-slate !text-[10px]">${esc(v.work_mode)}</span>
                 <span class="chip chip-slate !text-[10px]">${v.min_years}+ yr exp</span>
                 ${v.required_skills.map(s => {
