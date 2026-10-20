@@ -1,7 +1,8 @@
-# Python / SQLite
+# Python / SQLite / Private PDF Uploads
 __pycache__/
 *.py[cod]
 *.db
+src/data/uploads/
 venv/
 .venv/
 

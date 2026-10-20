@@ -21,7 +21,7 @@
           <div><div class="font-extrabold text-lg bg-gradient-to-r from-indigo-700 to-pink-600 bg-clip-text text-transparent">CareerLens AI</div>
             <span class="chip chip-indigo !text-[10px]">Talent Portal</span></div>
         </div>
-        <nav id="sideNav" class="mt-4 space-y-1.5 flex-1"></nav>
+        <nav id="sideNav" class="mt-4 space-y-1.5 flex-1 overflow-y-auto hidden-scroll"></nav>
         <div class="tint tint-indigo rounded-2xl p-3 mt-3">
           <div class="flex items-center gap-2.5">
             <div id="uAvatar" class="h-9 w-9 rounded-xl bg-gradient-to-br from-indigo-500 to-pink-500 text-white font-bold grid place-items-center">U</div>
@@ -47,7 +47,7 @@
         <div class="flex flex-wrap items-end justify-between gap-3">
           <div><div id="pgEyebrow" class="text-[11px] font-extrabold uppercase tracking-wider text-indigo-600"></div>
             <h1 id="pgTitle" class="text-2xl sm:text-3xl font-extrabold tracking-tight"></h1></div>
-          <div id="pgActions"></div>
+          <div id="pgActions" class="flex flex-wrap gap-2"></div>
         </div>
 
         <!-- ============ DASHBOARD ============ -->
@@ -57,7 +57,7 @@
             <div class="relative space-y-1"><div class="text-sm text-slate-500 font-semibold">Welcome back</div>
               <h2 id="dashHello" class="text-2xl font-extrabold"></h2>
               <p id="dashSub" class="text-sm text-slate-600"></p></div>
-            <div id="journey" class="relative mt-6 grid grid-cols-2 sm:grid-cols-5 gap-3"></div>
+            <div id="journey" class="relative mt-6 grid grid-cols-2 sm:grid-cols-6 gap-3"></div>
           </div>
           <div id="kpis" class="grid grid-cols-2 lg:grid-cols-4 gap-4"></div>
           <div class="grid lg:grid-cols-5 gap-6">
@@ -69,27 +69,152 @@
           </div>
         </section>
 
-        <!-- ============ PROFILE ============ -->
-        <section id="tab-profile" class="tab hidden">
-          <div class="glass rounded-3xl p-6 sm:p-8 space-y-6">
-            <div class="flex flex-wrap items-center justify-between gap-3 border-b border-slate-200/70 pb-4">
-              <div><div class="text-sm font-extrabold">Your details</div><div class="text-xs text-slate-500">Demo personas use synthetic data only</div></div>
-              <div id="personaBtns" class="flex flex-wrap gap-2"></div>
+        <!-- ============ PDF CV & AI SUMMARY (FUNCTION 01) ============ -->
+        <section id="tab-profile" class="tab hidden space-y-6">
+          <!-- Privacy & Data Governance Banner -->
+          <div class="tint tint-teal rounded-3xl p-5 flex flex-wrap items-center justify-between gap-4">
+            <div class="flex items-start gap-3.5 max-w-3xl">
+              <div class="h-11 w-11 rounded-2xl bg-teal-600 text-white grid place-items-center text-lg shrink-0 shadow">🔒</div>
+              <div>
+                <div class="flex flex-wrap items-center gap-2">
+                  <span class="text-sm font-extrabold text-teal-950">Private PDF Vault & Consent-Gated Sharing</span>
+                  <span class="chip chip-emerald">PDPA Protected</span>
+                  <span class="chip chip-indigo">PDF-Only Upload</span>
+                </div>
+                <p class="text-xs text-slate-600 mt-1 leading-relaxed">
+                  Your uploaded PDF CV and AI-extracted summary are stored privately under your unique ID. By default, your data is used <b>only for anonymised statistical trend analysis and your personal job/reskilling recommendations</b>. Employers <b>cannot</b> view your organised CV or original PDF unless you explicitly apply to their job vacancy.
+                </p>
+              </div>
             </div>
-            <div class="grid sm:grid-cols-2 gap-4">
-              <div><label class="label">Full name</label><input id="pName" class="input" /></div>
-              <div><label class="label">Industry</label><select id="pIndustry" class="input"><option>Finance & Accounting</option><option>Marketing & PR</option><option>IT & Software</option><option>HR & Administration</option></select></div>
-              <div><label class="label">Current role</label><input id="pRole" class="input" /></div>
-              <div><label class="label">Work mode</label><select id="pMode" class="input"><option>Hybrid</option><option>Remote</option><option>On-site</option></select></div>
-            </div>
-            <div>
-              <label class="label">Skills <span class="text-slate-400 font-medium">· press Enter to add</span></label>
-              <div id="skillChips" class="flex flex-wrap gap-2 mb-2.5"></div>
-              <input id="skillInput" class="input" placeholder="Type a skill, e.g. Financial Auditing" list="skillSuggest" />
-              <datalist id="skillSuggest"></datalist>
-            </div>
-            <div class="flex justify-end"><button onclick="saveProfile()" class="btn btn-primary">Save & analyse →</button></div>
+            <label class="flex items-center gap-2 text-xs font-bold text-teal-950 bg-white/80 px-3.5 py-2.5 rounded-2xl border border-teal-200 cursor-pointer shrink-0">
+              <input id="anonToggle" type="checkbox" checked onchange="toggleAnonStats(this.checked)" class="rounded text-teal-600 focus:ring-teal-500" />
+              Include in anonymised trend stats
+            </label>
           </div>
+
+          <div class="grid lg:grid-cols-12 gap-6">
+            <!-- Left: PDF Upload Dropzone + Quick Sample PDFs -->
+            <div class="lg:col-span-5 space-y-5">
+              <div class="glass rounded-3xl p-6 space-y-4">
+                <div class="flex items-center justify-between">
+                  <div>
+                    <div class="text-sm font-extrabold">1. Upload your PDF CV</div>
+                    <div class="text-xs text-slate-500">Strictly `.pdf` format only (max 8 MB)</div>
+                  </div>
+                  <span class="chip chip-pink">.PDF ONLY</span>
+                </div>
+
+                <label id="dropZone" for="pdfInput" class="block border-2 border-dashed border-indigo-300/90 hover:border-indigo-500 bg-white/75 hover:bg-indigo-50/40 transition rounded-3xl p-6 text-center cursor-pointer">
+                  <input id="pdfInput" type="file" accept=".pdf,application/pdf" class="hidden" onchange="handlePdfSelect(this.files[0])" />
+                  <div class="mx-auto h-12 w-12 rounded-2xl bg-gradient-to-br from-indigo-500 to-pink-500 text-white grid place-items-center text-xl shadow-md mb-3">📄</div>
+                  <div class="text-sm font-extrabold text-slate-800">Drop your PDF CV here or <span class="text-indigo-600 underline">browse</span></div>
+                  <div class="text-[11px] text-slate-500 mt-1">AI automatically extracts & organises your education, experience, projects, and skills</div>
+                  <div id="uploadStatus" class="mt-3 text-xs font-bold text-indigo-600 hidden"></div>
+                </label>
+
+                <div class="border-t border-slate-200/70 pt-4 space-y-2.5">
+                  <div class="flex items-center justify-between">
+                    <span class="text-xs font-extrabold text-slate-700">Synthetic sample PDF CVs (for instant testing)</span>
+                    <span class="text-[10px] text-slate-400">1-click AI parse or download</span>
+                  </div>
+                  <div id="samplePdfList" class="space-y-2"></div>
+                </div>
+              </div>
+
+              <!-- Employer Access Audit Log -->
+              <div class="glass rounded-3xl p-6 space-y-3">
+                <div class="flex items-center justify-between">
+                  <div>
+                    <div class="text-sm font-extrabold">Employer CV access log</div>
+                    <div class="text-[11px] text-slate-500">Every company view of your CV is audited here</div>
+                  </div>
+                  <span id="accessCountBadge" class="chip chip-slate">0 views</span>
+                </div>
+                <div id="accessLogList" class="space-y-2 max-h-52 overflow-y-auto pr-1"></div>
+              </div>
+            </div>
+
+            <!-- Right: AI-Captured & Organised CV Summary -->
+            <div class="lg:col-span-7 space-y-5">
+              <div class="glass rounded-3xl p-6 sm:p-7 space-y-5">
+                <div class="flex flex-wrap items-start justify-between gap-3 border-b border-slate-200/70 pb-4">
+                  <div>
+                    <div class="flex items-center gap-2">
+                      <span class="text-sm font-extrabold">2. AI-Organised CV Summary</span>
+                      <span id="cvStatusChip" class="chip chip-emerald">Stored in private vault</span>
+                    </div>
+                    <div id="cvFileMeta" class="text-xs text-slate-500 mt-0.5">Upload a PDF CV on the left to extract your structured profile</div>
+                  </div>
+                  <div class="flex gap-2">
+                    <a id="viewMyPdfBtn" href="/api/cv/me/pdf" target="_blank" rel="noopener" class="btn btn-soft !py-1.5 !text-xs hidden">👁️ View Original PDF</a>
+                  </div>
+                </div>
+
+                <!-- AI Executive Summary Box -->
+                <div class="tint tint-indigo rounded-2xl p-4 space-y-2">
+                  <div class="flex items-center justify-between">
+                    <span class="text-[11px] font-extrabold uppercase tracking-wider text-indigo-700">✨ AI Executive Summary (Captured from PDF)</span>
+                    <span id="cvSeekerType" class="chip chip-indigo"></span>
+                  </div>
+                  <textarea id="pSummary" rows="3" class="input !bg-white/90 text-xs leading-relaxed" placeholder="AI executive summary extracted from your PDF CV..."></textarea>
+                  <ul id="aiHighlights" class="space-y-1 text-[11px] text-slate-600 pt-1"></ul>
+                </div>
+
+                <!-- Structured Fields -->
+                <div class="grid sm:grid-cols-2 gap-3.5">
+                  <div><label class="label">Full name</label><input id="pName" class="input" /></div>
+                  <div><label class="label">Current role / headline</label><input id="pRole" class="input" /></div>
+                  <div><label class="label">Industry sector</label><select id="pIndustry" class="input"><option>Finance & Accounting</option><option>IT & Software</option><option>Marketing & PR</option><option>HR & Administration</option></select></div>
+                  <div><label class="label">Preferred work mode</label><select id="pMode" class="input"><option>Hybrid</option><option>Remote</option><option>On-site</option></select></div>
+                  <div><label class="label">Qualification level</label><select id="pEdu" class="input"><option>Diploma / TVET</option><option>Bachelor's Degree</option><option>Master's / Postgraduate</option></select></div>
+                  <div><label class="label">Years of experience</label><input id="pYears" type="number" min="0" max="40" value="1" class="input" /></div>
+                </div>
+
+                <!-- Extracted Experience, Education, Projects -->
+                <div class="grid sm:grid-cols-3 gap-3">
+                  <div class="bg-white/80 rounded-2xl p-3.5 border border-slate-200/70 space-y-1.5">
+                    <div class="text-[11px] font-extrabold text-indigo-700 uppercase">💼 Work Experience</div>
+                    <ul id="cvExpList" class="space-y-1.5 text-[11px] text-slate-600 list-disc pl-4"></ul>
+                  </div>
+                  <div class="bg-white/80 rounded-2xl p-3.5 border border-slate-200/70 space-y-1.5">
+                    <div class="text-[11px] font-extrabold text-teal-700 uppercase">🎓 Education</div>
+                    <ul id="cvEduList" class="space-y-1.5 text-[11px] text-slate-600 list-disc pl-4"></ul>
+                  </div>
+                  <div class="bg-white/80 rounded-2xl p-3.5 border border-slate-200/70 space-y-1.5">
+                    <div class="text-[11px] font-extrabold text-pink-700 uppercase">🚀 Key Projects</div>
+                    <ul id="cvProjList" class="space-y-1.5 text-[11px] text-slate-600 list-disc pl-4"></ul>
+                  </div>
+                </div>
+
+                <!-- Extracted Skills -->
+                <div>
+                  <label class="label">AI-Extracted Skills <span class="text-slate-400 font-medium">· add or refine skills below</span></label>
+                  <div id="skillChips" class="flex flex-wrap gap-2 mb-2.5"></div>
+                  <input id="skillInput" class="input" placeholder="Add a skill and press Enter (e.g. Python Data Analysis)" list="skillSuggest" />
+                  <datalist id="skillSuggest"></datalist>
+                </div>
+
+                <div class="flex flex-wrap items-center justify-between gap-3 pt-2 border-t border-slate-200/70">
+                  <button onclick="showTab('jobs')" class="btn btn-soft">💼 Browse & Apply Jobs →</button>
+                  <button onclick="saveProfile()" class="btn btn-primary">Save Summary & Refresh AI Matches →</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ============ BROWSE & APPLY JOBS (PRIVACY-GATED CV SHARING) ============ -->
+        <section id="tab-jobs" class="tab hidden space-y-5">
+          <div class="tint tint-indigo rounded-3xl p-5 flex flex-wrap items-center justify-between gap-4">
+            <div>
+              <div class="text-sm font-extrabold text-indigo-950">Consent-Gated Job Applications</div>
+              <p class="text-xs text-slate-600 mt-0.5">
+                Companies only gain access to your <b>AI-Organised CV Summary</b> and <b>Original PDF CV</b> for the specific role you apply to below. You can withdraw an application at any time to revoke access immediately.
+              </p>
+            </div>
+            <button onclick="showTab('profile')" class="btn btn-soft !py-2">📄 Manage my PDF CV</button>
+          </div>
+          <div id="jobsGrid" class="grid lg:grid-cols-2 gap-5"></div>
         </section>
 
         <!-- ============ QUESTIONNAIRE ============ -->
@@ -115,12 +240,14 @@
             <div class="tint tint-teal rounded-3xl p-6 space-y-4"><div class="text-sm font-extrabold text-teal-900">📈 Rising skills</div><div id="rising" class="space-y-4"></div></div>
             <div class="tint tint-pink rounded-3xl p-6 space-y-4"><div class="text-sm font-extrabold text-rose-900">⚠️ Tasks at automation risk</div><div id="declining" class="space-y-4"></div></div>
           </div>
+          <!-- Anonymized Talent Pool Statistical Trend Card -->
+          <div id="anonStatsCard" class="glass rounded-3xl p-6 space-y-3"></div>
           <div class="tint tint-indigo rounded-3xl p-6"><div class="text-sm font-extrabold text-indigo-900 mb-3">📰 Recent AI research signals</div><ul id="signals" class="space-y-2 text-xs text-slate-600"></ul></div>
         </section>
 
         <!-- ============ MATCHES ============ -->
         <section id="tab-match" class="tab hidden space-y-5">
-          <div class="flex flex-wrap gap-2"><span class="chip chip-emerald">⚖️ Fairness audited</span><span class="chip chip-slate">Scores are estimates</span></div>
+          <div class="flex flex-wrap gap-2"><span class="chip chip-emerald">⚖️ Fairness audited</span><span class="chip chip-indigo">📄 Matched using your private PDF CV</span><span class="chip chip-slate">Scores are estimates</span></div>
           <div id="roleCards" class="grid lg:grid-cols-2 gap-5"></div>
         </section>
 
@@ -144,11 +271,66 @@
     </div>
   </div>
 
+  <!-- Apply to Job Modal (Explicit Consent for Organised CV & Original PDF) -->
+  <div id="applyModalWrap" class="hidden">
+    <div class="overlay" onclick="closeApplyModal(event)">
+      <div class="modal p-6 sm:p-8 space-y-5 max-w-lg w-full" onclick="event.stopPropagation()">
+        <div class="flex items-start justify-between gap-3">
+          <div>
+            <div class="text-[11px] font-extrabold uppercase tracking-wider text-indigo-600">Consent-Gated Application</div>
+            <h3 id="amTitle" class="text-xl font-extrabold mt-0.5">Apply for Role</h3>
+            <div id="amMeta" class="text-xs text-slate-500"></div>
+          </div>
+          <button onclick="closeApplyModal()" class="text-slate-400 hover:text-slate-700 text-xl font-bold">✕</button>
+        </div>
+
+        <div class="tint tint-teal rounded-2xl p-4 space-y-2.5">
+          <div class="text-xs font-extrabold text-teal-950">🔒 Choose what to share with this employer:</div>
+          <label class="flex items-start gap-2.5 text-xs text-slate-700 cursor-pointer">
+            <input id="amShareOrg" type="checkbox" checked class="mt-0.5 rounded text-teal-600" />
+            <span><b>Share AI-Organised CV Summary</b> (structured skills, education, experience & executive summary)</span>
+          </label>
+          <label class="flex items-start gap-2.5 text-xs text-slate-700 cursor-pointer">
+            <input id="amSharePdf" type="checkbox" checked class="mt-0.5 rounded text-teal-600" />
+            <span><b>Allow employer to view Original Uploaded PDF CV</b> (authentic `.pdf` document if HR needs full verification)</span>
+          </label>
+        </div>
+
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="label">Expected salary (RM)</label>
+            <input id="amSalary" type="number" min="1500" max="50000" value="5200" class="input" />
+          </div>
+          <div>
+            <label class="label">Notice period / availability</label>
+            <select id="amAvail" class="input">
+              <option>Immediately</option>
+              <option>2 weeks</option>
+              <option selected>1 month</option>
+              <option>2 months</option>
+            </select>
+          </div>
+        </div>
+
+        <div>
+          <label class="label">Brief note to hiring manager (optional)</label>
+          <textarea id="amNote" rows="2" class="input" placeholder="Highlight why you are interested in this role..."></textarea>
+        </div>
+
+        <div class="flex justify-end gap-2 pt-2">
+          <button onclick="closeApplyModal()" class="btn btn-soft">Cancel</button>
+          <button onclick="submitJobApplication()" class="btn btn-primary">Confirm & Submit Application →</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <script src="/static/js/common.js"></script>
   <script>
     const NAV = [
       { id: 'dash', ico: '🏠', label: 'Dashboard', eyebrow: 'Overview', title: 'Your career dashboard' },
-      { id: 'profile', ico: '🧑‍💼', label: 'Profile & Skills', eyebrow: 'Function 01', title: 'Skills profile' },
+      { id: 'profile', ico: '📄', label: 'PDF CV & Summary', eyebrow: 'Function 01 · Private Vault', title: 'PDF CV upload & AI summary' },
+      { id: 'jobs', ico: '💼', label: 'Browse & Apply Jobs', eyebrow: 'Consent-Gated Sharing', title: 'Open company job vacancies' },
       { id: 'quest', ico: '📝', label: 'Questionnaire', eyebrow: 'Function 01', title: 'Application questionnaire' },
       { id: 'radar', ico: '📡', label: 'AI Radar', eyebrow: 'Function 02', title: 'Future skills radar' },
       { id: 'match', ico: '🎯', label: 'Role Matches', eyebrow: 'Function 03', title: 'Future-role matches' },
@@ -166,10 +348,12 @@
       { id: 'c8', text: 'Where do you want to be in 3–5 years?', type: 'text' },
     ];
 
-    let user = null, personas = [], skills = [], scenario = 'moderate', trend = null, roles = [], aiQuestions = [], selected = 0;
+    let user = null, personas = [], cvRecord = null, samplePdfs = [], jobsList = [], activeApplyJob = null;
+    let skills = [], scenario = 'moderate', trend = null, roles = [], aiQuestions = [], selected = 0;
     let analysed = false; const visited = new Set(['dash']); let answers = {}; let current = 'dash';
 
     const ringColor = s => s >= 80 ? '#10b981' : s >= 60 ? '#6366f1' : '#f59e0b';
+    const rm = n => 'RM ' + Number(n).toLocaleString();
 
     /* ---------- navigation ---------- */
     function buildNav() {
@@ -178,22 +362,149 @@
       document.getElementById('topNav').innerHTML = NAV.map(n =>
         `<button data-tab="${n.id}" onclick="showTab('${n.id}')" class="nav-item !w-auto whitespace-nowrap !py-2"><span>${n.ico}</span>${n.label}</button>`).join('');
     }
-    function showTab(id) {
+    async function showTab(id) {
       current = id; visited.add(id);
       document.querySelectorAll('.tab').forEach(t => t.classList.add('hidden'));
       const el = document.getElementById('tab-' + id); el.classList.remove('hidden'); el.classList.add('fade-in');
       document.querySelectorAll('[data-tab]').forEach(b => b.classList.toggle('active', b.dataset.tab === id));
       const n = NAV.find(x => x.id === id);
       document.getElementById('pgEyebrow').textContent = n.eyebrow; document.getElementById('pgTitle').textContent = n.title;
-      if (id === 'dash') renderDash(); if (id === 'passport') renderPassport();
+      if (id === 'dash') renderDash();
+      if (id === 'profile') await loadMyCv();
+      if (id === 'jobs') await loadJobs();
+      if (id === 'passport') renderPassport();
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
-    /* ---------- profile ---------- */
+    /* ---------- PDF CV Upload & Structured Summary ---------- */
+    async function loadMyCv() {
+      const r = await api('/api/cv/me');
+      if (!r.ok) return;
+      cvRecord = r.data.cv;
+      samplePdfs = r.data.samples || [];
+      renderSamplePdfs();
+      renderCvVault();
+    }
+
+    function renderSamplePdfs() {
+      samplePdfList.innerHTML = samplePdfs.map(s => `
+        <div class="flex items-center justify-between gap-2 bg-white/80 rounded-2xl px-3.5 py-2.5 border border-slate-200/70">
+          <div class="min-w-0">
+            <div class="text-xs font-extrabold truncate">${esc(s.label)}</div>
+            <div class="text-[10px] font-mono text-slate-400 truncate">${esc(s.filename)}</div>
+          </div>
+          <div class="flex items-center gap-1.5 shrink-0">
+            <a href="${esc(s.url)}" download class="btn btn-soft !py-1 !px-2.5 !text-[11px]" title="Download sample PDF">⬇ PDF</a>
+            <button onclick="useSamplePdf('${esc(s.filename)}')" class="btn btn-primary !py-1 !px-2.5 !text-[11px]">Upload & Parse</button>
+          </div>
+        </div>`).join('');
+    }
+
+    function renderCvVault() {
+      if (!cvRecord || !cvRecord.structured_cv) {
+        cvStatusChip.textContent = 'No PDF uploaded yet';
+        cvStatusChip.className = 'chip chip-amber';
+        cvFileMeta.textContent = 'Upload a .pdf CV to unlock AI extraction and job applications';
+        viewMyPdfBtn.classList.add('hidden');
+        accessCountBadge.textContent = '0 views';
+        accessLogList.innerHTML = '<div class="text-xs text-slate-400">No employer has viewed your CV.</div>';
+        return;
+      }
+      const st = cvRecord.structured_cv;
+      cvStatusChip.textContent = '✓ Stored in Private Vault';
+      cvStatusChip.className = 'chip chip-emerald';
+      cvFileMeta.textContent = `${cvRecord.original_filename} · ${cvRecord.file_size_kb} KB · ${cvRecord.page_count} page(s) · SHA-256 ${cvRecord.file_sha256} · Updated ${cvRecord.updated_at}`;
+      viewMyPdfBtn.classList.remove('hidden');
+      anonToggle.checked = Boolean(cvRecord.allow_anon_stats);
+
+      pName.value = st.full_name || user.full_name;
+      pRole.value = st.current_role || '';
+      pIndustry.value = st.industry || 'Finance & Accounting';
+      pMode.value = st.work_mode_preference || 'Hybrid';
+      pEdu.value = st.education_level || "Bachelor's Degree";
+      pYears.value = st.years_experience ?? 1;
+      pSummary.value = st.executive_summary || '';
+      cvSeekerType.textContent = st.seeker_type || 'Professional';
+
+      aiHighlights.innerHTML = (st.ai_highlights || []).map(h => `<li class="flex items-center gap-1.5"><span class="text-indigo-600 font-bold">•</span><span>${esc(h)}</span></li>`).join('');
+      cvExpList.innerHTML = (st.work_experience || []).map(x => `<li>${esc(x)}</li>`).join('') || '<li>No entries extracted</li>';
+      cvEduList.innerHTML = (st.education_history || []).map(x => `<li>${esc(x)}</li>`).join('') || '<li>No entries extracted</li>';
+      cvProjList.innerHTML = (st.projects || []).map(x => `<li>${esc(x)}</li>`).join('') || '<li>No entries extracted</li>';
+
+      skills = [...(st.skills || [])];
+      renderSkills();
+
+      const logs = cvRecord.access_logs || [];
+      accessCountBadge.textContent = `${logs.length} view${logs.length === 1 ? '' : 's'}`;
+      accessLogList.innerHTML = logs.length ? logs.map(lg => `
+        <div class="bg-white/80 rounded-2xl p-2.5 border border-slate-200/70 text-[11px] flex items-center justify-between gap-2">
+          <div>
+            <div class="font-extrabold text-slate-800">${esc(lg.company_name)} <span class="chip chip-indigo !text-[9px] ml-1">${esc(lg.access_type)}</span></div>
+            <div class="text-slate-500">Vacancy: ${esc(lg.vacancy_title)}</div>
+          </div>
+          <div class="text-[10px] font-mono text-slate-400 shrink-0">${esc(lg.viewed_at)}</div>
+        </div>`).join('') : '<div class="text-xs text-slate-400">No employer has viewed your CV yet. Your CV stays private until you apply.</div>';
+    }
+
+    async function handlePdfSelect(file) {
+      if (!file) return;
+      if (!file.name.toLowerCase().endsWith('.pdf')) {
+        toast('Only .pdf files are allowed! Please upload a PDF CV.', 'err');
+        pdfInput.value = '';
+        return;
+      }
+      uploadStatus.textContent = `⏳ Parsing "${file.name}" with CareerLens AI...`;
+      uploadStatus.classList.remove('hidden');
+
+      const fd = new FormData();
+      fd.append('file', file);
+      fd.append('allow_anon_stats', anonToggle.checked ? '1' : '0');
+
+      const res = await fetch('/api/cv/upload', { method: 'POST', body: fd });
+      const data = await res.json();
+      uploadStatus.classList.add('hidden');
+      pdfInput.value = '';
+
+      if (!res.ok || !data.ok) {
+        return toast(data.message || 'PDF upload failed.', 'err');
+      }
+      cvRecord = data.cv;
+      renderCvVault();
+      await runAnalysis();
+      await loadJobs();
+      toast('PDF CV uploaded & summarised by AI!');
+    }
+
+    async function useSamplePdf(filename) {
+      uploadStatus.textContent = `⏳ Loading & parsing sample PDF "${filename}"...`;
+      uploadStatus.classList.remove('hidden');
+      const { ok, data } = await postJson('/api/cv/upload', {
+        sample_filename: filename,
+        allow_anon_stats: anonToggle.checked,
+      });
+      uploadStatus.classList.add('hidden');
+      if (!ok || !data.ok) return toast(data.message || 'Could not parse sample PDF.', 'err');
+      cvRecord = data.cv;
+      renderCvVault();
+      await runAnalysis();
+      await loadJobs();
+      toast(`Extracted structured CV from ${filename}`);
+    }
+
+    async function toggleAnonStats(checked) {
+      if (!cvRecord) return;
+      const { ok, data } = await postJson('/api/cv/me', { allow_anon_stats: checked }, 'PUT');
+      if (ok && data.ok) {
+        cvRecord = data.cv;
+        toast(checked ? 'Opted in to anonymised trend stats' : 'Opted out of anonymised trend stats');
+        await runAnalysis();
+      }
+    }
+
     function renderSkills() {
       document.getElementById('skillChips').innerHTML = skills.length
         ? skills.map((s, i) => `<span class="chip chip-indigo">${esc(s)}<button onclick="removeSkill(${i})" aria-label="Remove">×</button></span>`).join('')
-        : '<span class="text-xs text-slate-400">No skills yet — add some below.</span>';
+        : '<span class="text-xs text-slate-400">No skills yet — upload a PDF CV or add below.</span>';
     }
     function removeSkill(i) { skills.splice(i, 1); renderSkills(); }
     function addSkill(v) {
@@ -201,15 +512,148 @@
       if (!skills.some(s => s.toLowerCase() === v.toLowerCase())) skills.push(v);
       renderSkills();
     }
-    function selectPersona(i) {
-      const p = personas[i]; if (!p) return;
-      pName.value = p.name.split(' (')[0]; pIndustry.value = p.industry; pRole.value = p.current_role; pMode.value = p.work_mode_preference;
-      skills = [...p.skills]; renderSkills();
-    }
+
     async function saveProfile() {
       if (!pName.value.trim()) return toast('Please enter your name.', 'err');
-      if (!skills.length) return toast('Add at least one skill.', 'err');
-      await runAnalysis(); toast('Profile analysed'); showTab('radar');
+      if (!skills.length) return toast('Add at least one skill or upload a PDF CV.', 'err');
+      if (cvRecord) {
+        const r = await postJson('/api/cv/me', {
+          full_name: pName.value,
+          current_role: pRole.value,
+          industry: pIndustry.value,
+          work_mode_preference: pMode.value,
+          education_level: pEdu.value,
+          years_experience: Number(pYears.value || 1),
+          executive_summary: pSummary.value,
+          skills,
+          allow_anon_stats: anonToggle.checked,
+        }, 'PUT');
+        if (r.ok && r.data.cv) { cvRecord = r.data.cv; renderCvVault(); }
+      }
+      await runAnalysis();
+      await loadJobs();
+      toast('Organised CV saved & matches updated');
+    }
+
+    /* ---------- Browse & Apply Jobs ---------- */
+    async function loadJobs() {
+      const r = await api('/api/jobs');
+      if (!r.ok) return;
+      jobsList = r.data.jobs || [];
+      renderJobs();
+    }
+
+    function renderJobs() {
+      if (!jobsList.length) {
+        jobsGrid.innerHTML = '<div class="glass rounded-3xl p-8 text-center text-sm text-slate-500 col-span-2">No open company vacancies right now.</div>';
+        return;
+      }
+      jobsGrid.innerHTML = jobsList.map(v => {
+        const app = v.application || {};
+        const score = v.match_score ?? 0;
+        return `
+          <article class="glass rounded-3xl p-6 space-y-4 lift ${app.applied ? 'ring-2 ring-teal-400' : ''}">
+            <div class="flex items-start justify-between gap-4">
+              <div class="flex items-start gap-3.5">
+                <div class="ring !w-14 !h-14 shrink-0" style="--p:${score};--c:${ringColor(score)}"><span class="!w-11 !h-11 !text-xs">${score}%</span></div>
+                <div>
+                  <div class="flex flex-wrap items-center gap-1.5 mb-1">
+                    <span class="chip chip-slate font-mono">${esc(v.vacancy_uid)}</span>
+                    <span class="chip chip-indigo">${esc(v.company_name)}</span>
+                    ${app.applied ? `<span class="chip chip-emerald">✓ Applied (${esc(app.application_uid)})</span>` : '<span class="chip chip-slate">🔒 CV Private</span>'}
+                  </div>
+                  <h3 class="text-lg font-extrabold leading-snug">${esc(v.title)}</h3>
+                  <div class="text-xs text-slate-500 mt-0.5">${esc(v.department || 'General')} · ${esc(v.location || 'Malaysia')} · ${esc(v.work_mode)} · ${v.min_years}+ yrs · ${esc(v.education_level)}</div>
+                </div>
+              </div>
+              <div class="text-right shrink-0">
+                <div class="text-sm font-extrabold text-teal-700">${rm(v.salary_min)} – ${rm(v.salary_max)}</div>
+                <div class="text-[10px] text-slate-400">Monthly budget</div>
+              </div>
+            </div>
+
+            <div class="space-y-1.5">
+              <div class="text-[11px] font-bold text-slate-500">Required skills (${v.matched_required.length}/${v.required_skills.length} matched on your CV)</div>
+              <div class="flex flex-wrap gap-1.5">
+                ${v.required_skills.map(s => {
+                  const hit = v.matched_required.includes(s);
+                  return `<span class="chip ${hit ? 'chip-emerald' : 'chip-amber'}">${hit ? '✓ ' : ''}${esc(s)}</span>`;
+                }).join('')}
+              </div>
+            </div>
+
+            ${app.applied ? `
+              <div class="tint tint-teal rounded-2xl p-3.5 flex flex-wrap items-center justify-between gap-2 text-xs">
+                <div>
+                  <div class="font-extrabold text-teal-950">Shared with ${esc(v.company_name)}:</div>
+                  <div class="text-[11px] text-slate-600">
+                    ${app.share_organised_cv ? '✓ AI-Organised CV Summary' : ''}
+                    ${app.share_original_pdf ? ' · ✓ Original PDF CV' : ' · 🔒 Original PDF withheld'}
+                    · HR Status: <b>${esc(app.hr_decision || 'Pending')}</b>
+                  </div>
+                </div>
+                <div class="flex gap-2">
+                  <button onclick="openApplyModal(${v.id})" class="btn btn-soft !py-1.5 !text-xs">Update permissions</button>
+                  <button onclick="withdrawJobApplication(${v.id})" class="btn btn-danger !py-1.5 !text-xs">Withdraw & Revoke CV</button>
+                </div>
+              </div>
+            ` : `
+              <div class="flex items-center justify-between pt-2 border-t border-slate-200/70">
+                <span class="text-[11px] text-slate-500">🔒 Employer cannot see your CV unless you apply</span>
+                <button onclick="openApplyModal(${v.id})" class="btn btn-primary !py-2">Apply & Share CV →</button>
+              </div>
+            `}
+          </article>`;
+      }).join('');
+    }
+
+    function openApplyModal(vid) {
+      if (!cvRecord) {
+        toast('Please upload your PDF CV first before applying.', 'err');
+        showTab('profile');
+        return;
+      }
+      const job = jobsList.find(j => j.id === vid);
+      if (!job) return;
+      activeApplyJob = job;
+      amTitle.textContent = `${job.title} · ${job.company_name}`;
+      amMeta.textContent = `${job.vacancy_uid} · ${rm(job.salary_min)} – ${rm(job.salary_max)} · ${job.work_mode}`;
+      const app = job.application || {};
+      amShareOrg.checked = app.applied ? Boolean(app.share_organised_cv) : true;
+      amSharePdf.checked = app.applied ? Boolean(app.share_original_pdf) : true;
+      amNote.value = app.cover_note || '';
+      applyModalWrap.classList.remove('hidden');
+    }
+
+    function closeApplyModal() {
+      applyModalWrap.classList.add('hidden');
+      activeApplyJob = null;
+    }
+
+    async function submitJobApplication() {
+      if (!activeApplyJob) return;
+      const { ok, data } = await postJson(`/api/jobs/${activeApplyJob.id}/apply`, {
+        share_organised_cv: amShareOrg.checked,
+        share_original_pdf: amSharePdf.checked,
+        salary_expectation: Number(amSalary.value || 5000),
+        available_in: amAvail.value,
+        cover_note: amNote.value,
+      });
+      if (!ok || !data.ok) return toast(data.message || 'Could not submit application.', 'err');
+      toast(data.message);
+      closeApplyModal();
+      await loadJobs();
+      await loadMyCv();
+      if (current === 'dash') renderDash();
+    }
+
+    async function withdrawJobApplication(vid) {
+      if (!confirm('Withdraw application and immediately revoke employer access to your CV?')) return;
+      const r = await api(`/api/jobs/${vid}/apply`, { method: 'DELETE' });
+      if (!r.ok) return toast(r.data.message || 'Could not withdraw.', 'err');
+      toast(r.data.message);
+      await loadJobs();
+      await loadMyCv();
     }
 
     /* ---------- analysis ---------- */
@@ -234,11 +678,15 @@
     /* ---------- dashboard ---------- */
     function renderDash() {
       const top = roles[0], role = roles[selected];
+      const appliedCount = jobsList.filter(j => j.application && j.application.applied).length;
       dashHello.textContent = user ? user.full_name : '';
-      dashSub.textContent = analysed ? 'Here is where you stand today and what to do next.' : 'Complete your profile to unlock matches and a learning plan.';
+      dashSub.textContent = cvRecord
+        ? `PDF CV ("${cvRecord.original_filename}") is stored in your private vault and powers your matches.`
+        : 'Upload your PDF CV to unlock AI extraction, role matching, and consent-gated job applications.';
       const answered = answeredCount();
       const steps = [
-        { label: 'Profile', tab: 'profile', done: analysed },
+        { label: 'PDF CV Vault', tab: 'profile', done: Boolean(cvRecord) },
+        { label: 'Apply Jobs', tab: 'jobs', done: appliedCount > 0 },
         { label: 'Questionnaire', tab: 'quest', done: answered >= 4 },
         { label: 'AI Radar', tab: 'radar', done: visited.has('radar') },
         { label: 'Matches', tab: 'match', done: visited.has('match') },
@@ -249,23 +697,23 @@
           <div class="flex items-center gap-2"><span class="step-dot ${s.done ? 'bg-emerald-500 text-white' : 'bg-white text-slate-500 border'}">${s.done ? '✓' : i + 1}</span>
           <div class="text-xs font-extrabold">${s.label}</div></div></button>`).join('');
       kpis.innerHTML = [
-        ['Best match', top ? top.match_score + '%' : '—', top ? esc(top.title) : 'Run analysis', 'indigo'],
-        ['Skills in gap', role ? role.skills_gap.length : '—', 'for selected role', 'pink'],
+        ['Best match', top ? top.match_score + '%' : '—', top ? esc(top.title) : 'Upload PDF CV', 'indigo'],
+        ['Jobs applied', appliedCount, `${jobsList.length} open company roles`, 'teal'],
         ['Learning hours', role ? role.estimated_total_hours : '—', 'verified courses', 'amber'],
-        ['SDGs linked', role ? role.sdg_tags.length : '—', 'for selected role', 'teal'],
+        ['CV privacy status', cvRecord ? 'Protected' : 'No PDF', `${cvRecord ? cvRecord.access_logs.length : 0} employer views`, 'pink'],
       ].map(k => `<div class="tint tint-${k[3]} rounded-2xl p-4"><div class="text-[11px] font-bold text-slate-500">${k[0]}</div>
         <div class="text-3xl font-extrabold mt-1">${k[1]}</div><div class="text-[11px] text-slate-500 truncate">${k[2]}</div></div>`).join('');
       dashTop.innerHTML = top ? `
-        <div class="flex items-center justify-between mb-4"><div class="text-sm font-extrabold">Top future-role matches</div><button onclick="showTab('match')" class="text-xs font-bold text-indigo-600">See all →</button></div>
+        <div class="flex items-center justify-between mb-4"><div class="text-sm font-extrabold">Top future-role matches (from your private PDF CV)</div><button onclick="showTab('match')" class="text-xs font-bold text-indigo-600">See all →</button></div>
         <div class="space-y-3">${roles.slice(0, 3).map((r, i) => `
           <div class="flex items-center gap-4 p-3 rounded-2xl bg-white/70 border border-white">
             <div class="ring !w-14 !h-14" style="--p:${r.match_score};--c:${ringColor(r.match_score)}"><span class="!w-11 !h-11 !text-xs">${r.match_score}</span></div>
             <div class="min-w-0 flex-1"><div class="text-sm font-extrabold truncate">${esc(r.title)}</div><div class="text-[11px] text-slate-500">${esc(r.industry)} · ${r.skills_gap.length} skills to build</div></div>
             <button onclick="selectRole(${i},true)" class="btn btn-soft !py-1.5">Plan</button></div>`).join('')}</div>`
-        : '<div class="text-sm text-slate-500">No matches yet.</div>';
-      const nxt = !analysed ? ['Complete your profile', 'profile', 'Add your skills to get started.']
+        : '<div class="text-sm text-slate-500">Upload a PDF CV to generate matches.</div>';
+      const nxt = !cvRecord ? ['Upload your PDF CV', 'profile', 'Let AI capture and organise your CV in your private vault.']
+        : appliedCount === 0 ? ['Browse & apply to open jobs', 'jobs', 'Share your organised CV with employers only when you apply.']
         : answered < 4 ? ['Answer the questionnaire', 'quest', 'Help us verify your practical depth.']
-        : !visited.has('match') ? ['Review your role matches', 'match', 'See why each role fits you.']
         : !visited.has('plan') ? ['Open your reskilling plan', 'plan', 'Follow an ordered, verified learning path.']
         : ['View your SDG passport', 'passport', 'See the impact of your chosen path.'];
       nextStep.innerHTML = `<div class="text-lg font-extrabold">${nxt[0]}</div><p class="text-xs text-slate-600">${nxt[2]}</p>
@@ -306,6 +754,21 @@
       rising.innerHTML = trend.emerging_skills.map(s => `<div><div class="flex justify-between text-xs mb-1"><b>${esc(s.skill)}</b><span class="font-extrabold text-teal-700">+${s.growth_pct}% <span class="text-slate-400">${esc(s.sdg)}</span></span></div><div class="bar teal"><i style="width:${Math.min(100, s.growth_pct)}%"></i></div></div>`).join('');
       declining.innerHTML = trend.declining_tasks.map(t => `<div><div class="flex justify-between text-xs mb-1"><b>${esc(t.task)}</b><span class="font-extrabold text-rose-600">${t.automation_risk_pct}%</span></div><div class="bar rose"><i style="width:${t.automation_risk_pct}%"></i></div></div>`).join('');
       signals.innerHTML = m.recent_signals.map(p => `<li class="flex gap-2"><span class="chip chip-indigo shrink-0">${esc(p.published)}</span><span>${esc(p.title)}</span></li>`).join('');
+
+      const st = trend.anonymized_talent_pool_stats;
+      if (st) {
+        anonStatsCard.innerHTML = `
+          <div class="flex flex-wrap items-center justify-between gap-2">
+            <div>
+              <div class="text-sm font-extrabold">📊 Anonymised Talent Pool Skill Distribution (${st.total_anonymized_cvs} Opt-In PDF CVs)</div>
+              <div class="text-[11px] text-slate-500">${esc(st.privacy_guarantee)}</div>
+            </div>
+            <span class="chip chip-emerald">Zero PII Exposed</span>
+          </div>
+          <div class="flex flex-wrap gap-2 pt-1">
+            ${(st.top_extracted_skills || []).map(x => `<span class="chip chip-indigo">${esc(x.skill)} · ${x.share_pct}%</span>`).join('') || '<span class="text-xs text-slate-400">No opted-in CVs yet</span>'}
+          </div>`;
+      }
     }
 
     /* ---------- matches ---------- */
@@ -361,26 +824,48 @@
             <div class="text-[10px] text-slate-400">Estimates only. Demo data is synthetic; not a guarantee of employment or salary.</div>
           </div></div>
         <div class="text-center mt-4"><button onclick="window.print()" class="btn btn-soft">🖨️ Print / save as PDF</button></div>`
-        : '<div class="glass rounded-3xl p-8 text-center text-sm text-slate-500">Complete your profile to generate your passport.</div>';
+        : '<div class="glass rounded-3xl p-8 text-center text-sm text-slate-500">Upload your PDF CV to generate your passport.</div>';
+    }
+
+    /* ---------- Drag & drop events ---------- */
+    function bindDropzone() {
+      const dz = document.getElementById('dropZone');
+      if (!dz) return;
+      ['dragenter', 'dragover'].forEach(ev => dz.addEventListener(ev, e => { e.preventDefault(); dz.classList.add('ring-2', 'ring-indigo-400'); }));
+      ['dragleave', 'drop'].forEach(ev => dz.addEventListener(ev, e => { e.preventDefault(); dz.classList.remove('ring-2', 'ring-indigo-400'); }));
+      dz.addEventListener('drop', e => {
+        const f = e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files[0];
+        if (f) handlePdfSelect(f);
+      });
     }
 
     /* ---------- init ---------- */
     async function init() {
       buildNav();
+      bindDropzone();
       const me = await api('/api/auth/me'); user = me.data.user;
       if (!user) return;
       if (user.role === 'hr_company') { window.location.href = '/workspace'; return; }
       uAvatar.textContent = user.full_name.charAt(0).toUpperCase(); uName.textContent = user.full_name; uUid.textContent = user.unique_uid;
       try { answers = JSON.parse(localStorage.getItem(ansKey()) || '{}'); } catch (e) { answers = {}; }
+
       const p = await api('/api/personas'); personas = p.data || [];
-      personaBtns.innerHTML = personas.map((x, i) => `<button onclick="selectPersona(${i})" class="chip chip-indigo hover:bg-indigo-100 cursor-pointer">${esc(x.name.split(' (')[0])}</button>`).join('');
       skillSuggest.innerHTML = [...new Set(personas.flatMap(x => x.skills))].map(s => `<option value="${esc(s)}">`).join('');
       skillInput.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ',') { e.preventDefault(); addSkill(skillInput.value); skillInput.value = ''; } });
-      const rd = user.role_details || {};
-      const match = personas.findIndex(x => x.industry === rd.industry);
-      selectPersona(match >= 0 ? match : 0);
-      pName.value = user.full_name; if (rd.current_role) pRole.value = rd.current_role; if (rd.preferred_work_mode) pMode.value = rd.preferred_work_mode;
-      await runAnalysis(); showTab('dash');
+
+      await loadMyCv();
+      if (!cvRecord) {
+        const rd = user.role_details || {};
+        pName.value = user.full_name;
+        pIndustry.value = rd.industry || 'Finance & Accounting';
+        pRole.value = rd.current_role || 'Junior Professional';
+        pMode.value = rd.preferred_work_mode || 'Hybrid';
+        const match = personas.findIndex(x => x.industry === rd.industry);
+        const fallbackPersona = personas[match >= 0 ? match : 0];
+        if (fallbackPersona) { skills = [...fallbackPersona.skills]; renderSkills(); }
+      }
+      await Promise.all([runAnalysis(), loadJobs()]);
+      showTab('dash');
     }
     init();
   </script>
