@@ -30,9 +30,9 @@ from trend_signals import get_trend_radar
 
 MASCOT_PROFILE = {
     "name": "Lumi",
-    "title": "CareerLens AI Owl Copilot",
+    "title": "Career Advisor",
     "avatar": "/static/brand/lumi_mascot.svg",
-    "scope_badge": "Trained on 13 Career, O*NET, JobStreet MY, EdX & HR Datasets (210k+ Records)",
+    "scope_badge": "Personalised Career & Workforce Advisor",
 }
 
 # Out-of-range topic detector (strictly refuses general-purpose unrelated chatter unless paired with career intent)
@@ -166,21 +166,23 @@ def get_quick_prompts(user: dict | None) -> list[dict]:
     """Return concise contextual quick-action chips for the chat widget."""
     if not user:
         return [
-            {"label": "🦉 What can Lumi do?", "prompt": "What can you help me with?"},
-            {"label": "🔒 PDF CV Privacy", "prompt": "How is my PDF CV protected?"},
-            {"label": "📈 Rising AI Skills", "prompt": "What are the fastest rising AI skills?"},
+            {"label": "✨ How Lumi Helps", "prompt": "What can you help me with?"},
+            {"label": "🔒 CV Privacy", "prompt": "How is my PDF CV protected?"},
+            {"label": "📈 Emerging Skills", "prompt": "What are the fastest rising AI skills?"},
+            {"label": "💼 Explore Careers", "prompt": "How do I find matching roles?"},
         ]
     if user.get("role") == "hr_company":
         return [
-            {"label": "🏆 Top candidates", "prompt": "Who are the top-matched candidates for my open vacancies?"},
-            {"label": "📄 Applied PDF CVs", "prompt": "Which candidates applied and shared their PDF CV?"},
-            {"label": "🔥 Biggest team gap", "prompt": "What is our biggest workforce skill gap on the heatmap?"},
+            {"label": "🏆 Top Candidates", "prompt": "Who are the top-matched candidates for my open vacancies?"},
+            {"label": "📄 Submitted CVs", "prompt": "Which candidates applied and shared their PDF CV?"},
+            {"label": "🔥 Team Skill Gaps", "prompt": "What is our biggest workforce skill gap on the heatmap?"},
+            {"label": "📊 Retention Insights", "prompt": "What are the key workforce retention and attrition insights?"},
         ]
     return [
-        {"label": "📍 Nearby jobs for me", "prompt": "Are there any suitable jobs or companies nearby me based on my resume?"},
-        {"label": "🎯 My #1 role match", "prompt": "What is my #1 matched future role and missing skills?"},
-        {"label": "🧭 Reskilling courses", "prompt": "Recommend verified HRD Corp courses to close my skill gap."},
-        {"label": "📄 My PDF CV summary", "prompt": "Summarize my uploaded PDF CV and extracted skills."},
+        {"label": "📍 Nearby Jobs", "prompt": "Are there any suitable jobs or companies nearby me based on my resume?"},
+        {"label": "🎯 Role Matches", "prompt": "What is my #1 matched future role and missing skills?"},
+        {"label": "🧭 Reskilling Plan", "prompt": "Recommend verified HRD Corp courses to close my skill gap."},
+        {"label": "📄 CV Summary", "prompt": "Summarize my uploaded PDF CV and extracted skills."},
     ]
 
 
@@ -346,12 +348,12 @@ def _generate_lumi_core(message: str, user: dict | None = None, history: list | 
             "guardrail_triggered": True,
             "blocked_topic": blocked_topic,
             "reply": (
-                f"🦉 **Outside my scope ({blocked_topic}).**\n"
-                f"I'm **Lumi**, trained strictly for **CareerLens AI** (CV analysis, career paths, nearby jobs, reskilling & HR screening)."
+                f"I specialize in career advisory, job matching, skill development, and workforce planning, so I am unable to assist with **{blocked_topic}**.\n\n"
+                f"How may I help you with your career goals, CV profile, or nearby job opportunities today?"
             ),
             "actions": [
-                {"label": "📍 Nearby Jobs for My CV", "prompt": "Are there any suitable jobs nearby me based on my resume?"},
-                {"label": "🎯 My #1 Role Match", "prompt": "What is my #1 matched future role and missing skills?"},
+                {"label": "📍 Nearby Jobs", "prompt": "Are there any suitable jobs nearby me based on my resume?"},
+                {"label": "🎯 Role Matches", "prompt": "What is my #1 matched future role and missing skills?"},
             ],
             "mascot": MASCOT_PROFILE,
         }
@@ -416,7 +418,7 @@ def _generate_lumi_core(message: str, user: dict | None = None, history: list | 
                 for d, v in list(depts.items())[:3]
             ]
             reply = (
-                f"🦉 **HR Attrition & Retention Benchmarks (IBM HR + Factory + Pay Equity Datasets):**\n"
+                f"🦉 **HR Attrition & Retention Benchmarks :**\n"
                 f"• **Overall Baseline Attrition:** **{ibm.get('overall_attrition_rate_pct', 16.1)}%** across {ibm.get('total_employees_analyzed', 1470):,} employees\n"
                 + "\n".join(dept_lines)
                 + "\n• **Fairness Guardrail:** Gender, age & race are stripped from screening to eliminate historical wage/hiring bias."
@@ -561,7 +563,7 @@ def _generate_lumi_core(message: str, user: dict | None = None, history: list | 
             ins = job_index.query_market_insights(query_text=role_q)
             reply = (
                 f"🦉 **Malaysia Market Benchmark ({role_q.title() or 'All Sectors'}):**\n"
-                f"• **Monthly Salary Range:** **RM {ins['salary_p25']:,} – RM {ins['salary_p75']:,}** (Median **RM {ins['salary_median']:,}** · {ins['salary_sample_size']:,} dataset records)\n"
+                f"• **Monthly Salary Range:** **RM {ins['salary_p25']:,} – RM {ins['salary_p75']:,}** (Median **RM {ins['salary_median']:,}** )\n"
                 f"• **Active Openings:** **{ins['matching_openings']:,} jobs** · Top Skills: {', '.join(ins['top_skills'][:4])}"
             )
             return {
@@ -574,29 +576,28 @@ def _generate_lumi_core(message: str, user: dict | None = None, history: list | 
             }
 
         # Intent T2: PDF CV Summary / Extracted Skills
-        if any(k in low for k in ("my cv", "pdf", "summarize", "summarise", "extracted", "upload")):
+        if any(k in low for k in ("my cv", "pdf", "summarize", "summarise", "extracted", "upload", "cv summary")):
             if not cv_rec:
                 return {
                     "ok": True, "in_range": True,
-                    "reply": "🦉 **No PDF CV uploaded yet.** Upload your `.pdf` CV in **PDF CV & Summary** for instant AI extraction.",
-                    "actions": [{"label": "📄 Upload PDF CV", "tab": "profile"}],
+                    "reply": "**No CV Uploaded Yet**\nPlease upload your PDF CV under **Profile & Skills** so I can summarize your experience and match you with relevant roles.",
+                    "actions": [{"label": "📄 Upload CV", "tab": "profile"}],
                     "mascot": MASCOT_PROFILE,
                 }
             st = cv_rec["structured_cv"]
-            bench = lumi_knowledge.lookup_resume_category_benchmark(st.get("current_role") or st.get("industry") or "")
-            bench_line = f"\n• **962-CV Dataset Benchmark ({bench['category']}):** Top peer skills include {', '.join(bench['top_skills'][:5])}" if bench else ""
+            top_match_line = f"\n• **Top Recommended Path:** {top_role['title']} ({top_role['match_score']}% alignment)" if top_role else ""
             reply = (
-                f"🦉 **PDF CV Summary (`{cv_rec['original_filename']}`):**\n"
-                f"• **Role:** {st.get('current_role')} · {st.get('industry')} ({st.get('years_experience')} yr)\n"
-                f"• **Top Skills ({len(st.get('skills', []))}):** {', '.join(st.get('skills', [])[:6])}"
-                + bench_line +
-                f"\n• **Privacy:** Viewed by **{len(cv_rec.get('access_logs', []))}** employer(s)."
+                f"**CV Profile Summary (`{cv_rec['original_filename']}`)**\n"
+                f"• **Current Role:** {st.get('current_role')} · {st.get('industry')} ({st.get('years_experience')} yrs experience)\n"
+                f"• **Key Skills ({len(st.get('skills', []))}):** {', '.join(st.get('skills', [])[:6])}"
+                + top_match_line +
+                f"\n• **Application Privacy:** Shared with **{len(cv_rec.get('access_logs', []))}** employer(s)."
             )
             return {
                 "ok": True, "in_range": True, "reply": reply,
                 "actions": [
-                    {"label": "📄 Open PDF CV Vault", "tab": "profile"},
-                    {"label": "💼 Apply to Jobs", "tab": "jobs"},
+                    {"label": "📄 View CV Profile", "tab": "profile"},
+                    {"label": "💼 Explore Nearby Jobs", "tab": "jobs"},
                 ],
                 "mascot": MASCOT_PROFILE,
             }
@@ -631,7 +632,7 @@ def _generate_lumi_core(message: str, user: dict | None = None, history: list | 
             roi_line = ""
             if roi_types:
                 t_name, t_stat = roi_types[0]
-                roi_line = f"\n• 📈 **Upskilling ROI (3,000-worker dataset):** AI upskilling yields **{t_stat['hiring_success_rate_pct']}% hiring success** & **+{t_stat['avg_salary_hike_pct']}% avg salary hike**."
+                roi_line = f"\n• 📈 **Upskilling ROI :** AI upskilling yields **{t_stat['hiring_success_rate_pct']}% hiring success** & **+{t_stat['avg_salary_hike_pct']}% avg salary hike**."
             steps = []
             if top_role and top_role.get("ordered_pathway"):
                 steps = [
@@ -701,7 +702,7 @@ def _generate_lumi_core(message: str, user: dict | None = None, history: list | 
                     f"• **{h['source']}:** *{h['q']}*\n  → {h['a']}"
                     for h in qa_hits
                 ]
-                reply = "🦉 **Trained Career & Interview Q&A Knowledge Base:**\n" + "\n".join(lines)
+                reply = "🦉 **Career & Interview Preparation Guidance:**\n" + "\n".join(lines)
             else:
                 vqs = ctx.get("verification_questions") or []
                 se_sample = (lumi_knowledge.load_brain().get("se_interview_qa") or [{}])[0]
@@ -741,7 +742,7 @@ def _generate_lumi_core(message: str, user: dict | None = None, history: list | 
             rising.append(f"• **2024–2030 Forecast ({rf['title']}):** Openings **{rf['growth_2024_2030_pct']:+.1f}%** · Automation Risk **{rf['automation_risk_pct']}%** · Remote **{rf['remote_ratio_pct']}%**")
         if sd:
             rising.append(f"• **Sector Shift ({sd['sector']}):** **{sd['workforce_displaced_pct']}%** displaced vs **+{sd['new_roles_created_pct']}%** new AI roles created")
-        reply = "🦉 **AI Workforce Impact & 2024–2030 Forecast (50,800-record dataset):**\n" + "\n".join(rising)
+        reply = "🦉 **AI Workforce Impact & 2024–2030 Forecast :**\n" + "\n".join(rising)
         actions = [{"label": "📡 Open AI Radar", "tab": "radar"}, {"label": "🧭 Reskilling Plan", "tab": "plan"}] if portal == "job_seeker" else []
         return {"ok": True, "in_range": True, "reply": reply, "actions": actions, "mascot": MASCOT_PROFILE}
 

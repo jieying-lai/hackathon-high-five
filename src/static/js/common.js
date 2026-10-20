@@ -38,7 +38,7 @@ async function signOut() {
     let safe = esc(text || '');
     safe = safe.replace(/\*\*(.+?)\*\*/g, '<b>$1</b>');
     safe = safe.replace(/_(.+?)_/g, '<i>$1</i>');
-    safe = safe.replace(/`([^`]+)`/g, '<code class="px-1.5 py-0.5 rounded bg-indigo-100/80 text-indigo-800 font-mono text-[10px]">$1</code>');
+    safe = safe.replace(/`([^`]+)`/g, '<code class="px-1.5 py-0.5 rounded bg-indigo-50 text-indigo-800 font-mono text-[11px]">$1</code>');
     safe = safe.replace(/\n/g, '<br/>');
     return safe;
   }
@@ -48,21 +48,17 @@ async function signOut() {
     if (!box) return;
     box.innerHTML = lumiHistory.map((m, idx) => {
       if (m.role === 'user') {
-        return `<div class="flex justify-end"><div class="lumi-msg-user px-3.5 py-2.5 text-xs max-w-[82%] shadow-sm">${esc(m.text)}</div></div>`;
+        return `<div class="flex justify-end"><div class="lumi-msg-user px-4 py-2.5 text-xs leading-relaxed max-w-[84%] shadow-sm">${esc(m.text)}</div></div>`;
       }
       const cls = m.guardrail ? 'lumi-msg-guard' : 'lumi-msg-bot';
-      const badge = m.guardrail
-        ? `<div class="mb-1"><span class="chip chip-rose !text-[9px]">🛡️ Out-of-Scope Guardrail</span></div>`
-        : `<div class="mb-1 flex items-center gap-1.5"><span class="chip chip-indigo !text-[9px]">🦉 Lumi AI · In-Scope</span></div>`;
       const actBtns = (m.actions || []).length ? `
-        <div class="flex flex-wrap gap-1.5 mt-2.5 pt-2 border-t border-slate-200/60">
-          ${m.actions.map((a, ai) => `<button onclick="window._lumiRunAction(${idx},${ai})" class="chip chip-teal hover:bg-teal-100 cursor-pointer !text-[10px]">${esc(a.label)} →</button>`).join('')}
+        <div class="flex flex-wrap gap-1.5 mt-3 pt-2.5 border-t border-slate-200/70">
+          ${m.actions.map((a, ai) => `<button type="button" onclick="window._lumiRunAction(${idx},${ai})" class="chip chip-teal hover:bg-teal-100 cursor-pointer !text-[11px] !py-1 !px-2.5">${esc(a.label)} →</button>`).join('')}
         </div>` : '';
       return `
-        <div class="flex items-start gap-2">
+        <div class="flex items-start gap-2.5">
           <img src="/static/brand/lumi_mascot.svg" alt="Lumi" class="w-8 h-8 rounded-full bg-indigo-50 border border-indigo-200 shrink-0 mt-0.5" />
-          <div class="${cls} p-3 text-xs leading-relaxed max-w-[85%] shadow-sm">
-            ${badge}
+          <div class="${cls} p-3.5 text-xs leading-relaxed flex-1 min-w-0 shadow-sm">
             <div>${formatLumiMarkdown(m.text)}</div>
             ${actBtns}
           </div>
@@ -75,7 +71,7 @@ async function signOut() {
     const bar = document.getElementById('lumiQuickBar');
     if (!bar) return;
     bar.innerHTML = lumiQuickPrompts.map((q, i) =>
-      `<button onclick="window._lumiAskQuick(${i})" class="chip chip-indigo hover:bg-indigo-100 cursor-pointer whitespace-nowrap !text-[10px] shrink-0">${esc(q.label)}</button>`
+      `<button type="button" onclick="window._lumiAskQuick(${i})" class="px-3 py-1.5 rounded-xl bg-indigo-50/90 hover:bg-indigo-100 text-indigo-900 border border-indigo-200/80 text-[11px] font-bold text-center truncate transition cursor-pointer">${esc(q.label)}</button>`
     ).join('');
   }
 
@@ -108,7 +104,7 @@ async function signOut() {
     const panel = document.getElementById('lumiPanel');
     const badge = document.getElementById('lumiFabLabel');
     if (panel) panel.classList.toggle('hidden', !lumiOpen);
-    if (badge) badge.textContent = lumiOpen ? 'Close Lumi' : 'Ask Lumi AI';
+    if (badge) badge.textContent = lumiOpen ? 'Close Advisor' : 'Ask Lumi';
     if (lumiOpen) {
       const inp = document.getElementById('lumiInput');
       if (inp) setTimeout(() => inp.focus(), 80);
@@ -142,7 +138,7 @@ async function signOut() {
       if (typing) typing.classList.add('hidden');
       lumiHistory.push({
         role: 'bot',
-        text: data.reply || 'Hoot! Let me check that for you.',
+        text: data.reply || 'Please let me know how I can assist you.',
         guardrail: Boolean(data.guardrail_triggered),
         actions: data.actions || [],
       });
@@ -151,7 +147,7 @@ async function signOut() {
       if (typing) typing.classList.add('hidden');
       lumiHistory.push({
         role: 'bot',
-        text: 'Hoot! I could not reach the CareerLens server right now. Please try again.',
+        text: 'Unable to reach the advisory service right now. Please try again shortly.',
         guardrail: false,
         actions: [],
       });
@@ -232,11 +228,75 @@ async function signOut() {
       lumiQuickPrompts = [];
     }
 
+    const headerTitle = lumiPortal === 'hr_company'
+      ? 'Lumi · Talent & Workforce Advisor'
+      : 'Lumi · Career Advisor';
+    const headerSub = lumiPortal === 'hr_company'
+      ? 'Support for candidate screening & workforce planning'
+      : 'Personalised guidance for your career, skills & job search';
+
+    const wrap = document.createElement('div');
+    wrap.setAttribute('data-no-translate', '');
+    wrap.innerHTML = `
+      <!-- Floating Launcher Button -->
+      <button id="lumiFab" onclick="toggleLumiChat()" class="lumi-fab" title="Open Lumi Career Advisor">
+        <div class="lumi-fab-avatar">
+          <img src="/static/brand/lumi_mascot.svg" alt="Lumi" class="w-11 h-11" />
+        </div>
+        <div class="text-left pr-1.5">
+          <div class="flex items-center gap-1.5">
+            <span id="lumiFabLabel" class="text-xs font-extrabold text-slate-800">Ask Lumi</span>
+            <span class="h-2 w-2 rounded-full bg-emerald-500 animate-pulse"></span>
+          </div>
+          <div class="text-[10px] font-semibold text-indigo-600">Career Advisor</div>
+        </div>
+      </button>
+
+      <!-- Lumi Advisory Panel -->
+      <aside id="lumiPanel" class="lumi-panel hidden" aria-label="Lumi Career Advisor">
+        <div class="lumi-header flex items-center justify-between gap-3">
+          <div class="flex items-center gap-3 min-w-0">
+            <div class="h-11 w-11 rounded-2xl bg-white/95 p-1 shadow grid place-items-center shrink-0">
+              <img src="/static/brand/lumi_mascot.svg" alt="Lumi" class="w-9 h-9" />
+            </div>
+            <div class="min-w-0">
+              <div class="flex items-center gap-2">
+                <span class="font-extrabold text-sm truncate">${headerTitle}</span>
+                <span class="inline-flex items-center gap-1 text-[10px] font-semibold px-2 py-0.5 rounded-full bg-white/20 border border-white/30 shrink-0">
+                  <span class="h-1.5 w-1.5 rounded-full bg-emerald-300"></span>Online
+                </span>
+              </div>
+              <div class="text-[11px] text-white/90 truncate mt-0.5">${headerSub}</div>
+            </div>
+          </div>
+          <button type="button" onclick="toggleLumiChat(false)" class="h-7 w-7 rounded-xl bg-white/15 hover:bg-white/25 text-white font-bold text-xs grid place-items-center shrink-0">✕</button>
+        </div>
+
+        <!-- Messages Container -->
+        <div id="lumiMsgList" class="flex-1 p-4 space-y-3.5 overflow-y-auto"></div>
+
+        <!-- Typing Indicator -->
+        <div id="lumiTyping" class="hidden px-4 py-2 text-[11px] font-semibold text-indigo-600 flex items-center gap-1.5 bg-indigo-50/60">
+          <span>Preparing your career insights...</span>
+        </div>
+
+        <!-- Neatly Aligned 2x2 Quick Selection Grid (Never clipped) -->
+        <div id="lumiQuickBar" class="px-3.5 py-2.5 border-t border-slate-200/70 bg-slate-50/90 grid grid-cols-2 gap-1.5"></div>
+
+        <!-- Input Bar -->
+        <form onsubmit="event.preventDefault();sendLumiMessage();" class="p-3 bg-white border-t border-slate-200/80 flex items-center gap-2">
+          <input id="lumiInput" type="text" class="input !py-2.5 !text-xs flex-1" placeholder="Ask about nearby roles, career paths, skills, or courses..." maxlength="280" />
+          <button type="submit" class="btn btn-primary !py-2.5 !px-4 !text-xs shrink-0">Send</button>
+        </form>
+      </aside>
+    `;
+    document.body.appendChild(wrap);
+
     const welcomeText = lumiPortal === 'hr_company'
-      ? "🦉 **Hi! I'm Lumi, your Employer AI Copilot.**\nAsk me about **top screened candidates**, **applied PDF CVs**, or **team skill gaps**."
+      ? "**Welcome! I am Lumi, your Talent & Workforce Advisor.**\nHow may I assist you with **candidate screening**, **submitted applications**, or **team skill readiness** today?"
       : lumiPortal === 'job_seeker'
-      ? "🦉 **Hi! I'm Lumi, your CareerLens AI Owl.**\nAsk me about **nearby jobs for your CV**, **career goals**, **role matches**, or **courses**."
-      : "🦉 **Hi! I'm Lumi.**\nI help with **private PDF CVs, nearby job matching, reskilling & fair HR screening**.";
+      ? "**Welcome! I am Lumi, your Career Advisor.**\nI can help you explore **nearby job opportunities**, **future role matches**, **reskilling pathways**, or review your **CV profile**."
+      : "**Welcome! I am Lumi, your Career Advisor.**\nAsk me about **career pathways, nearby job matching, skill development, or candidate screening**.";
 
     lumiHistory = [{
       role: 'bot',
