@@ -88,7 +88,12 @@ async function signOut() {
     const act = msg && msg.actions && msg.actions[actIdx];
     if (!act) return;
     if (act.tab && typeof window.showTab === 'function') {
-      window.showTab(act.tab);
+      window.showTab(act.tab).then(() => {
+        if (act.category && typeof window.setCompanyCategory === 'function') {
+          window.setCompanyCategory(act.category);
+          if (typeof window.setJobScope === 'function') window.setJobScope('all');
+        }
+      });
       toast(`Opened ${act.label.replace(/^[^\w]+/, '')}`);
     } else if (act.prompt) {
       window.sendLumiMessage(act.prompt);
@@ -132,6 +137,7 @@ async function signOut() {
         body: JSON.stringify({
           message: text,
           history: lumiHistory.slice(-6).map(m => ({ role: m.role, text: m.text })),
+          user_location: window._careerLensUserLocation || null,
         }),
       });
       const data = await res.json();
@@ -228,10 +234,10 @@ async function signOut() {
     }
 
     const welcomeText = lumiPortal === 'hr_company'
-      ? "🦉 **Hoot! Hi there — I'm Lumi, your Employer Portal AI Owl!**\n\nI'm connected to your live **Job Vacancies, Candidate Screening, Applied PDF CVs, and Workforce Skills Heatmap**. I strictly answer career & HR questions (never off-topic chatter).\n\nTap a quick prompt below or ask me anything in range!"
+      ? "🦉 **Hi! I'm Lumi, your Employer AI Copilot.**\nAsk me about **top screened candidates**, **applied PDF CVs**, or **team skill gaps**."
       : lumiPortal === 'job_seeker'
-      ? "🦉 **Hoot! Hi there — I'm Lumi, your CareerLens AI Owl Copilot!**\n\nI'm trained on your **Private PDF CV Vault, Future-Role Matches, Open Company Jobs, and Verified Reskilling Courses**. I strictly stay within career & reskilling topics.\n\nTap a quick prompt below or ask me a question!"
-      : "🦉 **Hoot! Welcome to CareerLens AI — I'm Lumi!**\n\nI'm a domain-scoped AI mascot trained exclusively for **PDF CV analysis, future-role matching, verified reskilling pathways, and fair HR screening**.\n\nAsk me how CareerLens works or sign in to analyse your live data!";
+      ? "🦉 **Hi! I'm Lumi, your CareerLens AI Owl.**\nAsk me about **nearby jobs for your CV**, **career goals** (e.g. *'I want to become a doctor'*), **role matches**, or **courses**."
+      : "🦉 **Hi! I'm Lumi.**\nI help with **private PDF CVs, nearby job matching, reskilling & fair HR screening**.";
 
     lumiHistory = [{
       role: 'bot',

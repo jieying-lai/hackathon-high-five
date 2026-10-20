@@ -203,18 +203,67 @@
           </div>
         </section>
 
-        <!-- ============ BROWSE & APPLY JOBS (PRIVACY-GATED CV SHARING) ============ -->
-        <section id="tab-jobs" class="tab hidden space-y-5">
-          <div class="tint tint-indigo rounded-3xl p-5 flex flex-wrap items-center justify-between gap-4">
-            <div>
-              <div class="text-sm font-extrabold text-indigo-950">Consent-Gated Job Applications</div>
-              <p class="text-xs text-slate-600 mt-0.5">
-                Companies only gain access to your <b>AI-Organised CV Summary</b> and <b>Original PDF CV</b> for the specific role you apply to below. You can withdraw an application at any time to revoke access immediately.
-              </p>
+        <!-- ============ BROWSE & APPLY JOBS + GPS NEARBY COMPANIES ============ -->
+        <section id="tab-jobs" class="tab hidden space-y-6">
+          <!-- GPS Location & Global Job/Company Search Bar -->
+          <div class="glass rounded-3xl p-5 space-y-4">
+            <div class="flex flex-wrap items-center justify-between gap-3">
+              <div class="flex items-center gap-3">
+                <div class="h-10 w-10 rounded-2xl bg-gradient-to-br from-teal-500 to-indigo-600 text-white grid place-items-center text-lg shadow">📍</div>
+                <div>
+                  <div class="flex items-center gap-2">
+                    <span class="text-sm font-extrabold">Your Location &amp; Nearby Discovery</span>
+                    <span id="locActiveChip" class="chip chip-teal">Kuala Lumpur (KLCC)</span>
+                  </div>
+                  <div class="text-[11px] text-slate-500">Use live GPS or select a city to rank nearby hiring companies &amp; open roles</div>
+                </div>
+              </div>
+              <div class="flex flex-wrap items-center gap-2">
+                <button onclick="detectGpsLocation()" class="btn btn-primary !py-2 !text-xs">🛰️ Use My GPS Location</button>
+                <select id="cityPresetSelect" onchange="selectManualCity(this.value)" class="input !w-auto !py-2 !text-xs"></select>
+              </div>
             </div>
-            <button onclick="showTab('profile')" class="btn btn-soft !py-2">📄 Manage my PDF CV</button>
+
+            <!-- Search any role / field + Category filter pills -->
+            <div class="grid sm:grid-cols-12 gap-3 pt-2 border-t border-slate-200/70">
+              <div class="sm:col-span-5">
+                <input id="jobSearchInput" oninput="filterJobsAndCompanies()" class="input !py-2" placeholder="🔍 Search any role, skill, company, or field (e.g. Doctor, Python, ESG, Copywriter)..." />
+              </div>
+              <div id="catFilterBar" class="sm:col-span-7 flex items-center gap-1.5 overflow-x-auto hidden-scroll py-0.5"></div>
+            </div>
           </div>
-          <div id="jobsGrid" class="grid lg:grid-cols-2 gap-5"></div>
+
+          <!-- Section 1: Nearby Recommended Companies by Category -->
+          <div class="space-y-3">
+            <div class="flex flex-wrap items-center justify-between gap-2 px-1">
+              <div>
+                <h2 class="text-base font-extrabold">🏢 Nearby Hiring Companies by Sector</h2>
+                <p class="text-xs text-slate-500">Sorted by distance from your location &amp; skill relevance across all industries</p>
+              </div>
+              <span id="compCountBadge" class="chip chip-indigo">0 companies</span>
+            </div>
+            <div id="companiesGrid" class="grid md:grid-cols-2 lg:grid-cols-4 gap-4"></div>
+          </div>
+
+          <!-- Section 2: Detailed Job Vacancies (CV-Relevant Highlighted, Toggle for All Sectors) -->
+          <div class="space-y-3 pt-2">
+            <div class="tint tint-indigo rounded-3xl p-4 flex flex-wrap items-center justify-between gap-3">
+              <div>
+                <div class="flex items-center gap-2">
+                  <span class="text-sm font-extrabold text-indigo-950">💼 Open Job Vacancies (Consent-Gated Apply)</span>
+                  <span class="chip chip-emerald">PDPA Protected</span>
+                </div>
+                <p class="text-xs text-slate-600 mt-0.5">
+                  Showing detailed vacancies matched to your CV by default. Switch to <b>All Open Roles</b> or type in the search box above to explore every field.
+                </p>
+              </div>
+              <div class="seg">
+                <button id="btnRelJobs" onclick="setJobScope('relevant')" class="on">🎯 Matched to My CV</button>
+                <button id="btnAllJobs" onclick="setJobScope('all')">🌐 All Open Roles</button>
+              </div>
+            </div>
+            <div id="jobsGrid" class="grid lg:grid-cols-2 gap-5"></div>
+          </div>
         </section>
 
         <!-- ============ QUESTIONNAIRE ============ -->
@@ -348,7 +397,9 @@
       { id: 'c8', text: 'Where do you want to be in 3–5 years?', type: 'text' },
     ];
 
-    let user = null, personas = [], cvRecord = null, samplePdfs = [], jobsList = [], activeApplyJob = null;
+    let user = null, personas = [], cvRecord = null, samplePdfs = [], jobsList = [], companiesList = [], categoriesList = [], activeApplyJob = null;
+    let userLocation = { label: 'Kuala Lumpur (KLCC)', lat: 3.1579, lng: 101.7116, city: 'Kuala Lumpur (KLCC)', presets: [] };
+    let selectedCategory = 'All', jobScope = 'relevant';
     let skills = [], scenario = 'moderate', trend = null, roles = [], aiQuestions = [], selected = 0;
     let analysed = false; const visited = new Set(['dash']); let answers = {}; let current = 'dash';
 
@@ -535,22 +586,156 @@
       toast('Organised CV saved & matches updated');
     }
 
-    /* ---------- Browse & Apply Jobs ---------- */
+    /* ---------- Browse & Apply Jobs + GPS Nearby Companies ---------- */
     async function loadJobs() {
-      const r = await api('/api/jobs');
+      const params = new URLSearchParams();
+      if (userLocation.lat && userLocation.lng) {
+        params.set('lat', userLocation.lat);
+        params.set('lng', userLocation.lng);
+      }
+      if (userLocation.city) params.set('city', userLocation.city);
+      const r = await api(`/api/jobs?${params.toString()}`);
       if (!r.ok) return;
       jobsList = r.data.jobs || [];
-      renderJobs();
+      companiesList = r.data.companies || [];
+      categoriesList = r.data.categories || [];
+      if (r.data.user_location) {
+        userLocation = { ...userLocation, ...r.data.user_location };
+        window._careerLensUserLocation = userLocation;
+      }
+      renderLocationControls();
+      renderCategoryPills();
+      filterJobsAndCompanies();
     }
 
-    function renderJobs() {
-      if (!jobsList.length) {
-        jobsGrid.innerHTML = '<div class="glass rounded-3xl p-8 text-center text-sm text-slate-500 col-span-2">No open company vacancies right now.</div>';
+    function renderLocationControls() {
+      if (locActiveChip) locActiveChip.textContent = `📍 ${userLocation.label}`;
+      if (cityPresetSelect && (userLocation.presets || []).length) {
+        cityPresetSelect.innerHTML = `<option value="">Manual city preset...</option>` +
+          userLocation.presets.map(c => `<option value="${esc(c)}" ${c === userLocation.city ? 'selected' : ''}>${esc(c)}</option>`).join('');
+      }
+    }
+
+    function renderCategoryPills() {
+      const cats = ['All', ...categoriesList];
+      catFilterBar.innerHTML = cats.map(c =>
+        `<button onclick="setCompanyCategory('${esc(c)}')" class="chip ${selectedCategory === c ? 'chip-indigo !border-indigo-500 ring-1 ring-indigo-400' : 'chip-slate'} cursor-pointer whitespace-nowrap">${esc(c)}</button>`
+      ).join('');
+    }
+
+    window.setCompanyCategory = function(cat) {
+      selectedCategory = cat || 'All';
+      renderCategoryPills();
+      filterJobsAndCompanies();
+    };
+
+    function setJobScope(scope) {
+      jobScope = scope;
+      btnRelJobs.className = scope === 'relevant' ? 'on' : '';
+      btnAllJobs.className = scope === 'all' ? 'on' : '';
+      filterJobsAndCompanies();
+    }
+
+    function selectManualCity(cityVal) {
+      if (!cityVal) return;
+      userLocation.city = cityVal;
+      userLocation.lat = null;
+      userLocation.lng = null;
+      toast(`Location set to ${cityVal}`);
+      loadJobs();
+    }
+
+    function detectGpsLocation() {
+      if (!navigator.geolocation) {
+        return toast('Browser GPS is unavailable — please pick a city from the dropdown.', 'err');
+      }
+      toast('Requesting GPS coordinates...');
+      navigator.geolocation.getCurrentPosition(
+        pos => {
+          userLocation.lat = Number(pos.coords.latitude.toFixed(4));
+          userLocation.lng = Number(pos.coords.longitude.toFixed(4));
+          userLocation.city = '';
+          toast(`GPS locked (${userLocation.lat}, ${userLocation.lng})`);
+          loadJobs();
+        },
+        () => {
+          toast('GPS permission denied or unavailable — select your city manually on the right.', 'err');
+        },
+        { enableHighAccuracy: false, timeout: 6000 }
+      );
+    }
+
+    function filterJobsAndCompanies() {
+      const q = (jobSearchInput ? jobSearchInput.value : '').trim().toLowerCase();
+      const cat = selectedCategory;
+
+      // Filter companies
+      const filteredComps = companiesList.filter(c => {
+        if (cat !== 'All' && c.category !== cat) return false;
+        if (!q) return true;
+        const hay = `${c.name} ${c.category} ${c.sub_sector} ${c.city} ${c.district} ${(c.featured_roles || []).join(' ')} ${(c.core_skills_sought || []).join(' ')}`.toLowerCase();
+        return hay.includes(q);
+      });
+      renderCompanies(filteredComps);
+
+      // Filter detailed vacancies (if user typed a search query or selected a specific category, show all matching even across sectors)
+      const filteredJobs = jobsList.filter(v => {
+        if (cat !== 'All' && v.company_category !== cat && v.department !== cat) return false;
+        if (q) {
+          const hay = `${v.title} ${v.company_name} ${v.department} ${v.company_category} ${v.location} ${(v.required_skills || []).join(' ')} ${(v.preferred_skills || []).join(' ')}`.toLowerCase();
+          return hay.includes(q);
+        }
+        if (jobScope === 'relevant' && cat === 'All') {
+          return Boolean(v.is_relevant_to_cv);
+        }
+        return true;
+      });
+      renderJobs(filteredJobs);
+    }
+
+    function renderCompanies(list) {
+      compCountBadge.textContent = `${list.length} compan${list.length === 1 ? 'y' : 'ies'}`;
+      if (!list.length) {
+        companiesGrid.innerHTML = '<div class="glass rounded-3xl p-6 text-center text-xs text-slate-500 col-span-4">No companies match this filter. Try clearing the search or category.</div>';
         return;
       }
-      jobsGrid.innerHTML = jobsList.map(v => {
+      companiesGrid.innerHTML = list.map(c => `
+        <article class="glass rounded-3xl p-4 space-y-2.5 lift flex flex-col justify-between ${c.is_cv_matched ? 'border-indigo-300/90' : ''}">
+          <div class="space-y-2">
+            <div class="flex flex-wrap items-center justify-between gap-1">
+              <span class="chip chip-indigo !text-[10px]">${esc(c.category)}</span>
+              <span class="chip ${c.distance_km <= 20 ? 'chip-emerald' : 'chip-slate'} !text-[10px]">${esc(c.proximity_badge)}</span>
+            </div>
+            <div>
+              <h3 class="text-sm font-extrabold leading-snug">${esc(c.name)}</h3>
+              <div class="text-[11px] text-slate-500">${esc(c.district)}, ${esc(c.city)} · ${c.distance_km} km</div>
+            </div>
+            <p class="text-[11px] text-slate-600 line-clamp-2">${esc(c.summary)}</p>
+            <div class="space-y-1">
+              <div class="text-[10px] font-bold text-slate-400 uppercase">Hiring roles &amp; domains</div>
+              <div class="flex flex-wrap gap-1">
+                ${(c.featured_roles || []).slice(0, 2).map(r => `<span class="chip chip-teal !text-[10px]">${esc(r)}</span>`).join('')}
+              </div>
+            </div>
+          </div>
+          <div class="pt-2 border-t border-slate-200/60 flex items-center justify-between text-[11px]">
+            <span class="font-bold ${c.is_cv_matched ? 'text-emerald-700' : 'text-slate-500'}">${c.is_cv_matched ? `✓ ${c.cv_relevance_pct}% CV fit` : 'Cross-sector'}</span>
+            <button onclick="setCompanyCategory('${esc(c.category)}');setJobScope('all')" class="font-extrabold text-indigo-600 hover:underline">View roles →</button>
+          </div>
+        </article>`).join('');
+    }
+
+    function renderJobs(list = jobsList) {
+      if (!list.length) {
+        jobsGrid.innerHTML = `<div class="glass rounded-3xl p-8 text-center text-sm text-slate-500 col-span-2">
+          No vacancies match this view. <button onclick="setJobScope('all');setCompanyCategory('All')" class="text-indigo-600 font-extrabold underline ml-1">Show all open roles across all sectors →</button>
+        </div>`;
+        return;
+      }
+      jobsGrid.innerHTML = list.map(v => {
         const app = v.application || {};
         const score = v.match_score ?? 0;
+        const distBadge = v.distance_km !== undefined ? `<span class="chip chip-teal">📍 ${v.distance_km} km</span>` : '';
         return `
           <article class="glass rounded-3xl p-6 space-y-4 lift ${app.applied ? 'ring-2 ring-teal-400' : ''}">
             <div class="flex items-start justify-between gap-4">
@@ -560,6 +745,8 @@
                   <div class="flex flex-wrap items-center gap-1.5 mb-1">
                     <span class="chip chip-slate font-mono">${esc(v.vacancy_uid)}</span>
                     <span class="chip chip-indigo">${esc(v.company_name)}</span>
+                    ${distBadge}
+                    ${v.is_relevant_to_cv ? '<span class="chip chip-pink">★ CV Relevant</span>' : ''}
                     ${app.applied ? `<span class="chip chip-emerald">✓ Applied (${esc(app.application_uid)})</span>` : '<span class="chip chip-slate">🔒 CV Private</span>'}
                   </div>
                   <h3 class="text-lg font-extrabold leading-snug">${esc(v.title)}</h3>

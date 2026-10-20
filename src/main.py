@@ -112,6 +112,7 @@ def api_chat():
         message=payload.get("message", ""),
         user=user,
         history=payload.get("history", []),
+        user_location=payload.get("user_location"),
     )
     return jsonify(result), (200 if result.get("ok") else 400)
 
@@ -197,9 +198,25 @@ def api_cv_me_pdf():
 @app.route("/api/jobs", methods=["GET"])
 @api_role("job_seeker")
 def api_jobs_list():
+    lat = request.args.get("lat", type=float)
+    lng = request.args.get("lng", type=float)
+    city = request.args.get("city", "")
+    category = request.args.get("category", "")
+    q = request.args.get("q", "")
+    nearby = hr_engine.list_nearby_companies_and_jobs(
+        candidate_uid=_owner(),
+        lat=lat,
+        lng=lng,
+        city_preset=city or None,
+        category=category,
+        query=q,
+    )
     return jsonify({
         "ok": True,
-        "jobs": hr_engine.list_open_vacancies_for_seeker(_owner()),
+        "jobs": nearby["vacancies"],
+        "companies": nearby["companies"],
+        "categories": nearby["categories"],
+        "user_location": nearby["user_location"],
         "has_cv": cv_engine.get_user_cv(_owner()) is not None,
     })
 

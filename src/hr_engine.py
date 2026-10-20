@@ -6,11 +6,32 @@ and HR-approved reskilling assignments (human stays in control).
 """
 
 import json
+import math
 import os
 from datetime import datetime, timezone
 
 from auth_db import DATA_DIR, get_db_connection
 from skills_taxonomy import expand_for_matching, skill_key
+
+CITY_COORDS = {
+    "Kuala Lumpur (KLCC)": {"city": "Kuala Lumpur", "lat": 3.1579, "lng": 101.7116},
+    "Petaling Jaya (Selangor)": {"city": "Petaling Jaya", "lat": 3.1347, "lng": 101.6226},
+    "Cyberjaya / Putrajaya": {"city": "Cyberjaya", "lat": 2.9213, "lng": 101.6559},
+    "Subang Jaya / Sunway": {"city": "Subang Jaya", "lat": 3.0674, "lng": 101.6067},
+    "Shah Alam (Selangor)": {"city": "Shah Alam", "lat": 3.0833, "lng": 101.5581},
+    "Penang (Bayan Lepas / George Town)": {"city": "Bayan Lepas", "lat": 5.2945, "lng": 100.2655},
+    "Johor Bahru (Iskandar Puteri)": {"city": "Johor Bahru", "lat": 1.4236, "lng": 103.6575},
+}
+
+
+def haversine_km(lat1: float, lng1: float, lat2: float, lng2: float) -> float:
+    """Calculate great-circle distance in km between two GPS coordinates."""
+    r = 6371.0
+    p1, p2 = math.radians(lat1), math.radians(lat2)
+    dp = math.radians(lat2 - lat1)
+    dl = math.radians(lng2 - lng1)
+    a = math.sin(dp / 2) ** 2 + math.cos(p1) * math.cos(p2) * math.sin(dl / 2) ** 2
+    return round(2 * r * math.atan2(math.sqrt(a), math.sqrt(1 - a)), 1)
 
 EDU_RANK = {"Diploma / TVET": 1, "Bachelor's Degree": 2, "Master's / Postgraduate": 3}
 WORK_MODES = ("On-site", "Hybrid", "Remote")
@@ -83,15 +104,32 @@ def init_hr_tables():
 
     demo_owner = "CL-HR-2026-8801"
     cur.execute("SELECT COUNT(*) AS c FROM vacancies WHERE owner_uid = ?", (demo_owner,))
-    if cur.fetchone()["c"] == 0:
+    if cur.fetchone()["c"] < 4:
+        existing_titles = {
+            r["title"] for r in cur.execute("SELECT title FROM vacancies WHERE owner_uid = ?", (demo_owner,)).fetchall()
+        }
         seeds = [
-            ("Software Developer", "Engineering", "Hybrid", "Kuala Lumpur", 4000, 6000, 1, "Bachelor's Degree",
+            ("Software Developer", "IT & Software", "Hybrid", "Kuala Lumpur", 4000, 6000, 1, "Bachelor's Degree",
              ["Python", "SQL", "REST APIs", "Git"], ["React", "Docker", "Data Structures"]),
-            ("AI Financial Compliance Analyst", "Audit & Assurance", "Hybrid", "Kuala Lumpur", 5000, 7500, 2,
+            ("AI Financial Compliance Analyst", "Finance & Accounting", "Hybrid", "Kuala Lumpur", 5000, 7500, 2,
              "Bachelor's Degree", ["Financial Auditing", "Risk Assessment", "Python Data Analysis", "SQL Basics"],
              ["ESG & Carbon Reporting Standards", "Excel Pivot & Macros"]),
+            ("AI Content Strategist & Copywriter", "Marketing & PR", "Remote", "Petaling Jaya", 3800, 5800, 1,
+             "Bachelor's Degree", ["Copywriting", "SEO Content Strategy", "Prompt Engineering", "Google Analytics"],
+             ["Social Media Campaigns", "Canva & Basic Design", "Bilingual Communication"]),
+            ("Health Informatics & PDPA Analyst", "Healthcare & Life Sciences", "Hybrid", "Subang Jaya", 4500, 6800, 1,
+             "Bachelor's Degree", ["Data Privacy (PDPA)", "Risk Assessment", "SQL", "Project Management"],
+             ["Python Data Analysis", "Excel Pivot & Macros"]),
+            ("People Data & Reskilling Partner", "HR & Administration", "Hybrid", "Kuala Lumpur", 4200, 6500, 2,
+             "Bachelor's Degree", ["Recruitment", "People Data Analytics", "Change Management"],
+             ["Skills Architecture Mapping", "Data Privacy (PDPA)"]),
+            ("ESG & Carbon Compliance Specialist", "Green Economy & ESG", "Hybrid", "Johor Bahru", 4800, 7200, 2,
+             "Bachelor's Degree", ["ESG & Carbon Reporting Standards", "Financial Reporting", "Risk Assessment"],
+             ["Excel Pivot & Macros", "Tax Compliance"]),
         ]
         for s in seeds:
+            if s[0] in existing_titles:
+                continue
             cur.execute(
                 """INSERT INTO vacancies (owner_uid, title, department, work_mode, location, salary_min, salary_max,
                    min_years, education_level, required_skills_json, preferred_skills_json, status, created_at)
@@ -364,6 +402,10 @@ def list_open_vacancies_for_seeker(candidate_uid: str) -> list[dict]:
             "motivation": st.get("executive_summary") or "",
         }
 
+    companies = _load("companies_directory.json")
+    comp_by_cat = {c["category"].lower(): c for c in companies}
+    comp_by_city = {c["city"].lower(): c for c in companies}
+
     out = []
     for vr in vac_rows:
         v = _vacancy_from_row(vr)
@@ -371,18 +413,33 @@ def list_open_vacancies_for_seeker(candidate_uid: str) -> list[dict]:
             rd = json.loads(vr["role_details_json"] or "{}")
         except Exception:
             rd = {}
-        v["company_name"] = rd.get("company_name") or "Nexus Digital & Finance Sdn Bhd"
-        v["company_industry"] = rd.get("company_industry") or v.get("department") or "Enterprise"
+        matched_comp = (
+            comp_by_cat.get((v.get("department") or "").lower())
+            or comp_by_city.get((v.get("location") or "").lower())
+            or companies[0]
+        )
+        v["company_name"] = matched_comp["name"] if v.get("department") in {c["category"] for c in companies} else (rd.get("company_name") or matched_comp["name"])
+        v["company_category"] = matched_comp["category"]
+        v["company_industry"] = matched_comp["sub_sector"]
+        v["company_district"] = matched_comp["district"]
+        v["lat"] = matched_comp["lat"]
+        v["lng"] = matched_comp["lng"]
 
         if cand_obj:
             scored = score_candidate(v, cand_obj)
             v["match_score"] = scored["score"]
             v["matched_required"] = scored["matched_required"]
             v["to_confirm"] = scored["to_confirm"]
+            v["is_relevant_to_cv"] = (
+                len(scored["matched_required"]) > 0
+                or scored["score"] >= 58
+                or (st.get("industry") or "").lower() == v["company_category"].lower()
+            )
         else:
             v["match_score"] = None
             v["matched_required"] = []
             v["to_confirm"] = v["required_skills"]
+            v["is_relevant_to_cv"] = True
 
         app_info = apps_by_vid.get(v["id"])
         v["application"] = {
@@ -397,6 +454,88 @@ def list_open_vacancies_for_seeker(candidate_uid: str) -> list[dict]:
         out.append(v)
 
     return sorted(out, key=lambda x: (x["match_score"] is not None, x["match_score"] or 0), reverse=True)
+
+
+def list_nearby_companies_and_jobs(candidate_uid: str, lat: float | None = None, lng: float | None = None,
+                                   city_preset: str | None = None, category: str = "", query: str = "") -> dict:
+    """Return nearby companies grouped by category + open job vacancies with distance & CV match."""
+    # Resolve coordinates
+    resolved_label = "Kuala Lumpur (KLCC)"
+    u_lat, u_lng = 3.1579, 101.7116
+
+    if city_preset and city_preset in CITY_COORDS:
+        resolved_label = city_preset
+        u_lat = CITY_COORDS[city_preset]["lat"]
+        u_lng = CITY_COORDS[city_preset]["lng"]
+    elif lat is not None and lng is not None:
+        u_lat, u_lng = float(lat), float(lng)
+        # Find nearest preset city name for friendly display
+        nearest_name = min(
+            CITY_COORDS.keys(),
+            key=lambda k: haversine_km(u_lat, u_lng, CITY_COORDS[k]["lat"], CITY_COORDS[k]["lng"]),
+        )
+        dist_to_preset = haversine_km(u_lat, u_lng, CITY_COORDS[nearest_name]["lat"], CITY_COORDS[nearest_name]["lng"])
+        resolved_label = f"GPS ({u_lat:.3f}, {u_lng:.3f}) · near {CITY_COORDS[nearest_name]['city']}" if dist_to_preset < 80 else f"GPS ({u_lat:.3f}, {u_lng:.3f})"
+
+    conn = get_db_connection()
+    cv_row = conn.execute("SELECT structured_cv_json FROM user_cvs WHERE owner_uid = ?", (candidate_uid,)).fetchone()
+    conn.close()
+    st = json.loads(cv_row["structured_cv_json"]) if cv_row else {}
+    user_skills = {skill_key(s) for s in expand_for_matching(st.get("skills") or [])}
+    user_industry = (st.get("industry") or "").lower()
+
+    companies = _load("companies_directory.json")
+    all_categories = sorted({c["category"] for c in companies})
+
+    cat_filter = (category or "").strip().lower()
+    q_filter = (query or "").strip().lower()
+
+    enriched_companies = []
+    for c in companies:
+        dist_km = haversine_km(u_lat, u_lng, c["lat"], c["lng"])
+        sought = c.get("core_skills_sought") or []
+        matched_skills = [s for s in sought if skill_key(s) in user_skills]
+        skill_ratio = len(matched_skills) / max(1, len(sought))
+        sector_bonus = 20 if c["category"].lower() == user_industry else 0
+        cv_relevance = min(98, round(50 + skill_ratio * 35 + sector_bonus))
+
+        if cat_filter and cat_filter != "all" and c["category"].lower() != cat_filter:
+            continue
+        if q_filter:
+            haystack = " ".join([
+                c["name"], c["category"], c["sub_sector"], c["city"], c["district"],
+                " ".join(c.get("featured_roles") or []), " ".join(sought),
+            ]).lower()
+            if q_filter not in haystack:
+                continue
+
+        enriched_companies.append({
+            **c,
+            "distance_km": dist_km,
+            "proximity_badge": "📍 Nearby (<15 km)" if dist_km <= 15 else ("🚗 Commutable (<35 km)" if dist_km <= 35 else f"✈️ {dist_km} km away"),
+            "matched_skills": matched_skills,
+            "cv_relevance_pct": cv_relevance,
+            "is_cv_matched": len(matched_skills) > 0 or c["category"].lower() == user_industry,
+        })
+
+    enriched_companies.sort(key=lambda x: (x["distance_km"], -x["cv_relevance_pct"]))
+
+    # Also attach distance to open vacancies
+    vacancies = list_open_vacancies_for_seeker(candidate_uid)
+    for v in vacancies:
+        v["distance_km"] = haversine_km(u_lat, u_lng, v.get("lat", 3.1579), v.get("lng", 101.7116))
+
+    return {
+        "user_location": {
+            "label": resolved_label,
+            "lat": u_lat,
+            "lng": u_lng,
+            "presets": list(CITY_COORDS.keys()),
+        },
+        "categories": all_categories,
+        "companies": enriched_companies,
+        "vacancies": vacancies,
+    }
 
 
 def screen_candidates(owner_uid, vacancy_id):
