@@ -1,0 +1,452 @@
+{
+  "Accountant": [
+    "accounting",
+    "financial reporting",
+    "reconciliation",
+    "excel"
+  ],
+  "Accounts Executive": [
+    "accounts payable",
+    "accounts receivable",
+    "bookkeeping",
+    "excel"
+  ],
+  "Accounts Assistant": [
+    "data entry",
+    "invoicing",
+    "bookkeeping",
+    "excel"
+  ],
+  "Financial Auditor": [
+    "audit",
+    "internal controls",
+    "financial reporting",
+    "risk assessment"
+  ],
+  "Tax Associate": [
+    "tax",
+    "taxation",
+    "compliance",
+    "accounting"
+  ],
+  "Payroll Executive": [
+    "payroll",
+    "excel",
+    "employment law",
+    "hr"
+  ],
+  "Financial Analyst": [
+    "financial analysis",
+    "financial modelling",
+    "excel",
+    "power bi"
+  ],
+  "Management Accountant": [
+    "budgeting",
+    "cost accounting",
+    "forecasting",
+    "financial analysis"
+  ],
+  "Software Engineer": [
+    "python",
+    "java",
+    "programming",
+    "git"
+  ],
+  "Frontend Developer": [
+    "javascript",
+    "react",
+    "html",
+    "css"
+  ],
+  "Backend Developer": [
+    "python",
+    "sql",
+    "api",
+    "node.js"
+  ],
+  "QA Engineer": [
+    "testing",
+    "selenium",
+    "quality assurance",
+    "automation"
+  ],
+  "Data Analyst": [
+    "sql",
+    "excel",
+    "power bi",
+    "python"
+  ],
+  "Cybersecurity Analyst": [
+    "security",
+    "networking",
+    "risk assessment",
+    "linux"
+  ],
+  "IT Support Specialist": [
+    "troubleshooting",
+    "networking",
+    "windows",
+    "technical support"
+  ],
+  "Cloud Engineer": [
+    "aws",
+    "azure",
+    "linux",
+    "docker"
+  ],
+  "Marketing Executive": [
+    "marketing",
+    "campaigns",
+    "communication",
+    "market research"
+  ],
+  "Digital Marketing Specialist": [
+    "google analytics",
+    "seo",
+    "advertising",
+    "digital marketing"
+  ],
+  "Content Writer": [
+    "writing",
+    "copywriting",
+    "editing",
+    "content"
+  ],
+  "Social Media Executive": [
+    "social media",
+    "content",
+    "canva",
+    "analytics"
+  ],
+  "Public Relations Executive": [
+    "public relations",
+    "communication",
+    "writing",
+    "media"
+  ],
+  "SEO Specialist": [
+    "seo",
+    "google analytics",
+    "keyword research",
+    "content"
+  ],
+  "HR Executive": [
+    "hr",
+    "recruitment",
+    "payroll",
+    "employment law"
+  ],
+  "Recruiter": [
+    "recruitment",
+    "interviewing",
+    "sourcing",
+    "communication"
+  ],
+  "HR Analyst": [
+    "excel",
+    "power bi",
+    "hr",
+    "data analysis"
+  ],
+  "Office Administrator": [
+    "administration",
+    "excel",
+    "documentation",
+    "scheduling"
+  ],
+  "Learning & Development Executive": [
+    "training",
+    "learning",
+    "facilitation",
+    "hr"
+  ],
+  "Civil Engineer": [
+    "civil engineering",
+    "autocad",
+    "construction",
+    "structural design"
+  ],
+  "Mechanical Engineer": [
+    "mechanical engineering",
+    "cad",
+    "solidworks",
+    "maintenance"
+  ],
+  "Electrical Engineer": [
+    "electrical engineering",
+    "circuit design",
+    "plc",
+    "testing"
+  ],
+  "Process Engineer": [
+    "process improvement",
+    "manufacturing",
+    "lean",
+    "six sigma"
+  ],
+  "Quality Engineer": [
+    "quality assurance",
+    "iso",
+    "testing",
+    "root cause analysis"
+  ],
+  "Registered Nurse": [
+    "nursing",
+    "patient care",
+    "clinical",
+    "healthcare"
+  ],
+  "Pharmacist": [
+    "pharmacy",
+    "medication",
+    "dispensing",
+    "patient care"
+  ],
+  "Medical Laboratory Technologist": [
+    "laboratory",
+    "diagnostics",
+    "testing",
+    "quality control"
+  ],
+  "Healthcare Administrator": [
+    "healthcare",
+    "administration",
+    "records",
+    "scheduling"
+  ],
+  "Teacher": [
+    "teaching",
+    "lesson planning",
+    "assessment",
+    "classroom"
+  ],
+  "Lecturer": [
+    "teaching",
+    "research",
+    "assessment",
+    "academic"
+  ],
+  "Training Executive": [
+    "training",
+    "facilitation",
+    "presentation",
+    "learning"
+  ],
+  "Instructional Designer": [
+    "instructional design",
+    "elearning",
+    "learning",
+    "content"
+  ],
+  "Sales Executive": [
+    "sales",
+    "negotiation",
+    "crm",
+    "communication"
+  ],
+  "Account Manager": [
+    "account management",
+    "sales",
+    "crm",
+    "relationship management"
+  ],
+  "Retail Supervisor": [
+    "retail",
+    "inventory",
+    "customer service",
+    "supervision"
+  ],
+  "Customer Success Executive": [
+    "customer service",
+    "crm",
+    "onboarding",
+    "communication"
+  ],
+  "Hotel Executive": [
+    "hospitality",
+    "hotel",
+    "customer service",
+    "operations"
+  ],
+  "Front Office Executive": [
+    "front office",
+    "reservations",
+    "customer service",
+    "administration"
+  ],
+  "Travel Consultant": [
+    "travel",
+    "tourism",
+    "booking",
+    "customer service"
+  ],
+  "Food & Beverage Supervisor": [
+    "food safety",
+    "hospitality",
+    "supervision",
+    "inventory"
+  ],
+  "Logistics Executive": [
+    "logistics",
+    "shipping",
+    "inventory",
+    "excel"
+  ],
+  "Procurement Executive": [
+    "procurement",
+    "negotiation",
+    "supplier management",
+    "purchasing"
+  ],
+  "Supply Chain Analyst": [
+    "supply chain",
+    "excel",
+    "forecasting",
+    "data analysis"
+  ],
+  "Warehouse Supervisor": [
+    "warehouse",
+    "inventory",
+    "supervision",
+    "logistics"
+  ],
+  "Banking Operations Executive": [
+    "banking",
+    "operations",
+    "compliance",
+    "reconciliation"
+  ],
+  "Credit Analyst": [
+    "credit analysis",
+    "financial analysis",
+    "risk assessment",
+    "excel"
+  ],
+  "Insurance Claims Executive": [
+    "insurance",
+    "claims",
+    "documentation",
+    "customer service"
+  ],
+  "Risk Analyst": [
+    "risk assessment",
+    "sql",
+    "financial analysis",
+    "compliance"
+  ],
+  "Graphic Designer": [
+    "graphic design",
+    "photoshop",
+    "illustrator",
+    "typography"
+  ],
+  "UI/UX Designer": [
+    "figma",
+    "user research",
+    "prototyping",
+    "ux"
+  ],
+  "Product Designer": [
+    "product design",
+    "figma",
+    "prototyping",
+    "user research"
+  ],
+  "Video Editor": [
+    "video editing",
+    "premiere pro",
+    "after effects",
+    "storytelling"
+  ],
+  "Legal Associate": [
+    "legal research",
+    "contracts",
+    "law",
+    "drafting"
+  ],
+  "Paralegal": [
+    "legal research",
+    "documentation",
+    "law",
+    "administration"
+  ],
+  "Compliance Executive": [
+    "compliance",
+    "regulatory",
+    "risk assessment",
+    "audit"
+  ],
+  "Production Executive": [
+    "production",
+    "manufacturing",
+    "operations",
+    "planning"
+  ],
+  "Production Planner": [
+    "planning",
+    "inventory",
+    "erp",
+    "manufacturing"
+  ],
+  "Quality Assurance Executive": [
+    "quality assurance",
+    "iso",
+    "quality control",
+    "documentation"
+  ],
+  "Manufacturing Technician": [
+    "manufacturing",
+    "maintenance",
+    "troubleshooting",
+    "technical"
+  ],
+  "Agricultural Officer": [
+    "agriculture",
+    "farming",
+    "fieldwork",
+    "reporting"
+  ],
+  "Farm Supervisor": [
+    "farming",
+    "supervision",
+    "agriculture",
+    "operations"
+  ],
+  "Agronomist": [
+    "agronomy",
+    "soil",
+    "crop science",
+    "research"
+  ],
+  "Agricultural Technician": [
+    "agriculture",
+    "equipment",
+    "maintenance",
+    "fieldwork"
+  ],
+  "Quantity Surveyor": [
+    "quantity surveying",
+    "cost estimation",
+    "contracts",
+    "construction"
+  ],
+  "Site Supervisor": [
+    "construction",
+    "supervision",
+    "safety",
+    "planning"
+  ],
+  "Property Executive": [
+    "property",
+    "administration",
+    "customer service",
+    "leasing"
+  ],
+  "Building Manager": [
+    "facilities",
+    "maintenance",
+    "property",
+    "operations"
+  ]
+}

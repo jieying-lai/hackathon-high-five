@@ -220,3 +220,14 @@ curl -X POST https://api.runpod.ai/v2/$RUNPOD_ENDPOINT_ID/runsync \
 ## License
 
 This project is licensed under the [Apache License 2.0](LICENSE).
+
+
+### CV questionnaire: ready after cloning
+
+The questionnaire works without an API key or model download. Install `requirements.txt`, start `python src/main.py`, use the Talent demo login and upload one of the supplied sample PDF CVs. Both role suggestions and the second-step CV questions run on the server locally. Answers remain saved per user in the browser.
+
+The default `QUESTIONNAIRE_PROVIDER=local` matches CV evidence against the role competency catalog and builds four questions from the CV, skill gaps, chosen role and basic answers. The UI labels this as rules-based local CV analysis, not generative AI. Suggestions explain matched skills and skills to confirm; they are not hiring decisions or proof of professional eligibility.
+
+To enable optional Gemini AI, set `QUESTIONNAIRE_PROVIDER=gemini` and `GEMINI_API_KEY` in the server environment or project-root `.env`. `QUESTIONNAIRE_GEMINI_MODEL` defaults to `gemini-2.5-flash`. The questionnaire rereads `.env` on every request; environment variables take precedence. The key stays on the server. Run `.venv/Scripts/python.exe scripts/check_questionnaire_ai.py` to test the optional live Gemini integration with a synthetic CV.
+
+The location catalog covers all 13 Malaysian states and 3 federal territories, with a curated selection of districts / areas and an Other area field.

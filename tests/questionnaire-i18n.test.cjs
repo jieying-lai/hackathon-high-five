@@ -58,7 +58,8 @@ test('arbitrary user skill names are preserved inside translated question templa
 });
 
 test('translated select labels cannot change stored values; answers are skipped by text translator', () => {
-  assert.ok(template.includes('<option value="${esc(o)}" ${o === val'));
+  const questionnaire = fs.readFileSync(path.join(root,'src/static/js/questionnaire.js'),'utf8');
+  assert.ok(questionnaire.includes('<option value="${esc(option)}" ${option === value'));
   const ui = fs.readFileSync(path.join(root,'src/static/js/member3.js'),'utf8');
   assert.ok(ui.includes("closest('script,style,textarea,input,[data-no-translate]')"));
   assert.ok(ui.includes("option.setAttribute('value', option.textContent)"));

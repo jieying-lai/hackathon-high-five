@@ -1,6 +1,4 @@
-/* Shared, dependency-free UI localization and accessible trend visualization.
- * API identifiers, skill names, provider names and user-entered content stay canonical.
- */
+
 (() => {
   const vocabulary = [
     ['Dashboard','Papan pemuka','仪表板'],['Overview','Gambaran keseluruhan','概览'],
@@ -98,7 +96,7 @@
     if (portalText !== text) return portalText;
     const icon = text.match(/^([✓⚖️🌱⏳🎉🖨️🇲🇾★+✨👤🏢🌐🛡️✅❌⚪]+\s*)(.+)$/u);
     if (icon) return icon[1] + translate(icon[2]);
-    // Text adjoining <b>/<i> elements can end at a separator, or start with one.
+
     if (text.includes('·')) return text.split(/(\s*·\s*)/).map((part,index)=>index%2 ? part : translate(part)).join('');
     return text;
   }
@@ -107,13 +105,11 @@
   const originalTitle = document.title;
   function apply() {
     observer.disconnect();
-    // Catalog strings containing HTML entities may arrive as adjacent text nodes.
-    // Merge them before matching whole phrases (e.g. roles containing '&').
+
     document.body.normalize();
     document.documentElement.lang = language === 'zh' ? 'zh-Hans' : language;
     document.title = translate(originalTitle);
-    // HTML options without value inherit textContent as their value. Freeze that
-    // value before translating the label, including department and HR decisions.
+
     document.querySelectorAll('option:not([value])').forEach(option => {
       option.setAttribute('value', option.textContent);
     });
@@ -146,7 +142,7 @@
     document.querySelectorAll('textarea[data-generated-source]').forEach(element => {
       const previous=generatedOriginals.get(element);
       const source=element.dataset.generatedSource;
-      // Only untouched generated suggestions follow language changes. HR edits stay intact.
+
       if (previous && element.value !== previous.rendered) return;
       const rendered=translate(source);
       element.value=rendered;
@@ -162,7 +158,13 @@
   toolbar.innerHTML = '<label for="uiLanguage" class="language-label">Language / Bahasa / 语言</label><svg class="language-globe" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><ellipse cx="12" cy="12" rx="4" ry="9"/><path d="M3 12h18M5 6.5c4 2 10 2 14 0M5 17.5c4-2 10-2 14 0"/></svg><select id="uiLanguage" aria-label="Language / Bahasa / 语言"><option value="en">EN</option><option value="ms">BM</option><option value="zh">中文</option></select>';
   if (languageSlot) {
     toolbar.classList.add('language-inline');
-    languageSlot.append(toolbar);
+    const portalViewport = window.matchMedia('(min-width: 1280px)');
+    function placeLanguageSelector() {
+      const target = document.querySelector(portalViewport.matches ? '[data-language-slot="desktop"]' : '[data-language-slot="mobile"]') || languageSlot;
+      target.append(toolbar);
+    }
+    placeLanguageSelector();
+    portalViewport.addEventListener('change', placeLanguageSelector);
   } else document.body.prepend(toolbar);
   const selector = toolbar.querySelector('select'); selector.value = language;
   selector.addEventListener('change', () => {

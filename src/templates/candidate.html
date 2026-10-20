@@ -9,7 +9,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-  <link rel="stylesheet" href="/static/css/theme.css" />
+  <link rel="stylesheet" href="/static/css/theme.css?v=20261020-auto-role" />
   <style>
     .cl-map-wrap {
       position: relative;
@@ -52,35 +52,30 @@
 <body class="min-h-screen">
   <div class="aurora"></div><div class="blob b1"></div><div class="blob b2"></div>
 
-  <div class="flex min-h-screen">
-    <!-- Sidebar (desktop) -->
-    <aside class="hidden lg:flex flex-col w-72 shrink-0 p-4 sticky top-0 h-screen">
-      <div class="glass rounded-3xl p-4 flex flex-col h-full">
-        <div class="flex items-center gap-3 px-1 pb-4 border-b border-slate-200/70">
-          <img src="/static/brand/careerlens_logo_icon.svg" alt="" class="h-11 w-11 rounded-2xl" />
-          <div><div class="font-extrabold text-lg bg-gradient-to-r from-indigo-700 to-pink-600 bg-clip-text text-transparent">CareerLens AI</div>
-            <span class="chip chip-indigo !text-[10px]">Talent Portal</span></div>
-        </div>
-        <nav id="sideNav" class="mt-4 space-y-1.5 flex-1 overflow-y-auto hidden-scroll"></nav>
-        <div class="tint tint-indigo rounded-2xl p-3 mt-3">
-          <div class="flex items-center gap-2.5">
-            <div id="uAvatar" class="h-9 w-9 rounded-xl bg-gradient-to-br from-indigo-500 to-pink-500 text-white font-bold grid place-items-center">U</div>
-            <div class="min-w-0"><div id="uName" data-no-translate class="text-xs font-extrabold truncate">User</div><div id="uUid" data-no-translate class="text-[10px] font-mono text-slate-500 truncate"></div></div>
-          </div>
-          <button onclick="signOut()" class="btn btn-soft w-full mt-3 !py-2">Sign out</button>
-        </div>
-      </div>
-    </aside>
+  <div class="flex flex-col min-h-screen">
 
-    <!-- Main -->
+    <header class="portal-desktop-header glass">
+      <a href="/" class="portal-brand"><img src="/static/brand/careerlens_logo_icon.svg" alt="" /><span>CareerLens AI<small>Talent Portal</small></span></a>
+      <nav id="sideNav" class="desktop-navigation" aria-label="Section navigation"></nav>
+      <div class="portal-account"><button type="button" class="notification-button" data-notification-button onclick="showTab('notifications')" aria-label="Interview notifications" title="Interview notifications"><span aria-hidden="true">🔔</span><span class="notification-label">Interview notifications</span></button><div data-language-slot="desktop"></div><div class="portal-user"><div id="uAvatar" class="h-9 w-9 rounded-xl bg-gradient-to-br from-indigo-500 to-pink-500 text-white font-bold grid place-items-center">U</div>
+            <div class="min-w-0"><div id="uName" data-no-translate class="text-xs font-extrabold truncate">User</div><div id="uUid" data-no-translate class="text-[10px] font-mono text-slate-500 truncate"></div></div></div><button onclick="signOut()" class="btn btn-soft">Sign out</button></div>
+    </header>
+
     <div class="flex-1 min-w-0">
-      <!-- Mobile top bar -->
-      <header class="lg:hidden sticky top-0 z-30 glass">
+
+      <header class="portal-mobile-header sticky top-0 z-30 glass">
         <div class="flex items-center justify-between px-4 py-2.5">
           <div class="flex items-center gap-2"><img src="/static/brand/careerlens_logo_icon.svg" class="h-9 w-9 rounded-xl" alt="" /><b class="text-sm">Talent Portal</b></div>
-          <button onclick="signOut()" class="btn btn-soft !py-1.5">Sign out</button>
+          <div class="portal-mobile-actions"><button type="button" class="notification-button" data-notification-button onclick="showTab('notifications')" aria-label="Interview notifications" title="Interview notifications"><span aria-hidden="true">🔔</span><span class="notification-label">Interview notifications</span></button><div data-language-slot="mobile"></div><button onclick="signOut()" class="btn btn-soft !py-1.5">Sign out</button></div>
         </div>
-        <nav id="topNav" class="flex gap-1.5 px-3 pb-2 overflow-x-auto hidden-scroll"></nav>
+        <div class="mobile-nav-bar">
+          <button id="navToggle" type="button" class="nav-toggle" aria-label="Toggle navigation" aria-expanded="false" aria-controls="topNav">
+            <span class="hamburger" aria-hidden="true"><i></i><i></i><i></i></span>
+            <span>Menu</span>
+          </button>
+          <span id="mobileCurrentSection" class="mobile-current-section" aria-live="polite"></span>
+        </div>
+        <nav id="topNav" class="mobile-nav" aria-label="Section navigation" hidden></nav>
       </header>
 
       <main class="p-4 sm:p-6 lg:p-8 max-w-6xl mx-auto space-y-6">
@@ -90,20 +85,18 @@
           <div id="pgActions" class="flex flex-wrap gap-2"></div>
         </div>
 
-        <!-- ============ INTERVIEW NOTIFICATIONS ============ -->
         <section id="tab-notifications" class="tab hidden space-y-4">
           <button class="btn btn-soft" onclick="loadInvitations(false)">Refresh notifications</button>
           <div id="talentInvitations" class="space-y-4"></div>
         </section>
 
-        <!-- ============ DASHBOARD ============ -->
         <section id="tab-dash" class="tab space-y-6">
           <div class="glass rounded-3xl p-6 sm:p-8 relative overflow-hidden">
             <div class="absolute -right-10 -top-10 h-48 w-48 rounded-full bg-gradient-to-br from-pink-300/50 to-indigo-300/50 blur-2xl"></div>
             <div class="relative space-y-1"><div class="text-sm text-slate-500 font-semibold">Welcome back</div>
               <h2 id="dashHello" data-no-translate class="text-2xl font-extrabold"></h2>
               <p id="dashSub" class="text-sm text-slate-600"></p></div>
-            <div id="journey" class="relative mt-6 grid grid-cols-2 sm:grid-cols-6 gap-3"></div>
+            <div id="journey" class="journey-grid relative mt-6"></div>
           </div>
           <div id="kpis" class="grid grid-cols-2 lg:grid-cols-4 gap-4"></div>
           <div class="grid lg:grid-cols-5 gap-6">
@@ -115,9 +108,8 @@
           </div>
         </section>
 
-        <!-- ============ PDF CV & AI SUMMARY (FUNCTION 01) ============ -->
         <section id="tab-profile" class="tab hidden space-y-6">
-          <!-- Privacy & Data Governance Banner -->
+
           <div class="tint tint-teal rounded-3xl p-5 flex flex-wrap items-center justify-between gap-4" data-no-translate>
             <div class="flex items-start gap-3.5 max-w-3xl">
               <div class="h-11 w-11 rounded-2xl bg-teal-600 text-white grid place-items-center text-lg shrink-0 shadow">🔒</div>
@@ -139,7 +131,7 @@
           </div>
 
           <div class="grid lg:grid-cols-12 gap-6">
-            <!-- Left: PDF Upload Dropzone + Quick Sample PDFs -->
+
             <div class="lg:col-span-5 space-y-5" data-no-translate>
               <div class="glass rounded-3xl p-6 space-y-4">
                 <div class="flex items-center justify-between">
@@ -167,7 +159,6 @@
                 </div>
               </div>
 
-              <!-- Employer Access Audit Log -->
               <div class="glass rounded-3xl p-6 space-y-3">
                 <div class="flex items-center justify-between">
                   <div>
@@ -180,7 +171,6 @@
               </div>
             </div>
 
-            <!-- Right: AI-Captured & Organised CV Summary -->
             <div class="lg:col-span-7 space-y-5">
               <div class="glass rounded-3xl p-6 sm:p-7 space-y-5">
                 <div class="flex flex-wrap items-start justify-between gap-3 border-b border-slate-200/70 pb-4" data-no-translate>
@@ -196,7 +186,6 @@
                   </div>
                 </div>
 
-                <!-- AI Executive Summary Box -->
                 <div class="tint tint-indigo rounded-2xl p-4 space-y-2" data-no-translate>
                   <div class="flex items-center justify-between">
                     <span class="text-[11px] font-extrabold uppercase tracking-wider text-indigo-700">✨ AI Executive Summary (Captured from PDF)</span>
@@ -206,7 +195,6 @@
                   <ul id="aiHighlights" class="space-y-1 text-[11px] text-slate-600 pt-1"></ul>
                 </div>
 
-                <!-- Structured Fields -->
                 <div class="grid sm:grid-cols-2 gap-3.5">
                   <div><label class="label" for="pName">Full name</label><input id="pName" data-no-translate class="input" /></div>
                   <div><label class="label" for="pRole">Current role</label><input id="pRole" class="input" /></div>
@@ -216,7 +204,6 @@
                   <div data-no-translate><label class="label" for="pYears">Years of experience</label><input id="pYears" type="number" min="0" max="40" value="1" class="input" /></div>
                 </div>
 
-                <!-- Extracted Experience, Education, Projects -->
                 <div class="grid sm:grid-cols-3 gap-3" data-no-translate>
                   <div class="bg-white/80 rounded-2xl p-3.5 border border-slate-200/70 space-y-1.5">
                     <div class="text-[11px] font-extrabold text-indigo-700 uppercase">💼 Work Experience</div>
@@ -232,10 +219,8 @@
                   </div>
                 </div>
 
-                <!-- NLP Competency, Measurable Impact & 1,237-Skill Lexicon Analysis -->
                 <div id="cvParserAnalytics" class="tint tint-teal rounded-2xl p-4 space-y-3 hidden" data-no-translate></div>
 
-                <!-- Extracted Skills -->
                 <div>
                   <label class="label" for="skillInput">Skills <span class="text-slate-400 font-medium">· press Enter to add</span></label>
                   <div id="skillChips" class="flex flex-wrap gap-2 mb-2.5"></div>
@@ -252,20 +237,18 @@
           </div>
         </section>
 
-        <!-- ============ BROWSE & APPLY JOBS + GPS INTERACTIVE MAP (68,447 REAL JOBSTREET MY POSTINGS) ============ -->
         <section id="tab-jobs" class="tab hidden space-y-6" data-no-translate>
-          <!-- GPS Location, Drag Radius Slider & Global Search Bar -->
+          <!-- GPS Location & Global Search Bar -->
           <div class="glass rounded-3xl p-5 space-y-4">
             <div class="flex flex-wrap items-center justify-between gap-3">
               <div class="flex items-center gap-3">
                 <div class="h-10 w-10 rounded-2xl bg-gradient-to-br from-teal-500 to-indigo-600 text-white grid place-items-center text-lg shadow">📍</div>
                 <div>
-                  <div class="flex flex-wrap items-center gap-2">
-                    <span class="text-sm font-extrabold">Your Location &amp; Radius Discovery</span>
+                  <div class="flex items-center gap-2">
+                    <span class="text-sm font-extrabold">Your Location &amp; Nearby Map Discovery</span>
                     <span id="locActiveChip" class="chip chip-teal">Kuala Lumpur (KLCC)</span>
-                    <span id="datasetStatsChip" class="chip chip-slate !text-[10px]">68,447 Malaysia Jobs · 20,514 Companies</span>
                   </div>
-                  <div class="text-[11px] text-slate-500">Drag the distance slider to resize the map circle — shows CV-matched dots first unless you select View All Nearby</div>
+                  <div class="text-[11px] text-slate-500">Zoom &amp; hover any pin on the map to preview short company details on the side</div>
                 </div>
               </div>
               <div class="flex flex-wrap items-center gap-2">
@@ -274,122 +257,92 @@
               </div>
             </div>
 
-            <!-- Interactive Drag Range Line (km) + Sort + Matched vs View All Nearby -->
-            <div class="tint tint-indigo rounded-2xl p-3.5 grid lg:grid-cols-12 gap-4 items-center">
-              <div class="lg:col-span-6 space-y-1.5">
-                <div class="flex items-center justify-between text-xs">
-                  <span class="font-extrabold text-slate-700">📏 Search Radius Circle: <span id="radiusValueLabel" class="text-indigo-600 font-black">10 km</span></span>
-                  <div class="flex items-center gap-1">
-                    <button onclick="setRadiusKm(5)" class="chip chip-slate !text-[10px] !py-0.5 !px-2 cursor-pointer">5km</button>
-                    <button onclick="setRadiusKm(10)" class="chip chip-slate !text-[10px] !py-0.5 !px-2 cursor-pointer">10km</button>
-                    <button onclick="setRadiusKm(20)" class="chip chip-slate !text-[10px] !py-0.5 !px-2 cursor-pointer">20km</button>
-                    <button onclick="setRadiusKm(35)" class="chip chip-slate !text-[10px] !py-0.5 !px-2 cursor-pointer">35km</button>
-                    <button onclick="setRadiusKm(50)" class="chip chip-slate !text-[10px] !py-0.5 !px-2 cursor-pointer">50km</button>
-                    <button onclick="setRadiusKm(100)" class="chip chip-slate !text-[10px] !py-0.5 !px-2 cursor-pointer">100km</button>
-                  </div>
-                </div>
-                <input id="radiusSlider" type="range" min="5" max="100" step="5" value="10"
-                  oninput="previewRadiusCircle(this.value)" onchange="commitRadiusChange(this.value)"
-                  class="w-full accent-indigo-600 cursor-pointer h-2 bg-indigo-200 rounded-lg" />
-              </div>
-
-              <div class="lg:col-span-3 flex items-center gap-2">
-                <span class="text-xs font-bold text-slate-600 whitespace-nowrap">Sort by:</span>
-                <select id="jobSortSelect" onchange="setJobSort(this.value)" class="input !py-1.5 !text-xs">
-                  <option value="match">🎯 Best CV Match</option>
-                  <option value="distance">📍 Nearest Distance (km)</option>
-                  <option value="salary">💰 Highest Salary</option>
-                </select>
-              </div>
-
-              <div class="lg:col-span-3 flex justify-end">
-                <div class="seg w-full sm:w-auto justify-center">
-                  <button id="btnMapMatched" onclick="setJobScope('relevant')" class="on !text-[11px]">🎯 Matched Only</button>
-                  <button id="btnMapAll" onclick="setJobScope('all')" class="!text-[11px]">🌐 View All Nearby</button>
-                </div>
-              </div>
-            </div>
-
             <!-- Search any role / field + Category filter pills -->
-            <div class="grid sm:grid-cols-12 gap-3 pt-1">
-              <div class="sm:col-span-5 flex items-center gap-2">
-                <input id="jobSearchInput" oninput="debouncedJobSearch()" class="input !py-2" placeholder="🔍 Search role, skill, or company within radius..." />
-                <button id="clearCompFilterBtn" onclick="setCompanyDotFilter('')" class="btn btn-soft !py-2 !px-2.5 !text-xs hidden whitespace-nowrap">✕ Clear Company</button>
+            <div class="grid sm:grid-cols-12 gap-3 pt-2 border-t border-slate-200/70">
+              <div class="sm:col-span-5">
+                <input id="jobSearchInput" oninput="filterJobsAndCompanies()" class="input !py-2" placeholder="🔍 Search any role, skill, company, or sector..." />
               </div>
               <div id="catFilterBar" class="sm:col-span-7 flex items-center gap-1.5 overflow-x-auto hidden-scroll py-0.5"></div>
             </div>
           </div>
 
-          <!-- Section 1: Interactive Dot Map + Radius Circle + Side Details Panel -->
+          <!-- Section 1: Interactive Map + Side Short Details Panel -->
           <div class="glass rounded-3xl p-5 space-y-4">
             <div class="flex flex-wrap items-center justify-between gap-2">
-              <div class="flex flex-wrap items-center gap-2">
+              <div class="flex items-center gap-2.5">
                 <h2 class="text-base font-extrabold">🗺️ Nearby Hiring Companies Map</h2>
-                <span id="compCountBadge" class="chip chip-indigo">0 companies in range</span>
-                <span id="rangeSummaryBadge" class="chip chip-emerald !text-[10px]">0 matched roles</span>
+                <span id="compCountBadge" class="chip chip-indigo">0 companies</span>
               </div>
               <div class="flex flex-wrap items-center gap-2 text-[11px]">
                 <span class="inline-flex items-center gap-1.5 font-bold text-slate-600"><span class="inline-block w-2.5 h-2.5 rounded-full bg-teal-600"></span>You</span>
-                <span class="inline-flex items-center gap-1.5 font-bold text-slate-600"><span class="inline-block w-2.5 h-2.5 rounded-full bg-emerald-500"></span>CV-Matched Dot</span>
-                <span class="inline-flex items-center gap-1.5 font-bold text-slate-600"><span class="inline-block w-2.5 h-2.5 rounded-full bg-indigo-500"></span>Other Hiring Dot</span>
-                <button onclick="zoomMapNearMe()" class="btn btn-soft !py-1 !px-2.5 !text-[11px]">🎯 Zoom Circle</button>
-                <button onclick="fitAllMapPins()" class="btn btn-soft !py-1 !px-2.5 !text-[11px]">🌐 Fit Dots</button>
+                <span class="inline-flex items-center gap-1.5 font-bold text-slate-600"><span class="inline-block w-2.5 h-2.5 rounded-full bg-emerald-500"></span>CV-Matched Sector</span>
+                <span class="inline-flex items-center gap-1.5 font-bold text-slate-600"><span class="inline-block w-2.5 h-2.5 rounded-full bg-indigo-500"></span>Other Sector</span>
+                <button onclick="zoomMapNearMe()" class="btn btn-soft !py-1 !px-2.5 !text-[11px]">🎯 Zoom Near Me</button>
+                <button onclick="fitAllMapPins()" class="btn btn-soft !py-1 !px-2.5 !text-[11px]">🌐 Fit All</button>
               </div>
             </div>
 
             <div class="grid lg:grid-cols-12 gap-5 items-stretch">
-              <!-- Left: Zoomable Map with Radius Circle & Company Dots -->
+              <!-- Left: Zoomable Map -->
               <div class="lg:col-span-7">
                 <div id="companyMap" class="cl-map-wrap"></div>
               </div>
 
-              <!-- Right: Hovered / Selected Dot Short Details Panel -->
+              <!-- Right: Hovered / Selected Pin Short Details Panel -->
               <div class="lg:col-span-5 flex flex-col justify-between gap-3">
                 <div id="mapSideCard" class="tint tint-indigo rounded-2xl p-5 flex-1 flex flex-col justify-between"></div>
                 <div class="space-y-1.5">
-                  <div class="text-[10px] font-extrabold uppercase tracking-wider text-slate-400 px-1">Top nearby companies in circle (hover or click dot)</div>
+                  <div class="text-[10px] font-extrabold uppercase tracking-wider text-slate-400 px-1">Hover or click to inspect on map</div>
                   <div id="mapQuickList" class="flex flex-wrap gap-1.5 max-h-24 overflow-y-auto pr-1"></div>
                 </div>
               </div>
             </div>
           </div>
 
-          <!-- Section 2: Clean Open Job Vacancies -->
+          <!-- Section 2: Clean Open Job Vacancies (Pic 2 Refined) -->
           <div class="space-y-3">
             <div class="flex flex-wrap items-center justify-between gap-3 px-1">
               <div>
-                <div class="flex flex-wrap items-center gap-2">
-                  <h2 class="text-base font-extrabold text-slate-900">💼 Open Job Vacancies in Range</h2>
-                  <span id="jobsShowingBadge" class="chip chip-indigo !text-[10px]">0 roles</span>
+                <div class="flex items-center gap-2">
+                  <h2 class="text-base font-extrabold text-slate-900">💼 Open Job Vacancies</h2>
+                  <span class="chip chip-emerald !text-[10px]">🔒 Consent-Gated Apply</span>
                 </div>
-                <p id="jobsSubtleDesc" class="text-xs text-slate-500">Showing CV-matched job openings inside your selected distance circle. Switch to View All Nearby to browse every sector.</p>
+                <p class="text-xs text-slate-500">Detailed role openings. Employers only receive your CV when you click Apply.</p>
               </div>
               <div class="seg">
-                <button id="btnRelJobs" onclick="setJobScope('relevant')" class="on">🎯 Matched in Range</button>
-                <button id="btnAllJobs" onclick="setJobScope('all')">🌐 View All Nearby</button>
+                <button id="btnRelJobs" onclick="setJobScope('relevant')" class="on">🎯 Matched to My CV</button>
+                <button id="btnAllJobs" onclick="setJobScope('all')">🌐 All Open Roles</button>
               </div>
             </div>
             <div id="jobsGrid" class="grid lg:grid-cols-2 gap-4"></div>
-            <div id="loadMoreJobsWrap" class="hidden pt-2 text-center">
-              <button onclick="loadMoreJobs()" class="btn btn-soft !px-6 !py-2.5 text-xs font-extrabold">Load More Roles in Range ↓</button>
-            </div>
           </div>
         </section>
 
-        <!-- ============ QUESTIONNAIRE ============ -->
         <section id="tab-quest" class="tab hidden space-y-6">
           <div class="glass rounded-3xl p-6 flex items-center gap-5">
             <div id="qRing" class="ring"><span>0%</span></div>
             <div class="flex-1"><div class="text-sm font-extrabold">Application questionnaire</div><div id="qProgText" class="text-xs text-slate-500"></div>
               <div class="bar mt-2"><i id="qBar" style="width:0%"></i></div></div>
           </div>
-          <div class="grid lg:grid-cols-2 gap-6">
-            <div class="glass rounded-3xl p-6 space-y-4"><div class="text-sm font-extrabold">Common questions</div><div id="commonQ" class="space-y-4"></div></div>
-            <div class="tint tint-pink rounded-3xl p-6 space-y-4"><div class="flex items-center justify-between"><div class="text-sm font-extrabold">Personalised for your CV</div><span class="chip chip-pink">AI-generated</span></div><div id="aiQ" class="space-y-4"></div></div>
+          <form id="questionnaireBasics" class="glass rounded-3xl p-6 space-y-5" onsubmit="event.preventDefault();continueQuestionnaire()">
+            <div><h2 class="font-extrabold">1 · Common questions</h2><p class="text-xs text-slate-500 mt-1">All basic fields are required. Choose your field before selecting a role.</p></div>
+            <div id="commonQ" class="questionnaire-fields"></div>
+            <div id="roleRecommendationPanel" class="role-suggestion-panel">
+              <div id="roleRecommendationStatus" role="status" aria-live="polite"></div>
+              <div id="roleRecommendations"></div>
+            </div>
+            <button type="submit" class="btn btn-primary">Continue to CV questions →</button>
+          </form>
+          <div id="questionnairePersonal" class="hidden tint tint-pink rounded-3xl p-6 space-y-5">
+            <div class="flex flex-wrap items-center justify-between gap-3"><h2 id="personalQuestionsTitle" tabindex="-1" class="font-extrabold">2 · Personalised for your CV</h2><button class="btn btn-soft" type="button" onclick="backToQuestionnaireBasics()">← Back to basic information</button></div>
+            <p id="questionnaireProviderDescription" class="text-xs text-slate-600">Generate questions using your uploaded CV summary and chosen role. Your CV summary and basic answers are sent to Google Gemini when you press Generate.</p>
+            <button id="generateQuestionsButton" type="button" class="btn btn-primary" onclick="generateQuestionnaireQuestions()">Generate my CV questions</button>
+            <div id="questionnaireAIStatus" role="status" aria-live="polite"></div>
+            <form id="questionnaireAIForm" onsubmit="event.preventDefault();completeQuestionnaire()" class="space-y-4"><div id="aiQ" class="space-y-4"></div><button id="completeQuestionnaireButton" type="submit" class="hidden btn btn-primary">Save questionnaire</button></form>
+            <div id="questionnaireSavedStatus" role="status" aria-live="polite"></div>
           </div>
         </section>
 
-        <!-- ============ RADAR ============ -->
         <section id="tab-radar" class="tab hidden space-y-6">
           <div class="glass rounded-3xl p-5 flex flex-wrap items-center justify-between gap-4">
             <div><div id="trendBadge" class="text-xs text-slate-500 font-medium"></div><div id="trendScenarioLabel" class="text-sm font-extrabold mt-0.5"></div></div>
@@ -406,12 +359,11 @@
             <div class="tint tint-teal rounded-3xl p-6 space-y-4"><div class="text-sm font-extrabold text-teal-900">📈 Rising skills</div><div id="rising" class="space-y-4"></div></div>
             <div class="tint tint-pink rounded-3xl p-6 space-y-4"><div class="text-sm font-extrabold text-rose-900">⚠️ Tasks at automation risk</div><div id="declining" class="space-y-4"></div></div>
           </div>
-          <!-- Anonymized Talent Pool Statistical Trend Card -->
+
           <div id="anonStatsCard" class="glass rounded-3xl p-6 space-y-3" data-no-translate></div>
           <div class="tint tint-indigo rounded-3xl p-6"><div class="text-sm font-extrabold text-indigo-900 mb-3">📰 Recent AI research signals</div><ul id="signals" class="space-y-2 text-xs text-slate-600"></ul></div>
         </section>
 
-        <!-- ============ MATCHES ============ -->
         <section id="tab-match" class="tab hidden space-y-5">
           <div class="flex flex-wrap gap-2">
             <details class="chip chip-slate"><summary>⚖️ Fairness checks</summary><p id="fairnessDetails" class="mt-2 max-w-lg">Protected attributes excluded from scoring. Statistical parity has not been audited.</p></details>
@@ -420,7 +372,6 @@
           <div id="roleCards" class="grid lg:grid-cols-2 gap-5"></div>
         </section>
 
-        <!-- ============ PLAN ============ -->
         <section id="tab-plan" class="tab hidden space-y-6">
           <div class="glass rounded-3xl p-5 flex flex-wrap items-center justify-between gap-3">
             <div class="flex items-center gap-3"><span class="text-xs font-bold text-slate-500">Target role</span><select id="planRole" onchange="selectRole(this.value,false)" class="input !w-auto"></select></div>
@@ -432,7 +383,6 @@
           </div>
         </section>
 
-        <!-- ============ PASSPORT ============ -->
         <section id="tab-passport" class="tab hidden">
           <div id="passport" class="max-w-2xl mx-auto"></div>
         </section>
@@ -440,7 +390,6 @@
     </div>
   </div>
 
-  <!-- Apply to Job Modal (Explicit Consent for Organised CV & Original PDF) -->
   <div id="applyModalWrap" class="hidden" data-no-translate>
     <div class="overlay" onclick="closeApplyModal(event)">
       <div class="modal p-6 sm:p-8 space-y-5 max-w-lg w-full" onclick="event.stopPropagation()">
@@ -494,8 +443,9 @@
     </div>
   </div>
 
-  <script src="/static/js/common.js"></script>
+  <script src="/static/js/common.js?v=20261020-questionnaire-1"></script>
   <script src="/static/js/interviews.js?v=20261020-4"></script>
+  <script src="/static/js/questionnaire.js?v=20261020-auto-role"></script>
   <script>
     const NAV = [
       { id: 'notifications', ico: '🔔', label: 'Interview notifications', eyebrow: 'Notifications', title: 'Interview notifications' },
@@ -511,14 +461,14 @@
       jobs: { id: 'jobs', ico: '📍', label: 'Nearby Jobs & Map', eyebrow: 'Location & Consent-Gated Apply', title: 'Nearby hiring companies & open roles' },
     };
     const COMMON_Q = [
-      { id: 'c1', text: 'Are you a fresh graduate, working, or changing career?', type: 'select', options: ['Fresh Graduate', 'Working Professional', 'Career Changer'] },
-      { id: 'c2', text: 'Which role or field are you aiming for?', type: 'text' },
-      { id: 'c3', text: 'Why does this role interest you?', type: 'text' },
-      { id: 'c4', text: 'Preferred location and work arrangement?', type: 'select', options: ['Kuala Lumpur · Hybrid', 'Selangor · Hybrid', 'Remote (Malaysia)', 'On-site (any city)'] },
-      { id: 'c5', text: 'Expected monthly salary range?', type: 'select', options: ['RM 3,000 – 4,000', 'RM 4,000 – 6,000', 'RM 6,000 – 8,000', 'RM 8,000+'] },
-      { id: 'c6', text: 'How soon can you start?', type: 'select', options: ['Immediately', '2 weeks', '1 month', '2+ months'] },
-      { id: 'c7', text: 'Do you prefer independent or team work? Why?', type: 'text' },
-      { id: 'c8', text: 'Where do you want to be in 3–5 years?', type: 'text' },
+      { id: 'c1', text: 'Are you a fresh graduate, working, or changing career?', type: 'select' },
+      { id: 'c2', text: 'Which role or field are you aiming for?', type: 'select' },
+      { id: 'c3', text: 'Why does this role interest you?', type: 'select' },
+      { id: 'c4', text: 'Preferred location and work arrangement?', type: 'select' },
+      { id: 'c5', text: 'Expected monthly salary range?', type: 'select' },
+      { id: 'c6', text: 'How soon can you start?', type: 'select' },
+      { id: 'c7', text: 'Do you prefer independent or team work? Why?', type: 'select' },
+      { id: 'c8', text: 'Where do you want to be in 3–5 years?', type: 'select' },
     ];
 
     let user = null, personas = [], cvRecord = null, samplePdfs = [], jobsList = [], companiesList = [], categoriesList = [], activeApplyJob = null;
@@ -540,20 +490,18 @@
         EXTRA_TABS.jobs,
         ...NAV.slice(3),
       ];
-      document.getElementById('sideNav').innerHTML = renderItems.map(n =>
-        `<button data-tab="${n.id}" ${n.id === 'jobs' ? 'data-no-translate' : ''} onclick="showTab('${n.id}')" class="nav-item"><span class="ico">${n.ico}</span>${n.label}</button>`).join('');
-      document.getElementById('topNav').innerHTML = renderItems.map(n =>
-        `<button data-tab="${n.id}" ${n.id === 'jobs' ? 'data-no-translate' : ''} onclick="showTab('${n.id}')" class="nav-item !w-auto whitespace-nowrap !py-2"><span>${n.ico}</span>${n.label}</button>`).join('');
+      buildPortalNavigation(renderItems, [{label: 'Overview', ids: ['dash']}, {label: 'My Profile', ids: ['profile', 'quest']}, {label: 'Explore Careers', ids: ['jobs', 'radar', 'match']}, {label: 'My Growth', ids: ['plan', 'passport']}]);
     }
     async function showTab(id) {
       current = id; visited.add(id);
       document.querySelectorAll('.tab').forEach(t => t.classList.add('hidden'));
       const el = document.getElementById('tab-' + id);
       if (el) { el.classList.remove('hidden'); el.classList.add('fade-in'); }
-      document.querySelectorAll('[data-tab]').forEach(b => b.classList.toggle('active', b.dataset.tab === id));
+      setPortalNavigation(id);
       const n = NAV.find(x => x.id === id) || EXTRA_TABS[id] || NAV[1];
       document.getElementById('pgEyebrow').textContent = n.eyebrow;
       document.getElementById('pgTitle').textContent = n.title;
+      if (id === 'quest') scheduleRoleRecommendation();
       if (id === 'notifications') loadInvitations(false);
       if (id === 'dash') renderDash();
       if (id === 'profile') await loadMyCv();
@@ -782,7 +730,7 @@
       }
     }
 
-    /* ---------- Browse & Apply Jobs + Interactive Radius Dot Map (68,447 JobStreet MY Postings) ---------- */
+    /* ---------- Browse & Apply Jobs + Interactive Map ---------- */
     let radiusKm = 10, jobSortBy = 'match', selectedCompanyName = '', jobsOffset = 0, jobsHasMore = false, jobsSummary = {};
     let radiusCircle = null, activeDotCircle = null, searchDebounceTimer = null, leafletRenderer = null;
 
@@ -1319,6 +1267,8 @@
       await loadMyCv();
     }
 
+
+
     /* ---------- analysis ---------- */
     let analysisVersion = 0;
     async function runAnalysis() {
@@ -1335,7 +1285,7 @@
         if (!t.ok || !m.ok) throw new Error('Analysis unavailable. Please retry.');
         document.getElementById('analysisStatus').textContent = '';
         document.getElementById('fairnessDetails').textContent = m.data.fairness_audit;
-        trend = t.data; roles = m.data.recommended_roles || []; aiQuestions = m.data.verification_questions || [];
+        trend = t.data; roles = m.data.recommended_roles || [];
         if (selected >= roles.length) selected = 0;
         analysed = true;
         renderRadar(); renderRoles(); renderPlanSelect(); renderPlan(); renderQuestionnaire();
@@ -1363,7 +1313,7 @@
       const answered = answeredCount();
       const steps = [
         { label: 'Profile', tab: 'profile', done: skills.length > 0 },
-        { label: 'Questionnaire', tab: 'quest', done: answered >= 4 },
+        { label: 'Questionnaire', tab: 'quest', done: answered >= questionnaireFieldDefinitions().length },
         { label: 'AI Radar', tab: 'radar', done: visited.has('radar') },
         { label: 'Matches', tab: 'match', done: visited.has('match') },
         { label: 'Plan', tab: 'plan', done: visited.has('plan') },
@@ -1377,7 +1327,7 @@
         ['Best match', top ? top.match_score + '%' : '—', top ? esc(top.title) : 'Run analysis', 'indigo'],
         ['Skills to build', role ? role.skills_gap.length : '—', 'for selected role', 'pink'],
         ['Learning hours', role ? role.estimated_total_hours : '—', 'verified courses', 'amber'],
-        ['Questionnaire', `${answered}/${COMMON_Q.length + aiQuestions.length}`, 'answered', 'teal'],
+        ['Questionnaire', `${answered}/${questionnaireFieldDefinitions().length + (aiQuestions.length || 4)}`, 'answered', 'teal'],
       ].map(k => `<div class="tint tint-${k[3]} rounded-2xl p-4"><div class="text-[11px] font-bold text-slate-500">${k[0]}</div>
         <div class="text-3xl font-extrabold mt-1">${k[1]}</div><div class="text-[11px] text-slate-500 truncate">${k[2]}</div></div>`).join('');
       dashTop.innerHTML = top ? `
@@ -1389,7 +1339,7 @@
             <button onclick="selectRole(${i},true)" class="btn btn-soft !py-1.5">Plan</button></div>`).join('')}</div>`
         : '<div class="text-sm text-slate-500">Save your profile to generate matches.</div>';
       const nxt = !analysed ? ['Add your skills', 'profile', 'Start by picking a sample persona or listing your skills.']
-        : answered < 4 ? ['Answer the questionnaire', 'quest', 'Help us verify your practical depth.']
+        : answered < questionnaireFieldDefinitions().length ? ['Answer the questionnaire', 'quest', 'Help us verify your practical depth.']
         : !visited.has('plan') ? ['Open your reskilling plan', 'plan', 'Follow an ordered, verified learning path.']
         : ['View your SDG passport', 'passport', 'See the impact of your chosen path.'];
       nextStep.innerHTML = `<div class="text-lg font-extrabold">${nxt[0]}</div><p class="text-xs text-slate-600">${nxt[2]}</p>
@@ -1397,30 +1347,6 @@
     }
 
     /* ---------- questionnaire ---------- */
-    const ansKey = () => `cl_answers_${user ? user.unique_uid : 'guest'}`;
-    function answeredCount() { return Object.values(answers).filter(v => String(v).trim()).length; }
-    function setAnswer(id, v) { answers[id] = v; localStorage.setItem(ansKey(), JSON.stringify(answers)); updateQProgress(); }
-    function updateQProgress() {
-      const total = COMMON_Q.length + aiQuestions.length, done = answeredCount(), pct = total ? Math.round(100 * done / total) : 0;
-      qRing.style.setProperty('--p', pct); qRing.querySelector('span').textContent = pct + '%';
-      qProgText.textContent = `${done} of ${total} answered · saved on this device`; qBar.style.width = pct + '%';
-    }
-    function renderQuestionnaire() {
-      commonQ.innerHTML = COMMON_Q.map((q, i) => {
-        const val = answers[q.id] || '';
-        const field = q.type === 'select'
-          ? `<select class="input" onchange="setAnswer('${q.id}',this.value)"><option value="">Select…</option>${q.options.map(o => `<option value="${esc(o)}" ${o === val ? 'selected' : ''}>${esc(o)}</option>`).join('')}</select>`
-          : `<textarea rows="2" class="input" oninput="setAnswer('${q.id}',this.value)">${esc(val)}</textarea>`;
-        return `<div><label class="label">${i + 1}. ${q.text}</label>${field}</div>`;
-      }).join('');
-      aiQ.innerHTML = aiQuestions.map((q, i) => {
-        const id = 'ai' + i;
-        return `<div><label class="label"><span class="chip chip-pink mr-1">${esc(q.skill_tested)}</span>${esc(q.question)}</label>
-          <textarea rows="3" class="input" oninput="setAnswer('${id}',this.value)">${esc(answers[id] || '')}</textarea></div>`;
-      }).join('');
-      updateQProgress();
-    }
-
     /* ---------- radar ---------- */
     function renderRadar() {
       if (!trend) return;
@@ -1541,6 +1467,7 @@
         const fallbackPersona = personas[match >= 0 ? match : 0];
         if (fallbackPersona) { skills = [...fallbackPersona.skills]; renderSkills(); }
       }
+      await loadQuestionnaireCatalog();
       await Promise.all([runAnalysis(), loadJobs()]);
       showTab('dash');
     }
@@ -1548,6 +1475,6 @@
   </script>
 <script src="/static/js/questionnaire-i18n.js"></script>
 <script src="/static/js/portal-i18n.js"></script>
-<script src="/static/js/member3.js?v=20261020-7"></script>
+<script src="/static/js/member3.js?v=20261020-questionnaire-1"></script>
 </body>
 </html>
