@@ -162,9 +162,10 @@ async function signOut() {
   };
 
   async function mountWidget() {
-    if (document.getElementById('lumiFab')) return;
+    if (!document.body || document.getElementById('lumiFab')) return;
 
     const wrap = document.createElement('div');
+    wrap.setAttribute('data-no-translate', '');
     wrap.innerHTML = `
       <!-- Floating Cute Mascot Launcher Button -->
       <button id="lumiFab" onclick="toggleLumiChat()" class="lumi-fab" title="Chat with Lumi — Domain-Scoped CareerLens AI Mascot">
@@ -236,7 +237,7 @@ async function signOut() {
     const welcomeText = lumiPortal === 'hr_company'
       ? "🦉 **Hi! I'm Lumi, your Employer AI Copilot.**\nAsk me about **top screened candidates**, **applied PDF CVs**, or **team skill gaps**."
       : lumiPortal === 'job_seeker'
-      ? "🦉 **Hi! I'm Lumi, your CareerLens AI Owl.**\nAsk me about **nearby jobs for your CV**, **career goals** (e.g. *'I want to become a doctor'*), **role matches**, or **courses**."
+      ? "🦉 **Hi! I'm Lumi, your CareerLens AI Owl.**\nAsk me about **nearby jobs for your CV**, **career goals**, **role matches**, or **courses**."
       : "🦉 **Hi! I'm Lumi.**\nI help with **private PDF CVs, nearby job matching, reskilling & fair HR screening**.";
 
     lumiHistory = [{

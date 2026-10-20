@@ -354,6 +354,35 @@ def api_hr_revoke():
     return jsonify({"ok": ok}), (200 if ok else 404)
 
 
+@app.route("/api/hr/interviews", methods=["GET", "POST"])
+@api_role("hr_company")
+def hr_interviews():
+    if request.method == "GET":
+        return jsonify(ok=True, invitations=hr_engine.interview_list(_owner(), True))
+    result, error = hr_engine.create_interview(session["user"], request.get_json(silent=True) or {})
+    return (jsonify(ok=True, **result) if result else (jsonify(ok=False, message=error), 400))
+
+
+@app.route("/api/talent/interviews", methods=["GET"])
+@api_role("job_seeker")
+def talent_interviews():
+    return jsonify(ok=True, invitations=hr_engine.interview_list(_owner()))
+
+
+@app.route("/api/hr/interviews/<int:invite_id>/cancel", methods=["POST"])
+@api_role("hr_company")
+def cancel_interview(invite_id):
+    ok = hr_engine.cancel_interview(_owner(), invite_id)
+    return jsonify(ok=ok), (200 if ok else 404)
+
+
+@app.route("/api/talent/interviews/<int:invite_id>/reply", methods=["POST"])
+@api_role("job_seeker")
+def reply_interview(invite_id):
+    ok = hr_engine.respond_interview(_owner(), invite_id, (request.get_json(silent=True) or {}).get("status"))
+    return jsonify(ok=ok), (200 if ok else 400)
+
+
 def main() -> None:
     project_name = os.getenv("PROJECT_NAME", "CareerLens AI")
     print(format_greeting(project_name))

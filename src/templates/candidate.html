@@ -7,7 +7,47 @@
   <link rel="icon" type="image/svg+xml" href="/static/brand/careerlens_logo_icon.svg" />
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <link rel="stylesheet" href="/static/css/theme.css" />
+  <style>
+    .cl-map-wrap {
+      position: relative;
+      height: 360px;
+      width: 100%;
+      border-radius: 1.25rem;
+      overflow: hidden;
+      border: 1px solid rgba(99, 102, 241, 0.22);
+      background: linear-gradient(135deg, #eef2ff 0%, #f0fdfa 100%);
+      z-index: 1;
+    }
+    .cl-pin {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 9999px;
+      font-weight: 800;
+      font-size: 11px;
+      color: #fff;
+      box-shadow: 0 6px 16px rgba(15, 23, 42, 0.25);
+      border: 2.5px solid #fff;
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+      cursor: pointer;
+    }
+    .cl-pin:hover, .cl-pin.active {
+      transform: scale(1.22);
+      box-shadow: 0 8px 22px rgba(79, 70, 229, 0.45);
+      z-index: 999 !important;
+    }
+    .cl-user-pin {
+      width: 18px;
+      height: 18px;
+      border-radius: 9999px;
+      background: #0d9488;
+      border: 3px solid #fff;
+      box-shadow: 0 0 0 6px rgba(13, 148, 136, 0.25), 0 4px 10px rgba(15, 23, 42, 0.3);
+    }
+  </style>
 </head>
 <body class="min-h-screen">
   <div class="aurora"></div><div class="blob b1"></div><div class="blob b2"></div>
@@ -25,7 +65,7 @@
         <div class="tint tint-indigo rounded-2xl p-3 mt-3">
           <div class="flex items-center gap-2.5">
             <div id="uAvatar" class="h-9 w-9 rounded-xl bg-gradient-to-br from-indigo-500 to-pink-500 text-white font-bold grid place-items-center">U</div>
-            <div class="min-w-0"><div id="uName" class="text-xs font-extrabold truncate">User</div><div id="uUid" class="text-[10px] font-mono text-slate-500 truncate"></div></div>
+            <div class="min-w-0"><div id="uName" data-no-translate class="text-xs font-extrabold truncate">User</div><div id="uUid" data-no-translate class="text-[10px] font-mono text-slate-500 truncate"></div></div>
           </div>
           <button onclick="signOut()" class="btn btn-soft w-full mt-3 !py-2">Sign out</button>
         </div>
@@ -50,12 +90,18 @@
           <div id="pgActions" class="flex flex-wrap gap-2"></div>
         </div>
 
+        <!-- ============ INTERVIEW NOTIFICATIONS ============ -->
+        <section id="tab-notifications" class="tab hidden space-y-4">
+          <button class="btn btn-soft" onclick="loadInvitations(false)">Refresh notifications</button>
+          <div id="talentInvitations" class="space-y-4"></div>
+        </section>
+
         <!-- ============ DASHBOARD ============ -->
         <section id="tab-dash" class="tab space-y-6">
           <div class="glass rounded-3xl p-6 sm:p-8 relative overflow-hidden">
             <div class="absolute -right-10 -top-10 h-48 w-48 rounded-full bg-gradient-to-br from-pink-300/50 to-indigo-300/50 blur-2xl"></div>
             <div class="relative space-y-1"><div class="text-sm text-slate-500 font-semibold">Welcome back</div>
-              <h2 id="dashHello" class="text-2xl font-extrabold"></h2>
+              <h2 id="dashHello" data-no-translate class="text-2xl font-extrabold"></h2>
               <p id="dashSub" class="text-sm text-slate-600"></p></div>
             <div id="journey" class="relative mt-6 grid grid-cols-2 sm:grid-cols-6 gap-3"></div>
           </div>
@@ -72,12 +118,12 @@
         <!-- ============ PDF CV & AI SUMMARY (FUNCTION 01) ============ -->
         <section id="tab-profile" class="tab hidden space-y-6">
           <!-- Privacy & Data Governance Banner -->
-          <div class="tint tint-teal rounded-3xl p-5 flex flex-wrap items-center justify-between gap-4">
+          <div class="tint tint-teal rounded-3xl p-5 flex flex-wrap items-center justify-between gap-4" data-no-translate>
             <div class="flex items-start gap-3.5 max-w-3xl">
               <div class="h-11 w-11 rounded-2xl bg-teal-600 text-white grid place-items-center text-lg shrink-0 shadow">🔒</div>
               <div>
                 <div class="flex flex-wrap items-center gap-2">
-                  <span class="text-sm font-extrabold text-teal-950">Private PDF Vault & Consent-Gated Sharing</span>
+                  <span class="text-sm font-extrabold text-teal-950">Private PDF Vault &amp; Consent-Gated Sharing</span>
                   <span class="chip chip-emerald">PDPA Protected</span>
                   <span class="chip chip-indigo">PDF-Only Upload</span>
                 </div>
@@ -94,7 +140,7 @@
 
           <div class="grid lg:grid-cols-12 gap-6">
             <!-- Left: PDF Upload Dropzone + Quick Sample PDFs -->
-            <div class="lg:col-span-5 space-y-5">
+            <div class="lg:col-span-5 space-y-5" data-no-translate>
               <div class="glass rounded-3xl p-6 space-y-4">
                 <div class="flex items-center justify-between">
                   <div>
@@ -108,7 +154,7 @@
                   <input id="pdfInput" type="file" accept=".pdf,application/pdf" class="hidden" onchange="handlePdfSelect(this.files[0])" />
                   <div class="mx-auto h-12 w-12 rounded-2xl bg-gradient-to-br from-indigo-500 to-pink-500 text-white grid place-items-center text-xl shadow-md mb-3">📄</div>
                   <div class="text-sm font-extrabold text-slate-800">Drop your PDF CV here or <span class="text-indigo-600 underline">browse</span></div>
-                  <div class="text-[11px] text-slate-500 mt-1">AI automatically extracts & organises your education, experience, projects, and skills</div>
+                  <div class="text-[11px] text-slate-500 mt-1">AI automatically extracts &amp; organises your education, experience, projects, and skills</div>
                   <div id="uploadStatus" class="mt-3 text-xs font-bold text-indigo-600 hidden"></div>
                 </label>
 
@@ -137,7 +183,7 @@
             <!-- Right: AI-Captured & Organised CV Summary -->
             <div class="lg:col-span-7 space-y-5">
               <div class="glass rounded-3xl p-6 sm:p-7 space-y-5">
-                <div class="flex flex-wrap items-start justify-between gap-3 border-b border-slate-200/70 pb-4">
+                <div class="flex flex-wrap items-start justify-between gap-3 border-b border-slate-200/70 pb-4" data-no-translate>
                   <div>
                     <div class="flex items-center gap-2">
                       <span class="text-sm font-extrabold">2. AI-Organised CV Summary</span>
@@ -151,7 +197,7 @@
                 </div>
 
                 <!-- AI Executive Summary Box -->
-                <div class="tint tint-indigo rounded-2xl p-4 space-y-2">
+                <div class="tint tint-indigo rounded-2xl p-4 space-y-2" data-no-translate>
                   <div class="flex items-center justify-between">
                     <span class="text-[11px] font-extrabold uppercase tracking-wider text-indigo-700">✨ AI Executive Summary (Captured from PDF)</span>
                     <span id="cvSeekerType" class="chip chip-indigo"></span>
@@ -162,16 +208,16 @@
 
                 <!-- Structured Fields -->
                 <div class="grid sm:grid-cols-2 gap-3.5">
-                  <div><label class="label">Full name</label><input id="pName" class="input" /></div>
-                  <div><label class="label">Current role / headline</label><input id="pRole" class="input" /></div>
-                  <div><label class="label">Industry sector</label><select id="pIndustry" class="input"><option>Finance & Accounting</option><option>IT & Software</option><option>Marketing & PR</option><option>HR & Administration</option></select></div>
-                  <div><label class="label">Preferred work mode</label><select id="pMode" class="input"><option>Hybrid</option><option>Remote</option><option>On-site</option></select></div>
-                  <div><label class="label">Qualification level</label><select id="pEdu" class="input"><option>Diploma / TVET</option><option>Bachelor's Degree</option><option>Master's / Postgraduate</option></select></div>
-                  <div><label class="label">Years of experience</label><input id="pYears" type="number" min="0" max="40" value="1" class="input" /></div>
+                  <div><label class="label" for="pName">Full name</label><input id="pName" data-no-translate class="input" /></div>
+                  <div><label class="label" for="pRole">Current role</label><input id="pRole" class="input" /></div>
+                  <div><label class="label" for="pIndustry">Industry</label><select id="pIndustry" class="input"><option>Finance & Accounting</option><option>IT & Software</option><option>Marketing & PR</option><option>HR & Administration</option></select></div>
+                  <div><label class="label" for="pMode">Work mode</label><select id="pMode" class="input"><option>Hybrid</option><option>Remote</option><option>On-site</option></select></div>
+                  <div data-no-translate><label class="label" for="pEdu">Qualification level</label><select id="pEdu" class="input"><option>Diploma / TVET</option><option>Bachelor's Degree</option><option>Master's / Postgraduate</option></select></div>
+                  <div data-no-translate><label class="label" for="pYears">Years of experience</label><input id="pYears" type="number" min="0" max="40" value="1" class="input" /></div>
                 </div>
 
                 <!-- Extracted Experience, Education, Projects -->
-                <div class="grid sm:grid-cols-3 gap-3">
+                <div class="grid sm:grid-cols-3 gap-3" data-no-translate>
                   <div class="bg-white/80 rounded-2xl p-3.5 border border-slate-200/70 space-y-1.5">
                     <div class="text-[11px] font-extrabold text-indigo-700 uppercase">💼 Work Experience</div>
                     <ul id="cvExpList" class="space-y-1.5 text-[11px] text-slate-600 list-disc pl-4"></ul>
@@ -188,38 +234,38 @@
 
                 <!-- Extracted Skills -->
                 <div>
-                  <label class="label">AI-Extracted Skills <span class="text-slate-400 font-medium">· add or refine skills below</span></label>
+                  <label class="label" for="skillInput">Skills <span class="text-slate-400 font-medium">· press Enter to add</span></label>
                   <div id="skillChips" class="flex flex-wrap gap-2 mb-2.5"></div>
-                  <input id="skillInput" class="input" placeholder="Add a skill and press Enter (e.g. Python Data Analysis)" list="skillSuggest" />
+                  <input id="skillInput" class="input" placeholder="Type a skill, e.g. Financial Auditing" list="skillSuggest" />
                   <datalist id="skillSuggest"></datalist>
                 </div>
 
-                <div class="flex flex-wrap items-center justify-between gap-3 pt-2 border-t border-slate-200/70">
-                  <button onclick="showTab('jobs')" class="btn btn-soft">💼 Browse & Apply Jobs →</button>
-                  <button onclick="saveProfile()" class="btn btn-primary">Save Summary & Refresh AI Matches →</button>
+                <div class="flex flex-wrap items-center justify-between gap-3 pt-2 border-t border-slate-200/70" data-no-translate>
+                  <button onclick="showTab('jobs')" class="btn btn-soft">📍 Explore Nearby Jobs &amp; Map →</button>
+                  <button onclick="saveProfile()" class="btn btn-primary">Save Summary &amp; Refresh AI Matches →</button>
                 </div>
               </div>
             </div>
           </div>
         </section>
 
-        <!-- ============ BROWSE & APPLY JOBS + GPS NEARBY COMPANIES ============ -->
-        <section id="tab-jobs" class="tab hidden space-y-6">
-          <!-- GPS Location & Global Job/Company Search Bar -->
+        <!-- ============ BROWSE & APPLY JOBS + GPS INTERACTIVE MAP ============ -->
+        <section id="tab-jobs" class="tab hidden space-y-6" data-no-translate>
+          <!-- GPS Location & Global Search Bar -->
           <div class="glass rounded-3xl p-5 space-y-4">
             <div class="flex flex-wrap items-center justify-between gap-3">
               <div class="flex items-center gap-3">
                 <div class="h-10 w-10 rounded-2xl bg-gradient-to-br from-teal-500 to-indigo-600 text-white grid place-items-center text-lg shadow">📍</div>
                 <div>
                   <div class="flex items-center gap-2">
-                    <span class="text-sm font-extrabold">Your Location &amp; Nearby Discovery</span>
+                    <span class="text-sm font-extrabold">Your Location &amp; Nearby Map Discovery</span>
                     <span id="locActiveChip" class="chip chip-teal">Kuala Lumpur (KLCC)</span>
                   </div>
-                  <div class="text-[11px] text-slate-500">Use live GPS or select a city to rank nearby hiring companies &amp; open roles</div>
+                  <div class="text-[11px] text-slate-500">Zoom &amp; hover any pin on the map to preview short company details on the side</div>
                 </div>
               </div>
               <div class="flex flex-wrap items-center gap-2">
-                <button onclick="detectGpsLocation()" class="btn btn-primary !py-2 !text-xs">🛰️ Use My GPS Location</button>
+                <button onclick="detectGpsLocation()" class="btn btn-primary !py-2 !text-xs">🛰️ Use My GPS</button>
                 <select id="cityPresetSelect" onchange="selectManualCity(this.value)" class="input !w-auto !py-2 !text-xs"></select>
               </div>
             </div>
@@ -227,42 +273,61 @@
             <!-- Search any role / field + Category filter pills -->
             <div class="grid sm:grid-cols-12 gap-3 pt-2 border-t border-slate-200/70">
               <div class="sm:col-span-5">
-                <input id="jobSearchInput" oninput="filterJobsAndCompanies()" class="input !py-2" placeholder="🔍 Search any role, skill, company, or field (e.g. Doctor, Python, ESG, Copywriter)..." />
+                <input id="jobSearchInput" oninput="filterJobsAndCompanies()" class="input !py-2" placeholder="🔍 Search any role, skill, company, or sector..." />
               </div>
               <div id="catFilterBar" class="sm:col-span-7 flex items-center gap-1.5 overflow-x-auto hidden-scroll py-0.5"></div>
             </div>
           </div>
 
-          <!-- Section 1: Nearby Recommended Companies by Category -->
-          <div class="space-y-3">
-            <div class="flex flex-wrap items-center justify-between gap-2 px-1">
-              <div>
-                <h2 class="text-base font-extrabold">🏢 Nearby Hiring Companies by Sector</h2>
-                <p class="text-xs text-slate-500">Sorted by distance from your location &amp; skill relevance across all industries</p>
+          <!-- Section 1: Interactive Map + Side Short Details Panel -->
+          <div class="glass rounded-3xl p-5 space-y-4">
+            <div class="flex flex-wrap items-center justify-between gap-2">
+              <div class="flex items-center gap-2.5">
+                <h2 class="text-base font-extrabold">🗺️ Nearby Hiring Companies Map</h2>
+                <span id="compCountBadge" class="chip chip-indigo">0 companies</span>
               </div>
-              <span id="compCountBadge" class="chip chip-indigo">0 companies</span>
+              <div class="flex flex-wrap items-center gap-2 text-[11px]">
+                <span class="inline-flex items-center gap-1.5 font-bold text-slate-600"><span class="inline-block w-2.5 h-2.5 rounded-full bg-teal-600"></span>You</span>
+                <span class="inline-flex items-center gap-1.5 font-bold text-slate-600"><span class="inline-block w-2.5 h-2.5 rounded-full bg-emerald-500"></span>CV-Matched Sector</span>
+                <span class="inline-flex items-center gap-1.5 font-bold text-slate-600"><span class="inline-block w-2.5 h-2.5 rounded-full bg-indigo-500"></span>Other Sector</span>
+                <button onclick="zoomMapNearMe()" class="btn btn-soft !py-1 !px-2.5 !text-[11px]">🎯 Zoom Near Me</button>
+                <button onclick="fitAllMapPins()" class="btn btn-soft !py-1 !px-2.5 !text-[11px]">🌐 Fit All</button>
+              </div>
             </div>
-            <div id="companiesGrid" class="grid md:grid-cols-2 lg:grid-cols-4 gap-4"></div>
+
+            <div class="grid lg:grid-cols-12 gap-5 items-stretch">
+              <!-- Left: Zoomable Map -->
+              <div class="lg:col-span-7">
+                <div id="companyMap" class="cl-map-wrap"></div>
+              </div>
+
+              <!-- Right: Hovered / Selected Pin Short Details Panel -->
+              <div class="lg:col-span-5 flex flex-col justify-between gap-3">
+                <div id="mapSideCard" class="tint tint-indigo rounded-2xl p-5 flex-1 flex flex-col justify-between"></div>
+                <div class="space-y-1.5">
+                  <div class="text-[10px] font-extrabold uppercase tracking-wider text-slate-400 px-1">Hover or click to inspect on map</div>
+                  <div id="mapQuickList" class="flex flex-wrap gap-1.5 max-h-24 overflow-y-auto pr-1"></div>
+                </div>
+              </div>
+            </div>
           </div>
 
-          <!-- Section 2: Detailed Job Vacancies (CV-Relevant Highlighted, Toggle for All Sectors) -->
-          <div class="space-y-3 pt-2">
-            <div class="tint tint-indigo rounded-3xl p-4 flex flex-wrap items-center justify-between gap-3">
+          <!-- Section 2: Clean Open Job Vacancies (Pic 2 Refined) -->
+          <div class="space-y-3">
+            <div class="flex flex-wrap items-center justify-between gap-3 px-1">
               <div>
                 <div class="flex items-center gap-2">
-                  <span class="text-sm font-extrabold text-indigo-950">💼 Open Job Vacancies (Consent-Gated Apply)</span>
-                  <span class="chip chip-emerald">PDPA Protected</span>
+                  <h2 class="text-base font-extrabold text-slate-900">💼 Open Job Vacancies</h2>
+                  <span class="chip chip-emerald !text-[10px]">🔒 Consent-Gated Apply</span>
                 </div>
-                <p class="text-xs text-slate-600 mt-0.5">
-                  Showing detailed vacancies matched to your CV by default. Switch to <b>All Open Roles</b> or type in the search box above to explore every field.
-                </p>
+                <p class="text-xs text-slate-500">Detailed role openings. Employers only receive your CV when you click Apply.</p>
               </div>
               <div class="seg">
                 <button id="btnRelJobs" onclick="setJobScope('relevant')" class="on">🎯 Matched to My CV</button>
                 <button id="btnAllJobs" onclick="setJobScope('all')">🌐 All Open Roles</button>
               </div>
             </div>
-            <div id="jobsGrid" class="grid lg:grid-cols-2 gap-5"></div>
+            <div id="jobsGrid" class="grid lg:grid-cols-2 gap-4"></div>
           </div>
         </section>
 
@@ -285,18 +350,28 @@
             <div><div id="trendBadge" class="text-xs text-slate-500 font-medium"></div><div id="trendScenarioLabel" class="text-sm font-extrabold mt-0.5"></div></div>
             <div class="seg"><button id="scModerate" onclick="setScenario('moderate')" class="on">🐢 Moderate</button><button id="scFast" onclick="setScenario('fast')">🚀 Fast disruption</button></div>
           </div>
+          <div class="glass rounded-3xl p-6 space-y-3">
+            <label for="scenarioSlider" class="label">What-If: AI adoption scenario</label>
+            <input id="scenarioSlider" type="range" min="0" max="1" step="1" value="0" class="w-full" aria-describedby="scenarioHelp" onchange="setScenario(this.value === '1' ? 'fast' : 'moderate')" />
+            <p id="scenarioHelp" class="hint">Two benchmark scenarios: Moderate / Fast. Estimates, not predictions.</p>
+            <div id="analysisStatus" role="status" aria-live="polite"></div>
+            <div id="radarChart"></div>
+          </div>
           <div class="grid md:grid-cols-2 gap-6">
             <div class="tint tint-teal rounded-3xl p-6 space-y-4"><div class="text-sm font-extrabold text-teal-900">📈 Rising skills</div><div id="rising" class="space-y-4"></div></div>
             <div class="tint tint-pink rounded-3xl p-6 space-y-4"><div class="text-sm font-extrabold text-rose-900">⚠️ Tasks at automation risk</div><div id="declining" class="space-y-4"></div></div>
           </div>
           <!-- Anonymized Talent Pool Statistical Trend Card -->
-          <div id="anonStatsCard" class="glass rounded-3xl p-6 space-y-3"></div>
+          <div id="anonStatsCard" class="glass rounded-3xl p-6 space-y-3" data-no-translate></div>
           <div class="tint tint-indigo rounded-3xl p-6"><div class="text-sm font-extrabold text-indigo-900 mb-3">📰 Recent AI research signals</div><ul id="signals" class="space-y-2 text-xs text-slate-600"></ul></div>
         </section>
 
         <!-- ============ MATCHES ============ -->
         <section id="tab-match" class="tab hidden space-y-5">
-          <div class="flex flex-wrap gap-2"><span class="chip chip-emerald">⚖️ Fairness audited</span><span class="chip chip-indigo">📄 Matched using your private PDF CV</span><span class="chip chip-slate">Scores are estimates</span></div>
+          <div class="flex flex-wrap gap-2">
+            <details class="chip chip-slate"><summary>⚖️ Fairness checks</summary><p id="fairnessDetails" class="mt-2 max-w-lg">Protected attributes excluded from scoring. Statistical parity has not been audited.</p></details>
+            <span class="chip chip-slate">Scores are estimates</span>
+          </div>
           <div id="roleCards" class="grid lg:grid-cols-2 gap-5"></div>
         </section>
 
@@ -321,7 +396,7 @@
   </div>
 
   <!-- Apply to Job Modal (Explicit Consent for Organised CV & Original PDF) -->
-  <div id="applyModalWrap" class="hidden">
+  <div id="applyModalWrap" class="hidden" data-no-translate>
     <div class="overlay" onclick="closeApplyModal(event)">
       <div class="modal p-6 sm:p-8 space-y-5 max-w-lg w-full" onclick="event.stopPropagation()">
         <div class="flex items-start justify-between gap-3">
@@ -337,7 +412,7 @@
           <div class="text-xs font-extrabold text-teal-950">🔒 Choose what to share with this employer:</div>
           <label class="flex items-start gap-2.5 text-xs text-slate-700 cursor-pointer">
             <input id="amShareOrg" type="checkbox" checked class="mt-0.5 rounded text-teal-600" />
-            <span><b>Share AI-Organised CV Summary</b> (structured skills, education, experience & executive summary)</span>
+            <span><b>Share AI-Organised CV Summary</b> (structured skills, education, experience &amp; executive summary)</span>
           </label>
           <label class="flex items-start gap-2.5 text-xs text-slate-700 cursor-pointer">
             <input id="amSharePdf" type="checkbox" checked class="mt-0.5 rounded text-teal-600" />
@@ -368,24 +443,28 @@
 
         <div class="flex justify-end gap-2 pt-2">
           <button onclick="closeApplyModal()" class="btn btn-soft">Cancel</button>
-          <button onclick="submitJobApplication()" class="btn btn-primary">Confirm & Submit Application →</button>
+          <button onclick="submitJobApplication()" class="btn btn-primary">Confirm &amp; Submit Application →</button>
         </div>
       </div>
     </div>
   </div>
 
   <script src="/static/js/common.js"></script>
+  <script src="/static/js/interviews.js?v=20261020-4"></script>
   <script>
     const NAV = [
+      { id: 'notifications', ico: '🔔', label: 'Interview notifications', eyebrow: 'Notifications', title: 'Interview notifications' },
       { id: 'dash', ico: '🏠', label: 'Dashboard', eyebrow: 'Overview', title: 'Your career dashboard' },
-      { id: 'profile', ico: '📄', label: 'PDF CV & Summary', eyebrow: 'Function 01 · Private Vault', title: 'PDF CV upload & AI summary' },
-      { id: 'jobs', ico: '💼', label: 'Browse & Apply Jobs', eyebrow: 'Consent-Gated Sharing', title: 'Open company job vacancies' },
-      { id: 'quest', ico: '📝', label: 'Questionnaire', eyebrow: 'Function 01', title: 'Application questionnaire' },
-      { id: 'radar', ico: '📡', label: 'AI Radar', eyebrow: 'Function 02', title: 'Future skills radar' },
-      { id: 'match', ico: '🎯', label: 'Role Matches', eyebrow: 'Function 03', title: 'Future-role matches' },
-      { id: 'plan', ico: '🧭', label: 'Reskilling Plan', eyebrow: 'Function 04', title: 'Personalised reskilling plan' },
-      { id: 'passport', ico: '🌱', label: 'SDG Passport', eyebrow: 'Impact', title: 'Your SDG career passport' },
+      { id: 'profile', ico: '🧑‍💼', label: 'Profile & Skills', eyebrow: 'Function 01', title: 'Skills profile' },
+      { id: 'quest', ico: '📝', label: 'Questionnaire', eyebrow: 'Function 02', title: 'Application questionnaire' },
+      { id: 'radar', ico: '📡', label: 'AI Radar', eyebrow: 'Function 03', title: 'Future skills radar' },
+      { id: 'match', ico: '🎯', label: 'Role Matches', eyebrow: 'Function 04', title: 'Future-role matches' },
+      { id: 'plan', ico: '🧭', label: 'Reskilling Plan', eyebrow: 'Function 05', title: 'Personalised reskilling plan' },
+      { id: 'passport', ico: '🌱', label: 'SDG Passport', eyebrow: 'Function 06', title: 'Your SDG career passport' },
     ];
+    const EXTRA_TABS = {
+      jobs: { id: 'jobs', ico: '📍', label: 'Nearby Jobs & Map', eyebrow: 'Location & Consent-Gated Apply', title: 'Nearby hiring companies & open roles' },
+    };
     const COMMON_Q = [
       { id: 'c1', text: 'Are you a fresh graduate, working, or changing career?', type: 'select', options: ['Fresh Graduate', 'Working Professional', 'Career Changer'] },
       { id: 'c2', text: 'Which role or field are you aiming for?', type: 'text' },
@@ -400,6 +479,7 @@
     let user = null, personas = [], cvRecord = null, samplePdfs = [], jobsList = [], companiesList = [], categoriesList = [], activeApplyJob = null;
     let userLocation = { label: 'Kuala Lumpur (KLCC)', lat: 3.1579, lng: 101.7116, city: 'Kuala Lumpur (KLCC)', presets: [] };
     let selectedCategory = 'All', jobScope = 'relevant';
+    let leafletMap = null, leafletMarkers = [], userMarker = null, activeCompanyId = null, filteredCompsCache = [];
     let skills = [], scenario = 'moderate', trend = null, roles = [], aiQuestions = [], selected = 0;
     let analysed = false; const visited = new Set(['dash']); let answers = {}; let current = 'dash';
 
@@ -408,21 +488,34 @@
 
     /* ---------- navigation ---------- */
     function buildNav() {
-      document.getElementById('sideNav').innerHTML = NAV.map(n =>
-        `<button data-tab="${n.id}" onclick="showTab('${n.id}')" class="nav-item"><span class="ico">${n.ico}</span>${n.label}</button>`).join('');
-      document.getElementById('topNav').innerHTML = NAV.map(n =>
-        `<button data-tab="${n.id}" onclick="showTab('${n.id}')" class="nav-item !w-auto whitespace-nowrap !py-2"><span>${n.ico}</span>${n.label}</button>`).join('');
+      const renderItems = [
+        NAV[0],
+        NAV[1],
+        NAV[2],
+        EXTRA_TABS.jobs,
+        ...NAV.slice(3),
+      ];
+      document.getElementById('sideNav').innerHTML = renderItems.map(n =>
+        `<button data-tab="${n.id}" ${n.id === 'jobs' ? 'data-no-translate' : ''} onclick="showTab('${n.id}')" class="nav-item"><span class="ico">${n.ico}</span>${n.label}</button>`).join('');
+      document.getElementById('topNav').innerHTML = renderItems.map(n =>
+        `<button data-tab="${n.id}" ${n.id === 'jobs' ? 'data-no-translate' : ''} onclick="showTab('${n.id}')" class="nav-item !w-auto whitespace-nowrap !py-2"><span>${n.ico}</span>${n.label}</button>`).join('');
     }
     async function showTab(id) {
       current = id; visited.add(id);
       document.querySelectorAll('.tab').forEach(t => t.classList.add('hidden'));
-      const el = document.getElementById('tab-' + id); el.classList.remove('hidden'); el.classList.add('fade-in');
+      const el = document.getElementById('tab-' + id);
+      if (el) { el.classList.remove('hidden'); el.classList.add('fade-in'); }
       document.querySelectorAll('[data-tab]').forEach(b => b.classList.toggle('active', b.dataset.tab === id));
-      const n = NAV.find(x => x.id === id);
-      document.getElementById('pgEyebrow').textContent = n.eyebrow; document.getElementById('pgTitle').textContent = n.title;
+      const n = NAV.find(x => x.id === id) || EXTRA_TABS[id] || NAV[1];
+      document.getElementById('pgEyebrow').textContent = n.eyebrow;
+      document.getElementById('pgTitle').textContent = n.title;
+      if (id === 'notifications') loadInvitations(false);
       if (id === 'dash') renderDash();
       if (id === 'profile') await loadMyCv();
-      if (id === 'jobs') await loadJobs();
+      if (id === 'jobs') {
+        await loadJobs();
+        setTimeout(() => { if (leafletMap) leafletMap.invalidateSize(); }, 120);
+      }
       if (id === 'passport') renderPassport();
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
@@ -438,6 +531,7 @@
     }
 
     function renderSamplePdfs() {
+      if (!window.samplePdfList) return;
       samplePdfList.innerHTML = samplePdfs.map(s => `
         <div class="flex items-center justify-between gap-2 bg-white/80 rounded-2xl px-3.5 py-2.5 border border-slate-200/70">
           <div class="min-w-0">
@@ -446,12 +540,13 @@
           </div>
           <div class="flex items-center gap-1.5 shrink-0">
             <a href="${esc(s.url)}" download class="btn btn-soft !py-1 !px-2.5 !text-[11px]" title="Download sample PDF">⬇ PDF</a>
-            <button onclick="useSamplePdf('${esc(s.filename)}')" class="btn btn-primary !py-1 !px-2.5 !text-[11px]">Upload & Parse</button>
+            <button onclick="useSamplePdf('${esc(s.filename)}')" class="btn btn-primary !py-1 !px-2.5 !text-[11px]">Upload &amp; Parse</button>
           </div>
         </div>`).join('');
     }
 
     function renderCvVault() {
+      if (!window.cvStatusChip) return;
       if (!cvRecord || !cvRecord.structured_cv) {
         cvStatusChip.textContent = 'No PDF uploaded yet';
         cvStatusChip.className = 'chip chip-amber';
@@ -468,7 +563,7 @@
       viewMyPdfBtn.classList.remove('hidden');
       anonToggle.checked = Boolean(cvRecord.allow_anon_stats);
 
-      pName.value = st.full_name || user.full_name;
+      pName.value = st.full_name || (user ? user.full_name : '');
       pRole.value = st.current_role || '';
       pIndustry.value = st.industry || 'Finance & Accounting';
       pMode.value = st.work_mode_preference || 'Hybrid';
@@ -566,7 +661,8 @@
 
     async function saveProfile() {
       if (!pName.value.trim()) return toast('Please enter your name.', 'err');
-      if (!skills.length) return toast('Add at least one skill or upload a PDF CV.', 'err');
+      if (skillInput.value.trim()) { addSkill(skillInput.value); skillInput.value = ''; }
+      if (!skills.length) return toast('Add at least one skill.', 'err');
       if (cvRecord) {
         const r = await postJson('/api/cv/me', {
           full_name: pName.value,
@@ -581,12 +677,13 @@
         }, 'PUT');
         if (r.ok && r.data.cv) { cvRecord = r.data.cv; renderCvVault(); }
       }
-      await runAnalysis();
-      await loadJobs();
-      toast('Organised CV saved & matches updated');
+      if (await runAnalysis()) {
+        await loadJobs();
+        toast('Profile & organised CV saved');
+      }
     }
 
-    /* ---------- Browse & Apply Jobs + GPS Nearby Companies ---------- */
+    /* ---------- Browse & Apply Jobs + Interactive Map ---------- */
     async function loadJobs() {
       const params = new URLSearchParams();
       if (userLocation.lat && userLocation.lng) {
@@ -609,14 +706,15 @@
     }
 
     function renderLocationControls() {
-      if (locActiveChip) locActiveChip.textContent = `📍 ${userLocation.label}`;
-      if (cityPresetSelect && (userLocation.presets || []).length) {
-        cityPresetSelect.innerHTML = `<option value="">Manual city preset...</option>` +
+      if (window.locActiveChip) locActiveChip.textContent = `📍 ${userLocation.label}`;
+      if (window.cityPresetSelect && (userLocation.presets || []).length) {
+        cityPresetSelect.innerHTML = `<option value="">Switch city...</option>` +
           userLocation.presets.map(c => `<option value="${esc(c)}" ${c === userLocation.city ? 'selected' : ''}>${esc(c)}</option>`).join('');
       }
     }
 
     function renderCategoryPills() {
+      if (!window.catFilterBar) return;
       const cats = ['All', ...categoriesList];
       catFilterBar.innerHTML = cats.map(c =>
         `<button onclick="setCompanyCategory('${esc(c)}')" class="chip ${selectedCategory === c ? 'chip-indigo !border-indigo-500 ring-1 ring-indigo-400' : 'chip-slate'} cursor-pointer whitespace-nowrap">${esc(c)}</button>`
@@ -631,8 +729,8 @@
 
     function setJobScope(scope) {
       jobScope = scope;
-      btnRelJobs.className = scope === 'relevant' ? 'on' : '';
-      btnAllJobs.className = scope === 'all' ? 'on' : '';
+      if (window.btnRelJobs) btnRelJobs.className = scope === 'relevant' ? 'on' : '';
+      if (window.btnAllJobs) btnAllJobs.className = scope === 'all' ? 'on' : '';
       filterJobsAndCompanies();
     }
 
@@ -666,19 +764,18 @@
     }
 
     function filterJobsAndCompanies() {
-      const q = (jobSearchInput ? jobSearchInput.value : '').trim().toLowerCase();
+      const q = (window.jobSearchInput ? jobSearchInput.value : '').trim().toLowerCase();
       const cat = selectedCategory;
 
-      // Filter companies
       const filteredComps = companiesList.filter(c => {
         if (cat !== 'All' && c.category !== cat) return false;
         if (!q) return true;
         const hay = `${c.name} ${c.category} ${c.sub_sector} ${c.city} ${c.district} ${(c.featured_roles || []).join(' ')} ${(c.core_skills_sought || []).join(' ')}`.toLowerCase();
         return hay.includes(q);
       });
-      renderCompanies(filteredComps);
+      filteredCompsCache = filteredComps;
+      renderCompaniesMap(filteredComps);
 
-      // Filter detailed vacancies (if user typed a search query or selected a specific category, show all matching even across sectors)
       const filteredJobs = jobsList.filter(v => {
         if (cat !== 'All' && v.company_category !== cat && v.department !== cat) return false;
         if (q) {
@@ -693,101 +790,219 @@
       renderJobs(filteredJobs);
     }
 
-    function renderCompanies(list) {
-      compCountBadge.textContent = `${list.length} compan${list.length === 1 ? 'y' : 'ies'}`;
-      if (!list.length) {
-        companiesGrid.innerHTML = '<div class="glass rounded-3xl p-6 text-center text-xs text-slate-500 col-span-4">No companies match this filter. Try clearing the search or category.</div>';
-        return;
+    function ensureLeafletMap() {
+      const mapEl = document.getElementById('companyMap');
+      if (!mapEl || typeof window.L === 'undefined') return null;
+      if (!leafletMap) {
+        leafletMap = L.map(mapEl, {
+          center: [userLocation.lat || 3.1579, userLocation.lng || 101.7116],
+          zoom: 11,
+          zoomControl: true,
+        });
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+          maxZoom: 18,
+          attribution: '&copy; OpenStreetMap',
+        }).addTo(leafletMap);
       }
-      companiesGrid.innerHTML = list.map(c => `
-        <article class="glass rounded-3xl p-4 space-y-2.5 lift flex flex-col justify-between ${c.is_cv_matched ? 'border-indigo-300/90' : ''}">
-          <div class="space-y-2">
-            <div class="flex flex-wrap items-center justify-between gap-1">
-              <span class="chip chip-indigo !text-[10px]">${esc(c.category)}</span>
-              <span class="chip ${c.distance_km <= 20 ? 'chip-emerald' : 'chip-slate'} !text-[10px]">${esc(c.proximity_badge)}</span>
-            </div>
-            <div>
-              <h3 class="text-sm font-extrabold leading-snug">${esc(c.name)}</h3>
-              <div class="text-[11px] text-slate-500">${esc(c.district)}, ${esc(c.city)} · ${c.distance_km} km</div>
-            </div>
-            <p class="text-[11px] text-slate-600 line-clamp-2">${esc(c.summary)}</p>
-            <div class="space-y-1">
-              <div class="text-[10px] font-bold text-slate-400 uppercase">Hiring roles &amp; domains</div>
-              <div class="flex flex-wrap gap-1">
-                ${(c.featured_roles || []).slice(0, 2).map(r => `<span class="chip chip-teal !text-[10px]">${esc(r)}</span>`).join('')}
-              </div>
-            </div>
-          </div>
-          <div class="pt-2 border-t border-slate-200/60 flex items-center justify-between text-[11px]">
-            <span class="font-bold ${c.is_cv_matched ? 'text-emerald-700' : 'text-slate-500'}">${c.is_cv_matched ? `✓ ${c.cv_relevance_pct}% CV fit` : 'Cross-sector'}</span>
-            <button onclick="setCompanyCategory('${esc(c.category)}');setJobScope('all')" class="font-extrabold text-indigo-600 hover:underline">View roles →</button>
-          </div>
-        </article>`).join('');
+      return leafletMap;
     }
 
+    function renderCompaniesMap(list) {
+      if (window.compCountBadge) {
+        compCountBadge.textContent = `${list.length} compan${list.length === 1 ? 'y' : 'ies'}`;
+      }
+      if (!list.length) {
+        if (window.mapSideCard) {
+          mapSideCard.innerHTML = `<div class="text-xs text-slate-500 my-auto text-center py-8">No hiring companies match this filter. Try clearing the search or sector filter.</div>`;
+        }
+        if (window.mapQuickList) mapQuickList.innerHTML = '';
+        return;
+      }
+
+      if (!activeCompanyId || !list.some(c => c.id === activeCompanyId)) {
+        activeCompanyId = list[0].id;
+      }
+
+      const map = ensureLeafletMap();
+      if (map) {
+        leafletMarkers.forEach(m => map.removeLayer(m));
+        leafletMarkers = [];
+        if (userMarker) map.removeLayer(userMarker);
+
+        const uLat = userLocation.lat || 3.1579;
+        const uLng = userLocation.lng || 101.7116;
+        userMarker = L.marker([uLat, uLng], {
+          icon: L.divIcon({
+            className: '',
+            html: `<div class="cl-user-pin" title="Your location: ${esc(userLocation.label)}"></div>`,
+            iconSize: [18, 18],
+            iconAnchor: [9, 9],
+          }),
+        }).addTo(map).bindTooltip(`📍 You (${esc(userLocation.label)})`, { direction: 'top', offset: [0, -8] });
+
+        list.forEach((c, idx) => {
+          const isMatched = Boolean(c.is_cv_matched);
+          const bg = isMatched ? '#10b981' : '#6366f1';
+          const marker = L.marker([c.lat, c.lng], {
+            icon: L.divIcon({
+              className: '',
+              html: `<div id="pin-${esc(c.id)}" class="cl-pin ${c.id === activeCompanyId ? 'active' : ''}" style="width:32px;height:32px;background:${bg}">${idx + 1}</div>`,
+              iconSize: [32, 32],
+              iconAnchor: [16, 16],
+            }),
+          }).addTo(map);
+
+          marker.bindTooltip(`<b>${esc(c.name)}</b><br/>${esc(c.category)} · ${c.distance_km} km`, {
+            direction: 'top',
+            offset: [0, -14],
+          });
+
+          marker.on('mouseover', () => highlightCompanyOnMap(c.id, false));
+          marker.on('click', () => highlightCompanyOnMap(c.id, true));
+          leafletMarkers.push(marker);
+        });
+      }
+
+      renderMapSideCard(list.find(c => c.id === activeCompanyId) || list[0]);
+      renderMapQuickList(list);
+    }
+
+    function highlightCompanyOnMap(compId, pan = false) {
+      activeCompanyId = compId;
+      const comp = filteredCompsCache.find(c => c.id === compId) || companiesList.find(c => c.id === compId);
+      if (!comp) return;
+      document.querySelectorAll('.cl-pin').forEach(el => el.classList.toggle('active', el.id === `pin-${compId}`));
+      if (pan && leafletMap && comp.lat && comp.lng) {
+        leafletMap.flyTo([comp.lat, comp.lng], Math.max(leafletMap.getZoom(), 13), { duration: 0.45 });
+      }
+      renderMapSideCard(comp);
+      renderMapQuickList(filteredCompsCache);
+    }
+
+    function zoomMapNearMe() {
+      if (!leafletMap) return;
+      leafletMap.flyTo([userLocation.lat || 3.1579, userLocation.lng || 101.7116], 12, { duration: 0.5 });
+    }
+
+    function fitAllMapPins() {
+      if (!leafletMap || !filteredCompsCache.length) return;
+      const pts = [
+        [userLocation.lat || 3.1579, userLocation.lng || 101.7116],
+        ...filteredCompsCache.map(c => [c.lat, c.lng]),
+      ];
+      leafletMap.fitBounds(pts, { padding: [28, 28] });
+    }
+
+    function renderMapSideCard(c) {
+      if (!window.mapSideCard || !c) return;
+      mapSideCard.innerHTML = `
+        <div class="space-y-3">
+          <div class="flex flex-wrap items-center justify-between gap-1.5">
+            <span class="chip chip-indigo !text-[10px]">${esc(c.category)}</span>
+            <span class="chip ${c.distance_km <= 20 ? 'chip-emerald' : 'chip-slate'} !text-[10px]">📍 ${c.distance_km} km</span>
+          </div>
+          <div>
+            <h3 class="text-base font-extrabold text-slate-900 leading-snug">${esc(c.name)}</h3>
+            <div class="text-xs text-slate-500 mt-0.5">${esc(c.district)}, ${esc(c.city)} · ${esc(c.sub_sector || '')}</div>
+          </div>
+          <p class="text-xs text-slate-600 leading-relaxed">${esc(c.summary)}</p>
+          <div class="space-y-1.5">
+            <div class="text-[10px] font-extrabold uppercase tracking-wider text-slate-400">Open hiring roles</div>
+            <div class="flex flex-wrap gap-1.5">
+              ${(c.featured_roles || []).map(r => `<span class="chip chip-teal !text-[10px]">${esc(r)}</span>`).join('')}
+            </div>
+          </div>
+        </div>
+        <div class="pt-3 mt-3 border-t border-indigo-200/60 flex items-center justify-between gap-2">
+          <span class="text-xs font-extrabold ${c.is_cv_matched ? 'text-emerald-700' : 'text-slate-500'}">
+            ${c.is_cv_matched ? `✓ ${c.cv_relevance_pct}% CV skill fit` : 'Cross-sector opportunity'}
+          </span>
+          <button onclick="setCompanyCategory('${esc(c.category)}');setJobScope('all')" class="btn btn-primary !py-1.5 !px-3 !text-xs">
+            Filter Sector Jobs →
+          </button>
+        </div>
+      `;
+    }
+
+    function renderMapQuickList(list) {
+      if (!window.mapQuickList) return;
+      mapQuickList.innerHTML = list.map((c, idx) => `
+        <button
+          onmouseenter="highlightCompanyOnMap('${esc(c.id)}', false)"
+          onclick="highlightCompanyOnMap('${esc(c.id)}', true)"
+          class="chip ${c.id === activeCompanyId ? 'chip-indigo !border-indigo-500 ring-1 ring-indigo-400' : 'chip-slate'} !text-[11px] cursor-pointer transition">
+          <b>${idx + 1}.</b> ${esc(c.name.split(' ')[0])} · ${c.distance_km}km
+        </button>
+      `).join('');
+    }
+
+    /* ---------- Clean Open Job Vacancies Cards (Pic 2 Refined) ---------- */
     function renderJobs(list = jobsList) {
+      if (!window.jobsGrid) return;
       if (!list.length) {
         jobsGrid.innerHTML = `<div class="glass rounded-3xl p-8 text-center text-sm text-slate-500 col-span-2">
-          No vacancies match this view. <button onclick="setJobScope('all');setCompanyCategory('All')" class="text-indigo-600 font-extrabold underline ml-1">Show all open roles across all sectors →</button>
+          No vacancies in this filter. <button onclick="setJobScope('all');setCompanyCategory('All')" class="text-indigo-600 font-extrabold underline ml-1">Show all open roles across all sectors →</button>
         </div>`;
         return;
       }
       jobsGrid.innerHTML = list.map(v => {
         const app = v.application || {};
         const score = v.match_score ?? 0;
-        const distBadge = v.distance_km !== undefined ? `<span class="chip chip-teal">📍 ${v.distance_km} km</span>` : '';
+        const distText = v.distance_km !== undefined ? ` · ${v.distance_km} km` : '';
+        const statusChip = app.applied
+          ? `<span class="chip chip-emerald !text-[10px]">✓ Applied</span>`
+          : v.is_relevant_to_cv
+          ? `<span class="chip chip-indigo !text-[10px]">★ CV Match</span>`
+          : `<span class="chip chip-slate !text-[10px]">${esc(v.work_mode)}</span>`;
+
         return `
-          <article class="glass rounded-3xl p-6 space-y-4 lift ${app.applied ? 'ring-2 ring-teal-400' : ''}">
-            <div class="flex items-start justify-between gap-4">
-              <div class="flex items-start gap-3.5">
-                <div class="ring !w-14 !h-14 shrink-0" style="--p:${score};--c:${ringColor(score)}"><span class="!w-11 !h-11 !text-xs">${score}%</span></div>
-                <div>
-                  <div class="flex flex-wrap items-center gap-1.5 mb-1">
-                    <span class="chip chip-slate font-mono">${esc(v.vacancy_uid)}</span>
-                    <span class="chip chip-indigo">${esc(v.company_name)}</span>
-                    ${distBadge}
-                    ${v.is_relevant_to_cv ? '<span class="chip chip-pink">★ CV Relevant</span>' : ''}
-                    ${app.applied ? `<span class="chip chip-emerald">✓ Applied (${esc(app.application_uid)})</span>` : '<span class="chip chip-slate">🔒 CV Private</span>'}
+          <article class="glass rounded-3xl p-5 flex flex-col justify-between gap-4 lift ${app.applied ? 'ring-2 ring-teal-400/80' : ''}">
+            <div class="space-y-3.5">
+              <!-- Clean Header -->
+              <div class="flex items-start justify-between gap-3">
+                <div class="flex items-center gap-3 min-w-0">
+                  <div class="ring !w-12 !h-12 shrink-0" style="--p:${score};--c:${ringColor(score)}">
+                    <span class="!w-9 !h-9 !text-[11px]">${score}%</span>
                   </div>
-                  <h3 class="text-lg font-extrabold leading-snug">${esc(v.title)}</h3>
-                  <div class="text-xs text-slate-500 mt-0.5">${esc(v.department || 'General')} · ${esc(v.location || 'Malaysia')} · ${esc(v.work_mode)} · ${v.min_years}+ yrs · ${esc(v.education_level)}</div>
+                  <div class="min-w-0">
+                    <h3 class="text-base font-extrabold text-slate-900 truncate">${esc(v.title)}</h3>
+                    <div class="text-xs text-slate-500 truncate mt-0.5">
+                      <span class="font-semibold text-slate-700">${esc(v.company_name)}</span> · ${esc(v.location || 'Malaysia')}${distText}
+                    </div>
+                  </div>
+                </div>
+                <div class="text-right shrink-0">
+                  <div class="text-xs font-extrabold text-teal-700 whitespace-nowrap">${rm(v.salary_min)} – ${rm(v.salary_max)}</div>
+                  <div class="mt-1 flex justify-end">${statusChip}</div>
                 </div>
               </div>
-              <div class="text-right shrink-0">
-                <div class="text-sm font-extrabold text-teal-700">${rm(v.salary_min)} – ${rm(v.salary_max)}</div>
-                <div class="text-[10px] text-slate-400">Monthly budget</div>
-              </div>
-            </div>
 
-            <div class="space-y-1.5">
-              <div class="text-[11px] font-bold text-slate-500">Required skills (${v.matched_required.length}/${v.required_skills.length} matched on your CV)</div>
-              <div class="flex flex-wrap gap-1.5">
+              <!-- Compact Meta & Skills -->
+              <div class="flex flex-wrap items-center gap-1.5 pt-1">
+                <span class="chip chip-slate !text-[10px]">${esc(v.work_mode)}</span>
+                <span class="chip chip-slate !text-[10px]">${v.min_years}+ yr exp</span>
                 ${v.required_skills.map(s => {
                   const hit = v.matched_required.includes(s);
-                  return `<span class="chip ${hit ? 'chip-emerald' : 'chip-amber'}">${hit ? '✓ ' : ''}${esc(s)}</span>`;
+                  return `<span class="chip ${hit ? 'chip-emerald' : 'chip-amber'} !text-[10px]">${hit ? '✓ ' : ''}${esc(s)}</span>`;
                 }).join('')}
               </div>
             </div>
 
+            <!-- Clean Footer -->
             ${app.applied ? `
-              <div class="tint tint-teal rounded-2xl p-3.5 flex flex-wrap items-center justify-between gap-2 text-xs">
-                <div>
-                  <div class="font-extrabold text-teal-950">Shared with ${esc(v.company_name)}:</div>
-                  <div class="text-[11px] text-slate-600">
-                    ${app.share_organised_cv ? '✓ AI-Organised CV Summary' : ''}
-                    ${app.share_original_pdf ? ' · ✓ Original PDF CV' : ' · 🔒 Original PDF withheld'}
-                    · HR Status: <b>${esc(app.hr_decision || 'Pending')}</b>
-                  </div>
+              <div class="tint tint-teal rounded-2xl px-3.5 py-2.5 flex flex-wrap items-center justify-between gap-2 text-xs">
+                <div class="text-[11px] text-slate-600">
+                  <b class="text-teal-900">CV Shared</b> · Status: <b>${esc(app.hr_decision || 'Pending')}</b>
                 </div>
-                <div class="flex gap-2">
-                  <button onclick="openApplyModal(${v.id})" class="btn btn-soft !py-1.5 !text-xs">Update permissions</button>
-                  <button onclick="withdrawJobApplication(${v.id})" class="btn btn-danger !py-1.5 !text-xs">Withdraw & Revoke CV</button>
+                <div class="flex items-center gap-1.5">
+                  <button onclick="openApplyModal(${v.id})" class="btn btn-soft !py-1 !px-2.5 !text-[11px]">Permissions</button>
+                  <button onclick="withdrawJobApplication(${v.id})" class="btn btn-danger !py-1 !px-2.5 !text-[11px]">Withdraw</button>
                 </div>
               </div>
             ` : `
-              <div class="flex items-center justify-between pt-2 border-t border-slate-200/70">
-                <span class="text-[11px] text-slate-500">🔒 Employer cannot see your CV unless you apply</span>
-                <button onclick="openApplyModal(${v.id})" class="btn btn-primary !py-2">Apply & Share CV →</button>
+              <div class="flex items-center justify-between pt-3 border-t border-slate-200/60">
+                <span class="text-[11px] text-slate-400">🔒 Private until you apply</span>
+                <button onclick="openApplyModal(${v.id})" class="btn btn-primary !py-1.5 !px-3.5 !text-xs">Apply &amp; Share CV →</button>
               </div>
             `}
           </article>`;
@@ -844,20 +1059,37 @@
     }
 
     /* ---------- analysis ---------- */
+    let analysisVersion = 0;
     async function runAnalysis() {
+      const pendingSkill = skillInput.value.trim(); if (pendingSkill) { addSkill(pendingSkill); skillInput.value = ''; }
       const profile = { name: pName.value, industry: pIndustry.value, current_role: pRole.value, work_mode_preference: pMode.value, skills };
-      const [t, m] = await Promise.all([
-        api(`/api/trends?scenario=${scenario}`),
-        postJson('/api/analyze', { profile, scenario }),
-      ]);
-      trend = t.data; roles = m.data.recommended_roles || []; aiQuestions = m.data.verification_questions || [];
-      if (selected >= roles.length) selected = 0;
-      analysed = true;
-      renderRadar(); renderRoles(); renderPlanSelect(); renderPlan(); renderQuestionnaire();
-      if (current === 'dash') renderDash();
+      const token = ++analysisVersion;
+      document.getElementById('analysisStatus').textContent = 'Loading analysis…';
+      try {
+        const [t, m] = await Promise.all([
+          api(`/api/trends?scenario=${scenario}`),
+          postJson('/api/analyze', { profile, scenario }),
+        ]);
+        if (token !== analysisVersion) return false;
+        if (!t.ok || !m.ok) throw new Error('Analysis unavailable. Please retry.');
+        document.getElementById('analysisStatus').textContent = '';
+        document.getElementById('fairnessDetails').textContent = m.data.fairness_audit;
+        trend = t.data; roles = m.data.recommended_roles || []; aiQuestions = m.data.verification_questions || [];
+        if (selected >= roles.length) selected = 0;
+        analysed = true;
+        renderRadar(); renderRoles(); renderPlanSelect(); renderPlan(); renderQuestionnaire();
+        if (current === 'dash') renderDash();
+        return true;
+      } catch (error) {
+        if (token === analysisVersion) {
+          document.getElementById('analysisStatus').textContent = 'Analysis unavailable. Please retry.';
+          toast('Analysis unavailable. Please retry.', 'err');
+        }
+        return false;
+      }
     }
     async function setScenario(s) {
-      scenario = s;
+      scenario = s; document.getElementById('scenarioSlider').value = s === 'fast' ? '1' : '0';
       scModerate.className = s === 'moderate' ? 'on' : ''; scFast.className = s === 'fast' ? 'on' : '';
       await runAnalysis();
     }
@@ -865,41 +1097,37 @@
     /* ---------- dashboard ---------- */
     function renderDash() {
       const top = roles[0], role = roles[selected];
-      const appliedCount = jobsList.filter(j => j.application && j.application.applied).length;
       dashHello.textContent = user ? user.full_name : '';
-      dashSub.textContent = cvRecord
-        ? `PDF CV ("${cvRecord.original_filename}") is stored in your private vault and powers your matches.`
-        : 'Upload your PDF CV to unlock AI extraction, role matching, and consent-gated job applications.';
+      dashSub.textContent = analysed ? 'Here is your latest career snapshot.' : 'Complete the steps below to unlock your full plan.';
       const answered = answeredCount();
       const steps = [
-        { label: 'PDF CV Vault', tab: 'profile', done: Boolean(cvRecord) },
-        { label: 'Apply Jobs', tab: 'jobs', done: appliedCount > 0 },
+        { label: 'Profile', tab: 'profile', done: skills.length > 0 },
         { label: 'Questionnaire', tab: 'quest', done: answered >= 4 },
         { label: 'AI Radar', tab: 'radar', done: visited.has('radar') },
         { label: 'Matches', tab: 'match', done: visited.has('match') },
         { label: 'Plan', tab: 'plan', done: visited.has('plan') },
+        { label: 'Passport', tab: 'passport', done: visited.has('passport') },
       ];
       journey.innerHTML = steps.map((s, i) => `
         <button onclick="showTab('${s.tab}')" class="text-left tint ${s.done ? 'tint-teal' : 'tint-indigo'} rounded-2xl p-3 lift">
           <div class="flex items-center gap-2"><span class="step-dot ${s.done ? 'bg-emerald-500 text-white' : 'bg-white text-slate-500 border'}">${s.done ? '✓' : i + 1}</span>
           <div class="text-xs font-extrabold">${s.label}</div></div></button>`).join('');
       kpis.innerHTML = [
-        ['Best match', top ? top.match_score + '%' : '—', top ? esc(top.title) : 'Upload PDF CV', 'indigo'],
-        ['Jobs applied', appliedCount, `${jobsList.length} open company roles`, 'teal'],
+        ['Best match', top ? top.match_score + '%' : '—', top ? esc(top.title) : 'Run analysis', 'indigo'],
+        ['Skills to build', role ? role.skills_gap.length : '—', 'for selected role', 'pink'],
         ['Learning hours', role ? role.estimated_total_hours : '—', 'verified courses', 'amber'],
-        ['CV privacy status', cvRecord ? 'Protected' : 'No PDF', `${cvRecord ? cvRecord.access_logs.length : 0} employer views`, 'pink'],
+        ['Questionnaire', `${answered}/${COMMON_Q.length + aiQuestions.length}`, 'answered', 'teal'],
       ].map(k => `<div class="tint tint-${k[3]} rounded-2xl p-4"><div class="text-[11px] font-bold text-slate-500">${k[0]}</div>
         <div class="text-3xl font-extrabold mt-1">${k[1]}</div><div class="text-[11px] text-slate-500 truncate">${k[2]}</div></div>`).join('');
       dashTop.innerHTML = top ? `
-        <div class="flex items-center justify-between mb-4"><div class="text-sm font-extrabold">Top future-role matches (from your private PDF CV)</div><button onclick="showTab('match')" class="text-xs font-bold text-indigo-600">See all →</button></div>
+        <div class="flex items-center justify-between mb-4"><div class="text-sm font-extrabold">Top future-role matches</div><button onclick="showTab('match')" class="text-xs font-bold text-indigo-600">See all →</button></div>
         <div class="space-y-3">${roles.slice(0, 3).map((r, i) => `
           <div class="flex items-center gap-4 p-3 rounded-2xl bg-white/70 border border-white">
             <div class="ring !w-14 !h-14" style="--p:${r.match_score};--c:${ringColor(r.match_score)}"><span class="!w-11 !h-11 !text-xs">${r.match_score}</span></div>
             <div class="min-w-0 flex-1"><div class="text-sm font-extrabold truncate">${esc(r.title)}</div><div class="text-[11px] text-slate-500">${esc(r.industry)} · ${r.skills_gap.length} skills to build</div></div>
             <button onclick="selectRole(${i},true)" class="btn btn-soft !py-1.5">Plan</button></div>`).join('')}</div>`
-        : '<div class="text-sm text-slate-500">Upload a PDF CV to generate matches.</div>';
-      const nxt = !cvRecord ? ['Upload your PDF CV', 'profile', 'Let AI capture and organise your CV in your private vault.']
-        : appliedCount === 0 ? ['Browse & apply to open jobs', 'jobs', 'Share your organised CV with employers only when you apply.']
+        : '<div class="text-sm text-slate-500">Save your profile to generate matches.</div>';
+      const nxt = !analysed ? ['Add your skills', 'profile', 'Start by picking a sample persona or listing your skills.']
         : answered < 4 ? ['Answer the questionnaire', 'quest', 'Help us verify your practical depth.']
         : !visited.has('plan') ? ['Open your reskilling plan', 'plan', 'Follow an ordered, verified learning path.']
         : ['View your SDG passport', 'passport', 'See the impact of your chosen path.'];
@@ -920,7 +1148,7 @@
       commonQ.innerHTML = COMMON_Q.map((q, i) => {
         const val = answers[q.id] || '';
         const field = q.type === 'select'
-          ? `<select class="input" onchange="setAnswer('${q.id}',this.value)"><option value="">Select…</option>${q.options.map(o => `<option ${o === val ? 'selected' : ''}>${esc(o)}</option>`).join('')}</select>`
+          ? `<select class="input" onchange="setAnswer('${q.id}',this.value)"><option value="">Select…</option>${q.options.map(o => `<option value="${esc(o)}" ${o === val ? 'selected' : ''}>${esc(o)}</option>`).join('')}</select>`
           : `<textarea rows="2" class="input" oninput="setAnswer('${q.id}',this.value)">${esc(val)}</textarea>`;
         return `<div><label class="label">${i + 1}. ${q.text}</label>${field}</div>`;
       }).join('');
@@ -935,6 +1163,7 @@
     /* ---------- radar ---------- */
     function renderRadar() {
       if (!trend) return;
+      window.renderTrendRadar?.(trend);
       const m = trend.signal_metadata;
       trendBadge.textContent = `Source: ${m.source_name} · Updated ${m.last_updated} · ${m.live_status.replace('_', ' ')}`;
       trendScenarioLabel.textContent = trend.scenario_label;
@@ -943,7 +1172,7 @@
       signals.innerHTML = m.recent_signals.map(p => `<li class="flex gap-2"><span class="chip chip-indigo shrink-0">${esc(p.published)}</span><span>${esc(p.title)}</span></li>`).join('');
 
       const st = trend.anonymized_talent_pool_stats;
-      if (st) {
+      if (st && window.anonStatsCard) {
         anonStatsCard.innerHTML = `
           <div class="flex flex-wrap items-center justify-between gap-2">
             <div>
@@ -960,7 +1189,7 @@
 
     /* ---------- matches ---------- */
     function renderRoles() {
-      const parts = [['Core skills', 'core_skills_match_pct', 50], ['Transferable', 'transferable_skills_pct', 25], ['Sector fit', 'industry_alignment_pct', 15], ['Work mode', 'work_mode_fit_pct', 10]];
+      const parts = [['Scenario adjustment', 'scenario_adjustment_pct', 20], ['Core skills', 'core_skills_match_pct', 50], ['Transferable', 'transferable_skills_pct', 25], ['Sector fit', 'industry_alignment_pct', 15], ['Work mode', 'work_mode_fit_pct', 10]];
       roleCards.innerHTML = roles.map((r, i) => `
         <article class="glass rounded-3xl p-6 space-y-4 lift ${i === 0 ? 'ring-2 ring-indigo-300' : ''}">
           <div class="flex items-start gap-4">
@@ -1011,7 +1240,7 @@
             <div class="text-[10px] text-slate-400">Estimates only. Demo data is synthetic; not a guarantee of employment or salary.</div>
           </div></div>
         <div class="text-center mt-4"><button onclick="window.print()" class="btn btn-soft">🖨️ Print / save as PDF</button></div>`
-        : '<div class="glass rounded-3xl p-8 text-center text-sm text-slate-500">Upload your PDF CV to generate your passport.</div>';
+        : '<div class="glass rounded-3xl p-8 text-center text-sm text-slate-500">Save your profile to generate your passport.</div>';
     }
 
     /* ---------- Drag & drop events ---------- */
@@ -1056,5 +1285,8 @@
     }
     init();
   </script>
+<script src="/static/js/questionnaire-i18n.js"></script>
+<script src="/static/js/portal-i18n.js"></script>
+<script src="/static/js/member3.js?v=20261020-7"></script>
 </body>
 </html>

@@ -11,7 +11,7 @@ import xml.etree.ElementTree as ET
 
 def fetch_live_arxiv_signal(query: str = "artificial+intelligence+workforce") -> dict:
     """Fetch latest AI papers from ArXiv API to demonstrate a live updatable signal source."""
-    url = f"http://export.arxiv.org/api/query?search_query=all:{query}&start=0&max_results=3&sortBy=submittedDate&sortOrder=descending"
+    url = f"https://export.arxiv.org/api/query?search_query=all:{query}&start=0&max_results=3&sortBy=submittedDate&sortOrder=descending"
     try:
         req = urllib.request.Request(url, headers={"User-Agent": "CareerLensAI/1.0"})
         with urllib.request.urlopen(req, timeout=4) as resp:
@@ -26,21 +26,20 @@ def fetch_live_arxiv_signal(query: str = "artificial+intelligence+workforce") ->
         if papers:
             return {
                 "live_status": "LIVE_CONNECTED",
-                "source_name": "ArXiv CS.AI Live API + O*NET / Hays Malaysia Benchmark",
+                "source_name": "ArXiv live paper feed; trend percentages are illustrative benchmarks",
                 "last_updated": datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M UTC"),
                 "recent_signals": papers,
             }
     except Exception:
         pass
 
-   
     return {
         "live_status": "CACHED_FALLBACK",
-        "source_name": "ArXiv CS.AI Snapshot + Hays Asia Salary Guide / MOSTI Dataset",
-        "last_updated": "2026-10-20 08:00 UTC",
+        "source_name": "Illustrative demo signals (offline); not verified research citations",
+        "last_updated": "Undated demo fixture",
         "recent_signals": [
-            {"title": "Autonomous LLM Agents in Financial & Enterprise Compliance", "published": "2026-10-18"},
-            {"title": "Human-AI Collaborative Workflows and Workforce Reskilling", "published": "2026-10-16"},
+            {"title": "Autonomous LLM Agents in Financial & Enterprise Compliance", "published": "Demo"},
+            {"title": "Human-AI Collaborative Workflows and Workforce Reskilling", "published": "Demo"},
         ],
     }
 

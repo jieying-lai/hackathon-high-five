@@ -1,82 +1,289 @@
 [
   {
-    "id": "CL-JS-2026-3101", "name": "Nurul Aina", "type": "Experienced Worker", "years": 3,
+    "id": "CL-JS-2026-1042",
+    "name": "Aisha Rahman",
+    "type": "Career Changer",
+    "years": 3,
     "education": "Bachelor's Degree",
-    "skills": ["Python", "SQL", "REST APIs", "Git", "React", "Docker"],
-    "projects": ["Inventory API for an SME retailer (Flask + PostgreSQL)", "Team reporting dashboard in React"],
-    "salary_expectation": 5500, "work_modes": ["Hybrid", "Remote"], "location": "Kuala Lumpur", "available_in": "1 month",
+    "skills": [
+      "Financial Auditing",
+      "Excel Pivot & Macros",
+      "Tax Compliance",
+      "SQL Basics",
+      "Risk Assessment",
+      "Financial Reporting"
+    ],
+    "projects": [
+      "Statutory audit and invoice reconciliation"
+    ],
+    "salary_expectation": 5000,
+    "work_modes": [
+      "Hybrid"
+    ],
+    "location": "Kuala Lumpur",
+    "available_in": "1 month",
+    "motivation": "Developing AI-assisted financial audit skills."
+  },
+  {
+    "id": "CL-JS-2026-3101",
+    "name": "Nurul Aina",
+    "type": "Experienced Worker",
+    "years": 3,
+    "education": "Bachelor's Degree",
+    "skills": [
+      "Python",
+      "SQL",
+      "REST APIs",
+      "Git",
+      "React",
+      "Docker"
+    ],
+    "projects": [
+      "Inventory API for an SME retailer (Flask + PostgreSQL)",
+      "Team reporting dashboard in React"
+    ],
+    "salary_expectation": 5500,
+    "work_modes": [
+      "Hybrid",
+      "Remote"
+    ],
+    "location": "Kuala Lumpur",
+    "available_in": "1 month",
     "motivation": "Moving from support engineering into product-focused backend work."
   },
   {
-    "id": "CL-JS-2026-3102", "name": "Marcus Wong", "type": "Experienced Worker", "years": 2,
+    "id": "CL-JS-2026-3102",
+    "name": "Marcus Wong",
+    "type": "Experienced Worker",
+    "years": 2,
     "education": "Bachelor's Degree",
-    "skills": ["Python", "SQL", "Git", "HTML/CSS/JS", "Data Structures"],
-    "projects": ["Booking web app (Django)", "Automated test suite for a payments module"],
-    "salary_expectation": 4800, "work_modes": ["On-site", "Hybrid"], "location": "Selangor", "available_in": "2 weeks",
+    "skills": [
+      "Python",
+      "SQL",
+      "Git",
+      "HTML/CSS/JS",
+      "Data Structures"
+    ],
+    "projects": [
+      "Booking web app (Django)",
+      "Automated test suite for a payments module"
+    ],
+    "salary_expectation": 4800,
+    "work_modes": [
+      "On-site",
+      "Hybrid"
+    ],
+    "location": "Selangor",
+    "available_in": "2 weeks",
     "motivation": "Wants broader exposure to API design and cloud deployment."
   },
   {
-    "id": "CL-JS-2026-3103", "name": "Siti Farhana", "type": "Fresh Graduate", "years": 0,
+    "id": "CL-JS-2026-3103",
+    "name": "Siti Farhana",
+    "type": "Fresh Graduate",
+    "years": 0,
     "education": "Bachelor's Degree",
-    "skills": ["Python", "SQL", "Git", "Data Structures", "HTML/CSS/JS"],
-    "projects": ["Capstone: campus lost-and-found portal (Flask + SQLite)", "Hackathon: waste-sorting quiz app"],
-    "salary_expectation": 3800, "work_modes": ["Hybrid", "On-site"], "location": "Penang", "available_in": "Immediately",
+    "skills": [
+      "Python",
+      "SQL",
+      "Git",
+      "Data Structures",
+      "HTML/CSS/JS"
+    ],
+    "projects": [
+      "Capstone: campus lost-and-found portal (Flask + SQLite)",
+      "Hackathon: waste-sorting quiz app"
+    ],
+    "salary_expectation": 3800,
+    "work_modes": [
+      "Hybrid",
+      "On-site"
+    ],
+    "location": "Penang",
+    "available_in": "Immediately",
     "motivation": "Looking for a first role with mentorship and real product ownership."
   },
   {
-    "id": "CL-JS-2026-3104", "name": "Arjun Pillai", "type": "Career Changer", "years": 1,
+    "id": "CL-JS-2026-3104",
+    "name": "Arjun Pillai",
+    "type": "Career Changer",
+    "years": 1,
     "education": "Bachelor's Degree",
-    "skills": ["Financial Auditing", "Excel Pivot & Macros", "SQL", "Python", "Git"],
-    "projects": ["Automated month-end reconciliation script (Python)", "Audit-sampling dashboard in Excel + SQL"],
-    "salary_expectation": 4500, "work_modes": ["Hybrid", "Remote"], "location": "Kuala Lumpur", "available_in": "1 month",
+    "skills": [
+      "Financial Auditing",
+      "Excel Pivot & Macros",
+      "SQL",
+      "Python",
+      "Git"
+    ],
+    "projects": [
+      "Automated month-end reconciliation script (Python)",
+      "Audit-sampling dashboard in Excel + SQL"
+    ],
+    "salary_expectation": 4500,
+    "work_modes": [
+      "Hybrid",
+      "Remote"
+    ],
+    "location": "Kuala Lumpur",
+    "available_in": "1 month",
     "motivation": "Moving from audit into data and software roles after self-study."
   },
   {
-    "id": "CL-JS-2026-3105", "name": "Mei Ling Tan", "type": "Experienced Worker", "years": 4,
+    "id": "CL-JS-2026-3105",
+    "name": "Mei Ling Tan",
+    "type": "Experienced Worker",
+    "years": 4,
     "education": "Bachelor's Degree",
-    "skills": ["Financial Auditing", "Risk Assessment", "SQL Basics", "Excel Pivot & Macros", "Tax Compliance", "Python Data Analysis"],
-    "projects": ["Led statutory audit for 3 mid-size manufacturers", "Built anomaly-flag workbook for expense claims"],
-    "salary_expectation": 6800, "work_modes": ["Hybrid"], "location": "Kuala Lumpur", "available_in": "2 months",
+    "skills": [
+      "Financial Auditing",
+      "Risk Assessment",
+      "SQL Basics",
+      "Excel Pivot & Macros",
+      "Tax Compliance",
+      "Python Data Analysis"
+    ],
+    "projects": [
+      "Led statutory audit for 3 mid-size manufacturers",
+      "Built anomaly-flag workbook for expense claims"
+    ],
+    "salary_expectation": 6800,
+    "work_modes": [
+      "Hybrid"
+    ],
+    "location": "Kuala Lumpur",
+    "available_in": "2 months",
     "motivation": "Wants to apply analytics and AI to compliance work."
   },
   {
-    "id": "CL-JS-2026-3106", "name": "Hafiz Ismail", "type": "Experienced Worker", "years": 3,
+    "id": "CL-JS-2026-3106",
+    "name": "Hafiz Ismail",
+    "type": "Experienced Worker",
+    "years": 3,
     "education": "Bachelor's Degree",
-    "skills": ["Financial Auditing", "Risk Assessment", "Financial Reporting", "SQL Basics", "Excel Pivot & Macros"],
-    "projects": ["Quarterly risk register for a logistics group", "Process-control testing for accounts payable"],
-    "salary_expectation": 5600, "work_modes": ["Hybrid", "On-site"], "location": "Selangor", "available_in": "1 month",
+    "skills": [
+      "Financial Auditing",
+      "Risk Assessment",
+      "Financial Reporting",
+      "SQL Basics",
+      "Excel Pivot & Macros"
+    ],
+    "projects": [
+      "Quarterly risk register for a logistics group",
+      "Process-control testing for accounts payable"
+    ],
+    "salary_expectation": 5600,
+    "work_modes": [
+      "Hybrid",
+      "On-site"
+    ],
+    "location": "Selangor",
+    "available_in": "1 month",
     "motivation": "Interested in automating repetitive audit tests."
   },
   {
-    "id": "CL-JS-2026-3107", "name": "Priya Nair", "type": "Fresh Graduate", "years": 0,
+    "id": "CL-JS-2026-3107",
+    "name": "Priya Nair",
+    "type": "Fresh Graduate",
+    "years": 0,
     "education": "Bachelor's Degree",
-    "skills": ["Financial Reporting", "Excel Pivot & Macros", "SQL Basics", "Python Data Analysis"],
-    "projects": ["Final-year thesis on ESG disclosure quality of listed firms", "Internship: accounts payable data clean-up"],
-    "salary_expectation": 3600, "work_modes": ["Hybrid", "Remote"], "location": "Kuala Lumpur", "available_in": "Immediately",
+    "skills": [
+      "Financial Reporting",
+      "Excel Pivot & Macros",
+      "SQL Basics",
+      "Python Data Analysis"
+    ],
+    "projects": [
+      "Final-year thesis on ESG disclosure quality of listed firms",
+      "Internship: accounts payable data clean-up"
+    ],
+    "salary_expectation": 3600,
+    "work_modes": [
+      "Hybrid",
+      "Remote"
+    ],
+    "location": "Kuala Lumpur",
+    "available_in": "Immediately",
     "motivation": "Wants to start in sustainability-focused finance."
   },
   {
-    "id": "CL-JS-2026-3108", "name": "Daniel Cheong", "type": "Experienced Worker", "years": 5,
+    "id": "CL-JS-2026-3108",
+    "name": "Daniel Cheong",
+    "type": "Experienced Worker",
+    "years": 5,
     "education": "Master's / Postgraduate",
-    "skills": ["Python", "SQL", "REST APIs", "Git", "Docker", "React", "Data Structures"],
-    "projects": ["Payment gateway integration (FastAPI)", "Migrated monolith to containers on cloud"],
-    "salary_expectation": 8000, "work_modes": ["Remote", "Hybrid"], "location": "Johor Bahru", "available_in": "3 months",
+    "skills": [
+      "Python",
+      "SQL",
+      "REST APIs",
+      "Git",
+      "Docker",
+      "React",
+      "Data Structures"
+    ],
+    "projects": [
+      "Payment gateway integration (FastAPI)",
+      "Migrated monolith to containers on cloud"
+    ],
+    "salary_expectation": 8000,
+    "work_modes": [
+      "Remote",
+      "Hybrid"
+    ],
+    "location": "Johor Bahru",
+    "available_in": "3 months",
     "motivation": "Seeking a senior role with architecture ownership."
   },
   {
-    "id": "CL-JS-2026-3109", "name": "Aisyah Zulkifli", "type": "Career Changer", "years": 1,
+    "id": "CL-JS-2026-3109",
+    "name": "Aisyah Zulkifli",
+    "type": "Career Changer",
+    "years": 1,
     "education": "Diploma / TVET",
-    "skills": ["HTML/CSS/JS", "Git", "Python", "Copywriting"],
-    "projects": ["Portfolio site for local cafes (HTML/CSS/JS)", "Bootcamp: to-do API with Flask"],
-    "salary_expectation": 4200, "work_modes": ["Remote", "Hybrid"], "location": "Selangor", "available_in": "Immediately",
+    "skills": [
+      "HTML/CSS/JS",
+      "Git",
+      "Python",
+      "Copywriting"
+    ],
+    "projects": [
+      "Portfolio site for local cafes (HTML/CSS/JS)",
+      "Bootcamp: to-do API with Flask"
+    ],
+    "salary_expectation": 4200,
+    "work_modes": [
+      "Remote",
+      "Hybrid"
+    ],
+    "location": "Selangor",
+    "available_in": "Immediately",
     "motivation": "Moving from content writing into web development."
   },
   {
-    "id": "CL-JS-2026-3110", "name": "Jun Wei Lim", "type": "Experienced Worker", "years": 2,
+    "id": "CL-JS-2026-3110",
+    "name": "Jun Wei Lim",
+    "type": "Experienced Worker",
+    "years": 2,
     "education": "Bachelor's Degree",
-    "skills": ["Python Data Analysis", "SQL Basics", "Risk Assessment", "Python", "SQL", "REST APIs"],
-    "projects": ["Credit-risk scorecard prototype", "Data pipeline for monthly KPI reporting"],
-    "salary_expectation": 5200, "work_modes": ["Hybrid", "Remote"], "location": "Kuala Lumpur", "available_in": "1 month",
+    "skills": [
+      "Python Data Analysis",
+      "SQL Basics",
+      "Risk Assessment",
+      "Python",
+      "SQL",
+      "REST APIs"
+    ],
+    "projects": [
+      "Credit-risk scorecard prototype",
+      "Data pipeline for monthly KPI reporting"
+    ],
+    "salary_expectation": 5200,
+    "work_modes": [
+      "Hybrid",
+      "Remote"
+    ],
+    "location": "Kuala Lumpur",
+    "available_in": "1 month",
     "motivation": "Wants to combine data work with compliance and risk."
   }
 ]

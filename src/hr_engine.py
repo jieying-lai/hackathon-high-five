@@ -8,6 +8,9 @@ and HR-approved reskilling assignments (human stays in control).
 import json
 import math
 import os
+import secrets
+import hashlib
+from contextlib import closing
 from datetime import datetime, timezone
 
 from auth_db import DATA_DIR, get_db_connection
@@ -100,6 +103,15 @@ def init_hr_tables():
         )
         """
     )
+    cur.execute("""CREATE TABLE IF NOT EXISTS interview_invites (
+        id INTEGER PRIMARY KEY AUTOINCREMENT, owner_uid TEXT NOT NULL,
+        candidate_id TEXT NOT NULL, candidate_name TEXT NOT NULL, recipient_uid TEXT,
+        company TEXT NOT NULL, role TEXT NOT NULL, interview_time TEXT NOT NULL,
+        location TEXT NOT NULL, message TEXT NOT NULL, token_hash TEXT UNIQUE NOT NULL,
+        status TEXT NOT NULL DEFAULT 'Pending', created_at TEXT NOT NULL,
+        UNIQUE(owner_uid, candidate_id, role, interview_time))""")
+    # Cancelled invitations are removed from both inboxes under the delete-on-cancel policy.
+    cur.execute("DELETE FROM interview_invites WHERE status='Cancelled'")
     conn.commit()
 
     demo_owner = "CL-HR-2026-8801"
@@ -566,9 +578,11 @@ def screen_candidates(owner_uid, vacancy_id):
 
 # ---------------------------------------------------------------- workforce
 def get_heatmap():
-    data = _load("workforce_team.json")
-    skills, target = data["skills"], data["target_level"]
-    emps = data["employees"]
+    candidates = _load("candidates_pool.json")
+    skills = sorted({skill for c in candidates for skill in c["skills"]})
+    target = 1
+    emps = [{**c, "department": "Finance" if any(s in c["skills"] for s in ["Financial Auditing", "Financial Reporting"]) else "Engineering",
+             "role": c["type"], "levels": {s: 1 for s in c["skills"]}} for c in candidates]
     courses = _load("verified_courses.json")
 
     employees = []
@@ -583,7 +597,7 @@ def get_heatmap():
                 recs.append({"skill": s, "gap": g, "course_title": course["title"], "provider": course["provider"],
                              "hours": course["hours"], "cost_type": course["cost_type"],
                              "badge": course["malaysia_badge"], "sdg": course["sdg"], "url": course["url"]})
-        employees.append({**e, "readiness": round(100 * total / (3 * len(skills))), "recommendations": recs[:3]})
+        employees.append({**e, "readiness": round(100 * total / (len(skills))), "recommendations": recs[:3]})
 
     skill_summary = []
     for s in skills:
@@ -609,7 +623,7 @@ def list_assignments(owner_uid):
 def assign_training(owner_uid, employee_id, skill):
     courses = _load("verified_courses.json")
     course = courses.get(SKILL_COURSE_MAP.get(skill, ""))
-    if not course or employee_id not in {e["id"] for e in _load("workforce_team.json")["employees"]}:
+    if not course or employee_id not in {e["id"] for e in _load("candidates_pool.json")}:
         return False, "No verified course is available for this skill."
     conn = get_db_connection()
     conn.execute(
@@ -630,3 +644,48 @@ def revoke_training(owner_uid, employee_id, skill):
     conn.commit()
     conn.close()
     return cur.rowcount > 0
+
+
+def create_interview(owner, data):
+    candidate = next((c for c in _load("candidates_pool.json") if c["id"] == data.get("candidate_id")), None)
+    if not candidate:
+        return None, "Candidate not found."
+    values = [str(data.get(k, "")).strip() for k in ("role", "time", "location", "message")]
+    if not all(values[:3]) or any(len(v) > 1500 for v in values):
+        return None, "Please complete the interview details."
+    try:
+        datetime.strptime(values[1], "%Y-%m-%dT%H:%M")
+    except ValueError:
+        return None, "Please complete the interview details."
+    token = secrets.token_urlsafe(24)
+    with closing(get_db_connection()) as conn, conn:
+        existing = conn.execute("SELECT id FROM interview_invites WHERE owner_uid=? AND candidate_id=? AND role=? AND interview_time=?", (owner["unique_uid"], candidate["id"], values[0], values[1])).fetchone()
+        if existing:
+            return None, "This invitation already exists."
+        recipient = conn.execute("SELECT unique_uid FROM users WHERE unique_uid=? AND role='job_seeker'", (candidate["id"],)).fetchone()
+        if not recipient:
+            return None, "This demo candidate has no account. Use Aisha Rahman to test invitations."
+        conn.execute("""INSERT INTO interview_invites (owner_uid,candidate_id,candidate_name,recipient_uid,company,role,interview_time,location,message,token_hash,created_at)
+          VALUES (?,?,?,?,?,?,?,?,?,?,?)""", (owner["unique_uid"],candidate["id"],candidate["name"],recipient[0] if recipient else None,
+          owner.get("role_details",{}).get("company_name",owner.get("full_name","HR")),*values,hashlib.sha256(token.encode()).hexdigest(),_now()))
+    return {"delivered": True}, None
+
+
+def interview_list(uid, hr=False):
+    with closing(get_db_connection()) as conn, conn:
+        rows = conn.execute("SELECT id,candidate_name,company,role,interview_time,location,message,status,recipient_uid FROM interview_invites WHERE " + ("owner_uid" if hr else "recipient_uid") + "=? ORDER BY id DESC", (uid,)).fetchall()
+    return [dict(r) for r in rows]
+
+
+def cancel_interview(uid, invite_id):
+    with closing(get_db_connection()) as conn, conn:
+        result = conn.execute("DELETE FROM interview_invites WHERE id=? AND owner_uid=?", (invite_id,uid))
+        return result.rowcount > 0
+
+
+def respond_interview(uid, invite_id, status):
+    if status not in ("Accepted", "Declined"):
+        return False
+    with closing(get_db_connection()) as conn, conn:
+        result = conn.execute("UPDATE interview_invites SET status=? WHERE id=? AND recipient_uid=? AND status='Pending'", (status,invite_id,uid))
+        return result.rowcount > 0

@@ -9,12 +9,12 @@
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/static/css/theme.css" />
 </head>
-<body class="hr min-h-scrn">
+<body class="hr min-h-screen">
   <div class="aurora"></div><div class="blob b1"></div><div class="blob b2"></div>
 
-  <div class="flex min-h-scrn">
+  <div class="flex min-h-screen">
     <!-- Dark sidebar (desktop) -->
-    <aside class="hidden lg:flex flex-col w-72 shrink-0 p-4 sticky top-0 h-scrn">
+    <aside class="hidden lg:flex flex-col w-72 shrink-0 p-4 sticky top-0 h-screen">
       <div class="sidebar-dark rounded-3xl p-4 flex flex-col h-full shadow-2xl">
         <div class="flex items-center gap-3 px-1 pb-4 border-b border-white/10">
           <img src="/static/brand/careerlens_logo_icon.svg" alt="" class="h-11 w-11 rounded-2xl" />
@@ -22,14 +22,14 @@
         </div>
         <div class="mt-4 rounded-2xl bg-white/5 border border-white/10 p-3">
           <div class="text-[10px] uppercase tracking-wider text-teal-300 font-bold">Company</div>
-          <div id="coName" class="text-sm font-extrabold text-white leading-snug"></div>
+          <div id="coName" data-no-translate class="text-sm font-extrabold text-white leading-snug"></div>
           <div id="coMeta" class="text-[11px] text-slate-400"></div>
         </div>
         <nav id="sideNav" class="mt-4 space-y-1.5 flex-1"></nav>
         <div class="rounded-2xl bg-white/5 border border-white/10 p-3">
           <div class="flex items-center gap-2.5">
             <div id="uAvatar" class="h-9 w-9 rounded-xl bg-gradient-to-br from-teal-400 to-sky-500 text-white font-bold grid place-items-center">U</div>
-            <div class="min-w-0"><div id="uName" class="text-xs font-extrabold text-white truncate"></div><div id="uUid" class="text-[10px] font-mono text-slate-400 truncate"></div></div>
+            <div class="min-w-0"><div id="uName" data-no-translate class="text-xs font-extrabold text-white truncate"></div><div id="uUid" data-no-translate class="text-[10px] font-mono text-slate-400 truncate"></div></div>
           </div>
           <button onclick="signOut()" class="btn w-full mt-3 !py-2 bg-white/10 text-white hover:bg-white/20">Sign out</button>
         </div>
@@ -63,7 +63,7 @@
             <div class="lg:col-span-2 space-y-6">
               <div class="tint tint-teal rounded-3xl p-6"><div class="text-sm font-extrabold mb-1">Screening pipeline</div><div id="ovPipelineTitle" class="text-[11px] text-slate-500 mb-4"></div><div id="ovPipeline" class="space-y-3"></div></div>
               <div class="tint tint-indigo rounded-3xl p-6 space-y-2.5">
-                <div class="text-sm font-extrabold">Responsible AI checks</div>
+                <div class="text-sm font-extrabold">Responsible AI checks</div><p class="hint">Protected attributes excluded. Statistical parity has not been audited.</p>
                 <div class="flex flex-wrap gap-2">
                   <span class="chip chip-emerald">✓ Job-relevant criteria only</span><span class="chip chip-emerald">✓ Protected attributes excluded</span>
                   <span class="chip chip-emerald">✓ CV gaps = “To confirm”</span><span class="chip chip-emerald">✓ Explainable scores</span><span class="chip chip-emerald">✓ HR final decision</span>
@@ -115,20 +115,34 @@
 
         <!-- ============ HEATMAP ============ -->
         <section id="tab-heatmap" class="tab hidden space-y-5">
+          <p class="hint">Demo candidate CVs, shared with candidate screening. Listed skills are unverified; missing skills need confirmation. Real resume submissions are not connected yet.</p>
+          <div class="glass rounded-3xl p-5 space-y-4">
+            <div id="hmPresets" class="flex flex-wrap gap-2"></div>
+            <div class="flex flex-wrap gap-3 items-center"><label for="hmSearch">Find candidate</label><input id="hmSearch" class="input !w-auto" placeholder="Name or role" oninput="renderHeatmap()"><button class="btn btn-soft" onclick="resetHeatFilters()">Reset comparison</button></div>
+            <details><summary class="cursor-pointer font-bold">Choose candidates</summary><div id="hmPeople" class="flex flex-wrap gap-3 pt-3"></div></details>
+            <details open><summary class="cursor-pointer font-bold">Choose skills</summary><div id="hmSkills" class="flex flex-wrap gap-3 pt-3"></div></details>
+          </div>
           <div id="hmKpis" class="grid grid-cols-2 lg:grid-cols-4 gap-4"></div>
           <div class="glass rounded-3xl p-5 space-y-4">
             <div class="flex flex-wrap items-center justify-between gap-3">
-              <div class="flex items-center gap-3"><span class="text-xs font-bold text-slate-500">Department</span><select id="hmDept" onchange="renderHeatmap()" class="input !w-auto"></select></div>
-              <div class="flex flex-wrap items-center gap-2 text-[11px] font-bold"><span class="heat heat-0 !h-6 !min-w-0 px-2">0 None</span><span class="heat heat-1 !h-6 !min-w-0 px-2">1 Basic</span><span class="heat heat-2 !h-6 !min-w-0 px-2">2 Proficient</span><span class="heat heat-3 !h-6 !min-w-0 px-2">3 Advanced</span><span class="text-slate-400">Target: 2</span></div>
+              <div class="flex items-center gap-3"><span class="text-xs font-bold text-slate-500">Field</span><select id="hmDept" onchange="renderHeatmap()" class="input !w-auto"></select></div>
+              <div class="text-xs text-slate-500">Listed in CV · To confirm</div>
             </div>
-            <div class="overflow-x-auto"><table class="w-full text-xs border-separate" style="border-spacing:.35rem">
+            <div class="overflow-x-auto"><table class="w-full text-xs border-separate" style="border-spacing:.35rem;table-layout:fixed">
               <thead id="hmHead"></thead><tbody id="hmBody"></tbody><tfoot id="hmFoot"></tfoot>
             </table></div>
           </div>
+          <section class="glass rounded-3xl p-6 space-y-3"><h2 class="font-extrabold">Interview responses</h2><button class="btn btn-soft" onclick="loadInvitations(true)">Refresh notifications</button><div id="latestInvitationReceipt" role="status"></div><div id="hrInvitations"></div></section>
+          <section class="glass rounded-3xl p-6 space-y-4" aria-labelledby="hmSummaryTitle">
+            <div class="tint tint-teal rounded-2xl p-4 space-y-2"><p class="font-bold">Default test candidate</p><p data-no-translate>Aisha Rahman</p><p class="text-sm">Test the invitation flow with the default candidate account.</p><button class="btn btn-hr" onclick="inviteCandidate('CL-JS-2026-1042')">Invite default candidate</button></div>
+            <h2 id="hmSummaryTitle" class="text-lg font-extrabold">Candidate recommendation summary</h2>
+            <p class="text-sm text-slate-500">Based on selected CV skills only. Top three positions include ties. Confirm skills in an interview; HR makes the final decision.</p>
+            <div id="hmRecommendation" class="grid md:grid-cols-2 xl:grid-cols-3 gap-4" aria-live="polite"></div>
+          </section>
         </section>
 
         <!-- ============ RESKILL ============ -->
-        <section id="tab-reskill" class="tab hidden">
+        <section id="tab-reskill" class="tab hidden"><p class="hint mb-4">Confirm missing CV skills before recommending training.</p>
           <div class="grid lg:grid-cols-3 gap-6">
             <div class="lg:col-span-2 space-y-4"><div id="rkCards" class="space-y-4"></div></div>
             <div class="space-y-4 self-start lg:sticky lg:top-6">
@@ -141,6 +155,22 @@
     </div>
   </div>
 
+  <script src="/static/js/interviews.js?v=20261020-4"></script>
+  <dialog id="interviewDialog" class="rounded-3xl p-6 w-full max-w-lg shadow-xl" style="max-height:90vh;overflow:auto">
+    <form id="interviewForm" class="space-y-4" onsubmit="sendInterview(event)">
+      <div class="flex justify-between items-center"><h2 class="text-xl font-extrabold">Invite to interview</h2><button type="button" class="btn btn-soft" onclick="interviewDialog.close()" aria-label="Close">×</button></div>
+      <p id="interviewCandidate" class="font-bold" data-no-translate></p>
+      <p class="text-sm text-slate-500">Invitations go directly to the candidate account. Use Aisha Rahman for the demo.</p>
+
+      <label class="block">Interview role<input id="interviewRole" required maxlength="150" class="input mt-1"></label>
+      <label class="block">Interview date and time (Malaysia, UTC+8)<input id="interviewTime" type="datetime-local" required class="input mt-1"></label>
+      <label class="block">Location or meeting link<input id="interviewLocation" required maxlength="500" class="input mt-1"></label>
+      <label class="block">Additional message<textarea id="interviewMessage" maxlength="1500" class="input mt-1" rows="3"></textarea></label>
+      <button type="submit" class="btn btn-hr">Send in-app invitation</button>
+      <p id="interviewStatus" class="text-sm text-slate-500" role="status"></p>
+    </form>
+  </dialog>
+
   <!-- Candidate insight slide-over -->
   <div id="insightWrap" class="hidden">
     <div class="overlay !items-stretch !justify-end !p-0" onclick="closeInsight()"></div>
@@ -148,7 +178,7 @@
   </div>
 
   <!-- Organised CV & Original PDF Modal (Application-Gated) -->
-  <div id="orgCvWrap" class="hidden">
+  <div id="orgCvWrap" class="hidden" data-no-translate>
     <div class="overlay" onclick="closeOrgCvModal()">
       <div id="orgCvModal" class="modal p-6 sm:p-8 space-y-5 max-w-3xl w-full max-h-[88vh] overflow-y-auto" onclick="event.stopPropagation()"></div>
     </div>
@@ -160,8 +190,8 @@
       { id: 'overview', ico: '📊', label: 'Overview', eyebrow: 'Employer portal', title: 'Hiring & workforce overview' },
       { id: 'vacancies', ico: '📋', label: 'Job Vacancies', eyebrow: 'Step 1', title: 'Job vacancies' },
       { id: 'screening', ico: '🔍', label: 'Candidate Screening', eyebrow: 'Step 2', title: 'Candidate screening' },
-      { id: 'heatmap', ico: '🔥', label: 'Skills Heatmap', eyebrow: 'Workforce', title: 'Workforce skills-gap heatmap' },
-      { id: 'reskill', ico: '🎓', label: 'Reskilling Plans', eyebrow: 'Workforce', title: 'Reskilling plans' },
+      { id: 'heatmap', ico: '🔥', label: 'Candidate skills comparison', eyebrow: 'Candidates', title: 'Candidate skills comparison' },
+      { id: 'reskill', ico: '🎓', label: 'Candidate learning suggestions', eyebrow: 'Candidates', title: 'Candidate learning suggestions' },
     ];
     const TONE = { emerald: 'chip-emerald', indigo: 'chip-indigo', amber: 'chip-amber', slate: 'chip-slate' };
     const DECISIONS = ['Pending', 'Shortlist', 'Needs review', 'Hold'];
@@ -258,23 +288,23 @@
       const sum = scrn.summary.by_action;
       const tiles = [
         ['Total screened', scrn.summary.total, 'indigo'],
-        ['Direct applicants (CV shared)', scrn.summary.applied_count || 0, 'emerald'],
-        ['Priority review', sum['Priority human review'] || 0, 'teal'],
-        ['Average match', scrn.summary.average_score + '%', 'amber'],
+        ['Priority review', sum['Priority human review'] || 0, 'emerald'],
+        ['Confirm skills', sum['Confirm skills with follow-up'] || 0, 'amber'],
+        ['Average match', scrn.summary.average_score + '%', 'teal'],
       ];
       scSummary.innerHTML = tiles.map(t => `<div class="tint tint-${t[2]} rounded-2xl p-4"><div class="text-[11px] font-bold text-slate-500">${t[0]}</div><div class="text-3xl font-extrabold mt-1">${t[1]}</div></div>`).join('');
       const rows = scrn.results.filter(r => typeFilter === 'All' || r.type === typeFilter);
       scRows.innerHTML = rows.length ? rows.map((r, i) => {
         const dec = decisions[decKey(scrn.vacancy.id, r.candidate_id)] || 'Pending';
         const appliedBadges = r.is_applied_user
-          ? `<span class="chip chip-emerald">✓ Applied · ${esc(r.application_uid)}</span>
-             ${r.share_organised_cv ? '<span class="chip chip-teal">Organised CV</span>' : ''}
-             ${r.share_original_pdf ? '<span class="chip chip-indigo">Original PDF</span>' : ''}`
-          : '<span class="chip chip-slate">Anonymised benchmark pool</span>';
+          ? `<span class="chip chip-emerald" data-no-translate>✓ Applied · ${esc(r.application_uid)}</span>
+             ${r.share_organised_cv ? '<span class="chip chip-teal" data-no-translate>Organised CV</span>' : ''}
+             ${r.share_original_pdf ? '<span class="chip chip-indigo" data-no-translate>Original PDF</span>' : ''}`
+          : '';
         return `<tr class="${r.is_applied_user ? 'bg-emerald-50/40' : ''} hover:bg-teal-50/40 transition">
           <td class="py-3.5 px-4 font-extrabold text-slate-400">${i + 1}</td>
           <td class="py-3.5 px-4">
-            <div class="font-extrabold text-sm">${esc(r.name)}</div>
+            <div class="font-extrabold text-sm" data-no-translate>${esc(r.name)}</div>
             <div class="flex flex-wrap items-center gap-1.5 mt-0.5">
               <span class="chip chip-slate">${esc(r.type)}</span>
               ${appliedBadges}
@@ -287,7 +317,7 @@
           <td class="py-3.5 px-4"><select class="input !py-1.5 !text-[11px] !w-auto" onchange="setDecision('${r.candidate_id}',this.value)">${DECISIONS.map(d => `<option ${d === dec ? 'selected' : ''}>${d}</option>`).join('')}</select></td>
           <td class="py-3.5 px-4">
             <div class="flex items-center gap-1.5">
-              ${r.is_applied_user && r.share_organised_cv ? `<button onclick="openOrganisedCv(${r.application_id})" class="btn btn-hr !py-1.5 !px-2.5 !text-[11px]">📄 CV</button>` : ''}
+              ${r.is_applied_user && r.share_organised_cv ? `<button onclick="openOrganisedCv(${r.application_id})" class="btn btn-hr !py-1.5 !px-2.5 !text-[11px]" data-no-translate>📄 CV</button>` : ''}
               <button onclick="openInsight('${r.candidate_id}')" class="btn btn-soft !py-1.5">Insight</button>
             </div>
           </td></tr>`;
@@ -304,7 +334,7 @@
       const r = scrn.results.find(x => x.candidate_id === cid); if (!r) return;
       const dec = decisions[decKey(scrn.vacancy.id, cid)] || 'Pending';
       const cvAccessBlock = r.is_applied_user ? `
-        <div class="tint tint-teal rounded-2xl p-4 space-y-2.5">
+        <div class="tint tint-teal rounded-2xl p-4 space-y-2.5" data-no-translate>
           <div class="flex items-center justify-between">
             <div class="text-xs font-extrabold text-teal-950">🔓 Candidate Applied · CV Access Granted</div>
             <span class="chip chip-emerald font-mono">${esc(r.application_uid)}</span>
@@ -315,15 +345,11 @@
             ${r.share_original_pdf ? `<a href="/api/hr/applications/${r.application_id}/pdf" target="_blank" rel="noopener" class="btn btn-soft !py-2 !text-xs">📄 Open Original PDF CV ↗</a>` : '<span class="chip chip-slate">🔒 Original PDF withheld by candidate</span>'}
           </div>
         </div>
-      ` : `
-        <div class="tint tint-indigo rounded-2xl p-3.5 text-[11px] text-slate-600">
-          🔒 <b>Privacy Boundary Active:</b> This profile is from the anonymised synthetic benchmark pool. Personal organised CVs and original PDFs are only unlocked when a candidate explicitly applies to your vacancy.
-        </div>
-      `;
+      ` : '';
 
       insight.innerHTML = `
         <div class="flex items-start justify-between gap-3"><div><div class="text-[11px] font-extrabold uppercase tracking-wider text-teal-700">Candidate insight</div>
-          <h2 class="text-2xl font-extrabold">${esc(r.name)}</h2><div class="flex flex-wrap gap-1.5 mt-1"><span class="chip chip-slate">${esc(r.type)}</span><span class="chip chip-slate font-mono">${esc(r.candidate_id)}</span>${r.is_applied_user ? '<span class="chip chip-emerald">✓ Verified Applicant</span>' : '<span class="chip chip-pink">Synthetic profile</span>'}</div></div>
+          <h2 class="text-2xl font-extrabold" data-no-translate>${esc(r.name)}</h2><div class="flex flex-wrap gap-1.5 mt-1"><span class="chip chip-slate">${esc(r.type)}</span><span class="chip chip-slate font-mono" data-no-translate>${esc(r.candidate_id)}</span><span class="chip chip-pink">Synthetic profile</span></div></div>
           <button onclick="closeInsight()" class="text-slate-400 hover:text-slate-700 text-xl font-bold">✕</button></div>
         ${cvAccessBlock}
         <div class="tint tint-teal rounded-2xl p-4 flex items-center gap-4"><div class="ring" style="--p:${r.score};--c:${ringColor(r.score)}"><span>${r.score}%</span></div>
@@ -334,10 +360,10 @@
           <div class="flex flex-wrap gap-1.5">${r.to_confirm.map(s => `<span class="chip chip-amber">${esc(s)}</span>`).join('') || '<span class="chip chip-emerald">Everything required is evidenced</span>'}</div></div>
         <div class="grid grid-cols-2 gap-3 text-xs"><div class="bg-white/80 rounded-xl p-3 border"><div class="text-slate-400 text-[10px] font-bold">Salary expectation</div><div class="font-extrabold">${rm(r.salary_expectation)}</div><div class="text-[11px] text-slate-500">${esc(r.salary_fit)}</div></div>
           <div class="bg-white/80 rounded-xl p-3 border"><div class="text-slate-400 text-[10px] font-bold">Availability · Mode</div><div class="font-extrabold">${esc(r.available_in)}</div><div class="text-[11px] text-slate-500">${r.work_modes.map(esc).join(' / ')} · ${esc(r.location)}</div></div></div>
-        <div><div class="text-xs font-extrabold mb-1">Application note / motivation</div><p class="text-xs text-slate-600">${esc(r.motivation)}</p></div>
-        <div><div class="text-xs font-extrabold mb-1">Projects on CV</div><ul class="list-disc pl-4 text-xs text-slate-600 space-y-0.5">${r.projects.map(p => `<li>${esc(p)}</li>`).join('')}</ul></div>
+        <div><div class="text-xs font-extrabold mb-1">Career motivation</div><p class="text-xs text-slate-600" data-no-translate>${esc(r.motivation)}</p></div>
+        <div><div class="text-xs font-extrabold mb-1">Projects on CV</div><ul class="list-disc pl-4 text-xs text-slate-600 space-y-0.5">${r.projects.map(p => `<li data-no-translate>${esc(p)}</li>`).join('')}</ul></div>
         <div class="space-y-2"><div class="flex items-center justify-between"><div class="text-xs font-extrabold">Suggested follow-up questions <span class="text-slate-400 font-medium">· editable</span></div><button onclick="copyQuestions()" class="btn btn-soft !py-1">Copy</button></div>
-          ${r.follow_up_questions.map(q => `<textarea rows="2" class="input fq">${esc(q)}</textarea>`).join('')}</div>
+          ${r.follow_up_questions.map(q => `<textarea rows="2" class="input fq" data-generated-source="${esc(q)}">${esc(q)}</textarea>`).join('')}</div>
         <div class="border-t pt-4 space-y-2"><div class="text-xs font-extrabold">Your decision</div><div class="flex flex-wrap gap-2">
           ${['Shortlist', 'Needs review', 'Hold'].map(d => `<button onclick="decideFromInsight('${r.candidate_id}','${d}')" class="btn ${d === dec ? 'btn-hr' : 'btn-soft'}">${d}</button>`).join('')}</div>
           <p class="hint">AI suggests; a person decides.</p></div>`;
@@ -380,7 +406,7 @@
             <div class="text-slate-500">${esc(st.phone || '—')}</div>
           </div>
           <div class="bg-white/85 rounded-2xl p-3.5 border border-slate-200/70">
-            <div class="text-[10px] font-bold text-slate-400 uppercase">Qualification & Arrangement</div>
+            <div class="text-[10px] font-bold text-slate-400 uppercase">Qualification &amp; Arrangement</div>
             <div class="font-extrabold mt-0.5">${esc(st.education_level || '—')}</div>
             <div class="text-slate-500">${esc(st.work_mode_preference || 'Hybrid')} · ${esc(st.seeker_type || '')}</div>
           </div>
@@ -427,22 +453,98 @@
     }
 
     /* ---------- heatmap ---------- */
-    async function loadHeat() { const r = await api('/api/hr/heatmap'); heat = r.data; assignments = heat.assignments || []; }
+    async function loadHeat() { const r = await api('/api/hr/heatmap'); if (!r.ok || !Array.isArray(r.data.employees)) { toast('Team data unavailable. Please retry.', 'err'); return; } heat = r.data; assignments = (heat.assignments || []).filter(a => heat.employees.some(c => c.id === a.employee_id)); }
+    const heatPresets = {
+      'All industries': {departments: null, skills: null},
+      'Accounting & audit': {departments: ['Finance', 'Audit & Assurance'], skills: ['Financial Auditing', 'Financial Reporting', 'Risk Assessment', 'SQL Basics', 'Python Data Analysis']},
+      'Insurance': {departments: ['Insurance'], skills: ['Risk Assessment', 'Financial Reporting']},
+      'Technology': {departments: ['Engineering'], skills: ['Python', 'SQL', 'REST APIs', 'Git', 'React', 'Docker']}
+    };
+    let heatPreset = 'All industries', heatPeople = null, heatSkills = null;
+    function setHeatPreset(key) {
+      heatPreset = key; heatPeople = null;
+      heatSkills = new Set(heatPresets[key].skills || heat.skills);
+      hmDept.innerHTML = ''; hmSearch.value = ''; renderHeatmap();
+    }
+    function resetHeatFilters() { setHeatPreset('All industries'); }
+    function toggleHeatChoice(kind, key, checked) {
+      const selection = kind === 'people' ? heatPeople : heatSkills;
+      checked ? selection.add(key) : selection.delete(key); renderHeatmap();
+    }
     function renderHeatmap() {
       if (!heat) return;
-      const depts = ['All departments', ...heat.departments];
-      if (!hmDept.options.length) hmDept.innerHTML = depts.map(d => `<option>${esc(d)}</option>`).join('');
-      const dept = hmDept.value || depts[0];
-      const emps = heat.employees.filter(e => dept === 'All departments' || e.department === dept);
-      const worst = [...heat.skill_summary].sort((a, b) => a.coverage - b.coverage)[0];
-      const below = heat.employees.filter(e => e.readiness < 60).length;
-      hmKpis.innerHTML = [['Team AI readiness', heat.team_readiness + '%', 'teal'], ['Biggest gap', esc(worst.skill), 'amber'], ['Staff below 60% ready', below, 'pink'], ['Employees tracked', heat.employees.length, 'indigo']]
-        .map(k => `<div class="tint tint-${k[2]} rounded-2xl p-4"><div class="text-[11px] font-bold text-slate-500">${k[0]}</div><div class="text-2xl font-extrabold mt-1 leading-tight">${k[1]}</div></div>`).join('');
-      hmHead.innerHTML = `<tr><th class="text-left text-[11px] text-slate-500 font-bold px-2">Employee</th>${heat.skills.map(s => `<th class="text-[10px] text-slate-500 font-bold px-1 align-bottom w-24">${esc(s)}</th>`).join('')}<th class="text-[11px] text-slate-500 font-bold px-2 min-w-[7rem]">Readiness</th></tr>`;
-      hmBody.innerHTML = emps.map(e => `<tr><td class="px-2 py-1"><div class="font-extrabold">${esc(e.name)}</div><div class="text-[10px] text-slate-500">${esc(e.role)}</div></td>
-        ${heat.skills.map(s => { const lv = e.levels[s] || 0; return `<td><div class="heat heat-${lv}" title="${esc(s)}: ${lv}">${lv}</div></td>`; }).join('')}
-        <td class="px-2"><div class="flex items-center gap-2"><b class="w-9">${e.readiness}%</b><div class="bar flex-1 ${e.readiness >= 70 ? 'emerald' : e.readiness >= 45 ? 'teal' : 'rose'}"><i style="width:${e.readiness}%"></i></div></div></td></tr>`).join('');
-      hmFoot.innerHTML = `<tr><td class="px-2 pt-2 text-[11px] font-extrabold text-slate-600">Team coverage (≥ target)</td>${heat.skill_summary.map(s => `<td class="pt-2"><div class="text-center font-extrabold text-xs ${s.coverage >= 60 ? 'text-emerald-600' : s.coverage >= 30 ? 'text-amber-600' : 'text-rose-600'}">${s.coverage}%</div></td>`).join('')}<td></td></tr>`;
+      loadInvitations(true);
+      const preset = heatPresets[heatPreset];
+      const pool = heat.employees.filter(e => !preset.departments || preset.departments.includes(e.department));
+      if (!heatPeople) heatPeople = new Set(pool.map(e => e.id));
+      if (!heatSkills) heatSkills = new Set(heat.skills);
+      hmPresets.innerHTML = Object.keys(heatPresets).map((key, i) => `<button class="btn ${key === heatPreset ? 'btn-hr' : 'btn-soft'}" aria-pressed="${key === heatPreset}" onclick="setHeatPreset(Object.keys(heatPresets)[${i}])">${esc(key)}</button>`).join('');
+      if (!hmDept.options.length) hmDept.innerHTML = ['All departments', ...new Set(pool.map(e => e.department))].map(d => `<option value="${esc(d)}">${esc(d)}</option>`).join('');
+      hmPeople.innerHTML = pool.map(e => `<label class="chip"><input type="checkbox" ${heatPeople.has(e.id) ? 'checked' : ''} onchange="toggleHeatChoice('people', this.value, this.checked)" value="${esc(e.id)}"><span data-no-translate>${esc(e.name)}</span></label>`).join('');
+      hmSkills.innerHTML = heat.skills.map(s => `<label class="chip"><input type="checkbox" ${heatSkills.has(s) ? 'checked' : ''} onchange="toggleHeatChoice('skills', this.value, this.checked)" value="${esc(s)}"><span>${esc(s)}</span></label>`).join('');
+      const query = hmSearch.value.trim().toLocaleLowerCase();
+      const emps = pool.filter(e => heatPeople.has(e.id) && (!hmDept.value || hmDept.value === 'All departments' || e.department === hmDept.value) && `${e.name} ${e.role} ${window.careerLensLocale?.translate(e.role) || ''}`.toLocaleLowerCase().includes(query));
+      const skills = heat.skills.filter(s => heatSkills.has(s));
+      const level = (e,s) => Number.isFinite(e.levels[s]) ? e.levels[s] : null;
+      const readiness = e => { const values = skills.map(s => level(e,s) || 0); return values.length ? Math.round(100 * values.reduce((a,b) => a+b,0)/values.length) : null; };
+      const scores = emps.map(readiness).filter(v => v !== null);
+      const coverage = skills.map(skill => { const values = emps.map(e => level(e,skill) || 0); return {skill, value: values.length ? Math.round(100*values.filter(v => v >= heat.target_level).length/values.length) : null}; });
+      const worst = coverage.filter(s => s.value !== null).sort((a,b) => a.value-b.value)[0];
+      hmKpis.innerHTML = [['CV skill coverage', scores.length ? Math.round(scores.reduce((a,b)=>a+b,0)/scores.length)+'%' : '—', 'teal'], ['Most to confirm', esc(worst?.skill || '—'), 'amber'], ['Candidates below 60% coverage', scores.filter(v=>v<60).length, 'pink'], ['Candidates compared', emps.length, 'indigo']].map(k => `<div class="tint tint-${k[2]} rounded-2xl p-4"><div class="text-[11px] font-bold text-slate-500">${k[0]}</div><div class="text-2xl font-extrabold mt-1 leading-tight">${k[1]}</div></div>`).join('');
+      const table = hmHead.closest('table'); table.style.minWidth = (400+skills.length*125)+'px';
+      hmHead.innerHTML = `<tr><th style="width:230px;position:sticky;left:0;background:#f8fafc;z-index:2" class="text-left px-3">Candidate</th>${skills.map(s => `<th style="width:125px" class="px-2">${esc(s)}</th>`).join('')}<th style="width:150px">CV skill coverage</th></tr>`;
+      hmBody.innerHTML = !emps.length || !skills.length ? `<tr><td colspan="${skills.length+2}" class="p-8 text-center">No comparison data. Select candidates and skills or reset filters.</td></tr>` : emps.map(e => { const score=readiness(e); return `<tr><td style="position:sticky;left:0;background:#f8fafc;z-index:1" class="px-3 py-4"><div class="font-extrabold whitespace-nowrap" data-no-translate>${esc(e.name)}</div><div class="text-xs text-slate-500 mt-1">${esc(e.role)}</div><div class="text-xs text-slate-500">${esc(e.department)}</div></td>${skills.map(s => {const lv=level(e,s);return `<td><div class="heat ${lv===null?'heat-1':'heat-2'}">${lv===null?'To confirm':'Listed in CV'}</div></td>`;}).join('')}<td class="px-3"><b>${score===null?'—':score+'%'}</b></td></tr>`; }).join('');
+      hmFoot.innerHTML = `<tr><td class="px-3 py-3 font-bold">Candidates listing this skill</td>${coverage.map(s=>`<td class="text-center font-bold">${s.value===null?'—':s.value+'%'}</td>`).join('')}<td></td></tr>`;
+      const ranked = emps.map(e => ({candidate: e, matched: skills.filter(s => level(e,s) >= heat.target_level)}))
+        .filter(item => item.matched.length > 0).sort((a,b) => b.matched.length-a.matched.length);
+      const cutoff = ranked[Math.min(2, ranked.length-1)]?.matched.length || 0;
+      const recommended = skills.length ? ranked.filter(item => item.matched.length >= cutoff) : [];
+      hmRecommendation.innerHTML = recommended.map(item => {
+        const e = item.candidate, missing = skills.filter(s => !item.matched.includes(s));
+        const rank = 1 + ranked.filter(other => other.matched.length > item.matched.length).length;
+        const chips = list => list.map(skill => `<span class="chip">${esc(skill)}</span>`).join('');
+        return `<article class="rounded-2xl border border-teal-100 bg-white/80 p-5 space-y-3">
+          <div class="flex items-start justify-between gap-3"><h3 class="font-extrabold" data-no-translate>${esc(e.name)}</h3><span class="chip chip-teal" data-no-translate>#${rank}</span></div>
+          <div class="text-sm"><span>CV skill coverage</span><strong class="ml-2">${readiness(e)}%</strong><span class="ml-2" data-no-translate>(${item.matched.length}/${skills.length})</span></div>
+          <div><p class="text-xs font-bold mb-2">Recommendation evidence</p><div class="flex flex-wrap gap-1">${chips(item.matched)}</div></div>
+          <div><p class="text-xs font-bold mb-2">Confirm at interview</p><div class="flex flex-wrap gap-1">${missing.length ? chips(missing) : '<span class="text-sm">All selected skills are listed. Verify with project examples.</span>'}</div></div>
+          <button type="button" class="btn btn-hr" data-candidate-id="${esc(e.id)}" onclick="inviteCandidate(this.dataset.candidateId)">Invite to interview</button>
+        </article>`;
+      }).join('') || '<p class="text-sm text-slate-500">No recommendations for this selection. Choose candidates and skills with CV evidence.</p>';
+
+    }
+
+    let interviewPerson = null;
+    function inviteCandidate(id) {
+      interviewPerson = heat?.employees.find(c => c.id === id);
+      if (!interviewPerson) return;
+      interviewForm.reset();
+      interviewCandidate.textContent = interviewPerson.name;
+      interviewStatus.textContent = '';
+      const vacancy = vacancies.find(v => v.id === selectedVid);
+      interviewRole.value = vacancy?.title || '';
+      interviewDialog.showModal();
+      interviewRole.focus();
+    }
+    function buildInterviewEmail(person, details, translate) {
+      const company = user?.role_details?.company_name || 'CareerLens AI';
+      const subject = `${translate('Interview invitation')} — ${details.role}`;
+      const body = [person.name + ',', translate('We would like to invite you to an interview.'),
+        `${translate('Company')}: ${company}`, `${translate('Interview role')}: ${details.role}`,
+        `${translate('Interview date and time (Malaysia, UTC+8)')}: ${details.time.replace('T', ' ')}`,
+        `${translate('Location or meeting link')}: ${details.location}`, details.message,
+        translate('Please reply to confirm your availability.'), user?.full_name || company].filter(Boolean).join('\n\n');
+      return `mailto:${encodeURIComponent(details.email)}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    }
+    function openInterviewEmail(event) {
+      event.preventDefault();
+      if (!interviewPerson || !interviewForm.reportValidity()) return;
+      const translate = text => window.careerLensLocale?.translate(text) || text;
+      const details = {email: interviewEmail.value.trim(), role: interviewRole.value.trim(), time: interviewTime.value,
+        location: interviewLocation.value.trim(), message: interviewMessage.value.trim()};
+      if (!details.role || !details.location) return;
+      window.location.href = buildInterviewEmail(interviewPerson, details, translate);
+      interviewStatus.textContent = translate('Email app requested. If it opens, review and send the draft there. Delivery is not tracked here.');
     }
 
     /* ---------- reskilling ---------- */
@@ -453,7 +555,7 @@
       rkCards.innerHTML = needing.map(e => `
         <article class="glass rounded-3xl p-5 space-y-3">
           <div class="flex items-center gap-4"><div class="ring !w-14 !h-14" style="--p:${e.readiness};--c:${ringColor(e.readiness)}"><span class="!w-11 !h-11 !text-xs">${e.readiness}</span></div>
-            <div class="flex-1 min-w-0"><div class="text-sm font-extrabold">${esc(e.name)}</div><div class="text-[11px] text-slate-500">${esc(e.role)} · ${esc(e.department)}</div></div></div>
+            <div class="flex-1 min-w-0"><div class="text-sm font-extrabold" data-no-translate>${esc(e.name)}</div><div class="text-[11px] text-slate-500">${esc(e.role)} · ${esc(e.department)}</div></div></div>
           <div class="space-y-2">${e.recommendations.map(r => { const on = hasAssign(e.id, r.skill); return `
             <div class="flex flex-wrap items-center justify-between gap-3 rounded-2xl bg-white/80 border border-white p-3">
               <div class="min-w-0"><div class="text-xs font-extrabold">${esc(r.skill)} <span class="chip chip-rose ml-1">gap ${r.gap}</span></div>
@@ -478,7 +580,7 @@
     function renderOverview() {
       const open = vacancies.filter(v => v.status === 'Open');
       const avg = scrn ? scrn.summary.average_score + '%' : '—';
-      kpis.innerHTML = [['Open vacancies', open.length, 'teal'], ['Candidate pool', 10, 'indigo'], ['Avg match', avg, 'sky'], ['Team AI readiness', heat ? heat.team_readiness + '%' : '—', 'amber']]
+      kpis.innerHTML = [['Open vacancies', open.length, 'teal'], ['Candidate pool', heat ? heat.employees.length : '—', 'indigo'], ['Avg match', avg, 'sky'], ['Candidate CV coverage', heat ? heat.team_readiness + '%' : '—', 'amber']]
         .map(k => `<div class="tint tint-${k[2]} rounded-2xl p-5"><div class="text-[11px] font-bold text-slate-500">${k[0]}</div><div class="text-3xl font-extrabold mt-1">${k[1]}</div></div>`).join('');
       ovVacancies.innerHTML = open.length ? open.map(v => `<div class="flex items-center gap-4 p-3 rounded-2xl bg-white/70 border border-white">
           <div class="h-11 w-11 rounded-2xl bg-gradient-to-br from-teal-400 to-sky-500 text-white grid place-items-center font-extrabold">${esc(v.title.charAt(0))}</div>
@@ -510,5 +612,8 @@
     }
     init();
   </script>
+<script src="/static/js/questionnaire-i18n.js"></script>
+<script src="/static/js/portal-i18n.js"></script>
+<script src="/static/js/member3.js?v=20261020-7"></script>
 </body>
 </html>

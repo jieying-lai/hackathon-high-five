@@ -13,16 +13,17 @@
   <div class="aurora"></div><div class="blob b1"></div><div class="blob b2"></div>
 
   <!-- Header -->
-  <header class="sticky top-0 z-40 glass">
+  <header class="landing-header sticky top-0 z-40 glass">
     <div class="max-w-6xl mx-auto px-4 sm:px-6 py-3 flex items-center justify-between gap-4">
-      <a href="/" class="flex items-center gap-3">
+      <a href="/" class="landing-brand flex items-center gap-3">
         <img src="/static/brand/careerlens_logo_icon.svg" alt="CareerLens AI" class="h-11 w-11 rounded-2xl" />
         <div>
           <div class="font-extrabold text-xl tracking-tight bg-gradient-to-r from-indigo-700 via-purple-600 to-pink-600 bg-clip-text text-transparent">CareerLens AI</div>
           <div class="text-[11px] text-slate-500 font-medium">Future-Ready Workforce & Reskilling</div>
         </div>
       </a>
-      <div class="flex items-center gap-2">
+      <div class="landing-actions flex items-center gap-2">
+        <div data-language-slot></div>
         <button onclick="openAuth('login')" class="btn btn-soft">Sign In</button>
         <button onclick="openAuth('register')" class="btn btn-primary">Create Account</button>
       </div>
@@ -244,5 +245,9 @@
       if (data.ok) window.location.href = '/workspace';
     }
   </script>
+<script src="/static/js/questionnaire-i18n.js"></script>
+<script src="/static/js/portal-i18n.js"></script>
+<script src="/static/js/auth-i18n.js"></script>
+<script src="/static/js/member3.js?v=20261020-6"></script>
 </body>
 </html>

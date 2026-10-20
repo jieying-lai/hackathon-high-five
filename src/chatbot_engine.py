@@ -535,7 +535,7 @@ def generate_lumi_response(message: str, user: dict | None = None, history: list
         return {
             "ok": True, "in_range": True,
             "reply": (
-                f"🦉 **Hi {ctx['user_name']}!** Ask me about **nearby jobs for your CV**, **career goals** (e.g. *'I want to become a doctor'*), **role matches**, or **courses**:"
+                f"🦉 **Hi {ctx['user_name']}!** Ask me about **nearby jobs for your CV**, **career goals**, **role matches**, or **courses**:"
             ),
             "actions": [
                 {"label": "📍 Nearby Jobs & Companies", "tab": "jobs"},

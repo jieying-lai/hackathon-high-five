@@ -5,6 +5,8 @@ __pycache__/
 src/data/uploads/
 venv/
 .venv/
+work/
+node_modules/
 
 # Environment
 .env

@@ -1,5 +1,27 @@
 # CareerLens AI
 
+## Member 3 frontend update (2026-10-20)
+
+The app uses Flask, Jinja HTML, vanilla JavaScript, Tailwind CDN, and SQLite.
+Run on Windows with `.\.venv\Scripts\python.exe src/main.py`, then open
+`http://127.0.0.1:5000`. No frontend build is required.
+
+The existing profile/chips, explainable role cards, ordered pathways, and HR heatmap
+now include a two-position What-If slider, an SVG benchmark radar, core EN/BM/Chinese
+UI localization, analysis error states, and qualified fairness disclosures.
+Trend percentages are illustrative benchmarks, and RunPod is not wired into the
+current Flask matching flow. Full content translation and browser visual acceptance
+remain pending. Eleven Python tests passed; UI screenshots have not yet been captured.
+
+- [中文运行、功能边界与验收说明](docs/MEMBER3_GUIDE.zh-CN.md)
+- [Pitch video 现场演示流程](docs/PITCH_DEMO.zh-CN.md)
+- [System architecture](docs/system-architecture.svg)
+- [High-resolution architecture PNG](docs/system-architecture.png)
+- UI screenshot/check script: `scripts/capture-ui.cjs` (requires Playwright + Microsoft Edge)
+
+The remaining sections below retain the original hackathon submission template;
+example links and placeholder stack descriptions are not deployment evidence.
+
 <p align="center">
   <img src="src/static/brand/careerlens_logo_horizontal.svg" alt="CareerLens AI × Team High Five Logo" width="560" />
 </p>

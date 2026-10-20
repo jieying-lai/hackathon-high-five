@@ -89,6 +89,7 @@ def match_user_to_roles(profile: dict, scenario: str = "moderate") -> dict:
                 "industry_alignment_pct": industry_pts,
                 "work_mode_fit_pct": mode_pts,
                 "gap_to_close_pct": max(0, 100 - total_score),
+                "scenario_adjustment_pct": total_score - (core_pts + trans_pts + industry_pts + mode_pts),
             },
             "matched_core_skills": matched_core,
             "matched_transferable_skills": matched_trans,
@@ -102,7 +103,7 @@ def match_user_to_roles(profile: dict, scenario: str = "moderate") -> dict:
     return {
         "candidate_name": profile.get("name", "Anonymous User"),
         "scenario_applied": scenario,
-        "fairness_audit": "Verified: Age, gender, ethnicity, and personal identifiers excluded from scoring.",
+        "fairness_audit": "Protected attributes excluded from scoring. Statistical parity has not been audited.",
         "verification_questions": generate_verification_questions(list(user_skills), user_industry),
         "recommended_roles": ranked_roles,
     }
