@@ -1,3 +1,4 @@
+#convert from csv to parquet format for faster processing and smaller file size
 from pathlib import Path
 import pandas as pd
 

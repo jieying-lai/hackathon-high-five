@@ -1,3 +1,4 @@
+#convert from csv to parquet format for faster processing and smaller file size
 import sys
 import subprocess
 import importlib.util
@@ -37,8 +38,8 @@ OUTPUT_DIR = BASE_DIR / "data" / "parquet"
 OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
 
 
-# Step 4: Automatically find all CSV files
-csv_files = sorted(BASE_DIR.rglob("*.csv"))
+# Step 4: find raw CSV files
+csv_files = sorted((BASE_DIR / "data" / "raw").rglob("*.csv"))
 
 if not csv_files:
     print("ERROR: No CSV files found!")
