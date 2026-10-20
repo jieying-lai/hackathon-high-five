@@ -46,6 +46,7 @@ async function loadQuestionnaireCatalog() {
   }
   questionnaireCatalog = response.data;
   const local = response.data.provider !== 'gemini';
+  document.getElementById('questionnaireExternalConsentLabel')?.classList.toggle('hidden', local);
   document.getElementById('questionnaireProviderDescription').textContent = local
     ? 'Questions are tailored to your CV skills, target role and basic answers.'
     : 'Your CV summary and basic answers are sent to Google Gemini when you press Generate.';
@@ -150,6 +151,7 @@ function backToQuestionnaireBasics() {
 
 async function requestQuestionnaireAI(action, button, status) {
   if (questionnaireBusy) return null;
+  if (questionnaireCatalog?.provider === 'gemini' && !document.getElementById('questionnaireExternalConsent')?.checked) { status.textContent = 'Choose whether to allow Google Gemini processing above first.'; return null; }
   if (!cvRecord) { status.textContent = 'Upload your PDF CV in Profile & Skills first.'; return null; }
   if (!answers.cField) { status.textContent = 'Choose your field first.'; document.getElementById('question-cField')?.focus(); return null; }
   questionnaireBusy = true;
@@ -166,7 +168,7 @@ async function requestQuestionnaireAI(action, button, status) {
   const timeout = setTimeout(() => questionnaireRequest?.abort(), 70000);
   try {
     const response = await fetch('/api/questionnaire/' + action, {method: 'POST', signal: questionnaireRequest.signal,
-      headers: {'Content-Type': 'application/json'}, body: JSON.stringify({field: answers.cField, answers,
+      headers: {'Content-Type': 'application/json'}, body: JSON.stringify({external_ai_consent: document.getElementById('questionnaireExternalConsent')?.checked === true, field: answers.cField, answers,
         language: window.careerLensLocale?.getLanguage() || 'en'})});
     const data = await response.json();
     if (!response.ok || !data.ok) throw new Error(data.message || 'AI is unavailable. Please retry.');
@@ -198,6 +200,7 @@ function roleRecommendationFingerprint() {
 function scheduleRoleRecommendation() {
   if (!questionnaireCatalog || current !== 'quest') return;
   clearTimeout(roleRecommendationTimer);
+  if (questionnaireCatalog?.provider === 'gemini' && !document.getElementById('questionnaireExternalConsent')?.checked) { roleRecommendationController?.abort(); roleRecommendationKey = ''; document.getElementById('roleRecommendationStatus').textContent = 'Google processing is off. Choose a role yourself or allow processing above.'; return; }
   const status = document.getElementById('roleRecommendationStatus');
   if (!cvRecord || !answers.cField) {
     roleRecommendationController?.abort();
@@ -229,7 +232,7 @@ async function recommendQuestionnaireRoles(key = roleRecommendationFingerprint()
   const timeout = setTimeout(() => controller.abort(), 65000);
   try {
     const response = await fetch('/api/questionnaire/recommendations', {method: 'POST', signal: controller.signal,
-      headers: {'Content-Type': 'application/json'}, body: JSON.stringify({field: answers.cField,
+      headers: {'Content-Type': 'application/json'}, body: JSON.stringify({external_ai_consent: document.getElementById('questionnaireExternalConsent')?.checked === true, field: answers.cField,
         language: window.careerLensLocale?.getLanguage() || 'en'})});
     const data = await response.json();
     if (!response.ok || !data.ok) throw new Error(data.message || 'Suggestion unavailable.');

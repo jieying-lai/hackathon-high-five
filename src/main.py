@@ -9,13 +9,19 @@ Run locally in VS Code terminal:
 """
 
 import os
+import io
+import json
+import secrets
+from datetime import timedelta
 from functools import wraps
+from urllib.parse import urlsplit
 
 from flask import Flask, jsonify, redirect, render_template, request, send_file, session
 
 import chatbot_engine
 import cv_engine
 import hr_engine
+import vault_sharing
 import job_index
 import questionnaire_engine
 from ai_matcher import load_json, match_user_to_roles
@@ -24,11 +30,72 @@ from trend_signals import get_trend_radar
 from utils import format_greeting
 
 app = Flask(__name__, template_folder="templates", static_folder="static")
-app.secret_key = os.getenv("FLASK_SECRET_KEY", "careerlens-sdc2026-dev-secret-key")
+app.secret_key = os.getenv("FLASK_SECRET_KEY") or secrets.token_hex(32)
+app.config.update(
+    MAX_CONTENT_LENGTH=9 * 1024 * 1024,  # 8 MB PDF plus multipart overhead
+    SESSION_COOKIE_HTTPONLY=True,
+    SESSION_COOKIE_SAMESITE="Lax",
+    SESSION_REFRESH_EACH_REQUEST=False,
+    SESSION_COOKIE_SECURE=os.getenv("COOKIE_SECURE", "0") == "1",
+    PERMANENT_SESSION_LIFETIME=timedelta(hours=2),
+)
+
+
+@app.before_request
+def protect_mutations():
+    """Require a same-session CSRF token for all changes, including sign in."""
+    if request.path.startswith("/static/sample_cvs/"):
+        sample_name = request.path[len("/static/sample_cvs/"):]
+        if sample_name not in {item["filename"] for item in cv_engine.SAMPLE_CV_SPECS}:
+            return jsonify(ok=False, message="This file is not a public synthetic demo CV."), 404
+    if request.method not in ("POST", "PUT", "PATCH", "DELETE"):
+        return None
+    expected = session.get("csrf_token", "")
+    provided = request.headers.get("X-CSRF-Token", "")
+    if not expected or not secrets.compare_digest(expected, provided):
+        return jsonify(ok=False, message="Your session changed. Refresh this page and try again."), 403
+    origin = request.headers.get("Origin")
+    if origin and urlsplit(origin).netloc != request.host:
+        return jsonify(ok=False, message="This request must come from CareerLens."), 403
+
+
+@app.after_request
+def private_response_headers(response):
+    if request.path.startswith("/api/") or request.path == "/workspace" or request.path.startswith("/shared/"):
+        response.headers["Cache-Control"] = "no-store, private"
+        response.headers["Pragma"] = "no-cache"
+        response.headers["Vary"] = "Cookie"
+    response.headers["X-Content-Type-Options"] = "nosniff"
+    response.headers["X-Frame-Options"] = "SAMEORIGIN"
+    response.headers["Referrer-Policy"] = "same-origin"
+    return response
+
+
+@app.errorhandler(413)
+def upload_too_large(_error):
+    return jsonify(ok=False, message="Upload one PDF CV, no larger than 8 MB."), 413
+
+
+@app.errorhandler(400)
+def invalid_request(_error):
+    return jsonify(ok=False, message="The request could not be read. Refresh and try again."), 400
+
+
+@app.route("/api/auth/csrf", methods=["GET"])
+def api_csrf():
+    if "csrf_token" not in session:
+        session["csrf_token"] = secrets.token_urlsafe(32)
+    return jsonify(csrf_token=session["csrf_token"])
+
+
+def json_object():
+    value = request.get_json(silent=True)
+    return value if isinstance(value, dict) else {}
 
 init_db()
 hr_engine.init_hr_tables()
 cv_engine.init_cv_tables()
+vault_sharing.init_share_tables()
 
 
 def api_role(role):
@@ -66,26 +133,32 @@ def workspace():
 # ------------------------------------------------------------------ auth
 @app.route("/api/auth/register", methods=["POST"])
 def api_register():
-    ok, msg, user_info = register_user(request.get_json(force=True) or {})
+    ok, msg, user_info = register_user(json_object())
     if not ok:
         return jsonify({"ok": False, "message": msg}), 400
+    session.clear()
     session["user"] = user_info
+    session["csrf_token"] = secrets.token_urlsafe(32)
+    session.permanent = True
     return jsonify({"ok": True, "message": msg, "user": user_info})
 
 
 @app.route("/api/auth/login", methods=["POST"])
 def api_login():
-    data = request.get_json(force=True) or {}
+    data = json_object()
     ok, msg, user_info = authenticate_user(data.get("email", ""), data.get("password", ""))
     if not ok:
         return jsonify({"ok": False, "message": msg}), 401
+    session.clear()
     session["user"] = user_info
+    session["csrf_token"] = secrets.token_urlsafe(32)
+    session.permanent = True
     return jsonify({"ok": True, "message": msg, "user": user_info})
 
 
 @app.route("/api/auth/logout", methods=["POST"])
 def api_logout():
-    session.pop("user", None)
+    session.clear()
     return jsonify({"ok": True, "message": "Logged out successfully."})
 
 
@@ -95,7 +168,6 @@ def api_me():
     if user and user.get("unique_uid"):
         fresh = get_user_by_uid(user["unique_uid"])
         if fresh:
-            session["user"] = fresh
             return jsonify({"user": fresh})
     return jsonify({"user": user})
 
@@ -105,7 +177,7 @@ def api_update_profile():
     user = session.get("user")
     if not user:
         return jsonify({"ok": False, "message": "Please sign in first."}), 401
-    data = request.get_json(force=True) or {}
+    data = json_object()
     ok, msg, updated_user = update_user_profile(
         unique_uid=user["unique_uid"],
         full_name=data.get("full_name"),
@@ -123,7 +195,7 @@ def api_update_password():
     user = session.get("user")
     if not user:
         return jsonify({"ok": False, "message": "Please sign in first."}), 401
-    data = request.get_json(force=True) or {}
+    data = json_object()
     ok, msg = update_user_password(
         unique_uid=user["unique_uid"],
         current_password=data.get("current_password", ""),
@@ -133,31 +205,6 @@ def api_update_password():
     if not ok:
         return jsonify({"ok": False, "message": msg}), 400
     return jsonify({"ok": True, "message": msg})
-
-
-# ------------------------------------------------------------------ Lumi Mascot AI Chatbot APIs
-@app.route("/api/chat/context", methods=["GET"])
-def api_chat_context():
-    user = session.get("user")
-    return jsonify({
-        "ok": True,
-        "mascot": chatbot_engine.MASCOT_PROFILE,
-        "quick_prompts": chatbot_engine.get_quick_prompts(user),
-        "portal": user["role"] if user else "guest",
-    })
-
-
-@app.route("/api/chat", methods=["POST"])
-def api_chat():
-    payload = request.get_json(force=True) or {}
-    user = session.get("user")
-    result = chatbot_engine.generate_lumi_response(
-        message=payload.get("message", ""),
-        user=user,
-        history=payload.get("history", []),
-        user_location=payload.get("user_location"),
-    )
-    return jsonify(result), (200 if result.get("ok") else 400)
 
 
 # ------------------------------------------------------------------ Talent Portal APIs
@@ -182,7 +229,8 @@ def questionnaire_generate(action):
     try:
         result = questionnaire_engine.generate(
             cv_engine.get_user_cv(_owner()), payload.get('field'),
-            payload.get('answers'), payload.get('language', 'en'), action)
+            payload.get('answers'), payload.get('language', 'en'), action,
+            external_ai_consent=payload.get('external_ai_consent') is True)
         return jsonify(ok=True, **result)
     except questionnaire_engine.QuestionnaireError as exc:
         return jsonify(ok=False, message=str(exc)), exc.status
@@ -216,20 +264,25 @@ def api_cv_upload():
     user = session["user"]
     # Support either direct multipart file upload OR quick-loading one of the synthetic sample PDFs
     if "file" in request.files and request.files["file"].filename:
+        if request.form.get("synthetic_confirmed") != "1":
+            return jsonify(ok=False, message="For this hackathon demo, confirm this is a synthetic CV with no real personal data."), 400
         up = request.files["file"]
         filename = up.filename or ""
-        pdf_bytes = up.read()
-        allow_anon = request.form.get("allow_anon_stats", "1") != "0"
+        pdf_bytes = up.read(cv_engine.MAX_PDF_BYTES + 1)
+        allow_anon = request.form.get("allow_anon_stats", "0") == "1"
     else:
-        body = request.get_json(silent=True) or {}
+        body = json_object()
         sample_name = (body.get("sample_filename") or "").strip()
         sample_path = os.path.join(cv_engine.SAMPLE_PDF_DIR, os.path.basename(sample_name))
-        if not sample_name or not os.path.exists(sample_path):
+        valid_samples = {item["filename"] for item in cv_engine.SAMPLE_CV_SPECS}
+        if sample_name not in valid_samples or not os.path.isfile(sample_path):
             return jsonify({"ok": False, "message": "Please select a valid .pdf CV file to upload."}), 400
         filename = os.path.basename(sample_name)
         with open(sample_path, "rb") as f:
             pdf_bytes = f.read()
-        allow_anon = bool(body.get("allow_anon_stats", True))
+        if "allow_anon_stats" in body and not isinstance(body["allow_anon_stats"], bool):
+            return jsonify(ok=False, message="Analytics consent must be true or false."), 400
+        allow_anon = body.get("allow_anon_stats", False)
 
     ok, msg, cv_data = cv_engine.save_user_pdf_cv(
         owner_uid=user["unique_uid"],
@@ -246,10 +299,72 @@ def api_cv_upload():
 @app.route("/api/cv/me", methods=["PUT"])
 @api_role("job_seeker")
 def api_cv_update():
-    ok, msg, cv_data = cv_engine.update_user_structured_cv(_owner(), request.get_json(force=True) or {})
+    ok, msg, cv_data = cv_engine.update_user_structured_cv(_owner(), json_object())
     if not ok:
         return jsonify({"ok": False, "message": msg}), 400
     return jsonify({"ok": True, "message": msg, "cv": cv_data})
+
+
+@app.route("/api/cv/me", methods=["DELETE"])
+@api_role("job_seeker")
+def api_cv_delete():
+    ok, msg = cv_engine.delete_user_cv(_owner())
+    if ok:
+        vault_sharing.remove_owner_shares(_owner())
+    return jsonify(ok=ok, message=msg), (200 if ok else 404)
+
+
+@app.route("/api/cv/me/export", methods=["GET"])
+@api_role("job_seeker")
+def api_cv_export():
+    data = cv_engine.export_user_cv(_owner())
+    if data is None:
+        return jsonify(ok=False, message="No CV found to export."), 404
+    data["recipient_sharing"] = vault_sharing.list_shares(_owner())
+    content = json.dumps(data, indent=2, ensure_ascii=False).encode("utf-8")
+    return send_file(io.BytesIO(content), mimetype="application/json", as_attachment=True,
+                     download_name="careerlens-private-profile.json")
+
+
+@app.route("/api/cv/shares", methods=["GET", "POST"])
+@api_role("job_seeker")
+def api_cv_shares():
+    if request.method == "GET":
+        return jsonify(ok=True, **vault_sharing.list_shares(_owner()))
+    ok, msg, share = vault_sharing.create_share(_owner(), json_object())
+    return jsonify(ok=ok, message=msg, share=share), (200 if ok else 400)
+
+
+@app.route("/api/cv/shares/<grant_id>", methods=["DELETE"])
+@api_role("job_seeker")
+def api_cv_revoke_share(grant_id):
+    ok = vault_sharing.revoke_share(_owner(), grant_id)
+    return jsonify(ok=ok, message="Access revoked." if ok else "Share not found."), (200 if ok else 404)
+
+
+@app.route("/shared/<grant_id>", methods=["GET"])
+def shared_cv_page(grant_id):
+    user = session.get("user")
+    if not user:
+        return render_template("shared_cv.html", share=None,
+                               error="Sign in to the recipient account, then reopen this link."), 401
+    share = vault_sharing.get_shared_cv(user["unique_uid"], grant_id)
+    if not share:
+        return render_template("shared_cv.html", share=None,
+                               error="This share is unavailable, expired, or belongs to another account."), 404
+    if share["share_summary"]:
+        share = vault_sharing.get_shared_cv(user["unique_uid"], grant_id, "summary")
+    return render_template("shared_cv.html", share=share, error=None)
+
+
+@app.route("/shared/<grant_id>/pdf", methods=["GET"])
+def shared_cv_pdf(grant_id):
+    user = session.get("user")
+    data = vault_sharing.get_shared_cv(user["unique_uid"], grant_id, "pdf") if user else None
+    if not data:
+        return jsonify(ok=False, message="This shared PDF is unavailable for your account."), 404
+    return send_file(data["stored_pdf_path"], mimetype="application/pdf", as_attachment=True,
+                     download_name=data["original_filename"])
 
 
 @app.route("/api/cv/me/pdf", methods=["GET"])
@@ -334,20 +449,8 @@ def api_geocode_reverse():
 @app.route("/api/jobs/js/<js_uid>/apply", methods=["POST"])
 @api_role("job_seeker")
 def api_jobs_apply_jobstreet(js_uid):
-    """Apply to a real JobStreet posting (materialised on demand, then consent-gated apply)."""
-    vid = job_index.materialize_vacancy(js_uid)
-    if not vid:
-        return jsonify({"ok": False, "message": "Job posting not found."}), 404
-    user = session["user"]
-    ok, msg, app_info = cv_engine.apply_to_vacancy(
-        candidate_uid=user["unique_uid"],
-        candidate_name=user["full_name"],
-        vacancy_id=vid,
-        payload=request.get_json(force=True) or {},
-    )
-    if not ok:
-        return jsonify({"ok": False, "message": msg}), 400
-    return jsonify({"ok": True, "message": msg, "application": app_info, "vacancy_id": vid})
+    """Imported dataset listings do not represent authenticated CV recipients."""
+    return jsonify(ok=False, message="This is a discovery listing without a connected employer account. Your CV has not been sent."), 409
 
 
 @app.route("/api/jobs/<int:vid>/apply", methods=["POST"])
@@ -358,7 +461,7 @@ def api_jobs_apply(vid):
         candidate_uid=user["unique_uid"],
         candidate_name=user["full_name"],
         vacancy_id=vid,
-        payload=request.get_json(force=True) or {},
+        payload=json_object(),
     )
     if not ok:
         return jsonify({"ok": False, "message": msg}), 400
@@ -401,7 +504,7 @@ def api_refresh_trends():
 @app.route("/api/analyze", methods=["POST"])
 @api_role("job_seeker")
 def api_analyze():
-    payload = request.get_json(force=True) or {}
+    payload = json_object()
     return jsonify(match_user_to_roles(profile=payload.get("profile", {}), scenario=payload.get("scenario", "moderate")))
 
 
@@ -415,7 +518,7 @@ def api_hr_vacancies():
 @app.route("/api/hr/vacancies", methods=["POST"])
 @api_role("hr_company")
 def api_hr_create_vacancy():
-    ok, msg, vacancy = hr_engine.create_vacancy(_owner(), request.get_json(force=True) or {})
+    ok, msg, vacancy = hr_engine.create_vacancy(_owner(), json_object())
     return (jsonify({"ok": True, "message": msg, "vacancy": vacancy}) if ok
             else (jsonify({"ok": False, "message": msg}), 400))
 
@@ -423,7 +526,7 @@ def api_hr_create_vacancy():
 @app.route("/api/hr/vacancies/<int:vid>/status", methods=["POST"])
 @api_role("hr_company")
 def api_hr_vacancy_status(vid):
-    status = (request.get_json(force=True) or {}).get("status")
+    status = (json_object()).get("status")
     if hr_engine.set_vacancy_status(_owner(), vid, status):
         return jsonify({"ok": True})
     return jsonify({"ok": False, "message": "Vacancy not found."}), 404
@@ -495,7 +598,7 @@ def api_hr_heatmap():
 @app.route("/api/hr/assignments", methods=["POST"])
 @api_role("hr_company")
 def api_hr_assign():
-    data = request.get_json(force=True) or {}
+    data = json_object()
     ok, msg = hr_engine.assign_training(_owner(), data.get("employee_id", ""), data.get("skill", ""))
     return jsonify({"ok": ok, "message": msg}), (200 if ok else 400)
 
@@ -503,9 +606,38 @@ def api_hr_assign():
 @app.route("/api/hr/assignments", methods=["DELETE"])
 @api_role("hr_company")
 def api_hr_revoke():
-    data = request.get_json(force=True) or {}
+    data = json_object()
     ok = hr_engine.revoke_training(_owner(), data.get("employee_id", ""), data.get("skill", ""))
     return jsonify({"ok": ok}), (200 if ok else 404)
+
+
+@app.route("/api/chat/context", methods=["GET"])
+def api_chat_context():
+    user = session.get("user")
+    return jsonify({
+        "ok": True,
+        "mascot": chatbot_engine.MASCOT_PROFILE,
+        "quick_prompts": chatbot_engine.get_quick_prompts(user),
+        "portal": user["role"] if user else "guest",
+    })
+
+
+@app.route("/api/chat", methods=["POST"])
+def api_chat():
+    payload = json_object()
+    user = session.get("user")
+    message = payload.get("message", "")
+    location = payload.get("user_location")
+    if not isinstance(message, str) or len(message) > 4000 or (location is not None and not isinstance(location, dict)):
+        return jsonify(ok=False, message="Send a text message up to 4,000 characters and a valid location."), 400
+    try:
+        result = chatbot_engine.generate_lumi_response(
+            message=message, user=user, user_location=location,
+            external_ai_consent=payload.get("external_ai_consent") is True,
+        )
+    except (TypeError, ValueError):
+        return jsonify(ok=False, message="Choose a city or provide valid latitude and longitude."), 400
+    return jsonify(result), (200 if result.get("ok") else 400)
 
 
 @app.route("/api/hr/interviews", methods=["GET", "POST"])
@@ -513,7 +645,7 @@ def api_hr_revoke():
 def hr_interviews():
     if request.method == "GET":
         return jsonify(ok=True, invitations=hr_engine.interview_list(_owner(), True))
-    result, error = hr_engine.create_interview(session["user"], request.get_json(silent=True) or {})
+    result, error = hr_engine.create_interview(session["user"], json_object())
     return (jsonify(ok=True, **result) if result else (jsonify(ok=False, message=error), 400))
 
 
@@ -533,8 +665,9 @@ def cancel_interview(invite_id):
 @app.route("/api/talent/interviews/<int:invite_id>/reply", methods=["POST"])
 @api_role("job_seeker")
 def reply_interview(invite_id):
-    ok = hr_engine.respond_interview(_owner(), invite_id, (request.get_json(silent=True) or {}).get("status"))
+    ok = hr_engine.respond_interview(_owner(), invite_id, (json_object()).get("status"))
     return jsonify(ok=ok), (200 if ok else 400)
+
 
 
 def main() -> None:
@@ -542,7 +675,7 @@ def main() -> None:
     print(format_greeting(project_name))
     port = int(os.getenv("PORT", 5000))
     print(f"Starting CareerLens AI server at http://127.0.0.1:{port}")
-    app.run(host="0.0.0.0", port=port, debug=True)
+    app.run(host=os.getenv("HOST", "127.0.0.1"), port=port, debug=False)
 
 
 if __name__ == "__main__":

@@ -142,7 +142,7 @@
         <nav id="topNav" class="mobile-nav" aria-label="Section navigation" hidden></nav>
       </header>
 
-      <main class="p-4 sm:p-6 lg:p-8 max-w-6xl mx-auto space-y-6">
+      <main class="p-4 sm:p-6 lg:p-8 max-w-6xl mx-auto space-y-6" style="padding-bottom: 140px">
         <div class="flex flex-wrap items-end justify-between gap-3">
           <div><div id="pgEyebrow" class="text-[11px] font-extrabold uppercase tracking-wider text-indigo-600"></div>
             <h1 id="pgTitle" class="text-2xl sm:text-3xl font-extrabold tracking-tight"></h1></div>
@@ -183,7 +183,7 @@
                   <div class="flex flex-wrap items-center gap-2">
                     <h2 id="accCardName" class="text-xl font-extrabold text-slate-900">User</h2>
                     <span id="accCardBadge" class="chip chip-indigo">Talent Account</span>
-                    <span class="chip chip-emerald">✓ Verified</span>
+                    <span class="chip chip-emerald">Account registered</span>
                   </div>
                   <div class="text-xs text-slate-500 mt-1 flex flex-wrap items-center gap-2">
                     <span>ID: <b id="accCardUid" class="font-mono text-slate-700"></b></span>
@@ -232,19 +232,22 @@
               <div class="h-11 w-11 rounded-2xl bg-teal-600 text-white grid place-items-center text-lg shrink-0 shadow">🔒</div>
               <div>
                 <div class="flex flex-wrap items-center gap-2">
-                  <span class="text-sm font-extrabold text-teal-950">Private PDF Vault &amp; Consent-Gated Sharing</span>
-                  <span class="chip chip-emerald">PDPA Protected</span>
-                  <span class="chip chip-indigo">PDF-Only Upload</span>
+                  <span class="text-sm font-extrabold text-teal-950">Your CV, your sharing choices</span>
+                  <span class="chip chip-indigo">Private by default</span>
                 </div>
                 <p class="text-xs text-slate-600 mt-1 leading-relaxed">
-                  Your uploaded PDF CV and AI-extracted summary are stored privately under your unique ID. By default, your data is used <b>only for anonymised statistical trend analysis and your personal job/reskilling recommendations</b>. Employers <b>cannot</b> view your organised CV or original PDF unless you explicitly apply to their job vacancy.
+                  Your PDF and organised profile are available to your signed-in account. An employer receives only the summary and/or PDF you choose to share when applying to its vacancy. Aggregate publication is currently disabled; your optional statistics preference is off by default. You can export your profile, withdraw sharing, or delete your vault below.
                 </p>
               </div>
             </div>
             <label class="flex items-center gap-2 text-xs font-bold text-teal-950 bg-white/80 px-3.5 py-2.5 rounded-2xl border border-teal-200 cursor-pointer shrink-0">
-              <input id="anonToggle" type="checkbox" checked onchange="toggleAnonStats(this.checked)" class="rounded text-teal-600 focus:ring-teal-500" />
-              Include in anonymised trend stats
+              <input id="anonToggle" type="checkbox" onchange="toggleAnonStats(this.checked)" class="rounded text-teal-600 focus:ring-teal-500" />
+              Optional statistics preference (publication disabled)
             </label>
+          </div>
+
+          <div class="rounded-2xl border border-amber-300 bg-amber-50 p-4 text-sm text-amber-950" role="note">
+            <b>Hackathon demo — use fictional CVs only.</b> This prototype uses a local, rule-based PDF parser; it is not a trained AI model and does not verify qualifications. Do not upload real names, contact details, identity documents, or confidential information. Text-based PDFs work best; image-only scans need OCR before upload.
           </div>
 
           <div class="grid lg:grid-cols-12 gap-6">
@@ -254,47 +257,79 @@
                 <div class="flex items-center justify-between">
                   <div>
                     <div class="text-sm font-extrabold">1. Upload your PDF CV</div>
-                    <div class="text-xs text-slate-500">Strictly `.pdf` format only (max 8 MB)</div>
+                    <div class="text-xs text-slate-500">Text-based PDF · maximum 8 MB</div>
                   </div>
                   <span class="chip chip-pink">.PDF ONLY</span>
                 </div>
 
-                <label id="dropZone" for="pdfInput" class="block border-2 border-dashed border-indigo-300/90 hover:border-indigo-500 bg-white/75 hover:bg-indigo-50/40 transition rounded-3xl p-6 text-center cursor-pointer">
-                  <input id="pdfInput" type="file" accept=".pdf,application/pdf" class="hidden" onchange="handlePdfSelect(this.files[0])" />
+                <label class="flex items-start gap-2.5 text-xs text-slate-700 cursor-pointer">
+                  <input id="syntheticConfirm" type="checkbox" class="mt-0.5 rounded text-indigo-600" />
+                  <span>I confirm my custom PDF contains only fictional, synthetic information.</span>
+                </label>
+                <label id="dropZone" for="pdfInput" tabindex="0" role="button" aria-label="Choose a fictional PDF CV" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();if(!uploadBusy)pdfInput.click()}" class="block border-2 border-dashed border-indigo-300/90 hover:border-indigo-500 bg-white/75 hover:bg-indigo-50/40 transition rounded-3xl p-6 text-center cursor-pointer">
+                  <input id="pdfInput" type="file" accept=".pdf,application/pdf" class="sr-only" onchange="handlePdfSelect(this.files[0])" />
                   <div class="mx-auto h-12 w-12 rounded-2xl bg-gradient-to-br from-indigo-500 to-pink-500 text-white grid place-items-center text-xl shadow-md mb-3">📄</div>
                   <div class="text-sm font-extrabold text-slate-800">Drop your PDF CV here or <span class="text-indigo-600 underline">browse</span></div>
-                  <div class="text-[11px] text-slate-500 mt-1">AI automatically extracts &amp; organises your education, experience, projects, and skills</div>
-                  <div id="uploadStatus" class="mt-3 text-xs font-bold text-indigo-600 hidden"></div>
+                  <div class="text-[11px] text-slate-500 mt-1">Extract, check the evidence, then review your profile before sharing</div>
                 </label>
+                <div id="uploadStatus" role="status" aria-live="polite" class="text-xs font-bold text-indigo-700 hidden"></div>
+                <ol id="uploadStages" aria-label="Upload progress" class="grid grid-cols-3 gap-2 text-[11px] text-slate-500">
+                  <li id="stageCheck" class="rounded-xl bg-slate-100 p-2">1. Check PDF</li>
+                  <li id="stageExtract" class="rounded-xl bg-slate-100 p-2">2. Extract text</li>
+                  <li id="stageReview" class="rounded-xl bg-slate-100 p-2">3. Review draft</li>
+                </ol>
 
                 <div class="border-t border-slate-200/70 pt-4 space-y-2.5">
                   <div class="flex items-center justify-between">
                     <span class="text-xs font-extrabold text-slate-700">Synthetic sample PDF CVs (for instant testing)</span>
-                    <span class="text-[10px] text-slate-400">1-click AI parse or download</span>
+                    <span class="text-[10px] text-slate-400">Try without a custom upload</span>
                   </div>
                   <div id="samplePdfList" class="space-y-2"></div>
                 </div>
               </div>
 
               <div class="glass rounded-3xl p-6 space-y-3">
+                <div class="text-sm font-extrabold">Share with someone you choose</div>
+                <p class="text-xs text-slate-600">The recipient needs a CareerLens account. Only that signed-in account can open the link. No email is sent.</p>
+                <label class="label" for="nRecipient">Recipient account email</label><input id="nRecipient" type="email" required class="input" placeholder="mentor@example.com" />
+                <label class="flex gap-2 text-xs"><input id="nSummary" type="checkbox" /> Share reviewed summary, including contact details</label>
+                <label class="flex gap-2 text-xs"><input id="nPdf" type="checkbox" /> Share complete original PDF</label>
+                <label class="label" for="nExpiry">Access expires after</label><select id="nExpiry" class="input"><option value="1">1 day</option><option value="7" selected>7 days</option><option value="30">30 days</option></select>
+                <button id="namedShareBtn" onclick="createNamedShare()" class="btn btn-primary !text-xs">Create recipient access</button>
+                <p class="text-[11px] text-slate-500">Editing or replacing the CV ends existing grants. Revoking access cannot retract copies already saved by a recipient.</p>
+                <div id="namedSharesList" class="space-y-2"></div><div id="receivedSharesList" class="space-y-2"></div>
+                <details><summary class="text-xs font-bold cursor-pointer">Recent recipient access</summary><div id="namedShareEvents" class="mt-2 space-y-1"></div></details>
+              </div>
+
+              <!-- Employer Access Audit Log -->
+              <div class="glass rounded-3xl p-6 space-y-3">
                 <div class="flex items-center justify-between">
                   <div>
                     <div class="text-sm font-extrabold">Employer CV access log</div>
-                    <div class="text-[11px] text-slate-500">Every company view of your CV is audited here</div>
+                    <div class="text-[11px] text-slate-500">Recorded employer accesses through this app</div>
                   </div>
                   <span id="accessCountBadge" class="chip chip-slate">0 views</span>
                 </div>
                 <div id="accessLogList" class="space-y-2 max-h-52 overflow-y-auto pr-1"></div>
               </div>
+              <div class="glass rounded-3xl p-6 space-y-3">
+                <div class="text-sm font-extrabold">3. Manage employer access</div>
+                <p class="text-xs text-slate-500">Each application grants access only to that vacancy's company account. Withdrawal blocks future access here; it cannot retract copies already downloaded.</p>
+                <div id="activeSharesList" class="space-y-3"></div>
+                <div class="flex flex-wrap gap-2 border-t border-slate-200 pt-3">
+                  <button id="exportCvBtn" onclick="exportMyCv()" class="btn btn-soft !text-xs" disabled>Export profile JSON</button>
+                  <button id="deleteCvBtn" onclick="deleteMyCv()" class="btn btn-danger !text-xs" disabled>Delete my vault</button>
+                </div>
+              </div>
             </div>
 
             <div class="lg:col-span-7 space-y-5">
               <div class="glass rounded-3xl p-6 sm:p-7 space-y-5">
-                <div class="flex flex-wrap items-start justify-between gap-3 border-b border-slate-200/70 pb-4" data-no-translate>
+                <div class="flex flex-wrap items-start justify-between gap-3 border-b border-slate-200/70 pb-4">
                   <div>
                     <div class="flex items-center gap-2">
-                      <span class="text-sm font-extrabold">2. AI-Organised CV Summary</span>
-                      <span id="cvStatusChip" class="chip chip-emerald">Stored in private vault</span>
+                      <span class="text-sm font-extrabold">2. Review your organised profile</span>
+                      <span id="cvStatusChip" class="chip chip-amber">No PDF yet</span>
                     </div>
                     <div id="cvFileMeta" class="text-xs text-slate-500 mt-0.5">Upload a PDF CV on the left to extract your structured profile</div>
                   </div>
@@ -303,51 +338,78 @@
                   </div>
                 </div>
 
-                <div class="tint tint-indigo rounded-2xl p-4 space-y-2" data-no-translate>
+                <div id="cvReviewPanel" class="rounded-2xl border border-amber-200 bg-amber-50 p-4 space-y-2" aria-live="polite">
+                  <div id="cvReviewHeading" class="text-xs font-extrabold text-amber-950">Review required before sharing</div>
+                  <p id="extractionMethod" class="text-xs text-slate-600">Upload a sample or fictional PDF to begin.</p>
+                  <ul id="reviewWarnings" class="text-xs text-slate-600 list-disc pl-4 space-y-1"></ul>
+                </div>
+
+                <!-- Extractive summary -->
+                <div class="tint tint-indigo rounded-2xl p-4 space-y-2">
                   <div class="flex items-center justify-between">
-                    <span class="text-[11px] font-extrabold uppercase tracking-wider text-indigo-700">✨ AI Executive Summary (Captured from PDF)</span>
+                    <label for="pSummary" class="text-[11px] font-extrabold uppercase tracking-wider text-indigo-700">Draft professional summary</label>
                     <span id="cvSeekerType" class="chip chip-indigo"></span>
                   </div>
-                  <textarea id="pSummary" rows="3" class="input !bg-white/90 text-xs leading-relaxed" placeholder="AI executive summary extracted from your PDF CV..."></textarea>
+                  <textarea id="pSummary" rows="4" maxlength="6000" class="input !bg-white/90 text-xs leading-relaxed" placeholder="Review the extracted summary. Keep only statements supported by the CV."></textarea>
                   <ul id="aiHighlights" class="space-y-1 text-[11px] text-slate-600 pt-1"></ul>
                 </div>
 
                 <div class="grid sm:grid-cols-2 gap-3.5">
-                  <div><label class="label" for="pName">Full name</label><input id="pName" data-no-translate class="input" /></div>
-                  <div><label class="label" for="pRole">Current role</label><input id="pRole" class="input" /></div>
-                  <div><label class="label" for="pIndustry">Industry</label><select id="pIndustry" class="input"><option>Finance & Accounting</option><option>IT & Software</option><option>Marketing & PR</option><option>HR & Administration</option></select></div>
-                  <div><label class="label" for="pMode">Work mode</label><select id="pMode" class="input"><option>Hybrid</option><option>Remote</option><option>On-site</option></select></div>
-                  <div data-no-translate><label class="label" for="pEdu">Qualification level</label><select id="pEdu" class="input"><option>Diploma / TVET</option><option>Bachelor's Degree</option><option>Master's / Postgraduate</option></select></div>
-                  <div data-no-translate><label class="label" for="pYears">Years of experience</label><input id="pYears" type="number" min="0" max="40" value="1" class="input" /></div>
+                  <div><label for="pName" class="label">Full name</label><input id="pName" maxlength="200" class="input" /></div>
+                  <div><label for="pRole" class="label">Current role / headline</label><input id="pRole" maxlength="300" class="input" /></div>
+                  <div><label for="pEmail" class="label">Email</label><input id="pEmail" type="email" maxlength="254" class="input" autocomplete="off" /></div>
+                  <div><label for="pPhone" class="label">Phone</label><input id="pPhone" type="tel" maxlength="100" class="input" autocomplete="off" /></div>
+                  <div class="sm:col-span-2"><label for="pLocation" class="label">Location</label><input id="pLocation" maxlength="300" class="input" /></div>
+                  <div><label for="pIndustry" class="label">Industry sector</label><select id="pIndustry" class="input"><option value="">Not specified</option><option>Finance & Accounting</option><option>IT & Software</option><option>Marketing & PR</option><option>HR & Administration</option></select></div>
+                  <div><label for="pMode" class="label">Preferred work mode</label><select id="pMode" class="input"><option value="">Not specified</option><option>Hybrid</option><option>Remote</option><option>On-site</option></select></div>
+                  <div><label for="pEdu" class="label">Qualification level</label><select id="pEdu" class="input"><option value="">Not specified</option><option>SPM / UEC</option><option>Diploma / TVET</option><option>Bachelor's Degree</option><option>Master's / Postgraduate</option><option>Doctor</option></select></div>
+                  <div><label for="pYears" class="label">Years of experience</label><input id="pYears" type="number" min="0" max="60" step="0.5" placeholder="Not specified" class="input" /><p class="text-[10px] text-slate-500 mt-1">Leave blank if unknown; 0 means no experience.</p></div>
                 </div>
 
-                <div class="grid sm:grid-cols-3 gap-3" data-no-translate>
+                <!-- Extracted Experience, Education, Projects -->
+                <div class="grid sm:grid-cols-2 gap-3">
                   <div class="bg-white/80 rounded-2xl p-3.5 border border-slate-200/70 space-y-1.5">
-                    <div class="text-[11px] font-extrabold text-indigo-700 uppercase">💼 Work Experience</div>
-                    <ul id="cvExpList" class="space-y-1.5 text-[11px] text-slate-600 list-disc pl-4"></ul>
+                    <label for="pExperience" class="text-[11px] font-extrabold text-indigo-700 uppercase">Work experience</label>
+                    <textarea id="pExperience" rows="5" class="input !text-xs" placeholder="One entry per line"></textarea>
                   </div>
                   <div class="bg-white/80 rounded-2xl p-3.5 border border-slate-200/70 space-y-1.5">
-                    <div class="text-[11px] font-extrabold text-teal-700 uppercase">🎓 Education</div>
-                    <ul id="cvEduList" class="space-y-1.5 text-[11px] text-slate-600 list-disc pl-4"></ul>
+                    <label for="pEducation" class="text-[11px] font-extrabold text-teal-700 uppercase">Education</label>
+                    <textarea id="pEducation" rows="5" class="input !text-xs" placeholder="One entry per line"></textarea>
                   </div>
                   <div class="bg-white/80 rounded-2xl p-3.5 border border-slate-200/70 space-y-1.5">
-                    <div class="text-[11px] font-extrabold text-pink-700 uppercase">🚀 Key Projects</div>
-                    <ul id="cvProjList" class="space-y-1.5 text-[11px] text-slate-600 list-disc pl-4"></ul>
+                    <label for="pProjects" class="text-[11px] font-extrabold text-pink-700 uppercase">Projects</label>
+                    <textarea id="pProjects" rows="5" class="input !text-xs" placeholder="One entry per line"></textarea>
+                  </div>
+                  <div class="bg-white/80 rounded-2xl p-3.5 border border-slate-200/70 space-y-1.5">
+                    <label for="pCertifications" class="text-[11px] font-extrabold text-indigo-700 uppercase">Certifications</label>
+                    <textarea id="pCertifications" rows="5" class="input !text-xs" placeholder="One entry per line"></textarea>
                   </div>
                 </div>
 
                 <div id="cvParserAnalytics" class="tint tint-teal rounded-2xl p-4 space-y-3 hidden" data-no-translate></div>
 
                 <div>
-                  <label class="label" for="skillInput">Skills <span class="text-slate-400 font-medium">· press Enter to add</span></label>
+                  <label for="skillInput" class="label">Skills <span class="text-slate-400 font-medium">· extracted mentions are not proof of proficiency</span></label>
                   <div id="skillChips" class="flex flex-wrap gap-2 mb-2.5"></div>
-                  <input id="skillInput" class="input" placeholder="Type a skill, e.g. Financial Auditing" list="skillSuggest" />
+                  <input id="skillInput" class="input" placeholder="Add a skill and press Enter (e.g. Python Data Analysis)" list="skillSuggest" />
                   <datalist id="skillSuggest"></datalist>
                 </div>
 
-                <div class="flex flex-wrap items-center justify-between gap-3 pt-2 border-t border-slate-200/70" data-no-translate>
-                  <button onclick="showTab('jobs')" class="btn btn-soft">📍 Explore Nearby Jobs &amp; Map →</button>
-                  <button onclick="saveProfile()" class="btn btn-primary">Save Summary &amp; Refresh AI Matches →</button>
+                <details class="rounded-2xl bg-slate-50 border border-slate-200 p-4">
+                  <summary class="text-xs font-extrabold cursor-pointer">Original extraction evidence (before your edits)</summary>
+                  <p class="text-[11px] text-slate-500 mt-2">Quotes and page numbers explain the parser's draft. Your edits are self-reported and are not independently verified.</p>
+                  <div id="fieldEvidenceList" class="space-y-2 mt-3"></div>
+                  <div id="skillEvidenceList" class="space-y-2 mt-3"></div>
+                </details>
+                <label class="flex items-start gap-2.5 text-xs text-slate-700 cursor-pointer">
+                  <input id="reviewConfirm" type="checkbox" class="mt-0.5 rounded text-indigo-600" />
+                  <span>I have checked the summary, contact details, sections and skills against the PDF, and corrected any mistakes. Mark this profile as reviewed when I save.</span>
+                </label>
+                <div id="profileSaveStatus" class="text-xs font-semibold text-slate-600" role="status" aria-live="polite"></div>
+
+                <div class="flex flex-wrap items-center justify-between gap-3 pt-2 border-t border-slate-200/70">
+                  <button onclick="showTab('jobs')" class="btn btn-soft">💼 Browse & Apply Jobs →</button>
+                  <button id="saveProfileBtn" onclick="saveProfile()" class="btn btn-primary" disabled>Save reviewed profile →</button>
                 </div>
               </div>
             </div>
@@ -536,6 +598,7 @@
             <div class="flex-1"><div class="text-sm font-extrabold">Application questionnaire</div><div id="qProgText" class="text-xs text-slate-500"></div>
               <div class="bar mt-2"><i id="qBar" style="width:0%"></i></div></div>
           </div>
+          <label id="questionnaireExternalConsentLabel" class="hidden flex gap-2 text-xs text-slate-600"><input id="questionnaireExternalConsent" type="checkbox" onchange="scheduleRoleRecommendation()" />Allow Google Gemini to process my reviewed CV summary, work/project details and questionnaire answers for role suggestions and questions. Optional; local processing sends nothing to Google.</label>
           <form id="questionnaireBasics" class="glass rounded-3xl p-6 space-y-5" onsubmit="event.preventDefault();continueQuestionnaire()">
             <div><h2 class="font-extrabold">1 · Common questions</h2><p class="text-xs text-slate-500 mt-1">All basic fields are required. Choose your field before selecting a role.</p></div>
             <div id="commonQ" class="questionnaire-fields"></div>
@@ -636,35 +699,36 @@
 
   <div id="applyModalWrap" class="hidden" data-no-translate>
     <div class="overlay" onclick="closeApplyModal(event)">
-      <div class="modal p-6 sm:p-8 space-y-5 max-w-lg w-full" onclick="event.stopPropagation()">
+      <div class="modal p-6 sm:p-8 space-y-5 max-w-lg w-full" role="dialog" aria-modal="true" aria-labelledby="amTitle" onclick="event.stopPropagation()" onkeydown="handleApplyKeys(event)">
         <div class="flex items-start justify-between gap-3">
           <div>
             <div class="text-[11px] font-extrabold uppercase tracking-wider text-indigo-600">Consent-Gated Application</div>
             <h3 id="amTitle" class="text-xl font-extrabold mt-0.5">Apply for Role</h3>
             <div id="amMeta" class="text-xs text-slate-500"></div>
           </div>
-          <button onclick="closeApplyModal()" class="text-slate-400 hover:text-slate-700 text-xl font-bold">✕</button>
+          <button onclick="closeApplyModal()" aria-label="Close application" class="text-slate-400 hover:text-slate-700 text-xl font-bold">✕</button>
         </div>
 
         <div class="tint tint-teal rounded-2xl p-4 space-y-2.5">
           <div class="text-xs font-extrabold text-teal-950">🔒 Choose what to share with this employer:</div>
           <label class="flex items-start gap-2.5 text-xs text-slate-700 cursor-pointer">
-            <input id="amShareOrg" type="checkbox" checked class="mt-0.5 rounded text-teal-600" />
-            <span><b>Share AI-Organised CV Summary</b> (structured skills, education, experience &amp; executive summary)</span>
+            <input id="amShareOrg" type="checkbox" class="mt-0.5 rounded text-teal-600" />
+            <span><b>Share organised CV summary</b> (including saved contact details, skills, education, experience, projects and certifications)</span>
           </label>
           <label class="flex items-start gap-2.5 text-xs text-slate-700 cursor-pointer">
-            <input id="amSharePdf" type="checkbox" checked class="mt-0.5 rounded text-teal-600" />
-            <span><b>Allow employer to view Original Uploaded PDF CV</b> (authentic `.pdf` document if HR needs full verification)</span>
+            <input id="amSharePdf" type="checkbox" class="mt-0.5 rounded text-teal-600" />
+            <span><b>Share original PDF CV</b> (all content in the uploaded file; recipients may save a copy)</span>
           </label>
+          <p class="text-[11px] text-slate-600">Permission applies only to the company account that owns this vacancy. Withdrawal stops future access here but cannot retract downloaded copies. Editing the profile or replacing the PDF revokes previous sharing. Review and share again to give access to your updates.</p>
         </div>
 
         <div class="grid grid-cols-2 gap-3">
           <div>
-            <label class="label">Expected salary (RM)</label>
+            <label for="amSalary" class="label">Expected salary (RM)</label>
             <input id="amSalary" type="number" min="1500" max="50000" value="5200" class="input" />
           </div>
           <div>
-            <label class="label">Notice period / availability</label>
+            <label for="amAvail" class="label">Notice period / availability</label>
             <select id="amAvail" class="input">
               <option>Immediately</option>
               <option>2 weeks</option>
@@ -675,13 +739,13 @@
         </div>
 
         <div>
-          <label class="label">Brief note to hiring manager (optional)</label>
+          <label for="amNote" class="label">Brief note to hiring manager (optional)</label>
           <textarea id="amNote" rows="2" class="input" placeholder="Highlight why you are interested in this role..."></textarea>
         </div>
 
         <div class="flex justify-end gap-2 pt-2">
           <button onclick="closeApplyModal()" class="btn btn-soft">Cancel</button>
-          <button onclick="submitJobApplication()" class="btn btn-primary">Confirm &amp; Submit Application →</button>
+          <button id="submitApplicationBtn" onclick="submitJobApplication()" class="btn btn-primary">Confirm & submit application →</button>
         </div>
       </div>
     </div>
@@ -717,7 +781,7 @@
           <div class="grid sm:grid-cols-2 gap-3.5">
             <div>
               <label class="label" for="accFullName">Full Name *</label>
-              <input id="accFullName" type="text" required class="input" placeholder="Your real name" />
+              <input id="accFullName" type="text" required class="input" placeholder="Your display name" />
             </div>
             <div>
               <label class="label" for="accEmail">Email Address *</label>
@@ -770,10 +834,10 @@
 
           <div class="tint tint-teal rounded-2xl p-3.5 text-xs text-slate-600 space-y-1">
             <div class="font-extrabold text-teal-900 flex items-center gap-1.5">
-              <span>🛡️ PDPA Consent Verified</span>
+              <span>🛡️ Sharing is your choice</span>
               <span class="chip chip-emerald !text-[9px]">Active</span>
             </div>
-            <div>Your personal profile is protected under Malaysian PDPA regulations and is only shared with employers upon your explicit job application.</div>
+            <div>Your CV stays private until you choose a recipient and access scope. This demo does not verify real-world identity or certify legal compliance.</div>
           </div>
 
           <div class="flex items-center justify-end gap-2.5 pt-2 border-t border-slate-200/70">
@@ -811,6 +875,7 @@
 
   <script src="/static/js/common.js?v=20261020-formal-lumi"></script>
 
+  <script src="/static/js/vault-shares.js"></script>
   <script src="/static/js/interviews.js?v=20261020-4"></script>
   <script src="/static/js/questionnaire.js?v=20261020-auto-role"></script>
   <script>
@@ -844,6 +909,7 @@
     let leafletMap = null, leafletMarkers = [], userMarker = null, activeCompanyId = null, filteredCompsCache = [];
     let skills = [], scenario = 'moderate', trend = null, roles = [], aiQuestions = [], selected = 0;
     let analysed = false; const visited = new Set(['dash']); let answers = {}; let current = 'dash';
+    let uploadBusy = false, profileBusy = false, applicationBusy = false, statsBusy = false, profileDirty = false, applyReturnFocus = null;
 
     const ringColor = s => s >= 80 ? '#10b981' : s >= 60 ? '#6366f1' : '#f59e0b';
     const rm = n => 'RM ' + Number(n).toLocaleString();
@@ -997,67 +1063,95 @@
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
-    /* ---------- PDF CV Upload & Structured Summary ---------- */
-    async function loadMyCv() {
+    /* ---------- PDF vault, review and consent ---------- */
+    const profileFieldIds = ['pName', 'pRole', 'pEmail', 'pPhone', 'pLocation', 'pIndustry', 'pMode', 'pEdu', 'pYears', 'pSummary', 'pExperience', 'pEducation', 'pProjects', 'pCertifications', 'skillInput', 'reviewConfirm'];
+    const isReviewed = () => cvRecord?.structured_cv?.review_status === 'reviewed';
+    const activeShares = () => cvRecord?.applications || [];
+    const splitEntries = value => value.split(/\r?\n/).map(s => s.trim()).filter(Boolean);
+    const entryText = values => (values || []).map(v => typeof v === 'string' ? v : JSON.stringify(v)).join('\n');
+
+    function updateVaultControls() {
+      const busy = uploadBusy || profileBusy || statsBusy;
+      pdfInput.disabled = busy;
+      syntheticConfirm.disabled = busy;
+      anonToggle.disabled = busy;
+      dropZone.setAttribute('aria-disabled', String(busy));
+      dropZone.setAttribute('aria-busy', String(uploadBusy));
+      document.querySelectorAll('[data-sample-upload]').forEach(b => { b.disabled = busy; });
+      profileFieldIds.forEach(id => { document.getElementById(id).disabled = busy || !cvRecord; });
+      saveProfileBtn.disabled = busy || !cvRecord;
+      exportCvBtn.disabled = busy || !cvRecord;
+      deleteCvBtn.disabled = busy || !cvRecord;
+      document.querySelectorAll('[data-revoke-share]').forEach(b => { b.disabled = busy || applicationBusy; });
+      saveProfileBtn.textContent = profileBusy ? 'Saving…' : 'Save reviewed profile →';
+    }
+
+    function markProfileDirty() {
+      if (!cvRecord) return;
+      profileDirty = true;
+      reviewConfirm.checked = false;
+      profileSaveStatus.textContent = 'Unsaved changes. Check your edits and confirm the review before saving.';
+      cvStatusChip.textContent = 'Unsaved changes';
+      cvStatusChip.className = 'chip chip-amber';
+    }
+
+    function showUploadStage(stage, message, error = false) {
+      uploadStatus.textContent = message;
+      uploadStatus.classList.remove('hidden');
+      uploadStatus.className = 'text-xs font-bold ' + (error ? 'text-rose-700' : 'text-indigo-700');
+      ['stageCheck', 'stageExtract', 'stageReview'].forEach((id, i) => {
+        const el = document.getElementById(id);
+        el.className = 'rounded-xl p-2 ' + (i < stage ? 'bg-teal-100 text-teal-900' : i === stage ? 'bg-indigo-100 text-indigo-900 font-bold' : 'bg-slate-100 text-slate-500');
+        if (i === stage) el.setAttribute('aria-current', 'step'); else el.removeAttribute('aria-current');
+      });
+    }
+
+    async function loadMyCv(force = false) {
+      if (profileDirty && !force) return;
       const r = await api('/api/cv/me');
-      if (!r.ok) return;
-      cvRecord = r.data.cv;
+      if (!r.ok) throw new Error(r.data.message || 'Could not load your vault. Please try again.');
+      cvRecord = r.data.cv || null;
       samplePdfs = r.data.samples || [];
+      profileDirty = false;
       renderSamplePdfs();
       renderCvVault();
+      await loadNamedShares();
+    }
+
+    async function reloadVault() {
+      if (uploadBusy || profileBusy || statsBusy) return;
+      if (profileDirty && !confirm('Discard unsaved edits and reload the saved profile?')) return;
+      try { await loadMyCv(true); } catch (error) { toast(error.message, 'err'); }
     }
 
     function renderSamplePdfs() {
-      if (!window.samplePdfList) return;
-      samplePdfList.innerHTML = samplePdfs.map(s => `
+      samplePdfList.innerHTML = samplePdfs.map((s, i) => `
         <div class="flex items-center justify-between gap-2 bg-white/80 rounded-2xl px-3.5 py-2.5 border border-slate-200/70">
-          <div class="min-w-0">
-            <div class="text-xs font-extrabold truncate">${esc(s.label)}</div>
-            <div class="text-[10px] font-mono text-slate-400 truncate">${esc(s.filename)}</div>
-          </div>
+          <div class="min-w-0"><div class="text-xs font-extrabold truncate">${esc(s.label)}</div><div class="text-[10px] font-mono text-slate-400 truncate">${esc(s.filename)}</div></div>
           <div class="flex items-center gap-1.5 shrink-0">
             <a href="${esc(s.url)}" download class="btn btn-soft !py-1 !px-2.5 !text-[11px]" title="Download sample PDF">⬇ PDF</a>
-            <button onclick="useSamplePdf('${esc(s.filename)}')" class="btn btn-primary !py-1 !px-2.5 !text-[11px]">Upload &amp; Parse</button>
+            <button data-sample-upload onclick="useSamplePdf(samplePdfs[${i}].filename)" class="btn btn-primary !py-1 !px-2.5 !text-[11px]">Try sample</button>
           </div>
         </div>`).join('');
     }
 
-    function renderCvVault() {
-      if (!window.cvStatusChip) return;
-      if (!cvRecord || !cvRecord.structured_cv) {
-        cvStatusChip.textContent = 'No PDF uploaded yet';
-        cvStatusChip.className = 'chip chip-amber';
-        cvFileMeta.textContent = 'Upload a .pdf CV to unlock AI extraction and job applications';
-        viewMyPdfBtn.classList.add('hidden');
-        accessCountBadge.textContent = '0 views';
-        accessLogList.innerHTML = '<div class="text-xs text-slate-400">No employer has viewed your CV.</div>';
-        return;
-      }
-      const st = cvRecord.structured_cv;
-      cvStatusChip.textContent = '✓ Stored in Private Vault';
-      cvStatusChip.className = 'chip chip-emerald';
-      cvFileMeta.textContent = `${cvRecord.original_filename} · ${cvRecord.file_size_kb} KB · ${cvRecord.page_count} page(s) · SHA-256 ${cvRecord.file_sha256} · Updated ${cvRecord.updated_at}`;
-      viewMyPdfBtn.classList.remove('hidden');
-      anonToggle.checked = Boolean(cvRecord.allow_anon_stats);
+    function setSelectValue(element, value) {
+      value = value || '';
+      if (value && !Array.from(element.options).some(o => o.value === value)) element.add(new Option(value, value));
+      element.value = value;
+    }
 
-      pName.value = st.full_name || (user ? user.full_name : '');
-      pRole.value = st.current_role || '';
-      pIndustry.value = st.industry || 'Finance & Accounting';
-      pMode.value = st.work_mode_preference || 'Hybrid';
-      pEdu.value = st.education_level || "Bachelor's Degree";
-      pYears.value = st.years_experience ?? 1;
-      pSummary.value = st.executive_summary || '';
-      cvSeekerType.textContent = st.seeker_type || 'Professional';
+    function renderEvidence(st) {
+      const fields = Object.entries(st.field_evidence || {});
+      fieldEvidenceList.innerHTML = fields.length ? fields.map(([field, evidence]) => {
+        const ev = evidence || {};
+        return `<div class="rounded-xl bg-white p-3 text-[11px]"><b>${esc(field.replaceAll('_', ' '))}</b><span class="text-slate-500"> · ${esc(ev.source || 'Source not specified')}${ev.page ? ' · page ' + esc(ev.page) : ''}</span>${ev.quote ? `<blockquote class="mt-1 text-slate-600 whitespace-pre-wrap">“${esc(ev.quote)}”</blockquote>` : '<p class="text-slate-500 mt-1">No source quote available.</p>'}</div>`;
+      }).join('') : '<p class="text-xs text-slate-500">No field evidence available.</p>';
+      skillEvidenceList.innerHTML = (st.skill_evidence || []).map(ev => `<div class="rounded-xl bg-white p-3 text-[11px]"><b>${esc(ev.skill)}</b><span class="text-slate-500"> · ${esc((ev.status || 'unverified').replaceAll('_', ' '))}${ev.page ? ' · page ' + esc(ev.page) : ''}</span>${ev.quote ? `<blockquote class="mt-1 text-slate-600 whitespace-pre-wrap">“${esc(ev.quote)}”</blockquote>` : ''}</div>`).join('');
+    }
 
-      aiHighlights.innerHTML = (st.ai_highlights || []).map(h => `<li class="flex items-center gap-1.5"><span class="text-indigo-600 font-bold">•</span><span>${esc(h)}</span></li>`).join('');
-      cvExpList.innerHTML = (st.work_experience || []).map(x => `<li>${esc(x)}</li>`).join('') || '<li>No entries extracted</li>';
-      cvEduList.innerHTML = (st.education_history || []).map(x => `<li>${esc(x)}</li>`).join('') || '<li>No entries extracted</li>';
-      cvProjList.innerHTML = (st.projects || []).map(x => `<li>${esc(x)}</li>`).join('') || '<li>No entries extracted</li>';
-
-      skills = [...(st.skills || [])];
-      renderSkills();
-
-      const pa = st.parser_analytics;
+    function renderParserAnalytics(pa) {
+      cvParserAnalytics.classList.toggle('hidden', !pa);
       if (pa && window.cvParserAnalytics) {
         cvParserAnalytics.classList.remove('hidden');
         const pred = pa.predicted_profile || {};
@@ -1067,23 +1161,24 @@
         cvParserAnalytics.innerHTML = `
           <div class="flex flex-wrap items-center justify-between gap-2">
             <div>
-              <div class="text-[11px] font-extrabold uppercase tracking-wider text-teal-800">🧠 NLP Resume Parser &amp; 5-Pillar Competency Analysis</div>
-              <div class="text-xs text-slate-600 mt-0.5">Classified Profile: <b class="text-slate-900">${esc(pred.domain || st.current_role)}</b> (${pred.confidence_pct || 85}% match) · Major: <b>${esc(maj.major || '')}</b></div>
+              <div class="text-[11px] font-extrabold uppercase tracking-wider text-teal-800">CV wording signals · local keyword heuristics</div>
+              <div class="text-xs text-slate-600 mt-0.5">Classified Profile: <b class="text-slate-900">${esc(pred.domain || 'Not specified')}</b> (confidence not validated) · Major: <b>${esc(maj.major || 'Not specified')}</b></div>
             </div>
             <div class="flex items-center gap-1.5">
-              <span class="chip chip-emerald">Competency ${pa.competency_score || 0}/100</span>
-              <span class="chip chip-indigo">Impact ${imp.impact_score || 0}/100</span>
+              <span class="chip chip-emerald">Keyword coverage ${pa.competency_score ?? "Not specified"}</span>
+              <span class="chip chip-indigo">Impact wording ${imp.impact_score ?? "Not specified"}</span>
             </div>
           </div>
 
+          <p class="text-[11px] text-slate-600">${esc(pa.disclaimer || "Counts of words and phrases are prompts for review, not proof of ability or hiring suitability.")}</p>
           <div class="grid sm:grid-cols-5 gap-2 pt-1">
             ${(pa.competencies || []).map(c => `
               <div class="bg-white/85 rounded-xl p-2.5 border border-teal-200/70 space-y-1">
                 <div class="flex items-center justify-between text-[10px]">
                   <span class="font-extrabold text-slate-700 truncate">${esc(c.label.split(' ')[0])}</span>
-                  <b class="text-teal-700">${c.score_pct}%</b>
+                  <b class="text-teal-700">${c.score_pct == null ? "Not specified" : c.score_pct + "%"}</b>
                 </div>
-                <div class="bar teal"><i style="width:${c.score_pct}%"></i></div>
+                <div class="bar teal"><i style="width:${Math.max(0, Math.min(100, Number(c.score_pct) || 0))}%"></i></div>
                 <div class="text-[10px] text-slate-500 truncate" title="${esc((c.matched_verbs || []).join(', '))}">
                   ${(c.matched_verbs || []).slice(0, 2).map(v => `<span class="text-teal-800 font-semibold">${esc(v)}</span>`).join(', ') || 'To confirm'}
                 </div>
@@ -1111,107 +1206,214 @@
         `;
       }
 
-      const logs = cvRecord.access_logs || [];
-      accessCountBadge.textContent = `${logs.length} view${logs.length === 1 ? '' : 's'}`;
+    }
+
+    function renderCvVault() {
+      const st = cvRecord?.structured_cv || {};
+      const present = Boolean(cvRecord);
+      cvStatusChip.textContent = !present ? 'No PDF yet' : isReviewed() ? 'Reviewed by you' : 'Needs your review';
+      cvStatusChip.className = 'chip ' + (isReviewed() ? 'chip-emerald' : 'chip-amber');
+      cvFileMeta.textContent = present ? `${cvRecord.original_filename} · ${cvRecord.file_size_kb} KB · ${cvRecord.page_count} page(s) · Updated ${cvRecord.updated_at}` : 'Upload a fictional PDF or try a sample to create your profile.';
+      cvFileMeta.title = present ? 'File fingerprint (SHA-256): ' + cvRecord.file_sha256 : '';
+      viewMyPdfBtn.classList.toggle('hidden', !present);
+      anonToggle.checked = present && Boolean(cvRecord.allow_anon_stats);
+      pName.value = st.full_name || '';
+      pRole.value = st.current_role || '';
+      pEmail.value = st.email || '';
+      pPhone.value = st.phone || '';
+      pLocation.value = st.location || '';
+      setSelectValue(pIndustry, st.industry);
+      setSelectValue(pMode, st.work_mode_preference);
+      setSelectValue(pEdu, st.education_level);
+      pYears.value = st.years_experience ?? '';
+      pSummary.value = st.executive_summary || '';
+      pExperience.value = entryText(st.work_experience);
+      pEducation.value = entryText(st.education_history);
+      pProjects.value = entryText(st.projects);
+      pCertifications.value = entryText(st.certifications);
+      cvSeekerType.textContent = st.seeker_type || 'Not specified';
+      aiHighlights.innerHTML = (st.ai_highlights || []).map(h => `<li class="text-slate-600">${esc(h)}</li>`).join('');
+      cvReviewHeading.textContent = isReviewed() ? 'Reviewed by you · not independently verified' : 'Check the draft before sharing with employers';
+      extractionMethod.textContent = present ? 'Extraction method: ' + (st.extraction_method || 'Local PDF text extraction') + '. Missing information is left blank; correct the draft using the original PDF.' : 'Upload a fictional PDF or choose a sample to begin.';
+      reviewWarnings.innerHTML = (st.review_warnings || []).map(w => `<li>${esc(typeof w === 'string' ? w : w.message || JSON.stringify(w))}</li>`).join('');
+      reviewConfirm.checked = false;
+      profileSaveStatus.textContent = isReviewed() ? 'Saved profile is ready for your sharing choices.' : present ? 'This draft cannot be shared until you review and save it.' : '';
+      skills = [...(st.skills || [])];
+      renderSkills();
+      renderEvidence(st);
+      renderParserAnalytics(st.parser_analytics);
+      const logs = cvRecord?.access_logs || [];
+      const logCount = cvRecord?.access_logs_total ?? logs.length;
+      accessCountBadge.textContent = `${logCount} access${logCount === 1 ? '' : 'es'}`;
       accessLogList.innerHTML = logs.length ? logs.map(lg => `
-        <div class="bg-white/80 rounded-2xl p-2.5 border border-slate-200/70 text-[11px] flex items-center justify-between gap-2">
-          <div>
-            <div class="font-extrabold text-slate-800">${esc(lg.company_name)} <span class="chip chip-indigo !text-[9px] ml-1">${esc(lg.access_type)}</span></div>
-            <div class="text-slate-500">Vacancy: ${esc(lg.vacancy_title)}</div>
-          </div>
-          <div class="text-[10px] font-mono text-slate-400 shrink-0">${esc(lg.viewed_at)}</div>
-        </div>`).join('') : '<div class="text-xs text-slate-400">No employer has viewed your CV yet. Your CV stays private until you apply.</div>';
+        <div class="bg-white/80 rounded-2xl p-2.5 border border-slate-200/70 text-[11px] space-y-1">
+          <div class="font-extrabold text-slate-800">${esc(lg.company_name)} <span class="chip chip-indigo !text-[9px]">${esc(lg.access_type)}</span></div>
+          <div class="text-slate-500">${esc(lg.vacancy_title)} · ${esc(lg.viewed_at)}</div>
+        </div>`).join('') : '<div class="text-xs text-slate-500">No recorded employer access.</div>';
+      activeSharesList.innerHTML = activeShares().length ? activeShares().map(app => `
+        <div class="rounded-2xl border border-slate-200 bg-white/80 p-3 space-y-2">
+          <div class="text-xs font-extrabold">${esc(app.company_name)} · ${esc(app.vacancy_title)}</div>
+          <p class="text-[11px] text-slate-600">${[app.share_organised_cv ? 'Summary shared' : 'Summary private', app.share_original_pdf ? 'PDF shared' : 'PDF private'].join(' · ')}</p>
+          <p class="text-[10px] text-slate-500">${esc(app.application_uid)} · ${esc(app.applied_at)}</p>
+          <button data-revoke-share onclick="withdrawJobApplication(${Number(app.vacancy_id)})" class="btn btn-danger !text-xs !py-1.5">Withdraw & revoke access</button>
+        </div>`).join('') : '<p class="text-xs text-slate-500">No active applications. No employer has permission to access this CV through an application.</p>';
+      updateVaultControls();
+    }
+
+    function confirmReplacement() {
+      if (!cvRecord) return true;
+      const shares = activeShares().length;
+      return confirm('Replace the current PDF and organised profile?' + (shares ? ' This will withdraw ' + shares + ' active application(s) and revoke their access. You must review and apply again to share the new CV.' : ' Your current profile edits will be replaced.') + ' Any links shared with named recipients will also be revoked. Previously downloaded copies cannot be retracted.');
+    }
+
+    async function refreshVaultDependents() {
+      try { await Promise.all([runAnalysis(), loadJobs(), loadNamedShares()]); }
+      catch (error) { toast('Your vault change was saved, but some related data could not refresh. Please reload.', 'err'); }
+    }
+
+    async function uploadPdfRequest(request, label) {
+      uploadBusy = true;
+      updateVaultControls();
+      showUploadStage(1, 'Uploading and extracting ' + label + '…');
+      try {
+        const r = await request();
+        if (!r.ok || !r.data.ok || !r.data.cv) throw new Error(r.data.message || 'The PDF could not be processed. Try a text-based PDF or a sample.');
+        cvRecord = r.data.cv;
+        profileDirty = false;
+        syntheticConfirm.checked = false;
+        renderCvVault();
+        showUploadStage(2, 'Draft ready. Check the extracted fields and evidence, then save your reviewed profile.');
+        toast('PDF processed. Review the draft before sharing.');
+        await refreshVaultDependents();
+      } catch (error) {
+        showUploadStage(0, error.message || 'Upload failed. Please retry.', true);
+        toast(error.message || 'Upload failed. Please retry.', 'err');
+      } finally {
+        uploadBusy = false;
+        pdfInput.value = '';
+        updateVaultControls();
+      }
     }
 
     async function handlePdfSelect(file) {
-      if (!file) return;
-      if (!file.name.toLowerCase().endsWith('.pdf')) {
-        toast('Only .pdf files are allowed! Please upload a PDF CV.', 'err');
+      if (!file || uploadBusy || profileBusy || statsBusy) return;
+      showUploadStage(0, 'Checking your PDF…');
+      let error = '';
+      if (!file.name.toLowerCase().endsWith('.pdf')) error = 'Choose a PDF file.';
+      else if (!file.size || file.size > 8 * 1024 * 1024) error = 'Choose a non-empty PDF no larger than 8 MB.';
+      else if (!syntheticConfirm.checked) error = 'Confirm that this custom PDF contains only fictional information before uploading.';
+      if (error) {
+        showUploadStage(0, error, true);
+        toast(error, 'err');
         pdfInput.value = '';
         return;
       }
-      uploadStatus.textContent = `⏳ Parsing "${file.name}" with CareerLens AI...`;
-      uploadStatus.classList.remove('hidden');
-
+      if (!confirmReplacement()) { pdfInput.value = ''; return; }
       const fd = new FormData();
       fd.append('file', file);
       fd.append('allow_anon_stats', anonToggle.checked ? '1' : '0');
-
-      const res = await fetch('/api/cv/upload', { method: 'POST', body: fd });
-      const data = await res.json();
-      uploadStatus.classList.add('hidden');
-      pdfInput.value = '';
-
-      if (!res.ok || !data.ok) {
-        return toast(data.message || 'PDF upload failed.', 'err');
-      }
-      cvRecord = data.cv;
-      renderCvVault();
-      await runAnalysis();
-      await loadJobs();
-      toast('PDF CV uploaded & summarised by AI!');
+      fd.append('synthetic_confirmed', '1');
+      await uploadPdfRequest(() => api('/api/cv/upload', { method: 'POST', body: fd }), file.name);
     }
 
     async function useSamplePdf(filename) {
-      uploadStatus.textContent = `⏳ Loading & parsing sample PDF "${filename}"...`;
-      uploadStatus.classList.remove('hidden');
-      const { ok, data } = await postJson('/api/cv/upload', {
-        sample_filename: filename,
-        allow_anon_stats: anonToggle.checked,
-      });
-      uploadStatus.classList.add('hidden');
-      if (!ok || !data.ok) return toast(data.message || 'Could not parse sample PDF.', 'err');
-      cvRecord = data.cv;
-      renderCvVault();
-      await runAnalysis();
-      await loadJobs();
-      toast(`Extracted structured CV from ${filename}`);
+      if (uploadBusy || profileBusy || statsBusy || !confirmReplacement()) return;
+      showUploadStage(0, 'Checking sample PDF…');
+      await uploadPdfRequest(() => postJson('/api/cv/upload', { sample_filename: filename, allow_anon_stats: anonToggle.checked }), filename);
     }
 
     async function toggleAnonStats(checked) {
       if (!cvRecord) return;
-      const { ok, data } = await postJson('/api/cv/me', { allow_anon_stats: checked }, 'PUT');
-      if (ok && data.ok) {
-        cvRecord = data.cv;
-        toast(checked ? 'Opted in to anonymised trend stats' : 'Opted out of anonymised trend stats');
-        await runAnalysis();
-      }
+      const before = Boolean(cvRecord.allow_anon_stats);
+      if (statsBusy || uploadBusy || profileBusy) { anonToggle.checked = before; return; }
+      statsBusy = true;
+      updateVaultControls();
+      try {
+        const r = await postJson('/api/cv/me', { allow_anon_stats: checked, expected_file_sha256: cvRecord.file_sha256 }, 'PUT');
+        if (!r.ok || !r.data.ok) throw new Error(r.data.message || 'Could not update statistics consent. Your previous choice is unchanged.');
+        cvRecord = r.data.cv;
+        toast('Preference saved. Aggregate publication is currently disabled.');
+        await refreshVaultDependents();
+      } catch (error) { anonToggle.checked = before; toast(error.message, 'err'); }
+      finally { statsBusy = false; updateVaultControls(); }
     }
 
     function renderSkills() {
-      document.getElementById('skillChips').innerHTML = skills.length
-        ? skills.map((s, i) => `<span class="chip chip-indigo">${esc(s)}<button onclick="removeSkill(${i})" aria-label="Remove">×</button></span>`).join('')
-        : '<span class="text-xs text-slate-400">No skills yet — upload a PDF CV or add below.</span>';
+      skillChips.innerHTML = skills.length ? skills.map((s, i) => `<span class="chip chip-indigo">${esc(s)}<button onclick="removeSkill(${i})" aria-label="Remove ${esc(s)}">×</button></span>`).join('') : '<span class="text-xs text-slate-500">No skills extracted. Add only skills supported by the CV.</span>';
     }
-    function removeSkill(i) { skills.splice(i, 1); renderSkills(); }
-    function addSkill(v) {
-      v = v.trim(); if (!v || v.length > 60) return;
-      if (!skills.some(s => s.toLowerCase() === v.toLowerCase())) skills.push(v);
+    function removeSkill(i) {
+      if (!cvRecord || uploadBusy || profileBusy || statsBusy) return;
+      skills.splice(i, 1); renderSkills(); markProfileDirty();
+    }
+    function addSkill(value) {
+      if (!cvRecord || uploadBusy || profileBusy || statsBusy) return;
+      value = value.trim();
+      if (!value || value.length > 60) return;
+      if (!skills.some(s => s.toLowerCase() === value.toLowerCase())) { skills.push(value); markProfileDirty(); }
       renderSkills();
     }
 
     async function saveProfile() {
-      if (!pName.value.trim()) return toast('Please enter your name.', 'err');
-      if (skillInput.value.trim()) { addSkill(skillInput.value); skillInput.value = ''; }
-      if (!skills.length) return toast('Add at least one skill.', 'err');
-      if (cvRecord) {
+      if (!cvRecord || uploadBusy || profileBusy || statsBusy) return;
+      if (!reviewConfirm.checked) { toast('Check your profile against the PDF, then tick the review confirmation.', 'err'); reviewConfirm.focus(); return; }
+      if (!pName.value.trim()) { toast('Enter the name shown on the fictional CV.', 'err'); pName.focus(); return; }
+      if (!pEmail.checkValidity() || !pYears.checkValidity()) { (!pEmail.checkValidity() ? pEmail : pYears).reportValidity(); return; }
+      if (profileDirty && (activeShares().length || namedShares.length) && !confirm('Saving these edits will withdraw existing applications and revoke recipient sharing. Continue?')) return;
+      const years = pYears.value.trim() === '' ? null : Number(pYears.value);
+      profileBusy = true;
+      updateVaultControls();
+      profileSaveStatus.textContent = 'Saving your reviewed profile…';
+      try {
         const r = await postJson('/api/cv/me', {
-          full_name: pName.value,
-          current_role: pRole.value,
-          industry: pIndustry.value,
-          work_mode_preference: pMode.value,
-          education_level: pEdu.value,
-          years_experience: Number(pYears.value || 1),
-          executive_summary: pSummary.value,
-          skills,
-          allow_anon_stats: anonToggle.checked,
+          full_name: pName.value.trim(), current_role: pRole.value.trim(),
+          email: pEmail.value.trim(), phone: pPhone.value.trim(), location: pLocation.value.trim(),
+          industry: pIndustry.value, work_mode_preference: pMode.value, education_level: pEdu.value,
+          years_experience: years, executive_summary: pSummary.value.trim(), skills,
+          work_experience: splitEntries(pExperience.value), education_history: splitEntries(pEducation.value),
+          projects: splitEntries(pProjects.value), certifications: splitEntries(pCertifications.value),
+          review_confirmed: true, expected_file_sha256: cvRecord.file_sha256,
         }, 'PUT');
-        if (r.ok && r.data.cv) { cvRecord = r.data.cv; renderCvVault(); }
-      }
-      if (await runAnalysis()) {
-        await loadJobs();
-        toast('Profile & organised CV saved');
-      }
+        if (!r.ok || !r.data.ok || !r.data.cv) throw new Error(r.data.message || 'Your edits were not saved. Please try again.');
+        cvRecord = r.data.cv;
+        profileDirty = false;
+        renderCvVault();
+        toast('Reviewed profile saved. Choose employer access when you apply.');
+        await refreshVaultDependents();
+      } catch (error) { profileSaveStatus.textContent = error.message; toast(error.message, 'err'); }
+      finally { profileBusy = false; updateVaultControls(); }
+    }
+
+    async function exportMyCv() {
+      if (!cvRecord || profileBusy || uploadBusy || statsBusy) return;
+      exportCvBtn.disabled = true;
+      try {
+        const r = await api('/api/cv/me/export');
+        if (!r.ok) throw new Error(r.data.message || 'Could not export your profile.');
+        const url = URL.createObjectURL(new Blob([JSON.stringify(r.data, null, 2)], { type: 'application/json' }));
+        const link = document.createElement('a');
+        link.href = url; link.download = 'careerlens-vault-profile.json';
+        document.body.appendChild(link); link.click(); link.remove();
+        setTimeout(() => URL.revokeObjectURL(url), 1000);
+        toast('Exported the saved profile. Unsaved edits are not included.');
+      } catch (error) { toast(error.message, 'err'); }
+      finally { updateVaultControls(); }
+    }
+
+    async function deleteMyCv() {
+      if (!cvRecord || profileBusy || uploadBusy || statsBusy) return;
+      if (!confirm('Delete your stored PDF and organised profile, withdraw all applications and revoke future employer and recipient access? This cannot be undone. Previously downloaded copies cannot be retracted.')) return;
+      profileBusy = true;
+      updateVaultControls();
+      try {
+        const r = await api('/api/cv/me', { method: 'DELETE' });
+        if (!r.ok || !r.data.ok) throw new Error(r.data.message || 'Your vault could not be deleted.');
+        cvRecord = null; profileDirty = false;
+        renderCvVault();
+        uploadStatus.classList.add('hidden');
+        toast(r.data.message || 'Vault deleted and sharing revoked.');
+        await refreshVaultDependents();
+      } catch (error) { toast(error.message, 'err'); }
+      finally { profileBusy = false; updateVaultControls(); }
     }
 
     /* ---------- Browse & Apply Jobs + Interactive Map ---------- */
@@ -1247,7 +1449,7 @@
       params.set('limit', 40);
 
       const r = await api(`/api/jobs?${params.toString()}`);
-      if (!r.ok) return;
+      if (!r.ok) throw new Error(r.data.message || 'Could not load vacancies. Please retry.');
 
       const incomingJobs = r.data.jobs || [];
       jobsList = append ? [...jobsList, ...incomingJobs] : incomingJobs;
@@ -1792,6 +1994,7 @@
       }
       jobsGrid.innerHTML = list.map((v, idx) => {
         const app = v.application || {};
+        const canApply = v.can_apply_in_app === true;
         const score = v.match_score ?? 0;
         const distText = v.distance_km !== undefined ? ` · ${v.distance_km} km away` : '';
         const salText = (v.salary_min && v.salary_max)
@@ -1851,8 +2054,7 @@
               </div>
             ` : `
               <div class="flex items-center justify-between pt-3 border-t border-slate-200/60">
-                <span class="text-[11px] text-slate-500 truncate pr-2">${esc(v.subcategory || v.company_category || '')}</span>
-                <button type="button" onclick="openApplyModalByKey('${esc(jobKey)}')" class="btn btn-primary !py-1.5 !px-4 !text-xs shrink-0">Apply →</button>
+                ${canApply ? `<span class="text-[11px] text-slate-400">Choose access for this vacancy owner</span><button onclick="openApplyModalByKey('${esc(jobKey)}')" class="btn btn-primary !py-1.5 !px-3.5 !text-xs">Apply &amp; choose access →</button>` : `<p class="text-[11px] text-slate-600">${esc(v.application_notice || "Discovery listing only. This company has no connected account for an in-app application.")}</p>`}
               </div>
             `}
           </article>`;
@@ -1860,60 +2062,66 @@
     }
 
     function openApplyModalByKey(jobKey) {
-      if (!cvRecord) {
-        toast('Please upload your PDF CV first before applying.', 'err');
+      if (!cvRecord || !isReviewed() || profileDirty) {
+        toast('Save your reviewed CV before choosing application permissions.', 'err');
         showTab('profile');
         return;
       }
       const job = jobsList.find(j => (j.key || j.jobstreet_id || String(j.id)) === String(jobKey));
       if (!job) return;
+      if (job.can_apply_in_app !== true) return toast(job.application_notice || 'This discovery listing has no recipient account for an in-app application.', 'err');
       activeApplyJob = job;
       amTitle.textContent = `${job.title} · ${job.company_name}`;
       const salText = (job.salary_min && job.salary_max) ? `${rm(job.salary_min)} – ${rm(job.salary_max)}` : 'Salary Negotiable';
       amMeta.textContent = `${job.vacancy_uid || job.jobstreet_id} · ${salText} · ${job.location || 'Malaysia'}`;
       const app = job.application || {};
-      amShareOrg.checked = app.applied ? Boolean(app.share_organised_cv) : true;
-      amSharePdf.checked = app.applied ? Boolean(app.share_original_pdf) : true;
+      amShareOrg.checked = app.applied ? Boolean(app.share_organised_cv) : false;
+      amSharePdf.checked = app.applied ? Boolean(app.share_original_pdf) : false;
       amNote.value = app.cover_note || '';
+      applyReturnFocus = document.activeElement;
       applyModalWrap.classList.remove('hidden');
+      amShareOrg.focus();
     }
 
     function openApplyModal(vid) {
-      openApplyModalByKey(vid);
+      const job = jobsList.find(j => j.id === vid);
+      if (job) openApplyModalByKey(job.key || job.jobstreet_id || String(job.id));
     }
 
     function closeApplyModal() {
       applyModalWrap.classList.add('hidden');
       activeApplyJob = null;
+      if (applyReturnFocus?.isConnected) applyReturnFocus.focus();
     }
 
     async function submitJobApplication() {
-      if (!activeApplyJob) return;
-      const endpoint = activeApplyJob.id
-        ? `/api/jobs/${activeApplyJob.id}/apply`
-        : `/api/jobs/js/${encodeURIComponent(activeApplyJob.jobstreet_id || activeApplyJob.key)}/apply`;
-      const { ok, data } = await postJson(endpoint, {
-        share_organised_cv: amShareOrg.checked,
-        share_original_pdf: amSharePdf.checked,
-        salary_expectation: Number(amSalary.value || 5000),
-        available_in: amAvail.value,
-        cover_note: amNote.value,
-      });
-      if (!ok || !data.ok) return toast(data.message || 'Could not submit application.', 'err');
-      toast(data.message);
-      closeApplyModal();
-      await loadJobs(false);
-      await loadMyCv();
-      if (current === 'dash') renderDash();
+      if (!activeApplyJob || applicationBusy) return;
+      if (!amShareOrg.checked && !amSharePdf.checked) return toast('Choose what to share before applying.', 'err');
+      if (!isReviewed() || profileDirty) return toast('Save your reviewed profile before sharing.', 'err');
+      applicationBusy = true; submitApplicationBtn.disabled = true;
+      try {
+        const { ok, data } = await postJson(`/api/jobs/${activeApplyJob.id}/apply`, {
+          share_organised_cv: amShareOrg.checked, share_original_pdf: amSharePdf.checked,
+          salary_expectation: amSalary.value === '' ? null : Number(amSalary.value),
+          available_in: amAvail.value, cover_note: amNote.value,
+        });
+        if (!ok || !data.ok) throw new Error(data.message || 'Could not submit application.');
+        toast(data.message); closeApplyModal();
+        await loadJobs(); await loadMyCv();
+        if (current === 'dash') renderDash();
+      } catch (error) { toast(error.message, 'err'); }
+      finally { applicationBusy = false; submitApplicationBtn.disabled = false; }
     }
 
     async function withdrawJobApplication(vid) {
-      if (!confirm('Withdraw application and immediately revoke employer access to your CV?')) return;
-      const r = await api(`/api/jobs/${vid}/apply`, { method: 'DELETE' });
-      if (!r.ok) return toast(r.data.message || 'Could not withdraw.', 'err');
-      toast(r.data.message);
-      await loadJobs(false);
-      await loadMyCv();
+      if (applicationBusy || !confirm('Withdraw application and revoke future employer access? Previously downloaded copies cannot be recalled.')) return;
+      applicationBusy = true; updateVaultControls();
+      try {
+        const r = await api(`/api/jobs/${vid}/apply`, { method: 'DELETE' });
+        if (!r.ok) throw new Error(r.data.message || 'Could not withdraw.');
+        toast(r.data.message); await loadJobs(); await loadMyCv();
+      } catch (error) { toast(error.message, 'err'); }
+      finally { applicationBusy = false; updateVaultControls(); }
     }
 
 
@@ -1921,7 +2129,6 @@
     /* ---------- analysis ---------- */
     let analysisVersion = 0;
     async function runAnalysis() {
-      const pendingSkill = skillInput.value.trim(); if (pendingSkill) { addSkill(pendingSkill); skillInput.value = ''; }
       const profile = { name: pName.value, industry: pIndustry.value, current_role: pRole.value, work_mode_preference: pMode.value, skills };
       const token = ++analysisVersion;
       document.getElementById('analysisStatus').textContent = 'Loading analysis…';
@@ -2015,7 +2222,7 @@
               <div class="text-sm font-extrabold">📊 Anonymised Talent Pool Skill Distribution (${st.total_anonymized_cvs} Opt-In PDF CVs)</div>
               <div class="text-[11px] text-slate-500">${esc(st.privacy_guarantee)}</div>
             </div>
-            <span class="chip chip-emerald">Zero PII Exposed</span>
+            <span class="chip chip-slate">Aggregate demo statistics</span>
           </div>
           <div class="flex flex-wrap gap-2 pt-1">
             ${(st.top_extracted_skills || []).map(x => `<span class="chip chip-indigo">${esc(x.skill)} · ${x.share_pct}%</span>`).join('') || '<span class="text-xs text-slate-400">No opted-in CVs yet</span>'}
@@ -2107,21 +2314,15 @@
       skillInput.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ',') { e.preventDefault(); addSkill(skillInput.value); skillInput.value = ''; } });
 
       await loadMyCv();
-      if (!cvRecord) {
-        const rd = user.role_details || {};
-        pName.value = user.full_name;
-        pIndustry.value = rd.industry || 'Finance & Accounting';
-        pRole.value = rd.current_role || 'Junior Professional';
-        pMode.value = rd.preferred_work_mode || 'Hybrid';
-        const match = personas.findIndex(x => x.industry === rd.industry);
-        const fallbackPersona = personas[match >= 0 ? match : 0];
-        if (fallbackPersona) { skills = [...fallbackPersona.skills]; renderSkills(); }
-      }
       await loadQuestionnaireCatalog();
       await Promise.all([runAnalysis(), loadJobs()]);
       showTab('dash');
     }
-    init();
+    profileFieldIds.filter(id => id !== 'reviewConfirm').forEach(id => {
+      document.getElementById(id).addEventListener('input', markProfileDirty);
+    });
+    window.addEventListener('beforeunload', event => { if (profileDirty) { event.preventDefault(); event.returnValue = ''; } });
+    init().catch(error => toast(error.message || 'Unable to load CareerLens. Refresh and retry.', 'err'));
   </script>
 <script src="/static/js/questionnaire-i18n.js"></script>
 <script src="/static/js/portal-i18n.js?v=20261020-locale-audit"></script>

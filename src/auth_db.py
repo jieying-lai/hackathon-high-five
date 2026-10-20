@@ -14,7 +14,7 @@ import sqlite3
 from werkzeug.security import check_password_hash, generate_password_hash
 
 DATA_DIR = os.path.join(os.path.dirname(__file__), "data")
-DB_PATH = os.path.join(DATA_DIR, "careerlens.db")
+DB_PATH = os.getenv("CAREERLENS_DB_PATH", os.path.join(DATA_DIR, "careerlens.db"))
 
 EMAIL_REGEX = re.compile(r"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$")
 
@@ -50,7 +50,7 @@ def init_db():
 
     # Seed 2 default demo users (1 Job Seeker, 1 HR Manager) so demo login works out of the box
     cur.execute("SELECT COUNT(*) as cnt FROM users")
-    if cur.fetchone()["cnt"] == 0:
+    if cur.fetchone()["cnt"] == 0 and os.getenv("CAREERLENS_DEMO", "1") == "1":
         now = datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M:%S UTC")
         demo_users = [
             (
@@ -206,7 +206,6 @@ def register_user(data: dict) -> tuple[bool, str, dict | None]:
         "email": email,
         "role": role,
         "role_details": role_details,
-        "password_hash_preview": pw_hash[:28] + "...",
         "consent_timestamp": now,
     }
     return True, "Account registered successfully!", user_info
@@ -235,7 +234,6 @@ def authenticate_user(email: str, password: str) -> tuple[bool, str, dict | None
         "email": row["email"],
         "role": row["role"],
         "role_details": json.loads(row["role_details_json"] or "{}"),
-        "password_hash_preview": row["password_hash"][:28] + "...",
         "consent_timestamp": row["consent_timestamp"],
     }
     return True, "Signed in successfully!", user_info

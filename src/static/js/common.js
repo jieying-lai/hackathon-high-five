@@ -1,3 +1,22 @@
+/* Shared helpers & Lumi Mascot AI Chatbox Widget for CareerLens AI pages. */
+// Every same-origin mutation carries the token belonging to this browser session.
+const nativeFetch = window.fetch.bind(window);
+let csrfTokenPromise;
+window.fetch = async function(input, options = {}) {
+  const target = new URL(typeof input === 'string' ? input : input.url, window.location.href);
+  const method = (options.method || (input instanceof Request ? input.method : 'GET')).toUpperCase();
+  if (target.origin === window.location.origin && ['POST', 'PUT', 'PATCH', 'DELETE'].includes(method)) {
+    if (!csrfTokenPromise) {
+      csrfTokenPromise = nativeFetch('/api/auth/csrf', { credentials: 'same-origin', cache: 'no-store' })
+        .then(async r => { if (!r.ok) throw new Error('Unable to start a secure session.'); return (await r.json()).csrf_token; })
+        .catch(error => { csrfTokenPromise = null; throw error; });
+    }
+    const headers = new Headers(options.headers || (input instanceof Request ? input.headers : {}));
+    headers.set('X-CSRF-Token', await csrfTokenPromise);
+    options = { ...options, headers };
+  }
+  return nativeFetch(input, options);
+};
 
 function esc(value) {
   return String(value ?? '').replace(/[&<>"']/g, ch => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[ch]));
@@ -130,6 +149,7 @@ async function signOut() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           message: text,
+          external_ai_consent: document.getElementById('lumiExternalConsent')?.checked === true,
           history: lumiHistory.slice(-6).map(m => ({ role: m.role, text: m.text })),
           user_location: window._careerLensUserLocation || null,
         }),
@@ -220,6 +240,7 @@ async function signOut() {
         </div>
 
         <!-- Neatly Aligned 2x2 Quick Selection Grid (Never clipped) -->
+        ${lumiPortal === 'job_seeker' ? '<label class="flex gap-2 text-[10px] text-slate-500 mb-2"><input type="checkbox" id="lumiExternalConsent" />Allow Google Gemini to rewrite replies using my message and reviewed CV profile. Optional; off by default.</label>' : ''}
         <div id="lumiQuickBar" class="px-3.5 py-2.5 border-t border-slate-200/70 bg-slate-50/90 grid grid-cols-2 gap-1.5"></div>
 
         <!-- Input Bar -->

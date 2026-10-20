@@ -587,7 +587,7 @@
               ${appliedBadges}
             </div>
           </td>
-          <td class="py-3.5 px-4 font-bold">${r.years === 0 ? 'Fresh graduate' : r.years + ' yr' + (r.years > 1 ? 's' : '')}</td>
+          <td class="py-3.5 px-4 font-bold">${r.years == null ? 'Not specified' : r.years === 0 ? '0 years' : r.years + ' yr' + (r.years > 1 ? 's' : '')}</td>
           <td class="py-3.5 px-4"><div class="flex items-center gap-2"><span class="font-extrabold text-sm w-10">${r.score}%</span><div class="bar flex-1 ${r.score >= 85 ? 'emerald' : r.score >= 70 ? 'teal' : r.score >= 55 ? '' : 'rose'}"><i style="width:${r.score}%"></i></div></div></td>
           <td class="py-3.5 px-4">${r.to_confirm.length ? `<div class="flex flex-wrap gap-1">${r.to_confirm.slice(0, 2).map(s => `<span class="chip chip-amber">${esc(s)}</span>`).join('')}${r.to_confirm.length > 2 ? `<span class="chip chip-slate">+${r.to_confirm.length - 2}</span>` : ''}</div>` : '<span class="chip chip-emerald">All covered</span>'}</td>
           <td class="py-3.5 px-4"><span class="chip ${TONE[r.tone]}">${esc(r.action)}</span></td>
@@ -599,6 +599,7 @@
             </div>
           </td></tr>`;
       }).join('') : '<tr><td colspan="8" class="p-8 text-center text-slate-500">No candidates in this group.</td></tr>';
+      scRows.innerHTML += (scrn.restricted_applications || []).map(r => `<tr><td colspan="8" class="p-4 border-t"><b>${esc(r.candidate_name)}</b> · ${esc(r.application_uid)}<p class="text-xs text-slate-500">${esc(r.notice)}</p>${r.pdf_url ? `<a class="btn btn-soft !text-xs mt-2" href="${esc(r.pdf_url)}" target="_blank" rel="noopener">Open explicitly shared original PDF</a>` : ''}</td></tr>`).join('');
       fairNote.textContent = '⚖️ ' + scrn.fairness_note;
     }
     function setDecision(cid, value) {
@@ -663,16 +664,16 @@
               <span class="chip chip-slate">Audit Logged</span>
             </div>
             <h3 class="text-2xl font-extrabold mt-1">${esc(st.full_name || ac.candidate_name)}</h3>
-            <div class="text-xs text-slate-500">${esc(st.current_role || '')} · ${esc(st.industry || '')} · ${st.years_experience || 0} yr(s) exp · ${esc(st.location || '')}</div>
+            <div class="text-xs text-slate-500">${esc(st.current_role || '')} · ${esc(st.industry || '')} · ${st.years_experience == null ? "Experience not specified" : esc(st.years_experience) + " yr(s) exp"} · ${esc(st.location || '')}</div>
           </div>
           <div class="flex items-center gap-2">
-            ${ac.share_original_pdf && ac.pdf_url ? `<a href="${esc(ac.pdf_url)}" target="_blank" rel="noopener" class="btn btn-hr !py-2 !text-xs">📄 Open Original PDF CV (${esc(ac.original_filename)}) ↗</a>` : '<span class="chip chip-slate">Original PDF withheld</span>'}
+            ${ac.share_original_pdf && ac.pdf_url ? `<a href="${esc(ac.pdf_url)}" target="_blank" rel="noopener" class="btn btn-hr !py-2 !text-xs">📄 Open Original PDF CV ↗</a>` : '<span class="chip chip-slate">Original PDF withheld</span>'}
             <button onclick="closeOrgCvModal()" class="text-slate-400 hover:text-slate-700 text-xl font-bold px-2">✕</button>
           </div>
         </div>
 
         <div class="tint tint-teal rounded-2xl p-4 space-y-1.5">
-          <div class="text-[11px] font-extrabold uppercase tracking-wider text-teal-800">✨ AI Executive Summary (Captured from Candidate PDF)</div>
+          <div class="text-[11px] font-extrabold uppercase tracking-wider text-teal-800">Reviewed professional summary</div>
           <p class="text-xs text-slate-700 leading-relaxed">${esc(st.executive_summary || '')}</p>
         </div>
 
@@ -685,17 +686,17 @@
           <div class="bg-white/85 rounded-2xl p-3.5 border border-slate-200/70">
             <div class="text-[10px] font-bold text-slate-400 uppercase">Qualification &amp; Arrangement</div>
             <div class="font-extrabold mt-0.5">${esc(st.education_level || '—')}</div>
-            <div class="text-slate-500">${esc(st.work_mode_preference || 'Hybrid')} · ${esc(st.seeker_type || '')}</div>
+            <div class="text-slate-500">${esc(st.work_mode_preference || 'Not specified')} · ${esc(st.seeker_type || '')}</div>
           </div>
           <div class="bg-white/85 rounded-2xl p-3.5 border border-slate-200/70">
-            <div class="text-[10px] font-bold text-slate-400 uppercase">PDF Document Verification</div>
-            <div class="font-extrabold mt-0.5 truncate">${esc(ac.original_filename)}</div>
-            <div class="text-slate-500 font-mono text-[10px]">${ac.page_count} page(s) · SHA ${esc(ac.file_sha256)}</div>
+            <div class="text-[10px] font-bold text-slate-400 uppercase">Review status</div>
+            <div class="font-extrabold mt-0.5">Reviewed by the CV owner</div>
+            <div class="text-slate-500 text-[10px]">Not independently verified</div>
           </div>
         </div>
 
         <div>
-          <div class="text-xs font-extrabold mb-2">AI-Extracted Skills (${(st.skills || []).length})</div>
+          <div class="text-xs font-extrabold mb-2">Owner-reviewed skill mentions (${(st.skills || []).length})</div>
           <div class="flex flex-wrap gap-1.5">
             ${(st.skills || []).map(s => `<span class="chip chip-teal">${esc(s)}</span>`).join('')}
             ${((st.parser_analytics && st.parser_analytics.lexicon_skills_extracted) || []).slice(0, 6).map(s => `<span class="chip chip-slate">+ ${esc(s)}</span>`).join('')}
@@ -705,17 +706,18 @@
         ${st.parser_analytics ? `
           <div class="tint tint-indigo rounded-2xl p-4 space-y-2.5">
             <div class="flex flex-wrap items-center justify-between gap-2">
-              <div class="text-xs font-extrabold text-indigo-950">🧠 5-Pillar Behavioral Competency &amp; Measurable Impact (NLP Parser)</div>
+              <div class="text-xs font-extrabold text-indigo-950">CV wording signals · local keyword heuristics</div>
               <div class="flex gap-1.5">
-                <span class="chip chip-emerald">Competency ${st.parser_analytics.competency_score || 0}/100</span>
-                <span class="chip chip-indigo">Impact ${(st.parser_analytics.measurable_impact || {}).impact_score || 0}/100</span>
+                <span class="chip chip-emerald">Keyword coverage ${st.parser_analytics.competency_score ?? "Not specified"}</span>
+                <span class="chip chip-indigo">Impact wording ${(st.parser_analytics.measurable_impact || {}).impact_score ?? "Not specified"}</span>
               </div>
             </div>
+            <p class="text-[11px] text-slate-600">${esc(st.parser_analytics.disclaimer || "Wording signals are prompts for review, not proof of ability or hiring suitability.")}</p>
             <div class="grid sm:grid-cols-5 gap-2">
               ${(st.parser_analytics.competencies || []).map(c => `
                 <div class="bg-white/85 rounded-xl p-2.5 border border-indigo-100 space-y-1">
-                  <div class="flex justify-between text-[10px]"><span class="font-extrabold">${esc(c.label.split(' ')[0])}</span><b>${c.score_pct}%</b></div>
-                  <div class="bar teal"><i style="width:${c.score_pct}%"></i></div>
+                  <div class="flex justify-between text-[10px]"><span class="font-extrabold">${esc(c.label.split(' ')[0])}</span><b>${c.score_pct == null ? "Not specified" : c.score_pct + "%"}</b></div>
+                  <div class="bar teal"><i style="width:${Math.max(0, Math.min(100, Number(c.score_pct) || 0))}%"></i></div>
                   <div class="text-[10px] text-slate-500 truncate">${(c.matched_verbs || []).slice(0, 2).map(esc).join(', ') || 'Confirm at interview'}</div>
                 </div>
               `).join('')}
@@ -739,7 +741,7 @@
         </div>
 
         <div class="text-[11px] text-slate-400 flex items-center justify-between pt-2 border-t border-slate-200/70">
-          <span>🔒 Access to this CV has been recorded in the candidate's PDPA transparency log.</span>
+          <span>🔒 Access to this CV has been recorded in the candidate's access log.</span>
           <button onclick="closeOrgCvModal()" class="btn btn-soft !py-1.5">Close</button>
         </div>
       `;

@@ -63,7 +63,7 @@ def cv_context(cv):
     return context
 
 
-def generate(cv, field, answers=None, language='en', action='questions'):
+def generate(cv, field, answers=None, language='en', action='questions', external_ai_consent=False):
     if not isinstance(field, str) or field not in CATALOG['roles']:
         raise QuestionnaireError('Select your field first.')
     context = cv_context(cv)
@@ -73,6 +73,10 @@ def generate(cv, field, answers=None, language='en', action='questions'):
         return generate_local(context, CATALOG['roles'][field], basics, language, action)
     if provider != 'gemini':
         raise QuestionnaireError('Unknown questionnaire provider configuration.', 503)
+    if external_ai_consent is not True:
+        raise QuestionnaireError('Choose whether to send your CV summary and questionnaire answers to Google Gemini first.', 403)
+    if cv.get('structured_cv', {}).get('review_status') != 'reviewed':
+        raise QuestionnaireError('Review and save your CV before sending it to Google Gemini.', 409)
     key, model = ai_configuration()
     if not key:
         raise QuestionnaireError('AI is not configured yet. Set GEMINI_API_KEY on the server, then retry.', 503)

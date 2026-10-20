@@ -1,5 +1,6 @@
 """Company-scoped comparison of consented applications; explicit demo mode only."""
 import json
+import os
 import re
 from contextlib import closing
 from auth_db import get_db_connection
@@ -46,16 +47,23 @@ def comparison(owner_uid, demo=False):
             candidates = []
             for app in applications:
                 st = json.loads(app["structured_cv_json"])
+                if st.get("review_status") != "reviewed":
+                    continue
                 c = {"id": app["candidate_uid"], "name": app["candidate_name"], "type": st.get("seeker_type", "To confirm"),
-                     "years": (st.get("years_experience") or 0) if st.get("experience_known", True) else 0, "education": st.get("education_level", "To confirm"),
+                     "years": st.get("years_experience"), "education": st.get("education_level") or "To confirm",
                      "skills": st.get("skills", []), "work_modes": [st.get("work_mode_preference", "")],
                      "salary_expectation": app["salary_expectation"], "location": st.get("location", ""),
                      "available_in": app["available_in"], "is_applied_user": True}
                 dimensions = structured_dimensions(st)
                 # Only explicit duration evidence is treated as known experience.
-                dimensions["experience_known"] = st.get("experience_known", bool(st.get("work_experience")))
+                dimensions["experience_known"] = st.get("years_experience") is not None
                 candidates.append((c, dimensions, "Application"))
-            if demo and owner_uid == "CL-HR-2026-8801":
+                conn.execute("""INSERT INTO cv_access_logs
+                    (candidate_uid,hr_uid,company_name,vacancy_id,vacancy_title,access_type,viewed_at)
+                    VALUES (?,?,?,?,?,?,?)""",
+                    (app["candidate_uid"], owner_uid, "Employer comparison", v["id"], v["title"],
+                     "Viewed reviewed summary in candidate comparison", hr_engine._now()))
+            if demo and owner_uid == "CL-HR-2026-8801" and os.getenv("CAREERLENS_DEMO", "1") == "1":
                 existing = {c[0]["id"] for c in candidates}
                 for c in hr_engine._load("candidates_pool.json"):
                     if c["id"] not in existing:
@@ -69,4 +77,5 @@ def comparison(owner_uid, demo=False):
                   "department": v.get("department") or "General",
                   "education_category": education_category(c["education"] if c["education"] != "To confirm" else c["type"]), "skills": c["skills"],
                   "skill_keys": sorted(expanded), "source": source})
+        conn.commit()
     return {"vacancies": vacancies, "candidates": rows, "education_categories": EDUCATION}

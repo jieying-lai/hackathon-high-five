@@ -18,15 +18,25 @@ def basics():
             'cField': 'Finance & Accounting', 'c2': 'Accountant', 'cState': 'Selangor', 'c4': 'Petaling'}
 
 
-CV = {'structured_cv': {'industry': 'Finance & Accounting', 'skills': ['Excel', 'SQL'],
+CV = {'structured_cv': {'review_status': 'reviewed', 'industry': 'Finance & Accounting', 'skills': ['Excel', 'SQL'],
                          'current_role': 'Accounts Executive', 'executive_summary': 'Financial reporting experience.'}}
 
 
 class QuestionnaireContracts(unittest.TestCase):
+    @patch.dict(os.environ, {'QUESTIONNAIRE_PROVIDER': 'gemini', 'GEMINI_API_KEY': 'test-only'})
+    @patch('questionnaire_engine.requests.post')
+    def test_external_processing_requires_explicit_consent_and_review(self, post):
+        for consent, cv, expected in [(False, CV, 403), (True, {'structured_cv': {'skills': ['SQL']}}, 409)]:
+            with self.assertRaises(engine.QuestionnaireError) as exc:
+                engine.generate(cv, basics()['cField'], basics(), external_ai_consent=consent)
+            self.assertEqual(exc.exception.status, expected)
+        post.assert_not_called()
+
     @patch.dict(os.environ, {'QUESTIONNAIRE_PROVIDER': 'local', 'GEMINI_API_KEY': '', 'GOOGLE_API_KEY': ''})
     @patch('questionnaire_engine.requests.post', side_effect=AssertionError('Offline mode must not use network'))
     def test_no_key_clone_flow_for_every_field(self, post):
         client = app.test_client()
+        client.environ_base["HTTP_X_CSRF_TOKEN"] = client.get("/api/auth/csrf").json["csrf_token"]
         with client.session_transaction() as session:
             session['user'] = {'role': 'job_seeker', 'unique_uid': 'offline-demo'}
         with patch('main.cv_engine.get_user_cv', return_value=CV):
@@ -76,11 +86,11 @@ class QuestionnaireContracts(unittest.TestCase):
             engine.generate(None, basics()['cField'], basics())
         self.assertEqual(exc.exception.status, 409)
         with patch.dict(os.environ, {'QUESTIONNAIRE_PROVIDER': 'gemini'}, clear=True), patch('questionnaire_engine.dotenv_values', return_value={}), self.assertRaises(engine.QuestionnaireError) as exc:
-            engine.generate(CV, basics()['cField'], basics())
+            engine.generate(CV, basics()['cField'], basics(), external_ai_consent=True)
         self.assertEqual(exc.exception.status, 503)
 
     def test_project_env_is_read_and_environment_takes_precedence(self):
-        with tempfile.TemporaryDirectory(dir=Path(__file__).resolve().parents[1] / 'work') as folder:
+        with tempfile.TemporaryDirectory() as folder:
             path = Path(folder) / '.env'
             path.write_text('GEMINI_API_KEY="test-file-key"\nQUESTIONNAIRE_GEMINI_MODEL=gemini-test\n', encoding='utf-8')
             with patch.object(engine, 'ENV_FILE', path), patch.dict(os.environ, {}, clear=True):
@@ -95,7 +105,7 @@ class QuestionnaireContracts(unittest.TestCase):
     def test_real_provider_contract_and_output_validation(self, post):
         questions = [{'skill_tested': 'Excel', 'question': 'How did you validate a financial report in Excel?'} for _ in range(4)]
         post.return_value = Mock(json=lambda: {'candidates': [{'content': {'parts': [{'text': json.dumps({'questions': questions})}]}}]})
-        result = engine.generate(CV, basics()['cField'], basics())
+        result = engine.generate(CV, basics()['cField'], basics(), external_ai_consent=True)
         self.assertEqual(len(result['questions']), 4)
         kwargs = post.call_args.kwargs
         self.assertEqual(kwargs['headers']['x-goog-api-key'], 'test-only')
@@ -104,18 +114,19 @@ class QuestionnaireContracts(unittest.TestCase):
         self.assertIn('Financial reporting', prompt)
         post.return_value = Mock(json=lambda: {'candidates': [{'content': {'parts': [{'text': '{"questions": []}'}]}}]})
         with self.assertRaises(engine.QuestionnaireError) as exc:
-            engine.generate(CV, basics()['cField'], basics())
+            engine.generate(CV, basics()['cField'], basics(), external_ai_consent=True)
         self.assertEqual(exc.exception.status, 502)
 
     @patch.dict(os.environ, {'GEMINI_API_KEY': 'test-only', 'QUESTIONNAIRE_PROVIDER': 'gemini'})
     @patch('questionnaire_engine.requests.post', side_effect=requests.Timeout)
     def test_timeout_is_retryable(self, post):
         with self.assertRaises(engine.QuestionnaireError) as exc:
-            engine.generate(CV, basics()['cField'], basics())
+            engine.generate(CV, basics()['cField'], basics(), external_ai_consent=True)
         self.assertEqual(exc.exception.status, 504)
 
     def test_authorization_and_cv_ownership(self):
         client = app.test_client()
+        client.environ_base["HTTP_X_CSRF_TOKEN"] = client.get("/api/auth/csrf").json["csrf_token"]
         self.assertEqual(client.get('/api/questionnaire/catalog').status_code, 401)
         with client.session_transaction() as session:
             session['user'] = {'role': 'hr_company', 'unique_uid': 'hr-test'}

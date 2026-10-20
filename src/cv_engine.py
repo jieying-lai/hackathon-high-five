@@ -1,26 +1,7 @@
-"""PDF-Only CV Upload, AI Extraction/Summarization, Privacy Storage & Application Engine.
+"""Private PDF persistence, reviewed profiles, explicit application sharing and audit logs.
 
-Enforces CareerLens AI's core privacy and data-use architecture:
-  1. Only valid `.pdf` files are accepted (`%PDF-` signature + `.pdf` extension + text extraction).
-  2. AI Extraction Engine captures structured sections from the PDF CV:
-       - Personal & Professional Header (Name, Email, Phone, Location, Industry, Current Role, Years Exp, Seeker Type)
-       - Education & Qualifications
-       - Work Experience Highlights
-       - Key Projects & Achievements
-       - Canonical Skills (matched via `skills_taxonomy.py`)
-       - AI Executive Summary
-  3. Strict Privacy Boundary:
-       - Stored CVs are linked to the user's unique ID (`owner_uid`).
-       - By default, CV data is used ONLY for:
-           a) Anonymized, aggregated statistical skill & trend analysis (no PII), and
-           b) Personalised future-role matching & reskilling pathways for that user.
-       - Employers / HR CANNOT browse or view any user's personal CV unless the user
-         explicitly applies to a vacancy posted by that company.
-  4. Application-Gated Employer Viewing:
-       - When a Job Seeker applies to a vacancy, they control whether to share their
-         AI-Organised CV Summary and/or grant access to the Original PDF CV.
-       - Every employer view of an Organised CV or Original PDF is recorded in `cv_access_logs`
-         for full candidate transparency.
+Extraction uses the local parser in cv_parser.py. No trained model or external
+AI service is called. Aggregate publication is disabled.
 """
 
 from datetime import datetime, timezone
@@ -29,17 +10,13 @@ import io
 import json
 import os
 import re
+import uuid
 
 from fpdf import FPDF
 from pypdf import PdfReader
 
 from auth_db import DATA_DIR, get_db_connection
-from skills_taxonomy import (
-    analyze_resume_competencies_and_impact,
-    expand_for_matching,
-    extract_skills,
-    skill_key,
-)
+from skills_taxonomy import expand_for_matching, extract_skills, skill_key
 
 UPLOADS_DIR = os.path.join(DATA_DIR, "uploads")
 SAMPLE_PDF_DIR = os.path.join(os.path.dirname(__file__), "static", "sample_cvs")
@@ -82,7 +59,7 @@ def init_cv_tables() -> None:
             page_count INTEGER NOT NULL DEFAULT 1,
             raw_text TEXT NOT NULL,
             structured_cv_json TEXT NOT NULL,
-            allow_anon_stats INTEGER NOT NULL DEFAULT 1,
+            allow_anon_stats INTEGER NOT NULL DEFAULT 0,
             uploaded_at TEXT NOT NULL,
             updated_at TEXT NOT NULL
         )
@@ -96,8 +73,8 @@ def init_cv_tables() -> None:
             vacancy_id INTEGER NOT NULL,
             candidate_uid TEXT NOT NULL,
             candidate_name TEXT NOT NULL,
-            share_organised_cv INTEGER NOT NULL DEFAULT 1,
-            share_original_pdf INTEGER NOT NULL DEFAULT 1,
+            share_organised_cv INTEGER NOT NULL DEFAULT 0,
+            share_original_pdf INTEGER NOT NULL DEFAULT 0,
             cover_note TEXT,
             salary_expectation INTEGER NOT NULL DEFAULT 4500,
             available_in TEXT NOT NULL DEFAULT '1 month',
@@ -125,7 +102,7 @@ def init_cv_tables() -> None:
     conn.close()
 
     ensure_sample_pdfs()
-    _seed_demo_cv_and_application()
+    # Real vaults must never be repopulated or re-shared on application startup.
 
 
 # ------------------------------------------------------------------ Synthetic Sample PDF Generator
@@ -296,36 +273,8 @@ def _build_pdf_bytes(spec: dict) -> bytes:
     return bytes(pdf.output())
 
 
-BENCHMARK_PDF_SPECS = [
-    {
-        "filename": "Benchmark_React_Developer_CV.pdf",
-        "label": "Anjani Priyadarshini · React JS Developer (Benchmark Dataset)",
-        "role": "React JS Developer",
-        "industry": "IT & Software",
-    },
-    {
-        "filename": "Benchmark_SQL_Developer_CV.pdf",
-        "label": "Anil Kumar · SQL & MSBI Database Developer (Benchmark Dataset)",
-        "role": "SQL Developer",
-        "industry": "IT & Software",
-    },
-    {
-        "filename": "Benchmark_Workday_HCM_CV.pdf",
-        "label": "Chinna Subbarayudu · Workday HCM Consultant (Benchmark Dataset)",
-        "role": "Workday HCM Consultant",
-        "industry": "HR & Administration",
-    },
-    {
-        "filename": "Benchmark_QA_Testing_Intern_CV.pdf",
-        "label": "Ravali P · QA & Software Testing Intern (Benchmark Dataset)",
-        "role": "QA Testing Intern",
-        "industry": "IT & Software",
-    },
-]
-
-
 def ensure_sample_pdfs() -> list[dict]:
-    """Ensure synthetic and real benchmark sample PDFs exist in `static/sample_cvs/` and return metadata."""
+    """Ensure synthetic sample PDFs exist in `static/sample_cvs/` and return metadata."""
     os.makedirs(SAMPLE_PDF_DIR, exist_ok=True)
     out = []
     for spec in SAMPLE_CV_SPECS:
@@ -340,500 +289,351 @@ def ensure_sample_pdfs() -> list[dict]:
             "role": spec["role"],
             "industry": spec["industry"],
         })
-    for bspec in BENCHMARK_PDF_SPECS:
-        bpath = os.path.join(SAMPLE_PDF_DIR, bspec["filename"])
-        if os.path.exists(bpath):
-            out.append({
-                "filename": bspec["filename"],
-                "label": bspec["label"],
-                "url": f"/static/sample_cvs/{bspec['filename']}",
-                "role": bspec["role"],
-                "industry": bspec["industry"],
-            })
     return out
 
 
-# ------------------------------------------------------------------ AI PDF CV Extraction & Summarization
-def _detect_education_level(text: str) -> str:
-    low = text.lower()
-    if re.search(r"ph\.?d|doctorate|doctoral", low):
-        return "Doctor"
-    if any(k in low for k in ("master", "mba", "msc", "postgraduate")):
-        return "Master's / Postgraduate"
-    if any(k in low for k in ("bachelor", "b.sc", "b.acc", "b.eng", "b.comm", "hons")):
-        return "Bachelor's Degree"
-    if re.search(r"\b(spm|uec)\b", low):
-        return "SPM / UEC"
-    if re.search(r"diploma|tvet", low):
-        return "Diploma / TVET"
-    if re.search(r"intern|trainee", low):
-        return "Intern / Trainee"
-    return "To confirm"
+# Source-grounded local parsing lives in its own testable module.
+from cv_parser import parse_and_summarize_pdf_cv
 
 
-def _detect_industry(text: str, skills: list[str], fallback: str = "Finance & Accounting") -> str:
-    low = text.lower()
-    skill_set = {s.lower() for s in skills}
-    if any(k in skill_set for k in ("financial auditing", "tax compliance", "financial reporting", "risk assessment")) or "account" in low or "audit" in low:
-        return "Finance & Accounting"
-    if any(k in skill_set for k in ("copywriting", "seo content strategy", "google analytics", "social media campaigns")) or "marketing" in low or "copywrit" in low:
-        return "Marketing & PR"
-    if any(k in skill_set for k in ("python", "rest apis", "react", "docker", "data structures", "sql")) or "software" in low or "developer" in low:
-        return "IT & Software"
-    if any(k in skill_set for k in ("recruitment", "people data analytics", "change management", "skills architecture mapping")) or "human resource" in low:
-        return "HR & Administration"
-    return fallback
-
-
-def _detect_work_mode(text: str, fallback: str = "Hybrid") -> str:
-    low = text.lower()
-    if "remote" in low and "hybrid" not in low:
-        return "Remote"
-    if "on-site" in low or "onsite" in low:
-        return "On-site"
-    return fallback
-
-
-def _detect_years_experience(text: str) -> int:
-    matches = [int(m.group(1)) for m in YEARS_RX.finditer(text) if int(m.group(1)) <= 40]
-    if matches:
-        return max(matches)
-    if "intern" in text.lower() or "fresh graduate" in text.lower():
-        return 0
-    return 1
-
-
-def _detect_seeker_type(years: int, text: str) -> str:
-    low = text.lower()
-    if years <= 1 or "fresh graduate" in low or "intern" in low:
-        return "Fresh Graduate"
-    if "transition" in low or "career changer" in low or "switcher" in low or "upskilling" in low:
-        return "Career Changer"
-    return "Experienced Worker"
-
-
-def parse_and_summarize_pdf_cv(pdf_bytes: bytes, filename: str, user_context: dict | None = None) -> tuple[bool, str, dict | None]:
-    """Validate PDF bytes, extract raw text via pypdf, and produce an AI-structured CV summary."""
-    user_context = user_context or {}
-    if not filename or not filename.lower().endswith(".pdf"):
-        return False, "Only PDF files (.pdf) are accepted. Please upload your CV in PDF format.", None
-    if not pdf_bytes or len(pdf_bytes) < 64:
-        return False, "The uploaded PDF file appears to be empty.", None
-    if len(pdf_bytes) > MAX_PDF_BYTES:
-        return False, "PDF file exceeds the 8 MB maximum size limit.", None
-    if not pdf_bytes.lstrip().startswith(b"%PDF-"):
-        return False, "Invalid file signature: file is not a genuine PDF document.", None
-
+def _upload_path_is_private(path: str) -> bool:
+    root = os.path.realpath(UPLOADS_DIR)
     try:
-        reader = PdfReader(io.BytesIO(pdf_bytes))
-        page_count = len(reader.pages)
-        if page_count < 1:
-            return False, "The PDF document contains no pages.", None
-        page_texts = [(p.extract_text() or "") for p in reader.pages]
-        raw_text = "\n".join(page_texts).strip()
-    except Exception as exc:
-        return False, f"Could not read PDF file: {exc}", None
-
-    if len(raw_text) < 25:
-        return False, "This PDF contains almost no selectable text (it may be a scanned image). Please upload a text-based PDF CV.", None
-
-    lines = [ln.strip() for ln in raw_text.splitlines() if ln.strip()]
-
-    # Sections bucket
-    sections: dict[str, list[str]] = {
-        "header": [],
-        "summary": [],
-        "experience": [],
-        "education": [],
-        "projects": [],
-        "skills": [],
-        "certifications": [],
-    }
-    current_sec = "header"
-    for ln in lines:
-        matched_header = None
-        for sec_name, rx in SECTION_HEADERS.items():
-            if rx.match(ln):
-                matched_header = sec_name
-                break
-        if matched_header:
-            current_sec = matched_header
-            continue
-        sections[current_sec].append(ln)
-
-    # Extract contact & header info
-    rd = user_context.get("role_details") or {}
-    full_name = user_context.get("full_name") or (sections["header"][0] if sections["header"] else "Candidate")
-    if sections["header"] and len(sections["header"][0]) <= 55 and not EMAIL_RX.search(sections["header"][0]):
-        full_name = sections["header"][0].strip()
-
-    email_match = EMAIL_RX.search(raw_text)
-    email = email_match.group(0) if email_match else (user_context.get("email") or "")
-    phone_match = PHONE_RX.search(raw_text)
-    phone = phone_match.group(0).strip() if phone_match else "Not specified"
-
-    location = rd.get("location") or "Kuala Lumpur, Malaysia"
-    for city in ("Kuala Lumpur", "Petaling Jaya", "Selangor", "Penang", "Johor Bahru", "Cyberjaya", "Putrajaya", "Malaysia"):
-        if city.lower() in raw_text.lower():
-            location = city if "Malaysia" in city else f"{city}, Malaysia"
-            break
-
-    skills = extract_skills(raw_text)
-    if not skills:
-        # Fallback if a custom PDF lists comma-separated items under skills
-        for s_line in sections["skills"]:
-            for token in re.split(r"[,•|;/]", s_line):
-                tok = token.strip(" -•\t")
-                if 2 <= len(tok) <= 45 and len(skills) < 12:
-                    skills.append(tok)
-
-    years = _detect_years_experience(raw_text)
-    education_level = _detect_education_level(raw_text)
-    industry = _detect_industry(raw_text, skills, fallback=rd.get("industry") or "Finance & Accounting")
-    work_mode = _detect_work_mode(raw_text, fallback=rd.get("preferred_work_mode") or "Hybrid")
-    seeker_type = _detect_seeker_type(years, raw_text)
-
-    # Current role detection
-    current_role = rd.get("current_role") or "Professional"
-    if len(sections["header"]) >= 2:
-        second_line = sections["header"][1]
-        role_cand = second_line.split("|")[0].strip()
-        if 3 <= len(role_cand) <= 60 and "@" not in role_cand:
-            current_role = role_cand
-
-    def _clean_bullets(items: list[str], limit: int = 5) -> list[str]:
-        out = []
-        for it in items:
-            cleaned = it.lstrip("-•*· ").strip()
-            if len(cleaned) >= 6:
-                out.append(cleaned)
-        return out[:limit]
-
-    experience_list = _clean_bullets(sections["experience"], 5)
-    education_list = _clean_bullets(sections["education"], 4)
-    projects_list = _clean_bullets(sections["projects"], 4)
-    cert_list = _clean_bullets(sections["certifications"], 4)
-
-    if not education_list:
-        education_list = [f"{education_level} (extracted from CV document)"]
-    if not experience_list:
-        experience_list = [f"{current_role} ({years} yr{'s' if years != 1 else ''} relevant experience)"]
-    if not projects_list:
-        projects_list = [f"Portfolio & practical work in {', '.join(skills[:3]) or industry}"]
-
-    exec_summary_raw = " ".join(sections["summary"]).strip()
-    if not exec_summary_raw:
-        top_sk = ", ".join(skills[:5]) if skills else "core domain skills"
-        exec_summary_raw = (
-            f"{full_name} is a {seeker_type.lower()} ({current_role}) in {industry} with "
-            f"{years} year{'s' if years != 1 else ''} of experience, holding a {education_level}. "
-            f"Key evidenced competencies include {top_sk}."
-        )
-
-    parser_analytics = analyze_resume_competencies_and_impact(raw_text)
-    ai_highlights = [
-        f"Role & Sector: {current_role} in {industry} ({years} yr{'s' if years != 1 else ''} experience · {seeker_type})",
-        f"Predicted Profile: {parser_analytics['predicted_profile']['domain']} ({parser_analytics['predicted_profile']['confidence_pct']}% confidence) · Competency Score: {parser_analytics['competency_score']}/100",
-        f"Verified Skill Signals ({len(skills)}): {', '.join(skills[:8]) if skills else 'General transferable skills'}",
-    ]
-
-    structured = {
-        "full_name": full_name,
-        "email": email,
-        "phone": phone,
-        "location": location,
-        "industry": industry,
-        "current_role": current_role,
-        "years_experience": years,
-        "seeker_type": seeker_type,
-        "education_level": education_level,
-        "work_mode_preference": work_mode,
-        "executive_summary": exec_summary_raw[:650],
-        "ai_highlights": ai_highlights,
-        "skills": skills,
-        "expanded_skills": expand_for_matching(skills),
-        "work_experience": experience_list,
-        "education_history": education_list,
-        "projects": projects_list,
-        "certifications": cert_list,
-        "page_count": page_count,
-        "char_count": len(raw_text),
-        "parser_analytics": parser_analytics,
-        "privacy_notice": (
-            "Protected under CareerLens PDPA Shield: Used exclusively for anonymised aggregate skill trend "
-            "statistics and your personal job/reskilling recommendations. Employers cannot view this CV "
-            "unless you explicitly apply to their vacancy."
-        ),
-    }
-    from candidate_comparison import structured_dimensions
-    structured.update(structured_dimensions(structured, raw_text))
-    structured["skills"] = list(dict.fromkeys(structured["hard_skills"] + structured["soft_skills"]))
-    structured["expanded_skills"] = expand_for_matching(structured["skills"])
-    structured["experience_known"] = bool(YEARS_RX.search(raw_text) or "intern" in raw_text.lower() or "fresh graduate" in raw_text.lower())
-    return True, "PDF CV parsed and summarised by AI.", {
-        "page_count": page_count,
-        "raw_text": raw_text,
-        "structured_cv": structured,
-    }
+        return os.path.commonpath([root, os.path.realpath(path)]) == root
+    except (TypeError, ValueError):
+        return False
 
 
 def save_user_pdf_cv(owner_uid: str, filename: str, pdf_bytes: bytes, user_context: dict | None = None,
-                     allow_anon_stats: bool = True) -> tuple[bool, str, dict | None]:
-    """Validate, parse, and persist a user's PDF CV tied to `owner_uid`."""
+                     allow_anon_stats: bool = False) -> tuple[bool, str, dict | None]:
+    """Store a new unreviewed CV; revoke earlier application access on replacement."""
+    if type(allow_anon_stats) is not bool:
+        return False, "Choose whether to include your CV in aggregate statistics.", None
     ok, msg, parsed = parse_and_summarize_pdf_cv(pdf_bytes, filename, user_context=user_context)
     if not ok or not parsed:
         return False, msg, None
 
     os.makedirs(UPLOADS_DIR, exist_ok=True)
     safe_uid = re.sub(r"[^A-Za-z0-9_-]", "_", owner_uid)
-    stored_filename = f"{safe_uid}.pdf"
-    stored_path = os.path.join(UPLOADS_DIR, stored_filename)
-    with open(stored_path, "wb") as f:
-        f.write(pdf_bytes)
-
+    stored_path = os.path.join(UPLOADS_DIR, f"{safe_uid}-{uuid.uuid4().hex}.pdf")
+    structured = parsed["structured_cv"]
+    # A unique version also prevents an identical PDF re-upload from reviving old grants.
+    structured["vault_version_id"] = uuid.uuid4().hex
+    structured["review_status"] = "needs_review"
+    structured.pop("reviewed_at", None)
+    structured["privacy_notice"] = (
+        "Private to you until you review the extracted details and choose what to share "
+        "with the employer for a specific application. Optional aggregate statistics are disabled pending privacy review."
+    )
     sha256_hex = hashlib.sha256(pdf_bytes).hexdigest()
     now = _now()
-    structured = parsed["structured_cv"]
-
     conn = get_db_connection()
-    cur = conn.cursor()
-    cur.execute(
-        """
-        INSERT INTO user_cvs (
-            owner_uid, original_filename, stored_pdf_path, file_sha256,
-            file_size_bytes, page_count, raw_text, structured_cv_json,
-            allow_anon_stats, uploaded_at, updated_at
-        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-        ON CONFLICT(owner_uid) DO UPDATE SET
-            original_filename = excluded.original_filename,
-            stored_pdf_path = excluded.stored_pdf_path,
-            file_sha256 = excluded.file_sha256,
-            file_size_bytes = excluded.file_size_bytes,
-            page_count = excluded.page_count,
-            raw_text = excluded.raw_text,
-            structured_cv_json = excluded.structured_cv_json,
-            allow_anon_stats = excluded.allow_anon_stats,
-            updated_at = excluded.updated_at
-        """,
-        (
-            owner_uid,
-            os.path.basename(filename),
-            stored_path,
-            sha256_hex,
-            len(pdf_bytes),
-            parsed["page_count"],
-            parsed["raw_text"],
-            json.dumps(structured),
-            1 if allow_anon_stats else 0,
-            now,
-            now,
-        ),
-    )
-    conn.commit()
-    conn.close()
-    return True, "PDF CV uploaded, summarised, and stored in your private vault.", get_user_cv(owner_uid)
+    old_path = None
+    try:
+        conn.execute("BEGIN IMMEDIATE")
+        old = conn.execute("SELECT stored_pdf_path FROM user_cvs WHERE owner_uid = ?", (owner_uid,)).fetchone()
+        old_path = old["stored_pdf_path"] if old else None
+        with open(stored_path, "xb") as f:
+            f.write(pdf_bytes)
+        revoked = conn.execute("DELETE FROM job_applications WHERE candidate_uid = ?", (owner_uid,)).rowcount
+        conn.execute(
+            """
+            INSERT INTO user_cvs (
+                owner_uid, original_filename, stored_pdf_path, file_sha256,
+                file_size_bytes, page_count, raw_text, structured_cv_json,
+                allow_anon_stats, uploaded_at, updated_at
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            ON CONFLICT(owner_uid) DO UPDATE SET
+                original_filename = excluded.original_filename,
+                stored_pdf_path = excluded.stored_pdf_path,
+                file_sha256 = excluded.file_sha256,
+                file_size_bytes = excluded.file_size_bytes,
+                page_count = excluded.page_count,
+                raw_text = excluded.raw_text,
+                structured_cv_json = excluded.structured_cv_json,
+                allow_anon_stats = excluded.allow_anon_stats,
+                updated_at = excluded.updated_at
+            """,
+            (owner_uid, os.path.basename(filename), stored_path, sha256_hex, len(pdf_bytes),
+             parsed["page_count"], parsed["raw_text"], json.dumps(structured), int(allow_anon_stats), now, now),
+        )
+        conn.commit()
+    except Exception:
+        conn.rollback()
+        if os.path.isfile(stored_path):
+            os.remove(stored_path)
+        return False, "The CV could not be stored. Please try again; your previous record was kept.", None
+    finally:
+        conn.close()
+    if old_path and old_path != stored_path and _upload_path_is_private(old_path) and os.path.isfile(old_path):
+        os.remove(old_path)
+    result = get_user_cv(owner_uid)
+    result["revoked_applications_count"] = revoked
+    message = "PDF stored privately. Review the extracted details before sharing."
+    if revoked:
+        message += f" {revoked} earlier application(s) were withdrawn and their access revoked. Apply again to share this CV."
+    return True, message, result
+
+
+_TEXT_LIMITS = {
+    "full_name": 160, "email": 254, "phone": 60, "industry": 120, "current_role": 160,
+    "work_mode_preference": 60, "executive_summary": 3000, "location": 160,
+    "education_level": 120,
+}
+_LIST_LIMITS = {"skills": (50, 100), "work_experience": (20, 2000), "education_history": (20, 1000),
+                "projects": (20, 2000), "certifications": (30, 500)}
 
 
 def update_user_structured_cv(owner_uid: str, updates: dict) -> tuple[bool, str, dict | None]:
-    """Allow the CV owner to refine their AI-extracted summary/skills or privacy toggle."""
-    conn = get_db_connection()
-    row = conn.execute("SELECT * FROM user_cvs WHERE owner_uid = ?", (owner_uid,)).fetchone()
-    if not row:
-        conn.close()
-        return False, "Please upload your PDF CV first.", None
-
-    structured = json.loads(row["structured_cv_json"])
-    for key in ("full_name", "industry", "current_role", "work_mode_preference", "executive_summary", "location", "education_level"):
-        if key in updates and updates[key] is not None:
-            structured[key] = str(updates[key]).strip()
+    """Validate owner edits and prevent an old browser tab from editing a replacement CV."""
+    if not isinstance(updates, dict):
+        return False, "Send a valid profile update.", None
+    if "allow_anon_stats" in updates and type(updates["allow_anon_stats"]) is not bool:
+        return False, "The statistics preference must be true or false.", None
+    if "review_confirmed" in updates and type(updates["review_confirmed"]) is not bool:
+        return False, "The review confirmation must be true or false.", None
+    clean = {}
+    for key, limit in _TEXT_LIMITS.items():
+        if key in updates:
+            value = updates[key]
+            if not isinstance(value, str) or len(value) > limit:
+                return False, f"{key.replace('_', ' ').title()} must be text of at most {limit} characters.", None
+            clean[key] = value.strip()
+    for key, (count, length) in _LIST_LIMITS.items():
+        if key not in updates:
+            continue
+        values = updates[key]
+        if (not isinstance(values, list) or len(values) > count
+                or any(not isinstance(v, str) or len(v) > length for v in values)):
+            return False, f"{key.replace('_', ' ').title()} accepts at most {count} text entries, each at most {length} characters.", None
+        clean[key] = list(dict.fromkeys(v.strip() for v in values if v.strip()))
     if "years_experience" in updates:
-        try:
-            structured["years_experience"] = max(0, min(40, int(updates["years_experience"])))
-        except (TypeError, ValueError):
-            pass
-    if "skills" in updates and isinstance(updates["skills"], list):
-        clean_sk = [str(s).strip() for s in updates["skills"] if str(s).strip()]
-        structured["skills"] = clean_sk
-        structured["expanded_skills"] = expand_for_matching(clean_sk)
+        value = updates["years_experience"]
+        if value is not None and (type(value) not in (int, float) or not 0 <= value <= 80):
+            return False, "Years of experience must be a number from 0 to 80, or empty.", None
+        clean["years_experience"] = value
 
-    allow_anon = row["allow_anon_stats"]
-    if "allow_anon_stats" in updates:
-        allow_anon = 1 if bool(updates["allow_anon_stats"]) else 0
-
-    conn.execute(
-        "UPDATE user_cvs SET structured_cv_json = ?, allow_anon_stats = ?, updated_at = ? WHERE owner_uid = ?",
-        (json.dumps(structured), allow_anon, _now(), owner_uid),
-    )
-    conn.commit()
-    conn.close()
-    return True, "Organised CV summary updated.", get_user_cv(owner_uid)
+    conn = get_db_connection()
+    try:
+        conn.execute("BEGIN IMMEDIATE")
+        row = conn.execute("SELECT * FROM user_cvs WHERE owner_uid = ?", (owner_uid,)).fetchone()
+        if not row:
+            return False, "Please upload your PDF CV first.", None
+        if clean or updates.get("review_confirmed"):
+            if updates.get("expected_file_sha256") != row["file_sha256"]:
+                return False, "This CV has changed. Reload the vault before saving or confirming your review.", None
+        structured = json.loads(row["structured_cv_json"])
+        changed = any(structured.get(key) != value for key, value in clean.items())
+        structured.update(clean)
+        if "skills" in clean:
+            structured["expanded_skills"] = expand_for_matching(clean["skills"])
+        revoked = 0
+        if changed:
+            from candidate_comparison import structured_dimensions
+            structured.update(structured_dimensions(structured))
+            structured["experience_known"] = structured.get("years_experience") is not None
+            # Original wording analysis is not a score for the owner's edited draft.
+            structured.pop("parser_analytics", None)
+            structured["profile_revision_id"] = uuid.uuid4().hex
+            revoked = conn.execute("DELETE FROM job_applications WHERE candidate_uid = ?", (owner_uid,)).rowcount
+            structured["review_status"] = "needs_review"
+            structured.pop("reviewed_at", None)
+            # Old generated claims must not survive corrected facts.
+            structured["ai_highlights"] = []
+            structured["owner_edited_fields"] = sorted(set(structured.get("owner_edited_fields", [])) | set(clean))
+        if updates.get("review_confirmed"):
+            structured["review_status"] = "reviewed"
+            structured["reviewed_at"] = _now()
+        allow_anon = updates.get("allow_anon_stats", bool(row["allow_anon_stats"]))
+        conn.execute(
+            "UPDATE user_cvs SET structured_cv_json = ?, allow_anon_stats = ?, updated_at = ? WHERE owner_uid = ?",
+            (json.dumps(structured), int(allow_anon), _now(), owner_uid),
+        )
+        conn.commit()
+    finally:
+        conn.close()
+    result = get_user_cv(owner_uid)
+    result["revoked_applications_count"] = revoked
+    message = "CV details saved." if not updates.get("review_confirmed") else "CV reviewed. You can now choose what to share when applying."
+    if revoked:
+        message += f" {revoked} earlier application(s) were withdrawn to avoid sharing changed details. Apply again to share your changes."
+    return True, message, result
 
 
 def get_user_cv(owner_uid: str) -> dict | None:
-    """Return the user's stored CV metadata, structured summary, and employer access audit logs."""
+    """Owner-only data, including applications to closed vacancies so access remains manageable."""
     conn = get_db_connection()
     row = conn.execute("SELECT * FROM user_cvs WHERE owner_uid = ?", (owner_uid,)).fetchone()
     logs = conn.execute(
-        "SELECT * FROM cv_access_logs WHERE candidate_uid = ? ORDER BY id DESC LIMIT 20",
-        (owner_uid,),
+        "SELECT * FROM cv_access_logs WHERE candidate_uid = ? ORDER BY id DESC LIMIT 50", (owner_uid,),
     ).fetchall()
+    log_count = conn.execute("SELECT COUNT(*) FROM cv_access_logs WHERE candidate_uid = ?", (owner_uid,)).fetchone()[0]
     apps = conn.execute(
-        "SELECT vacancy_id, application_uid, share_organised_cv, share_original_pdf, hr_decision, applied_at FROM job_applications WHERE candidate_uid = ?",
+        """SELECT a.vacancy_id, a.application_uid, a.share_organised_cv, a.share_original_pdf,
+                  a.hr_decision, a.applied_at, v.title AS vacancy_title, v.status AS vacancy_status,
+                  u.role_details_json AS employer_details
+             FROM job_applications a JOIN vacancies v ON v.id = a.vacancy_id
+             LEFT JOIN users u ON u.unique_uid = v.owner_uid WHERE a.candidate_uid = ? ORDER BY a.id DESC""",
         (owner_uid,),
     ).fetchall()
     conn.close()
     if not row:
         return None
+    applications = []
+    for app in apps:
+        item = dict(app)
+        employer_details = json.loads(item.pop("employer_details") or "{}")
+        item["company_name"] = employer_details.get("company_name") or "Employer"
+        item["share_organised_cv"] = bool(item["share_organised_cv"])
+        item["share_original_pdf"] = bool(item["share_original_pdf"])
+        applications.append(item)
     structured = json.loads(row["structured_cv_json"])
-    if "parser_analytics" not in structured:
-        structured["parser_analytics"] = analyze_resume_competencies_and_impact(row["raw_text"] or "")
+    structured.setdefault("review_status", "needs_review")
     return {
-        "owner_uid": row["owner_uid"],
-        "original_filename": row["original_filename"],
-        "file_sha256": row["file_sha256"][:16] + "...",
-        "file_size_kb": round(row["file_size_bytes"] / 1024, 1),
-        "page_count": row["page_count"],
-        "allow_anon_stats": bool(row["allow_anon_stats"]),
-        "uploaded_at": row["uploaded_at"],
-        "updated_at": row["updated_at"],
-        "structured_cv": structured,
-        "pdf_url": "/api/cv/me/pdf",
-        "applications_count": len(apps),
-        "access_logs": [dict(lg) for lg in logs],
+        "owner_uid": row["owner_uid"], "original_filename": row["original_filename"],
+        "file_sha256": row["file_sha256"], "file_size_kb": round(row["file_size_bytes"] / 1024, 1),
+        "page_count": row["page_count"], "allow_anon_stats": bool(row["allow_anon_stats"]),
+        "uploaded_at": row["uploaded_at"], "updated_at": row["updated_at"],
+        "structured_cv": structured, "pdf_url": "/api/cv/me/pdf", "applications_count": len(applications),
+        "applications": applications, "active_applications": applications,
+        "access_logs": [dict(lg) for lg in logs], "access_logs_total": log_count,
     }
 
 
 def get_user_pdf_path(owner_uid: str) -> tuple[str | None, str | None]:
     conn = get_db_connection()
-    row = conn.execute(
-        "SELECT stored_pdf_path, original_filename FROM user_cvs WHERE owner_uid = ?",
-        (owner_uid,),
-    ).fetchone()
+    row = conn.execute("SELECT stored_pdf_path, original_filename FROM user_cvs WHERE owner_uid = ?", (owner_uid,)).fetchone()
     conn.close()
-    if not row or not os.path.exists(row["stored_pdf_path"]):
+    if not row or not _upload_path_is_private(row["stored_pdf_path"]) or not os.path.isfile(row["stored_pdf_path"]):
         return None, None
     return row["stored_pdf_path"], row["original_filename"]
 
 
-# ------------------------------------------------------------------ Anonymized Statistical Trend Aggregation
-def get_anonymized_cv_statistics() -> dict:
-    """Aggregate skill & industry counts across consenting user CVs without exposing any PII."""
+def delete_user_cv(owner_uid: str) -> tuple[bool, str]:
+    """Delete vault content and revoke all corresponding employer access."""
     conn = get_db_connection()
-    rows = conn.execute(
-        "SELECT structured_cv_json FROM user_cvs WHERE allow_anon_stats = 1"
-    ).fetchall()
+    try:
+        conn.execute("BEGIN IMMEDIATE")
+        row = conn.execute("SELECT stored_pdf_path FROM user_cvs WHERE owner_uid = ?", (owner_uid,)).fetchone()
+        if not row:
+            return False, "No CV found."
+        path = row["stored_pdf_path"]
+        if not _upload_path_is_private(path):
+            return False, "The stored file could not be safely removed. Contact the application owner."
+        if os.path.isfile(path):
+            os.remove(path)
+        conn.execute("DELETE FROM job_applications WHERE candidate_uid = ?", (owner_uid,))
+        conn.execute("DELETE FROM cv_access_logs WHERE candidate_uid = ?", (owner_uid,))
+        conn.execute("DELETE FROM user_cvs WHERE owner_uid = ?", (owner_uid,))
+        conn.commit()
+    except OSError:
+        conn.rollback()
+        return False, "The stored file could not be removed. Please try again."
+    finally:
+        conn.close()
+    return True, "Your PDF, extracted details, applications and access history were deleted. Earlier downloaded copies cannot be recalled."
+
+
+def export_user_cv(owner_uid: str) -> dict | None:
+    result = get_user_cv(owner_uid)
+    if result is None:
+        return None
+    conn = get_db_connection()
+    row = conn.execute("SELECT raw_text FROM user_cvs WHERE owner_uid = ?", (owner_uid,)).fetchone()
+    logs = conn.execute("SELECT * FROM cv_access_logs WHERE candidate_uid = ? ORDER BY id", (owner_uid,)).fetchall()
     conn.close()
+    result["raw_text"] = row["raw_text"]
+    result["access_logs"] = [dict(log) for log in logs]
+    result["exported_at"] = _now()
+    result["export_notice"] = "Personal data export. Download your original PDF separately from your vault."
+    return result
 
-    skill_counts: dict[str, int] = {}
-    industry_counts: dict[str, int] = {}
-    total_profiles = len(rows)
 
-    for r in rows:
-        try:
-            st = json.loads(r["structured_cv_json"])
-        except Exception:
-            continue
-        ind = st.get("industry") or "General"
-        industry_counts[ind] = industry_counts.get(ind, 0) + 1
-        for sk in st.get("skills") or []:
-            skill_counts[sk] = skill_counts.get(sk, 0) + 1
-
-    top_skills = [
-        {"skill": k, "count": v, "share_pct": round(100 * v / max(1, total_profiles))}
-        for k, v in sorted(skill_counts.items(), key=lambda x: x[1], reverse=True)[:8]
-    ]
+def get_anonymized_cv_statistics() -> dict:
+    """Do not publish rare attributes or free-text fields as supposedly anonymous data."""
     return {
-        "total_anonymized_cvs": total_profiles,
-        "top_extracted_skills": top_skills,
-        "industry_distribution": industry_counts,
-        "privacy_guarantee": "Aggregated from opt-in PDF CVs with zero personal identifiers (UID, name, email, and raw PDFs are stripped).",
+        "total_anonymized_cvs": 0, "top_extracted_skills": [], "industry_distribution": {},
+        "status": "disabled_pending_privacy_review",
+        "privacy_guarantee": "CV-derived aggregate statistics are not published. A recorded preference does not enable publication.",
     }
 
 
-# ------------------------------------------------------------------ Job Applications & Privacy-Gated HR Access
 def apply_to_vacancy(candidate_uid: str, candidate_name: str, vacancy_id: int, payload: dict) -> tuple[bool, str, dict | None]:
-    """Submit or update a candidate's application to an open vacancy, unlocking CV access for that employer."""
-    cv_record = get_user_cv(candidate_uid)
-    if not cv_record:
-        return False, "Please upload your PDF CV in the 'PDF CV & Summary' tab before applying for a job.", None
-
-    conn = get_db_connection()
-    vac = conn.execute("SELECT * FROM vacancies WHERE id = ?", (vacancy_id,)).fetchone()
-    if not vac:
-        conn.close()
-        return False, "Vacancy not found.", None
-    if vac["status"] != "Open":
-        conn.close()
-        return False, "This vacancy is currently closed to new applications.", None
-
-    share_organised = 1 if payload.get("share_organised_cv", True) else 0
-    share_pdf = 1 if payload.get("share_original_pdf", True) else 0
+    """Explicit, per-resource consent, tied to the CV the candidate reviewed."""
+    if not isinstance(payload, dict):
+        return False, "Send a valid application.", None
+    for key in ("share_organised_cv", "share_original_pdf"):
+        if key in payload and type(payload[key]) is not bool:
+            return False, "Sharing choices must be true or false.", None
+    share_organised = payload.get("share_organised_cv", False)
+    share_pdf = payload.get("share_original_pdf", False)
     if not share_organised and not share_pdf:
-        conn.close()
-        return False, "Please share at least your AI-Organised CV Summary when applying to a vacancy.", None
-
-    cover_note = (payload.get("cover_note") or "").strip()[:400]
+        return False, "Choose at least one CV resource to share, or withdraw the application to revoke access.", None
+    cover_note = payload.get("cover_note") or ""
+    available_in = payload.get("available_in") or "Not specified"
+    if not isinstance(cover_note, str) or len(cover_note) > 2000 or not isinstance(available_in, str) or len(available_in) > 80:
+        return False, "The cover note or availability is invalid.", None
+    salary = payload.get("salary_expectation")
+    if salary in (None, ""):
+        salary = 0
+    if type(salary) not in (int, float) or not 0 <= salary <= 10000000:
+        return False, "Salary expectation must be a non-negative number.", None
+    conn = get_db_connection()
     try:
-        salary_exp = int(payload.get("salary_expectation") or 4800)
-    except (TypeError, ValueError):
-        salary_exp = 4800
-    available_in = (payload.get("available_in") or "1 month").strip()[:40]
-    now = _now()
-
-    existing = conn.execute(
-        "SELECT id, application_uid FROM job_applications WHERE vacancy_id = ? AND candidate_uid = ?",
-        (vacancy_id, candidate_uid),
-    ).fetchone()
-
-    if existing:
-        app_uid = existing["application_uid"]
-        conn.execute(
-            """
-            UPDATE job_applications
-               SET candidate_name = ?, share_organised_cv = ?, share_original_pdf = ?,
-                   cover_note = ?, salary_expectation = ?, available_in = ?, applied_at = ?
-             WHERE id = ?
-            """,
-            (candidate_name, share_organised, share_pdf, cover_note, salary_exp, available_in, now, existing["id"]),
-        )
-    else:
-        cur = conn.cursor()
-        cur.execute(
-            """
-            INSERT INTO job_applications (
-                application_uid, vacancy_id, candidate_uid, candidate_name,
-                share_organised_cv, share_original_pdf, cover_note,
-                salary_expectation, available_in, hr_decision, applied_at
-            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, 'Pending', ?)
-            """,
-            ("TEMP", vacancy_id, candidate_uid, candidate_name, share_organised, share_pdf, cover_note, salary_exp, available_in, now),
-        )
-        aid = cur.lastrowid
-        app_uid = f"APP-2026-{aid:04d}"
-        cur.execute("UPDATE job_applications SET application_uid = ? WHERE id = ?", (app_uid, aid))
-
-    conn.commit()
-    conn.close()
-    return True, f"Application {app_uid} submitted! The employer can now view your shared CV for this role.", {
-        "application_uid": app_uid,
-        "vacancy_id": vacancy_id,
-        "share_organised_cv": bool(share_organised),
-        "share_original_pdf": bool(share_pdf),
-        "applied_at": now,
+        conn.execute("BEGIN IMMEDIATE")
+        cv_row = conn.execute("SELECT structured_cv_json FROM user_cvs WHERE owner_uid = ?", (candidate_uid,)).fetchone()
+        if not cv_row:
+            return False, "Upload and review your PDF CV before applying.", None
+        structured = json.loads(cv_row["structured_cv_json"])
+        if structured.get("review_status") != "reviewed":
+            return False, "Review and confirm your CV details before sharing with an employer.", None
+        vac = conn.execute("SELECT * FROM vacancies WHERE id = ?", (vacancy_id,)).fetchone()
+        if not vac:
+            return False, "Vacancy not found.", None
+        recipient = conn.execute("SELECT role FROM users WHERE unique_uid = ?", (vac["owner_uid"],)).fetchone()
+        if (not recipient or recipient["role"] != "hr_company"
+                or str(vac["owner_uid"]).startswith("JS-") or str(vac["vacancy_uid"]).startswith("JS-")):
+            return False, "This discovery listing has no connected employer account. Your CV has not been sent.", None
+        existing = conn.execute(
+            "SELECT id, application_uid FROM job_applications WHERE vacancy_id = ? AND candidate_uid = ?",
+            (vacancy_id, candidate_uid),
+        ).fetchone()
+        if vac["status"] != "Open" and not existing:
+            return False, "This vacancy is closed to new applications.", None
+        now = _now()
+        if existing:
+            app_uid = existing["application_uid"]
+            conn.execute(
+                """UPDATE job_applications SET candidate_name = ?, share_organised_cv = ?, share_original_pdf = ?,
+                   cover_note = ?, salary_expectation = ?, available_in = ? WHERE id = ?""",
+                (candidate_name, int(share_organised), int(share_pdf), cover_note.strip(), int(salary), available_in.strip(), existing["id"]),
+            )
+        else:
+            app_uid = f"APP-{uuid.uuid4().hex[:16].upper()}"
+            conn.execute(
+                """INSERT INTO job_applications (
+                    application_uid, vacancy_id, candidate_uid, candidate_name, share_organised_cv,
+                    share_original_pdf, cover_note, salary_expectation, available_in, hr_decision, applied_at
+                   ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, 'Pending', ?)""",
+                (app_uid, vacancy_id, candidate_uid, candidate_name, int(share_organised), int(share_pdf),
+                 cover_note.strip(), int(salary), available_in.strip(), now),
+            )
+        conn.commit()
+    finally:
+        conn.close()
+    return True, "Application saved with only your selected CV resources shared.", {
+        "application_uid": app_uid, "vacancy_id": vacancy_id,
+        "share_organised_cv": share_organised, "share_original_pdf": share_pdf, "applied_at": now,
     }
 
 
 def withdraw_application(candidate_uid: str, vacancy_id: int) -> tuple[bool, str]:
-    """Allow a candidate to withdraw their job application and immediately revoke employer CV access."""
     conn = get_db_connection()
-    cur = conn.execute(
-        "DELETE FROM job_applications WHERE vacancy_id = ? AND candidate_uid = ?",
-        (vacancy_id, candidate_uid),
-    )
+    cur = conn.execute("DELETE FROM job_applications WHERE vacancy_id = ? AND candidate_uid = ?", (vacancy_id, candidate_uid))
     conn.commit()
     conn.close()
-    if cur.rowcount > 0:
-        return True, "Application withdrawn. Employer access to your CV has been revoked immediately."
+    if cur.rowcount:
+        return True, "Application withdrawn. Further employer access is revoked; earlier downloaded copies cannot be recalled."
     return False, "No active application found for this vacancy."
 
 
@@ -841,119 +641,65 @@ def log_employer_cv_access(candidate_uid: str, hr_user: dict, vacancy_id: int, v
     company_name = ((hr_user.get("role_details") or {}).get("company_name") or hr_user.get("full_name") or "Employer")
     conn = get_db_connection()
     conn.execute(
-        """
-        INSERT INTO cv_access_logs (
-            candidate_uid, hr_uid, company_name, vacancy_id, vacancy_title, access_type, viewed_at
-        ) VALUES (?, ?, ?, ?, ?, ?, ?)
-        """,
-        (candidate_uid, hr_user.get("unique_uid", ""), company_name, vacancy_id, vacancy_title, access_type, _now()),
+        """INSERT INTO cv_access_logs (candidate_uid, hr_uid, company_name, vacancy_id, vacancy_title, access_type, viewed_at)
+           VALUES (?, ?, ?, ?, ?, ?, ?)""",
+        (candidate_uid, hr_user["unique_uid"], company_name, vacancy_id, vacancy_title, access_type, _now()),
     )
     conn.commit()
     conn.close()
 
 
-def get_application_cv_for_hr(hr_user: dict, application_id: int, access_type: str = "Organised CV Summary") -> tuple[bool, str, dict | None]:
-    """Verify that `application_id` belongs to a vacancy owned by `hr_user`, log access, and return CV data."""
-    hr_uid = hr_user["unique_uid"]
+def get_application_cv_for_hr(hr_user: dict, application_id: int, access_type: str = "Organised CV Summary",
+                              resource: str | None = None) -> tuple[bool, str, dict | None]:
+    """Authorize the exact resource before returning it or recording a successful read."""
+    resource = resource or ("pdf" if "pdf" in access_type.lower() else "summary")
+    if resource not in ("pdf", "summary"):
+        return False, "Unknown CV resource.", None
     conn = get_db_connection()
-    row = conn.execute(
-        """
-        SELECT a.*, v.owner_uid AS vacancy_owner, v.title AS vacancy_title, v.vacancy_uid
-          FROM job_applications a
-          JOIN vacancies v ON v.id = a.vacancy_id
-         WHERE a.id = ?
-        """,
-        (application_id,),
-    ).fetchone()
-    if not row:
-        conn.close()
-        return False, "Application not found.", None
-    if row["vacancy_owner"] != hr_uid:
-        conn.close()
-        return False, "Access denied: candidates' CVs are private unless they applied to your company's vacancy.", None
-
-    cv_row = conn.execute("SELECT * FROM user_cvs WHERE owner_uid = ?", (row["candidate_uid"],)).fetchone()
-    conn.close()
-    if not cv_row:
-        return False, "Candidate CV record not found.", None
-
-    log_employer_cv_access(row["candidate_uid"], hr_user, row["vacancy_id"], row["vacancy_title"], access_type)
-
-    structured = json.loads(cv_row["structured_cv_json"])
-    if "parser_analytics" not in structured:
-        structured["parser_analytics"] = analyze_resume_competencies_and_impact(cv_row["raw_text"] or "")
-    return True, "Authorised via candidate job application.", {
-        "application_id": row["id"],
-        "application_uid": row["application_uid"],
-        "vacancy_id": row["vacancy_id"],
-        "vacancy_uid": row["vacancy_uid"],
-        "vacancy_title": row["vacancy_title"],
-        "candidate_uid": row["candidate_uid"],
-        "candidate_name": row["candidate_name"],
-        "applied_at": row["applied_at"],
-        "cover_note": row["cover_note"] or "",
-        "share_organised_cv": bool(row["share_organised_cv"]),
-        "share_original_pdf": bool(row["share_original_pdf"]),
-        "original_filename": cv_row["original_filename"],
-        "page_count": cv_row["page_count"],
-        "file_sha256": cv_row["file_sha256"][:16] + "...",
-        "structured_cv": structured if row["share_organised_cv"] else None,
-        "stored_pdf_path": cv_row["stored_pdf_path"] if row["share_original_pdf"] else None,
-        "pdf_url": f"/api/hr/applications/{row['id']}/pdf" if row["share_original_pdf"] else None,
-    }
-
-
-def _seed_demo_cv_and_application() -> None:
-    """Seed Aisha Rahman's default PDF CV and 1 sample application so both portals showcase the pipeline out of the box."""
-    demo_js_uid = "CL-JS-2026-1042"
-    conn = get_db_connection()
-    has_cv = conn.execute("SELECT 1 FROM user_cvs WHERE owner_uid = ?", (demo_js_uid,)).fetchone()
-    conn.close()
-    if not has_cv:
-        sample_path = os.path.join(SAMPLE_PDF_DIR, "Aisha_Rahman_Auditor_CV.pdf")
-        if os.path.exists(sample_path):
-            with open(sample_path, "rb") as f:
-                pdf_bytes = f.read()
-            save_user_pdf_cv(
-                owner_uid=demo_js_uid,
-                filename="Aisha_Rahman_Auditor_CV.pdf",
-                pdf_bytes=pdf_bytes,
-                user_context={
-                    "full_name": "Aisha Rahman",
-                    "email": "aisha.demo@careerlens.my",
-                    "role_details": {
-                        "industry": "Finance & Accounting",
-                        "current_role": "Junior Financial Auditor",
-                        "preferred_work_mode": "Hybrid",
-                        "location": "Kuala Lumpur",
-                    },
-                },
-                allow_anon_stats=True,
-            )
-
-    # Seed an initial application from Aisha to the AI Financial Compliance Analyst vacancy (id=2)
-    conn = get_db_connection()
-    vac = conn.execute(
-        "SELECT id FROM vacancies WHERE title LIKE '%Compliance%' ORDER BY id ASC LIMIT 1"
-    ).fetchone()
-    conn.close()
-    if vac:
-        conn2 = get_db_connection()
-        already = conn2.execute(
-            "SELECT 1 FROM job_applications WHERE vacancy_id = ? AND candidate_uid = ?",
-            (vac["id"], demo_js_uid),
+    try:
+        conn.execute("BEGIN IMMEDIATE")
+        row = conn.execute(
+            """SELECT a.*, v.owner_uid AS vacancy_owner, v.title AS vacancy_title, v.vacancy_uid,
+                      u.role_details_json AS employer_details
+                 FROM job_applications a JOIN vacancies v ON v.id = a.vacancy_id
+                 LEFT JOIN users u ON u.unique_uid = v.owner_uid WHERE a.id = ?""", (application_id,),
         ).fetchone()
-        conn2.close()
-        if not already:
-            apply_to_vacancy(
-                candidate_uid=demo_js_uid,
-                candidate_name="Aisha Rahman",
-                vacancy_id=vac["id"],
-                payload={
-                    "share_organised_cv": True,
-                    "share_original_pdf": True,
-                    "cover_note": "I have 3 years of statutory audit & risk assessment experience and am actively building Python data analysis skills for AI financial compliance.",
-                    "salary_expectation": 5500,
-                    "available_in": "1 month",
-                },
-            )
+        if not row or row["vacancy_owner"] != hr_user.get("unique_uid"):
+            return False, "Application not found or access denied.", None
+        permitted = row["share_original_pdf"] if resource == "pdf" else row["share_organised_cv"]
+        if not permitted:
+            return False, "The candidate has not shared this CV resource.", None
+        cv_row = conn.execute("SELECT * FROM user_cvs WHERE owner_uid = ?", (row["candidate_uid"],)).fetchone()
+        if not cv_row:
+            return False, "Candidate CV not found.", None
+        structured = json.loads(cv_row["structured_cv_json"])
+        if structured.get("review_status") != "reviewed":
+            return False, "The candidate must review this CV before it can be shared.", None
+        path = cv_row["stored_pdf_path"]
+        if resource == "pdf" and (not _upload_path_is_private(path) or not os.path.isfile(path)):
+            return False, "The shared PDF is no longer available.", None
+        data = {
+            "application_id": row["id"], "application_uid": row["application_uid"],
+            "vacancy_id": row["vacancy_id"], "vacancy_uid": row["vacancy_uid"], "vacancy_title": row["vacancy_title"],
+            "candidate_uid": row["candidate_uid"], "candidate_name": row["candidate_name"], "applied_at": row["applied_at"],
+            "cover_note": row["cover_note"] or "", "share_organised_cv": bool(row["share_organised_cv"]),
+            "share_original_pdf": bool(row["share_original_pdf"]),
+        }
+        if resource == "pdf":
+            data.update(stored_pdf_path=path, original_filename=cv_row["original_filename"])
+        else:
+            # Original-file identifiers and internal parser metadata are not part of summary sharing.
+            summary_keys = set(_TEXT_LIMITS) | set(_LIST_LIMITS) | {"years_experience", "seeker_type", "review_status", "reviewed_at"}
+            data["structured_cv"] = {key: value for key, value in structured.items() if key in summary_keys}
+            if row["share_original_pdf"]:
+                data["pdf_url"] = f"/api/hr/applications/{row['id']}/pdf"
+        company = json.loads(row["employer_details"] or "{}").get("company_name") or "Employer"
+        conn.execute(
+            """INSERT INTO cv_access_logs (candidate_uid, hr_uid, company_name, vacancy_id, vacancy_title, access_type, viewed_at)
+               VALUES (?, ?, ?, ?, ?, ?, ?)""",
+            (row["candidate_uid"], hr_user["unique_uid"], company, row["vacancy_id"], row["vacancy_title"], access_type, _now()),
+        )
+        conn.commit()
+        return True, "Access granted for this application and resource.", data
+    finally:
+        conn.close()

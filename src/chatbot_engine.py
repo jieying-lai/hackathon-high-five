@@ -83,7 +83,7 @@ def check_domain_guardrail(message: str) -> tuple[bool, str | None]:
     return True, None
 
 
-def _build_live_context(user: dict | None, user_location: dict | None = None) -> dict:
+def _build_live_context(user: dict | None, user_location: dict | None = None, include_screening=False, include_heatmap=False) -> dict:
     """Gather live database context for the current user (Job Seeker, Employer/HR, or Guest)."""
     courses = load_json("verified_courses.json")
     future_roles = load_json("future_roles.json")
@@ -100,9 +100,9 @@ def _build_live_context(user: dict | None, user_location: dict | None = None) ->
     uid = user.get("unique_uid", "")
     if role == "hr_company":
         vacancies = hr_engine.list_vacancies(uid)
-        heatmap = hr_engine.get_heatmap()
+        heatmap = hr_engine.get_heatmap(uid) if include_heatmap else {}
         assignments = hr_engine.list_assignments(uid)
-        top_screen = hr_engine.screen_candidates(uid, vacancies[0]["id"]) if vacancies else None
+        top_screen = hr_engine.screen_candidates(uid, vacancies[0]["id"]) if vacancies and include_screening else None
         return {
             "portal": "hr_company",
             "user_name": user.get("full_name", "HR Manager"),
@@ -120,10 +120,10 @@ def _build_live_context(user: dict | None, user_location: dict | None = None) ->
     rd = user.get("role_details") or {}
     profile = {
         "name": st.get("full_name") or user.get("full_name") or "Candidate",
-        "industry": st.get("industry") or rd.get("industry") or "Finance & Accounting",
-        "current_role": st.get("current_role") or rd.get("current_role") or "Professional",
-        "work_mode_preference": st.get("work_mode_preference") or rd.get("preferred_work_mode") or "Hybrid",
-        "skills": st.get("skills") or ["Financial Auditing", "Risk Assessment", "Excel Pivot & Macros"],
+        "industry": st.get("industry") or rd.get("industry") or "",
+        "current_role": st.get("current_role") or rd.get("current_role") or "",
+        "work_mode_preference": st.get("work_mode_preference") or rd.get("preferred_work_mode") or "",
+        "skills": st.get("skills") or [],
     }
     match_res = match_user_to_roles(profile=profile, scenario="moderate")
 
@@ -358,8 +358,10 @@ def _generate_lumi_core(message: str, user: dict | None = None, history: list | 
             "mascot": MASCOT_PROFILE,
         }
 
-    ctx = _build_live_context(user, user_location=user_location)
     low = clean_msg.lower()
+    ctx = _build_live_context(user, user_location=user_location,
+        include_screening=any(k in low for k in ("applied", "applicant", "pdf", "shared", "cv", "candidate", "screen", "top", "vacanc", "hire", "shortlist", "match")),
+        include_heatmap=any(k in low for k in ("heatmap", "gap", "team", "workforce", "reskill", "train", "employee", "readiness")))
     portal = ctx["portal"]
 
     # ------------------------------------------------------------------
@@ -373,13 +375,15 @@ def _generate_lumi_core(message: str, user: dict | None = None, history: list | 
         if any(k in low for k in ("applied", "applicant", "pdf", "shared", "cv")):
             results = (top_scr.get("results") or [])
             applied = [r for r in results if r.get("is_applied_user")]
-            if applied:
+            restricted = top_scr.get("restricted_applications") or []
+            if applied or restricted:
                 lines = [
                     f"• **{a['name']}** (`{a['application_uid']}`) — **{a['score']}% match** "
                     f"({'✓ Organised CV' if a['share_organised_cv'] else ''}{' + ✓ PDF' if a['share_original_pdf'] else ' · 🔒 No PDF'})"
                     for a in applied
                 ]
-                reply = f"🦉 **Applicants who shared their CV ({len(applied)}):**\n" + "\n".join(lines)
+                lines.extend(f"• **{a['candidate_name']}** — Original PDF only; summary and score are not shared." for a in restricted)
+                reply = f"🦉 **Applicants who shared their CV ({len(applied) + len(restricted)}):**\n" + "\n".join(lines)
             else:
                 reply = "🦉 **No direct PDF CV applicants yet.** CVs stay private until a candidate applies to your vacancy."
             return {
@@ -591,7 +595,7 @@ def _generate_lumi_core(message: str, user: dict | None = None, history: list | 
                 f"• **Current Role:** {st.get('current_role')} · {st.get('industry')} ({st.get('years_experience')} yrs experience)\n"
                 f"• **Key Skills ({len(st.get('skills', []))}):** {', '.join(st.get('skills', [])[:6])}"
                 + top_match_line +
-                f"\n• **Application Privacy:** Shared with **{len(cv_rec.get('access_logs', []))}** employer(s)."
+                f"\n• **Application Privacy:** Shared with **{cv_rec.get('access_logs_total', 0)}** recorded employer request(s)."
             )
             return {
                 "ok": True, "in_range": True, "reply": reply,
@@ -607,9 +611,9 @@ def _generate_lumi_core(message: str, user: dict | None = None, history: list | 
             logs = (cv_rec or {}).get("access_logs") or []
             applied_jobs = [j for j in jobs if (j.get("application") or {}).get("applied")]
             reply = (
-                f"🦉 **PDPA Privacy Status:**\n"
-                f"• **Default:** Used *only* for anonymised trend stats & personal matching.\n"
-                f"• **Employer Access:** Unlocked for **{len(applied_jobs)}** applied job(s) · **{len(logs)}** audited HR view(s)."
+                f"🦉 **CV sharing status:**\n"
+                f"• **Default:** Private career matching; aggregate publication is disabled.\n"
+                f"• **Employer Access:** Unlocked for **{len(applied_jobs)}** applied job(s) · **{(cv_rec or {}).get('access_logs_total', 0)}** audited HR request(s)."
             )
             return {
                 "ok": True, "in_range": True, "reply": reply,
@@ -723,7 +727,7 @@ def _generate_lumi_core(message: str, user: dict | None = None, history: list | 
         bs = lumi_knowledge.brain_summary()
         st = bs.get("stats") or {}
         reply = (
-            f"🦉 **Lumi AI is trained on {bs['datasets_count']} real-world datasets (210,000+ records):**\n"
+            f"🦉 **Lumi uses reference data from {bs['datasets_count']} real-world datasets (210,000+ records):**\n"
             f"• 🇲🇾 **JobStreet MY:** {st.get('jobstreet_malaysia_jobs', 68447):,} jobs & {st.get('jobstreet_malaysia_companies', 20514):,} companies\n"
             f"• 🌐 **O*NET 29.0 & Resumes:** {st.get('onet_occupations', 1016):,} occupations, {st.get('onet_tech_skills_rows', 32470):,} tech skills & {st.get('updated_resumes_count', 962)} CVs\n"
             f"• 🎓 **Courses & Q&A:** {st.get('edx_courses_total', 720)} EdX university courses, {st.get('career_qa_pairs', 1620):,} Career Q&A & {st.get('se_interview_questions', 200)} SE Interview Q&A\n"
@@ -804,10 +808,14 @@ def _generate_lumi_core(message: str, user: dict | None = None, history: list | 
 
 
 def generate_lumi_response(message: str, user: dict | None = None, history: list | None = None,
-                           user_location: dict | None = None) -> dict:
-    """Run Lumi's 13-dataset NLU + RAG engine and optionally polish with Gemini 2.5 Flash if GEMINI_API_KEY is set."""
+                           user_location: dict | None = None, external_ai_consent=False) -> dict:
+    """Local replies by default; a talent owner may opt in to external rewriting."""
     res = _generate_lumi_core(message, user=user, history=history, user_location=user_location)
-    if res.get("ok") and res.get("in_range") and res.get("reply"):
-        ctx = _build_live_context(user, user_location=user_location)
-        res["reply"] = _enhance_with_gemini(message, res["reply"], ctx)
+    # A recruiter cannot authorize sending candidates' data to a separate processor.
+    if (external_ai_consent is True and user and user.get("role") == "job_seeker"
+            and res.get("ok") and res.get("in_range") and res.get("reply")):
+        cv = cv_engine.get_user_cv(user.get("unique_uid", ""))
+        if cv and cv.get("structured_cv", {}).get("review_status") == "reviewed":
+            ctx = _build_live_context(user, user_location=user_location)
+            res["reply"] = _enhance_with_gemini(message, res["reply"], ctx)
     return res

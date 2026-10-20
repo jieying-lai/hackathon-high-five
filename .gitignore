@@ -18,3 +18,10 @@ node_modules/
 .idea/
 ~$*
 SDC_Hackathon_2026_Master_Plan_and_Setup_Guide.docx
+
+# Local vault verification artifacts
+.test-deps/
+.test-tmp/
+source-manifest*.json
+*.db-wal
+*.db-shm

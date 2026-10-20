@@ -44,7 +44,7 @@ class PortalAuthorization(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         import auth_db
-        cls.temp = tempfile.TemporaryDirectory(dir=Path(__file__).resolve().parents[1] / 'work')
+        cls.temp = tempfile.TemporaryDirectory()
         cls.previous_path = auth_db.DB_PATH
         auth_db.DB_PATH = str(Path(cls.temp.name) / 'test.db')
         import main
@@ -64,18 +64,21 @@ class PortalAuthorization(unittest.TestCase):
 
     def test_talent_cannot_read_hr_data(self):
         client = self.app.test_client()
+        client.environ_base["HTTP_X_CSRF_TOKEN"] = client.get("/api/auth/csrf").json["csrf_token"]
         with client.session_transaction() as session:
             session['user'] = {'role':'job_seeker', 'unique_uid':'test'}
         self.assertEqual(client.get('/api/hr/heatmap').status_code, 403)
 
     def test_hr_cannot_read_talent_data(self):
         client = self.app.test_client()
+        client.environ_base["HTTP_X_CSRF_TOKEN"] = client.get("/api/auth/csrf").json["csrf_token"]
         with client.session_transaction() as session:
             session['user'] = {'role':'hr_company', 'unique_uid':'test'}
         self.assertEqual(client.get('/api/personas').status_code, 403)
 
     def test_interview_claim_reply_and_owner_isolation(self):
         hr = self.app.test_client()
+        hr.environ_base["HTTP_X_CSRF_TOKEN"] = hr.get("/api/auth/csrf").json["csrf_token"]
         with hr.session_transaction() as session:
             session['user'] = {'role':'hr_company','unique_uid':'CL-HR-2026-8801','full_name':'HR'}
         payload = {'candidate_id':'CL-JS-2026-1042','role':'Auditor','time':'2026-12-01T10:00','location':'Office','message':'Hello'}
@@ -84,16 +87,19 @@ class PortalAuthorization(unittest.TestCase):
         self.assertEqual(hr.post('/api/hr/interviews',json=payload).status_code,400)
         self.assertNotIn('claim_code',sent.json)
         talent = self.app.test_client()
+        talent.environ_base["HTTP_X_CSRF_TOKEN"] = talent.get("/api/auth/csrf").json["csrf_token"]
         with talent.session_transaction() as session:
             session['user'] = {'role':'job_seeker','unique_uid':'CL-JS-2026-1042'}
         invite = talent.get('/api/talent/interviews').json['invitations'][0]
         other = self.app.test_client()
+        other.environ_base["HTTP_X_CSRF_TOKEN"] = other.get("/api/auth/csrf").json["csrf_token"]
         with other.session_transaction() as session:
             session['user'] = {'role':'job_seeker','unique_uid':'other-person'}
         self.assertEqual(other.post(f"/api/talent/interviews/{invite['id']}/reply",json={'status':'Accepted'}).status_code,400)
         self.assertEqual(talent.post(f"/api/talent/interviews/{invite['id']}/reply",json={'status':'Accepted'}).status_code,200)
         self.assertEqual(hr.get('/api/hr/interviews').json['invitations'][0]['status'],'Accepted')
         intruder = self.app.test_client()
+        intruder.environ_base["HTTP_X_CSRF_TOKEN"] = intruder.get("/api/auth/csrf").json["csrf_token"]
         with intruder.session_transaction() as session:
             session['user'] = {'role':'hr_company','unique_uid':'intruder'}
         self.assertEqual(intruder.post(f"/api/hr/interviews/{invite['id']}/cancel",json={}).status_code,404)
@@ -111,6 +117,7 @@ class PortalAuthorization(unittest.TestCase):
 
     def test_heatmap_contract(self):
         client = self.app.test_client()
+        client.environ_base["HTTP_X_CSRF_TOKEN"] = client.get("/api/auth/csrf").json["csrf_token"]
         with client.session_transaction() as session:
             session['user'] = {'role':'hr_company', 'unique_uid':'test'}
         response = client.get('/api/hr/heatmap')

@@ -125,7 +125,7 @@ def init_hr_tables():
 
     demo_owner = "CL-HR-2026-8801"
     cur.execute("SELECT COUNT(*) AS c FROM vacancies WHERE owner_uid = ?", (demo_owner,))
-    if cur.fetchone()["c"] < 4:
+    if cur.fetchone()["c"] < 4 and os.getenv("CAREERLENS_DEMO", "1") == "1":
         existing_titles = {
             r["title"] for r in cur.execute("SELECT title FROM vacancies WHERE owner_uid = ?", (demo_owner,)).fetchall()
         }
@@ -348,11 +348,14 @@ def score_candidate(v, c):
 
     skills_pts = round(45 * len(matched_req) / max(1, len(req)))
     pref_pts = round(10 * len(matched_pref) / len(pref)) if pref else 10
-    exp_pts = 20 if c["years"] >= v["min_years"] else round(20 * c["years"] / max(1, v["min_years"]))
-    edu_pts = 10 if EDU_RANK.get(c["education"], 1) >= EDU_RANK.get(v["education_level"], 1) else 5
-    mode_pts = 5 if v["work_mode"] in c["work_modes"] else 2
+    years = c.get("years")
+    exp_pts = 0 if years is None else (20 if years >= v["min_years"] else round(20 * years / max(1, v["min_years"])))
+    edu_pts = 0 if c["education"] not in EDU_RANK else (10 if EDU_RANK[c["education"]] >= EDU_RANK.get(v["education_level"], 1) else 5)
+    mode_pts = 0 if not c["work_modes"] else (5 if v["work_mode"] in c["work_modes"] else 2)
     sal = c["salary_expectation"]
-    if v["salary_min"] <= sal <= v["salary_max"]:
+    if not sal:
+        sal_pts, sal_fit = 0, "Not specified"
+    elif v["salary_min"] <= sal <= v["salary_max"]:
         sal_pts, sal_fit = 10, "Within budget"
     elif sal < v["salary_min"]:
         sal_pts, sal_fit = 7, "Below budget range"
@@ -387,18 +390,19 @@ def score_candidate(v, c):
     }
 
 
-def _applied_candidates_for_vacancy(vacancy_id: int) -> list[dict]:
-    """Load real Job Seeker applications for this vacancy (privacy-gated: only applicants appear)."""
+def _applied_candidates_for_vacancy(vacancy_id: int, owner_uid: str) -> list[dict]:
+    """Screen only reviewed summaries explicitly shared with this vacancy owner."""
     conn = get_db_connection()
     rows = conn.execute(
         """
         SELECT a.*, u.structured_cv_json
           FROM job_applications a
           JOIN user_cvs u ON u.owner_uid = a.candidate_uid
-         WHERE a.vacancy_id = ?
+          JOIN vacancies v ON v.id = a.vacancy_id
+         WHERE a.vacancy_id = ? AND v.owner_uid = ? AND a.share_organised_cv = 1
          ORDER BY a.id DESC
         """,
-        (vacancy_id,),
+        (vacancy_id, owner_uid),
     ).fetchall()
     conn.close()
     out = []
@@ -407,17 +411,19 @@ def _applied_candidates_for_vacancy(vacancy_id: int) -> list[dict]:
             st = json.loads(r["structured_cv_json"])
         except Exception:
             continue
-        pref_mode = st.get("work_mode_preference") or "Hybrid"
-        work_modes = list({pref_mode, "Hybrid"})
+        if st.get("review_status") != "reviewed":
+            continue
+        pref_mode = st.get("work_mode_preference")
+        work_modes = [pref_mode] if pref_mode else []
         out.append({
             "id": r["candidate_uid"],
             "name": st.get("full_name") or r["candidate_name"],
-            "type": st.get("seeker_type") or "Career Changer",
-            "years": int(st.get("years_experience") or 1),
-            "education": st.get("education_level") or "Bachelor's Degree",
-            "location": st.get("location") or "Kuala Lumpur",
-            "available_in": r["available_in"] or "1 month",
-            "salary_expectation": int(r["salary_expectation"] or 5000),
+            "type": st.get("seeker_type") or "Not specified",
+            "years": st.get("years_experience"),
+            "education": st.get("education_level") or "Not specified",
+            "location": st.get("location") or "Not specified",
+            "available_in": r["available_in"] or "Not specified",
+            "salary_expectation": int(r["salary_expectation"] or 0),
             "work_modes": work_modes,
             "skills": st.get("skills") or [],
             "projects": st.get("projects") or [],
@@ -438,7 +444,7 @@ def list_open_vacancies_for_seeker(candidate_uid: str) -> list[dict]:
     conn = get_db_connection()
     vac_rows = conn.execute(
         """
-        SELECT v.*, u.role_details_json, u.full_name AS hr_name
+        SELECT v.*, u.role_details_json, u.full_name AS hr_name, u.role AS owner_role
           FROM vacancies v
           LEFT JOIN users u ON u.unique_uid = v.owner_uid
          WHERE v.status = 'Open' AND COALESCE(v.vacancy_uid, '') NOT LIKE 'JS-%'
@@ -463,13 +469,13 @@ def list_open_vacancies_for_seeker(candidate_uid: str) -> list[dict]:
         cand_obj = {
             "id": candidate_uid,
             "name": st.get("full_name") or "Candidate",
-            "type": st.get("seeker_type") or "Experienced Worker",
-            "years": int(st.get("years_experience") or 1),
-            "education": st.get("education_level") or "Bachelor's Degree",
-            "location": st.get("location") or "Kuala Lumpur",
-            "available_in": "1 month",
-            "salary_expectation": 5000,
-            "work_modes": [st.get("work_mode_preference") or "Hybrid"],
+            "type": st.get("seeker_type") or "Not specified",
+            "years": st.get("years_experience"),
+            "education": st.get("education_level") or "Not specified",
+            "location": st.get("location") or "Not specified",
+            "available_in": "Not specified",
+            "salary_expectation": 0,
+            "work_modes": [st["work_mode_preference"]] if st.get("work_mode_preference") else [],
             "skills": st.get("skills") or [],
             "projects": st.get("projects") or [],
             "motivation": st.get("executive_summary") or "",
@@ -500,6 +506,9 @@ def list_open_vacancies_for_seeker(candidate_uid: str) -> list[dict]:
             v["subcategory"] = js_meta.get("subcategory", "")
             v["description_snippet"] = js_meta.get("description_snippet", "")
             v["dataset_source"] = "JobStreet Malaysia Dataset"
+            v["can_apply_in_app"] = False
+            v["application_channel"] = "external"
+            v["application_notice"] = "Imported listing for discovery. CareerLens cannot deliver your CV to this company; confirm the vacancy with the employer."
         else:
             try:
                 rd = json.loads(vr["role_details_json"] or "{}")
@@ -510,10 +519,11 @@ def list_open_vacancies_for_seeker(candidate_uid: str) -> list[dict]:
                 or comp_by_city.get((v.get("location") or "").lower())
                 or companies[0]
             )
-            v["company_name"] = matched_comp["name"] if v.get("department") in {c["category"] for c in companies} else (rd.get("company_name") or matched_comp["name"])
-            v["company_category"] = matched_comp["category"]
-            v["company_industry"] = matched_comp["sub_sector"]
-            v["company_district"] = matched_comp["district"]
+            # The consent recipient is the vacancy owner, never a directory match.
+            v["company_name"] = rd.get("company_name") or vr["hr_name"] or "Employer account unavailable"
+            v["company_category"] = rd.get("company_industry") or v.get("department") or "Unspecified"
+            v["company_industry"] = rd.get("company_industry") or v.get("department") or "Unspecified"
+            v["company_district"] = v.get("location") or "Not specified"
             v["lat"] = matched_comp["lat"]
             v["lng"] = matched_comp["lng"]
             v["jobstreet_id"] = None
@@ -521,6 +531,12 @@ def list_open_vacancies_for_seeker(candidate_uid: str) -> list[dict]:
             v["subcategory"] = matched_comp["sub_sector"]
             v["description_snippet"] = ""
             v["dataset_source"] = "Direct Employer Portal"
+            v["can_apply_in_app"] = vr["owner_role"] == "hr_company" and not str(vr["owner_uid"]).startswith("JS-")
+            v["application_channel"] = "in_app" if v["can_apply_in_app"] else "external"
+            v["application_notice"] = (
+                f"Your selected CV resources will be shared with {v['company_name']} for this vacancy."
+                if v["can_apply_in_app"] else "No connected employer account can receive an application for this listing."
+            )
 
         if cand_obj:
             scored = score_candidate(v, cand_obj)
@@ -543,8 +559,8 @@ def list_open_vacancies_for_seeker(candidate_uid: str) -> list[dict]:
             "applied": bool(app_info),
             "application_uid": app_info["application_uid"] if app_info else None,
             "applied_at": app_info["applied_at"] if app_info else None,
-            "share_organised_cv": bool(app_info["share_organised_cv"]) if app_info else True,
-            "share_original_pdf": bool(app_info["share_original_pdf"]) if app_info else True,
+            "share_organised_cv": bool(app_info["share_organised_cv"]) if app_info else False,
+            "share_original_pdf": bool(app_info["share_original_pdf"]) if app_info else False,
             "hr_decision": app_info["hr_decision"] if app_info else None,
             "cover_note": app_info["cover_note"] if app_info else "",
         }
@@ -557,6 +573,12 @@ def list_nearby_companies_and_jobs(candidate_uid: str, lat: float | None = None,
                                    city_preset: str | None = None, category: str = "", query: str = "") -> dict:
     """Return nearby companies grouped by category + open job vacancies with distance & CV match."""
     # Resolve coordinates
+    if (lat is None) != (lng is None):
+        raise ValueError("Both coordinates are required.")
+    if lat is not None:
+        lat, lng = float(lat), float(lng)
+        if not math.isfinite(lat) or not math.isfinite(lng) or not -90 <= lat <= 90 or not -180 <= lng <= 180:
+            raise ValueError("Invalid coordinates.")
     resolved_label = "Kuala Lumpur (KLCC)"
     u_lat, u_lng = 3.1579, 101.7116
 
@@ -639,25 +661,48 @@ def screen_candidates(owner_uid, vacancy_id):
     v = get_vacancy(owner_uid, vacancy_id)
     if not v:
         return None
-    applied = _applied_candidates_for_vacancy(vacancy_id)
-    synthetic_pool = _load("candidates_pool.json")
+    applied = _applied_candidates_for_vacancy(vacancy_id, owner_uid)
+    synthetic_pool = _load("candidates_pool.json") if os.getenv("CAREERLENS_DEMO", "1") == "1" else []
     all_candidates = applied + synthetic_pool
     results = sorted((score_candidate(v, c) for c in all_candidates),
                      key=lambda r: (r.get("is_applied_user", False), r["score"]), reverse=True)
     summary = {}
     for r in results:
         summary[r["action"]] = summary.get(r["action"], 0) + 1
+    conn = get_db_connection()
+    restricted = conn.execute(
+        """SELECT a.id AS application_id, a.application_uid, a.candidate_name, a.applied_at,
+                  a.share_original_pdf FROM job_applications a JOIN vacancies v ON v.id = a.vacancy_id
+             WHERE a.vacancy_id = ? AND v.owner_uid = ? AND a.share_organised_cv = 0""",
+        (vacancy_id, owner_uid),
+    ).fetchall()
+    employer = conn.execute("SELECT role_details_json FROM users WHERE unique_uid = ?", (owner_uid,)).fetchone()
+    company = json.loads(employer["role_details_json"] or "{}").get("company_name") if employer else "Employer"
+    for candidate in applied:
+        conn.execute(
+            """INSERT INTO cv_access_logs (candidate_uid, hr_uid, company_name, vacancy_id, vacancy_title, access_type, viewed_at)
+               VALUES (?, ?, ?, ?, ?, 'Viewed shared summary in applicant screening', ?)""",
+            (candidate["id"], owner_uid, company or "Employer", vacancy_id, v["title"], _now()),
+        )
+    conn.commit()
+    conn.close()
+    restricted_apps = [{**dict(item), "share_original_pdf": bool(item["share_original_pdf"]),
+                        "pdf_url": f"/api/hr/applications/{item['application_id']}/pdf" if item["share_original_pdf"] else None,
+                        "notice": "The candidate has not shared a structured summary. No automated screening score is available."}
+                       for item in restricted]
     return {
         "vacancy": v, "results": results,
+        "restricted_applications": restricted_apps,
         "summary": {
             "by_action": summary,
             "total": len(results),
-            "applied_count": len(applied),
+            "applied_count": len(applied) + len(restricted_apps),
+            "summary_shared_count": len(applied),
             "average_score": round(sum(r["score"] for r in results) / max(1, len(results))),
         },
-        "fairness_note": "Scored on job-relevant criteria only. Personal PDF CVs are strictly private and only "
-                         "visible here when a candidate explicitly applies to this vacancy. Missing CV items are "
-                         "marked 'To confirm', never auto-rejected. HR makes the final decision.",
+        "fairness_note": "Scores use only reviewed summaries explicitly shared for this vacancy. PDF-only applicants "
+                         "are listed separately without a derived score. Missing information requires follow-up; "
+                         "scores are guidance and HR makes the final decision.",
     }
 
 
