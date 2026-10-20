@@ -25,7 +25,7 @@
         <div class="tint tint-indigo rounded-2xl p-3 mt-3">
           <div class="flex items-center gap-2.5">
             <div id="uAvatar" class="h-9 w-9 rounded-xl bg-gradient-to-br from-indigo-500 to-pink-500 text-white font-bold grid place-items-center">U</div>
-            <div class="min-w-0"><div id="uName" class="text-xs font-extrabold truncate">User</div><div id="uUid" class="text-[10px] font-mono text-slate-500 truncate"></div></div>
+            <div class="min-w-0"><div id="uName" data-no-translate class="text-xs font-extrabold truncate">User</div><div id="uUid" data-no-translate class="text-[10px] font-mono text-slate-500 truncate"></div></div>
           </div>
           <button onclick="signOut()" class="btn btn-soft w-full mt-3 !py-2">Sign out</button>
         </div>
@@ -50,12 +50,16 @@
           <div id="pgActions"></div>
         </div>
 
+        <section id="tab-notifications" class="tab hidden space-y-4">
+
+          <button class="btn btn-soft" onclick="loadInvitations(false)">Refresh notifications</button><div id="talentInvitations" class="space-y-4"></div>
+        </section>
         <!-- ============ DASHBOARD ============ -->
         <section id="tab-dash" class="tab space-y-6">
           <div class="glass rounded-3xl p-6 sm:p-8 relative overflow-hidden">
             <div class="absolute -right-10 -top-10 h-48 w-48 rounded-full bg-gradient-to-br from-pink-300/50 to-indigo-300/50 blur-2xl"></div>
             <div class="relative space-y-1"><div class="text-sm text-slate-500 font-semibold">Welcome back</div>
-              <h2 id="dashHello" class="text-2xl font-extrabold"></h2>
+              <h2 id="dashHello" data-no-translate class="text-2xl font-extrabold"></h2>
               <p id="dashSub" class="text-sm text-slate-600"></p></div>
             <div id="journey" class="relative mt-6 grid grid-cols-2 sm:grid-cols-5 gap-3"></div>
           </div>
@@ -77,13 +81,13 @@
               <div id="personaBtns" class="flex flex-wrap gap-2"></div>
             </div>
             <div class="grid sm:grid-cols-2 gap-4">
-              <div><label class="label">Full name</label><input id="pName" class="input" /></div>
-              <div><label class="label">Industry</label><select id="pIndustry" class="input"><option>Finance & Accounting</option><option>Marketing & PR</option><option>IT & Software</option><option>HR & Administration</option></select></div>
-              <div><label class="label">Current role</label><input id="pRole" class="input" /></div>
-              <div><label class="label">Work mode</label><select id="pMode" class="input"><option>Hybrid</option><option>Remote</option><option>On-site</option></select></div>
+              <div><label class="label" for="pName">Full name</label><input id="pName" data-no-translate class="input" /></div>
+              <div><label class="label" for="pIndustry">Industry</label><select id="pIndustry" class="input"><option>Finance & Accounting</option><option>Marketing & PR</option><option>IT & Software</option><option>HR & Administration</option></select></div>
+              <div><label class="label" for="pRole">Current role</label><input id="pRole" class="input" /></div>
+              <div><label class="label" for="pMode">Work mode</label><select id="pMode" class="input"><option>Hybrid</option><option>Remote</option><option>On-site</option></select></div>
             </div>
             <div>
-              <label class="label">Skills <span class="text-slate-400 font-medium">· press Enter to add</span></label>
+              <label class="label" for="skillInput">Skills <span class="text-slate-400 font-medium">· press Enter to add</span></label>
               <div id="skillChips" class="flex flex-wrap gap-2 mb-2.5"></div>
               <input id="skillInput" class="input" placeholder="Type a skill, e.g. Financial Auditing" list="skillSuggest" />
               <datalist id="skillSuggest"></datalist>
@@ -111,6 +115,13 @@
             <div><div id="trendBadge" class="text-xs text-slate-500 font-medium"></div><div id="trendScenarioLabel" class="text-sm font-extrabold mt-0.5"></div></div>
             <div class="seg"><button id="scModerate" onclick="setScenario('moderate')" class="on">🐢 Moderate</button><button id="scFast" onclick="setScenario('fast')">🚀 Fast disruption</button></div>
           </div>
+          <div class="glass rounded-3xl p-6 space-y-3">
+            <label for="scenarioSlider" class="label">What-If: AI adoption scenario</label>
+            <input id="scenarioSlider" type="range" min="0" max="1" step="1" value="0" class="w-full" aria-describedby="scenarioHelp" onchange="setScenario(this.value === '1' ? 'fast' : 'moderate')" />
+            <p id="scenarioHelp" class="hint">Two benchmark scenarios: Moderate / Fast. Estimates, not predictions.</p>
+            <div id="analysisStatus" role="status" aria-live="polite"></div>
+            <div id="radarChart"></div>
+          </div>
           <div class="grid md:grid-cols-2 gap-6">
             <div class="tint tint-teal rounded-3xl p-6 space-y-4"><div class="text-sm font-extrabold text-teal-900">📈 Rising skills</div><div id="rising" class="space-y-4"></div></div>
             <div class="tint tint-pink rounded-3xl p-6 space-y-4"><div class="text-sm font-extrabold text-rose-900">⚠️ Tasks at automation risk</div><div id="declining" class="space-y-4"></div></div>
@@ -120,7 +131,7 @@
 
         <!-- ============ MATCHES ============ -->
         <section id="tab-match" class="tab hidden space-y-5">
-          <div class="flex flex-wrap gap-2"><span class="chip chip-emerald">⚖️ Fairness audited</span><span class="chip chip-slate">Scores are estimates</span></div>
+          <div class="flex flex-wrap gap-2"><details class="chip chip-slate"><summary>⚖️ Fairness checks</summary><p id="fairnessDetails" class="mt-2 max-w-lg">Protected attributes excluded from scoring. Statistical parity has not been audited.</p></details><span class="chip chip-slate">Scores are estimates</span></div>
           <div id="roleCards" class="grid lg:grid-cols-2 gap-5"></div>
         </section>
 
@@ -145,15 +156,17 @@
   </div>
 
   <script src="/static/js/common.js"></script>
+  <script src="/static/js/interviews.js?v=20261020-4"></script>
   <script>
     const NAV = [
+      { id: 'notifications', ico: '🔔', label: 'Interview notifications', eyebrow: 'Notifications', title: 'Interview notifications' },
       { id: 'dash', ico: '🏠', label: 'Dashboard', eyebrow: 'Overview', title: 'Your career dashboard' },
       { id: 'profile', ico: '🧑‍💼', label: 'Profile & Skills', eyebrow: 'Function 01', title: 'Skills profile' },
-      { id: 'quest', ico: '📝', label: 'Questionnaire', eyebrow: 'Function 01', title: 'Application questionnaire' },
-      { id: 'radar', ico: '📡', label: 'AI Radar', eyebrow: 'Function 02', title: 'Future skills radar' },
-      { id: 'match', ico: '🎯', label: 'Role Matches', eyebrow: 'Function 03', title: 'Future-role matches' },
-      { id: 'plan', ico: '🧭', label: 'Reskilling Plan', eyebrow: 'Function 04', title: 'Personalised reskilling plan' },
-      { id: 'passport', ico: '🌱', label: 'SDG Passport', eyebrow: 'Impact', title: 'Your SDG career passport' },
+      { id: 'quest', ico: '📝', label: 'Questionnaire', eyebrow: 'Function 02', title: 'Application questionnaire' },
+      { id: 'radar', ico: '📡', label: 'AI Radar', eyebrow: 'Function 03', title: 'Future skills radar' },
+      { id: 'match', ico: '🎯', label: 'Role Matches', eyebrow: 'Function 04', title: 'Future-role matches' },
+      { id: 'plan', ico: '🧭', label: 'Reskilling Plan', eyebrow: 'Function 05', title: 'Personalised reskilling plan' },
+      { id: 'passport', ico: '🌱', label: 'SDG Passport', eyebrow: 'Function 06', title: 'Your SDG career passport' },
     ];
     const COMMON_Q = [
       { id: 'c1', text: 'Are you a fresh graduate, working, or changing career?', type: 'select', options: ['Fresh Graduate', 'Working Professional', 'Career Changer'] },
@@ -185,6 +198,7 @@
       document.querySelectorAll('[data-tab]').forEach(b => b.classList.toggle('active', b.dataset.tab === id));
       const n = NAV.find(x => x.id === id);
       document.getElementById('pgEyebrow').textContent = n.eyebrow; document.getElementById('pgTitle').textContent = n.title;
+      if (id === 'notifications') loadInvitations(false);
       if (id === 'dash') renderDash(); if (id === 'passport') renderPassport();
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
@@ -208,25 +222,43 @@
     }
     async function saveProfile() {
       if (!pName.value.trim()) return toast('Please enter your name.', 'err');
+      if (skillInput.value.trim()) { addSkill(skillInput.value); skillInput.value = ''; }
       if (!skills.length) return toast('Add at least one skill.', 'err');
-      await runAnalysis(); toast('Profile analysed'); showTab('radar');
+      if (await runAnalysis()) { toast('Profile analysed'); showTab('radar'); }
     }
 
     /* ---------- analysis ---------- */
     async function runAnalysis() {
+      const pendingSkill = skillInput.value.trim(); if (pendingSkill) { addSkill(pendingSkill); skillInput.value = ''; }
       const profile = { name: pName.value, industry: pIndustry.value, current_role: pRole.value, work_mode_preference: pMode.value, skills };
+      const token = ++analysisVersion;
+      document.getElementById('analysisStatus').textContent = 'Loading analysis…';
+      try {
       const [t, m] = await Promise.all([
         api(`/api/trends?scenario=${scenario}`),
         postJson('/api/analyze', { profile, scenario }),
       ]);
+      if (token !== analysisVersion) return false;
+      if (!t.ok || !m.ok) throw new Error('Analysis unavailable. Please retry.');
+      document.getElementById('analysisStatus').textContent = '';
+      document.getElementById('fairnessDetails').textContent = m.data.fairness_audit;
       trend = t.data; roles = m.data.recommended_roles || []; aiQuestions = m.data.verification_questions || [];
       if (selected >= roles.length) selected = 0;
       analysed = true;
       renderRadar(); renderRoles(); renderPlanSelect(); renderPlan(); renderQuestionnaire();
       if (current === 'dash') renderDash();
+      return true;
+      } catch (error) {
+        if (token === analysisVersion) {
+          document.getElementById('analysisStatus').textContent = 'Analysis unavailable. Please retry.';
+          toast('Analysis unavailable. Please retry.', 'err');
+        }
+        return false;
+      }
     }
+    let analysisVersion = 0;
     async function setScenario(s) {
-      scenario = s;
+      scenario = s; document.getElementById('scenarioSlider').value = s === 'fast' ? '1' : '0';
       scModerate.className = s === 'moderate' ? 'on' : ''; scFast.className = s === 'fast' ? 'on' : '';
       await runAnalysis();
     }
@@ -285,7 +317,7 @@
       commonQ.innerHTML = COMMON_Q.map((q, i) => {
         const val = answers[q.id] || '';
         const field = q.type === 'select'
-          ? `<select class="input" onchange="setAnswer('${q.id}',this.value)"><option value="">Select…</option>${q.options.map(o => `<option ${o === val ? 'selected' : ''}>${esc(o)}</option>`).join('')}</select>`
+          ? `<select class="input" onchange="setAnswer('${q.id}',this.value)"><option value="">Select…</option>${q.options.map(o => `<option value="${esc(o)}" ${o === val ? 'selected' : ''}>${esc(o)}</option>`).join('')}</select>`
           : `<textarea rows="2" class="input" oninput="setAnswer('${q.id}',this.value)">${esc(val)}</textarea>`;
         return `<div><label class="label">${i + 1}. ${q.text}</label>${field}</div>`;
       }).join('');
@@ -300,6 +332,7 @@
     /* ---------- radar ---------- */
     function renderRadar() {
       if (!trend) return;
+      window.renderTrendRadar?.(trend);
       const m = trend.signal_metadata;
       trendBadge.textContent = `Source: ${m.source_name} · Updated ${m.last_updated} · ${m.live_status.replace('_', ' ')}`;
       trendScenarioLabel.textContent = trend.scenario_label;
@@ -310,7 +343,7 @@
 
     /* ---------- matches ---------- */
     function renderRoles() {
-      const parts = [['Core skills', 'core_skills_match_pct', 50], ['Transferable', 'transferable_skills_pct', 25], ['Sector fit', 'industry_alignment_pct', 15], ['Work mode', 'work_mode_fit_pct', 10]];
+      const parts = [['Scenario adjustment', 'scenario_adjustment_pct', 20], ['Core skills', 'core_skills_match_pct', 50], ['Transferable', 'transferable_skills_pct', 25], ['Sector fit', 'industry_alignment_pct', 15], ['Work mode', 'work_mode_fit_pct', 10]];
       roleCards.innerHTML = roles.map((r, i) => `
         <article class="glass rounded-3xl p-6 space-y-4 lift ${i === 0 ? 'ring-2 ring-indigo-300' : ''}">
           <div class="flex items-start gap-4">
@@ -384,5 +417,8 @@
     }
     init();
   </script>
+<script src="/static/js/questionnaire-i18n.js"></script>
+<script src="/static/js/portal-i18n.js"></script>
+<script src="/static/js/member3.js?v=20261020-7"></script>
 </body>
 </html>

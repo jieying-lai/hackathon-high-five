@@ -4,6 +4,8 @@ __pycache__/
 *.db
 venv/
 .venv/
+work/
+node_modules/
 
 # Environment
 .env
