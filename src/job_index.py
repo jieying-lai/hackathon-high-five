@@ -494,3 +494,155 @@ def materialize_vacancy(js_uid):
     vid = cur.lastrowid
     conn.close()
     return vid
+
+
+import urllib.parse
+import urllib.request
+
+
+def search_map_places(query: str, limit: int = 6) -> list[dict]:
+    """Search real Malaysian buildings, condos, streets, suburbs, or cities via OpenStreetMap Nominatim + local index."""
+    q = (query or "").strip()
+    if len(q) < 2:
+        return []
+    results = []
+    seen = set()
+
+    # 1. Query live OpenStreetMap Nominatim (Malaysia-scoped) for condos, buildings, streets, postcodes
+    search_q = q if "malaysia" in q.lower() else f"{q}, Malaysia"
+    url = "https://nominatim.openstreetmap.org/search?" + urllib.parse.urlencode({
+        "q": search_q,
+        "format": "json",
+        "addressdetails": 1,
+        "limit": limit,
+        "countrycodes": "my",
+    })
+    try:
+        req = urllib.request.Request(url, headers={"User-Agent": "CareerLensAI-Malaysia/1.0"})
+        with urllib.request.urlopen(req, timeout=4.5) as resp:
+            items = json.loads(resp.read().decode("utf-8"))
+            for it in items:
+                lat = round(float(it["lat"]), 5)
+                lng = round(float(it["lon"]), 5)
+                disp = it.get("display_name") or q
+                parts = [p.strip() for p in disp.split(",") if p.strip() and p.strip().lower() != "malaysia"]
+                short_label = ", ".join(parts[:2]) if len(parts) >= 2 else (parts[0] if parts else q)
+                full_addr = ", ".join(parts[:5])
+                key = (round(lat, 3), round(lng, 3), short_label.lower())
+                if key not in seen:
+                    seen.add(key)
+                    results.append({
+                        "label": short_label,
+                        "address": full_addr,
+                        "short_label": short_label,
+                        "full_address": full_addr,
+                        "lat": lat,
+                        "lng": lng,
+                        "place_type": (it.get("type") or it.get("class") or "place").replace("_", " "),
+                        "source": "OpenStreetMap Malaysia",
+                    })
+    except Exception:
+        pass
+
+    # 2. Fallback / supplement from local Malaysian location aliases & geocache
+    if len(results) < limit:
+        loc_hit = resolve_location_from_text(q)
+        if loc_hit:
+            key = (round(loc_hit["lat"], 3), round(loc_hit["lng"], 3), loc_hit["label"].lower())
+            if key not in seen:
+                seen.add(key)
+                results.append({
+                    "label": loc_hit["label"],
+                    "address": f"{loc_hit['label']}, Malaysia",
+                    "short_label": loc_hit["label"],
+                    "full_address": f"{loc_hit['label']}, Malaysia",
+                    "lat": loc_hit["lat"],
+                    "lng": loc_hit["lng"],
+                    "place_type": "district / city",
+                    "source": "Malaysia Geo Index",
+                })
+        geo_path = os.path.join(DATA_DIR, "jobstreet_geocache.json")
+        if os.path.exists(geo_path):
+            try:
+                gcache = json.load(open(geo_path, encoding="utf-8"))
+                low_q = q.lower()
+                for loc_name, coords in gcache.items():
+                    if coords and low_q in loc_name.lower():
+                        lat, lng = round(float(coords[0]), 5), round(float(coords[1]), 5)
+                        key = (round(lat, 3), round(lng, 3), loc_name.lower())
+                        if key not in seen:
+                            seen.add(key)
+                            results.append({
+                                "label": loc_name,
+                                "address": f"{loc_name}, Malaysia",
+                                "short_label": loc_name,
+                                "full_address": f"{loc_name}, Malaysia",
+                                "lat": lat,
+                                "lng": lng,
+                                "place_type": "district",
+                                "source": "Malaysia Geo Index",
+                            })
+                        if len(results) >= limit:
+                            break
+            except Exception:
+                pass
+
+    return results[:limit]
+
+
+def reverse_geocode_coords(lat: float, lng: float) -> dict:
+    """Identify the real street, condo/building, suburb, and city for GPS or map-clicked coordinates."""
+    lat, lng = round(float(lat), 5), round(float(lng), 5)
+    url = "https://nominatim.openstreetmap.org/reverse?" + urllib.parse.urlencode({
+        "lat": lat,
+        "lon": lng,
+        "format": "json",
+        "zoom": 18,
+        "addressdetails": 1,
+    })
+    try:
+        req = urllib.request.Request(url, headers={"User-Agent": "CareerLensAI-Malaysia/1.0"})
+        with urllib.request.urlopen(req, timeout=4.5) as resp:
+            data = json.loads(resp.read().decode("utf-8"))
+            addr = data.get("address") or {}
+            building = addr.get("building") or addr.get("amenity") or addr.get("residential") or addr.get("shop") or ""
+            road = addr.get("road") or addr.get("pedestrian") or ""
+            suburb = addr.get("suburb") or addr.get("neighbourhood") or addr.get("quarter") or addr.get("village") or ""
+            city = addr.get("city") or addr.get("town") or addr.get("municipality") or addr.get("district") or addr.get("state") or "Malaysia"
+            postcode = addr.get("postcode") or ""
+
+            short_parts = [p for p in [building or road, suburb or city] if p]
+            short_label = ", ".join(dict.fromkeys(short_parts)) or city
+            full_parts = [p for p in [building, road, suburb, postcode, city] if p]
+            full_address = ", ".join(dict.fromkeys(full_parts)) or data.get("display_name") or f"GPS ({lat:.4f}, {lng:.4f})"
+            return {
+                "ok": True,
+                "label": short_label[:65],
+                "address": full_address[:140],
+                "short_label": short_label[:65],
+                "full_address": full_address[:140],
+                "lat": lat,
+                "lng": lng,
+                "source": "OpenStreetMap Reverse Geocode",
+            }
+    except Exception:
+        pass
+
+    # Fallback to nearest known Malaysian district
+    best_label = "Kuala Lumpur"
+    best_dist = 999999.0
+    for _, label, al_lat, al_lng, _, _ in LOCATION_ALIASES:
+        d = haversine_km(lat, lng, al_lat, al_lng)
+        if d < best_dist:
+            best_dist = d
+            best_label = label
+    return {
+        "ok": True,
+        "label": f"Near {best_label}",
+        "address": f"GPS ({lat:.4f}, {lng:.4f}) · near {best_label}",
+        "short_label": f"Near {best_label}",
+        "full_address": f"GPS ({lat:.4f}, {lng:.4f}) · near {best_label}",
+        "lat": lat,
+        "lng": lng,
+        "source": "Malaysia Geo Fallback",
+    }

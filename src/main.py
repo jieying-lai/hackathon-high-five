@@ -227,16 +227,23 @@ def api_jobs_list():
     lat = request.args.get("lat", type=float)
     lng = request.args.get("lng", type=float)
     city = request.args.get("city", "")
+    custom_label = (request.args.get("label") or "").strip()
     resolved_label = "Kuala Lumpur (KLCC)"
     u_lat, u_lng = 3.1579, 101.7116
-    if city and city in hr_engine.CITY_COORDS:
-        resolved_label = city
+    if city and city in hr_engine.CITY_COORDS and (lat is None or lng is None):
+        resolved_label = custom_label or city
         u_lat, u_lng = hr_engine.CITY_COORDS[city]["lat"], hr_engine.CITY_COORDS[city]["lng"]
     elif lat is not None and lng is not None:
         u_lat, u_lng = lat, lng
-        nearest = min(hr_engine.CITY_COORDS, key=lambda k: hr_engine.haversine_km(
-            u_lat, u_lng, hr_engine.CITY_COORDS[k]["lat"], hr_engine.CITY_COORDS[k]["lng"]))
-        resolved_label = f"My GPS · near {hr_engine.CITY_COORDS[nearest]['city']}"
+        if custom_label:
+            resolved_label = custom_label
+        else:
+            nearest = min(hr_engine.CITY_COORDS, key=lambda k: hr_engine.haversine_km(
+                u_lat, u_lng, hr_engine.CITY_COORDS[k]["lat"], hr_engine.CITY_COORDS[k]["lng"]))
+            resolved_label = f"Near {hr_engine.CITY_COORDS[nearest]['city']}"
+    elif city and city in hr_engine.CITY_COORDS:
+        resolved_label = custom_label or city
+        u_lat, u_lng = hr_engine.CITY_COORDS[city]["lat"], hr_engine.CITY_COORDS[city]["lng"]
 
     employer_vacancies = hr_engine.list_open_vacancies_for_seeker(_owner())
     res = job_index.search_nearby(
@@ -260,6 +267,27 @@ def api_jobs_list():
                           "presets": list(hr_engine.CITY_COORDS.keys())},
     })
     return jsonify(res)
+
+
+@app.route("/api/geocode/search", methods=["GET"])
+@api_role("job_seeker")
+def api_geocode_search():
+    """Search OpenStreetMap Malaysia + local index for condos, buildings, streets, or areas."""
+    q = (request.args.get("q") or "").strip()
+    places = job_index.search_map_places(q, limit=6)
+    return jsonify({"ok": True, "places": places})
+
+
+@app.route("/api/geocode/reverse", methods=["GET"])
+@api_role("job_seeker")
+def api_geocode_reverse():
+    """Reverse-geocode GPS or map-clicked coordinates into a street/condo/area address."""
+    lat = request.args.get("lat", type=float)
+    lng = request.args.get("lng", type=float)
+    if lat is None or lng is None:
+        return jsonify({"ok": False, "message": "lat and lng required"}), 400
+    info = job_index.reverse_geocode_coords(lat, lng)
+    return jsonify(info)
 
 
 @app.route("/api/jobs/js/<js_uid>/apply", methods=["POST"])
