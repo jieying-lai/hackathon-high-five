@@ -212,7 +212,7 @@ def lookup_hr_and_workforce_analytics() -> dict:
 
 
 def lookup_resume_category_benchmark(query_or_industry: str) -> dict | None:
-    """Return top skills benchmarked from 962 real resumes in UpdatedResumeDataSet.csv."""
+    """Return relevant peer skill benchmarks for a role or industry."""
     b = load_brain()
     cats = b.get("resume_category_benchmarks") or {}
     low = (query_or_industry or "").lower()
@@ -226,11 +226,15 @@ def lookup_resume_category_benchmark(query_or_industry: str) -> dict | None:
         if s > best_s:
             best_s, best_cat = s, (cat, info)
     if not best_cat and cats:
-        # Map CareerLens industry names to closest resume category
-        if "finance" in low or "account" in low:
+        if any(w in q_toks for w in ("finance", "accounting", "audit", "banking", "tax")):
             best_cat = ("Business Analyst", cats.get("Business Analyst") or next(iter(cats.values())))
-        elif "it" in low or "software" in low or "data" in low:
+        elif any(w in q_toks for w in ("software", "developer", "data", "python", "ai", "cloud", "cybersecurity")):
             best_cat = ("Data Science", cats.get("Data Science") or next(iter(cats.values())))
-        elif "hr" in low:
+        elif any(w in q_toks for w in ("hr", "human", "recruitment", "talent")):
             best_cat = ("HR", cats.get("HR") or next(iter(cats.values())))
+        elif any(w in q_toks for w in ("marketing", "copywriter", "pr", "media", "brand", "digital", "content", "sales")):
+            if "Sales" in cats:
+                best_cat = ("Sales", cats["Sales"])
+            elif "Arts" in cats:
+                best_cat = ("Arts", cats["Arts"])
     return {"category": best_cat[0], **best_cat[1]} if best_cat else None

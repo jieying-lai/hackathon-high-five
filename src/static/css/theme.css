@@ -108,7 +108,7 @@ body.hr .lumi-fab { border-color: rgba(20,184,166,.55); box-shadow: 0 16px 36px 
 .lumi-fab-avatar { width: 3.1rem; height: 3.1rem; border-radius: 50%; background: linear-gradient(135deg, #eef2ff, #fdf2f8);
   display: grid; place-items: center; animation: lumiBob 3.2s ease-in-out infinite; flex: none; }
 @keyframes lumiBob { 0%,100% { transform: translateY(0) rotate(0deg) } 50% { transform: translateY(-4px) rotate(3deg) } }
-.lumi-panel { position: fixed; right: 1.35rem; bottom: 5.5rem; width: min(410px, calc(100vw - 1.8rem)); height: min(600px, calc(100vh - 7.5rem));
+.lumi-panel { position: fixed; right: 1.35rem; bottom: 5.5rem; width: min(435px, calc(100vw - 1.8rem)); height: min(610px, calc(100vh - 7.2rem));
   z-index: 85; display: flex; flex-direction: column; border-radius: 1.75rem; background: rgba(255,255,255,.92);
   backdrop-filter: blur(26px) saturate(180%); -webkit-backdrop-filter: blur(26px) saturate(180%);
   border: 1.5px solid rgba(255,255,255,.98); box-shadow: 0 24px 60px rgba(79,70,229,.22), 0 4px 16px rgba(15,23,42,.08);
