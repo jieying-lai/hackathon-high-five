@@ -862,6 +862,24 @@
       ).join('');
     }
 
+    window.applyLumiMapJump = function(act) {
+      if (act.lat && act.lng) {
+        userLocation.lat = Number(act.lat);
+        userLocation.lng = Number(act.lng);
+        userLocation.city = act.city || '';
+        userLocation.label = act.label_loc || act.city || 'Selected Location';
+      }
+      if (act.radius) {
+        radiusKm = Number(act.radius);
+        if (window.radiusSlider) radiusSlider.value = radiusKm;
+      }
+      if (window.jobSearchInput && act.query !== undefined) {
+        jobSearchInput.value = act.query || '';
+      }
+      selectedCompanyName = '';
+      loadJobs(false).then(() => zoomMapNearMe());
+    };
+
     window.setCompanyCategory = function(cat) {
       selectedCategory = cat || 'All';
       selectedCompanyName = '';

@@ -85,7 +85,9 @@ async function signOut() {
     if (!act) return;
     if (act.tab && typeof window.showTab === 'function') {
       window.showTab(act.tab).then(() => {
-        if (act.category && typeof window.setCompanyCategory === 'function') {
+        if (act.lat && act.lng && typeof window.applyLumiMapJump === 'function') {
+          window.applyLumiMapJump(act);
+        } else if (act.category && typeof window.setCompanyCategory === 'function') {
           window.setCompanyCategory(act.category);
           if (typeof window.setJobScope === 'function') window.setJobScope('all');
         }

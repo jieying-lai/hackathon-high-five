@@ -147,6 +147,67 @@ def query_market_insights(query_text: str = "", category: str = "") -> dict:
     }
 
 
+INDUSTRY_ROLE_KEYWORDS = {
+    "Finance & Accounting": {"account", "accountant", "accounting", "audit", "auditor", "finance", "financial", "tax", "credit", "treasury", "accounts", "compliance", "risk", "analyst"},
+    "IT & Software": {"software", "developer", "engineer", "programmer", "python", "java", "data", "it", "system", "web", "frontend", "backend", "fullstack", "cloud", "devops", "security", "network", "ai", "analyst"},
+    "Marketing & PR": {"marketing", "digital", "content", "copywriter", "brand", "social", "media", "seo", "communications", "pr", "campaign", "creative", "advertising"},
+    "HR & Administration": {"hr", "human", "resource", "resources", "recruitment", "recruiter", "talent", "payroll", "people", "admin", "administrative", "training"},
+    "Engineering & Green Tech": {"engineer", "engineering", "mechanical", "electrical", "process", "quality", "qa", "qc", "production", "manufacturing", "project", "esg", "environmental"},
+    "Logistics & Supply Chain": {"logistics", "supply", "chain", "procurement", "purchasing", "warehouse", "inventory", "shipping", "planner", "buyer"},
+    "Healthcare & Life Sciences": {"clinical", "medical", "health", "healthcare", "nurse", "pharmacist", "laboratory", "hospital", "patient"},
+}
+
+LOCATION_ALIASES = [
+    # Johor
+    (["iskandar puteri", "gelang patah", "nusajaya"], "Johor Bahru (Iskandar Puteri)", 1.4236, 103.6575, "Johor Bahru (Iskandar Puteri)", 20),
+    (["kulai", "senai"], "Kulai / Senai (Johor)", 1.6300, 103.6200, "Johor Bahru (Iskandar Puteri)", 20),
+    (["pasir gudang", "masai"], "Pasir Gudang (Johor)", 1.4726, 103.9022, "Johor Bahru (Iskandar Puteri)", 20),
+    (["muar"], "Muar (Johor)", 2.0442, 102.5689, "", 25),
+    (["batu pahat"], "Batu Pahat (Johor)", 1.8548, 102.9325, "", 25),
+    (["kluang"], "Kluang (Johor)", 2.0305, 103.3189, "", 25),
+    (["johor bahru", "johor", "jb", "skudai", "tebrau", "柔佛", "新山"], "Johor Bahru (Johor)", 1.4927, 103.7414, "Johor Bahru (Iskandar Puteri)", 20),
+    # Penang & North
+    (["bayan lepas", "bayan baru"], "Bayan Lepas (Penang)", 5.2945, 100.2655, "Penang (Bayan Lepas / George Town)", 15),
+    (["george town", "georgetown"], "George Town (Penang)", 5.4141, 100.3288, "Penang (Bayan Lepas / George Town)", 15),
+    (["butterworth", "seberang perai", "perai", "bukit mertajam", "batu kawan"], "Seberang Perai / Butterworth (Penang)", 5.3630, 100.4300, "Penang (Bayan Lepas / George Town)", 20),
+    (["penang", "pulau pinang", "槟城"], "Penang", 5.3600, 100.3100, "Penang (Bayan Lepas / George Town)", 20),
+    (["kulim"], "Kulim (Kedah)", 5.3649, 100.5618, "", 20),
+    (["sungai petani", "alor setar", "kedah", "langkawi", "吉打"], "Kedah", 5.6470, 100.4877, "", 30),
+    # Perak
+    (["ipoh", "kinta", "perak", "taiping", "kampar", "怡保", "霹雳"], "Ipoh (Perak)", 4.5975, 101.0901, "Ipoh (Perak)", 20),
+    # Negeri Sembilan & Melaka
+    (["seremban", "negeri sembilan", "senawang", "nilai", "sendayan", "芙蓉", "森美兰"], "Seremban (Negeri Sembilan)", 2.7258, 101.9424, "Seremban (Negeri Sembilan)", 20),
+    (["melaka", "malacca", "ayer keroh", "马六甲"], "Melaka", 2.1896, 102.2501, "", 20),
+    # East Coast & East Malaysia
+    (["kuantan", "pahang", "gebeng", "关丹", "彭亨"], "Kuantan (Pahang)", 3.8126, 103.3256, "", 25),
+    (["kota kinabalu", "sabah", "sandakan", "tawau", "沙巴", "亚庇"], "Kota Kinabalu (Sabah)", 5.9804, 116.0735, "", 25),
+    (["kuching", "sarawak", "miri", "bintulu", "sibu", "砂拉越", "古晋"], "Kuching (Sarawak)", 1.5533, 110.3592, "", 25),
+    # Klang Valley / Selangor / KL
+    (["cyberjaya", "putrajaya", "sepang", "赛城", "布城"], "Cyberjaya / Putrajaya", 2.9213, 101.6559, "Cyberjaya / Putrajaya", 15),
+    (["subang jaya", "subang", "sunway", "bandar sunway", "usj", "梳邦", "双威"], "Subang Jaya / Sunway", 3.0674, 101.6067, "Subang Jaya / Sunway", 12),
+    (["shah alam", "glenmarie", "setia alam", "kota kemuning", "莎阿南"], "Shah Alam (Selangor)", 3.0833, 101.5581, "Shah Alam (Selangor)", 15),
+    (["klang", "port klang", "bukit raja", "巴生"], "Klang (Selangor)", 3.0449, 101.4456, "Klang (Selangor)", 15),
+    (["petaling jaya", "pj", "damansara", "kota damansara", "bandar utama", "kelana jaya", "八打灵"], "Petaling Jaya (Selangor)", 3.1347, 101.6226, "Petaling Jaya (Selangor)", 12),
+    (["puchong", "蒲种"], "Puchong (Selangor)", 3.0245, 101.6175, "", 12),
+    (["kajang", "bangi", "serdang", "seri kembangan", "加影"], "Kajang / Bangi (Selangor)", 2.9800, 101.7600, "", 15),
+    (["cheras", "蕉赖"], "Cheras (KL)", 3.1068, 101.7259, "", 12),
+    (["kuala lumpur", "klcc", "kl", "bangsar", "bukit jalil", "mont kiara", "kepong", "吉隆坡"], "Kuala Lumpur (KLCC)", 3.1579, 101.7116, "Kuala Lumpur (KLCC)", 12),
+]
+
+
+def resolve_location_from_text(text: str) -> dict | None:
+    """Detect if the user mentioned a specific Malaysian state, city, or district in their prompt."""
+    low = (text or "").lower()
+    for aliases, label, lat, lng, preset, default_km in LOCATION_ALIASES:
+        for a in aliases:
+            if len(a) <= 2:
+                if re.search(rf"\b{re.escape(a)}\b", low):
+                    return {"label": label, "lat": lat, "lng": lng, "city": preset, "default_km": default_km}
+            elif a in low:
+                return {"label": label, "lat": lat, "lng": lng, "city": preset, "default_km": default_km}
+    return None
+
+
 def _cv_profile(candidate_uid):
     conn = get_db_connection()
     row = conn.execute("SELECT structured_cv_json FROM user_cvs WHERE owner_uid = ?", (candidate_uid,)).fetchone()
@@ -172,29 +233,32 @@ def _cv_profile(candidate_uid):
         st.get("target_role") or rd.get("target_role"),
         " ".join(st.get("experience") or []),
     ]))
+    role_toks = _tokens(role_text) | INDUSTRY_ROLE_KEYWORDS.get(industry, set())
     return {
         "has_cv": bool(row),
         "skill_keys": keys,
         "industry": industry,
-        "role_tokens": _tokens(role_text),
+        "role_tokens": role_toks,
     }
 
 
 def _score(idx, i, prof):
-    """Explainable 0-100 fit: skills overlap (60) + sector fit (25) + role-title similarity (15)."""
+    """Explainable 0-100 fit: skills overlap (55) + sector fit (25) + role-title relevance (20)."""
     j = idx["jobs"][i]
     sk_ids = j[12]
     sk_keys = idx["skill_keys"]
     matched = [idx["skills"][s] for s in sk_ids if sk_keys[s] in prof["skill_keys"]]
-    denom = max(1, min(len(sk_ids), 6))
-    skill_pts = min(60, round(60 * len(matched) / denom))
+    # Require at least 3 skills in denominator so 1-skill noise postings never get full 55 pts
+    denom = max(3, min(len(sk_ids), 5))
+    skill_pts = min(55, round(55 * len(matched) / denom))
     industry = CATEGORY_TO_INDUSTRY.get(idx["categories"][j[4]], "")
     sector_pts = 25 if industry and industry == prof["industry"] else 0
     tt = idx["title_tokens"][i]
     overlap = len(tt & prof["role_tokens"])
-    title_pts = min(15, overlap * 8)
+    title_pts = min(20, overlap * 10)
     score = skill_pts + sector_pts + title_pts
-    is_match = (len(matched) >= 2) or (score >= 45) or (len(matched) >= 1 and sector_pts > 0)
+    # True CV match requires either >=2 matched skills, or >=1 matched skill + title/sector alignment
+    is_match = (len(matched) >= 2 and (sector_pts > 0 or title_pts > 0)) or (len(matched) >= 3) or (score >= 55)
     return score, matched, is_match
 
 

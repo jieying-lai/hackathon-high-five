@@ -61,7 +61,7 @@ _IN_RANGE_KEYWORDS = re.compile(
     r"job|vacanc(?:y|ies)|role|career|work|working|profession|occupation|become|switch|transition|dream|"
     r"doctor|physician|nurse|healthcare|medical|lawyer|legal|engineer|developer|programmer|scientist|"
     r"teacher|educator|designer|accountant|auditor|marketer|copywriter|analyst|manager|pilot|architect|"
-    r"nearby|near\s+me|location|gps|around\s+me|city|kuala\s+lumpur|selangor|penang|johor|cyberjaya|petaling|"
+    r"nearby|near\s+me|location|gps|around\s+me|city|kuala\s+lumpur|kl|selangor|penang|johor|jb|cyberjaya|putrajaya|petaling|pj|subang|sunway|shah\s+alam|klang|ipoh|perak|melaka|malacca|seremban|sabah|sarawak|kuching|kuantan|kulim|kedah|puchong|kajang|bangi|cheras|"
     r"match|score|interview|question(?:naire)?|salary|rm|sdg|passport|trend|radar|ai|automation|"
     r"hr|employer|company|companies|category|sector|industry|candidate|screen(?:ing)?|heatmap|workforce|privacy|pdpa|apply|application|lumi|help|"+
     r"attrition|turnover|retention|overtime|edx|university|mit|harvard|onet|o\*net|displacement|2030|forecast|equity|fairness|gender\s+pay|upskilling|dataset|trained|"+
@@ -203,16 +203,17 @@ def _handle_career_aspiration(low: str, ctx: dict) -> dict | None:
         "software": ("IT & Software", "Software & AI Developer", "Software Developer", "Focus on **Python, SQL, REST APIs, and Git** to qualify for open Software & AI engineering roles."),
     }
 
+    has_aspiration_verb = bool(aspiration_rx) or any(
+        p in low for p in ("become", "want to be", "how to be", "switch to", "transition to", "career as", "dream job", "想当", "想成为", "转行")
+    )
+    if not has_aspiration_verb:
+        return None
+
     matched_key = None
-    target_phrase = ""
     for k in regulated_map:
         if re.search(rf"\b{k}\b", low):
             matched_key = k
-            target_phrase = k
             break
-
-    if not matched_key and not aspiration_rx:
-        return None
 
     prof = ctx.get("profile") or {}
     cur_role = prof.get("current_role", "your current role")
@@ -269,7 +270,63 @@ def _handle_career_aspiration(low: str, ctx: dict) -> dict | None:
     }
 
 
-def generate_lumi_response(message: str, user: dict | None = None, history: list | None = None,
+
+def _get_gemini_key() -> tuple[str, str]:
+    """Read GEMINI_API_KEY or GOOGLE_API_KEY from environment or .env file."""
+    key = (os.getenv("GEMINI_API_KEY") or os.getenv("GOOGLE_API_KEY") or "").strip()
+    model = (os.getenv("LUMI_GEMINI_MODEL") or "gemini-2.5-flash").strip()
+    if not key:
+        env_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), ".env")
+        if os.path.exists(env_path):
+            try:
+                for line in open(env_path, encoding="utf-8").read().splitlines():
+                    line = line.strip()
+                    if line and not line.startswith("#") and "=" in line:
+                        k, v = line.split("=", 1)
+                        k, v = k.strip(), v.strip().strip('"').strip("'")
+                        if k in ("GEMINI_API_KEY", "GOOGLE_API_KEY") and v:
+                            key = v
+                        elif k == "LUMI_GEMINI_MODEL" and v:
+                            model = v
+            except Exception:
+                pass
+    return key, model
+
+
+def _enhance_with_gemini(user_msg: str, grounded_reply: str, ctx: dict) -> str:
+    """If GEMINI_API_KEY is configured, use Gemini 2.5 Flash to polish/answer naturally using the 13-dataset facts."""
+    api_key, model = _get_gemini_key()
+    if not api_key:
+        return grounded_reply
+    url = f"https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent?key={api_key}"
+    prof = ctx.get("profile") or {}
+    prompt = (
+        "You are Lumi 🦉, the cute, smart AI Owl Copilot for CareerLens AI Malaysia.\n"
+        "Rules:\n"
+        "1. Reply in the SAME language as the user (English, Chinese, or Bahasa/Manglish).\n"
+        "2. Keep it concise (max 3-4 short bullet points, start with 🦉).\n"
+        "3. Strictly preserve the exact numbers, company names, salaries, and facts from the GROUNDED DATASET FACTS below.\n\n"
+        f"User Profile: {prof.get('current_role', '')} in {prof.get('industry', '')}, Skills: {', '.join((prof.get('skills') or [])[:6])}\n"
+        f"User Message: {user_msg}\n"
+        f"GROUNDED DATASET FACTS:\n{grounded_reply}"
+    )
+    payload = json.dumps({
+        "contents": [{"parts": [{"text": prompt}]}],
+        "generationConfig": {"temperature": 0.25, "maxOutputTokens": 280},
+    }).encode("utf-8")
+    try:
+        req = urllib.request.Request(url, data=payload, headers={"Content-Type": "application/json"})
+        with urllib.request.urlopen(req, timeout=4.5) as resp:
+            data = json.loads(resp.read().decode("utf-8"))
+            cand_text = data["candidates"][0]["content"]["parts"][0]["text"].strip()
+            if cand_text:
+                return cand_text
+    except Exception:
+        pass
+    return grounded_reply
+
+
+def _generate_lumi_core(message: str, user: dict | None = None, history: list | None = None,
                            user_location: dict | None = None) -> dict:
     """Process a user message through Lumi's Concise Domain Guardrail + Live Tool Engine."""
     history = history or []
@@ -407,37 +464,91 @@ def generate_lumi_response(message: str, user: dict | None = None, history: list
         if asp_res:
             return asp_res
 
-        # Intent T1: Nearby / Location / Radius Circle Jobs & Companies (68,447 JobStreet MY dataset)
-        if any(k in low for k in ("nearby", "near me", "around me", "location", "gps", "close to me", "suitable job", "company near", "companies near", "km", "radius")):
+        # Intent T1: Smart Location / City / Radius Circle Job Search (understands Johor, Penang, Ipoh, PJ, KL, etc.)
+        explicit_loc = job_index.resolve_location_from_text(clean_msg)
+        is_loc_intent = bool(explicit_loc) or any(
+            k in low for k in ("nearby", "near me", "around me", "near ", "location", "gps", "close to", "suitable job", "company near", "companies near", "km", "radius", "附近")
+        )
+        if is_loc_intent and not any(k in low for k in ("salary", "pay", "course", "edx", "interview", "attrition", "2030", "replace")):
+            target_loc = explicit_loc or {
+                "label": loc_info.get("label", "Kuala Lumpur (KLCC)"),
+                "lat": loc_info.get("lat", 3.1579),
+                "lng": loc_info.get("lng", 101.7116),
+                "city": loc_info.get("city", ""),
+                "default_km": 10,
+            }
             km_match = re.search(r"(\d{1,3})\s*km", low)
-            req_km = float(km_match.group(1)) if km_match else 10.0
+            req_km = float(km_match.group(1)) if km_match else float(target_loc.get("default_km") or 15)
+
+            # Extract optional role/skill filter if user asked e.g. "software jobs nearby johor"
+            role_filter = re.sub(
+                r"\b(the|jobs?|vacanc(?:y|ies)|roles?|openings?|work|company|companies|hiring|nearby|near|around|in|at|to|me|my|resume|cv|based|on|suitable|any|find|show|within|radius|\d+\s*km|johor|bahru|jb|penang|george\s*town|bayan\s*lepas|ipoh|perak|melaka|malacca|seremban|sabah|sarawak|kuching|kuantan|kulim|kedah|cyberjaya|putrajaya|subang|sunway|shah\s*alam|klang|petaling\s*jaya|pj|puchong|kajang|bangi|cheras|kuala\s*lumpur|klcc|kl|selangor)\b",
+                " ",
+                low,
+            )
+            role_filter = re.sub(r"[^a-z0-9+#\s]", " ", role_filter)
+            role_filter = re.sub(r"\s+", " ", role_filter).strip()
+            search_mode = "all" if role_filter else "matched"
+
             live = job_index.search_nearby(
                 candidate_uid=ctx.get("uid", ""),
-                lat=loc_info.get("lat", 3.1579),
-                lng=loc_info.get("lng", 101.7116),
+                lat=target_loc["lat"],
+                lng=target_loc["lng"],
                 radius_km=req_km,
-                mode="matched",
-                limit=3,
+                mode=search_mode,
+                query=role_filter,
+                limit=4,
             )
+            # If matched mode had 0 hits in a smaller town, fall back to all roles in range
+            if not live["jobs"] and search_mode == "matched":
+                live = job_index.search_nearby(
+                    candidate_uid=ctx.get("uid", ""),
+                    lat=target_loc["lat"],
+                    lng=target_loc["lng"],
+                    radius_km=req_km,
+                    mode="all",
+                    query=role_filter,
+                    limit=4,
+                )
             summ = live["summary"]
             top_dots = live["dots"][:2]
-            top_jobs = live["jobs"][:2]
+            top_jobs = []
+            seen_tc = set()
+            for j in live["jobs"]:
+                tc = (j["title"].lower(), j["company_name"].lower())
+                if tc not in seen_tc:
+                    seen_tc.add(tc)
+                    top_jobs.append(j)
+                if len(top_jobs) >= 3:
+                    break
             comp_lines = [
-                f"• 🟢 **{c['name']}** (*{c['category']}*) — **{c['distance_km']} km** · {c['matched']} matched role(s) ({c['best_score']}% fit)"
+                f"• 🟢 **{c['name']}** (*{c['category']}*) — **{c['distance_km']} km** · {c['jobs']} open role(s)"
                 for c in top_dots
             ]
             job_lines = [
-                f"• 💼 **{j['title']}** ({j['company_name']}) — **{j.get('match_score') or 0}% match** · {j.get('distance_km', 0)} km"
+                f"• 💼 **{j['title']}** ({j['company_name']}) — **{j.get('match_score') or 0}% CV fit** · {j.get('distance_km', 0)} km"
+                + (f" · RM {j['salary_min']:,}–{j['salary_max']:,}" if j.get("salary_min") else "")
                 for j in top_jobs
             ]
+            filter_tag = f" matching **'{role_filter}'**" if role_filter else ""
             reply = (
-                f"🦉 **Within {int(req_km)} km of {loc_info['label']}:** **{summ['matched_in_range']:,} CV-matched roles** (out of {summ['jobs_in_range']:,} total jobs across {summ['companies_on_map']:,} companies)\n"
-                + "\n".join(comp_lines + job_lines)
+                f"🦉 **Jobs within {int(req_km)} km of {target_loc['label']}{filter_tag}:** "
+                f"**{summ['matched_in_range']:,} CV-matched roles** (out of **{summ['jobs_in_range']:,}** total openings across **{summ['companies_on_map']:,}** companies)\n"
+                + ("\n".join(comp_lines + job_lines) if (comp_lines or job_lines) else "• Try expanding the radius slider to 35–50 km on the map.")
             )
             return {
                 "ok": True, "in_range": True, "reply": reply,
                 "actions": [
-                    {"label": f"🗺️ View {int(req_km)}km Radius Map", "tab": "jobs"},
+                    {
+                        "label": f"🗺️ Fly Map to {target_loc['label']} ({int(req_km)}km)",
+                        "tab": "jobs",
+                        "lat": target_loc["lat"],
+                        "lng": target_loc["lng"],
+                        "label_loc": target_loc["label"],
+                        "city": target_loc.get("city", ""),
+                        "radius": int(req_km),
+                        "query": role_filter,
+                    },
                     {"label": "📄 My PDF CV", "tab": "profile"},
                 ],
                 "mascot": MASCOT_PROFILE,
@@ -689,3 +800,13 @@ def generate_lumi_response(message: str, user: dict | None = None, history: list
         "actions": [],
         "mascot": MASCOT_PROFILE,
     }
+
+
+def generate_lumi_response(message: str, user: dict | None = None, history: list | None = None,
+                           user_location: dict | None = None) -> dict:
+    """Run Lumi's 13-dataset NLU + RAG engine and optionally polish with Gemini 2.5 Flash if GEMINI_API_KEY is set."""
+    res = _generate_lumi_core(message, user=user, history=history, user_location=user_location)
+    if res.get("ok") and res.get("in_range") and res.get("reply"):
+        ctx = _build_live_context(user, user_location=user_location)
+        res["reply"] = _enhance_with_gemini(message, res["reply"], ctx)
+    return res
