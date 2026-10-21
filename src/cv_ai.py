@@ -25,13 +25,19 @@ def settings():
     local = dotenv_values(Path(__file__).resolve().parents[1] / '.env')
     def get(key, default=''):
         return os.environ.get(key, local.get(key) or default).strip()
-    return {'enabled': get('CV_AI_PROVIDER', 'local') == 'runpod',
+    provider=get('CV_AI_PROVIDER','local')
+    return {'provider': provider, 'enabled': provider in ('runpod','desktop'),
+            'local_url': get('CV_LOCAL_MODEL_URL','http://127.0.0.1:8766/organise-cv'),
             'endpoint': get('CV_RUNPOD_ENDPOINT_ID'), 'key': get('RUNPOD_API_KEY'),
             'model': get('CV_MODEL_ID', MODEL_ID)}
 
 
 def status():
     cfg = settings()
+    if cfg['provider']=='desktop':
+        return {'available':True,'model':cfg['model'],'provider':'Local computer',
+                'message':'AI runs on this computer; no API key or RunPod connection required. CPU processing may take a few minutes.',
+                'training_status':'CV organisation uses the pretrained base model, not the interview adapter.'}
     ready = bool(cfg['enabled'] and re.fullmatch(r'[A-Za-z0-9_-]{4,100}', cfg['endpoint']) and cfg['key'])
     return {'available': ready, 'model': cfg['model'], 'provider': 'RunPod',
             'message': 'RunPod configured; model quality still requires evaluation.' if ready else
@@ -41,6 +47,18 @@ def status():
 
 def request_draft(pages):
     cfg = settings()
+    if cfg['provider']=='desktop':
+        validate_pages(pages)
+        try:
+            response=requests.post(cfg['local_url'],json={'pages':pages},timeout=(3,1200))
+            response.raise_for_status()
+            output=response.json()
+            if output.get('contract')!=CONTRACT_VERSION or output.get('model_id')!=cfg['model']:
+                raise ValueError('Unexpected local model')
+            draft=validate_output(output.get('draft'),pages)
+            return draft,{key:str(output.get(key) or '')[:200] for key in ('model_id','model_revision','adapter_version')}
+        except (requests.RequestException,ValueError,TypeError,KeyError):
+            raise CVAIError('Local AI could not produce a source-checked draft. Your saved profile is unchanged. You can keep using local PDF extraction and manual editing.',502) from None
     if not status()['available']:
         raise CVAIError('RunPod CV model is not configured. Your local CV draft is unchanged.', 503)
     validate_pages(pages)
@@ -98,9 +116,9 @@ def organise(owner_uid, payload):
     from candidate_comparison import structured_dimensions
     from skills_taxonomy import expand_for_matching
     if payload.get('external_ai_consent') is not True:
-        raise CVAIError('Confirm that RunPod may process your PDF text before using AI organisation.')
+        raise CVAIError('Confirm that the configured AI may process your PDF text before using AI organisation.')
     if not status()['available']:
-        raise CVAIError('The RunPod CV model is not connected yet. Local extraction remains available.', 503)
+        raise CVAIError('The CV model is not connected yet. Local extraction remains available.', 503)
     if not _slots.acquire(blocking=False):
         raise CVAIError('Another CV is being processed. Please try again shortly.', 429)
     try:
@@ -160,15 +178,16 @@ def organise(owner_uid, payload):
         structured.update(structured_dimensions(structured))
         structured.pop('parser_analytics', None)
         structured['ai_highlights'] = []
+        provider='Local computer' if settings()['provider']=='desktop' else 'RunPod'
         structured['model_provenance'] = {**metadata, 'contract': CONTRACT_VERSION,
-            'provider': 'RunPod', 'consented_at': cv_engine._now(), 'custom_training_verified': False}
-        structured['extraction_method'] = 'Local PDF extraction + ' + metadata['model_id'] + ' on RunPod; source-checked draft'
+            'provider': provider, 'consented_at': cv_engine._now(), 'custom_training_verified': False}
+        structured['extraction_method'] = 'Local PDF extraction + ' + metadata['model_id'] + ' on ' + provider + '; source-checked draft'
         structured['review_warnings'] = ['AI can omit or misclassify details even when quotes match. Check every section against the original PDF.',
             'AI-suggested skills are not added to matching automatically; review and add only those you actually have.']
         structured['review_status'] = 'needs_review'
         structured['vault_version_id'] = prior['vault_version_id']
         structured['profile_revision_id'] = uuid.uuid4().hex
-        structured['privacy_notice'] = 'PDF text was sent to your configured RunPod worker with consent. It is not added to a training dataset by this app.'
+        structured['privacy_notice'] = ('PDF text was processed on this computer with consent.' if provider=='Local computer' else 'PDF text was sent to your configured RunPod worker with consent.') + ' It is not added to a training dataset by this app.'
         conn = cv_engine.get_db_connection()
         try:
             conn.execute('BEGIN IMMEDIATE')

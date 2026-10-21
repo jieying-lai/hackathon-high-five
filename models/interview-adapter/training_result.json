@@ -1,0 +1,22 @@
+{
+  "train": {
+    "train_runtime": 204.784,
+    "train_samples_per_second": 3.555,
+    "train_steps_per_second": 0.439,
+    "total_flos": 983870002206720.0,
+    "train_loss": 1.1750008371141223,
+    "epoch": 1.9670329670329672
+  },
+  "validation": {
+    "eval_loss": 0.9497851133346558,
+    "eval_runtime": 2.6651,
+    "eval_samples_per_second": 12.007,
+    "eval_steps_per_second": 12.007,
+    "epoch": 1.9670329670329672
+  },
+  "base_model": "Qwen/Qwen2.5-1.5B-Instruct",
+  "gpu": "NVIDIA RTX 4000 Ada Generation",
+  "cv_training_data": false,
+  "quality_approved": false,
+  "note": "Validation loss is not proof of interview quality. Review generated samples before deployment."
+}

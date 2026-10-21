@@ -1,0 +1,9 @@
+# Website and CPU model runtime. No RunPod or paid API is required by the launcher.
+-r requirements.txt
+torch==2.6.0
+transformers==4.51.3
+peft==0.15.2
+accelerate==1.6.0
+huggingface-hub==0.36.2
+psutil==7.0.0
+waitress==3.0.2

@@ -1,5 +1,44 @@
 # CareerLens AI
 
+## Run on your own computer — teammates and judges
+
+1. Download this GitHub project (**Code → Download ZIP**), then extract it completely.
+2. **Windows 10/11 x64:** double-click `Start.cmd` in the extracted folder.
+   **macOS / Linux:** open a terminal in that folder and run `bash start.sh`.
+3. Wait for the browser to open. Keep the startup window open while using the app.
+
+The launcher automatically installs a private Python 3.12 environment and CPU AI
+libraries, downloads the public Qwen base model, loads our included trained LoRA
+adapter, and starts both the website and AI service on your computer. No paid API
+key, RunPod account, GPU, separate model download, or existing Python installation
+is required. This includes **Auto generate** on HR shortlisted candidates.
+
+**First startup needs internet, several GB of downloads and approximately 10 GB
+of free disk space. 16 GB RAM is recommended; CPU generation may take minutes.**
+Later starts reuse the installed environment and model. Live trends, maps, CDN
+styling and external courses still need internet. This is not an entirely offline
+website. Optional CV organisation also runs locally with the pretrained base
+model; the interview adapter is not a CV-trained model.
+
+| Portal | Demo email | Demo password |
+| --- | --- | --- |
+| Talent | aisha.demo@careerlens.my | CareerLens@2026 |
+| HR | hr.demo@nexussme.my | CareerLens@2026 |
+
+Each computer gets its own local database and uploaded files. Data is not shared
+between teammates. Press **Ctrl+C** in the startup window to stop both services.
+For troubleshooting and feature coverage see [local startup guide](docs/LOCAL_START.zh-CN.md).
+
+The roughly 25 MB adapter/tokenizer is included under `models/interview-adapter`;
+the ~3.1 GB base weights and installed environment are downloaded automatically
+and excluded from Git. HR must review generated questions before use. There is
+no question-bank/template fallback when generation fails.
+
+Optional hosted RunPod deployment files are retained separately; they are not
+needed for local startup. In the team Git checkout, Publish-to-GitHub.cmd pushes
+already committed changes using your normal Git login. It is not a startup step
+for judges.
+
 ## Member 3 frontend update (2026-10-20)
 
 The app uses Flask, Jinja HTML, vanilla JavaScript, Tailwind CDN, and SQLite.

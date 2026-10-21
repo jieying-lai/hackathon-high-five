@@ -42,10 +42,10 @@ def generate(owner_uid, payload):
     provider = (os.getenv('HR_INTERVIEW_PROVIDER') or values.get('HR_INTERVIEW_PROVIDER') or 'local').lower()
     if provider not in ('local', 'gemini'):
         raise QuestionnaireError('The AI model configuration is invalid.', 503)
-    key, model = ai_configuration()
+    key, model = ai_configuration() if provider == 'gemini' else ('', '')
     if provider == 'gemini' and not key:
         raise QuestionnaireError('AI is not configured yet. Set GEMINI_API_KEY on the server, then retry.', 503)
-    if not re.fullmatch(r'[a-zA-Z0-9._-]+', model):
+    if provider == 'gemini' and not re.fullmatch(r'[a-zA-Z0-9._-]+', model):
         raise QuestionnaireError('The AI model configuration is invalid.', 503)
 
     def clean(value, limit=2000):
@@ -72,7 +72,9 @@ def generate(owner_uid, payload):
     try:
         if provider == 'local':
             model_url = os.getenv('HR_INTERVIEW_MODEL_URL') or values.get('HR_INTERVIEW_MODEL_URL') or 'http://127.0.0.1:8766/generate'
-            response = requests.post(model_url,json={'prompt':prompt, 'context':context, 'language':payload.get('language','en'), 'question_count':4},timeout=(3,120))
+            from interview_runtime import ensure_local_runtime
+            ensure_local_runtime(model_url)
+            response = requests.post(model_url,json={'prompt':prompt, 'context':context, 'language':payload.get('language','en'), 'question_count':4},timeout=(3,300))
             if response.status_code == 503:
                 raise QuestionnaireError('AI question generation is not connected yet. Please try again later.', 503)
             response.raise_for_status()

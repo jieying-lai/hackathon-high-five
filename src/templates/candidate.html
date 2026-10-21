@@ -249,7 +249,7 @@
           </div>
 
           <div class="rounded-2xl border border-amber-300 bg-amber-50 p-4 text-sm text-amber-950" role="note">
-            <b>Hackathon demo — use fictional CVs only.</b> Uploads are extracted locally. Optional AI organisation uses a pretrained model on RunPod when connected and authorised below; it does not verify qualifications. Do not upload real personal or confidential information. Text-based PDFs work best; image-only scans need OCR before upload.
+            <b>Hackathon demo — use fictional CVs only.</b> Uploads are extracted locally. Optional AI organisation uses the configured pretrained model when connected and authorised below; it does not verify qualifications. Do not upload real personal or confidential information. Text-based PDFs work best; image-only scans need OCR before upload.
           </div>
 
 
@@ -313,7 +313,7 @@
                     <p class="text-sm text-slate-600 mt-2">Use a pretrained model to group experience, education and achievements into a draft supported by quotes from your PDF. Your review is still required.</p></div>
                   <p id="cvAIAvailability" class="text-sm text-slate-600" role="status">Checking model connection…</p>
                   <label class="flex items-start gap-3 text-sm text-slate-700"><input id="cvAIConsent" type="checkbox" />
-                    <span>Allow my PDF's extracted text, including any contact details, to be processed by the configured RunPod service for this request. This app does not use it for model training. RunPod may retain job data temporarily.</span></label>
+                    <span id="cvAIConsentText">Allow my PDF's extracted text, including contact details, to be processed by the configured AI for this request. This app does not use it for model training.</span></label>
                   <p class="text-xs text-slate-500">This rebuilds the draft from the PDF, replaces saved edits and ends existing sharing. Failed requests keep your current draft.</p>
                   <button id="organiseCvBtn" type="button" onclick="organiseWithAI()" class="btn btn-primary" disabled>Organise my CV with AI</button>
                   <p id="cvAIStatus" class="text-sm font-semibold text-slate-600" role="status" aria-live="polite"></p>
@@ -1216,6 +1216,9 @@
       samplePdfs = r.data.samples || [];
       cvAIAvailable = r.data.ai?.available === true;
       cvAIAvailability.textContent = r.data.ai?.message || 'AI organisation is not connected yet. Local extraction is available.';
+      document.getElementById('cvAIConsentText').textContent = r.data.ai?.provider === 'Local computer'
+        ? 'Allow AI on this computer to process my extracted PDF text for this request. It stays on this computer and is not used for training.'
+        : 'Allow my extracted PDF text, including contact details, to be sent to the configured RunPod worker. This app does not use it for training. RunPod may retain job data temporarily.';
       profileDirty = false;
       renderSamplePdfs();
       renderCvVault();
@@ -1381,9 +1384,9 @@
 
     async function organiseWithAI() {
       if (!cvRecord || uploadBusy || profileBusy || statsBusy || !cvAIAvailable) return;
-      if (!cvAIConsent.checked) { toast('Confirm RunPod processing first.', 'err'); cvAIConsent.focus(); return; }
+      if (!cvAIConsent.checked) { toast('Confirm AI processing first.', 'err'); cvAIConsent.focus(); return; }
       if (profileDirty) return toast('Save or discard your unsaved edits before rebuilding the draft.', 'err');
-      if (!confirm('Rebuild this draft from the PDF using RunPod? This replaces saved edits and ends current employer and recipient sharing. You must review and share again.')) return;
+      if (!confirm('Rebuild this draft from the PDF using the configured AI? This replaces saved edits and ends current employer and recipient sharing. You must review and share again.')) return;
       profileBusy = true;
       updateVaultControls();
       cvAIStatus.textContent = 'Organising your CV… the model may need a moment to start.';

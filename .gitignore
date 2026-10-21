@@ -6,6 +6,10 @@ src/data/uploads/
 data_raw/
 venv/
 .venv/
+.runtime/
+state/local/
+state/interview-model/
+state/judges/
 work/
 node_modules/
 
