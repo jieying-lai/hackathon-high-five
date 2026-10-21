@@ -28,6 +28,15 @@
 .shortlist-flip.is-flipped .shortlist-flip-inner{transform:rotateY(180deg)}
 .shortlist-face{backface-visibility:hidden;-webkit-backface-visibility:hidden;width:100%;box-sizing:border-box}
 .shortlist-back{position:absolute;inset:0 auto auto 0;transform:rotateY(180deg);visibility:hidden}
+.shortlist-face.shortlist-back{background:linear-gradient(135deg,#faf5ff,#ede9fe);border:1px solid #c4b5fd;box-shadow:0 12px 30px #7c3aed16}
+.shortlist-back h3{color:#4c1d95}
+.shortlist-question-name{color:#6d28d9}
+.shortlist-back [data-interview-question-list]:not(:empty){padding:1rem 1.25rem;border:1px solid #ddd6fe;border-radius:16px;background:#ffffffb8}
+.shortlist-back .hint{color:#65517f}
+.btn.shortlist-ai-generate{color:#fff;background:linear-gradient(135deg,#7c3aed,#a21caf);border:1px solid #7c3aed;box-shadow:0 8px 20px #7c3aed33;gap:.55rem}
+.btn.shortlist-ai-generate:hover:not(:disabled){background:linear-gradient(135deg,#6d28d9,#86198f);box-shadow:0 10px 24px #7c3aed44;transform:translateY(-1px)}
+.btn.shortlist-ai-generate:focus-visible{outline:3px solid #a78bfa;outline-offset:3px}
+.shortlist-ai-generate svg{flex-shrink:0}
 .shortlist-flip.is-flipped .shortlist-front{position:absolute;inset:0 auto auto 0}
 .shortlist-flip.is-flipped .shortlist-back{position:relative;visibility:visible}
 .shortlist-name{border-radius:12px;padding:4px 8px;margin:-4px -8px;cursor:pointer;transition:background .2s}

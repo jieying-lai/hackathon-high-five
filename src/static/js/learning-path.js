@@ -3,9 +3,37 @@ window.LearningPath = (() => {
   const esc = value => String(value ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
   const text = value => `<span>${esc(value)}</span>`;
   let reminderOptions = null, reminderDismissed = false;
+  function savedSkills() {
+    if (!reminderOptions) return [];
+    let activity = {};
+    try { activity = JSON.parse(localStorage.getItem('cl_learning_' + reminderOptions.identity) || '{}') || {}; } catch {}
+    return Object.entries(activity).flatMap(([key, value]) => {
+      if (!value?.saved || value.status === 'completed') return [];
+      try {
+        const [skill, url] = JSON.parse(key);
+        return typeof skill === 'string' && typeof url === 'string' && /^https?:\/\//i.test(url) ? [{key, skill, url}] : [];
+      } catch { return []; }
+    });
+  }
+  function updateSavedBadge(count) {
+    document.querySelectorAll('[data-notification-button]').forEach(button => {
+      let badge = button.querySelector('[data-saved-learning-count]');
+      if (!badge) {
+        badge = document.createElement('span');
+        badge.className = 'saved-learning-count';
+        badge.dataset.savedLearningCount = '';
+        badge.dataset.noTranslate = '';
+        button.append(badge);
+      }
+      badge.hidden = !count;
+      badge.textContent = String(count);
+      badge.setAttribute('aria-label', `${count} saved skills to learn`);
+    });
+  }
   function updateReminder() {
     if (!reminderOptions) return;
     const {identity, container, onChange} = reminderOptions;
+    updateSavedBadge(savedSkills().length);
     if (reminderDismissed) { container.hidden = true; return; }
     let activity = {};
     try { activity = JSON.parse(localStorage.getItem('cl_learning_' + identity) || '{}') || {}; } catch {}
@@ -30,7 +58,16 @@ window.LearningPath = (() => {
     }));
     window.careerLensLocale?.apply();
   }
-  function reminder(options) { reminderOptions = options; updateReminder(); }
+  function reminder(options) {
+    reminderOptions = options;
+    reminderDismissed = false;
+    updateReminder();
+    const saved = savedSkills();
+    if (saved.length && typeof toast === 'function') {
+      const message = window.careerLensLocale?.translate('Your saved skills are waiting') || 'Your saved skills are waiting';
+      toast(`${message} (${saved.length})`);
+    }
+  }
   const outcomes = {
     'LLM Orchestration (LangChain/LlamaIndex)': 'Build a small AI assistant that connects a language model to a tool.',
     'Vector Databases & RAG': 'Build a prototype that answers questions using a PDF and cites its sources.',
@@ -84,5 +121,8 @@ window.LearningPath = (() => {
     }
     locale?.apply();
   }
-  return {render, reminder};
+  window.addEventListener('storage', event => {
+    if (reminderOptions && (event.key === null || event.key === 'cl_learning_' + reminderOptions.identity)) updateReminder();
+  });
+  return {render, reminder, savedSkills};
 })();

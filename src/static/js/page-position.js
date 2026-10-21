@@ -19,10 +19,20 @@
  }
  function navigate(){interrupted=true;pending=null;unlock();navigating=true;ready=true;}
  function complete(){navigating=false;save();}
+ function isReload(){
+  try{
+   const entry=win.performance?.getEntriesByType?.('navigation')?.[0];
+   if(entry)return entry.type==='reload';
+   return win.performance?.navigation?.type===1;
+  }catch(_){return false;}
+ }
  function initialize(options){
   key='cl_page_position_v1:'+win.location.pathname+':'+options.portal+':'+options.identity;
   readView=options.getView;isValid=options.isValid;ready=false;interrupted=false;navigating=false;
-  const saved=read();
+  // A fresh login/navigation starts at the portal dashboard. Only an actual
+  // browser refresh may reuse the last view and scroll position for this tab.
+  const saved=isReload()?read():null;
+  if(!saved){try{win.sessionStorage.removeItem(key);}catch(_){}}
   pending=saved&&isValid(saved.view)&&Number.isFinite(saved.x)&&Number.isFinite(saved.y)&&saved.x>=0&&saved.y>=0?saved:null;
  }
  const frame=()=>new Promise(resolve=>win.requestAnimationFrame(resolve));

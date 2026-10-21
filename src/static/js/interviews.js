@@ -5,10 +5,15 @@
     if(!buttons.length)return;
     const panel=document.createElement('aside');
     panel.id='notificationPreview';panel.className='notification-preview';panel.hidden=true;
-    panel.setAttribute('aria-label','Interview notifications');
+    panel.setAttribute('aria-label','Notifications');
     document.body.append(panel);
     let anchor=null,openInbox=null,version=0;
     const translate=()=>window.careerLensLocale?.apply();
+    function learningReminders(){
+      const saved=window.LearningPath?.savedSkills?.()||[];
+      if(!saved.length)return '';
+      return '<section class="notification-learning-reminders"><h2>Saved for later</h2><p>Your saved skills are waiting</p>'+saved.map(item=>`<div class="notification-preview-item"><strong data-no-translate>${esc(item.skill)}</strong><a class="font-bold text-indigo-700" href="${esc(item.url)}" target="_blank" rel="noopener">Learn skill ↗</a></div>`).join('')+'</section>';
+    }
     function close(focus=false){
       version++;panel.hidden=true;
       buttons.forEach(b=>b.setAttribute('aria-expanded','false'));
@@ -25,7 +30,7 @@
       anchor=button;openInbox=action;const request=++version;
       buttons.forEach(b=>b.setAttribute('aria-expanded',String(b===button)));
       panel.hidden=false;position();
-      panel.innerHTML='<h2>Interview notifications</h2><p>Loading notifications…</p>';
+      panel.innerHTML=learningReminders()+'<h2>Interview notifications</h2><p>Loading notifications…</p>';
       translate();
       try{
         const hr=!!document.getElementById('hrInvitations');
@@ -33,11 +38,11 @@
         if(request!==version)return;
         if(!result.ok)throw Error();
         const entries=result.data.invitations||[];
-        panel.innerHTML='<h2>Interview notifications</h2><div class="notification-preview-list">'+(entries.slice(0,3).map(i=>`<div class="notification-preview-item"><strong data-no-translate>${esc(hr?i.candidate_name:i.company)}</strong><p data-no-translate>${esc(i.role)}</p><span>${esc(i.status)}</span></div>`).join('')||'<p>No interview invitations yet.</p>')+'</div><p class="notification-preview-hint">Double-click the bell to open all notifications.</p><button type="button" class="btn btn-soft">Open notifications</button>';
+        panel.innerHTML=learningReminders()+'<h2>Interview notifications</h2><div class="notification-preview-list">'+(entries.slice(0,3).map(i=>`<div class="notification-preview-item"><strong data-no-translate>${esc(hr?i.candidate_name:i.company)}</strong><p data-no-translate>${esc(i.role)}</p><span>${esc(i.status)}</span></div>`).join('')||'<p>No interview invitations yet.</p>')+'</div><p class="notification-preview-hint">Double-click the bell to open all notifications.</p><button type="button" class="btn btn-soft">Open notifications</button>';
         panel.querySelector('button').addEventListener('click',()=>{const action=openInbox;close();action();});
       }catch{
         if(request!==version)return;
-        panel.innerHTML='<h2>Interview notifications</h2><p>Could not load invitations. Please retry.</p>';
+        panel.innerHTML=learningReminders()+'<h2>Interview notifications</h2><p>Could not load invitations. Please retry.</p>';
       }
       translate();
     }

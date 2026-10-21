@@ -132,9 +132,9 @@ body.hr .lumi-msg-user { background: linear-gradient(135deg, #0d9488, #0284c7 65
 .hamburger { display: flex; flex-direction: column; gap: 4px; width: 18px; }
 .hamburger i { display: block; height: 2px; background: currentColor; border-radius: 2px; }
 .mobile-current-section { font-size: .78rem; font-weight: 800; color: #4338ca; overflow-wrap: anywhere; min-width: 0; }
-.mobile-nav { position: absolute; left: .75rem; right: .75rem; top: 100%; display: grid; gap: .35rem; padding: .65rem; max-height: min(65vh, 32rem); overflow-y: auto; overscroll-behavior: contain; background: #fff; border: 1px solid #c7d2fe; border-radius: 1rem; box-shadow: 0 18px 40px rgba(15,23,42,.2); }
+.mobile-nav { position: absolute; left: .75rem; right: auto; top: 100%; width: min(26rem, calc(100% - 1.5rem)); display: grid; gap: .35rem; padding: .65rem; max-height: min(32rem, var(--portal-menu-space, 65dvh)); overflow-y: auto; overscroll-behavior: contain; scrollbar-width: thin; background: #fff; border: 1px solid #c7d2fe; border-radius: 1rem; box-shadow: 0 18px 40px rgba(15,23,42,.2); }
 .mobile-nav[hidden] { display: none; }
-.mobile-nav .nav-item { width: 100% !important; min-height: 44px; white-space: normal; }
+.mobile-nav .nav-item { width: 100% !important; min-height: 44px; margin: 0; padding: .65rem .75rem; gap: .65rem; font-size: .8rem; white-space: normal; }
 .sidebar-dark .mobile-nav { background: #101e38; border-color: #0d9488; }
 .sidebar-dark .mobile-current-section { color: #5eead4; }
 .sidebar-dark .nav-toggle { color: #ccfbf1; background: #163449; border-color: #0d9488; }
@@ -168,7 +168,9 @@ body.hr .lumi-msg-user { background: linear-gradient(135deg, #0d9488, #0284c7 65
 }
 @media (min-width: 1600px) { .portal-user { display: flex; } }
 
-.portal-mobile-header { display: block; }
+.portal-mobile-header { display: block; z-index: 60; }
+/* Beat Tailwind's runtime-injected z-30 utility on the sticky header. */
+.responsive-ui .portal-mobile-header { z-index: 60; }
 .portal-mobile-actions { display: flex; align-items: center; gap: .5rem; flex-shrink: 0; }
 .portal-mobile-header > div:first-child { gap: .5rem; }
 .portal-mobile-header > div:first-child > div:first-child { min-width: 0; }

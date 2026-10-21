@@ -7,10 +7,10 @@
   <link rel="icon" type="image/svg+xml" href="/static/brand/careerlens_logo_icon.svg" />
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/static/css/theme.css?v=20261020-questionnaire-1" />
-  <link rel="stylesheet" href="/static/css/candidate-comparison.css?v=20261021-flip" />
+  <link rel="stylesheet" href="/static/css/theme.css?v=20261021-menu-outline-v2" />
+  <link rel="stylesheet" href="/static/css/candidate-comparison.css?v=20261021-ai-card-colors" />
   <link rel="stylesheet" href="/static/css/responsive.css?v=20261021-hr-header-aligned" />
-  <link rel="stylesheet" href="/static/css/page-outline.css?v=20261021-outline-offset" />
+  <link rel="stylesheet" href="/static/css/page-outline.css?v=20261021-menu-outline-v2" />
 </head>
 <body class="responsive-ui responsive-employer hr min-h-screen company-comparison-portal">
   <div class="aurora"></div><div class="blob b1"></div><div class="blob b2"></div>
@@ -38,7 +38,7 @@
     </header>
 
     <div class="portal-content flex-1 min-w-0">
-      <header class="portal-mobile-header sticky top-0 z-30 sidebar-dark">
+      <header class="portal-mobile-header sticky top-0 sidebar-dark">
         <div class="flex items-center justify-between px-4 py-2.5">
           <div class="flex items-center gap-2"><img src="/static/brand/careerlens_logo_icon.svg" class="h-9 w-9 rounded-xl" alt="" /><div class="text-sm text-white"><b>CareerLens AI</b><small id="mobileCompanyName" data-no-translate class="block text-xs"></small></div></div>
           <div class="portal-mobile-actions"><button type="button" onclick="openAccountModal()" class="btn !py-1 !px-2.5 text-xs bg-teal-500/20 text-teal-100 border border-teal-400/30 font-bold flex items-center gap-1" title="Company Profile"><span>⚙️</span><span>Profile</span></button><button type="button" class="notification-button" data-notification-button onclick="openInterviewResponses()" aria-label="Interview notifications" title="Interview notifications"><span aria-hidden="true">🔔</span></button><div data-language-slot="mobile"></div><button onclick="signOut()" class="btn !py-1.5 bg-white/10 text-white">Sign out</button></div>
@@ -213,7 +213,7 @@
   </div>
 
   <script src="/static/js/candidate-comparison.js?v=20261021-shortlisting"></script>
-  <script src="/static/js/shortlisting.js?v=20261021-model-framework"></script>
+  <script src="/static/js/shortlisting.js?v=20261021-ai-card-colors"></script>
   <script src="/static/js/interviews.js?v=20261021-notification-preview"></script>
   <dialog id="interviewDialog" class="rounded-3xl p-6 w-full max-w-lg shadow-xl" >
     <form id="interviewForm" class="space-y-4" onsubmit="sendInterview(event)">
@@ -351,8 +351,8 @@
     </div>
   </div>
 
-  <script src="/static/js/page-position.js?v=20261021-restore"></script>
-  <script src="/static/js/common.js?v=20261021-nav-groups"></script>
+  <script src="/static/js/page-position.js?v=20261021-reload-only"></script>
+  <script src="/static/js/common.js?v=20261021-menu-outline-v2"></script>
 
   <script>
     const NAV = [

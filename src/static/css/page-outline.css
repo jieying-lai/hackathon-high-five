@@ -1,5 +1,6 @@
 .page-outline{--outline-color:#7c3aed;--outline-rgb:124,58,237;--outline-gradient:linear-gradient(135deg,#4f46e5,#9333ea);position:fixed;left:24px;top:calc(50% + 30px);transform:translateY(-50%);z-index:35;width:48px;max-height:calc(100dvh - 180px);overflow:visible;padding:12px 4px;border:0;background:transparent;box-shadow:none}
 .page-outline[hidden]{display:none}
+.portal-menu-open .page-outline{visibility:hidden;opacity:0;pointer-events:none}
 .responsive-employer .page-outline{--outline-color:#0891b2;--outline-rgb:8,145,178;--outline-gradient:linear-gradient(135deg,#0d9488,#0284c7)}
 .outline-caption,.outline-footer>span:first-child{display:none}
 .outline-list{position:relative}.outline-list ol{position:relative;list-style:none;margin:0;padding:0;display:grid;gap:8px}

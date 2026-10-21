@@ -296,6 +296,7 @@ function closePortalMenu(restoreFocus = false) {
   if (!toggle || !nav) return;
   nav.hidden = true;
   toggle.setAttribute('aria-expanded', 'false');
+  document.body.classList.remove('portal-menu-open');
   if (restoreFocus) toggle.focus();
 }
 
@@ -330,6 +331,13 @@ function setPortalNavigation(id) {
     const toggle = document.getElementById('navToggle');
     const nav = document.getElementById('topNav');
     if (!toggle || !nav) return;
+    function sizePortalMenu() {
+      if (nav.hidden) return;
+      const viewport = window.visualViewport;
+      const viewportBottom = viewport ? viewport.offsetTop + viewport.height : window.innerHeight;
+      const headerBottom = toggle.closest('header').getBoundingClientRect().bottom;
+      nav.style.setProperty('--portal-menu-space', `${Math.max(0, viewportBottom - headerBottom - 12)}px`);
+    }
     const groups = () => [...document.querySelectorAll('.nav-group')];
     document.addEventListener('toggle', event => {
       const group = event.target;
@@ -350,7 +358,12 @@ function setPortalNavigation(id) {
       const open = toggle.getAttribute('aria-expanded') !== 'true';
       nav.hidden = !open;
       toggle.setAttribute('aria-expanded', String(open));
+      document.body.classList.toggle('portal-menu-open', open);
+      if (open) sizePortalMenu();
     });
+    window.addEventListener('resize', sizePortalMenu);
+    window.visualViewport?.addEventListener('resize', sizePortalMenu);
+    if (window.ResizeObserver) new ResizeObserver(sizePortalMenu).observe(toggle.closest('header'));
     document.addEventListener('keydown', event => {
       if (event.key === 'Escape' && !nav.hidden) closePortalMenu(true);
     });
