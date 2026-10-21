@@ -842,233 +842,281 @@
     </div>
   </div>
 
-<!-- User Account Settings & Profile Modal (LinkedIn-Inspired Formal UI) -->
+<!-- User Account Settings & Profile Modal (LinkedIn-Inspired Executive UI) -->
   <div id="accountModalWrap" class="hidden">
-    <div class="overlay" onclick="closeAccountModal(event)">
-      <div class="modal max-w-2xl w-full max-h-[92vh] overflow-y-auto !p-0 shadow-2xl rounded-[1.75rem] border border-slate-100" onclick="event.stopPropagation()">
+    <div class="overlay !p-2 sm:!p-4" onclick="closeAccountModal(event)">
+      <div class="modal max-w-2xl w-full max-h-[92vh] overflow-hidden flex flex-col !p-0 shadow-2xl rounded-3xl border border-slate-200/90 bg-white" onclick="event.stopPropagation()">
         
-        <!-- LinkedIn-Style Header Cover Banner -->
-        <div class="h-28 sm:h-32 bg-gradient-to-r from-slate-900 via-indigo-950 to-blue-900 relative rounded-t-[1.75rem] p-4 flex items-start justify-between">
-          <div class="flex items-center gap-2">
-            <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/15 backdrop-blur-md text-white text-[11px] font-bold border border-white/20">
+        <!-- LinkedIn Executive Header Cover Banner -->
+        <div class="relative h-28 sm:h-36 bg-gradient-to-r from-[#003B73] via-[#0A66C2] to-[#0077B5] overflow-hidden p-4 sm:p-5 flex items-start justify-between flex-shrink-0">
+          <!-- Modern Mesh Ambient Pattern -->
+          <div class="absolute inset-0 opacity-20 pointer-events-none" style="background-image: radial-gradient(#fff 1.5px, transparent 1.5px); background-size: 16px 16px;"></div>
+          <div class="absolute -right-8 -bottom-8 w-44 h-44 rounded-full bg-white/15 blur-2xl pointer-events-none"></div>
+
+          <!-- Top Status Chips -->
+          <div class="flex items-center gap-2 relative z-10">
+            <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-black/30 backdrop-blur-md text-emerald-300 text-[11px] font-bold border border-emerald-400/30 shadow-xs">
               <span class="h-2 w-2 rounded-full bg-emerald-400 animate-pulse"></span>
-              Verified Talent Profile
+              Verified Talent
             </span>
-            <span id="modalRoleBadge" class="chip chip-indigo !bg-indigo-600/80 !text-white !border-none !text-[10px]">Job Seeker</span>
+            <span id="modalRoleBadge" class="inline-flex items-center px-2.5 py-1 rounded-full bg-white/20 backdrop-blur-md text-white text-[11px] font-semibold border border-white/25">Job Seeker</span>
           </div>
-          <button type="button" onclick="closeAccountModal()" class="h-8 w-8 rounded-full bg-black/40 hover:bg-black/60 text-white font-black text-sm grid place-items-center transition" title="Close">✕</button>
+
+          <!-- Frosted Glass Close Button -->
+          <button type="button" onclick="closeAccountModal()" class="relative z-10 h-8 w-8 rounded-full bg-black/30 hover:bg-black/60 text-white flex items-center justify-center transition backdrop-blur-md border border-white/20 cursor-pointer text-sm font-bold shadow-xs" title="Close">✕</button>
         </div>
 
-        <div class="px-6 sm:px-8 pb-7 space-y-6">
-          <!-- Overlapping Profile Avatar & Photo Selector -->
-          <div class="flex flex-wrap items-end justify-between gap-4 -mt-12 sm:-mt-14 border-b border-slate-200/70 pb-4">
+        <!-- Overlapping Profile Avatar & Identity Header -->
+        <div class="px-6 sm:px-8 pb-3 border-b border-slate-100 flex-shrink-0 bg-white relative z-10">
+          <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4 -mt-12 sm:-mt-16">
+            
+            <!-- Left: Avatar Circle + Full Details -->
             <div class="flex items-end gap-4">
               <!-- Avatar Display with Hover Camera Upload -->
-              <div class="relative group cursor-pointer" onclick="document.getElementById('accAvatarFile').click()" title="Click to upload custom photo">
-                <div id="modalUserAvatarBox" class="h-20 w-20 sm:h-22 sm:w-22 rounded-full ring-4 ring-white shadow-xl bg-gradient-to-br from-indigo-500 to-pink-500 overflow-hidden grid place-items-center text-white font-extrabold text-2xl">
+              <div class="relative group cursor-pointer flex-shrink-0" onclick="document.getElementById('accAvatarFile').click()" title="Click to upload custom photo">
+                <div id="modalUserAvatarBox" class="h-22 w-22 sm:h-26 sm:w-26 rounded-full ring-4 ring-white shadow-xl bg-gradient-to-tr from-indigo-600 via-indigo-500 to-sky-500 overflow-hidden grid place-items-center text-white font-black text-3xl">
                   <span id="modalUserAvatarInitial">U</span>
                   <img id="modalUserAvatarImg" src="" alt="Profile" class="h-full w-full object-cover hidden" />
                 </div>
-                <div class="absolute inset-0 rounded-full bg-black/50 text-white text-[10px] font-bold flex flex-col items-center justify-center opacity-0 group-hover:opacity-100 transition backdrop-blur-xs">
-                  <span class="text-base">📷</span>
-                  <span>Change</span>
+                <!-- Camera Upload Button Badge -->
+                <div class="absolute bottom-0.5 right-0.5 h-7 w-7 rounded-full bg-[#0A66C2] text-white flex items-center justify-center shadow-md border-2 border-white text-xs hover:bg-blue-700 transition" title="Upload photo">
+                  <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/><circle cx="12" cy="13" r="3"/></svg>
                 </div>
               </div>
               <input type="file" id="accAvatarFile" accept="image/png,image/jpeg,image/webp" class="hidden" onchange="handleAvatarFileUpload(event)" />
               <input type="hidden" id="accAvatarData" value="" />
 
-              <div>
-                <h3 id="modalTopName" class="text-lg sm:text-xl font-black text-slate-900 leading-tight">Aisha Rahman</h3>
-                <div class="text-xs text-slate-500 mt-0.5">
-                  ID: <span id="modalUid" class="font-mono font-bold text-slate-700" data-no-translate></span> · Joined <span id="modalJoinedDate" class="text-slate-600" data-no-translate></span>
+              <div class="mb-1">
+                <h3 id="modalTopName" class="text-xl sm:text-2xl font-black text-slate-900 tracking-tight leading-tight">Aisha Rahman</h3>
+                <div id="modalTopRoleSubtitle" class="text-xs sm:text-sm font-semibold text-slate-600 mt-0.5">Junior Financial Auditor</div>
+                <div class="flex items-center gap-2 flex-wrap text-xs text-slate-500 mt-1">
+                  <span class="font-mono font-bold text-slate-600">ID: <span id="modalUid" data-no-translate></span></span>
+                  <span class="text-slate-300">·</span>
+                  <span class="text-slate-500">Joined <span id="modalJoinedDate" data-no-translate></span></span>
                 </div>
               </div>
             </div>
 
-            <!-- Quick Avatar Presets -->
-            <div class="flex items-center gap-1.5 flex-wrap">
-              <span class="text-[11px] font-bold text-slate-400 mr-1">Presets:</span>
-              <button type="button" onclick="setAvatarPreset('woman')" class="h-8 w-8 rounded-full border border-slate-200 hover:border-indigo-400 bg-slate-50 grid place-items-center text-sm shadow-xs transition hover:scale-105" title="Professional Woman">👩‍💼</button>
-              <button type="button" onclick="setAvatarPreset('man')" class="h-8 w-8 rounded-full border border-slate-200 hover:border-indigo-400 bg-slate-50 grid place-items-center text-sm shadow-xs transition hover:scale-105" title="Professional Man">👨‍💼</button>
-              <button type="button" onclick="setAvatarPreset('tech')" class="h-8 w-8 rounded-full border border-slate-200 hover:border-indigo-400 bg-slate-50 grid place-items-center text-sm shadow-xs transition hover:scale-105" title="Tech Specialist">👩‍💻</button>
-              <button type="button" onclick="setAvatarPreset('student')" class="h-8 w-8 rounded-full border border-slate-200 hover:border-indigo-400 bg-slate-50 grid place-items-center text-sm shadow-xs transition hover:scale-105" title="Fresh Graduate">👨‍🎓</button>
-              <button type="button" onclick="clearAvatarPhoto()" class="text-[10px] text-slate-400 hover:text-rose-500 font-bold ml-1 transition">Clear</button>
+            <!-- Right: Quick Avatar Presets -->
+            <div class="bg-slate-50 border border-slate-200/80 rounded-2xl p-2 px-3 flex flex-col sm:items-end gap-1.5 flex-shrink-0">
+              <div class="flex items-center justify-between w-full gap-3">
+                <span class="text-[11px] font-bold text-slate-500 uppercase tracking-wider">Preset Avatars</span>
+                <button type="button" onclick="clearAvatarPhoto()" class="text-[10px] text-rose-500 hover:text-rose-700 font-bold transition">Clear</button>
+              </div>
+              <div class="flex items-center gap-1.5">
+                <button type="button" onclick="setAvatarPreset('woman')" class="h-8 w-8 rounded-full border border-slate-200 hover:border-indigo-500 bg-white grid place-items-center text-sm shadow-xs transition hover:scale-110 cursor-pointer" title="Professional Woman">👩‍💼</button>
+                <button type="button" onclick="setAvatarPreset('man')" class="h-8 w-8 rounded-full border border-slate-200 hover:border-indigo-500 bg-white grid place-items-center text-sm shadow-xs transition hover:scale-110 cursor-pointer" title="Professional Man">👨‍💼</button>
+                <button type="button" onclick="setAvatarPreset('tech')" class="h-8 w-8 rounded-full border border-slate-200 hover:border-indigo-500 bg-white grid place-items-center text-sm shadow-xs transition hover:scale-110 cursor-pointer" title="Tech Specialist">👩‍💻</button>
+                <button type="button" onclick="setAvatarPreset('student')" class="h-8 w-8 rounded-full border border-slate-200 hover:border-indigo-500 bg-white grid place-items-center text-sm shadow-xs transition hover:scale-110 cursor-pointer" title="Fresh Graduate">👨‍🎓</button>
+                <button type="button" onclick="document.getElementById('accAvatarFile').click()" class="h-8 px-2.5 rounded-full border border-dashed border-indigo-300 text-indigo-600 hover:bg-indigo-50 text-[11px] font-bold flex items-center gap-1 shadow-xs transition cursor-pointer">
+                  <span>📷</span> <span>Upload</span>
+                </button>
+              </div>
             </div>
           </div>
 
-          <!-- Tab Switcher (Profile Information vs Security) -->
-          <div class="seg w-full">
-            <button type="button" id="tabBtnAccountProfile" onclick="setAccountModalTab('profile')" class="on flex-1 text-xs font-bold py-2">👤 Professional Profile</button>
-            <button type="button" id="tabBtnAccountSecurity" onclick="setAccountModalTab('security')" class="flex-1 text-xs font-bold py-2">🔒 Account Security</button>
+          <!-- Clean Horizontal Navigation Tabs -->
+          <div class="flex items-center gap-6 border-b border-slate-200 mt-4">
+            <button type="button" id="tabBtnAccountProfile" onclick="setAccountModalTab('profile')" class="pb-2.5 text-xs sm:text-sm font-bold text-[#0A66C2] border-b-2 border-[#0A66C2] flex items-center gap-2 transition cursor-pointer">
+              <span>👤</span> <span>Professional Profile</span>
+            </button>
+            <button type="button" id="tabBtnAccountSecurity" onclick="setAccountModalTab('security')" class="pb-2.5 text-xs sm:text-sm font-semibold text-slate-500 hover:text-slate-800 border-b-2 border-transparent flex items-center gap-2 transition cursor-pointer">
+              <span>🔒</span> <span>Login & Security</span>
+            </button>
           </div>
+        </div>
 
+        <!-- Scrollable Form Body Container -->
+        <div class="overflow-y-auto px-6 sm:px-8 py-5 flex-1 space-y-5">
+          
           <!-- Section 1: Professional Profile Form -->
-          <form id="formAccountProfile" class="space-y-4" onsubmit="event.preventDefault();submitAccountProfile();" novalidate>
+          <form id="formAccountProfile" class="space-y-5" onsubmit="event.preventDefault();submitAccountProfile();" novalidate>
             
-            <!-- Block A: Name & Headline -->
-            <div class="grid sm:grid-cols-2 gap-4">
-              <div>
-                <label class="label !text-xs" for="accFullName">Full Name * <span class="text-[10px] text-slate-400">(as per NRIC / Passport)</span></label>
-                <input id="accFullName" type="text" required class="input" placeholder="e.g. Nur Aisha binti Rahman" oninput="validateField(this, 'name')" />
-                <div id="errFullName" class="text-[11px] text-rose-500 font-semibold hidden mt-1">Please enter your legal full name (at least 2 characters).</div>
+            <!-- Group 1: Identity & Contact -->
+            <div class="space-y-3">
+              <div class="text-xs font-bold text-slate-400 uppercase tracking-wider flex items-center gap-1.5">
+                <span>📇</span> <span>Identity & Contact Information</span>
               </div>
-              <div>
-                <label class="label !text-xs" for="accEmail">Email Address * <span class="text-[10px] text-slate-400">(Primary contact)</span></label>
-                <input id="accEmail" type="email" required class="input" placeholder="name@careerlens.my" oninput="validateField(this, 'email')" />
-                <div id="errEmail" class="text-[11px] text-rose-500 font-semibold hidden mt-1">Please enter a valid email address.</div>
-              </div>
-            </div>
-
-            <div class="grid sm:grid-cols-2 gap-4">
-              <div>
-                <label class="label !text-xs" for="accCurrentRole">Professional Title / Headline *</label>
-                <input id="accCurrentRole" type="text" list="curatedRoleSuggestions" required class="input" placeholder="e.g. Junior Financial Auditor / Software Dev" oninput="validateField(this, 'role')" />
-                <datalist id="curatedRoleSuggestions">
-                  <option value="Junior Financial Auditor">
-                  <option value="Senior Digital Copywriter">
-                  <option value="Full Stack Software Engineer">
-                  <option value="Data Analyst &amp; BI Specialist">
-                  <option value="Human Resources Executive">
-                  <option value="Graphic &amp; UI/UX Designer">
-                  <option value="Marketing &amp; Growth Specialist">
-                  <option value="Accountant &amp; Tax Consultant">
-                  <option value="Cybersecurity Analyst">
-                  <option value="Operations &amp; Project Coordinator">
-                </datalist>
-                <div id="errCurrentRole" class="text-[11px] text-rose-500 font-semibold hidden mt-1">Please specify your current or target career title.</div>
-              </div>
-
-              <div>
-                <label class="label !text-xs" for="accPhone">Contact Phone Number <span class="text-[10px] text-slate-400">(Malaysia +60)</span></label>
-                <div class="relative">
-                  <span class="absolute left-3 top-2.5 text-xs font-bold text-slate-400">🇲🇾 +60</span>
-                  <input id="accPhone" type="tel" class="input !pl-16" placeholder="12-345 6789" oninput="validateField(this, 'phone')" />
+              <div class="grid sm:grid-cols-2 gap-3.5">
+                <div>
+                  <label class="label !text-xs !mb-1 font-bold text-slate-700" for="accFullName">Legal Full Name * <span class="text-[10px] text-slate-400 font-normal">(as per NRIC / Passport)</span></label>
+                  <input id="accFullName" type="text" required class="input !py-2.5 !text-sm" placeholder="e.g. Aisha Rahman" oninput="validateField(this, 'name')" />
+                  <div id="errFullName" class="text-[11px] text-rose-500 font-semibold hidden mt-1">Please enter your legal full name (at least 2 characters).</div>
                 </div>
-                <div id="errPhone" class="text-[11px] text-rose-500 font-semibold hidden mt-1">Enter a valid Malaysian mobile number (e.g. 12-3456789).</div>
+                <div>
+                  <label class="label !text-xs !mb-1 font-bold text-slate-700" for="accEmail">Primary Email Address *</label>
+                  <input id="accEmail" type="email" required class="input !py-2.5 !text-sm" placeholder="name@example.com" oninput="validateField(this, 'email')" />
+                  <div id="errEmail" class="text-[11px] text-rose-500 font-semibold hidden mt-1">Please enter a valid email address.</div>
+                </div>
+              </div>
+
+              <div class="grid sm:grid-cols-2 gap-3.5">
+                <div>
+                  <label class="label !text-xs !mb-1 font-bold text-slate-700" for="accCurrentRole">Professional Title / Current Headline *</label>
+                  <input id="accCurrentRole" type="text" list="curatedRoleSuggestions" required class="input !py-2.5 !text-sm" placeholder="e.g. Junior Financial Auditor" oninput="validateField(this, 'role')" />
+                  <datalist id="curatedRoleSuggestions">
+                    <option value="Junior Financial Auditor">
+                    <option value="Senior Digital Copywriter">
+                    <option value="Full Stack Software Engineer">
+                    <option value="Data Analyst & BI Specialist">
+                    <option value="Human Resources Executive">
+                    <option value="Graphic & UI/UX Designer">
+                    <option value="Marketing & Growth Specialist">
+                    <option value="Accountant & Tax Consultant">
+                    <option value="Cybersecurity Analyst">
+                    <option value="Operations & Project Coordinator">
+                  </datalist>
+                  <div id="errCurrentRole" class="text-[11px] text-rose-500 font-semibold hidden mt-1">Please enter a valid professional title.</div>
+                </div>
+
+                <div>
+                  <label class="label !text-xs !mb-1 font-bold text-slate-700" for="accPhone">Contact Mobile Number <span class="text-[10px] text-slate-400 font-normal">(Malaysia +60)</span></label>
+                  <div class="relative">
+                    <span class="absolute left-3 top-2.5 text-xs font-bold text-slate-500 select-none">🇲🇾 +60</span>
+                    <input id="accPhone" type="tel" class="input !pl-16 !py-2.5 !text-sm" placeholder="12-345 6789" oninput="validateField(this, 'phone')" />
+                  </div>
+                  <div id="errPhone" class="text-[11px] text-rose-500 font-semibold hidden mt-1">Enter a valid Malaysian mobile number (e.g. 12-3456789).</div>
+                </div>
               </div>
             </div>
 
-            <!-- Block B: Industry, Seniority & Education (All Formal Dropdowns) -->
-            <div class="grid sm:grid-cols-3 gap-3.5">
-              <div>
-                <label class="label !text-xs" for="accIndustry">Career Field / Industry</label>
-                <select id="accIndustry" class="input">
-                  <option value="Finance & Accounting">Finance &amp; Accounting</option>
-                  <option value="IT & Software">IT &amp; Software Engineering</option>
-                  <option value="Marketing & PR">Marketing, Media &amp; PR</option>
-                  <option value="HR & Administration">Human Resources &amp; Admin</option>
-                  <option value="Engineering & Manufacturing">Engineering &amp; Manufacturing</option>
-                  <option value="Healthcare & Life Sciences">Healthcare &amp; Life Sciences</option>
-                  <option value="Education & EdTech">Education &amp; EdTech</option>
-                  <option value="Supply Chain & Logistics">Supply Chain &amp; Logistics</option>
-                  <option value="ESG & Sustainability">ESG &amp; Sustainability</option>
-                  <option value="General">General / Management</option>
-                </select>
+            <!-- Group 2: Career, Seniority & Education Background -->
+            <div class="space-y-3 pt-2 border-t border-slate-100">
+              <div class="text-xs font-bold text-slate-400 uppercase tracking-wider flex items-center gap-1.5">
+                <span>💼</span> <span>Career Field & Seniority</span>
+              </div>
+              
+              <div class="grid sm:grid-cols-3 gap-3.5">
+                <div>
+                  <label class="label !text-xs !mb-1 font-bold text-slate-700" for="accIndustry">Industry Domain</label>
+                  <select id="accIndustry" class="input !py-2.5 !text-xs font-medium cursor-pointer">
+                    <option value="Finance & Accounting" selected>Finance &amp; Accounting</option>
+                    <option value="IT & Software">IT &amp; Software Engineering</option>
+                    <option value="Marketing & PR">Marketing, Media &amp; PR</option>
+                    <option value="HR & Administration">Human Resources &amp; Admin</option>
+                    <option value="Engineering & Manufacturing">Engineering &amp; Manufacturing</option>
+                    <option value="Healthcare & Life Sciences">Healthcare &amp; Life Sciences</option>
+                    <option value="Education & EdTech">Education &amp; EdTech</option>
+                    <option value="Supply Chain & Logistics">Supply Chain &amp; Logistics</option>
+                    <option value="ESG & Sustainability">ESG &amp; Sustainability</option>
+                    <option value="General">General / Management</option>
+                  </select>
+                </div>
+
+                <div>
+                  <label class="label !text-xs !mb-1 font-bold text-slate-700" for="accSeniority">Experience Level</label>
+                  <select id="accSeniority" class="input !py-2.5 !text-xs font-medium cursor-pointer">
+                    <option value="Student / Graduate">Student / Fresh Graduate</option>
+                    <option value="Entry-Level (1-2 yrs)" selected>Entry-Level (1-2 yrs)</option>
+                    <option value="Mid-Level (3-5 yrs)">Mid-Level (3-5 yrs)</option>
+                    <option value="Senior Level (6-9 yrs)">Senior Level (6-9 yrs)</option>
+                    <option value="Lead / Executive (10+ yrs)">Lead / Executive (10+ yrs)</option>
+                  </select>
+                </div>
+
+                <div>
+                  <label class="label !text-xs !mb-1 font-bold text-slate-700" for="accEducation">Highest Education</label>
+                  <select id="accEducation" class="input !py-2.5 !text-xs font-medium cursor-pointer">
+                    <option value="Bachelor's Degree" selected>Bachelor's Degree (Hons)</option>
+                    <option value="Secondary / SPM">Secondary (SPM / STPM)</option>
+                    <option value="Diploma / TVET">Diploma / TVET / Advanced Dip</option>
+                    <option value="Master's / Postgraduate">Master's Degree (Postgrad)</option>
+                    <option value="Doctorate / PhD">Doctorate / PhD</option>
+                    <option value="Professional Qualification">Professional Cert (ACCA/CFA)</option>
+                  </select>
+                </div>
               </div>
 
-              <div>
-                <label class="label !text-xs" for="accSeniority">Seniority Level</label>
-                <select id="accSeniority" class="input">
-                  <option value="Student / Graduate">Student / Fresh Graduate</option>
-                  <option value="Entry-Level (1-2 yrs)" selected>Entry-Level (1-2 yrs)</option>
-                  <option value="Mid-Level (3-5 yrs)">Mid-Level (3-5 yrs)</option>
-                  <option value="Senior Level (6-9 yrs)">Senior Level (6-9 yrs)</option>
-                  <option value="Lead / Executive (10+ yrs)">Lead / Executive (10+ yrs)</option>
-                </select>
-              </div>
+              <div class="grid sm:grid-cols-2 gap-3.5">
+                <div>
+                  <label class="label !text-xs !mb-1 font-bold text-slate-700" for="accLocation">State / Location in Malaysia</label>
+                  <select id="accLocation" class="input !py-2.5 !text-xs font-medium cursor-pointer">
+                    <option value="W.P. Kuala Lumpur" selected>W.P. Kuala Lumpur</option>
+                    <option value="Selangor">Selangor (PJ, Shah Alam, Cyberjaya)</option>
+                    <option value="Penang">Penang (George Town, Bayan Lepas)</option>
+                    <option value="Johor">Johor (Johor Bahru, Iskandar)</option>
+                    <option value="Perak">Perak (Ipoh)</option>
+                    <option value="Melaka">Melaka</option>
+                    <option value="Negeri Sembilan">Negeri Sembilan (Seremban)</option>
+                    <option value="Sarawak">Sarawak (Kuching, Miri)</option>
+                    <option value="Sabah">Sabah (Kota Kinabalu)</option>
+                    <option value="Pahang">Pahang (Kuantan)</option>
+                    <option value="Kedah">Kedah (Alor Setar, Kulim)</option>
+                    <option value="Terengganu">Terengganu (Kuala Terengganu)</option>
+                    <option value="Kelantan">Kelantan (Kota Bharu)</option>
+                    <option value="Perlis">Perlis</option>
+                    <option value="W.P. Putrajaya">W.P. Putrajaya</option>
+                    <option value="W.P. Labuan">W.P. Labuan</option>
+                    <option value="Remote Malaysia">Remote / Anywhere in Malaysia</option>
+                  </select>
+                </div>
 
-              <div>
-                <label class="label !text-xs" for="accEducation">Highest Education</label>
-                <select id="accEducation" class="input">
-                  <option value="Secondary / SPM">Secondary (SPM / O-Levels / STPM)</option>
-                  <option value="Diploma / TVET">Diploma / TVET / Advanced Dip</option>
-                  <option value="Bachelor's Degree" selected>Bachelor's Degree (Hons)</option>
-                  <option value="Master's / Postgraduate">Master's Degree (Postgraduate)</option>
-                  <option value="Doctorate / PhD">Doctorate / PhD</option>
-                  <option value="Professional Qualification">Professional Cert (ACCA/CFA/AWS)</option>
-                </select>
+                <div>
+                  <label class="label !text-xs !mb-1 font-bold text-slate-700" for="accWorkMode">Work Arrangement Preference</label>
+                  <select id="accWorkMode" class="input !py-2.5 !text-xs font-medium cursor-pointer">
+                    <option value="Hybrid" selected>Hybrid (Remote + On-site)</option>
+                    <option value="Remote">Remote-First (Work from Home)</option>
+                    <option value="On-site">On-site Only (Office Presence)</option>
+                  </select>
+                </div>
               </div>
             </div>
 
-            <!-- Block C: Location & Preferences (Formal Malaysian States Dropdown) -->
-            <div class="grid sm:grid-cols-2 gap-4">
-              <div>
-                <label class="label !text-xs" for="accLocation">Location / State in Malaysia</label>
-                <select id="accLocation" class="input">
-                  <option value="W.P. Kuala Lumpur">W.P. Kuala Lumpur</option>
-                  <option value="Selangor">Selangor (PJ, Shah Alam, Cyberjaya)</option>
-                  <option value="Penang">Penang (George Town, Bayan Lepas)</option>
-                  <option value="Johor">Johor (Johor Bahru, Iskandar)</option>
-                  <option value="Perak">Perak (Ipoh)</option>
-                  <option value="Melaka">Melaka</option>
-                  <option value="Negeri Sembilan">Negeri Sembilan (Seremban)</option>
-                  <option value="Sarawak">Sarawak (Kuching, Miri)</option>
-                  <option value="Sabah">Sabah (Kota Kinabalu)</option>
-                  <option value="Pahang">Pahang (Kuantan)</option>
-                  <option value="Kedah">Kedah (Alor Setar, Kulim)</option>
-                  <option value="Terengganu">Terengganu (Kuala Terengganu)</option>
-                  <option value="Kelantan">Kelantan (Kota Bharu)</option>
-                  <option value="Perlis">Perlis</option>
-                  <option value="W.P. Putrajaya">W.P. Putrajaya</option>
-                  <option value="W.P. Labuan">W.P. Labuan</option>
-                  <option value="Remote Malaysia">Remote / Anywhere in Malaysia</option>
-                </select>
+            <!-- Group 3: Bio / Pitch -->
+            <div class="space-y-1.5 pt-2 border-t border-slate-100">
+              <div class="flex justify-between items-center">
+                <label class="label !text-xs !mb-0 font-bold text-slate-700" for="accBio">Professional Headline Pitch <span class="text-[10px] text-slate-400 font-normal">(Optional)</span></label>
+                <span id="accBioCounter" class="text-[10px] text-slate-400 font-mono">0/240</span>
               </div>
-
-              <div>
-                <label class="label !text-xs" for="accWorkMode">Preferred Work Mode</label>
-                <select id="accWorkMode" class="input">
-                  <option value="Hybrid">Hybrid (Remote + On-site)</option>
-                  <option value="Remote">Remote-First (Work from Home)</option>
-                  <option value="On-site">On-site Only (Office Presence)</option>
-                </select>
-              </div>
+              <textarea id="accBio" rows="2" maxlength="240" class="input !py-2 !text-xs leading-relaxed" placeholder="Summarize your key strengths, certifications, or career aspirations..." oninput="updateBioCounter(this)"></textarea>
             </div>
 
-            <!-- Block D: Short Bio / Career Pitch -->
-            <div>
-              <div class="flex justify-between items-center mb-1">
-                <label class="label !text-xs !mb-0" for="accBio">Professional Headline Pitch <span class="text-[10px] text-slate-400">(Optional)</span></label>
-                <span id="accBioCounter" class="text-[10px] text-slate-400">0/240</span>
-              </div>
-              <textarea id="accBio" rows="2" maxlength="240" class="input text-xs" placeholder="Summarize your key strengths, certifications, or career aspirations..." oninput="updateBioCounter(this)"></textarea>
-            </div>
-
-            <div class="tint tint-teal rounded-2xl p-3 text-xs text-slate-600 flex items-center justify-between gap-3">
+            <!-- Privacy Guarantee Banner -->
+            <div class="tint tint-teal rounded-2xl p-3 text-xs text-slate-600 flex items-center justify-between gap-3 shadow-xs">
               <div class="flex items-center gap-2">
                 <span class="text-base">🛡️</span>
-                <span><b>Privacy-First:</b> Profile information is stored locally with PDPA consent controls.</span>
+                <span><b>Privacy-First:</b> Stored locally under Malaysian Personal Data Protection Act (PDPA).</span>
               </div>
-              <span class="chip chip-emerald !text-[9px]">Encrypted</span>
+              <span class="chip chip-emerald !text-[9px] !font-bold">Encrypted</span>
             </div>
 
-            <div class="flex items-center justify-end gap-2.5 pt-3 border-t border-slate-200/70">
-              <button type="button" onclick="closeAccountModal()" class="btn btn-soft !py-2.5 !px-5 font-bold">Cancel</button>
-              <button type="submit" id="btnSaveAccountProfile" class="btn btn-primary !py-2.5 !px-6 font-extrabold shadow-sm">Save Profile Changes →</button>
+            <!-- Footer Save Actions -->
+            <div class="flex items-center justify-end gap-3 pt-3 border-t border-slate-200/80">
+              <button type="button" onclick="closeAccountModal()" class="btn btn-soft !py-2.5 !px-5 font-bold text-slate-600 hover:text-slate-900">Cancel</button>
+              <button type="submit" id="btnSaveAccountProfile" class="!py-2.5 !px-7 font-extrabold text-sm text-white bg-[#0A66C2] hover:bg-[#004182] active:bg-[#003B73] rounded-xl shadow-sm hover:shadow transition flex items-center gap-2 cursor-pointer">
+                <span>Save Profile Changes</span>
+                <span>→</span>
+              </button>
             </div>
           </form>
 
           <!-- Section 2: Account Security & Password -->
           <form id="formAccountSecurity" class="space-y-4 hidden" onsubmit="event.preventDefault();submitAccountPassword();">
-            <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200/80 space-y-3.5">
+            <div class="p-5 rounded-2xl bg-slate-50 border border-slate-200/80 space-y-4">
               <div>
-                <label class="label !text-xs" for="accCurrPassword">Current Password *</label>
-                <input id="accCurrPassword" type="password" required class="input" placeholder="Enter current password" />
+                <label class="label !text-xs !mb-1 font-bold text-slate-700" for="accCurrPassword">Current Password *</label>
+                <input id="accCurrPassword" type="password" required class="input !py-2.5 !text-sm" placeholder="Enter current password" />
               </div>
               <div>
-                <label class="label !text-xs" for="accNewPassword">New Password *</label>
-                <input id="accNewPassword" type="password" required class="input" placeholder="Min. 8 chars (A-Z, a-z, 0-9, symbol)" oninput="checkPasswordStrength(this.value)" />
-                <div class="text-[11px] text-slate-500 mt-1">Must contain at least 8 characters with uppercase, lowercase, number, and a special character (!@#$%^&*).</div>
+                <label class="label !text-xs !mb-1 font-bold text-slate-700" for="accNewPassword">New Password *</label>
+                <input id="accNewPassword" type="password" required class="input !py-2.5 !text-sm" placeholder="Min. 8 characters" oninput="checkPasswordStrength(this.value)" />
+                <div class="text-[11px] text-slate-500 mt-1.5 flex items-center gap-1.5">
+                  <span class="text-amber-500 font-bold">ℹ</span>
+                  <span>Must contain at least 8 characters with uppercase, lowercase, number, and special symbol.</span>
+                </div>
               </div>
               <div>
-                <label class="label !text-xs" for="accConfirmPassword">Confirm New Password *</label>
-                <input id="accConfirmPassword" type="password" required class="input" placeholder="Re-type new password" />
+                <label class="label !text-xs !mb-1 font-bold text-slate-700" for="accConfirmPassword">Confirm New Password *</label>
+                <input id="accConfirmPassword" type="password" required class="input !py-2.5 !text-sm" placeholder="Re-type new password" />
               </div>
             </div>
 
-            <div class="flex items-center justify-end gap-2.5 pt-2 border-t border-slate-200/70">
-              <button type="button" onclick="closeAccountModal()" class="btn btn-soft !py-2.5 !px-5 font-bold">Cancel</button>
-              <button type="submit" id="btnSaveAccountPassword" class="btn btn-primary !py-2.5 !px-6 font-extrabold">Update Password →</button>
+            <div class="flex items-center justify-end gap-3 pt-3 border-t border-slate-200/80">
+              <button type="button" onclick="closeAccountModal()" class="btn btn-soft !py-2.5 !px-5 font-bold text-slate-600 hover:text-slate-900">Cancel</button>
+              <button type="submit" id="btnSaveAccountPassword" class="!py-2.5 !px-7 font-extrabold text-sm text-white bg-[#0A66C2] hover:bg-[#004182] active:bg-[#003B73] rounded-xl shadow-sm hover:shadow transition flex items-center gap-2 cursor-pointer">
+                <span>Update Password</span>
+                <span>→</span>
+              </button>
             </div>
           </form>
 
@@ -1172,8 +1220,12 @@
 
     function setAccountModalTab(tab) {
       const isProf = tab === 'profile';
-      tabBtnAccountProfile.className = isProf ? 'on flex-1 text-xs font-bold py-2' : 'flex-1 text-xs font-bold py-2';
-      tabBtnAccountSecurity.className = !isProf ? 'on flex-1 text-xs font-bold py-2' : 'flex-1 text-xs font-bold py-2';
+      tabBtnAccountProfile.className = isProf 
+        ? 'pb-2.5 text-xs sm:text-sm font-bold text-[#0A66C2] border-b-2 border-[#0A66C2] flex items-center gap-2 transition cursor-pointer' 
+        : 'pb-2.5 text-xs sm:text-sm font-semibold text-slate-500 hover:text-slate-800 border-b-2 border-transparent flex items-center gap-2 transition cursor-pointer';
+      tabBtnAccountSecurity.className = !isProf 
+        ? 'pb-2.5 text-xs sm:text-sm font-bold text-[#0A66C2] border-b-2 border-[#0A66C2] flex items-center gap-2 transition cursor-pointer' 
+        : 'pb-2.5 text-xs sm:text-sm font-semibold text-slate-500 hover:text-slate-800 border-b-2 border-transparent flex items-center gap-2 transition cursor-pointer';
       formAccountProfile.classList.toggle('hidden', !isProf);
       formAccountSecurity.classList.toggle('hidden', isProf);
     }
@@ -1280,13 +1332,15 @@
 
       accFullName.value = name;
       accEmail.value = u.email || '';
-      accCurrentRole.value = rd.current_role || (cvRecord && cvRecord.structured_cv ? cvRecord.structured_cv.current_role : '') || '';
+      const initialRole = rd.current_role || (cvRecord && cvRecord.structured_cv ? cvRecord.structured_cv.current_role : '') || 'Junior Financial Auditor';
+      accCurrentRole.value = initialRole;
+      if (window.modalTopRoleSubtitle) modalTopRoleSubtitle.textContent = initialRole;
       accPhone.value = rd.phone || '';
-      if (rd.industry && accIndustry) accIndustry.value = rd.industry;
-      if (rd.seniority_level && window.accSeniority) accSeniority.value = rd.seniority_level;
-      if (rd.preferred_work_mode && accWorkMode) accWorkMode.value = rd.preferred_work_mode;
-      if (rd.education_level && accEducation) accEducation.value = rd.education_level;
-      if (rd.location && accLocation) accLocation.value = rd.location;
+      if (accIndustry) accIndustry.value = rd.industry || 'Finance & Accounting';
+      if (window.accSeniority) accSeniority.value = rd.seniority_level || 'Entry-Level (1-2 yrs)';
+      if (accEducation) accEducation.value = rd.education_level || "Bachelor's Degree";
+      if (accLocation) accLocation.value = rd.location || 'W.P. Kuala Lumpur';
+      if (accWorkMode) accWorkMode.value = rd.preferred_work_mode || 'Hybrid';
       if (window.accBio) {
         accBio.value = rd.bio || '';
         updateBioCounter(accBio);
