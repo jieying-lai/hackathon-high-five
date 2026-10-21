@@ -1146,7 +1146,6 @@
       if (window.accCardUid) accCardUid.textContent = user.unique_uid || '';
       if (window.accCardEmail) accCardEmail.textContent = user.email || '';
       if (window.accCardJoined) accCardJoined.textContent = (user.created_at || '2026').replace(' UTC', '');
-      const rd = user.role_details || {};
       if (window.accCardRole) accCardRole.textContent = rd.current_role || (cvRecord && cvRecord.structured_cv ? cvRecord.structured_cv.current_role : '') || 'Professional';
       if (window.accCardIndustry) accCardIndustry.textContent = rd.industry || 'Finance & Accounting';
       if (window.accCardWorkMode) accCardWorkMode.textContent = rd.preferred_work_mode || 'Hybrid';
