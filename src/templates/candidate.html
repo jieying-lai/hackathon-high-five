@@ -710,6 +710,50 @@
             <details class="chip chip-slate"><summary>⚖️ Fairness checks</summary><p id="fairnessDetails" class="mt-2 max-w-lg">Protected attributes excluded from scoring. Statistical parity has not been audited.</p></details>
             <span class="chip chip-slate">Scores are estimates</span>
           </div>
+          <!-- JobGalaxy Style Career Progression & Mobility Matrix (Powered by ONET 29.0) -->
+          <div class="glass rounded-3xl p-6 space-y-5 border border-indigo-100 shadow-sm" data-no-translate>
+            <div class="flex flex-wrap items-center justify-between gap-3 border-b border-slate-200/80 pb-4">
+              <div class="flex items-center gap-3">
+                <div class="h-11 w-11 rounded-2xl bg-indigo-600 text-white font-black text-xl grid place-items-center shadow">🗺️</div>
+                <div>
+                  <div class="flex items-center gap-2">
+                    <h3 class="text-base font-extrabold text-slate-900">Career Pathway &amp; Progression Matrix</h3>
+                    <span class="chip chip-indigo">O*NET &amp; MASCO Standard</span>
+                    <span id="pathwayCurrentZoneBadge" class="chip chip-emerald">Job Zone 3</span>
+                  </div>
+                  <div class="text-xs text-slate-500 mt-0.5">Interactive career ladder mapping vertical advancements and lateral skill-transferable transitions.</div>
+                </div>
+              </div>
+              <div id="pathwayRoleIndicator" class="text-xs font-bold text-slate-600 bg-slate-100 px-3 py-1.5 rounded-xl border border-slate-200">
+                Current Role: <span id="pathwayRoleName" class="text-indigo-600 font-extrabold">Junior Financial Auditor</span>
+              </div>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-5">
+              <!-- Vertical Advancements (Career Ladder) -->
+              <div class="p-4 rounded-2xl bg-white/70 border border-slate-200/80 space-y-3">
+                <div class="flex items-center justify-between">
+                  <span class="text-xs font-extrabold text-slate-800 flex items-center gap-1.5">
+                    <span>🚀 Vertical Career Advancements</span>
+                  </span>
+                  <span class="text-[10px] text-slate-400 font-semibold">Promotion Ladder</span>
+                </div>
+                <div id="pathwayAdvancementsList" class="space-y-2"></div>
+              </div>
+
+              <!-- Lateral Transitions (Career Changers) -->
+              <div class="p-4 rounded-2xl bg-white/70 border border-slate-200/80 space-y-3">
+                <div class="flex items-center justify-between">
+                  <span class="text-xs font-extrabold text-slate-800 flex items-center gap-1.5">
+                    <span>🔀 Lateral Mobility &amp; Transition</span>
+                  </span>
+                  <span class="text-[10px] text-slate-400 font-semibold">Skill Transfer</span>
+                </div>
+                <div id="pathwayLateralsList" class="space-y-2"></div>
+              </div>
+            </div>
+          </div>
+
           <div data-outline-label="Role matches" id="roleCards" class="grid lg:grid-cols-2 gap-5"></div>
         </section>
 
@@ -1094,6 +1138,7 @@
       if (id === 'notifications') loadInvitations(false);
       if (id === 'dash') renderDash();
       if (id === 'profile') await loadMyCv();
+      if (id === 'match') await loadCareerPathways();
       if (id === 'jobs') {
         await loadJobs();
         setTimeout(() => { if (leafletMap) leafletMap.invalidateSize(); }, 120);
@@ -2379,6 +2424,58 @@
         const f = e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files[0];
         if (f) handlePdfSelect(f);
       });
+    }
+
+
+    /* ---------- ONET Career Pathway Matrix Engine ---------- */
+    async function loadCareerPathways(roleTitle) {
+      try {
+        const title = roleTitle || (user && user.role_details ? user.role_details.current_role : '') || 'Junior Financial Auditor';
+        const res = await api('/api/career-pathways?role=' + encodeURIComponent(title));
+        if (res && res.data && res.data.ok) {
+          renderCareerPathways(res.data.pathways);
+        }
+      } catch (e) {
+        console.warn('Failed to load career pathways:', e);
+      }
+    }
+
+    function renderCareerPathways(p) {
+      if (!p) return;
+      if (window.pathwayRoleName) pathwayRoleName.textContent = p.current_role;
+      if (window.pathwayCurrentZoneBadge) pathwayCurrentZoneBadge.textContent = 'Job Zone ' + p.job_zone;
+
+      if (window.pathwayAdvancementsList) {
+        if (!p.advancements || !p.advancements.length) {
+          pathwayAdvancementsList.innerHTML = '<div class="text-xs text-slate-400 italic py-2">Senior specialist roles aligned with your field.</div>';
+        } else {
+          pathwayAdvancementsList.innerHTML = p.advancements.map((a, idx) => `
+            <div class="flex items-center justify-between p-2.5 rounded-xl bg-slate-50 hover:bg-indigo-50/50 border border-slate-200/70 transition text-xs">
+              <div class="flex items-center gap-2 min-w-0 pr-2">
+                <span class="h-5 w-5 rounded-md bg-indigo-100 text-indigo-700 font-black text-[10px] grid place-items-center shrink-0">${idx + 1}</span>
+                <span class="font-extrabold text-slate-800 truncate" title="${esc(a.title)}">${esc(a.title)}</span>
+              </div>
+              <span class="chip chip-indigo !text-[10px] shrink-0 font-bold">Zone ${a.target_zone}</span>
+            </div>
+          `).join('');
+        }
+      }
+
+      if (window.pathwayLateralsList) {
+        if (!p.lateral_transitions || !p.lateral_transitions.length) {
+          pathwayLateralsList.innerHTML = '<div class="text-xs text-slate-400 italic py-2">Adjacent roles sharing strong skill overlap.</div>';
+        } else {
+          pathwayLateralsList.innerHTML = p.lateral_transitions.map((l, idx) => `
+            <div class="flex items-center justify-between p-2.5 rounded-xl bg-slate-50 hover:bg-teal-50/50 border border-slate-200/70 transition text-xs">
+              <div class="flex items-center gap-2 min-w-0 pr-2">
+                <span class="h-5 w-5 rounded-md bg-teal-100 text-teal-700 font-black text-[10px] grid place-items-center shrink-0">${idx + 1}</span>
+                <span class="font-extrabold text-slate-800 truncate" title="${esc(l.title)}">${esc(l.title)}</span>
+              </div>
+              <span class="chip chip-teal !text-[10px] shrink-0 font-bold">Match #${l.transferability_rank}</span>
+            </div>
+          `).join('');
+        }
+      }
     }
 
     /* ---------- init ---------- */

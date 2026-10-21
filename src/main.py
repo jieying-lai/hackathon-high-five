@@ -18,6 +18,7 @@ from urllib.parse import urlsplit
 
 from flask import Flask, jsonify, redirect, render_template, request, send_file, session
 
+import career_pathways
 import chatbot_engine
 import cv_engine
 import hr_engine
@@ -241,6 +242,18 @@ def questionnaire_generate(action):
     except questionnaire_engine.QuestionnaireError as exc:
         return jsonify(ok=False, message=str(exc)), exc.status
 
+
+
+@app.route("/api/career-pathways", methods=["GET"])
+@api_role("job_seeker")
+def api_career_pathways():
+    role = request.args.get("role", "").strip()
+    if not role:
+        user = session.get("user")
+        if user and user.get("role_details"):
+            role = user["role_details"].get("current_role", "")
+    summary = career_pathways.get_pathways_summary(role or "Junior Financial Auditor")
+    return jsonify({"ok": True, "pathways": summary})
 
 @app.route("/api/personas", methods=["GET"])
 @api_role("job_seeker")

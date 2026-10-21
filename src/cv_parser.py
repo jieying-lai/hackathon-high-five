@@ -174,7 +174,7 @@ def parse_and_summarize_pdf_cv(pdf_bytes: bytes, filename: str,
             contents = page.get_contents()
             if contents is not None and len(contents.get_data()) > MAX_PAGE_STREAM_BYTES:
                 return False, "This PDF contains an unusually large page. Export a simplified text PDF and retry.", None
-            text = (page.extract_text() or "").replace("\x00", "").strip()
+            text = (page.extract_text() or "").replace("\x00", "").replace("\u2019", "'").replace("\u2018", "'").replace("\u201c", '"').replace("\u201d", '"').strip()
             text_length += len(text) + 1
             if text_length > MAX_TEXT_CHARS:
                 return False, "This PDF contains too much text to process safely. Upload a shorter CV (maximum 100,000 characters).", None
