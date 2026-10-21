@@ -984,13 +984,20 @@
                 <span id="rangeSummaryBadge" class="chip chip-emerald !text-[11px]">0 matched</span>
               </div>
               
-              <!-- Display Scope & Sector Filter beside Map -->
-              <div class="flex flex-wrap items-center gap-3">
-                <div class="seg">
-                  <button type="button" id="btnMapMatched" onclick="setJobScope('relevant')" class="on !text-xs font-bold">🎯 CV-Matched Only</button>
-                  <button type="button" id="btnMapAll" onclick="setJobScope('all')" class="!text-xs font-bold">🌐 All Nearby Sectors</button>
+              <!-- Display Scope, 3-Map Switcher & Sector Filter beside Map -->
+              <div class="flex flex-wrap items-center gap-2.5">
+                <!-- 3-Map Style Switcher (Instant 1-Click switch, NO API key popup) -->
+                <div class="inline-flex items-center p-0.5 bg-slate-100 rounded-xl text-xs font-bold gap-0.5 border border-slate-200/80">
+                  <button type="button" id="btnLayerMapbox" onclick="switchMapProvider('mapbox')" class="px-2.5 py-1 rounded-lg transition font-bold text-slate-600 hover:text-slate-900" title="Mapbox HD Vector Map">🚀 Mapbox</button>
+                  <button type="button" id="btnLayerOpenMap" onclick="switchMapProvider('openmap')" class="px-2.5 py-1 rounded-lg transition font-bold text-slate-600 hover:text-slate-900" title="OpenStreetMap France CDN">🗺️ OpenMap</button>
+                  <button type="button" id="btnLayerEsri" onclick="switchMapProvider('esri')" class="px-2.5 py-1 rounded-lg transition font-bold text-slate-600 hover:text-slate-900" title="Esri World Street Map">🏙️ Esri</button>
                 </div>
-                <div class="flex items-center gap-2.5 text-xs">
+
+                <div class="seg">
+                  <button type="button" id="btnMapMatched" onclick="setJobScope('relevant')" class="on !text-xs font-bold">🎯 CV-Matched</button>
+                  <button type="button" id="btnMapAll" onclick="setJobScope('all')" class="!text-xs font-bold">🌐 All Sectors</button>
+                </div>
+                <div class="hidden sm:flex items-center gap-2 text-xs">
                   <span class="inline-flex items-center gap-1 font-bold text-slate-700"><span class="inline-block w-2.5 h-2.5 rounded-full bg-emerald-500 shadow-xs"></span>CV-Matched</span>
                   <span class="inline-flex items-center gap-1 font-bold text-slate-700"><span class="inline-block w-2.5 h-2.5 rounded-full bg-indigo-500 shadow-xs"></span>Other Sectors</span>
                 </div>
@@ -2874,10 +2881,6 @@
     }
 
     function switchMapProvider(prov) {
-      if (prov === 'mapbox' && !getMapboxToken()) {
-        openMapboxKeyModal();
-        return;
-      }
       activeMapProvider = prov;
       localStorage.setItem('careerlens_map_provider', prov);
       updateMapProviderPills();
