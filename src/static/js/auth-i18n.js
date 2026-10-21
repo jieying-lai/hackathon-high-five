@@ -5,6 +5,11 @@
   else root.authI18n=api;
 })(typeof window==='undefined'?globalThis:window,function(){
   const rows=`
+Company name must contain at least 2 characters, excluding leading and trailing spaces.|Nama syarikat mesti mengandungi sekurang-kurangnya 2 aksara, tidak termasuk ruang di awal dan akhir.|公司名称至少需要 2 个字符，不计首尾空格。
+Select a district / area|Pilih daerah / kawasan|选择地区／县区
+W.P. Labuan|Wilayah Persekutuan Labuan|纳闽联邦直辖区
+State / federal territory|Negeri / wilayah persekutuan|州属／联邦直辖区
+District / area|Daerah / kawasan|地区／县区
 CareerLens AI — Workforce Intelligence & Reskilling|CareerLens AI — Kecerdasan Tenaga Kerja & Latihan Semula|CareerLens AI — 职场洞察与技能提升
 Future-Ready Workforce & Reskilling|Tenaga Kerja Sedia Masa Depan & Latihan Semula|面向未来的职场与技能提升
 Sign In|Log Masuk|登录

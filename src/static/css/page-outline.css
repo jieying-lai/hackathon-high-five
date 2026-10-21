@@ -1,0 +1,24 @@
+.page-outline{--outline-color:#7c3aed;--outline-rgb:124,58,237;--outline-gradient:linear-gradient(135deg,#4f46e5,#9333ea);position:fixed;left:24px;top:calc(50% + 30px);transform:translateY(-50%);z-index:35;width:48px;max-height:calc(100dvh - 180px);overflow:visible;padding:12px 4px;border:0;background:transparent;box-shadow:none}
+.page-outline[hidden]{display:none}
+.responsive-employer .page-outline{--outline-color:#0891b2;--outline-rgb:8,145,178;--outline-gradient:linear-gradient(135deg,#0d9488,#0284c7)}
+.outline-caption,.outline-footer>span:first-child{display:none}
+.outline-list{position:relative}.outline-list ol{position:relative;list-style:none;margin:0;padding:0;display:grid;gap:8px}
+.outline-step{display:flex;align-items:center;position:relative;width:100%;min-height:52px;padding:8px 4px;text-align:left;border:0;border-radius:12px;cursor:pointer;background:transparent}
+.outline-number{display:grid;place-items:center;flex:none;width:32px;height:32px;border:1px solid rgba(var(--outline-rgb),.38);background:rgba(var(--outline-rgb),.08);border-radius:50%;font-size:13px;font-weight:600;color:#64748b;transform:scale(.86);transition:transform .45s cubic-bezier(.22,1,.36,1),background .3s,color .3s,box-shadow .3s;z-index:2}
+.outline-step.is-past .outline-number{color:#fff;background:var(--outline-color);border-color:var(--outline-color);font-weight:700;box-shadow:0 2px 8px rgba(var(--outline-rgb),.2)}
+.outline-step.is-active .outline-number{transform:scale(1.16);background:var(--outline-gradient);border-color:var(--outline-color);color:#fff;font-weight:800;box-shadow:0 0 20px rgba(var(--outline-rgb),.48)}
+.outline-label{display:none;position:absolute;left:48px;max-width:180px;width:max-content;padding:7px 11px;border-radius:10px;background:rgba(var(--outline-rgb),.1);color:var(--outline-color);font-size:12px;font-weight:650;line-height:1.5;overflow-wrap:anywhere}
+.outline-step:hover .outline-label,.outline-step:focus-visible .outline-label{display:block}
+.outline-step:focus-visible{outline:3px solid rgba(var(--outline-rgb),.4);outline-offset:3px}
+.outline-track{position:absolute;left:19px;width:1px;border-left:1px dashed rgba(var(--outline-rgb),.28);pointer-events:none}
+.outline-progress{display:block;position:absolute;left:-1px;top:0;width:3px;height:100%;border-radius:4px;background:var(--outline-gradient);transform:scaleY(0);transform-origin:top;box-shadow:0 0 10px rgba(var(--outline-rgb),.45);transition:transform 100ms linear}
+.outline-indicator{position:absolute;top:0;left:0;width:40px;height:40px;border-radius:50%;border:1px solid rgba(var(--outline-rgb),.4);background:transparent;pointer-events:none;transition:transform .5s cubic-bezier(.22,1,.36,1);will-change:transform}
+.outline-indicator:after{content:'';position:absolute;inset:-4px;border:1px solid rgba(var(--outline-rgb),.35);border-radius:50%;animation:outline-breathe 2.6s ease-out infinite}
+.outline-footer{display:flex;justify-content:center;margin:18px 0 0;padding:0;font-size:12px}.outline-count{font-variant-numeric:tabular-nums;color:var(--outline-color);font-weight:800;white-space:nowrap}
+.page-outline-enabled [data-outline-label]{scroll-margin-top:132px}
+.page-outline-enabled .portal-content{padding-left:0}
+.page-outline-enabled main{margin-left:auto!important;margin-right:auto!important;width:100%;max-width:min(72rem,calc(100% - 104px))!important}
+@keyframes outline-breathe{0%,100%{transform:scale(1);opacity:.55}65%{transform:scale(1.2);opacity:0}}
+@media(max-width:1023px){.page-outline{left:2px;width:44px;max-height:calc(100dvh - 220px)}.page-outline-enabled main{max-width:calc(100% - 96px)!important;padding-left:12px!important;padding-right:12px!important}.outline-step{min-height:46px}.outline-label{max-width:150px}}
+@media(max-height:600px){.page-outline{top:55%;max-height:calc(100dvh - 140px);padding:6px 4px}.outline-step{min-height:38px}.outline-list ol{gap:4px}.outline-footer{margin-top:10px}}
+@media(prefers-reduced-motion:reduce){.outline-indicator,.outline-number,.outline-progress{transition:none!important}.outline-indicator:after{animation:none}}

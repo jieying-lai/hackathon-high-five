@@ -87,7 +87,7 @@ const CompanyComparison = (() => {
     const html=[1,0,2].map(index=>{
       const c=best[index],rank=index+1;
       if(!c) return `<article class="podium-card podium-${rank} podium-empty"><b data-no-translate>#${rank}</b><p>No candidate for this position.</p></article>`;
-      return `<article class="podium-card podium-${rank}"><div class="podium-medal" data-no-translate>${['🥇','🥈','🥉'][index]} #${rank}</div><h3 data-no-translate>${esc(c.name)}</h3><p>${esc(c.position)}</p><strong class="podium-score" data-no-translate>${c.score}%</strong><p>${esc(c.education_category)}</p><div class="flex flex-wrap justify-center gap-1">${c.matched_required.slice(0,4).map(s=>`<span class="chip chip-teal">${esc(s)}</span>`).join('')}</div><p class="text-xs">${esc(c.source)}</p><button class="btn btn-hr" onclick="CompanyComparison.invite('${esc(c.id)}',${c.vacancy_id})">Invite to interview</button></article>`;
+      return `<article class="podium-card podium-${rank}"><div class="podium-medal" data-no-translate>${['🥇','🥈','🥉'][index]} #${rank}</div><h3 data-no-translate>${esc(c.name)}</h3><p>${esc(c.position)}</p><strong class="podium-score" data-no-translate>${c.score}%</strong><p>${esc(c.education_category)}</p><div class="flex flex-wrap justify-center gap-1">${c.matched_required.slice(0,4).map(s=>`<span class="chip chip-teal">${esc(s)}</span>`).join('')}</div><p class="text-xs">${esc(c.source)}</p><button class="btn btn-hr" onclick="CompanyComparison.shortlist('${esc(c.id)}',${c.vacancy_id})">Shortlist candidate</button></article>`;
     }).join('');
     // Preserve existing cards on unchanged refreshes, keeping focus and preventing flicker.
     if (html !== lastPodiumMarkup) {
@@ -96,7 +96,7 @@ const CompanyComparison = (() => {
     }
   }
   function table(rows) {
-    document.getElementById('comparisonRows').innerHTML=rows.map(c=>`<tr><th scope="row"><span data-no-translate>${esc(c.name)}</span><small>${esc(c.source)}</small></th><td>${esc(c.department)}<small>${esc(c.position)}</small></td><td>${c.experience_known?`<span data-no-translate>${c.years}</span>`:'To confirm'}</td><td>${esc(c.education_category)}<small data-no-translate>${esc(c.institution.join(' · ') || '—')}<br>${esc(c.major.join(' · ') || '—')}</small></td><td><b data-no-translate>${c.score}%</b></td><td><details><summary>Skills & experience</summary><p>Hard skills</p><p>${c.hard_skills.map(s=>text(s)).join(' · ')||'—'}</p><p>Soft skills</p><p>${c.soft_skills.map(s=>text(s)).join(' · ')||'—'}</p><p data-no-translate>${esc(c.past_positions.join(' · ')||'—')}</p><p>To confirm</p><p>${c.to_confirm.map(s=>text(s)).join(' · ')||'—'}</p></details></td></tr>`).join('') || '<tr><td colspan="6">No candidates match these filters.</td></tr>';
+    document.getElementById('comparisonRows').innerHTML=rows.map(c=>`<tr><th scope="row"><span data-no-translate>${esc(c.name)}</span><small>${esc(c.source)}</small></th><td>${esc(c.department)}<small>${esc(c.position)}</small></td><td>${c.experience_known?`<span data-no-translate>${c.years}</span>`:'To confirm'}</td><td>${esc(c.education_category)}<small data-no-translate>${esc(c.institution.join(' · ') || '—')}<br>${esc(c.major.join(' · ') || '—')}</small></td><td><b data-no-translate>${c.score}%</b></td><td><details><summary>Skills & experience</summary><p>Hard skills</p><p>${c.hard_skills.map(s=>text(s)).join(' · ')||'—'}</p><p>Soft skills</p><p>${c.soft_skills.map(s=>text(s)).join(' · ')||'—'}</p><p data-no-translate>${esc(c.past_positions.join(' · ')||'—')}</p><p>To confirm</p><p>${c.to_confirm.map(s=>text(s)).join(' · ')||'—'}</p></details></td><td><select class="input !text-xs" onchange="setDecision('${esc(c.id)}',this.value,${c.vacancy_id})">${['Pending','Shortlist','Needs review','Hold'].map(d=>option(d,d,window.getCandidateDecision?.(c.vacancy_id,c.id)||'Pending')).join('')}</select></td></tr>`).join('') || '<tr><td colspan="7">No candidates match these filters.</td></tr>';
   }
   function snapshot(rows) {
     const container=document.getElementById('comparisonSnapshot'); if(!container)return;
@@ -115,10 +115,13 @@ const CompanyComparison = (() => {
     window.careerLensLocale?.apply();
   }
   function reset() { Object.assign(state,{department:'',years:0,education:0,sort:'match',query:''}); document.getElementById('comparisonFilters').reset(); render(); }
+  function shortlist(id,vid) {
+    const candidate=data?.candidates.find(c=>c.id===id && Number(c.vacancy_id)===Number(vid));
+    if(candidate)window.shortlistCandidate?.(id,vid);
+  }
   async function invite(id,vid) {
-    const c=data?.candidates.find(c=>c.id===id && c.vacancy_id===vid); if(!c)return;
-    interviewPerson={id:c.id,name:c.name}; interviewForm.reset(); interviewCandidate.textContent=c.name; interviewStatus.textContent=''; interviewRole.value=c.position; interviewDialog.showModal(); interviewRole.focus();
+    if(typeof window.showTab === 'function') await window.showTab('shortlisting');
   }
   document.addEventListener('change',e=>{if(e.target.id==='uiLanguage') setTimeout(render,0);});
-  return {load,set,reset,invite,filtered};
+  return {load,set,reset,invite,shortlist,filtered,refresh:render,allCandidates:()=>data?.candidates||[]};
 })();

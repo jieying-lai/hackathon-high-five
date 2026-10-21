@@ -1,0 +1,8 @@
+.scenario-slider{--scenario-progress:0%;appearance:none;-webkit-appearance:none;height:8px;min-height:8px!important;border-radius:999px;background:linear-gradient(90deg,#6366f1 0%,#a855f7 var(--scenario-progress),#dbe1ee var(--scenario-progress),#dbe1ee 100%);cursor:pointer;touch-action:pan-y;margin:20px 0}
+.scenario-slider::-webkit-slider-thumb{appearance:none;-webkit-appearance:none;width:23px;height:23px;background:#6366f1;border:3px solid white;border-radius:50%;box-shadow:0 2px 8px #6366f155;transition:box-shadow .15s}
+.scenario-slider::-moz-range-thumb{width:18px;height:18px;background:#6366f1;border:3px solid white;border-radius:50%;box-shadow:0 2px 8px #6366f155}
+.scenario-slider:active::-webkit-slider-thumb{box-shadow:0 0 0 7px #6366f122,0 2px 8px #6366f155}
+.scenario-slider:focus-visible{outline:3px solid #a5b4fc;outline-offset:9px}
+#radarData{transition:points 90ms linear}
+#rising .bar i,#declining .bar i{transition:width 90ms linear}
+@media(prefers-reduced-motion:reduce){#radarData,#rising .bar i,#declining .bar i,.scenario-slider::-webkit-slider-thumb{transition:none}}

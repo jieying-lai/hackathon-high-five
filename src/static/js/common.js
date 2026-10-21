@@ -37,12 +37,17 @@ function postJson(url, body, method = 'POST') {
 function toast(message, type = 'ok') {
   const el = document.createElement('div');
   el.className = `toast ${type}`;
-  el.textContent = message;
+  el.textContent = window.careerLensLocale?.translate(message) ?? message;
   document.body.appendChild(el);
   setTimeout(() => el.remove(), 2800);
 }
 
+function localizedConfirm(message) {
+  return window.confirm(window.careerLensLocale?.translate(message) ?? message);
+}
+
 async function signOut() {
+  window.PagePosition?.clear();
   await fetch('/api/auth/logout', { method: 'POST' });
   window.location.href = '/';
 }
@@ -67,7 +72,7 @@ async function signOut() {
     if (!box) return;
     box.innerHTML = lumiHistory.map((m, idx) => {
       if (m.role === 'user') {
-        return `<div class="flex justify-end"><div class="lumi-msg-user px-4 py-2.5 text-xs leading-relaxed max-w-[84%] shadow-sm">${esc(m.text)}</div></div>`;
+        return `<div class="flex justify-end"><div data-no-translate class="lumi-msg-user px-4 py-2.5 text-xs leading-relaxed max-w-[84%] shadow-sm">${esc(m.text)}</div></div>`;
       }
       const cls = m.guardrail ? 'lumi-msg-guard' : 'lumi-msg-bot';
       const actBtns = (m.actions || []).length ? `
@@ -195,7 +200,6 @@ async function signOut() {
       : 'Personalised guidance for your career, skills & job search';
 
     const wrap = document.createElement('div');
-    wrap.setAttribute('data-no-translate', '');
     wrap.innerHTML = `
       <!-- Floating Launcher Button -->
       <button id="lumiFab" onclick="toggleLumiChat()" class="lumi-fab" title="Open Lumi Career Advisor">
@@ -280,7 +284,7 @@ function buildPortalNavigation(items, groups) {
   const available = group => group.ids.map(id => items.find(item => item.id === id)).filter(Boolean);
   document.getElementById('sideNav').innerHTML = groups.map(group => {
     const children = available(group);
-    if (children.length === 1) return itemButton(children[0]);
+    if (children.length === 1 && !group.dropdown) return itemButton(children[0]);
     return `<details class="nav-group"><summary>${esc(group.label)}<span class="nav-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-panel">${children.map(itemButton).join('')}</div></details>`;
   }).join('');
   document.getElementById('topNav').innerHTML = groups.map(group => `<div class="mobile-nav-group"><div class="nav-group-label">${esc(group.label)}</div>${available(group).map(itemButton).join('')}</div>`).join('');
@@ -384,6 +388,19 @@ function setPortalNavigation(id) {
     document.addEventListener('keydown', event => { if (event.key === 'Escape' && !nav.hidden) close(true); });
     window.matchMedia('(min-width: 1280px)').addEventListener('change', () => close());
     const links = [...document.querySelectorAll('.homepage-navigation a, #homeNav a')];
+    links.forEach(link => link.addEventListener('click', event => {
+      const landing = document.getElementById('landing');
+      const auth = document.getElementById('auth');
+      if (!landing || !auth || !landing.classList.contains('hidden')) return;
+
+      const section = document.querySelector(link.hash);
+      if (!section) return;
+      event.preventDefault();
+      auth.classList.add('hidden');
+      landing.classList.remove('hidden');
+      window.history.pushState(null, '', link.hash);
+      requestAnimationFrame(() => section.scrollIntoView({ behavior: 'smooth', block: 'start' }));
+    }));
     const observer = new IntersectionObserver(entries => {
       const visible = entries.filter(entry => entry.isIntersecting).sort((a,b) => b.intersectionRatio-a.intersectionRatio)[0];
       if (!visible) return;

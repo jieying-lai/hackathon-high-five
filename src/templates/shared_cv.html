@@ -20,20 +20,25 @@
   {% if error %}
     <h1>Access unavailable</h1><p>{{ error }}</p><a class="button" href="/">Sign in / return to CareerLens</a>
   {% elif share %}
-    <h1>{{ share.owner_name }} shared a CV with you</h1>
-    <p class="note">Only your signed-in account can use this link. Access expires {{ share.expires_at }}.
-      The owner can revoke access or replace the CV. Please respect the agreed purpose of this share.</p>
+    <h1><span data-no-translate>{{ share.owner_name }}</span> <span>shared a CV with you</span></h1>
+    <p class="note"><span>Only your signed-in account can use this link. Access expires</span> <span data-no-translate>{{ share.expires_at }}</span>.
+      <span>The owner can revoke access or replace the CV. Please respect the agreed purpose of this share.</span></p>
     {% if share.share_pdf %}<p><a class="button" href="/shared/{{ share.grant_id }}/pdf">Download shared original PDF</a></p>{% endif %}
     {% if share.structured_cv %}{% set cv = share.structured_cv %}
-      <h2>Reviewed career summary</h2><p>{{ cv.executive_summary or 'No summary provided.' }}</p>
+      <h2>Reviewed career summary</h2><p>{% if cv.executive_summary %}<span data-no-translate>{{ cv.executive_summary }}</span>{% else %}<span>No summary provided.</span>{% endif %}</p>
       <dl>{% for key,label in [('full_name','Name'),('current_role','Role'),('email','Email'),('phone','Phone'),('location','Location'),('industry','Industry'),('years_experience','Years of experience'),('education_level','Qualification'),('work_mode_preference','Work preference')] %}
-        <div><dt>{{ label }}</dt><dd>{{ cv[key] if cv[key] is defined and cv[key] is not none and cv[key] != '' else 'Not specified' }}</dd></div>
+        <div><dt>{{ label }}</dt><dd>{% if cv[key] is defined and cv[key] is not none and cv[key] != '' %}<span data-no-translate>{{ cv[key] }}</span>{% else %}<span>Not specified</span>{% endif %}</dd></div>
       {% endfor %}</dl>
       {% for key,label in [('skills','Skills mentioned or owner supplied'),('work_experience','Experience'),('education_history','Education'),('projects','Projects'),('certifications','Certifications')] %}
-        <h2>{{ label }}</h2><ul>{% for item in cv[key] or [] %}<li>{{ item }}</li>{% else %}<li>Not specified</li>{% endfor %}</ul>
+        <h2>{{ label }}</h2><ul>{% for item in cv[key] or [] %}<li data-no-translate>{{ item }}</li>{% else %}<li>Not specified</li>{% endfor %}</ul>
       {% endfor %}
       <p class="note">Reviewed by the CV owner. CareerLens has not independently verified these qualifications or skills.</p>
     {% else %}<p>The owner shared only the original PDF. Their structured profile is private.</p>{% endif %}
     <p><a href="/workspace">Return to workspace</a></p>
   {% endif %}
-</main></body></html>
+</main>
+<script src="/static/js/questionnaire-i18n.js"></script>
+<script src="/static/js/portal-i18n.js?v=20261021-i18n-audit"></script>
+<script src="/static/js/auth-i18n.js"></script>
+<script src="/static/js/member3.js?v=20261021-i18n-audit"></script>
+</body></html>

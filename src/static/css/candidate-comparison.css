@@ -23,3 +23,14 @@
 
 
 .comparison-search-row{grid-column:1/-1;display:flex;flex-wrap:wrap;align-items:flex-end;gap:1rem}.comparison-search-row>label{flex:1 1 16rem;min-width:0}.comparison-search-row>.btn{flex:0 1 auto}
+.shortlist-flip{perspective:1400px}
+.shortlist-flip-inner{position:relative;transform-style:preserve-3d;transition:transform .65s cubic-bezier(.22,.7,.2,1)}
+.shortlist-flip.is-flipped .shortlist-flip-inner{transform:rotateY(180deg)}
+.shortlist-face{backface-visibility:hidden;-webkit-backface-visibility:hidden;width:100%;box-sizing:border-box}
+.shortlist-back{position:absolute;inset:0 auto auto 0;transform:rotateY(180deg);visibility:hidden}
+.shortlist-flip.is-flipped .shortlist-front{position:absolute;inset:0 auto auto 0}
+.shortlist-flip.is-flipped .shortlist-back{position:relative;visibility:visible}
+.shortlist-name{border-radius:12px;padding:4px 8px;margin:-4px -8px;cursor:pointer;transition:background .2s}
+.shortlist-name:hover{background:#14b8a615}
+.shortlist-name:focus-visible{outline:3px solid #14b8a6;outline-offset:4px}
+@media(prefers-reduced-motion:reduce){.shortlist-flip-inner{transition:none}}

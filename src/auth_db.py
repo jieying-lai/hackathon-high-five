@@ -160,7 +160,8 @@ def register_user(data: dict) -> tuple[bool, str, dict | None]:
         company_name = (role_details.get("company_name") or "").strip()
         hr_job_title = (role_details.get("hr_job_title") or "").strip()
         if len(company_name) < 2:
-            return False, "HR / Company accounts must provide a valid Company Name.", None
+            return False, "Company name must contain at least 2 characters, excluding leading and trailing spaces.", None
+        role_details["company_name"] = company_name
         if len(hr_job_title) < 2:
             return False, "Please enter your HR / Management job title.", None
 

@@ -136,11 +136,13 @@
           <div class="text-xs font-extrabold text-indigo-900">Talent details</div>
           <div class="grid sm:grid-cols-3 gap-3">
             <div><label class="label">Career status</label><select id="sType" class="input"><option>Fresh Graduate</option><option>Working Professional</option><option>Career Switcher</option></select></div>
-            <div><label class="label">Industry</label><select id="sIndustry" class="input"><option>Finance & Accounting</option><option>Marketing & PR</option><option>IT & Software</option><option>HR & Administration</option></select></div>
+            <div><label for="sIndustry" class="label">Industry</label><select id="sIndustry" class="input" required><option value="">Select…</option>{% for industry in registration_industries %}<option value="{{ industry }}">{{ industry }}</option>{% endfor %}</select></div>
             <div><label class="label">Current / target role</label><input id="sRole" class="input" value="Junior Financial Analyst" /></div>
-            <div><label class="label">Education</label><select id="sEdu" class="input"><option>Bachelor's Degree</option><option>Diploma / TVET</option><option>Master's / Postgraduate</option></select></div>
+            <div><label for="sEdu" class="label">Education</label><select id="sEdu" class="input"><option value="SPM / UEC">SPM / UEC</option><option selected>Bachelor's Degree</option><option>Diploma / TVET</option><option>Master's / Postgraduate</option></select></div>
             <div><label class="label">Work mode</label><select id="sMode" class="input"><option>Hybrid</option><option>Remote</option><option>On-site</option></select></div>
-            <div><label class="label">Location</label><select id="sLoc" class="input"><option>Kuala Lumpur</option><option>Selangor</option><option>Penang</option><option>Johor Bahru</option></select></div>
+            <div><label for="sLocState" class="label">State / federal territory</label><select id="sLocState" class="input" required data-regions='{{ registration_regions|tojson }}' onchange="updateRegistrationDistricts()"><option value="">Select…</option>{% for state in registration_regions %}<option value="{{ state }}">{{ state }}</option>{% endfor %}</select></div>
+            <div><label for="sLoc" class="label">District / area</label><select id="sLoc" class="input" required onchange="updateRegistrationOtherArea()"><option value="">Select a district / area</option>{% for state, areas in registration_regions.items() %}<optgroup label="{{ state }}">{% for area in areas %}<option value="{{ area }}" data-state="{{ state }}">{{ area }}</option>{% endfor %}</optgroup>{% endfor %}</select></div>
+            <div id="sLocOtherField" class="hidden"><label for="sLocOther" class="label">Enter your preferred area</label><input id="sLocOther" class="input" minlength="2" maxlength="100" disabled /></div>
           </div>
         </div>
 
@@ -148,7 +150,7 @@
           <div class="text-xs font-extrabold text-teal-900">Company & HR details *</div>
           <div class="grid sm:grid-cols-2 gap-3">
             <div><label class="label">Select or enter company *</label><select id="hPreset" onchange="syncCompany()" class="input"><option>Nexus Digital & Finance Sdn Bhd</option><option>Aura Creative & Media Group MY</option><option>Pacific Smart Logistics Sdn Bhd</option><option value="custom">+ Custom company…</option></select></div>
-            <div><label class="label">Company name *</label><input id="hCompany" class="input" value="Nexus Digital & Finance Sdn Bhd" /></div>
+            <div><label for="hCompany" class="label">Company name *</label><input id="hCompany" class="input" required minlength="2" aria-describedby="hCompanyHint" oninput="validateCompanyName()" value="Nexus Digital & Finance Sdn Bhd" /><p id="hCompanyHint" class="hint" role="status">Company name must contain at least 2 characters, excluding leading and trailing spaces.</p></div>
             <div><label class="label">Your job title *</label><input id="hTitle" class="input" value="HR & L&D Manager" /></div>
             <div><label class="label">Company size</label><select id="hSize" class="input"><option>1–10 (Micro SME)</option><option>11–50 (Small Enterprise)</option><option selected>51–250 (Medium Enterprise)</option><option>250+ (Large Enterprise)</option></select></div>
             <div><label class="label">Industry</label><select id="hIndustry" class="input"><option>Finance & Accounting</option><option>Marketing & PR</option><option>IT & Software</option><option>HR & Administration</option></select></div>
@@ -183,9 +185,11 @@
     <button onclick="quickLogin('hr_company')" class="w-full text-left p-3.5 rounded-2xl bg-teal-50 hover:bg-teal-100 border border-teal-200"><div class="font-bold text-xs">Daniel Tan · Employer</div><div class="text-[11px] text-slate-500">hr.demo@nexussme.my</div></button>
   </div></div>
 
-  <script src="/static/js/common.js?v=20261020-locale-audit"></script>
+  <script src="/static/js/page-position.js?v=20261021-restore"></script>
+  <script src="/static/js/common.js?v=20261021-restore"></script>
   <script>
-    function openAuth(mode, role) {
+    function openAuth(mode, role, options = {}) {
+      if (!options.restore) window.PagePosition?.navigate();
       document.getElementById('landing').classList.add('hidden');
       document.getElementById('auth').classList.remove('hidden');
       document.getElementById('alertBox').classList.add('hidden');
@@ -195,7 +199,10 @@
       document.getElementById('tabLogin').className = login ? 'on' : '';
       document.getElementById('tabReg').className = login ? '' : 'on';
       if (!login && role) pickRole(role);
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+      if (!options.restore) {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        window.PagePosition?.complete();
+      }
     }
     function showAlert(msg) { const b = document.getElementById('alertBox'); b.textContent = msg; b.classList.remove('hidden'); }
     function toggleTerms(show) { document.getElementById('termsModal').classList.toggle('hidden', !show); }
@@ -212,7 +219,66 @@
     function syncCompany() {
       const v = document.getElementById('hPreset').value, input = document.getElementById('hCompany');
       input.value = v === 'custom' ? '' : v;
+      validateCompanyName();
       if (v === 'custom') input.focus();
+    }
+    function validateCompanyName() {
+      const input = document.getElementById('hCompany');
+      const valid = [...input.value.trim()].length >= 2;
+      const message = 'Company name must contain at least 2 characters, excluding leading and trailing spaces.';
+      input.setCustomValidity(valid ? '' : (window.careerLensLocale?.translate(message) ?? message));
+      input.setAttribute('aria-invalid', String(!valid));
+      document.getElementById('hCompanyHint').className = valid ? 'hint' : 'hint !text-rose-600';
+      return valid;
+    }
+    function updateRegistrationDistricts(selectedDistrict = '') {
+      const state = document.getElementById('sLocState');
+      const district = document.getElementById('sLoc');
+      const regions = JSON.parse(state.dataset.regions || '{}');
+      const areas = regions[state.value];
+      district.replaceChildren();
+      const placeholder = document.createElement('option');
+      placeholder.value = '';
+      placeholder.textContent = 'Select a district / area';
+      placeholder.selected = !selectedDistrict;
+      district.append(placeholder);
+      function addAreas(container, region, entries) {
+        [...new Set(entries)].forEach(area => {
+          const option = document.createElement('option');
+          option.value = area;
+          option.textContent = area;
+          option.dataset.state = region;
+          option.selected = area === selectedDistrict;
+          container.append(option);
+        });
+      }
+      if (areas) addAreas(district, state.value, [...areas, 'Other area']);
+      else Object.entries(regions).forEach(([region, entries]) => {
+        const group = document.createElement('optgroup');
+        group.label = region;
+        addAreas(group, region, entries);
+        district.append(group);
+      });
+      district.value = selectedDistrict;
+      district.disabled = false;
+      updateRegistrationOtherArea();
+    }
+    function updateRegistrationOtherArea() {
+      const district = document.getElementById('sLoc');
+      const state = document.getElementById('sLocState');
+      const selected = district.selectedOptions?.[0] || [...district.options].find(option => option.selected);
+      if (selected?.dataset.state && selected.dataset.state !== state.value) {
+        state.value = selected.dataset.state;
+        updateRegistrationDistricts(district.value);
+        return;
+      }
+      const other = district.value === 'Other area';
+      const input = document.getElementById('sLocOther');
+      document.getElementById('sLocOtherField').classList.toggle('hidden', !other);
+      input.disabled = !other;
+      input.required = other;
+      if (!other) input.value = '';
+      window.careerLensLocale?.apply();
     }
     function liveCheck() {
       const name = regName.value.trim(), email = regEmail.value.trim(), pw = regPw.value, pw2 = regPw2.value;
@@ -229,30 +295,48 @@
 
     async function submitRegistration() {
       const role = regRole.value;
+      if (role === 'hr_company' && !validateCompanyName()) { hCompany.reportValidity(); return; }
+      if (role === 'job_seeker' && ![sIndustry, sLocState, sLoc, sLocOther].every(field => field.disabled || field.reportValidity())) return;
       const role_details = role === 'job_seeker'
-        ? { seeker_type: sType.value, industry: sIndustry.value, current_role: sRole.value, education_level: sEdu.value, preferred_work_mode: sMode.value, location: sLoc.value }
-        : { company_name: hCompany.value, hr_job_title: hTitle.value, company_size: hSize.value, company_industry: hIndustry.value, reskilling_focus: hFocus.value };
+        ? { seeker_type: sType.value, industry: sIndustry.value, current_role: sRole.value, education_level: sEdu.value, preferred_work_mode: sMode.value,
+            location: [sLoc.value === 'Other area' ? sLocOther.value.trim() : sLoc.value, sLocState.value].join(', '),
+            location_state: sLocState.value, location_district: sLoc.value, location_area_other: sLoc.value === 'Other area' ? sLocOther.value.trim() : '' }
+        : { company_name: hCompany.value.trim(), hr_job_title: hTitle.value, company_size: hSize.value, company_industry: hIndustry.value, reskilling_focus: hFocus.value };
       const { data } = await postJson('/api/auth/register', {
         full_name: regName.value, email: regEmail.value, password: regPw.value, confirm_password: regPw2.value,
         role, role_details, pdpa_consent: regConsent.checked });
       if (!data.ok) return showAlert(data.message);
+      window.PagePosition?.clear();
       window.location.href = '/workspace';
     }
     async function submitLogin() {
       const { data } = await postJson('/api/auth/login', { email: loginEmail.value, password: loginPassword.value });
       if (!data.ok) return showAlert(data.message);
+      window.PagePosition?.clear();
       window.location.href = '/workspace';
     }
     async function quickLogin(kind) {
       const email = kind === 'hr_company' ? 'hr.demo@nexussme.my' : 'aisha.demo@careerlens.my';
       const { data } = await postJson('/api/auth/login', { email, password: 'CareerLens@2026' });
-      if (data.ok) window.location.href = '/workspace';
+      if (data.ok) { window.PagePosition?.clear(); window.location.href = '/workspace'; }
+    }
+    if (window.PagePosition) {
+      window.PagePosition.initialize({identity:'guest',portal:'landing',
+        getView:()=>document.getElementById('auth').classList.contains('hidden')?'landing':document.getElementById('loginPane').classList.contains('hidden')?'register':'login',
+        isValid:view=>['landing','login','register'].includes(view)});
+      window.PagePosition.restore((view,options)=>{
+        if (view !== 'landing') openAuth(view, undefined, options);
+        else {
+          document.getElementById('landing').classList.remove('hidden');
+          document.getElementById('auth').classList.add('hidden');
+        }
+      },'landing');
     }
   </script>
 <script src="/static/js/questionnaire-i18n.js"></script>
-<script src="/static/js/portal-i18n.js?v=20261020-locale-audit"></script>
-<script src="/static/js/auth-i18n.js"></script>
-<script src="/static/js/member3.js?v=20261020-questionnaire-1"></script>
+<script src="/static/js/portal-i18n.js?v=20261021-i18n-audit"></script>
+<script src="/static/js/auth-i18n.js?v=20261021-registration-locations"></script>
+<script src="/static/js/member3.js?v=20261021-registration-locations"></script>
 <script src="/static/js/home-features.js?v=3"></script>
   <script>
     function saveUserWorkspaceProgress(stepKey, stepData) {

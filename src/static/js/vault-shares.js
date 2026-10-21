@@ -6,7 +6,7 @@ async function loadNamedShares() {
   namedShares = r.data.shares || [];
   namedSharesList.innerHTML = namedShares.length ? namedShares.map((s, i) => `
     <div class="rounded-xl border border-slate-200 p-3 space-y-2 text-xs">
-      <b>${esc(s.recipient_name)}</b><p>${esc(s.recipient_email)}</p>
+      <b data-no-translate>${esc(s.recipient_name)}</b><p data-no-translate>${esc(s.recipient_email)}</p>
       <p>${s.share_summary ? 'Summary' : ''}${s.share_summary && s.share_pdf ? ' + ' : ''}${s.share_pdf ? 'Original PDF' : ''} · Expires ${esc(new Date(s.expires_at).toLocaleString())}</p>
       <label class="label">Recipient-only link<input readonly class="input !text-xs" value="${esc(location.origin + s.url)}" onclick="this.select()" aria-label="Recipient-only share link"></label>
       <button onclick="revokeNamedShare(${i})" class="btn btn-danger !text-xs !py-1.5">Revoke access</button>
