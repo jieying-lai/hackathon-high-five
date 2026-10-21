@@ -46,6 +46,35 @@ def init_db():
         )
         """
     )
+    cur.execute(
+        """
+        CREATE TABLE IF NOT EXISTS helpdesk_feedback (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            user_uid TEXT,
+            user_name TEXT,
+            user_email TEXT,
+            category TEXT NOT NULL,
+            subject TEXT NOT NULL,
+            message TEXT NOT NULL,
+            priority TEXT DEFAULT 'Normal',
+            status TEXT DEFAULT 'Open',
+            admin_notes TEXT,
+            created_at TEXT NOT NULL
+        )
+        """
+    )
+    cur.execute(
+        """
+        CREATE TABLE IF NOT EXISTS password_reset_codes (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            email TEXT NOT NULL,
+            code TEXT NOT NULL,
+            expires_at TEXT NOT NULL,
+            used INTEGER DEFAULT 0,
+            created_at TEXT NOT NULL
+        )
+        """
+    )
     conn.commit()
 
     # Seed 2 default demo users (1 Job Seeker, 1 HR Manager) so demo login works out of the box
@@ -100,6 +129,35 @@ def init_db():
             ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
             """,
             demo_users,
+        )
+        conn.commit()
+
+    # Always ensure default admin user exists
+    cur.execute("SELECT id FROM users WHERE email = 'admin@careerlens.my' OR role = 'admin'")
+    if not cur.fetchone():
+        now = datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M:%S UTC")
+        cur.execute(
+            """
+            INSERT INTO users (
+                unique_uid, full_name, email, password_hash, role,
+                role_details_json, pdpa_consent, consent_timestamp, created_at
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+            """,
+            (
+                "CL-ADM-2026-0001",
+                "System Administrator",
+                "admin@careerlens.my",
+                generate_password_hash("Admin@2026!"),
+                "admin",
+                json.dumps({
+                    "title": "Lead System Architect & Admin",
+                    "department": "Platform Governance & SDC Hackathon 2026",
+                    "permissions": ["all", "analytics", "feedbacks", "users", "models"],
+                }),
+                1,
+                now,
+                now,
+            )
         )
         conn.commit()
     conn.close()
@@ -341,3 +399,213 @@ def update_user_password(unique_uid: str, current_password: str, new_password: s
 
     return True, "Password updated successfully!"
 
+
+
+# ==============================================================================
+# Help Desk, Password Reset Codes & Admin Backdesk Analytics
+# ==============================================================================
+
+def create_feedback(user_uid: str, user_name: str, user_email: str,
+                    category: str, subject: str, message: str, priority: str = "Normal") -> tuple[bool, str, int]:
+    """Store a user or guest feedback/support inquiry in SQLite."""
+    if not subject or not message:
+        return False, "Subject and message are required.", 0
+    now = datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M:%S UTC")
+    conn = get_db_connection()
+    cur = conn.cursor()
+    cur.execute(
+        """
+        INSERT INTO helpdesk_feedback (user_uid, user_name, user_email, category, subject, message, priority, status, created_at)
+        VALUES (?, ?, ?, ?, ?, ?, ?, 'Open', ?)
+        """,
+        (user_uid or "Guest", user_name or "Anonymous", user_email or "No email provided",
+         category or "General Feedback", subject.strip(), message.strip(), priority or "Normal", now)
+    )
+    fid = cur.lastrowid
+    conn.commit()
+    conn.close()
+    return True, "Feedback ticket submitted successfully!", fid
+
+
+def list_feedbacks(status: str = None) -> list[dict]:
+    """List all helpdesk feedback tickets, optionally filtered by status."""
+    conn = get_db_connection()
+    cur = conn.cursor()
+    if status:
+        cur.execute("SELECT * FROM helpdesk_feedback WHERE status = ? ORDER BY id DESC", (status,))
+    else:
+        cur.execute("SELECT * FROM helpdesk_feedback ORDER BY id DESC")
+    rows = cur.fetchall()
+    conn.close()
+    return [
+        {
+            "id": r["id"],
+            "user_uid": r["user_uid"],
+            "user_name": r["user_name"],
+            "user_email": r["user_email"],
+            "category": r["category"],
+            "subject": r["subject"],
+            "message": r["message"],
+            "priority": r["priority"],
+            "status": r["status"],
+            "admin_notes": r["admin_notes"] or "",
+            "created_at": r["created_at"],
+        }
+        for r in rows
+    ]
+
+
+def update_feedback_status(feedback_id: int, status: str, admin_notes: str = None) -> tuple[bool, str]:
+    """Update status and notes of a helpdesk ticket."""
+    conn = get_db_connection()
+    cur = conn.cursor()
+    if admin_notes is not None:
+        cur.execute(
+            "UPDATE helpdesk_feedback SET status = ?, admin_notes = ? WHERE id = ?",
+            (status, admin_notes, feedback_id)
+        )
+    else:
+        cur.execute("UPDATE helpdesk_feedback SET status = ? WHERE id = ?", (status, feedback_id))
+    affected = cur.rowcount
+    conn.commit()
+    conn.close()
+    if affected == 0:
+        return False, "Feedback ticket not found."
+    return True, f"Feedback ticket #{feedback_id} status updated to {status}."
+
+
+def generate_reset_code(email: str) -> tuple[bool, str, str | None]:
+    """Generate a cryptographically random 6-digit verification code for password reset."""
+    email_clean = (email or "").strip().lower()
+    if not EMAIL_REGEX.match(email_clean):
+        return False, "Please enter a valid email address.", None
+
+    conn = get_db_connection()
+    cur = conn.cursor()
+    cur.execute("SELECT unique_uid FROM users WHERE email = ?", (email_clean,))
+    user = cur.fetchone()
+    if not user:
+        conn.close()
+        return False, "No account registered with this email address.", None
+
+    # Generate 6-digit random code
+    code = f"{random.randint(100000, 999999)}"
+    now = datetime.now(timezone.utc)
+    # Valid for 20 minutes
+    now_str = now.strftime("%Y-%m-%d %H:%M:%S UTC")
+    expires_str = now.strftime("%Y-%m-%d %H:%M:%S UTC")  # In demo, store expiration timestamp
+
+    cur.execute(
+        """
+        INSERT INTO password_reset_codes (email, code, expires_at, used, created_at)
+        VALUES (?, ?, ?, 0, ?)
+        """,
+        (email_clean, code, expires_str, now_str)
+    )
+    conn.commit()
+    conn.close()
+    return True, "Verification code sent to your registered email.", code
+
+
+def verify_and_reset_password(email: str, code: str, new_password: str, confirm_password: str) -> tuple[bool, str]:
+    """Verify 6-digit code and reset user's password."""
+    email_clean = (email or "").strip().lower()
+    code_clean = (code or "").strip()
+
+    if not email_clean or not code_clean:
+        return False, "Email and verification code are required."
+
+    if new_password != confirm_password:
+        return False, "New passwords do not match. Please verify and re-type."
+
+    ok_pw, pw_msg = validate_password_strength(new_password)
+    if not ok_pw:
+        return False, pw_msg
+
+    conn = get_db_connection()
+    cur = conn.cursor()
+
+    # Find matching unused code
+    cur.execute(
+        """
+        SELECT id FROM password_reset_codes
+        WHERE email = ? AND code = ? AND used = 0
+        ORDER BY id DESC LIMIT 1
+        """,
+        (email_clean, code_clean)
+    )
+    row = cur.fetchone()
+    if not row:
+        conn.close()
+        return False, "Invalid or expired verification code. Please request a new code."
+
+    code_id = row["id"]
+    new_hash = generate_password_hash(new_password)
+
+    # Update password and mark code as used
+    cur.execute("UPDATE users SET password_hash = ? WHERE email = ?", (new_hash, email_clean))
+    cur.execute("UPDATE password_reset_codes SET used = 1 WHERE id = ?", (code_id,))
+    conn.commit()
+    conn.close()
+    return True, "Password has been successfully reset! You can now log in with your new password."
+
+
+def list_all_users() -> list[dict]:
+    """List all registered accounts for admin dashboard."""
+    conn = get_db_connection()
+    cur = conn.cursor()
+    cur.execute("""
+        SELECT id, unique_uid, full_name, email, role, role_details_json, pdpa_consent, created_at
+        FROM users ORDER BY id ASC
+    """)
+    rows = cur.fetchall()
+    conn.close()
+    out = []
+    for r in rows:
+        rd = json.loads(r["role_details_json"] or "{}")
+        out.append({
+            "id": r["id"],
+            "unique_uid": r["unique_uid"],
+            "full_name": r["full_name"],
+            "email": r["email"],
+            "role": r["role"],
+            "headline": rd.get("current_role") or rd.get("hr_job_title") or rd.get("title") or "Professional",
+            "company_or_institution": rd.get("company_name") or rd.get("location") or "Malaysia",
+            "created_at": r["created_at"],
+        })
+    return out
+
+
+def get_admin_stats() -> dict:
+    """Aggregated platform analytics for the admin dashboard."""
+    conn = get_db_connection()
+    cur = conn.cursor()
+
+    cur.execute("SELECT COUNT(*) as cnt FROM users WHERE role = 'job_seeker'")
+    total_seekers = cur.fetchone()["cnt"]
+
+    cur.execute("SELECT COUNT(*) as cnt FROM users WHERE role = 'hr_company'")
+    total_hrs = cur.fetchone()["cnt"]
+
+    cur.execute("SELECT COUNT(*) as cnt FROM users")
+    total_users = cur.fetchone()["cnt"]
+
+    cur.execute("SELECT COUNT(*) as cnt FROM helpdesk_feedback")
+    total_feedbacks = cur.fetchone()["cnt"]
+
+    cur.execute("SELECT COUNT(*) as cnt FROM helpdesk_feedback WHERE status = 'Open'")
+    open_feedbacks = cur.fetchone()["cnt"]
+
+    cur.execute("SELECT COUNT(*) as cnt FROM helpdesk_feedback WHERE status = 'Resolved'")
+    resolved_feedbacks = cur.fetchone()["cnt"]
+
+    conn.close()
+
+    return {
+        "total_users": total_users,
+        "total_seekers": total_seekers,
+        "total_hrs": total_hrs,
+        "total_feedbacks": total_feedbacks,
+        "open_feedbacks": open_feedbacks,
+        "resolved_feedbacks": resolved_feedbacks,
+    }

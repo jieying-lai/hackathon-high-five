@@ -112,20 +112,87 @@
     <header class="portal-desktop-header glass">
       <a href="/" class="portal-brand"><img src="/static/brand/careerlens_logo_icon.svg" alt="" /><span>CareerLens AI<small>Talent Portal</small></span></a>
       <nav id="sideNav" class="desktop-navigation" aria-label="Section navigation"></nav>
-      <div class="portal-account">
+      <div class="portal-account flex items-center gap-2.5">
         <button type="button" class="notification-button" data-notification-button onclick="showTab('notifications')" aria-label="Interview notifications" title="Interview notifications"><span aria-hidden="true">🔔</span><span class="notification-label">Interview notifications</span></button>
         <div data-language-slot="desktop"></div>
-        <button type="button" onclick="openAccountModal()" class="portal-user text-left hover:opacity-90 transition cursor-pointer p-1.5 rounded-2xl hover:bg-white/80 border border-slate-200/90 shadow-xs flex items-center gap-2" title="View & Edit Account Profile">
-          <div id="uAvatar" class="h-9 w-9 rounded-xl bg-gradient-to-br from-indigo-500 to-pink-500 text-white font-bold grid place-items-center shrink-0">U</div>
-          <div class="min-w-0 pr-1">
-            <div class="flex items-center gap-1.5">
-              <span id="uName" data-no-translate class="text-xs font-extrabold truncate">User</span>
-              <span class="text-[9px] font-extrabold px-1.5 py-0.5 rounded-md bg-indigo-50 text-indigo-700 border border-indigo-200 shrink-0">Edit Profile ⚙️</span>
+
+        <!-- Prettier Profile Pill & Dropdown -->
+        <div class="relative" id="navProfileWrap">
+          <button type="button" id="topProfileDropdownBtn" onclick="toggleNavProfileDropdown()" class="portal-user text-left hover:opacity-95 transition cursor-pointer p-1.5 pr-3.5 rounded-2xl hover:bg-white/90 border border-slate-200/90 shadow-xs flex items-center gap-2.5 bg-white/70" title="Account Settings & Profile">
+            <div id="uAvatar" class="h-9 w-9 rounded-xl bg-gradient-to-br from-indigo-500 to-pink-500 text-white font-black text-sm grid place-items-center shrink-0 shadow-xs">U</div>
+            <div class="min-w-0 flex items-center gap-1.5">
+              <span id="uName" data-no-translate class="text-xs font-extrabold truncate text-slate-800">User</span>
+              <span class="text-[10px] text-slate-400 font-bold select-none">▾</span>
             </div>
-            <div id="uUid" data-no-translate class="text-[10px] font-mono text-slate-500 truncate"></div>
+          </button>
+
+          <!-- Prettier Settings & Profile Dropdown -->
+          <div id="navProfileDropdown" class="hidden absolute right-0 top-full mt-2 w-72 bg-white rounded-2xl shadow-2xl border border-slate-200/90 p-2 z-50 divide-y divide-slate-100 text-xs">
+            <!-- Header Preview -->
+            <div class="p-2.5">
+              <div class="flex items-center gap-2.5">
+                <div id="dropAvatar" class="h-10 w-10 rounded-xl bg-gradient-to-br from-indigo-500 to-pink-500 text-white font-black text-sm grid place-items-center shrink-0 shadow-xs">U</div>
+                <div class="min-w-0 flex-1">
+                  <div id="dropName" class="font-extrabold text-slate-900 truncate">User</div>
+                  <div id="dropEmail" class="text-[10px] text-slate-500 truncate font-mono">user@careerlens.my</div>
+                </div>
+              </div>
+              <button type="button" onclick="showTab('profile');closeNavProfileDropdown();" class="mt-2.5 w-full btn btn-primary !py-2 !px-3 !text-xs font-bold flex items-center justify-center gap-1.5 shadow-sm">
+                <span>👤</span><span>View Full Profile Page →</span>
+              </button>
+            </div>
+
+            <!-- Language Setting Selection -->
+            <div class="p-2.5 space-y-1.5">
+              <div class="text-[10px] font-extrabold uppercase tracking-wider text-slate-400">🌐 Language Setting</div>
+              <div class="grid grid-cols-3 gap-1">
+                <button type="button" onclick="setAppLanguage('en')" class="lang-opt-btn px-2 py-1.5 rounded-lg text-center font-bold text-[11px] bg-slate-100 hover:bg-indigo-50 hover:text-indigo-700 transition" data-lang="en">English</button>
+                <button type="button" onclick="setAppLanguage('ms')" class="lang-opt-btn px-2 py-1.5 rounded-lg text-center font-bold text-[11px] bg-slate-100 hover:bg-indigo-50 hover:text-indigo-700 transition" data-lang="ms">BM</button>
+                <button type="button" onclick="setAppLanguage('zh')" class="lang-opt-btn px-2 py-1.5 rounded-lg text-center font-bold text-[11px] bg-slate-100 hover:bg-indigo-50 hover:text-indigo-700 transition" data-lang="zh">中文</button>
+              </div>
+            </div>
+
+            <!-- Notification Settings -->
+            <div class="p-2.5 space-y-2">
+              <div class="text-[10px] font-extrabold uppercase tracking-wider text-slate-400">🔔 Notification Settings</div>
+              <label class="flex items-center justify-between text-[11px] text-slate-700 cursor-pointer">
+                <span>Interview Notifications</span>
+                <input type="checkbox" id="prefNotifInterview" checked onchange="saveNotificationPref('interview', this.checked)" class="rounded text-indigo-600 focus:ring-indigo-500" />
+              </label>
+              <label class="flex items-center justify-between text-[11px] text-slate-700 cursor-pointer">
+                <span>Job Match Alerts</span>
+                <input type="checkbox" id="prefNotifJobs" checked onchange="saveNotificationPref('jobs', this.checked)" class="rounded text-indigo-600 focus:ring-indigo-500" />
+              </label>
+            </div>
+
+            <!-- Profile & Security Menu Items -->
+            <div class="p-1 space-y-0.5">
+              <button type="button" onclick="openAccountModal();setAccountModalTab('profile');closeNavProfileDropdown();" class="w-full text-left px-2.5 py-2 rounded-xl hover:bg-slate-50 flex items-center justify-between text-slate-700 font-bold transition">
+                <span class="flex items-center gap-2"><span>✏️</span><span>Edit Profile Details</span></span>
+                <span class="text-slate-400">›</span>
+              </button>
+              <button type="button" onclick="openAccountModal();setAccountModalTab('security');closeNavProfileDropdown();" class="w-full text-left px-2.5 py-2 rounded-xl hover:bg-slate-50 flex items-center justify-between text-slate-700 font-bold transition">
+                <span class="flex items-center gap-2"><span>🔒</span><span>Security &amp; Password</span></span>
+                <span class="text-slate-400">›</span>
+              </button>
+              <button type="button" onclick="openNavForgotPwModal();closeNavProfileDropdown();" class="w-full text-left px-2.5 py-2 rounded-xl hover:bg-slate-50 flex items-center justify-between text-slate-700 font-bold transition">
+                <span class="flex items-center gap-2"><span>🔑</span><span>Forgot Password? (Code Reset)</span></span>
+                <span class="text-slate-400">›</span>
+              </button>
+              <button type="button" onclick="openHelpDeskModal();closeNavProfileDropdown();" class="w-full text-left px-2.5 py-2 rounded-xl hover:bg-slate-50 flex items-center justify-between text-indigo-700 font-bold transition">
+                <span class="flex items-center gap-2"><span>💬</span><span>Help Desk &amp; Feedback</span></span>
+                <span class="chip chip-indigo !text-[9px]">Admin</span>
+              </button>
+            </div>
+
+            <!-- Sign Out -->
+            <div class="p-1">
+              <button type="button" onclick="signOut()" class="w-full text-left px-2.5 py-2 rounded-xl hover:bg-red-50 text-red-600 font-bold flex items-center gap-2 transition">
+                <span>🚪</span><span>Sign Out</span>
+              </button>
+            </div>
           </div>
-        </button>
-        <button onclick="signOut()" class="btn btn-soft">Sign out</button>
+        </div>
       </div>
     </header>
 
@@ -211,11 +278,15 @@
               </div>
             </div>
 
-            <!-- Profile Overview Details Grid -->
-            <div class="profile-overview grid grid-cols-2 sm:grid-cols-4 gap-3 pt-1">
+            <!-- Profile Overview Details Grid (Comprehensive) -->
+            <div class="profile-overview grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 pt-1">
               <div class="p-3.5 rounded-2xl bg-white/80 border border-slate-200/80 shadow-xs">
                 <div class="text-[10px] font-extrabold text-slate-400 uppercase tracking-wider">Current Role</div>
                 <div id="accCardRole" class="text-xs font-bold text-slate-800 mt-1 truncate">—</div>
+              </div>
+              <div class="p-3.5 rounded-2xl bg-white/80 border border-slate-200/80 shadow-xs">
+                <div class="text-[10px] font-extrabold text-slate-400 uppercase tracking-wider">Gender</div>
+                <div id="accCardGender" class="text-xs font-bold text-slate-800 mt-1 truncate">Prefer not to say</div>
               </div>
               <div class="p-3.5 rounded-2xl bg-white/80 border border-slate-200/80 shadow-xs">
                 <div class="text-[10px] font-extrabold text-slate-400 uppercase tracking-wider">Career Field</div>
@@ -226,8 +297,235 @@
                 <div id="accCardWorkMode" class="text-xs font-bold text-slate-800 mt-1 truncate">—</div>
               </div>
               <div class="p-3.5 rounded-2xl bg-white/80 border border-slate-200/80 shadow-xs">
+                <div class="text-[10px] font-extrabold text-slate-400 uppercase tracking-wider">Contact Phone</div>
+                <div id="accCardPhone" class="text-xs font-bold text-slate-800 mt-1 truncate">+60 12-345 6789</div>
+              </div>
+              <div class="p-3.5 rounded-2xl bg-white/80 border border-slate-200/80 shadow-xs">
                 <div class="text-[10px] font-extrabold text-slate-400 uppercase tracking-wider">Location</div>
                 <div id="accCardLocation" class="text-xs font-bold text-slate-800 mt-1 truncate">—</div>
+              </div>
+            </div>
+
+            <!-- Professional Pitch / Bio Banner -->
+            <div class="p-4 rounded-2xl bg-indigo-50/60 border border-indigo-100 flex items-start gap-3">
+              <span class="text-lg shrink-0">💬</span>
+              <div>
+                <div class="text-[10px] font-extrabold uppercase tracking-wider text-indigo-700">Professional Bio &amp; Aspirations</div>
+                <p id="accCardBio" class="text-xs text-slate-700 mt-0.5 leading-relaxed font-medium">Aspiring professional actively reskilling in digital analytics and sustainable technologies.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Section: Achievements & SDG 8 Career Milestones Showcase -->
+          <div data-outline-label="Achievements & Milestones" class="glass rounded-3xl p-6 sm:p-7 space-y-4 border border-slate-200/80 shadow-xs">
+            <div class="flex flex-wrap items-center justify-between gap-3 border-b border-slate-200/70 pb-3">
+              <div>
+                <div class="text-[11px] font-extrabold uppercase tracking-wider text-emerald-600">Verified Credentials</div>
+                <h3 class="text-lg font-extrabold text-slate-900">🏆 Achievements &amp; SDG 8 Passport Milestones</h3>
+              </div>
+              <span class="chip chip-emerald !text-[11px] font-bold">SDG 8 Champion · Level 3</span>
+            </div>
+
+            <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-3.5">
+              <div class="p-4 rounded-2xl bg-gradient-to-br from-emerald-50 to-teal-50 border border-emerald-200/80 shadow-xs flex items-center gap-3">
+                <div class="h-12 w-12 rounded-xl bg-emerald-600 text-white font-black text-xl grid place-items-center shadow-xs">🌱</div>
+                <div>
+                  <div class="text-[10px] font-black uppercase text-emerald-800">SDG 8 Passport</div>
+                  <div class="text-sm font-extrabold text-slate-900">Decent Work Verified</div>
+                  <div class="text-[10px] text-slate-500">Tier 1 Ethical Readiness</div>
+                </div>
+              </div>
+
+              <div class="p-4 rounded-2xl bg-gradient-to-br from-indigo-50 to-purple-50 border border-indigo-200/80 shadow-xs flex items-center gap-3">
+                <div class="h-12 w-12 rounded-xl bg-indigo-600 text-white font-black text-xl grid place-items-center shadow-xs">🎯</div>
+                <div>
+                  <div class="text-[10px] font-black uppercase text-indigo-800">Skill Readiness</div>
+                  <div class="text-sm font-extrabold text-slate-900">88% Benchmark Match</div>
+                  <div class="text-[10px] text-slate-500">Ahead of 78% of peers</div>
+                </div>
+              </div>
+
+              <div class="p-4 rounded-2xl bg-gradient-to-br from-amber-50 to-orange-50 border border-amber-200/80 shadow-xs flex items-center gap-3">
+                <div class="h-12 w-12 rounded-xl bg-amber-500 text-white font-black text-xl grid place-items-center shadow-xs">★</div>
+                <div>
+                  <div class="text-[10px] font-black uppercase text-amber-800">AI Verified Candidate</div>
+                  <div class="text-sm font-extrabold text-slate-900">Pre-Screened Talent</div>
+                  <div class="text-[10px] text-slate-500">Priority Review by HR</div>
+                </div>
+              </div>
+
+              <div class="p-4 rounded-2xl bg-gradient-to-br from-pink-50 to-rose-50 border border-pink-200/80 shadow-xs flex items-center gap-3">
+                <div class="h-12 w-12 rounded-xl bg-pink-600 text-white font-black text-xl grid place-items-center shadow-xs">🤝</div>
+                <div>
+                  <div class="text-[10px] font-black uppercase text-pink-800">Data Sovereignty</div>
+                  <div class="text-sm font-extrabold text-slate-900">PDPA Compliant</div>
+                  <div class="text-[10px] text-slate-500">100% Consent Controlled</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Section: Enrolled Courses Through CareerLens to Respective Providers -->
+          <div data-outline-label="Enrolled Courses" class="glass rounded-3xl p-6 sm:p-7 space-y-4 border border-slate-200/80 shadow-xs">
+            <div class="flex flex-wrap items-center justify-between gap-3 border-b border-slate-200/70 pb-3">
+              <div>
+                <div class="text-[11px] font-extrabold uppercase tracking-wider text-indigo-600">Learning &amp; Up-skilling</div>
+                <h3 class="text-lg font-extrabold text-slate-900">🎓 Enrolled Courses &amp; Provider Certifications</h3>
+                <p class="text-xs text-slate-500 mt-0.5">Courses and reskilling programs enrolled through CareerLens AI to external providers</p>
+              </div>
+              <button type="button" onclick="showTab('plan')" class="btn btn-primary !py-2 !px-4 !text-xs font-bold">
+                + Explore More Courses
+              </button>
+            </div>
+
+            <div id="enrolledCoursesList" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-3.5">
+              <!-- Course Card 1 -->
+              <div class="p-4 rounded-2xl bg-white border border-slate-200/90 shadow-xs flex flex-col justify-between space-y-3">
+                <div>
+                  <div class="flex items-center justify-between gap-2 mb-1.5">
+                    <span class="chip chip-emerald !text-[9px]">HRD Corp Claimable</span>
+                    <span class="text-[10px] font-bold text-slate-400">40 Hours</span>
+                  </div>
+                  <h4 class="text-xs font-extrabold text-slate-900 leading-snug">AI-Powered Financial Analytics &amp; ESG Reporting</h4>
+                  <div class="text-[11px] text-slate-500 mt-1">Provider: <b>Digital Penang / HRD Corp</b></div>
+                </div>
+                <div class="space-y-2 pt-2 border-t border-slate-100">
+                  <div class="flex items-center justify-between text-[11px]">
+                    <span class="text-slate-500 font-bold">Progress:</span>
+                    <span class="text-emerald-700 font-black">75% Completed</span>
+                  </div>
+                  <div class="w-full h-2 rounded-full bg-slate-100 overflow-hidden">
+                    <div class="h-full bg-emerald-500 rounded-full" style="width: 75%"></div>
+                  </div>
+                  <a href="https://hrdcorp.gov.my/" target="_blank" rel="noopener" class="w-full btn btn-soft !py-1.5 !text-center !text-[11px] font-bold block mt-2">
+                    Open Provider Portal ↗
+                  </a>
+                </div>
+              </div>
+
+              <!-- Course Card 2 -->
+              <div class="p-4 rounded-2xl bg-white border border-slate-200/90 shadow-xs flex flex-col justify-between space-y-3">
+                <div>
+                  <div class="flex items-center justify-between gap-2 mb-1.5">
+                    <span class="chip chip-indigo !text-[9px]">Coursera / MDEC</span>
+                    <span class="text-[10px] font-bold text-slate-400">32 Hours</span>
+                  </div>
+                  <h4 class="text-xs font-extrabold text-slate-900 leading-snug">Data Analytics &amp; BI Visualization Professional Cert</h4>
+                  <div class="text-[11px] text-slate-500 mt-1">Provider: <b>Google / Coursera</b></div>
+                </div>
+                <div class="space-y-2 pt-2 border-t border-slate-100">
+                  <div class="flex items-center justify-between text-[11px]">
+                    <span class="text-slate-500 font-bold">Progress:</span>
+                    <span class="text-indigo-700 font-black">100% Completed</span>
+                  </div>
+                  <div class="w-full h-2 rounded-full bg-slate-100 overflow-hidden">
+                    <div class="h-full bg-indigo-600 rounded-full" style="width: 100%"></div>
+                  </div>
+                  <a href="https://www.coursera.org" target="_blank" rel="noopener" class="w-full btn btn-soft !py-1.5 !text-center !text-[11px] font-bold block mt-2">
+                    View Certificate ↗
+                  </a>
+                </div>
+              </div>
+
+              <!-- Course Card 3 -->
+              <div class="p-4 rounded-2xl bg-white border border-slate-200/90 shadow-xs flex flex-col justify-between space-y-3">
+                <div>
+                  <div class="flex items-center justify-between gap-2 mb-1.5">
+                    <span class="chip chip-teal !text-[9px]">TVET Malaysia</span>
+                    <span class="text-[10px] font-bold text-slate-400">24 Hours</span>
+                  </div>
+                  <h4 class="text-xs font-extrabold text-slate-900 leading-snug">Sustainable Workforce Practices &amp; Green Economy</h4>
+                  <div class="text-[11px] text-slate-500 mt-1">Provider: <b>SDG Academy Malaysia</b></div>
+                </div>
+                <div class="space-y-2 pt-2 border-t border-slate-100">
+                  <div class="flex items-center justify-between text-[11px]">
+                    <span class="text-slate-500 font-bold">Progress:</span>
+                    <span class="text-teal-700 font-black">50% In Progress</span>
+                  </div>
+                  <div class="w-full h-2 rounded-full bg-slate-100 overflow-hidden">
+                    <div class="h-full bg-teal-500 rounded-full" style="width: 50%"></div>
+                  </div>
+                  <a href="https://www.edx.org" target="_blank" rel="noopener" class="w-full btn btn-soft !py-1.5 !text-center !text-[11px] font-bold block mt-2">
+                    Resume Learning ↗
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Section: Comprehensive Skills Portfolio (In Full) -->
+          <div data-outline-label="Full Skills Portfolio" class="glass rounded-3xl p-6 sm:p-7 space-y-4 border border-slate-200/80 shadow-xs">
+            <div class="flex flex-wrap items-center justify-between gap-3 border-b border-slate-200/70 pb-3">
+              <div>
+                <div class="text-[11px] font-extrabold uppercase tracking-wider text-pink-600">Skills Portfolio</div>
+                <h3 class="text-lg font-extrabold text-slate-900">⚡ Comprehensive Skills &amp; Competencies (Full View)</h3>
+                <p class="text-xs text-slate-500 mt-0.5">All detected, verified, and mapped skills without truncation</p>
+              </div>
+              <span id="fullSkillCountBadge" class="chip chip-pink !text-[11px] font-bold">18 Total Skills</span>
+            </div>
+
+            <!-- Skills Categories Grid -->
+            <div class="grid md:grid-cols-2 gap-4">
+              <!-- Technical & Engineering Skills -->
+              <div class="p-4 rounded-2xl bg-white border border-slate-200/80 space-y-2.5">
+                <div class="flex items-center justify-between">
+                  <span class="text-xs font-black text-slate-800 uppercase tracking-wider">💻 Technical &amp; Engineering Skills</span>
+                  <span class="chip chip-indigo !text-[10px]">Verified</span>
+                </div>
+                <div class="flex flex-wrap gap-1.5" id="fullTechSkills">
+                  <span class="chip chip-indigo !text-xs">Python</span>
+                  <span class="chip chip-indigo !text-xs">SQL &amp; Relational DBs</span>
+                  <span class="chip chip-indigo !text-xs">Power BI</span>
+                  <span class="chip chip-indigo !text-xs">Tableau</span>
+                  <span class="chip chip-indigo !text-xs">Financial Modeling</span>
+                  <span class="chip chip-indigo !text-xs">Audit Sampling</span>
+                  <span class="chip chip-indigo !text-xs">SAP ERP</span>
+                  <span class="chip chip-indigo !text-xs">Excel Macros (VBA)</span>
+                </div>
+              </div>
+
+              <!-- Domain & ESG Expertise -->
+              <div class="p-4 rounded-2xl bg-white border border-slate-200/80 space-y-2.5">
+                <div class="flex items-center justify-between">
+                  <span class="text-xs font-black text-slate-800 uppercase tracking-wider">🌱 Domain &amp; Sustainability Skills</span>
+                  <span class="chip chip-emerald !text-[10px]">Aligned</span>
+                </div>
+                <div class="flex flex-wrap gap-1.5" id="fullDomainSkills">
+                  <span class="chip chip-emerald !text-xs">ESG Disclosure Frameworks</span>
+                  <span class="chip chip-emerald !text-xs">Tax Compliance (LHDN)</span>
+                  <span class="chip chip-emerald !text-xs">Risk Assessment</span>
+                  <span class="chip chip-emerald !text-xs">Internal Controls</span>
+                  <span class="chip chip-emerald !text-xs">Carbon Accounting</span>
+                  <span class="chip chip-emerald !text-xs">Governance &amp; Ethics</span>
+                </div>
+              </div>
+
+              <!-- Soft & Human-Centric Skills -->
+              <div class="p-4 rounded-2xl bg-white border border-slate-200/80 space-y-2.5">
+                <div class="flex items-center justify-between">
+                  <span class="text-xs font-black text-slate-800 uppercase tracking-wider">🤝 Human-Centric &amp; Leadership Skills</span>
+                  <span class="chip chip-slate !text-[10px]">Critical</span>
+                </div>
+                <div class="flex flex-wrap gap-1.5" id="fullSoftSkills">
+                  <span class="chip chip-slate !text-xs">Stakeholder Communication</span>
+                  <span class="chip chip-slate !text-xs">Analytical Problem Solving</span>
+                  <span class="chip chip-slate !text-xs">Cross-Functional Collaboration</span>
+                  <span class="chip chip-slate !text-xs">Adaptability to AI Tools</span>
+                  <span class="chip chip-slate !text-xs">Professional Ethics</span>
+                </div>
+              </div>
+
+              <!-- Certifications & Credentials -->
+              <div class="p-4 rounded-2xl bg-white border border-slate-200/80 space-y-2.5">
+                <div class="flex items-center justify-between">
+                  <span class="text-xs font-black text-slate-800 uppercase tracking-wider">📜 Licenses &amp; Certifications</span>
+                  <span class="chip chip-teal !text-[10px]">Active</span>
+                </div>
+                <div class="flex flex-wrap gap-1.5" id="fullCertSkills">
+                  <span class="chip chip-teal !text-xs">ACCA Affiliate / Part-Qualified</span>
+                  <span class="chip chip-teal !text-xs">Google Data Analytics Professional</span>
+                  <span class="chip chip-teal !text-xs">HRD Corp Certified Trainee</span>
+                </div>
               </div>
             </div>
           </div>
@@ -958,7 +1256,16 @@
               </div>
             </div>
 
-            <div class="grid sm:grid-cols-3 gap-3">
+            <div class="grid sm:grid-cols-4 gap-3">
+              <div>
+                <label class="label !text-xs !mb-1 font-semibold text-slate-700" for="accGender">Gender</label>
+                <select id="accGender" class="input !py-2 !text-xs">
+                  <option value="Prefer not to say">Prefer not to say</option>
+                  <option value="Female">Female</option>
+                  <option value="Male">Male</option>
+                  <option value="Non-Binary">Non-Binary</option>
+                </select>
+              </div>
               <div>
                 <label class="label !text-xs !mb-1 font-semibold text-slate-700" for="accIndustry">Career Industry</label>
                 <select id="accIndustry" class="input !py-2 !text-xs">
@@ -1068,6 +1375,14 @@
               </div>
             </div>
 
+            <div class="p-3 bg-amber-50 rounded-2xl border border-amber-200 flex flex-wrap items-center justify-between gap-2">
+              <div>
+                <div class="text-xs font-extrabold text-amber-900">Forgot your password?</div>
+                <div class="text-[11px] text-amber-700">Generate a random 6-digit verification code to reset it immediately.</div>
+              </div>
+              <button type="button" onclick="closeAccountModal();openNavForgotPwModal();" class="btn btn-primary !py-1.5 !px-3 !text-xs font-bold shrink-0">Reset via Code →</button>
+            </div>
+
             <div class="flex items-center justify-end gap-2 pt-3 border-t border-slate-100">
               <button type="button" onclick="closeAccountModal()" class="btn btn-soft !py-2 !px-4 !text-xs font-semibold">Cancel</button>
               <button type="submit" id="btnSaveAccountPassword" class="btn btn-primary !py-2 !px-5 !text-xs font-bold !bg-[#0A66C2] hover:!bg-[#004182]">Update Password</button>
@@ -1149,10 +1464,24 @@
       if (window.accCardUid) accCardUid.textContent = user.unique_uid || '';
       if (window.accCardEmail) accCardEmail.textContent = user.email || '';
       if (window.accCardJoined) accCardJoined.textContent = (user.created_at || '2026').replace(' UTC', '');
-      if (window.accCardRole) accCardRole.textContent = rd.current_role || (cvRecord && cvRecord.structured_cv ? cvRecord.structured_cv.current_role : '') || 'Professional';
+      if (window.accCardRole) accCardRole.textContent = rd.current_role || (cvRecord && cvRecord.structured_cv ? cvRecord.structured_cv.current_role : '') || 'Junior Financial Auditor';
+      if (window.accCardGender) accCardGender.textContent = rd.gender || 'Prefer not to say';
       if (window.accCardIndustry) accCardIndustry.textContent = rd.industry || 'Finance & Accounting';
       if (window.accCardWorkMode) accCardWorkMode.textContent = rd.preferred_work_mode || 'Hybrid';
+      if (window.accCardPhone) accCardPhone.textContent = rd.phone ? '+60 ' + rd.phone : '+60 12-345 6789';
       if (window.accCardLocation) accCardLocation.textContent = rd.location || 'Kuala Lumpur';
+      if (window.accCardBio && rd.bio) accCardBio.textContent = rd.bio;
+
+      // Update Nav Dropdown Info
+      if (window.dropName) dropName.textContent = user.full_name || 'User';
+      if (window.dropEmail) dropEmail.textContent = user.email || '';
+      if (window.dropAvatar) {
+        if (rd.avatar_url) {
+          dropAvatar.innerHTML = '<img src="' + esc(rd.avatar_url) + '" class="h-full w-full object-cover rounded-xl" alt="Avatar" />';
+        } else {
+          dropAvatar.textContent = (user.full_name || 'U').charAt(0).toUpperCase();
+        }
+      }
     }
 
         /* ---------- Account Profile View & Edit Modal (LinkedIn-Inspired) ---------- */
@@ -1309,6 +1638,7 @@
       accCurrentRole.value = initialRole;
       if (window.modalTopRoleSubtitle) modalTopRoleSubtitle.textContent = initialRole;
       accPhone.value = rd.phone || '';
+      if (window.accGender) matchSelectSafely(accGender, rd.gender, 'Prefer not to say');
       matchSelectSafely(accIndustry, rd.industry, 'Finance & Accounting');
       matchSelectSafely(accSeniority, rd.seniority_level, 'Entry-Level (1-2 yrs)');
       matchSelectSafely(accEducation, rd.education_level, "Bachelor's Degree");
@@ -1350,6 +1680,7 @@
         role_details: {
           current_role: accCurrentRole.value.trim(),
           phone: accPhone.value.trim(),
+          gender: accGender ? accGender.value : 'Prefer not to say',
           industry: accIndustry.value,
           seniority_level: accSeniority ? accSeniority.value : '',
           preferred_work_mode: accWorkMode.value,
@@ -2226,14 +2557,11 @@
       const mapEl = document.getElementById('companyMap');
       if (!mapEl || typeof window.L === 'undefined') return null;
       if (!leafletMap) {
-        leafletRenderer = L.canvas({ padding: 0.5 });
         leafletMap = L.map(mapEl, {
           center: [userLocation.lat || 3.1579, userLocation.lng || 101.7116],
           zoom: radiusZoomLevel(radiusKm),
           zoomControl: true,
           attributionControl: false,
-          preferCanvas: true,
-          renderer: leafletRenderer,
         });
         L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}', {
           maxZoom: 19,
@@ -2260,14 +2588,14 @@
         if (userMarker) map.removeLayer(userMarker);
         if (radiusCircle) map.removeLayer(radiusCircle);
 
-        // Draw dynamic radius circle around user's location
+        // Draw crisp dynamic radius circle around user's location
         radiusCircle = L.circle([uLat, uLng], {
           radius: radiusKm * 1000,
           color: '#4f46e5',
-          weight: 2,
+          weight: 2.5,
           dashArray: '6, 6',
           fillColor: '#6366f1',
-          fillOpacity: 0.08,
+          fillOpacity: 0.12,
           interactive: false,
         }).addTo(map);
 
@@ -2320,7 +2648,6 @@
           const color = isMatched ? '#10b981' : '#6366f1';
           const radiusPx = Math.min(10, 5 + Math.log2(c.jobs + 1));
           const marker = L.circleMarker([c.lat, c.lng], {
-            renderer: leafletRenderer,
             radius: radiusPx,
             fillColor: color,
             color: '#ffffff',
@@ -2947,5 +3274,103 @@ async function submit3AiVerificationAnswers() {
 }
 </script>
 <script src="/static/js/page-outline.js?v=20261021-outline-vivid"></script>
+
+  <!-- Help Desk & Feedback Modal -->
+  <div id="helpDeskModal" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-4 hidden">
+    <div class="bg-white rounded-3xl p-6 sm:p-7 max-w-lg w-full space-y-4 border border-slate-200 shadow-2xl">
+      <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+        <div>
+          <h3 class="text-base font-extrabold text-slate-900">CareerLens Help Desk</h3>
+          <p class="text-xs text-slate-500">Submit feedback, report an issue, or contact platform admin</p>
+        </div>
+        <button onclick="closeHelpDeskModal()" class="text-slate-400 hover:text-slate-600 text-lg font-bold">✕</button>
+      </div>
+
+      <form onsubmit="event.preventDefault();submitHelpDeskFeedback();" class="space-y-3.5 text-xs">
+        <div>
+          <label class="block font-bold text-slate-700 mb-1">Inquiry Category *</label>
+          <select id="hdCategory" class="input !py-2 !text-xs font-bold">
+            <option value="General Feedback">General Feedback &amp; Suggestions</option>
+            <option value="Job Matching Inquiry">Job Matching &amp; Map Issue</option>
+            <option value="Course &amp; Reskilling">Course Enrollment &amp; Reskilling</option>
+            <option value="Bug Report">Technical Bug Report</option>
+            <option value="Account &amp; Security">Account &amp; Security Support</option>
+          </select>
+        </div>
+        <div>
+          <label class="block font-bold text-slate-700 mb-1">Subject / Summary *</label>
+          <input type="text" id="hdSubject" required class="input !py-2 !text-xs" placeholder="e.g. Melaka radius map dot inquiry" />
+        </div>
+        <div>
+          <label class="block font-bold text-slate-700 mb-1">Detailed Message *</label>
+          <textarea id="hdMessage" required rows="4" class="input !py-2 !text-xs leading-relaxed" placeholder="Please describe your question or feedback in detail..."></textarea>
+        </div>
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block font-bold text-slate-700 mb-1">Priority</label>
+            <select id="hdPriority" class="input !py-2 !text-xs">
+              <option value="Normal">Normal</option>
+              <option value="High">High Priority</option>
+              <option value="Urgent">Urgent</option>
+            </select>
+          </div>
+          <div>
+            <label class="block font-bold text-slate-700 mb-1">Company Support Email</label>
+            <div class="p-2 rounded-xl bg-indigo-50 border border-indigo-100 font-mono text-[11px] text-indigo-700 font-bold truncate">support@careerlens.my</div>
+          </div>
+        </div>
+
+        <div class="flex items-center justify-end gap-2 pt-3 border-t border-slate-100">
+          <button type="button" onclick="closeHelpDeskModal()" class="btn btn-soft !py-2 !px-4 !text-xs font-semibold">Cancel</button>
+          <button type="submit" id="btnSubmitHelpDesk" class="btn btn-primary !py-2 !px-5 !text-xs font-bold">Submit Feedback →</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Forgot Password Verification Code Modal (From Nav / Settings) -->
+  <div id="navForgotPwModal" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-4 hidden">
+    <div class="bg-white rounded-3xl p-6 sm:p-7 max-w-md w-full space-y-4 border border-slate-200 shadow-2xl">
+      <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+        <div>
+          <h3 class="text-base font-extrabold text-slate-900">Reset Account Password</h3>
+          <p class="text-xs text-slate-500">Verify your identity with a secure 6-digit code</p>
+        </div>
+        <button onclick="closeNavForgotPwModal()" class="text-slate-400 hover:text-slate-600 text-lg font-bold">✕</button>
+      </div>
+
+      <!-- Step 1: Request Code -->
+      <div id="navFpStep1" class="space-y-3 text-xs">
+        <div>
+          <label class="block font-bold text-slate-700 mb-1">Account Email Address</label>
+          <input type="email" id="navFpEmail" class="input !py-2 !text-xs" placeholder="name@domain.com" />
+        </div>
+        <button type="button" id="navFpBtnReq" onclick="requestNavPasswordCode()" class="btn btn-primary w-full !py-2.5 !text-xs font-bold">
+          Send Verification Code →
+        </button>
+      </div>
+
+      <!-- Step 2: Enter Code & New Password -->
+      <div id="navFpStep2" class="space-y-3 text-xs hidden">
+        <div id="navFpDemoCodeBox" class="p-3 rounded-xl bg-amber-50 border border-amber-200 text-amber-900 text-xs font-mono font-bold text-center"></div>
+        <div>
+          <label class="block font-bold text-slate-700 mb-1">6-Digit Verification Code</label>
+          <input type="text" id="navFpCode" maxlength="6" class="input !py-2 !text-center !text-sm !font-mono !font-extrabold tracking-widest" placeholder="123456" />
+        </div>
+        <div>
+          <label class="block font-bold text-slate-700 mb-1">New Password (min 8 chars, A-Z, 0-9, symbol)</label>
+          <input type="password" id="navFpNewPw" class="input !py-2 !text-xs" placeholder="New strong password" />
+        </div>
+        <div>
+          <label class="block font-bold text-slate-700 mb-1">Confirm New Password</label>
+          <input type="password" id="navFpConfirmPw" class="input !py-2 !text-xs" placeholder="Re-type new password" />
+        </div>
+        <button type="button" id="navFpBtnReset" onclick="submitNavResetPassword()" class="btn btn-primary w-full !py-2.5 !text-xs font-bold">
+          Confirm Password Reset →
+        </button>
+      </div>
+    </div>
+  </div>
+
 </body>
 </html>
