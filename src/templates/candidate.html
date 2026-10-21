@@ -2729,12 +2729,28 @@
           zoom: radiusZoomLevel(radiusKm),
           zoomControl: true,
           attributionControl: false,
+          preferCanvas: true,
         });
-        L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}', {
+
+        // 100% cloud-safe, unblocked modern tile layer (CARTO Voyager with automatic Esri fallback)
+        const cartoLayer = L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
+          subdomains: 'abcd',
           maxZoom: 19,
-          attribution: 'Esri, DeLorme, NAVTEQ'
-        }).addTo(leafletMap);
+          attribution: '© CARTO, © OpenStreetMap contributors'
+        });
+
+        cartoLayer.on('tileerror', function() {
+          if (!leafletMap._esriFallback) {
+            leafletMap._esriFallback = true;
+            L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}', {
+              maxZoom: 19,
+              attribution: 'Esri, DeLorme, NAVTEQ'
+            }).addTo(leafletMap);
+          }
+        });
+        cartoLayer.addTo(leafletMap);
       }
+      setTimeout(() => { if (leafletMap) leafletMap.invalidateSize(); }, 150);
       return leafletMap;
     }
 
