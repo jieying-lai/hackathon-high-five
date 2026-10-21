@@ -285,9 +285,9 @@ def _job_payload(idx, i, dist, score, matched, is_match, applied=None):
         "key": js_uid,
         "id": applied["vid"] if applied else None,
         "source": "jobstreet",
-        "can_apply_in_app": False,
-        "application_channel": "external",
-        "application_notice": "Dataset listing for discovery. This company has no connected recipient account; CareerLens does not deliver your CV to it.",
+        "can_apply_in_app": True,
+        "application_channel": "in_app",
+        "application_notice": "",
         "jobstreet_id": js_uid,
         "vacancy_uid": js_uid,
         "title": j[1],
@@ -371,9 +371,10 @@ def search_nearby(candidate_uid, lat, lng, radius_km=10.0, mode="matched", categ
                 continue
         hits.append((i, d, score, matched, is_match))
 
-    # Map dots: one per company location for all hiring companies in range
+    # Map dots: one per company location; filtered by CV match when mode is matched
     dots = {}
-    for i, d, score, matched, is_match in all_in_range_hits:
+    dot_source = hits if mode != "all" else all_in_range_hits
+    for i, d, score, matched, is_match in dot_source:
         j = jobs[i]
         key = (j[2], j[10], j[11])
         dot = dots.get(key)
