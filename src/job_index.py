@@ -341,6 +341,7 @@ def search_nearby(candidate_uid, lat, lng, radius_km=10.0, mode="matched", categ
     dlng = radius_km / (111.0 * max(0.2, math.cos(math.radians(lat))))
     jobs = idx["jobs"]
     hits = []
+    all_in_range_hits = []
     total_in_range = matched_in_range = 0
     cat_counts = {}
 
@@ -356,6 +357,8 @@ def search_nearby(candidate_uid, lat, lng, radius_km=10.0, mode="matched", categ
         if is_match:
             matched_in_range += 1
         category_name = idx["categories"][j[4]]
+        if not cat or category_name == cat:
+            all_in_range_hits.append((i, d, score, matched, is_match))
         if mode != "all" and not is_match and f"JS-{j[0]}" not in applied:
             continue
         cat_counts[category_name] = cat_counts.get(category_name, 0) + 1
@@ -368,9 +371,9 @@ def search_nearby(candidate_uid, lat, lng, radius_km=10.0, mode="matched", categ
                 continue
         hits.append((i, d, score, matched, is_match))
 
-    # Map dots: one per company location
+    # Map dots: one per company location for all hiring companies in range
     dots = {}
-    for i, d, score, matched, is_match in hits:
+    for i, d, score, matched, is_match in all_in_range_hits:
         j = jobs[i]
         key = (j[2], j[10], j[11])
         dot = dots.get(key)
@@ -383,7 +386,7 @@ def search_nearby(candidate_uid, lat, lng, radius_km=10.0, mode="matched", categ
         dot["jobs"] += 1
         dot["matched"] += 1 if is_match else 0
         dot["best_score"] = max(dot["best_score"], score)
-        if len(dot["roles"]) < 5:
+        if len(dot["roles"]) < 5 and j[1] not in dot["roles"]:
             dot["roles"].append(j[1])
 
     # Employer-portal vacancies (posted directly by HR users) are merged in too
@@ -392,6 +395,24 @@ def search_nearby(candidate_uid, lat, lng, radius_km=10.0, mode="matched", categ
         vd = haversine_km(lat, lng, v.get("lat", lat), v.get("lng", lng))
         if vd > radius_km and not (v.get("application") or {}).get("applied"):
             continue
+
+        # Add employer vacancy map dot in range
+        if not cat or v.get("company_category") == cat or v.get("department") == cat:
+            key = ("emp", v.get("company_name"), v.get("lat"), v.get("lng"))
+            dot = dots.get(key)
+            if not dot:
+                dot = dots[key] = {
+                    "id": f"e_{v['id']}", "name": v.get("company_name") or "Employer", "lat": v.get("lat"),
+                    "lng": v.get("lng"), "distance_km": round(vd, 1), "location": v.get("location") or "",
+                    "category": v.get("company_category") or v.get("department") or "", "jobs": 0, "matched": 0,
+                    "best_score": 0, "roles": [], "verified_employer": True,
+                }
+            dot["jobs"] += 1
+            dot["matched"] += 1 if v.get("is_relevant_to_cv") else 0
+            dot["best_score"] = max(dot["best_score"], v.get("match_score") or 0)
+            if len(dot["roles"]) < 5 and v["title"] not in dot["roles"]:
+                dot["roles"].append(v["title"])
+
         if mode != "all" and not v.get("is_relevant_to_cv") and not (v.get("application") or {}).get("applied"):
             continue
         if cat and v.get("company_category") != cat and v.get("department") != cat:
@@ -400,20 +421,6 @@ def search_nearby(candidate_uid, lat, lng, radius_km=10.0, mode="matched", categ
             continue
         v = {**v, "distance_km": round(vd, 1), "source": "employer", "key": f"V-{v['id']}"}
         emp_out.append(v)
-        key = ("emp", v.get("company_name"), v.get("lat"), v.get("lng"))
-        dot = dots.get(key)
-        if not dot:
-            dot = dots[key] = {
-                "id": f"e_{v['id']}", "name": v.get("company_name") or "Employer", "lat": v.get("lat"),
-                "lng": v.get("lng"), "distance_km": round(vd, 1), "location": v.get("location") or "",
-                "category": v.get("company_category") or v.get("department") or "", "jobs": 0, "matched": 0,
-                "best_score": 0, "roles": [], "verified_employer": True,
-            }
-        dot["jobs"] += 1
-        dot["matched"] += 1 if v.get("is_relevant_to_cv") else 0
-        dot["best_score"] = max(dot["best_score"], v.get("match_score") or 0)
-        if len(dot["roles"]) < 5:
-            dot["roles"].append(v["title"])
 
     if sort_by == "distance":
         dot_list = sorted(dots.values(), key=lambda x: (x["distance_km"], -x["best_score"], -x["matched"]))

@@ -103,6 +103,22 @@ async function signOut() {
     const msg = lumiHistory[msgIdx];
     const act = msg && msg.actions && msg.actions[actIdx];
     if (!act) return;
+    if (act.action === 'login') {
+      if (typeof openAuth === 'function') openAuth('login');
+      else window.location.href = '/#auth';
+      return;
+    } else if (act.action === 'register') {
+      if (typeof openAuth === 'function') openAuth('register');
+      else window.location.href = '/#auth';
+      return;
+    } else if (act.action === 'hr_demo') {
+      if (typeof quickLogin === 'function') quickLogin('hr_company');
+      else window.location.href = '/#auth';
+      return;
+    } else if (act.action === 'support') {
+      window.location.href = 'mailto:support@careerlens.my?subject=CareerLens%20AI%20Support%20Inquiry';
+      return;
+    }
     if (act.tab && typeof window.showTab === 'function') {
       window.showTab(act.tab).then(() => {
         if (act.lat && act.lng && typeof window.applyLumiMapJump === 'function') {
@@ -252,6 +268,11 @@ async function signOut() {
           <input id="lumiInput" type="text" class="input !py-2.5 !text-xs flex-1" placeholder="Ask about nearby roles, career paths, skills, or courses..." maxlength="280" />
           <button type="submit" class="btn btn-primary !py-2.5 !px-4 !text-xs shrink-0">Send</button>
         </form>
+
+        <!-- Lumi Subtle Small Footer -->
+        <div class="px-3.5 py-1.5 bg-slate-50 border-t border-slate-200/60 text-center text-[10px] text-slate-400 font-medium">
+          CareerLens AI © 2026 · Need help? Contact <a href="mailto:support@careerlens.my" class="text-indigo-600 font-bold hover:underline">support@careerlens.my</a> · Powered by Lumi AI
+        </div>
       </aside>
     `;
     document.body.appendChild(wrap);
@@ -260,13 +281,22 @@ async function signOut() {
       ? "**Welcome! I am Lumi, your Talent & Workforce Advisor.**\nHow may I assist you with **candidate screening**, **submitted applications**, or **team skill readiness** today?"
       : lumiPortal === 'job_seeker'
       ? "**Welcome! I am Lumi, your Career Advisor.**\nI can help you explore **nearby job opportunities**, **future role matches**, **reskilling pathways**, or review your **CV profile**."
-      : "**Welcome! I am Lumi, your Career Advisor.**\nAsk me about **career pathways, nearby job matching, skill development, or candidate screening**.";
+      : "**Welcome to CareerLens AI! I am Lumi, your Intelligent Career & Workforce Advisor.**\n\nTo unlock your personalised **AI job matching**, **CV vault analysis**, **reskilling pathways**, and **interview tracking**, please sign in to your account.\n\n**Ways to Sign In / Access the Platform:**\n• **👤 Job Seeker / Talent:** Log in with your email or try demo Aisha Rahman to explore 69k+ nearby roles and build your SDG Passport.\n• **🏢 HR / Employer:** Log in or try demo Daniel Tan to post vacancies and screen applicants ethically.\n• **🔐 Platform Admin:** Access system statistics and inquiries via Backdesk Login.\n• **Don't have an account?** Click **Register** on the top navigation to create a new profile in seconds!\n\nFacing any problems or have questions? Email our company support team at **support@careerlens.my**.";
+
+    const defaultActions = lumiPortal === 'guest'
+      ? [
+          { label: '🔑 Sign In Now', action: 'login' },
+          { label: '📝 Create Account', action: 'register' },
+          { label: '🏢 Employer Demo', action: 'hr_demo' },
+          { label: '📧 Contact Support', action: 'support' },
+        ]
+      : lumiQuickPrompts.slice(0, 2);
 
     lumiHistory = [{
       role: 'bot',
       text: welcomeText,
       guardrail: false,
-      actions: lumiQuickPrompts.slice(0, 2),
+      actions: defaultActions,
     }];
     renderQuickPrompts();
     renderLumiMessages();
