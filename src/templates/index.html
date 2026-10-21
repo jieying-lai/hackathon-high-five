@@ -37,150 +37,111 @@
   </header>
 
   <main id="landing" class="max-w-6xl mx-auto px-4 sm:px-6 py-10 space-y-12">
-    <section id="home-intro" class="glass rounded-[2.5rem] p-6 sm:p-10 lg:p-12 fade-in border border-indigo-100/80 shadow-xl overflow-hidden relative">
-      <!-- Background subtle gradient flare -->
-      <div class="absolute -top-24 -left-24 w-96 h-96 bg-indigo-500/10 rounded-full blur-3xl pointer-events-none"></div>
-      <div class="absolute -bottom-24 -right-24 w-96 h-96 bg-pink-500/10 rounded-full blur-3xl pointer-events-none"></div>
+        <section id="home-intro" class="glass rounded-[2rem] p-8 sm:p-12 lg:p-14 fade-in border border-slate-200/80 shadow-xl overflow-hidden relative">
+      <!-- Subtle ambient blur -->
+      <div class="absolute -top-32 -left-32 w-80 h-80 bg-indigo-500/10 rounded-full blur-3xl pointer-events-none"></div>
+      <div class="absolute -bottom-32 -right-32 w-80 h-80 bg-teal-500/10 rounded-full blur-3xl pointer-events-none"></div>
 
-      <div class="grid lg:grid-cols-12 gap-8 lg:gap-12 items-center relative z-10">
+      <div class="grid lg:grid-cols-12 gap-10 lg:gap-14 items-center relative z-10">
         
-        <!-- Left: Hero Headline, CTAs, and Enhanced Stat Cards -->
+        <!-- Left: Hero Headline, CTAs, and Clean Minimalist Metrics -->
         <div class="lg:col-span-7 space-y-6">
-          <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-indigo-50 border border-indigo-200/80 text-indigo-700 text-xs font-black shadow-xs">
-            <span class="inline-block w-2 h-2 rounded-full bg-indigo-600 animate-pulse"></span>
-            <span>✨ AI Workforce Navigation Platform</span>
+          <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-indigo-50/90 border border-indigo-200/70 text-indigo-700 text-xs font-bold tracking-wide shadow-xs">
+            <span>✨</span>
+            <span>AI Workforce Navigation &amp; Reskilling Platform</span>
           </div>
 
-          <h1 class="text-3xl sm:text-5xl font-black tracking-tight leading-[1.15] text-slate-900">
-            Find your place in the <span class="bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-500 bg-clip-text text-transparent">AI era</span>
+          <h1 class="text-3xl sm:text-5xl lg:text-[3.25rem] font-extrabold tracking-tight leading-[1.15] text-slate-900">
+            Find your place in the <span class="bg-gradient-to-r from-indigo-600 to-teal-600 bg-clip-text text-transparent">AI era</span>
           </h1>
 
           <p class="text-slate-600 text-sm sm:text-base leading-relaxed max-w-xl">
-            Match today's skills to tomorrow's roles with transparent scores, verified courses and a clear reskilling path tailored for Malaysia's changing workforce.
+            Match today's skills to tomorrow's roles, with transparent scores, verified courses and a clear path.
           </p>
 
-          <div class="flex flex-wrap items-center gap-3 pt-1">
-            <button onclick="openAuth('register')" class="btn btn-primary text-sm font-bold px-6 py-3.5 shadow-lg shadow-indigo-600/20 hover:shadow-indigo-600/30 hover:-translate-y-0.5 transition flex items-center gap-2">
-              <span>🚀 Get Started Free</span>
-              <span>→</span>
+          <div class="flex flex-wrap items-center gap-3.5 pt-1">
+            <button onclick="openAuth('register')" class="btn btn-primary !text-sm !font-bold !px-7 !py-3.5 shadow-md shadow-indigo-600/20 hover:shadow-indigo-600/30 transition">
+              Get Started →
             </button>
-            <button onclick="openAuth('login')" class="btn btn-soft text-sm font-bold px-6 py-3.5 border border-slate-300 hover:bg-slate-100 transition">
+            <button onclick="openAuth('login')" class="btn btn-soft !text-sm !font-bold !px-7 !py-3.5 border border-slate-300 hover:bg-slate-100 transition">
               Sign In
             </button>
-            <span class="text-xs text-slate-400 font-semibold px-2 py-1">· No Credit Card Required</span>
           </div>
 
-          <!-- Enhanced Stat Cards (replacing plain text columns) -->
-          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3.5 pt-4 border-t border-slate-200/80">
-            <!-- Stat 1 -->
-            <div class="p-3.5 rounded-2xl bg-white/80 border border-indigo-100 shadow-xs hover:border-indigo-300 transition group">
-              <div class="flex items-center justify-between">
-                <span class="text-[10px] font-black uppercase tracking-wider text-indigo-600">Adoption Gap</span>
-                <span class="text-sm">⚡</span>
-              </div>
-              <div class="text-xl font-black text-indigo-700 mt-1">56% <span class="text-xs text-slate-400 font-normal">/</span> 26%</div>
-              <div class="text-[11px] font-bold text-slate-600 mt-0.5 leading-snug">use AI vs trained in MY</div>
-              <div class="w-full bg-slate-100 h-1.5 rounded-full mt-2 overflow-hidden flex">
-                <div class="bg-indigo-600 h-full" style="width: 56%" title="56% Use AI"></div>
-                <div class="bg-indigo-300 h-full" style="width: 26%" title="26% Trained"></div>
-              </div>
+          <!-- Clean Professional Metrics (Minimalist, No Clutter) -->
+          <div class="grid grid-cols-3 gap-4 pt-6 border-t border-slate-200/80">
+            <div>
+              <div class="text-2xl sm:text-3xl font-black text-indigo-700 tracking-tight">56% <span class="text-xs sm:text-sm font-medium text-slate-400">/ 26%</span></div>
+              <div class="text-xs text-slate-500 font-medium mt-1">use AI vs trained (MY)</div>
             </div>
-
-            <!-- Stat 2 -->
-            <div class="p-3.5 rounded-2xl bg-white/80 border border-pink-100 shadow-xs hover:border-pink-300 transition group">
-              <div class="flex items-center justify-between">
-                <span class="text-[10px] font-black uppercase tracking-wider text-pink-600">Reskill Scope</span>
-                <span class="text-sm">👥</span>
-              </div>
-              <div class="text-xl font-black text-pink-600 mt-1">600k+</div>
-              <div class="text-[11px] font-bold text-slate-600 mt-0.5 leading-snug">workers to reskill in MY</div>
-              <div class="text-[10px] text-pink-600/80 font-semibold mt-1.5 flex items-center gap-1">
-                <span>↑ High National Priority</span>
-              </div>
+            <div>
+              <div class="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">600k+</div>
+              <div class="text-xs text-slate-500 font-medium mt-1">workers to reskill</div>
             </div>
-
-            <!-- Stat 3 -->
-            <div class="p-3.5 rounded-2xl bg-white/80 border border-teal-100 shadow-xs hover:border-teal-300 transition group">
-              <div class="flex items-center justify-between">
-                <span class="text-[10px] font-black uppercase tracking-wider text-teal-700">UN Goals</span>
-                <span class="text-sm">🌱</span>
-              </div>
-              <div class="text-xl font-black text-teal-700 mt-1">SDG 4 · 8</div>
-              <div class="text-[11px] font-bold text-slate-600 mt-0.5 leading-snug">Quality Education &amp; Work</div>
-              <div class="text-[10px] text-teal-700/80 font-semibold mt-1.5 flex items-center gap-1">
-                <span>✓ Verified Impact Metrics</span>
-              </div>
+            <div>
+              <div class="text-2xl sm:text-3xl font-black text-teal-700 tracking-tight">SDG 4 · 8</div>
+              <div class="text-xs text-slate-500 font-medium mt-1">impact alignment</div>
             </div>
           </div>
         </div>
 
-        <!-- Right: Modern Live AI Matcher Preview Card (Not just a logo!) -->
+        <!-- Right: Clean, Professional Product Preview Card (Neutral Platform Overview, No Mock User Profile) -->
         <div class="lg:col-span-5 flex justify-center">
-          <div class="w-full max-w-md bg-white rounded-3xl p-5 sm:p-6 border border-indigo-200/90 shadow-2xl space-y-4 relative">
+          <div class="w-full max-w-md bg-white rounded-3xl p-6 border border-slate-200/90 shadow-xl space-y-4">
+            
             <!-- Card Header -->
-            <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+            <div class="flex items-center justify-between pb-3 border-b border-slate-100">
               <div class="flex items-center gap-2.5">
                 <img src="/static/brand/careerlens_logo_icon.svg" alt="CareerLens" class="w-8 h-8 rounded-xl shadow-xs" />
                 <div>
-                  <div class="text-xs font-black text-slate-900">CareerLens AI Radar</div>
-                  <div class="text-[10px] text-slate-400 font-mono">Live Talent Match Preview</div>
+                  <h3 class="text-xs font-extrabold text-slate-900">CareerLens AI Radar</h3>
+                  <p class="text-[10px] text-slate-400 font-medium">Workforce Mobility &amp; Matching Engine</p>
                 </div>
               </div>
-              <span class="inline-flex items-center gap-1 text-[10px] font-extrabold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200">
-                <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-ping"></span> Live Match
-              </span>
+              <span class="chip chip-emerald !text-[10px] font-bold">● Active Engine</span>
             </div>
 
-            <!-- Profile Summary Preview -->
-            <div class="flex items-center gap-3 p-3 rounded-2xl bg-gradient-to-r from-slate-50 to-indigo-50/50 border border-slate-200/60">
-              <div class="h-12 w-12 rounded-2xl bg-gradient-to-br from-indigo-500 to-pink-500 text-white font-black text-lg grid place-items-center shadow-xs shrink-0">
-                A
-              </div>
-              <div class="min-w-0 flex-1">
-                <div class="flex items-center justify-between">
-                  <h4 class="text-xs font-extrabold text-slate-900 truncate">Aisha Rahman</h4>
-                  <span class="chip chip-indigo !text-[10px]">KL, Malaysia</span>
+            <!-- 3 Clean Feature Capability Rows -->
+            <div class="space-y-2.5 text-xs">
+              <div class="p-3 rounded-2xl bg-slate-50/80 border border-slate-200/70 flex items-start gap-3 hover:bg-indigo-50/50 transition">
+                <div class="h-8 w-8 rounded-xl bg-indigo-100 text-indigo-700 grid place-items-center font-bold text-sm shrink-0">
+                  📄
                 </div>
-                <div class="text-[11px] text-slate-500 font-medium truncate mt-0.5">Junior Financial Auditor → AI ESG Specialist</div>
+                <div class="min-w-0">
+                  <div class="font-extrabold text-slate-900">Skill Extraction &amp; Verification</div>
+                  <div class="text-[11px] text-slate-500 mt-0.5">Instant CV parsing across 400+ national taxonomy skills</div>
+                </div>
+              </div>
+
+              <div class="p-3 rounded-2xl bg-slate-50/80 border border-slate-200/70 flex items-start gap-3 hover:bg-teal-50/50 transition">
+                <div class="h-8 w-8 rounded-xl bg-teal-100 text-teal-700 grid place-items-center font-bold text-sm shrink-0">
+                  🎯
+                </div>
+                <div class="min-w-0">
+                  <div class="font-extrabold text-slate-900">Future-Role Fit Scoring</div>
+                  <div class="text-[11px] text-slate-500 mt-0.5">Transparent fit breakdown powered by O*NET 29.0 &amp; MASCO</div>
+                </div>
+              </div>
+
+              <div class="p-3 rounded-2xl bg-slate-50/80 border border-slate-200/70 flex items-start gap-3 hover:bg-purple-50/50 transition">
+                <div class="h-8 w-8 rounded-xl bg-purple-100 text-purple-700 grid place-items-center font-bold text-sm shrink-0">
+                  🧭
+                </div>
+                <div class="min-w-0">
+                  <div class="font-extrabold text-slate-900">Personalised Reskilling Plan</div>
+                  <div class="text-[11px] text-slate-500 mt-0.5">Structured courses, Pomodoro buddy, and SDG passport</div>
+                </div>
               </div>
             </div>
 
-            <!-- Match Score Spotlight -->
-            <div class="p-3.5 rounded-2xl bg-indigo-50/70 border border-indigo-100 space-y-2">
-              <div class="flex items-center justify-between text-xs">
-                <span class="font-bold text-slate-700">Future-Role Fit Score</span>
-                <span class="font-black text-indigo-700 text-sm">92% Match</span>
-              </div>
-              <div class="w-full bg-white h-2.5 rounded-full p-0.5 border border-indigo-200 overflow-hidden">
-                <div class="bg-gradient-to-r from-indigo-600 to-teal-500 h-full rounded-full" style="width: 92%"></div>
-              </div>
-              <div class="flex justify-between items-center text-[10px] text-slate-500 pt-0.5">
-                <span>Projected Salary: <b class="text-slate-800">RM 6,500 – RM 9,200</b></span>
-                <span class="text-emerald-700 font-bold">▲ High Demand Sector</span>
-              </div>
-            </div>
-
-            <!-- Extracted Skills & Micro-reskilling -->
-            <div class="space-y-1.5">
-              <div class="text-[10px] font-black uppercase tracking-wider text-slate-400">Core Verified Competencies</div>
-              <div class="flex flex-wrap gap-1.5">
-                <span class="chip chip-emerald !text-[11px]">✓ Python Analytics</span>
-                <span class="chip chip-emerald !text-[11px]">✓ Financial Modeling</span>
-                <span class="chip chip-teal !text-[11px]">✓ ESG Reporting</span>
-                <span class="chip chip-amber !text-[11px]">⚡ AI Auditing (Target)</span>
-              </div>
-            </div>
-
-            <!-- Nearby Job Indicator -->
-            <div class="p-2.5 rounded-xl bg-slate-50 border border-slate-200/80 flex items-center justify-between text-xs">
-              <div class="flex items-center gap-2">
-                <span class="text-sm">📍</span>
-                <span class="text-slate-700 font-semibold text-[11px]"><b>69,000+</b> live vacancies mapped nearby</span>
-              </div>
-              <button onclick="openAuth('register')" class="text-indigo-600 font-extrabold hover:underline text-[11px]">
-                Explore →
+            <!-- Bottom Live Data Signal -->
+            <div class="pt-3 border-t border-slate-100 flex items-center justify-between text-xs">
+              <span class="text-[11px] text-slate-500 font-medium">📍 <b>69,000+</b> live postings indexed</span>
+              <button onclick="openAuth('register')" class="text-indigo-600 font-bold hover:underline text-[11px]">
+                Explore Roles →
               </button>
             </div>
+
           </div>
         </div>
 
