@@ -1488,13 +1488,28 @@
 
         /* ---------- Account Profile View & Edit Modal (LinkedIn-Inspired) ---------- */
     function openAccountModal() {
-      if (!user) return;
+      if (!user) {
+        user = {
+          full_name: (window.uName && uName.textContent && uName.textContent !== 'User') ? uName.textContent : 'Aisha Rahman',
+          email: 'aisha.demo@careerlens.my',
+          unique_uid: 'MY-TALENT-2026-DEMO',
+          role_details: {
+            current_role: 'Junior Financial Auditor',
+            gender: 'Female',
+            phone: '12-345 6789',
+            industry: 'Finance & Accounting',
+            preferred_work_mode: 'Hybrid',
+            location: 'W.P. Kuala Lumpur',
+            bio: 'Passionate financial analyst specializing in ESG auditing, sustainable investments, and fintech solutions.'
+          }
+        };
+      }
       document.body.classList.add('modal-open');
       if (window.lumiFab) lumiFab.style.display = 'none';
       if (window.lumiPanel) lumiPanel.classList.add('hidden');
       populateAccountModal(user);
       setAccountModalTab('profile');
-      accountModalWrap.classList.remove('hidden');
+      if (window.accountModalWrap) accountModalWrap.classList.remove('hidden');
     }
 
     function closeAccountModal(e) {
@@ -3368,6 +3383,200 @@ async function submit3AiVerificationAnswers() {
       </div>
     </div>
   </div>
+
+  <script>
+    /* ---------- Top Navigation Profile Dropdown & Modal Handlers ---------- */
+    function toggleNavProfileDropdown(e) {
+      if (e) e.stopPropagation();
+      const drop = document.getElementById('navProfileDropdown');
+      if (drop) {
+        drop.classList.toggle('hidden');
+      }
+    }
+
+    function closeNavProfileDropdown() {
+      const drop = document.getElementById('navProfileDropdown');
+      if (drop) drop.classList.add('hidden');
+    }
+
+    document.addEventListener('click', function(event) {
+      const wrap = document.getElementById('navProfileWrap');
+      if (wrap && !wrap.contains(event.target)) {
+        closeNavProfileDropdown();
+      }
+    });
+
+    function setAppLanguage(lang) {
+      if (typeof window.setLanguage === 'function') {
+        window.setLanguage(lang);
+      } else {
+        localStorage.setItem('careerlens_language', lang);
+      }
+      const label = lang === 'zh' ? '中文' : lang === 'ms' ? 'Bahasa Melayu' : 'English';
+      if (typeof toast === 'function') toast(`Language set to ${label}`, 'ok');
+    }
+
+    function saveNotificationPref(key, value) {
+      try {
+        const prefs = JSON.parse(localStorage.getItem('careerlens_notif_prefs') || '{}');
+        prefs[key] = value;
+        localStorage.setItem('careerlens_notif_prefs', JSON.stringify(prefs));
+      } catch (e) {}
+      if (typeof toast === 'function') toast('Notification preference updated', 'ok');
+    }
+
+    /* Help Desk Modal */
+    function openHelpDeskModal() {
+      const m = document.getElementById('helpDeskModal');
+      if (m) m.classList.remove('hidden');
+    }
+
+    function closeHelpDeskModal() {
+      const m = document.getElementById('helpDeskModal');
+      if (m) m.classList.add('hidden');
+    }
+
+    async function submitHelpDeskFeedback() {
+      const btn = document.getElementById('btnSubmitHelpDesk');
+      const cat = document.getElementById('hdCategory') ? document.getElementById('hdCategory').value : 'General Feedback';
+      const sub = document.getElementById('hdSubject') ? document.getElementById('hdSubject').value.trim() : '';
+      const msg = document.getElementById('hdMessage') ? document.getElementById('hdMessage').value.trim() : '';
+      const prio = document.getElementById('hdPriority') ? document.getElementById('hdPriority').value : 'Normal';
+
+      if (!sub || !msg) {
+        if (typeof toast === 'function') toast('Please enter both subject and message.', 'err');
+        return;
+      }
+
+      if (btn) { btn.disabled = true; btn.textContent = 'Submitting...'; }
+
+      try {
+        const res = await fetch('/api/helpdesk/feedback', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ category: cat, subject: sub, message: msg, priority: prio })
+        });
+        const data = await res.json();
+        if (data.ok) {
+          if (typeof toast === 'function') toast(`Ticket #${data.ticket_id} created successfully! Our admin team has received it.`, 'ok');
+          closeHelpDeskModal();
+          document.getElementById('hdSubject').value = '';
+          document.getElementById('hdMessage').value = '';
+        } else {
+          if (typeof toast === 'function') toast(data.error || 'Failed to submit feedback', 'err');
+        }
+      } catch (err) {
+        if (typeof toast === 'function') toast('Error submitting feedback. Please check connection.', 'err');
+      } finally {
+        if (btn) { btn.disabled = false; btn.textContent = 'Submit Feedback →'; }
+      }
+    }
+
+    /* Forgot Password Verification Modal */
+    function openNavForgotPwModal() {
+      const m = document.getElementById('navForgotPwModal');
+      if (m) {
+        m.classList.remove('hidden');
+        const s1 = document.getElementById('navFpStep1');
+        const s2 = document.getElementById('navFpStep2');
+        if (s1) s1.classList.remove('hidden');
+        if (s2) s2.classList.add('hidden');
+        const emailInput = document.getElementById('navFpEmail');
+        if (emailInput && window.user && window.user.email) {
+          emailInput.value = window.user.email;
+        }
+      }
+    }
+
+    function closeNavForgotPwModal() {
+      const m = document.getElementById('navForgotPwModal');
+      if (m) m.classList.add('hidden');
+    }
+
+    let navCurrentFpEmail = '';
+    async function requestNavPasswordCode() {
+      const email = document.getElementById('navFpEmail') ? document.getElementById('navFpEmail').value.trim() : '';
+      if (!email || !email.includes('@')) {
+        if (typeof toast === 'function') toast('Please enter a valid email address.', 'err');
+        return;
+      }
+      navCurrentFpEmail = email;
+      const btn = document.getElementById('navFpBtnReq');
+      if (btn) { btn.disabled = true; btn.textContent = 'Sending Code...'; }
+
+      try {
+        const res = await fetch('/api/auth/forgot-password/request', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email: email })
+        });
+        const data = await res.json();
+        if (data.ok) {
+          const s1 = document.getElementById('navFpStep1');
+          const s2 = document.getElementById('navFpStep2');
+          if (s1) s1.classList.add('hidden');
+          if (s2) s2.classList.remove('hidden');
+          const box = document.getElementById('navFpDemoCodeBox');
+          if (box) box.innerHTML = `🔑 Verification Code sent! For demo: <span class="text-indigo-700 underline text-sm font-extrabold">${data.code}</span>`;
+          const codeInput = document.getElementById('navFpCode');
+          if (codeInput) { codeInput.value = data.code; codeInput.focus(); }
+          if (typeof toast === 'function') toast('Verification code generated!', 'ok');
+        } else {
+          if (typeof toast === 'function') toast(data.error || 'Failed to request code', 'err');
+        }
+      } catch (err) {
+        if (typeof toast === 'function') toast('Error contacting auth service.', 'err');
+      } finally {
+        if (btn) { btn.disabled = false; btn.textContent = 'Send Verification Code →'; }
+      }
+    }
+
+    async function submitNavResetPassword() {
+      const code = document.getElementById('navFpCode') ? document.getElementById('navFpCode').value.trim() : '';
+      const new_password = document.getElementById('navFpNewPw') ? document.getElementById('navFpNewPw').value : '';
+      const confirm_password = document.getElementById('navFpConfirmPw') ? document.getElementById('navFpConfirmPw').value : '';
+
+      if (!code || code.length !== 6) {
+        if (typeof toast === 'function') toast('Please enter the 6-digit verification code.', 'err');
+        return;
+      }
+      if (!new_password || new_password.length < 8) {
+        if (typeof toast === 'function') toast('Password must be at least 8 characters with letters, digits & special character.', 'err');
+        return;
+      }
+      if (new_password !== confirm_password) {
+        if (typeof toast === 'function') toast('Passwords do not match.', 'err');
+        return;
+      }
+
+      const btn = document.getElementById('navFpBtnReset');
+      if (btn) { btn.disabled = true; btn.textContent = 'Updating...'; }
+
+      try {
+        const res = await fetch('/api/auth/forgot-password/verify', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            email: navCurrentFpEmail || (window.user ? window.user.email : ''),
+            code: code,
+            new_password: new_password,
+            confirm_password: confirm_password
+          })
+        });
+        const data = await res.json();
+        if (data.ok) {
+          if (typeof toast === 'function') toast('Password successfully reset! Please keep it safe.', 'ok');
+          closeNavForgotPwModal();
+        } else {
+          if (typeof toast === 'function') toast(data.error || 'Password reset failed', 'err');
+        }
+      } catch (err) {
+        if (typeof toast === 'function') toast('Network error while resetting password.', 'err');
+      } finally {
+        if (btn) { btn.disabled = false; btn.textContent = 'Confirm Password Reset →'; }
+      }
+    }
+  </script>
 
 </body>
 </html>
