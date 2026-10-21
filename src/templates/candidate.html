@@ -100,10 +100,14 @@
     }
   </style>
   <link rel="stylesheet" href="/static/css/profile.css?v=20261021-layout-1" />
-  <link rel="stylesheet" href="/static/css/responsive.css?v=20261021-header-original-size" />
+  <link rel="stylesheet" href="/static/css/responsive.css?v=20261021-green-completion" />
   <link rel="stylesheet" href="/static/css/page-outline.css?v=20261021-menu-outline-v2" />
-  <link rel="stylesheet" href="/static/css/pomodoro.css?v=20261021-study-buddy" />
+  <link rel="stylesheet" href="/static/css/pomodoro.css?v=20261021-buddy-tooltip" />
   <link rel="stylesheet" href="/static/css/sdg-passport.css?v=20261021-passport-close-once" />
+  <link rel="stylesheet" href="/static/css/discovery-learning.css?v=20261021-horizontal-completed" />
+  <link rel="stylesheet" href="/static/css/reskilling-plan.css?v=20261021-green-completion" />
+  <link rel="stylesheet" href="/static/css/learning-controls.css?v=20261021-single-replacement" />
+  <link rel="stylesheet" href="/static/css/learning-impact.css?v=20261021-community-pledges" />
 </head>
 <body class="responsive-ui responsive-talent min-h-screen">
   <div class="aurora"></div><div class="blob b1"></div><div class="blob b2"></div>
@@ -774,18 +778,35 @@
         </section>
 
         <section id="tab-plan" class="tab hidden space-y-6">
-          <div class="glass rounded-3xl p-5 flex flex-wrap items-center justify-between gap-3">
-            <div class="flex items-center gap-3"><span class="text-xs font-bold text-slate-500">Target role</span><select data-outline-label="Target role" id="planRole" onchange="selectRole(this.value,false)" class="input !w-auto"></select></div>
-            <div id="planStats" class="flex gap-2"></div>
-          </div>
-          <div id="learningProgress" class="glass rounded-2xl p-5 space-y-3"></div>
-          <div class="grid lg:grid-cols-3 gap-6">
-            <div class="lg:col-span-2 glass rounded-3xl p-6"><div class="text-sm font-extrabold mb-5">Step-by-step path</div><div data-outline-label="Learning pathway" id="timeline" class="timeline space-y-5"></div></div>
-            <div class="space-y-4"><aside id="learningPomodoro" aria-label="Pomodoro study timer"></aside><div id="learningGoal"></div><div class="text-[11px] font-extrabold uppercase tracking-wider text-teal-700">SDG alignment</div><div id="planSdg" class="space-y-4"></div></div>
-          </div>
+          <nav class="growth-navigation" data-growth-navigation aria-label="My Growth"></nav>
+          <p class="growth-intro">Build the skills for your target role. Start with your next learning goal, then follow the path below.</p>
+          <section class="reskilling-overview glass" aria-label="Your learning overview">
+            <div class="reskilling-target"><label for="planRole">Target role</label><select data-outline-label="Target role" id="planRole" onchange="selectRole(this.value,false)" class="input"></select><div id="planStats" class="flex flex-wrap gap-2"></div></div>
+            <div class="reskilling-progress"><div id="learningProgress" class="space-y-3"></div><button type="button" class="reskilling-achievements" onclick="showTab('completed')"><span>✓ Completed Learning</span><b id="completedLearningCount" data-no-translate>0</b><span aria-hidden="true">→</span></button></div>
+          </section>
+          <aside id="learningPomodoro" hidden aria-label="Pomodoro study timer"></aside>
+          <div class="glass rounded-3xl p-6 reskilling-path"><div class="growth-path-heading"><div><h2 class="text-sm font-extrabold">Step-by-step path</h2><p class="hint">These courses are recommended based on your selected target role and the skills you still need to improve.</p><p class="hint">Follow the cards from left to right. Open a step for details.</p></div></div><div data-outline-label="Learning pathway" id="timeline" class="timeline learning-path-horizontal" tabindex="0" aria-label="Learning steps, scroll horizontally"></div></div>
+          <section id="learningGoal" class="reskilling-next" data-outline-label="Your next learning goal" aria-label="Your next learning goal"></section>
+          <details class="growth-tool"><summary>🌱 How this path connects to the SDGs</summary><div id="planSdg" class="space-y-4"></div></details>
+        </section>
+
+        <section id="tab-discover" class="tab hidden space-y-6">
+          <nav class="growth-navigation" data-growth-navigation aria-label="My Growth"></nav>
+          <section id="discoveryLearning" data-outline-label="Explore your interests" aria-label="Explore your interests"></section>
+        </section>
+
+        <section id="tab-saved" class="tab hidden space-y-6">
+          <nav class="growth-navigation" data-growth-navigation aria-label="My Growth"></nav>
+          <div id="savedAdditionalCourses" data-outline-label="Saved Courses"></div>
+        </section>
+
+        <section id="tab-completed" class="tab hidden space-y-6">
+          <nav class="growth-navigation" data-growth-navigation aria-label="My Growth"></nav>
+          <div id="completedLearning" data-outline-label="Completed Learning"></div>
         </section>
 
         <section id="tab-passport" class="tab hidden">
+          <nav class="growth-navigation" data-growth-navigation aria-label="My Growth"></nav>
           <div data-outline-label="Your SDG passport" id="passport" class="mx-auto"></div>
         </section>
       </main>
@@ -1081,9 +1102,11 @@
   </div>
 
   <script src="/static/js/page-position.js?v=20261021-reload-only"></script>
-  <script src="/static/js/learning-path.js?v=20261021-passport-milestones"></script>
-  <script src="/static/js/sdg-passport.js?v=20261021-passport-close-once"></script>
-  <script src="/static/js/pomodoro.js?v=20261021-study-buddy"></script>
+  <script src="/static/js/learning-path.js?v=20261021-badges-pledges"></script>
+  <script src="/static/js/learning-impact.js?v=20261021-piggy-art"></script>
+  <script src="/static/js/discovery-learning.js?v=20261021-single-replacement"></script>
+  <script src="/static/js/sdg-passport.js?v=20261021-discovery-stamps"></script>
+  <script src="/static/js/pomodoro.js?v=20261021-buddy-tooltip"></script>
   <script src="/static/js/common.js?v=20261021-menu-outline-v2"></script>
 
   <script src="/static/js/vault-shares.js"></script>
@@ -1099,6 +1122,9 @@
       { id: 'radar', ico: '📡', label: 'AI Radar', eyebrow: 'Industry insights', title: 'Future skills radar' },
       { id: 'match', ico: '🎯', label: 'Role Matches', eyebrow: 'Career opportunities', title: 'Future-role matches' },
       { id: 'plan', ico: '🧭', label: 'Reskilling Plan', eyebrow: 'Learning & development', title: 'Personalised reskilling plan' },
+      { id: 'discover', ico: '✦', label: 'Explore Learning', eyebrow: 'Follow your curiosity', title: 'Explore learning beyond your career' },
+      { id: 'saved', ico: '♡', label: 'Saved Courses', eyebrow: 'Your learning wishlist', title: 'Your saved courses' },
+      { id: 'completed', ico: '✓', label: 'Completed Learning', eyebrow: 'Your learning journey', title: 'See what you have achieved' },
       { id: 'passport', ico: '🌱', label: 'SDG Passport', eyebrow: 'Sustainable career impact', title: 'Your SDG career passport' },
     ];
     const EXTRA_TABS = {
@@ -1432,7 +1458,7 @@
         EXTRA_TABS.jobs,
         ...NAV.slice(3),
       ];
-      buildPortalNavigation(renderItems, [{label: 'Overview', ids: ['dash']}, {label: 'My Profile', ids: ['profile', 'quest']}, {label: 'Explore Careers', ids: ['jobs', 'radar', 'match']}, {label: 'My Growth', ids: ['plan', 'passport']}]);
+      buildPortalNavigation(renderItems, [{label: 'Overview', ids: ['dash']}, {label: 'My Profile', ids: ['profile', 'quest']}, {label: 'Explore Careers', ids: ['jobs', 'radar', 'match']}, {label: 'My Growth', ids: ['plan', 'discover', 'saved', 'completed', 'passport']}]);
     }
     async function showTab(id, options = {}) {
       if (!options.restore) window.PagePosition?.navigate();
@@ -1445,6 +1471,12 @@
       const n = NAV.find(x => x.id === id) || EXTRA_TABS[id] || NAV[1];
       document.getElementById('pgEyebrow').textContent = n.eyebrow;
       document.getElementById('pgTitle').textContent = n.title;
+      renderGrowthNavigation();
+      if (id === 'plan') renderPlan();
+      if (id === 'discover') renderDiscoveryLearning();
+      if (id === 'saved') renderSavedCourses();
+      if (id === 'completed') renderCompletedLearning();
+      window.PomodoroTimer.setVisible(document.getElementById('learningPomodoro'),id==='plan'||id==='discover');
       if (id === 'quest') scheduleRoleRecommendation();
       if (id === 'notifications') loadInvitations(false);
       if (id === 'dash') renderDash();
@@ -2730,9 +2762,37 @@
     }
 
     /* ---------- plan ---------- */
+    function syncGrowthHeaderOffset(){
+      const heights=[...document.querySelectorAll('.portal-desktop-header,.portal-mobile-header')].map(header=>header.getBoundingClientRect().height);
+      document.documentElement.style.setProperty('--growth-header-height',Math.ceil(Math.max(0,...heights))+'px');
+    }
+    function renderGrowthNavigation() {
+      const items=NAV.filter(item=>['plan','discover','saved','completed','passport'].includes(item.id));
+      document.querySelectorAll('[data-growth-navigation]').forEach(nav=>{
+        nav.innerHTML=items.map(item=>`<button type="button" onclick="showTab('${item.id}')" ${current===item.id?'aria-current="page"':''}><span aria-hidden="true">${item.ico}</span> <span>${esc(item.label)}</span></button>`).join('');
+      });
+      window.careerLensLocale?.apply();
+    }
     function renderPlanSelect() { planRole.innerHTML = roles.map((r, i) => `<option value="${i}" ${i === selected ? 'selected' : ''}>${esc(r.title)} · ${r.match_score}%</option>`).join(''); }
     function selectRole(i, go) { selected = Number(i); planRole.value = selected; renderPlan(); if (go) showTab('plan'); else if (current === 'dash') renderDash(); }
+    function renderDiscoveryLearning() {
+      if (!user) return;
+      window.DiscoveryLearning.render({
+        identity:user.unique_uid,container:document.getElementById('discoveryLearning'),
+        refresh:renderDiscoveryLearning,onPassport:()=>showTab('passport'),onSavedCourses:()=>showTab('saved'),locale:window.careerLensLocale
+      });
+    }
+    function renderSavedCourses() {
+      if(!user)return;
+      window.DiscoveryLearning.renderSaved({identity:user.unique_uid,roles,container:document.getElementById('savedAdditionalCourses'),refresh:renderSavedCourses,onExplore:()=>showTab('discover'),locale:window.careerLensLocale});
+    }
+    function renderCompletedLearning() {
+      if(!user)return;
+      window.LearningPath.renderCompleted({identity:user.unique_uid,container:document.getElementById('completedLearning'),roles,locale:window.careerLensLocale,onExplore:()=>showTab('discover')});
+      window.LearningImpact.sync(user.unique_uid);
+    }
     function renderPlan() {
+        document.getElementById('completedLearningCount').textContent=window.LearningPath.completedCourses(user.unique_uid,roles).length;
         const r = roles[selected]; 
         if (!r) return;
 
@@ -2772,7 +2832,11 @@
         user,
         role: roles[selected],
         roles,
-        onLearn: () => showTab('plan'),
+        onLearn: async goal => {
+          await showTab('discover');
+          const discovery=document.getElementById('discoveryLearning');
+          if (window.DiscoveryLearning.showGoal(discovery,goal)) discovery.scrollIntoView({behavior:window.matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth',block:'start'});
+        },
         locale: window.careerLensLocale
       });
     }
@@ -2848,7 +2912,12 @@
       const me = await api('/api/auth/me'); user = me.data.user;
       if (!user) return;
       if (user.role === 'hr_company') { window.location.href = '/workspace'; return; }
-      window.PomodoroTimer.mount({identity:user.unique_uid, container:document.getElementById('learningPomodoro')});
+      window.LearningImpact.initialize({identity:user.unique_uid});
+      renderDiscoveryLearning();
+      window.PomodoroTimer.mount({identity:user.unique_uid, container:document.getElementById('learningPomodoro'),floating:true});
+      syncGrowthHeaderOffset();
+      if(window.ResizeObserver){const observer=new ResizeObserver(syncGrowthHeaderOffset);document.querySelectorAll('.portal-desktop-header,.portal-mobile-header').forEach(header=>observer.observe(header));}
+      window.addEventListener('resize',syncGrowthHeaderOffset);
       window.PagePosition?.initialize({identity:user.unique_uid,portal:'talent',getView:()=>current,isValid:id=>typeof id==='string'&&!!document.getElementById('tab-'+id)});
       uAvatar.textContent = user.full_name.charAt(0).toUpperCase(); uName.textContent = user.full_name; uUid.textContent = user.unique_uid;
       renderAccountProfileCard();
@@ -2872,7 +2941,7 @@
     init().catch(error => toast(error.message || 'Unable to load CareerLens. Refresh and retry.', 'err'));
   </script>
 <script src="/static/js/questionnaire-i18n.js"></script>
-<script src="/static/js/portal-i18n.js?v=20261021-passport-book"></script>
+<script src="/static/js/portal-i18n.js?v=20261021-single-replacement"></script>
 <script src="/static/js/member3.js?v=20261021-continuous"></script>
 <script>
   let generatedVerificationQ = [];

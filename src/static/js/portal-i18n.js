@@ -5,6 +5,119 @@
   else root.portalI18n = api;
 })(typeof window === 'undefined' ? globalThis : window, function () {
   const rows = `
+Not enough free memory to start local AI. Close unused apps to free at least 4 GB of RAM, then retry.|Memori bebas tidak mencukupi. Tutup aplikasi yang tidak digunakan untuk membebaskan sekurang-kurangnya 4 GB RAM, kemudian cuba lagi.|可用内存不足，暂时无法启动本地 AI。请关闭不用的程序，释放至少 4 GB 可用内存后重试。
+The local AI service has stopped. Restart the project with Start.cmd, then use the page it opens.|Perkhidmatan AI tempatan telah berhenti. Mulakan semula dengan Start.cmd dan gunakan halaman yang dibuka.|本地 AI 服务已停止。请用 Start.cmd 重新启动项目，并使用它自动打开的页面。
+The local AI runtime is missing. Run Start.cmd to install and start it.|Persekitaran AI tempatan tiada. Jalankan Start.cmd untuk memasang dan memulakannya.|缺少本地 AI 运行环境，请运行 Start.cmd 安装并启动。
+The trained interview adapter is missing. Restore models/interview-adapter and restart Start.cmd.|Penyesuai temu duga terlatih tiada. Pulihkan models/interview-adapter dan mulakan Start.cmd semula.|缺少训练后的面试模型，请恢复 models/interview-adapter，再用 Start.cmd 启动。
+The base model is missing. Run Start.cmd to finish the model setup.|Model asas tiada. Jalankan Start.cmd untuk melengkapkan persediaan model.|缺少基础模型，请运行 Start.cmd 完成模型配置。
+The local AI service failed during startup. See state/interview-model/server-error.log, then restart with Start.cmd.|AI tempatan gagal bermula. Lihat state/interview-model/server-error.log, kemudian mulakan dengan Start.cmd.|本地 AI 启动失败，详情见 state/interview-model/server-error.log；请用 Start.cmd 重新启动。
+The local AI model is still loading. Keep its startup window open and retry shortly.|Model AI tempatan masih dimuatkan. Biarkan tetingkap permulaan terbuka dan cuba sebentar lagi.|本地 AI 模型仍在加载，请保留启动窗口，稍后重试。
+No replacement available. Try another topic or a new batch.|Tiada pengganti tersedia. Cuba topik lain atau kumpulan baharu.|暂时没有可替换课程，试试其他主题或换一批推荐。
+All users’ accumulated pledges|Jumlah ikrar semua pengguna|所有用户共同累积
+This shared total combines all registered users on this platform. Transfers are recorded after receipt confirmation.|Jumlah bersama ini merangkumi semua pengguna berdaftar di platform ini. Pemindahan direkodkan selepas pengesahan resit.|此扑满汇总平台所有注册用户的累计承诺，确认凭证后才登记为已汇出。
+registered users|pengguna berdaftar|位注册用户
+badge contributors|penyumbang lencana|位徽章贡献者
+Includes a USD 5 demo opening balance.|Termasuk baki permulaan demo USD 5.|包含 USD 5 演示初始余额。
+Selected recipient: WFP. Transfer dates are awaiting confirmation. Listing a recipient does not imply a formal partnership.|Penerima dipilih: WFP. Tarikh pemindahan menunggu pengesahan. Penyenaraian bukan perkongsian rasmi.|已选择 WFP 为接收机构，汇款日期待确认；展示接收机构不代表已建立正式合作。
+Learning milestones|Pencapaian pembelajaran|学习里程碑
+Syncing your learning milestones…|Menyegerakkan pencapaian pembelajaran…|正在同步学习里程碑……
+Could not sync learning milestones. Please retry.|Tidak dapat menyegerakkan pencapaian. Sila cuba lagi.|暂时无法同步学习里程碑，请重试。
+Learning badge unlocked! View your milestones in Completed Learning.|Lencana pembelajaran dibuka! Lihat di Pembelajaran Selesai.|已解锁学习徽章！到“已完成学习”查看。
+Small steps, shared kindness|Langkah kecil, kebaikan bersama|小小进步，汇聚善意
+Learn. Earn a badge. Make a little difference.|Belajar. Raih lencana. Bawa sedikit perubahan.|学习、获得徽章，让善意多一点。
+Complete 10, 20, 30, 40 and 50 courses to collect five milestone badges.|Lengkapkan 10, 20, 30, 40 dan 50 kursus untuk mengumpul lima lencana.|完成 10、20、30、40、50 门课程，逐步收集五枚里程碑徽章。
+1 badge = USD 1 company pledge|1 lencana = USD 1 ikrar syarikat|1 枚徽章 = 公司承诺捐出 USD 1
+Earned|Diperoleh|已获得
+Not yet earned|Belum diperoleh|尚未获得
+Next milestone|Pencapaian seterusnya|下个里程碑
+more courses to go|kursus lagi|门课程后达成
+You have collected all five learning badges!|Anda telah mengumpul semua lima lencana!|你已集齐五枚学习徽章！
+A little piggy bank for shared kindness|Tabung kecil untuk kebaikan bersama|汇聚善意的小扑满
+Your unlocked pledge|Ikrar yang anda buka|你已解锁的捐款承诺
+Funded by CareerLens, not charged to you.|Dibiayai CareerLens, tiada caj kepada anda.|由 CareerLens 公司出资，不向你收费。
+Our kindness piggy bank|Tabung kebaikan kita|我们的爱心扑满
+For every milestone badge earned, CareerLens pledges USD 1 towards hunger relief.|Bagi setiap lencana, CareerLens berikrar USD 1 untuk bantuan kelaparan.|每获得一枚里程碑徽章，CareerLens 承诺捐出 USD 1 支持抗饥饿援助。
+Company total pledged|Jumlah ikrar syarikat|公司累计承诺
+Awaiting transfer|Menunggu pemindahan|待汇出
+Recorded as sent|Direkodkan dihantar|已登记汇出
+Next transfer|Pemindahan seterusnya|下次汇款
+Recipient|Penerima|接收机构
+To be announced|Akan diumumkan|待公布
+Totals cover accounts using this server. Transfers are recorded only after the company provides a receipt.|Jumlah meliputi akaun pada pelayan ini. Pemindahan direkodkan selepas syarikat menyediakan resit.|合计涵盖本服务器的账号；公司提供汇款凭证后才登记为已汇出。
+Demo campaign: these are demonstration pledges. No money is transferred automatically.|Kempen demo: ini ikrar demonstrasi. Tiada wang dipindahkan secara automatik.|演示活动：此处为演示承诺记录，系统不会自动转账。
+Donation plans & transparency|Pelan derma & ketelusan|捐款安排与透明记录
+Milestones use self-reported, unique completed courses. Each badge is awarded once per account and remains earned.|Pencapaian menggunakan kursus unik yang dilaporkan sendiri. Setiap lencana diberi sekali dan kekal diperoleh.|里程碑按自行记录的独立已完成课程累计；每枚徽章每账号只授予一次，获得后永久保留。
+Recipient and transfer dates will be announced by CareerLens. The organisations below are suggestions, not confirmed partners.|Penerima dan tarikh akan diumumkan CareerLens. Organisasi di bawah ialah cadangan, bukan rakan yang disahkan.|接收机构及汇款日期由 CareerLens 公布；下列机构为候选，尚未确认合作。
+Transfer receipts|Resit pemindahan|汇款凭证
+No transfer receipts have been recorded yet.|Belum ada resit pemindahan direkodkan.|目前尚无已登记的汇款凭证。
+These courses are recommended based on your selected target role and the skills you still need to improve.|Kursus ini dicadangkan berdasarkan jawatan sasaran yang dipilih dan kemahiran yang masih perlu anda tingkatkan.|这些课程根据你选择的目标职位及当前尚需提升的技能差距推荐。
+Your little study companion: 25 minutes of focus, then a 5-minute break.|Teman belajar kecil anda: fokus selama 25 minit, kemudian rehat 5 minit.|你的小小学习伙伴：专注 25 分钟，再休息 5 分钟。
+Click to open. Drag the tomato to move.|Klik untuk membuka. Seret tomato untuk bergerak.|点击番茄展开，拖动番茄移动。
+Resize Pomodoro buddy|Ubah saiz Pomodoro buddy|调整番茄钟大小
+Drag to resize. Arrow keys adjust size; Home resets.|Seret untuk ubah saiz. Kekunci anak panah melaras saiz; Home menetapkan semula.|拖动调整大小；聚焦后可用方向键调整，按 Home 恢复默认大小。
+Your career courses and additional courses, saved in one place.|Kursus kerjaya dan kursus tambahan anda, disimpan di satu tempat.|职业路径课程与额外课程，统一收藏在这里。
+Added to Saved Courses.|Ditambah ke Kursus Disimpan.|已加入课程收藏。
+Removed from Saved Courses. Your learning progress is kept.|Dikeluarkan daripada Kursus Disimpan. Kemajuan pembelajaran dikekalkan.|已移除收藏，学习进度仍保留。
+Save any course from your plan or Explore Learning to find it here.|Simpan kursus daripada pelan atau Teroka Pembelajaran untuk mencarinya di sini.|在学习计划或探索学习中收藏课程，即可在这里找到。
+Save course|Simpan kursus|收藏课程
+Saved to courses|Disimpan dalam kursus|已收藏
+Move Pomodoro buddy with arrow keys. Press Home to return to the left.|Gerakkan Pomodoro buddy dengan kekunci anak panah. Tekan Home untuk kembali ke kiri.|聚焦标题栏后，用方向键移动番茄钟，按 Home 回到左侧。
+Drag here to move your buddy|Seret di sini untuk menggerakkan buddy|拖动标题栏移动番茄钟
+Completed Learning|Pembelajaran Selesai|已完成学习
+Your learning journey|Perjalanan pembelajaran anda|你的学习历程
+See what you have achieved|Lihat pencapaian anda|看看你已完成的学习
+See what you have achieved →|Lihat pencapaian anda →|查看学习成果 →
+Follow the cards from left to right. Open a step for details.|Ikuti kad dari kiri ke kanan. Buka langkah untuk butiran.|从左往右逐步学习，展开卡片可查看推荐理由。
+Completed courses|Kursus selesai|已完成课程
+Recorded course hours|Jam kursus direkodkan|已记录课程学时
+Additional courses completed|Kursus tambahan selesai|已完成额外课程
+Completion is self-reported. Hours use available course estimates, not tracked study time.|Penyelesaian dilaporkan sendiri. Jam berdasarkan anggaran kursus yang tersedia, bukan masa belajar dijejaki.|完成状态由你自行记录；学时采用课程已有估算，并非实际计时。
+All learning|Semua pembelajaran|全部学习
+Career plan|Pelan kerjaya|职业学习计划
+Completed on|Selesai pada|完成于
+Completion date not recorded|Tarikh selesai tidak direkodkan|未记录完成日期
+Your completed learning will appear here.|Pembelajaran yang selesai akan dipaparkan di sini.|完成的课程会汇总在这里。
+Mark a course Completed after you finish learning.|Tandakan kursus Selesai selepas tamat belajar.|学完后，将课程状态设为“已完成”。
+Explore Learning|Teroka Pembelajaran|探索学习
+Saved Courses|Kursus Disimpan|课程收藏
+Explore learning beyond your career|Teroka pembelajaran di luar kerjaya anda|探索职业以外的新兴趣
+Your saved courses|Kursus yang anda simpan|你收藏的课程
+Build the skills for your target role. Start with your next learning goal, then follow the path below.|Bina kemahiran untuk jawatan sasaran. Mulakan dengan matlamat seterusnya, kemudian ikuti laluan di bawah.|为目标职位提升技能：先查看下一步学习目标，再沿着下方路径逐步学习。
+Focus timer|Pemasa fokus|专注番茄钟
+How this path connects to the SDGs|Hubungan laluan ini dengan SDG|这条学习路径与 SDG 的关联
+Discover interests beyond your career plan.|Temui minat di luar pelan kerjaya anda.|探索职业学习计划之外的新兴趣。
+Return to the additional courses you saved.|Kembali ke kursus tambahan yang anda simpan.|找回已收藏的额外课程，继续学习。
+See the learning stamps you have collected.|Lihat cop pembelajaran yang telah anda kumpul.|查看学习过程中收集的印章。
+Explore courses →|Teroka kursus →|探索课程 →
+Open wishlist →|Buka senarai hasrat →|打开收藏 →
+Open passport →|Buka pasport →|打开护照 →
+Your learning wishlist|Senarai hasrat pembelajaran anda|你的学习愿望清单
+Additional courses|Kursus tambahan|额外课程
+Saved beyond your career plan. Find them here whenever you are ready.|Disimpan di luar pelan kerjaya anda. Cari di sini apabila anda bersedia.|职业学习计划之外的收藏课程，随时回来继续学习。
+Revisit course ↗|Lihat semula kursus ↗|重温课程 ↗
+Start learning ↗|Mula belajar ↗|开始学习 ↗
+Remove from wishlist|Keluarkan daripada senarai hasrat|移除收藏
+Your wishlist is ready for a little curiosity.|Senarai hasrat anda sedia untuk diterokai.|为你的好奇心留一个位置。
+Tap Save for later on any additional course to keep it here.|Tekan Simpan untuk kemudian pada kursus tambahan untuk menyimpannya di sini.|点击额外课程的“稍后学习”，就能收藏到这里。
+Removed from Additional courses. Your learning progress is kept.|Dikeluarkan daripada Kursus tambahan. Kemajuan pembelajaran dikekalkan.|已移除收藏，学习进度仍保留。
+Added to Additional courses.|Ditambah ke Kursus tambahan.|已加入额外课程收藏。
+Arts & creativity|Seni & kreativiti|艺术与创意
+Technology|Teknologi|科技
+What would you like to learn?|Apakah yang anda ingin pelajari?|你想学习什么？
+e.g. psychology, photography, personal finance (English keywords)|cth. psychology, photography, personal finance (kata kunci Inggeris)|例如 psychology、photography、personal finance（请输入英文关键词）
+Recommend for me|Cadangkan untuk saya|为我推荐
+Recommendations adapt to your interests, saved learning and feedback.|Cadangan disesuaikan mengikut minat, pembelajaran disimpan dan maklum balas anda.|推荐会根据你的兴趣、收藏和反馈调整。
+Finding courses for you…|Mencari kursus untuk anda…|正在为你寻找课程……
+Courses in the recommendation model|Kursus dalam model cadangan|推荐模型中的课程数
+For you|Untuk anda|为你推荐
+About this course|Tentang kursus ini|课程介绍
+Open the provider page for course details.|Buka laman penyedia untuk butiran kursus.|请打开课程网站查看详情。
+Check the provider page for current fees, language and availability.|Semak laman penyedia untuk yuran, bahasa dan ketersediaan terkini.|最新费用、语言和开放情况请以课程网站为准。
+Not interested|Tidak berminat|不感兴趣
+No more matching courses. Change your interests or reset feedback to explore again.|Tiada lagi kursus sepadan. Ubah minat atau tetapkan semula maklum balas untuk meneroka lagi.|暂无更多匹配课程。试试其他兴趣，或重置反馈后继续探索。
+Suggestions come from the course dataset. Your feedback is saved on this device for your account.|Cadangan daripada set data kursus. Maklum balas disimpan pada peranti ini untuk akaun anda.|课程来自学习数据集。反馈按账号保存在这台设备上。
+Recommend another batch|Cadangkan pilihan lain|换一批推荐
+Reset feedback|Tetapkan semula maklum balas|重置反馈
 Trained strictly on CV, Reskilling & Fair HR|Dilatih khusus untuk CV, latihan semula & HR adil|专注于简历、技能提升与公平招聘
 Chat with Lumi — Domain-Scoped CareerLens AI Mascot|Berbual dengan Lumi — pembantu AI khusus CareerLens|与 Lumi 对话 — CareerLens 专业 AI 助手
 Lumi AI Copilot|Pembantu AI Lumi|Lumi AI 助手
@@ -630,6 +743,38 @@ Describe a problem you solved that was blocking your team's delivery.|Terangkan 
     ['Auto generate', 'Jana automatik', '自动生成'],
     ['Pomodoro buddy', 'Teman Pomodoro', '番茄学习搭子'],
     ['Open my passport', 'Buka pasport saya', '打开我的护照'],
+    ['Follow your curiosity', 'Ikuti rasa ingin tahu anda', '跟随你的好奇心'],
+    ['Explore a new side of you', 'Terokai sisi baharu diri anda', '探索不一样的自己'],
+    ['Choose your interests. Discover learning beyond your current career path.', 'Pilih minat anda. Terokai pembelajaran di luar laluan kerjaya semasa.', '选择感兴趣的主题，发现职业方向以外的学习机会。'],
+    ['View my passport', 'Lihat pasport saya', '查看我的护照'],
+    ['Psychology', 'Psikologi', '心理学'],
+    ['Money & everyday life', 'Wang & kehidupan harian', '理财与日常生活'],
+    ['Nature & ecology', 'Alam & ekologi', '自然与生态'],
+    ['People & inclusion', 'Masyarakat & keterangkuman', '人际与包容'],
+    ['Sustainable living', 'Kehidupan lestari', '可持续生活'],
+    ['Suggestions adapt to your interests, saved learning and stamps.', 'Cadangan mengikut minat, pembelajaran tersimpan dan cop anda.', '推荐会随你的兴趣、收藏和已有印章调整。'],
+    ['Matches an interest you chose.', 'Sepadan dengan minat pilihan anda.', '符合你选择的兴趣。'],
+    ['You saved this for later.', 'Anda menyimpannya untuk kemudian.', '你之前收藏过这项学习。'],
+    ['Builds on a topic you have explored.', 'Meneruskan topik yang pernah anda terokai.', '延续你曾探索的主题。'],
+    ['Explore a new SDG learning stamp.', 'Terokai cop pembelajaran SDG baharu.', '尝试获得一枚新的 SDG 学习印章。'],
+    ['Try a fresh perspective.', 'Cuba perspektif baharu.', '尝试一个新的视角。'],
+    ['Show all goals', 'Tunjuk semua matlamat', '查看所有目标'],
+    ['Free learning', 'Pembelajaran percuma', '免费学习'],
+    ['Self-paced', 'Mengikut kadar sendiri', '按自己的节奏学习'],
+    ['Try this after learning', 'Cuba selepas belajar', '学完可以尝试'],
+    ['This SDG stamp is already in your passport.', 'Cop SDG ini sudah ada dalam pasport anda.', '你的护照已经拥有这枚 SDG 印章。'],
+    ['Complete this learning to collect its SDG stamp.', 'Selesaikan pembelajaran ini untuk mengumpul cop SDGnya.', '完成这项学习，即可收集对应的 SDG 印章。'],
+    ['SDG links are learning mappings by CareerLens. Mark Completed after finishing the resource.', 'Pemetaan SDG dibuat oleh CareerLens. Tandakan Selesai selepas menamatkan pembelajaran.', 'SDG 对应关系由 CareerLens 作学习主题映射，学完后再标记 Completed。'],
+    ['Show recommendations', 'Tunjuk cadangan', '显示推荐'],
+    ['Explore all topics', 'Terokai semua topik', '探索全部主题'],
+    ['Learning recorded. Open your passport to see your stamp.', 'Pembelajaran direkodkan. Buka pasport untuk melihat cop anda.', '学习已记录，打开护照查看你的印章吧。'],
+    ['Explore your interests', 'Terokai minat anda', '探索兴趣'],
+    ['Keep a short reflection on how context, thoughts and behaviour can influence everyday wellbeing.', 'Tulis refleksi ringkas tentang pengaruh konteks, pemikiran dan tingkah laku terhadap kesejahteraan harian.', '写一段小反思，说明环境、想法与行为如何影响日常幸福感。'],
+    ['Compare two explanations of a familiar human behaviour using ideas from the lectures.', 'Bandingkan dua penjelasan tentang tingkah laku manusia berdasarkan idea kuliah.', '用课程里的观点，比较两种对日常行为的不同解释。'],
+    ['Create a sample monthly budget and explain the costs and risks of different borrowing choices.', 'Sediakan contoh belanjawan bulanan dan jelaskan kos serta risiko pilihan pinjaman.', '制作一份示例月度预算，并说明不同借贷选择的成本和风险。'],
+    ['Map the relationships between living things in a small ecosystem near you.', 'Petakan hubungan antara hidupan dalam ekosistem kecil berhampiran anda.', '画出身边一个小生态系统里，不同生物之间的关系。'],
+    ['Suggest three practical ways to make a study group or community activity more inclusive.', 'Cadangkan tiga cara praktikal menjadikan kumpulan belajar atau aktiviti komuniti lebih inklusif.', '提出三个小办法，让学习小组或社区活动更包容。'],
+    ['Review a week of household waste and propose one change to reduce, reuse or recycle resources.', 'Semak sisa isi rumah selama seminggu dan cadangkan perubahan untuk mengurang, mengguna semula atau mengitar semula sumber.', '观察一周的家庭垃圾，提出一项减少浪费、重复使用或回收的改变。'],
     ['Close passport', 'Tutup pasport', '合上护照'],
     ['A little learning. A lasting journey.', 'Sedikit pembelajaran. Perjalanan bermakna.', '学一点，留下成长的足迹。'],
     ['learning stamps collected', 'cop pembelajaran dikumpul', '枚学习印章已收集'],

@@ -3,7 +3,7 @@ window.PomodoroTimer = (() => {
   const durations = {focus:25*60, break:5*60};
   const instances = new WeakMap();
   const format = seconds => `${String(Math.floor(seconds/60)).padStart(2,'0')}:${String(seconds%60).padStart(2,'0')}`;
-  function mount({identity, container}) {
+  function mount({identity, container, floating=false}) {
     if (!container || instances.has(container)) return;
     const key = 'cl_pomodoro_v1:' + identity;
     let state = {mode:'focus', remaining:durations.focus, deadline:null, completed:0,
@@ -17,8 +17,12 @@ window.PomodoroTimer = (() => {
         state={...state,...saved, sound:saved.sound!==false, collapsed:!!saved.collapsed};
       }
     } catch {}
+    if(floating){
+      // Start the floating presentation as a small buddy on its first visit.
+      try{if(!localStorage.getItem('cl_pomodoro_position_v1:'+identity))state.collapsed=true;}catch{state.collapsed=true;}
+    }
     const tr = text => window.careerLensLocale?.translate(text) || text;
-    let audio = null;
+    let audio = null, floatingControls=null;
     const save = () => {try {sessionStorage.setItem(key,JSON.stringify(state));} catch {}};
     container.classList.add('pomodoro');
     container.innerHTML = `<div class="pomodoro-head"><span aria-hidden="true">🍅</span><h2 class="pomodoro-title">Pomodoro buddy</h2><span class="pomodoro-mini" data-timer-mini data-no-translate></span><button type="button" class="pomodoro-toggle" aria-controls="pomodoroBody" data-timer-collapse></button></div>
@@ -44,11 +48,19 @@ window.PomodoroTimer = (() => {
       collapse.setAttribute('aria-expanded',String(!state.collapsed));
       collapse.setAttribute('aria-label',state.collapsed?'Expand timer':'Minimise timer');
       container.dataset.running=String(state.deadline!==null);
+      container.dataset.collapsed=String(state.collapsed);
+      if(floating){
+        const tomato=container.querySelector('.pomodoro-head>span:first-child');
+        tomato.setAttribute('role','button');tomato.tabIndex=state.collapsed?0:-1;
+        tomato.removeAttribute('aria-hidden');tomato.setAttribute('aria-label',tr('Expand timer'));
+        tomato.setAttribute('aria-expanded',String(!state.collapsed));
+      }
       start.textContent=tr(state.deadline!==null?'Pause':state.remaining<durations[state.mode]?'Resume':state.mode==='focus'?'Start focus':'Start break');
       find('[data-timer-count]').textContent=String(state.completed);
       find('[data-timer-sound]').textContent=tr(state.sound?'Sound on':'Sound off');
       find('[data-timer-sound]').setAttribute('aria-pressed',String(state.sound));
       container.querySelectorAll('[data-timer-mode]').forEach(button=>button.setAttribute('aria-pressed',String(button.dataset.timerMode===state.mode)));
+      floatingControls?.reposition();
     }
     function enableAudio() {
       if (!state.sound) return;
@@ -99,12 +111,144 @@ window.PomodoroTimer = (() => {
     find('[data-timer-sound]').addEventListener('click',()=>{state.sound=!state.sound;enableAudio();save();draw();});
     message(state.deadline!==null?'Welcome back. Your timer is still running.':'One tomato, one small step.');
     tick();
+    if(floating)floatingControls=makeFloating(container,identity,tr,()=>{if(state.collapsed){state.collapsed=false;save();draw();}});
     const interval=window.setInterval(tick,1000);
     document.addEventListener('visibilitychange',tick);
     window.addEventListener('pageshow',tick);
     window.addEventListener('pagehide',save);
-    instances.set(container,{interval});
+    instances.set(container,{interval,reposition:()=>floatingControls?.reposition()});
     window.careerLensLocale?.apply();
   }
-  return {mount};
+  function makeFloating(container,identity,tr,expand){
+    const key='cl_pomodoro_position_v1:'+identity;
+    container.classList.add('pomodoro-floating');
+    document.body.appendChild(container);
+    const head=container.querySelector('.pomodoro-head');
+    head.tabIndex=0;
+    head.setAttribute('aria-label',tr('Move Pomodoro buddy with arrow keys. Press Home to return to the left.'));
+    head.removeAttribute('title');
+    const tomato=head.firstElementChild;
+    const tip=document.createElement('div');tip.className='pomodoro-tooltip';tip.id='pomodoroBuddyTooltip';tip.setAttribute('role','tooltip');tip.hidden=true;
+    const tipTitle=document.createElement('strong'),tipIntro=document.createElement('p'),tipHelp=document.createElement('p');
+    tipHelp.className='pomodoro-tooltip-help';tip.append(tipTitle,tipIntro,tipHelp);document.body.appendChild(tip);
+    tomato.setAttribute('aria-describedby',tip.id);
+    function hideTip(){tip.hidden=true;}
+    function placeTip(){
+      if(tip.hidden)return;
+      const anchor=tomato.getBoundingClientRect(),box=tip.getBoundingClientRect();
+      const right=anchor.right+12;
+      const left=right+box.width<=window.innerWidth-12?right:anchor.left-box.width-12;
+      tip.style.left=Math.max(12,Math.min(left,window.innerWidth-box.width-12))+'px';
+      tip.style.top=Math.max(12,Math.min(anchor.top+(anchor.height-box.height)/2,window.innerHeight-box.height-12))+'px';
+    }
+    function showTip(){
+      if(container.hidden||container.dataset.collapsed!=='true'||container.classList.contains('pomodoro-dragging'))return;
+      tipTitle.textContent=tr('Pomodoro buddy');
+      tipIntro.textContent=tr('Your little study companion: 25 minutes of focus, then a 5-minute break.');
+      tipHelp.textContent=tr('Click to open. Drag the tomato to move.');
+      tip.hidden=false;placeTip();
+    }
+    tomato.addEventListener('pointerenter',event=>{if(event.pointerType!=='touch')showTip();});
+    tomato.addEventListener('pointerleave',hideTip);tomato.addEventListener('focus',showTip);tomato.addEventListener('blur',hideTip);
+    tomato.addEventListener('keydown',event=>{if(event.key==='Escape')hideTip();});
+    let point={x:18,y:window.innerHeight-90},size={width:300,height:null},drag=null,resizing=null;
+    try{
+      const saved=JSON.parse(localStorage.getItem(key)||'null');
+      if(Number.isFinite(saved?.x)&&Number.isFinite(saved?.y))point={x:saved.x,y:saved.y};
+      if(Number.isFinite(saved?.width))size.width=Math.max(240,Math.min(600,saved.width));
+      if(Number.isFinite(saved?.height))size.height=Math.max(260,Math.min(900,saved.height));
+    }catch{}
+    const persist=()=>{try{localStorage.setItem(key,JSON.stringify({...point,...size}));}catch{}};
+    function reposition(){
+      container.style.setProperty('--buddy-width',Math.min(size.width,Math.max(0,window.innerWidth-24))+'px');
+      container.style.setProperty('--buddy-height',size.height===null?'auto':Math.min(size.height,Math.max(0,window.innerHeight-24))+'px');
+      container.dataset.compact=String(size.width<280||(size.height!==null&&size.height<440));
+      if(container.hidden){hideTip();return;}
+      if(container.dataset.collapsed!=='true')hideTip();
+      const box=container.getBoundingClientRect();
+      point.x=Math.max(12,Math.min(point.x,Math.max(12,window.innerWidth-box.width-12)));
+      point.y=Math.max(12,Math.min(point.y,Math.max(12,window.innerHeight-box.height-12)));
+      container.style.left=point.x+'px';container.style.top=point.y+'px';
+      placeTip();
+    }
+    head.addEventListener('pointerdown',event=>{
+      hideTip();
+      if(event.button!==0||event.target.closest('button,a,input,select'))return;
+      if(container.dataset.collapsed==='true'&&event.target!==head.firstElementChild)return;
+      reposition();drag={id:event.pointerId,x:event.clientX,y:event.clientY,startX:point.x,startY:point.y,moved:false,collapsed:container.dataset.collapsed==='true'};
+      head.setPointerCapture(event.pointerId);container.classList.add('pomodoro-dragging');event.preventDefault();
+    });
+    head.addEventListener('pointermove',event=>{
+      if(!drag||event.pointerId!==drag.id)return;
+      if(Math.hypot(event.clientX-drag.x,event.clientY-drag.y)>6)drag.moved=true;
+      if(!drag.moved)return;
+      point={x:drag.startX+event.clientX-drag.x,y:drag.startY+event.clientY-drag.y};reposition();
+    });
+    function stop(event){
+      if(!drag||event.pointerId!==drag.id)return;
+      const tapped=event.type==='pointerup'&&drag.collapsed&&!drag.moved&&Math.hypot(event.clientX-drag.x,event.clientY-drag.y)<=6;
+      if(head.hasPointerCapture(event.pointerId))head.releasePointerCapture(event.pointerId);
+      drag=null;container.classList.remove('pomodoro-dragging');persist();
+      if(tapped)expand();
+    }
+    head.addEventListener('pointerup',stop);head.addEventListener('pointercancel',stop);
+    head.addEventListener('keydown',event=>{
+      if((event.target===head.firstElementChild||event.target===head)&&container.dataset.collapsed==='true'&&(event.key==='Enter'||event.key===' ')){event.preventDefault();expand();return;}
+      if(event.target!==head)return;
+      const step=event.shiftKey?48:16;
+      if(event.key==='Home')point={x:18,y:window.innerHeight-container.getBoundingClientRect().height-18};
+      else if(event.key==='ArrowLeft')point.x-=step;
+      else if(event.key==='ArrowRight')point.x+=step;
+      else if(event.key==='ArrowUp')point.y-=step;
+      else if(event.key==='ArrowDown')point.y+=step;
+      else return;
+      event.preventDefault();reposition();persist();
+    });
+    container.querySelector('[data-timer-mini]').addEventListener('click',()=>{if(container.dataset.collapsed==='true')expand();});
+    const handle=document.createElement('button');handle.type='button';handle.className='pomodoro-resize-handle';
+    handle.textContent='↘';handle.title=tr('Drag to resize. Arrow keys adjust size; Home resets.');
+    handle.setAttribute('aria-label',tr('Resize Pomodoro buddy'));
+    container.appendChild(handle);
+    handle.addEventListener('pointerdown',event=>{
+      if(event.button!==0)return;
+      const box=container.getBoundingClientRect();
+      resizing={id:event.pointerId,x:event.clientX,y:event.clientY,width:box.width,height:box.height};
+      handle.setPointerCapture(event.pointerId);event.preventDefault();event.stopPropagation();
+    });
+    function setSize(width,height){
+      size={width:Math.max(240,Math.min(600,width)),height:Math.max(260,Math.min(900,height))};
+      reposition();
+    }
+    handle.addEventListener('pointermove',event=>{
+      if(!resizing||event.pointerId!==resizing.id)return;
+      setSize(resizing.width+event.clientX-resizing.x,resizing.height+event.clientY-resizing.y);
+    });
+    function stopResize(event){
+      if(!resizing||event.pointerId!==resizing.id)return;
+      if(handle.hasPointerCapture(event.pointerId))handle.releasePointerCapture(event.pointerId);
+      resizing=null;persist();
+    }
+    handle.addEventListener('pointerup',stopResize);handle.addEventListener('pointercancel',stopResize);
+    function resetSize(){size={width:300,height:null};reposition();persist();}
+    handle.addEventListener('dblclick',resetSize);
+    handle.addEventListener('keydown',event=>{
+      const box=container.getBoundingClientRect(),step=event.shiftKey?40:16;
+      if(event.key==='Home')resetSize();
+      else if(event.key==='ArrowLeft')setSize(box.width-step,box.height);
+      else if(event.key==='ArrowRight')setSize(box.width+step,box.height);
+      else if(event.key==='ArrowUp')setSize(box.width,box.height-step);
+      else if(event.key==='ArrowDown')setSize(box.width,box.height+step);
+      else return;
+      event.preventDefault();persist();
+    });
+    window.addEventListener('resize',()=>{reposition();persist();});
+    reposition();persist();
+    return {reposition};
+  }
+  function setVisible(container,visible){
+    if(!container)return;
+    container.hidden=!visible;
+    instances.get(container)?.reposition();
+  }
+  return {mount,setVisible};
 })();

@@ -25,6 +25,7 @@ window.SDGPassport = (() => {
     try{activity=JSON.parse(localStorage.getItem('cl_learning_'+user.unique_uid)||'{}')||{};}catch{}
     const courses=new Map();
     for(const r of roles||[])for(const course of r.ordered_pathway||[])courses.set(JSON.stringify([course.target_skill,course.url]),course);
+    for(const course of window.DiscoveryLearning?.catalogue||[])courses.set(JSON.stringify([course.target_skill,course.url]),course);
     const completed=[];
     for(const [key,item] of Object.entries(activity)){
       if(item?.status!=='completed')continue;
@@ -76,7 +77,7 @@ window.SDGPassport = (() => {
       const title=`SDG ${number} · ${goals[number-1][0]}`;
       const panel=container.querySelector('#passportEvidence');
       panel.innerHTML=`<div class="passport-evidence-symbol" aria-hidden="true">${items.length?stamp(number):number}</div><div><span class="passport-evidence-label ${items.length?'':'is-locked'}">${esc(tr(items.length?'Stamp earned':'Not yet earned'))}</span><h3 tabindex="-1">${esc(title)}</h3>${items.length?`<p>${esc(tr('Your completed learning behind this stamp'))}</p><ul>${items.map(c=>`<li><strong>${esc(c.target_skill)}</strong> · ${esc(c.sdg)}${c.updated?' · '+esc(date(c.updated)):''}</li>`).join('')}</ul>`:unique.length?`<p>${esc(tr('Complete a mapped course and mark it Completed to collect this stamp.'))}</p><ul>${unique.slice(0,4).map(c=>`<li>${esc(c.target_skill)} · ${esc(c.sdg)}</li>`).join('')}</ul>`:`<p>${esc(tr('No course in your current learning paths maps to this goal yet. It stays open for a future milestone.'))}</p>`}<button type="button" class="passport-action" data-passport-learn>${esc(tr('Go to my learning plan'))} →</button></div>`;
-      panel.querySelector('[data-passport-learn]').addEventListener('click',()=>onLearn?.());
+      panel.querySelector('[data-passport-learn]').addEventListener('click',()=>onLearn?.(number));
       if(focus){
         panel.querySelector('h3').focus({preventScroll:true});
         panel.scrollIntoView({behavior:window.matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth',block:'start'});

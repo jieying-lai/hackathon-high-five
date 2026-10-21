@@ -1,0 +1,44 @@
+/* Keep learning destinations accessible while reading long course lists. */
+.growth-navigation {
+  position: sticky;
+  top: calc(var(--growth-header-height, 90px) + 8px);
+  z-index: 38;
+  background: #fbf8ff;
+  border-color: #fff;
+  box-shadow: 0 6px 22px #5d3b8712;
+}
+.portal-menu-open .growth-navigation { visibility: hidden; }
+:is(#tab-plan, #tab-discover, #tab-saved, #tab-completed, #tab-passport) [data-outline-label] {
+  scroll-margin-top: calc(var(--growth-header-height, 90px) + 110px);
+}
+.course-favourite {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  border: 1px solid #ead7e9;
+  background: #fff;
+  color: #b8739a;
+  cursor: pointer;
+}
+.course-favourite span { font-size: 26px; line-height: 1; }
+.course-favourite:hover { background: #fff1f6; border-color: #f0a9c4; }
+.course-favourite[aria-pressed=true] { color: #e34275; background: #fff0f5; border-color: #f3abc3; }
+.course-favourite[aria-pressed=true] span { font-size: 23px; }
+.course-favourite:focus-visible { outline: 3px solid #c084fc; outline-offset: 3px; }
+.discovery-card.discovery-replacing { opacity: .65; }
+.discovery-replacement-empty { justify-content: center; color: #81758e; font-size: 13px; line-height: 1.8; }
+@media (max-width: 640px) {
+  .growth-navigation {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    gap: 6px;
+    scrollbar-width: thin;
+    scroll-padding-inline: 8px;
+  }
+  .growth-navigation button { flex: 0 0 auto; white-space: nowrap; }
+}

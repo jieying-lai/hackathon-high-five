@@ -1,0 +1,63 @@
+/* One visual rhythm for the career plan; the shared timer keeps its own style. */
+#tab-plan { --plan-gap: 24px; }
+#tab-plan > .growth-intro { margin-top: 0; margin-bottom: 4px; }
+.reskilling-overview {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+  align-items: center;
+  gap: 36px;
+  padding: 28px 32px;
+  border: 1px solid #ffffffed;
+  border-radius: 28px;
+}
+.reskilling-target { display: flex; flex-direction: column; align-items: flex-start; gap: 14px; min-width: 0; }
+.reskilling-target > label { color: #5e5175; font-size: 13px; font-weight: 800; }
+.reskilling-target > .input { width: 100%; min-width: 0; max-width: none; min-height: 48px; }
+.reskilling-progress { min-width: 0; border-left: 1px solid #dfd5ec; padding-left: 36px; }
+.reskilling-progress-percent { font-size: 23px; font-weight: 800; color: #7940db; }
+.reskilling-progress .hint { font-size: 11px; line-height: 1.6; max-width: 46ch; }
+.reskilling-achievements {
+  display: flex; align-items: center; gap: 10px; width: 100%;
+  margin-top: 16px; padding-top: 14px; border-top: 1px solid #e6deef;
+  text-align: left; font-size: 12px; font-weight: 700; color: #6b5085;
+}
+.reskilling-achievements > b { margin-left: auto; background: #efe6fa; padding: 3px 10px; border-radius: 99px; color: #7240ba; }
+.reskilling-achievements:hover { color: #6d28d9; }
+.reskilling-achievements:focus-visible { outline: 3px solid #a78bfa; outline-offset: 5px; border-radius: 6px; }
+#tab-plan #planPomodoroHost > .pomodoro { border-radius: 28px; padding: 24px 28px; }
+.learning-next-card {
+  display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center;
+  gap: 32px; padding: 28px 32px; border-radius: 28px;
+  background: linear-gradient(110deg, #faf7ffed, #f0f8ffed);
+  border: 1px solid #d7c9fc;
+}
+.learning-next-content { min-width: 0; }
+.learning-next-content h2 { font-size: 12px; font-weight: 800; color: #8465aa; }
+.learning-next-content h3 { font-size: 22px; line-height: 1.4; font-weight: 800; color: #5940b6; margin: 8px 0; }
+.learning-next-content p { font-size: 14px; line-height: 1.8; color: #70647e; max-width: 75ch; }
+.learning-next-action { display: flex; flex-direction: column; gap: 14px; align-items: flex-end; }
+.learning-next-action p { font-size: 12px; color: #7a6c89; }
+.learning-next-action .btn { white-space: nowrap; padding: 12px 22px; }
+.learning-next-done { grid-template-columns: 1fr; }
+#tab-plan .reskilling-path { border-radius: 28px; padding: 28px 32px; }
+.reskilling-path .growth-path-heading h2 { font-size: 18px; }
+.reskilling-path .growth-path-heading .hint { font-size: 12px; line-height: 1.7; }
+#tab-plan .growth-tool { border-radius: 22px; background: #ffffff9c; }
+.learning-step-completed .step-dot { background: #18976a; }
+.reskilling-path #timeline .learning-step-completed>article { background: linear-gradient(145deg,#f1fcf6,#e7f7ef); border-color: #a8ddc1; box-shadow: none; }
+.learning-step-check { position: absolute; right: -4px; bottom: -3px; display: grid; place-items: center; width: 17px; height: 17px; border: 2px solid #fff; border-radius: 50%; background: #087950; color: #fff; font-size: 10px; font-weight: 800; line-height: 1; }
+.learning-step-completed .text-indigo-600, .learning-step-completed .text-indigo-700 { color: #16774f; }
+.learning-step-completed select { color: #126442; background-color: #f4fff8; border-color: #a8ddc1; }
+.reskilling-path #timeline .learning-step-completed:before { background: linear-gradient(90deg,#61c49a,#b2e6cb); }
+@media (max-width: 900px) {
+  .reskilling-overview { grid-template-columns: 1fr; gap: 22px; }
+  .reskilling-progress { padding-left: 0; padding-top: 22px; border-left: 0; border-top: 1px solid #dfd5ec; }
+  .reskilling-progress .hint { max-width: none; }
+}
+@media (max-width: 640px) {
+  .reskilling-overview, .learning-next-card, #tab-plan .reskilling-path { padding: 22px 18px; border-radius: 24px; }
+  #tab-plan #planPomodoroHost > .pomodoro { padding: 20px 18px; border-radius: 24px; }
+  .learning-next-card { grid-template-columns: 1fr; gap: 20px; }
+  .learning-next-content h3 { font-size: 19px; }
+  .learning-next-action { align-items: flex-start; }
+}

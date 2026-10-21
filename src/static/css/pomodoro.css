@@ -23,3 +23,39 @@
 .pomodoro-sound{padding:4px;border:0;background:transparent;color:#805768;font-size:11px;text-decoration:underline;text-underline-offset:3px}
 @media(max-width:1023px){.pomodoro-art{width:126px;height:118px}.pomodoro-art img{width:126px;height:126px}}
 @media(prefers-reduced-motion:reduce){.pomodoro-art img{transition:none;transform:none!important}}
+.pomodoro-floating{position:fixed;left:18px;top:calc(100vh - 90px);z-index:55;width:min(300px,calc(100vw - 24px));max-height:calc(100dvh - 24px);padding:16px;border-radius:24px;overflow-x:hidden;overflow-y:auto;box-shadow:0 14px 44px #7e31582b,0 2px 8px #7e315813;backdrop-filter:blur(18px);scrollbar-width:thin}
+.pomodoro-floating[hidden]{display:none}
+.pomodoro-floating[data-collapsed=true]{width:min(96px,calc(100vw - 24px));border-radius:20px;padding:8px 10px}
+.pomodoro-floating .pomodoro-head{cursor:grab;touch-action:none;user-select:none;gap:8px;outline-offset:4px;border-radius:12px}
+.pomodoro-floating .pomodoro-head:focus-visible{outline:3px solid #c084fc}
+.pomodoro-floating .pomodoro-head>span:first-child{flex-shrink:0;width:40px;height:40px;font-size:0;background:url('/static/illustrations/pomodoro-tomato.png') center/contain no-repeat}
+.pomodoro-floating .pomodoro-title{font-size:12px;line-height:1.4;min-width:0}
+.pomodoro-floating .pomodoro-mini{font-size:12px}
+.pomodoro-floating .pomodoro-toggle{flex-shrink:0;width:28px;height:28px;cursor:pointer}
+.pomodoro-floating.pomodoro-dragging .pomodoro-head{cursor:grabbing}
+.pomodoro-floating.pomodoro-dragging{box-shadow:0 20px 50px #7e31583b}
+.portal-menu-open .pomodoro-floating{visibility:hidden;pointer-events:none}
+.pomodoro-floating{display:flex;flex-direction:column;width:min(var(--buddy-width,300px),calc(100vw - 24px));height:var(--buddy-height,auto);overflow:hidden;background:#fff3f7;backdrop-filter:none}
+.pomodoro-floating .pomodoro-head{flex-shrink:0}
+.pomodoro-floating .pomodoro-body{min-height:0;overflow-y:auto;overflow-x:hidden;max-height:calc(100dvh - 110px);padding-bottom:14px;scrollbar-width:thin;flex:1 1 auto}
+.pomodoro-floating[data-collapsed=true]{height:auto;padding:0;border:0;border-radius:0;background:transparent;box-shadow:none;overflow:visible;backdrop-filter:none}
+.pomodoro-floating[data-collapsed=true] .pomodoro-head{flex-direction:column;gap:4px;justify-content:center;align-items:center;cursor:default}
+.pomodoro-floating[data-collapsed=true] .pomodoro-head>span:first-child{width:76px;height:76px;cursor:grab;filter:drop-shadow(0 4px 5px #8b31551c)}
+.pomodoro-floating.pomodoro-dragging[data-collapsed=true] .pomodoro-head>span:first-child{cursor:grabbing}
+.pomodoro-floating[data-collapsed=true] .pomodoro-title{display:none}
+.pomodoro-floating[data-collapsed=true] .pomodoro-mini{order:-1;font-size:20px;text-shadow:0 1px 2px #fff;cursor:pointer}
+.pomodoro-floating[data-collapsed=true] .pomodoro-toggle{display:none}
+.pomodoro-floating .pomodoro-head>span:first-child:focus-visible{outline:3px solid #c084fc;outline-offset:3px;border-radius:14px}
+.pomodoro-resize-handle{position:absolute;bottom:2px;right:2px;display:grid;place-items:center;width:30px;height:30px;border-radius:10px;background:#fff7fa;color:#a74370;border:1px solid #f1c9d9;cursor:nwse-resize;touch-action:none;font-size:20px;line-height:1;z-index:2}
+.pomodoro-floating[data-collapsed=true] .pomodoro-resize-handle{display:none}
+.pomodoro-floating[data-compact=true] .pomodoro-art{height:76px;width:80px;margin:2px auto}
+.pomodoro-floating[data-compact=true] .pomodoro-art img{height:80px;width:80px}
+.pomodoro-floating[data-compact=true] .pomodoro-clock{font-size:34px}
+.pomodoro-floating[data-compact=true] .pomodoro-status{font-size:11px;min-height:24px;margin:4px 0 8px}
+.pomodoro-floating[data-compact=true] .pomodoro-modes{margin-top:10px}
+.pomodoro-floating[data-compact=true] .pomodoro-foot{margin-top:8px;padding-right:12px}
+.pomodoro-tooltip{position:fixed;z-index:56;width:min(250px,calc(100vw - 24px));padding:15px 17px;border:1px solid #f0cedb;border-radius:18px;background:#fff8fb;color:#694254;box-shadow:0 8px 28px #78354b20;font-size:12px;line-height:1.7;pointer-events:none}
+.pomodoro-tooltip[hidden],.portal-menu-open .pomodoro-tooltip{display:none}
+.pomodoro-tooltip strong{display:block;color:#a43866;font-size:13px;margin-bottom:5px}
+.pomodoro-tooltip p{margin:0}
+.pomodoro-tooltip .pomodoro-tooltip-help{margin-top:7px;font-size:11px;color:#8e6980}

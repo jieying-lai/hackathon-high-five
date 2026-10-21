@@ -1,0 +1,45 @@
+.learning-impact{margin:26px 0;padding:25px;border:1px solid #e5d5ef;border-radius:26px;background:linear-gradient(135deg,#fffaf5,#fcf4ff 70%,#f1faf8)}
+.impact-heading{display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap}
+.impact-heading h2{font-size:22px;line-height:1.4;font-weight:800;color:#4e355d;margin:7px 0}
+.impact-heading p{font-size:12px;color:#8b7896;line-height:1.7}
+.impact-pledge-chip{padding:8px 12px;border:1px solid #edd090;border-radius:999px;background:#fff8df;color:#a06d23;font-size:11px;font-weight:800}
+.impact-badges{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px;margin-top:22px}
+.impact-badge{min-width:0;display:flex;flex-direction:column;align-items:center;padding:8px 10px 13px;background:#fff;border:1px solid #efe3ef;border-radius:18px;overflow:hidden;text-align:center}
+.impact-badge-art{display:block;width:100%;aspect-ratio:1/1.7;background-image:url('/static/illustrations/learning-milestone-badges.png');background-repeat:no-repeat;background-size:500% auto;background-position:var(--badge-x) center}
+.impact-badge.is-locked .impact-badge-art{filter:grayscale(.65);opacity:.55}
+.impact-badge.is-earned{border-color:#efc36c;box-shadow:0 5px 16px #d69d2720;background:#fffdf6}
+.impact-badge strong{font-size:11px;color:#695173;margin-top:3px;line-height:1.6}
+.impact-badge-status{font-size:10px;color:#9a8aa1;line-height:1.6;margin:5px 0}
+.is-earned .impact-badge-status{color:#19815c;font-weight:800}
+.impact-badge progress{width:100%;height:5px;border-radius:99px;overflow:hidden;accent-color:#be8cd9;margin-top:auto}
+.is-earned progress{accent-color:#27a779}
+.impact-badge-count{font-size:10px;color:#937fa2;margin-top:5px}
+.impact-next{margin-top:14px;font-size:12px;font-weight:700;color:#946328}
+.impact-bank{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.6fr);gap:24px;padding:25px;margin-top:24px;border-radius:22px;border:1px solid #f0cddc;background:#fff4f6}
+.impact-piggy{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}
+.impact-piggy img{width:min(220px,100%);height:auto}
+.impact-piggy span{font-size:12px;color:#94657e}
+.impact-piggy strong{display:block;font-size:30px;color:#a74776;line-height:1.4;font-weight:800}
+.impact-piggy p{font-size:10px;line-height:1.6;color:#9a7c8e;margin-top:5px}
+.impact-bank-details h3{font-size:20px;line-height:1.5;font-weight:800;color:#7a4066}
+.impact-bank-details>p{font-size:12px;color:#99738b;line-height:1.7;margin-top:8px}
+.impact-totals{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-top:18px}
+.impact-totals>div{display:flex;flex-direction:column;gap:7px;background:#fff;border:1px solid #f1dfe7;border-radius:13px;padding:13px 10px}
+.impact-totals span{font-size:10px;color:#9e7d94;line-height:1.5}
+.impact-totals strong{font-size:16px;line-height:1.5;font-weight:800;color:#8f4973}
+.impact-schedule{display:flex;flex-direction:column;gap:10px;font-size:12px;margin-top:19px;color:#98728a}
+.impact-schedule>div{display:flex;justify-content:space-between;gap:15px}
+.impact-schedule dd{font-weight:800;color:#80506e;text-align:right}
+.impact-schedule a{color:#80506e;text-decoration:underline;text-underline-offset:3px}
+.impact-bank-details .impact-community{font-size:11px;color:#99617f}
+.impact-bank-details .impact-ledger-note{font-size:10px}
+.impact-demo{padding:9px 12px;border-radius:10px;background:#fff8e7;border:1px solid #efdfb5;color:#9a782e!important;font-size:10px!important}
+.impact-transparency{margin-top:20px;border-top:1px solid #ecdfed;padding-top:15px;font-size:11px;line-height:1.8;color:#8b7896}
+.impact-transparency summary{cursor:pointer;font-weight:800;color:#7a548d}
+.impact-transparency p{margin-top:10px}
+.impact-transparency h4{font-weight:800;margin-top:15px}
+.impact-recipient-links{display:flex;flex-wrap:wrap;gap:14px;margin-top:12px}
+.impact-transparency a{color:#7950a1;text-decoration:underline;text-underline-offset:3px}
+.impact-error{color:#b75370;font-size:12px;margin:10px 0}
+@media(max-width:900px){.impact-badges{grid-auto-flow:column;grid-template-columns:none;grid-auto-columns:155px;overflow-x:auto;padding-bottom:10px;scroll-snap-type:x proximity}.impact-badge{scroll-snap-align:start}.impact-bank{grid-template-columns:1fr}.impact-piggy{flex-direction:row;gap:20px;text-align:left}.impact-piggy img{width:150px}}
+@media(max-width:540px){.learning-impact{padding:17px}.impact-heading h2{font-size:19px}.impact-bank{padding:17px}.impact-totals{grid-template-columns:1fr}.impact-totals>div{flex-direction:row;justify-content:space-between;align-items:center}.impact-piggy img{width:115px}.impact-piggy strong{font-size:24px}.impact-schedule>div{flex-direction:column;gap:4px}.impact-schedule dd{text-align:left}}

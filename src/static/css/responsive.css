@@ -1,6 +1,6 @@
 /* Minimal responsive corrections. Original theme, typography, spacing and desktop composition are retained. */
-.learning-step-completed{filter:grayscale(1)}
-.learning-step-completed>article{background:#f1f5f9;border-color:#cbd5e1;box-shadow:none}
+.learning-step-completed{filter:none}
+.learning-step-completed>article{background:linear-gradient(145deg,#f1fcf6,#e7f7ef);border-color:#a8ddc1;box-shadow:none}
 @media(min-width:1280px){
  .responsive-ui .portal-desktop-header{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr)}
  .responsive-ui .portal-desktop-header .desktop-navigation{justify-self:center}

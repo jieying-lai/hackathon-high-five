@@ -24,6 +24,8 @@ if str(_SRC_DIR) not in sys.path:
 from flask import Flask, jsonify, redirect, render_template, request, send_file, session
 
 import career_pathways
+import course_recommender
+import learning_impact
 import chatbot_engine
 import cv_engine
 import cv_ai
@@ -786,6 +788,31 @@ def api_submit_3_verification_answers():
         return jsonify({"ok": False, "message": str(e)}), 500
 
 # ------------------------------------------------------------------ Course Mapping for Reskilling Pathway
+@app.route('/api/learning-impact', methods=['GET', 'POST'])
+@api_role('job_seeker')
+def api_learning_impact():
+    try:
+        uid = session['user']['unique_uid']
+        if request.method == 'POST':
+            return jsonify(learning_impact.sync(uid, json_object().get('completed_urls', [])))
+        return jsonify(learning_impact.get_summary(uid))
+    except ValueError as exc:
+        return jsonify(ok=False, message=str(exc)), 400
+    except (OSError, learning_impact.sqlite3.Error):
+        app.logger.exception('Learning milestone ledger unavailable')
+        return jsonify(ok=False, message='Learning milestones are unavailable. Please retry.'), 503
+
+
+@app.route('/api/discovery/recommend', methods=['POST'])
+@api_role('job_seeker')
+def api_discovery_recommend():
+    try:
+        return jsonify(course_recommender.recommend(json_object(), session['user']['unique_uid']))
+    except (OSError, ValueError, KeyError):
+        app.logger.exception('Course recommendation model unavailable')
+        return jsonify(ok=False, message='Course recommendations are unavailable. Please retry later.'), 503
+
+
 @app.route('/api/reskilling/course-mapping', methods=['GET', 'POST'])
 @api_role('job_seeker')
 def api_course_mapping():

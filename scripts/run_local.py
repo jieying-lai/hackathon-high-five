@@ -71,6 +71,8 @@ def main():
             print('WARNING: 16 GB RAM is recommended. AI generation can be slow or run out of memory.', flush=True)
         if memory.available < 5 * 1024**3:
             print('Please close memory-heavy applications. CPU AI needs several GB of available RAM.', flush=True)
+        if memory.available < 4 * 1024**3:
+            raise RuntimeError('Not enough free memory to start local AI. Close unused apps to free at least 4 GB of RAM, then restart Start.cmd.')
         base = ensure_base_model()
         model_port = free_port(8766)
         web_port = free_port(5000)
@@ -104,7 +106,8 @@ def main():
         site = start('website', [sys.executable, '-u', str(ROOT / 'scripts/serve_local_site.py')])
         url = f'http://127.0.0.1:{web_port}'
         wait_ready(site, url + '/', 120)
-        instance.write_text(json.dumps({'port': web_port, 'pid': os.getpid()}))
+        instance.write_text(json.dumps({'port': web_port, 'pid': os.getpid(), 'model_url':f'http://127.0.0.1:{model_port}/generate',
+                                       'model_pid':model.pid, 'website_pid':site.pid}))
         print('\nCareerLens is ready: ' + url + '\nKeep this window open. Press Ctrl+C to stop both services.', flush=True)
         print('Demo login: hr.demo@nexussme.my / CareerLens@2026', flush=True)
         webbrowser.open(url)

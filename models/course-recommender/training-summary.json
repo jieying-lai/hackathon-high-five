@@ -1,0 +1,16 @@
+{
+  "kind": "fitted-tfidf-content-v1",
+  "trained_at_utc": "2026-10-21T13:32:36.971361+00:00",
+  "course_count": 5014,
+  "vocabulary_size": 28865,
+  "usage_rows": 420,
+  "catalogue_sha256": "37fa0a4ba95123079e931e2d8d0a35b2d0d92d79976ea31a6b1559c7ffd79e47",
+  "usage_sha256": "f74537e96b3b0ddc785b375fdda89f22568fad1de19e22890f866ac571177d8a",
+  "objective": "Corpus TF-IDF fit; cosine retrieval and feedback reranking",
+  "sdg_labels_used": false,
+  "cv_used": false,
+  "neural_finetuning": false,
+  "preference_accuracy_evaluated": false,
+  "satisfaction_scale": "1-10 in the supplied usage dataset",
+  "usage_limit": "Aggregate platform prior only. No user-to-course preference ground truth."
+}

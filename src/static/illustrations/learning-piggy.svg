@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="300" height="240" viewBox="0 0 300 240" role="img" aria-label="A cheerful pink piggy bank with a golden coin">
+ <defs><linearGradient id="p" x2=".5" y2="1"><stop stop-color="#ffd8e8"/><stop offset="1" stop-color="#f29abd"/></linearGradient><linearGradient id="g" x2=".3" y2="1"><stop stop-color="#fff0a1"/><stop offset="1" stop-color="#efb63f"/></linearGradient></defs>
+ <ellipse cx="148" cy="217" rx="102" ry="12" fill="#e7c4dd" opacity=".4"/>
+ <path d="M241 147c35-24 35 27 12 15-18-10 19-32 25-9" fill="none" stroke="#e594b4" stroke-width="8" stroke-linecap="round"/>
+ <path d="M73 182l-4 29q0 7 9 7h15l8-23m92-4 8 20q2 7 10 7h13l-2-35" fill="#e991b1" stroke="#cd769b" stroke-width="3"/>
+ <ellipse cx="148" cy="147" rx="102" ry="66" fill="url(#p)" stroke="#df8bac" stroke-width="3"/>
+ <path d="M81 103Q62 44 114 85" fill="#ffc4dc" stroke="#df8bac" stroke-width="3"/><path d="M83 86l-1-19 21 16" fill="#f494b8"/>
+ <path d="M122 89q27-12 53-1" fill="none" stroke="#b36a8c" stroke-width="6" stroke-linecap="round"/>
+ <ellipse cx="68" cy="156" rx="32" ry="25" fill="#f5acc9" stroke="#dc85a9" stroke-width="3"/><ellipse cx="58" cy="156" rx="4" ry="6" fill="#a35379"/><ellipse cx="77" cy="156" rx="4" ry="6" fill="#a35379"/>
+ <path d="M103 128q8-12 16 0m51 0q8-12 16 0" fill="none" stroke="#7d4766" stroke-width="5" stroke-linecap="round"/>
+ <ellipse cx="112" cy="151" rx="12" ry="7" fill="#ef85ab" opacity=".6"/><ellipse cx="184" cy="151" rx="12" ry="7" fill="#ef85ab" opacity=".6"/>
+ <path d="M136 151q13 18 26-1" fill="#b05d81" stroke="#b05d81" stroke-width="3" stroke-linecap="round"/><path d="M141 155q8 8 16-1" stroke="#f9acc6" stroke-width="5" fill="none"/>
+ <circle cx="150" cy="42" r="27" fill="url(#g)" stroke="#dba52f" stroke-width="3"/><circle cx="150" cy="42" r="21" fill="none" stroke="#fff1ac" stroke-width="2"/>
+ <text x="150" y="52" text-anchor="middle" font-family="sans-serif" font-size="28" font-weight="bold" fill="#b48120">$</text>
+ <path d="M44 45l4-11 4 11 11 4-11 4-4 11-4-11-11-4zM239 61l3-9 3 9 9 3-9 3-3 9-3-9-9-3z" fill="#eac45c"/><path d="M210 38c-9-14-25 1 0 17 25-16 9-31 0-17" fill="#ee89b0"/>
+</svg>
