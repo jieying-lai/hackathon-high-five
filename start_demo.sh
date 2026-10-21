@@ -4,8 +4,11 @@ set -e
 echo "=== CareerLens AI Demo Launcher ==="
 
 # 1. Kill any existing server on port 5000
-echo "1. Checking port 5000..."
+echo "1. Freeing port 5000..."
+pkill -9 -f "src/main" 2>/dev/null || true
+pkill -9 -f "flask" 2>/dev/null || true
 fuser -k 5000/tcp 2>/dev/null || true
+sleep 1
 
 # 2. Install basic requirements if missing
 echo "2. Ensuring requirements..."
