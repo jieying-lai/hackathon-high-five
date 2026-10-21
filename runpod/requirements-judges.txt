@@ -1,0 +1,7 @@
+# Install into the website/model server environment, not on judges' computers.
+-r ../requirements.txt
+gunicorn==23.0.0
+transformers==4.51.3
+peft==0.15.2
+accelerate==1.6.0
+# Install a PyTorch build matching the server GPU separately if not already present.
