@@ -92,10 +92,14 @@ window.SDGPassport = (() => {
       markSeen();container.querySelector('[data-passport-close]').focus({preventScroll:true});
     }
     container.querySelectorAll('[data-passport-open]').forEach(button=>button.addEventListener('click',open));
-    container.querySelector('[data-passport-close]').addEventListener('click',()=>{
+    container.querySelector('[data-passport-close]').addEventListener('click',event=>{
+      event.preventDefault();
+      event.stopPropagation();
       state.open=false;interior.hidden=true;cover.hidden=false;
       container.querySelectorAll('[data-passport-open]').forEach(b=>b.setAttribute('aria-expanded','false'));
       container.querySelector('[data-passport-open]').focus({preventScroll:true});
+      // The interior is much taller: bring the cover back into view on this same click.
+      container.scrollIntoView({behavior:'instant',block:'start'});
     });
     container.querySelectorAll('[data-passport-goal]').forEach(button=>button.addEventListener('click',()=>showEvidence(Number(button.dataset.passportGoal),true)));
     container.querySelector('[data-passport-print]').addEventListener('click',()=>{

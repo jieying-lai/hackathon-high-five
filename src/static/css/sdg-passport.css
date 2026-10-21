@@ -1,4 +1,4 @@
-.sdg-passport{--passport-ink:#714315;--passport-gold:#b88835;color:#503721;max-width:1120px;margin:auto}
+.sdg-passport{--passport-ink:#714315;--passport-gold:#b88835;color:#503721;max-width:1120px;margin:auto;scroll-margin-top:150px}
 .passport-cover-view{text-align:center;padding:12px 0 26px;perspective:1500px}
 .passport-cover-button{display:block;position:relative;width:min(350px,75vw);aspect-ratio:.72;margin:0 auto 25px;padding:0;border:0;border-radius:13px 22px 22px 13px;background:#8b1219 url('/static/passport/passport-cover.png') center/118% 113% no-repeat;box-shadow:13px 18px 28px #52141b30,inset 6px 0 10px #34070b55;transform:rotateY(-8deg) rotateZ(-2deg);transform-origin:left center;transition:transform .55s cubic-bezier(.2,.7,.2,1),box-shadow .4s;cursor:pointer}
 .passport-cover-button:hover{transform:rotateY(-17deg) rotateZ(-1deg);box-shadow:22px 20px 32px #52141b38}

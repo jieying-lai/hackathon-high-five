@@ -13,9 +13,9 @@
  .responsive-ui:not(.responsive-employer) .portal-desktop-header .portal-account>.btn{white-space:nowrap;flex-shrink:0}
  .responsive-ui:not(.responsive-employer) .portal-desktop-header [data-language-slot]{display:flex;align-items:center;flex-shrink:0}
  .responsive-ui:not(.responsive-employer) .portal-desktop-header .portal-user{flex-shrink:0}
- .responsive-employer .portal-desktop-header{padding:.65rem 1.1rem;gap:.65rem}
+ .responsive-employer .portal-desktop-header{grid-template-columns:minmax(11rem,1fr) max-content max-content;padding:.65rem 1.1rem;gap:clamp(.75rem,1vw,1.25rem)}
  .responsive-employer .portal-desktop-header .portal-account{flex-wrap:nowrap;align-items:center;gap:.5rem;max-width:none}
- .responsive-employer .portal-desktop-header .desktop-navigation{gap:.2rem}
+ .responsive-employer .portal-desktop-header .desktop-navigation{gap:.2rem;justify-self:end;width:max-content}
  .responsive-employer .portal-desktop-header .desktop-navigation>.nav-item,
  .responsive-employer .portal-desktop-header .nav-group summary{font-size:.78rem;padding:.65rem .6rem;gap:.4rem}
  .responsive-employer .portal-desktop-header .portal-account>.btn{height:42px;font-size:.75rem;padding:0 .9rem;white-space:nowrap;flex-shrink:0;border-radius:14px}
