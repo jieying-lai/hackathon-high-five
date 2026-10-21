@@ -2389,12 +2389,54 @@
     function renderPlanSelect() { planRole.innerHTML = roles.map((r, i) => `<option value="${i}" ${i === selected ? 'selected' : ''}>${esc(r.title)} · ${r.match_score}%</option>`).join(''); }
     function selectRole(i, go) { selected = Number(i); planRole.value = selected; renderPlan(); if (go) showTab('plan'); else if (current === 'dash') renderDash(); }
     function renderPlan() {
-      const r = roles[selected]; if (!r) return;
-      planStats.innerHTML = `<span class="chip chip-amber">⏳ ${r.estimated_total_hours} hours</span><span class="chip chip-indigo">${r.ordered_pathway.length} steps</span>`;
-      LearningPath.render({role:r, identity:user.unique_uid, timeline,
-        progress:document.getElementById('learningProgress'), goal:document.getElementById('learningGoal'),
-        refresh:renderPlan, locale:window.careerLensLocale});
-      planSdg.innerHTML = r.sdg_tags.map(s => `<div class="tint tint-teal rounded-2xl p-4"><div class="text-sm font-extrabold text-teal-900">🌱 ${esc(s.code)}</div><div class="text-xs font-bold">${esc(s.name)}</div><p class="text-[11px] text-slate-600 mt-1">${esc(s.reason)}</p></div>`).join('');
+        const r = roles[selected]; 
+        if (!r) return;
+
+        if (window.planStats) {
+            planStats.innerHTML = `
+                <span class="chip chip-amber">⏳ ${r.estimated_total_hours || 40} hours</span>
+                <span class="chip chip-indigo">${(r.ordered_pathway || []).length} mapped courses</span>
+            `;
+        }
+
+        const pathwayList = r.ordered_pathway || [];
+
+        if (window.timeline) {
+            timeline.innerHTML = pathwayList.length ? pathwayList.map((s, idx) => `
+                <div class="relative pl-12">
+                    <span class="step-dot absolute left-0 top-0 bg-gradient-to-br from-indigo-500 to-pink-500 text-white font-bold">${idx + 1}</span>
+                    <div class="tint tint-indigo rounded-2xl p-4 space-y-2 border border-indigo-100">
+                        <div class="flex flex-wrap items-center justify-between gap-2">
+                            <span class="text-[11px] font-extrabold text-indigo-700 uppercase tracking-wider">${esc(s.phase || 'Skill Acquisition')} · ${esc(s.difficulty || 'Intermediate')}</span>
+                            <span class="chip chip-amber">${s.hours || 10} h · ${esc(s.cost_type || 'Free / Claimable')}</span>
+                        </div>
+                        <div class="text-sm font-extrabold text-slate-900">Target Skill: ${esc(s.target_skill || 'Core Competency')}</div>
+                        <div class="text-xs text-slate-600">
+                            <b>Course:</b> ${esc(s.course_title || 'Certified Professional Module')} · <i>${esc(s.provider || 'HRD Corp / Partner')}</i>
+                        </div>
+                        <div class="flex items-center justify-between pt-1 border-t border-indigo-100/60 mt-2">
+                            <div class="flex gap-1.5 flex-wrap">
+                                <span class="chip chip-teal">${esc(s.malaysia_badge || 'MY Recognized')}</span>
+                                <span class="chip chip-emerald">${esc(s.sdg || 'SDG 8')}</span>
+                            </div>
+                            <a href="${esc(s.url || '#')}" target="_blank" rel="noopener" class="btn btn-soft !py-1 !px-3 !text-[11px]">
+                                Open Course ↗
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            `).join('') : '<div class="text-sm font-bold text-emerald-700 p-4 bg-emerald-50 rounded-2xl">🎉 You already cover all core skills required for this role.</div>';
+        }
+
+        if (window.planSdg) {
+            planSdg.innerHTML = (r.sdg_tags || []).map(s => `
+                <div class="tint tint-teal rounded-2xl p-4 space-y-1">
+                    <div class="text-sm font-extrabold text-teal-900">🌱 ${esc(s.code)}</div>
+                    <div class="text-xs font-bold text-slate-800">${esc(s.name)}</div>
+                    <p class="text-[11px] text-slate-600 mt-1">${esc(s.reason)}</p>
+                </div>
+            `).join('');
+        }
     }
 
     /* ---------- passport ---------- */
