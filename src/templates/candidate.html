@@ -103,6 +103,7 @@
   <link rel="stylesheet" href="/static/css/responsive.css?v=20261021-header-original-size" />
   <link rel="stylesheet" href="/static/css/page-outline.css?v=20261021-menu-outline-v2" />
   <link rel="stylesheet" href="/static/css/pomodoro.css?v=20261021-study-buddy" />
+  <link rel="stylesheet" href="/static/css/sdg-passport.css?v=20261021-passport-book" />
 </head>
 <body class="responsive-ui responsive-talent min-h-screen">
   <div class="aurora"></div><div class="blob b1"></div><div class="blob b2"></div>
@@ -785,7 +786,7 @@
         </section>
 
         <section id="tab-passport" class="tab hidden">
-          <div data-outline-label="Your SDG passport" id="passport" class="max-w-2xl mx-auto"></div>
+          <div data-outline-label="Your SDG passport" id="passport" class="mx-auto"></div>
         </section>
       </main>
     </div>
@@ -1080,7 +1081,8 @@
   </div>
 
   <script src="/static/js/page-position.js?v=20261021-reload-only"></script>
-  <script src="/static/js/learning-path.js?v=20261021-saved-notification"></script>
+  <script src="/static/js/learning-path.js?v=20261021-passport-milestones"></script>
+  <script src="/static/js/sdg-passport.js?v=20261021-passport-book"></script>
   <script src="/static/js/pomodoro.js?v=20261021-study-buddy"></script>
   <script src="/static/js/common.js?v=20261021-menu-outline-v2"></script>
 
@@ -2764,19 +2766,14 @@
 
     /* ---------- passport ---------- */
     function renderPassport() {
-      const r = roles[selected];
-      passport.innerHTML = r ? `
-        <div class="rounded-[2rem] p-1 bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 shadow-2xl">
-          <div class="rounded-[1.9rem] bg-white/95 p-8 space-y-6">
-            <div class="flex items-center justify-between"><div class="flex items-center gap-3"><img src="/static/brand/careerlens_logo_icon.svg" class="h-12 w-12 rounded-2xl" alt="" /><div><div class="text-[11px] font-extrabold uppercase tracking-wider text-indigo-600">SDG Career Passport</div><div class="text-lg font-extrabold">${esc(user.full_name)}</div></div></div><span class="chip chip-indigo font-mono">${esc(user.unique_uid)}</span></div>
-            <div class="tint tint-indigo rounded-2xl p-5"><div class="text-[11px] font-bold text-slate-500">Target role</div><div class="text-xl font-extrabold">${esc(r.title)}</div>
-              <div class="flex gap-4 mt-2 text-xs"><span><b>${r.match_score}%</b> match</span><span><b>${r.estimated_total_hours}h</b> to close gap</span><span><b>${r.ordered_pathway.length}</b> courses</span></div></div>
-            <div><div class="text-xs font-extrabold mb-2">Contribution to the SDGs</div><div class="grid sm:grid-cols-2 gap-3">${r.sdg_tags.map(s => `<div class="tint tint-teal rounded-2xl p-3"><div class="text-sm font-extrabold">🌱 ${esc(s.code)}</div><div class="text-[11px] text-slate-600">${esc(s.reason)}</div></div>`).join('')}</div></div>
-            <div><div class="text-xs font-extrabold mb-2">Skills to build</div><div class="flex flex-wrap gap-1.5">${r.skills_gap.map(s => `<span class="chip chip-rose">${esc(s)}</span>`).join('') || '<span class="chip chip-emerald">None — fully matched</span>'}</div></div>
-            <div class="text-[10px] text-slate-400">Estimates only. Demo data is synthetic; not a guarantee of employment or salary.</div>
-          </div></div>
-        <div class="text-center mt-4"><button onclick="window.print()" class="btn btn-soft">🖨️ Print / save as PDF</button></div>`
-        : '<div class="glass rounded-3xl p-8 text-center text-sm text-slate-500">Save your profile to generate your passport.</div>';
+      window.SDGPassport.render({
+        container: document.getElementById('passport'),
+        user,
+        role: roles[selected],
+        roles,
+        onLearn: () => showTab('plan'),
+        locale: window.careerLensLocale
+      });
     }
 
     /* ---------- Drag & drop events ---------- */
@@ -2874,7 +2871,7 @@
     init().catch(error => toast(error.message || 'Unable to load CareerLens. Refresh and retry.', 'err'));
   </script>
 <script src="/static/js/questionnaire-i18n.js"></script>
-<script src="/static/js/portal-i18n.js?v=20261021-pomodoro-buddy"></script>
+<script src="/static/js/portal-i18n.js?v=20261021-passport-book"></script>
 <script src="/static/js/member3.js?v=20261021-continuous"></script>
 <script>
   let generatedVerificationQ = [];

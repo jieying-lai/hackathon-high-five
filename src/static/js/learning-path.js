@@ -84,9 +84,19 @@ window.LearningPath = (() => {
     const steps = role.ordered_pathway || [];
     const id = step => JSON.stringify([step.target_skill, step.url]);
     const state = step => activity[id(step)] || {};
+    // Retain course-to-SDG evidence if this course later leaves the skills-gap list.
+    let enriched = false;
+    for (const step of steps) {
+      if (activity[id(step)] && !activity[id(step)].sdg) {
+        activity[id(step)] = {...state(step), sdg:step.sdg, course_title:step.course_title, hours:step.hours};
+        enriched = true;
+      }
+    }
+    if (enriched) { try { localStorage.setItem(key, JSON.stringify(activity)); } catch {} }
     const outcome = step => outcomes[step.target_skill] || 'Create a small portfolio example using this skill and explain your decisions.';
     function save(step, changes) {
-      activity[id(step)] = {...state(step), ...changes};
+      if (changes.status === 'completed' && state(step).status !== 'completed') changes = {...changes, completed_at:Date.now()};
+      activity[id(step)] = {...state(step), sdg:step.sdg, course_title:step.course_title, hours:step.hours, ...changes};
       try { localStorage.setItem(key, JSON.stringify(activity)); }
       catch { if (typeof toast === 'function') toast('Could not save learning progress. Please retry.', 'err'); return false; }
       updateReminder();
