@@ -631,9 +631,9 @@
               </div>
             </div>
 
-            <!-- Row 2: Search Specific Building / Condo / Street + Scope Toggle -->
+            <!-- Row 2: Search Specific Building / Condo / Street -->
             <div class="grid lg:grid-cols-12 gap-4 items-end pt-4 border-t border-slate-200/70">
-              <div class="lg:col-span-8 relative">
+              <div class="lg:col-span-12 relative">
                 <label class="block text-[11px] font-extrabold uppercase tracking-wider text-slate-500 mb-1.5">
                   Search Building, Condo, Street, or Area
                 </label>
@@ -660,16 +660,6 @@
                   </button>
                 </div>
                 <div id="locSuggestBox" class="loc-suggest-dropdown hidden"></div>
-              </div>
-
-              <div class="lg:col-span-4 flex lg:justify-end">
-                <div class="w-full sm:w-auto">
-                  <label class="block text-[11px] font-extrabold uppercase tracking-wider text-slate-500 mb-1.5">Display Scope</label>
-                  <div class="seg w-full sm:w-auto">
-                    <button type="button" id="btnMapMatched" onclick="setJobScope('relevant')" class="on !text-xs">🎯 Matched Only</button>
-                    <button type="button" id="btnMapAll" onclick="setJobScope('all')" class="!text-xs">🌐 View All Nearby</button>
-                  </div>
-                </div>
               </div>
             </div>
 
@@ -2495,8 +2485,10 @@
       selectedCompanyName = '';
       if (window.btnRelJobs) btnRelJobs.className = jobScope === 'relevant' ? 'on' : '';
       if (window.btnAllJobs) btnAllJobs.className = jobScope === 'all' ? 'on' : '';
-      if (window.btnMapMatched) btnMapMatched.className = jobScope === 'relevant' ? 'on !text-xs' : '!text-xs';
-      if (window.btnMapAll) btnMapAll.className = jobScope === 'all' ? 'on !text-xs' : '!text-xs';
+      const bMapMatched = document.getElementById('btnMapMatched');
+      const bMapAll = document.getElementById('btnMapAll');
+      if (bMapMatched) bMapMatched.className = jobScope === 'relevant' ? 'on !text-xs font-bold' : '!text-xs font-bold';
+      if (bMapAll) bMapAll.className = jobScope === 'all' ? 'on !text-xs font-bold' : '!text-xs font-bold';
       loadJobs(false);
     }
 
@@ -2562,9 +2554,16 @@
     }
 
     function renderCompaniesMap(list) {
-      const totalComps = Number(jobsSummary.companies_on_map || list.length);
+      if (jobScope === 'relevant') {
+        list = (list || []).filter(c => (c.matched || 0) > 0 || (c.best_score || 0) >= 50);
+      }
+      const totalComps = list ? list.length : 0;
       if (window.compCountBadge) {
-        compCountBadge.textContent = `${totalComps.toLocaleString()} compan${totalComps === 1 ? 'y' : 'ies'} (${radiusKm} km)`;
+        if (jobScope === 'relevant') {
+          compCountBadge.textContent = `${totalComps.toLocaleString()} CV-matched compan${totalComps === 1 ? 'y' : 'ies'} (${radiusKm} km)`;
+        } else {
+          compCountBadge.textContent = `${totalComps.toLocaleString()} compan${totalComps === 1 ? 'y' : 'ies'} (${radiusKm} km)`;
+        }
       }
 
       const map = ensureLeafletMap();
@@ -2629,7 +2628,8 @@
       }
 
       if (!activeCompanyId || !list.some(c => c.id === activeCompanyId)) {
-        activeCompanyId = list[0].id;
+        const bestMatched = list.find(c => (c.matched || 0) > 0) || list[0];
+        activeCompanyId = bestMatched ? bestMatched.id : null;
       }
 
       if (map) {

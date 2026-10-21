@@ -398,7 +398,7 @@ def search_nearby(candidate_uid, lat, lng, radius_km=10.0, mode="matched", categ
             continue
 
         # Add employer vacancy map dot in range
-        if not cat or v.get("company_category") == cat or v.get("department") == cat:
+        if (mode == "all" or v.get("is_relevant_to_cv")) and (not cat or v.get("company_category") == cat or v.get("department") == cat):
             key = ("emp", v.get("company_name"), v.get("lat"), v.get("lng"))
             dot = dots.get(key)
             if not dot:
@@ -423,10 +423,13 @@ def search_nearby(candidate_uid, lat, lng, radius_km=10.0, mode="matched", categ
         v = {**v, "distance_km": round(vd, 1), "source": "employer", "key": f"V-{v['id']}"}
         emp_out.append(v)
 
+    raw_dots = list(dots.values())
+    if mode != "all":
+        raw_dots = [d for d in raw_dots if d.get("matched", 0) > 0 or d.get("best_score", 0) >= 50]
     if sort_by == "distance":
-        dot_list = sorted(dots.values(), key=lambda x: (x["distance_km"], -x["best_score"], -x["matched"]))
+        dot_list = sorted(raw_dots, key=lambda x: (x["distance_km"], -x["best_score"], -x["matched"]))
     else:
-        dot_list = sorted(dots.values(), key=lambda x: (-x["best_score"], -x["matched"], x["distance_km"]))
+        dot_list = sorted(raw_dots, key=lambda x: (-x["best_score"], -x["matched"], x["distance_km"]))
     cap = 400 if mode != "all" else max_dots
     dots_truncated = len(dot_list) > cap
     dot_list = dot_list[:cap]
@@ -462,7 +465,7 @@ def search_nearby(candidate_uid, lat, lng, radius_km=10.0, mode="matched", categ
             "jobs_in_range": total_in_range,
             "matched_in_range": matched_in_range,
             "shown_jobs": total,
-            "companies_on_map": len(dots),
+            "companies_on_map": len(dot_list),
             "dots_truncated": dots_truncated,
         },
         "categories": [c for c, _ in sorted(cat_counts.items(), key=lambda kv: -kv[1])],
