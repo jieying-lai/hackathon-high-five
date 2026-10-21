@@ -1,3 +1,63 @@
+// A single click previews notifications; a double click opens the existing inbox.
+(function notificationPreview(){
+  function mount(){
+    const buttons=[...document.querySelectorAll('[data-notification-button]')];
+    if(!buttons.length)return;
+    const panel=document.createElement('aside');
+    panel.id='notificationPreview';panel.className='notification-preview';panel.hidden=true;
+    panel.setAttribute('aria-label','Interview notifications');
+    document.body.append(panel);
+    let anchor=null,openInbox=null,version=0;
+    const translate=()=>window.careerLensLocale?.apply();
+    function close(focus=false){
+      version++;panel.hidden=true;
+      buttons.forEach(b=>b.setAttribute('aria-expanded','false'));
+      if(focus)anchor?.focus();
+    }
+    function position(){
+      if(!anchor)return;
+      const rect=anchor.getBoundingClientRect();
+      panel.style.top=Math.min(rect.bottom+10,window.innerHeight-100)+'px';
+      panel.style.right=Math.max(12,window.innerWidth-rect.right)+'px';
+    }
+    async function preview(button,action){
+      if(!panel.hidden&&anchor===button){close();return;}
+      anchor=button;openInbox=action;const request=++version;
+      buttons.forEach(b=>b.setAttribute('aria-expanded',String(b===button)));
+      panel.hidden=false;position();
+      panel.innerHTML='<h2>Interview notifications</h2><p>Loading notifications…</p>';
+      translate();
+      try{
+        const hr=!!document.getElementById('hrInvitations');
+        const result=await api(hr?'/api/hr/interviews':'/api/talent/interviews');
+        if(request!==version)return;
+        if(!result.ok)throw Error();
+        const entries=result.data.invitations||[];
+        panel.innerHTML='<h2>Interview notifications</h2><div class="notification-preview-list">'+(entries.slice(0,3).map(i=>`<div class="notification-preview-item"><strong data-no-translate>${esc(hr?i.candidate_name:i.company)}</strong><p data-no-translate>${esc(i.role)}</p><span>${esc(i.status)}</span></div>`).join('')||'<p>No interview invitations yet.</p>')+'</div><p class="notification-preview-hint">Double-click the bell to open all notifications.</p><button type="button" class="btn btn-soft">Open notifications</button>';
+        panel.querySelector('button').addEventListener('click',()=>{const action=openInbox;close();action();});
+      }catch{
+        if(request!==version)return;
+        panel.innerHTML='<h2>Interview notifications</h2><p>Could not load invitations. Please retry.</p>';
+      }
+      translate();
+    }
+    buttons.forEach(button=>{
+      const original=button.onclick;
+      if(!original)return;
+      button.removeAttribute('onclick');
+      button.setAttribute('aria-controls',panel.id);button.setAttribute('aria-expanded','false');
+      const action=()=>original.call(button);
+      button.addEventListener('click',event=>{if(event.detail<2)preview(button,action);});
+      button.addEventListener('dblclick',()=>{close();action();});
+    });
+    document.addEventListener('click',event=>{if(!panel.contains(event.target)&&!event.target.closest('[data-notification-button]'))close();});
+    document.addEventListener('keydown',event=>{if(event.key==='Escape'&&!panel.hidden)close(true);});
+    window.addEventListener('resize',()=>close(),{passive:true});
+    window.addEventListener('scroll',()=>{if(!panel.hidden)position();},{passive:true});
+  }
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',mount);else mount();
+})();
+
 async function sendInterview(event) {
   event.preventDefault();
   if (!interviewPerson || !interviewForm.reportValidity()) return;
@@ -47,5 +107,5 @@ async function replyInvitation(id,status,button) {
 setInterval(() => {
   if (document.hidden) return;
   if (document.getElementById('tab-notifications')?.classList.contains('hidden') === false) loadInvitations(false);
-  if (document.getElementById('tab-heatmap')?.classList.contains('hidden') === false) loadInvitations(true);
+  if (document.getElementById('tab-shortlisting')?.classList.contains('hidden') === false) loadInvitations(true);
 }, 30000);

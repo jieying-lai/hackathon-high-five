@@ -8,8 +8,9 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/static/css/theme.css?v=20261020-questionnaire-1" />
-  <link rel="stylesheet" href="/static/css/candidate-comparison.css?v=6" />
-  <link rel="stylesheet" href="/static/css/responsive.css?v=20261020-minimal-4" />
+  <link rel="stylesheet" href="/static/css/candidate-comparison.css?v=20261021-flip" />
+  <link rel="stylesheet" href="/static/css/responsive.css?v=20261021-notification-preview" />
+  <link rel="stylesheet" href="/static/css/page-outline.css?v=20261021-outline-offset" />
 </head>
 <body class="responsive-ui responsive-employer hr min-h-screen company-comparison-portal">
   <div class="aurora"></div><div class="blob b1"></div><div class="blob b2"></div>
@@ -36,7 +37,7 @@
       </div>
     </header>
 
-    <div class="flex-1 min-w-0">
+    <div class="portal-content flex-1 min-w-0">
       <header class="portal-mobile-header sticky top-0 z-30 sidebar-dark">
         <div class="flex items-center justify-between px-4 py-2.5">
           <div class="flex items-center gap-2"><img src="/static/brand/careerlens_logo_icon.svg" class="h-9 w-9 rounded-xl" alt="" /><div class="text-sm text-white"><b>CareerLens AI</b><small id="mobileCompanyName" data-no-translate class="block text-xs"></small></div></div>
@@ -61,22 +62,22 @@
 
         <section id="tab-overview" class="tab space-y-6">
           <!-- Employer Company Account & Profile Card -->
-          <div class="glass rounded-3xl p-6 space-y-4 border border-teal-200 shadow-sm" data-no-translate>
+          <div data-outline-label="Company profile" class="glass rounded-3xl p-6 space-y-4 border border-teal-200 shadow-sm">
             <div class="flex flex-wrap items-center justify-between gap-4">
               <div class="flex items-center gap-3.5">
                 <div id="hrCardAvatar" class="h-12 w-12 rounded-2xl bg-gradient-to-br from-teal-500 to-sky-600 text-white font-black text-xl grid place-items-center shadow">🏢</div>
                 <div>
                   <div class="flex flex-wrap items-center gap-2">
-                    <h2 id="hrCardName" class="text-xl font-extrabold text-slate-900">Employer Company</h2>
+                    <h2 id="hrCardName" class="text-xl font-extrabold text-slate-900" data-no-translate>Employer Company</h2>
                     <span class="chip chip-teal">Verified Employer</span>
                     <span class="chip chip-emerald">Company Workspace</span>
                   </div>
                   <div class="text-xs text-slate-500 mt-1 flex flex-wrap items-center gap-2">
-                    <span>ID: <b id="hrCardUid" class="font-mono text-slate-700"></b></span>
+                    <span>ID: <b id="hrCardUid" class="font-mono text-slate-700" data-no-translate></b></span>
                     <span>•</span>
-                    <span>Login: <b id="hrCardEmail" class="text-slate-700"></b></span>
+                    <span>Login: <b id="hrCardEmail" class="text-slate-700" data-no-translate></b></span>
                     <span>•</span>
-                    <span>Contact: <b id="hrCardContact" class="text-slate-700"></b></span>
+                    <span>Contact: <b id="hrCardContact" class="text-slate-700" data-no-translate></b></span>
                   </div>
                 </div>
               </div>
@@ -94,8 +95,8 @@
             </div>
           </div>
 
-          <div id="kpis" class="grid grid-cols-2 lg:grid-cols-4 gap-4"></div>
-          <div class="grid lg:grid-cols-5 gap-6">
+          <div data-outline-label="Hiring overview" id="kpis" class="grid grid-cols-2 lg:grid-cols-4 gap-4"></div>
+          <div data-outline-label="Hiring & screening" class="grid lg:grid-cols-5 gap-6">
             <div class="lg:col-span-3 glass rounded-3xl p-6 space-y-4">
               <div class="flex items-center justify-between"><div class="text-sm font-extrabold">Open vacancies</div><button onclick="showTab('vacancies')" class="text-xs font-bold text-teal-700">Manage →</button></div>
               <div id="ovVacancies" class="space-y-3"></div>
@@ -111,7 +112,7 @@
               </div>
             </div>
           </div>
-          <section id="overviewRanking" class="glass rounded-3xl p-6 space-y-4">
+          <section data-outline-label="Candidate ranking" id="overviewRanking" class="glass rounded-3xl p-6 space-y-4">
             <div class="flex flex-wrap justify-between items-center gap-3"><h2 class="text-lg font-extrabold">Top 3 candidate recommendations</h2><label>Vacancy<select id="podiumVacancy" class="input" onchange="selectComparisonVacancy(this.value)"></select></label></div>
             <p class="hint">Ranking follows comparison filters and selected vacancy. Scores use job criteria; equal scores use candidate ID for stable ordering. HR makes the final decision.</p>
             <div id="overviewPodium" class="podium" aria-live="polite"></div>
@@ -137,17 +138,17 @@
               <p class="hint">Use only criteria that relate directly to the role.</p>
               <button onclick="createVacancy()" class="btn btn-hr w-full py-3">Create vacancy</button>
             </div>
-            <div class="lg:col-span-7 space-y-4"><div id="vacList" class="space-y-4"></div></div>
+            <div class="lg:col-span-7 space-y-4"><div data-outline-label="Job vacancies" id="vacList" class="space-y-4"></div></div>
           </div>
         </section>
 
         <section id="tab-screening" class="tab hidden space-y-5">
           <div class="glass rounded-3xl p-5 flex flex-wrap items-center justify-between gap-4">
             <div class="flex items-center gap-3"><span class="text-xs font-bold text-slate-500">Vacancy</span><select id="scVacancy" onchange="loadScreen(this.value)" class="input vacancy-picker"></select></div>
-            <div id="typeFilter" class="seg"></div>
+            <div data-outline-label="Screening filters" id="typeFilter" class="seg"></div>
           </div>
-          <div id="scSummary" class="grid grid-cols-2 lg:grid-cols-4 gap-4"></div>
-          <div class="glass rounded-3xl overflow-hidden">
+          <div data-outline-label="Screening summary" id="scSummary" class="grid grid-cols-2 lg:grid-cols-4 gap-4"></div>
+          <div data-outline-label="Candidate screening" class="glass rounded-3xl overflow-hidden">
             <div class="overflow-x-auto table-scroll" tabindex="0" role="region" aria-label="Scrollable data table"><table class="w-full text-left text-xs">
               <thead><tr class="bg-slate-50/80 text-slate-500 border-b border-slate-200"><th class="py-3 px-4 w-12">#</th><th class="py-3 px-4">Candidate</th><th class="py-3 px-4">Relevant exp.</th><th class="py-3 px-4 min-w-[9rem]">Match</th><th class="py-3 px-4">To confirm</th><th class="py-3 px-4">Suggested action</th><th class="py-3 px-4">HR decision</th><th class="py-3 px-4"></th></tr></thead>
               <tbody id="scRows" class="divide-y divide-slate-200/60"></tbody>
@@ -157,11 +158,11 @@
           <div id="fairNote" class="text-[11px] text-slate-500 px-1"></div>
         </section>
 
-        <section id="tab-heatmap" class="tab hidden space-y-5">
+        <section id="tab-heatmap" class="tab hidden space-y-6">
           <p id="comparisonStatus" class="hint" role="status"></p>
           <div class="glass rounded-3xl p-5 space-y-4">
             <label class="flex items-center gap-2"><input id="comparisonDemo" type="checkbox" onchange="CompanyComparison.load()">Include labelled demo candidates</label>
-            <form id="comparisonFilters" class="comparison-filters" onsubmit="return false">
+            <form data-outline-label="Comparison filters" id="comparisonFilters" class="comparison-filters" onsubmit="return false">
               <label>Department<select id="compareDepartment" class="input" onchange="CompanyComparison.set('department',this.value)"></select></label>
               <label>Position<select id="comparePosition" class="input" onchange="selectComparisonVacancy(this.value)"></select></label>
               <label>Experience years<select class="input" onchange="CompanyComparison.set('years',this.value)"><option value="0">Any experience</option><option value="1">1+</option><option value="3">3+</option><option value="5">5+</option><option value="10">10+</option></select></label>
@@ -175,20 +176,32 @@
             <p><span>Matching candidates</span>: <b id="comparisonCount" data-no-translate>0</b></p>
             <p class="hint">Missing CV details need confirmation. Experience is CV-stated, not independently verified. Intern / Trainee is a status, not a degree; highest known qualification takes precedence.</p>
           </div>
-          <div class="comparison-chart-layout">
+          <div data-outline-label="Skills & qualifications" class="comparison-chart-layout">
             <div class="comparison-left-stack"><section class="glass rounded-3xl p-6"><h2 class="font-bold mb-3">Education distribution</h2><div id="educationChart" class="education-chart"></div></section>
             <section class="glass rounded-3xl p-6"><h2 class="font-bold mb-3">Hiring snapshot</h2><div id="comparisonSnapshot" class="space-y-3"></div><p class="hint mt-3">Calculated from current filters; missing skills need interview confirmation.</p></section></div>
             <section class="glass rounded-3xl p-6"><h2 class="font-bold mb-3">CV evidence for required skills</h2><p class="hint mb-4">Number of filtered candidates listing each skill; not a proficiency assessment.</p><div id="comparisonSkills" class="space-y-3"></div></section>
           </div>
-          <div class="glass rounded-3xl p-5 overflow-x-auto table-scroll" tabindex="0" role="region" aria-label="Scrollable data table"><table class="comparison-table"><thead><tr><th>Candidate</th><th>Department / Position</th><th>Experience years</th><th>Education / Institution / Major</th><th>Match score</th><th>CV details</th></tr></thead><tbody id="comparisonRows"></tbody></table></div>
-          <section id="interviewResponses" tabindex="-1" class="glass rounded-3xl p-6 space-y-3"><h2 class="font-extrabold">Interview responses</h2><button class="btn btn-soft" onclick="loadInvitations(true)">Refresh notifications</button><div id="latestInvitationReceipt" role="status"></div><div id="hrInvitations"></div></section>
+          <div data-outline-label="Candidate details" class="glass rounded-3xl p-5 overflow-x-auto table-scroll" tabindex="0" role="region" aria-label="Scrollable data table"><table class="comparison-table"><thead><tr><th>Candidate</th><th>Department / Position</th><th>Experience years</th><th>Education / Institution / Major</th><th>Match score</th><th>CV details</th><th>HR decision</th></tr></thead><tbody id="comparisonRows"></tbody></table></div>
         </section>
 
+        <section id="tab-shortlisting" class="tab hidden space-y-6">
+          <div data-outline-label="Shortlist filters" class="glass rounded-3xl p-6 space-y-4">
+            <div class="flex flex-wrap items-center justify-between gap-3">
+              <div><h2 class="font-extrabold">Shortlisted candidates</h2><p class="hint">Review your shortlist and arrange interviews here.</p></div>
+              <div class="flex flex-wrap gap-2"><button type="button" class="btn btn-soft" onclick="refreshShortlisting(this)">Refresh shortlist</button><button type="button" class="btn btn-soft" onclick="showTab('screening')">Back to screening</button></div>
+            </div>
+            <label for="shortlistVacancy" class="label">Vacancy</label>
+            <select id="shortlistVacancy" class="input" onchange="renderShortlist()"><option value="">All positions</option></select>
+            <p class="hint">Shortlist decisions are saved on this device for your account and vacancy.</p>
+            <div id="shortlistStatus" role="status" class="text-sm font-bold text-teal-700"></div>
+          </div>
+          <div data-outline-label="Shortlisted candidates" id="shortlistCandidates" class="space-y-4"></div>
+          <section data-outline-label="Interview responses" id="interviewResponses" tabindex="-1" class="glass rounded-3xl p-6 space-y-3"><h2 class="font-extrabold">Interview responses</h2><button class="btn btn-soft" onclick="loadInvitations(true)">Refresh notifications</button><div id="latestInvitationReceipt" role="status"></div><div id="hrInvitations"></div></section>
         </section>
 
         <section id="tab-reskill" class="tab hidden"><p class="hint mb-4">Confirm missing CV skills before recommending training.</p>
           <div class="grid lg:grid-cols-3 gap-6">
-            <div class="lg:col-span-2 space-y-4"><div id="rkCards" class="space-y-4"></div></div>
+            <div class="lg:col-span-2 space-y-4"><div data-outline-label="Learning suggestions" id="rkCards" class="space-y-4"></div></div>
             <div class="space-y-4 self-start lg:sticky lg:top-6">
               <div class="tint tint-teal rounded-3xl p-6 space-y-3"><div class="text-sm font-extrabold">Approved training</div><div id="rkSummary"></div></div>
               <div class="tint tint-indigo rounded-3xl p-6 space-y-3"><div class="text-sm font-extrabold">SDG contribution</div><div id="rkSdg" class="flex flex-wrap gap-2"></div></div>
@@ -199,8 +212,9 @@
     </div>
   </div>
 
-  <script src="/static/js/candidate-comparison.js?v=4"></script>
-  <script src="/static/js/interviews.js?v=20261020-4"></script>
+  <script src="/static/js/candidate-comparison.js?v=20261021-shortlisting"></script>
+  <script src="/static/js/shortlisting.js?v=20261021-flip"></script>
+  <script src="/static/js/interviews.js?v=20261021-notification-preview"></script>
   <dialog id="interviewDialog" class="rounded-3xl p-6 w-full max-w-lg shadow-xl" >
     <form id="interviewForm" class="space-y-4" onsubmit="sendInterview(event)">
       <div class="flex justify-between items-center"><h2 class="text-xl font-extrabold">Invite to interview</h2><button type="button" class="btn btn-soft" onclick="interviewDialog.close()" aria-label="Close">×</button></div>
@@ -221,14 +235,14 @@
     <aside id="insight" class="slideover p-6 sm:p-8 space-y-6"></aside>
   </div>
 
-  <div id="orgCvWrap" class="hidden" data-no-translate>
+  <div id="orgCvWrap" class="hidden">
     <div class="overlay" onclick="closeOrgCvModal()">
       <div id="orgCvModal" class="modal p-6 sm:p-8 space-y-5 max-w-3xl w-full max-h-[88vh] overflow-y-auto" onclick="event.stopPropagation()"></div>
     </div>
   </div>
 
 <!-- HR / Employer Account Settings & Profile Modal -->
-  <div id="accountModalWrap" class="hidden" data-no-translate>
+  <div id="accountModalWrap" class="hidden">
     <div class="overlay" onclick="closeAccountModal(event)">
       <div class="modal p-6 sm:p-8 space-y-5 max-w-xl w-full max-h-[90vh] overflow-y-auto" onclick="event.stopPropagation()">
         <!-- Modal Header -->
@@ -240,7 +254,7 @@
                 <h3 class="text-xl font-extrabold text-slate-900">Employer Account Profile</h3>
                 <span class="chip chip-teal">HR &amp; Employer Portal</span>
               </div>
-              <div class="text-xs text-slate-500 mt-0.5">Account UID: <span id="modalUid" class="font-mono font-bold text-slate-700"></span> · Joined <span id="modalJoinedDate" class="text-slate-600"></span></div>
+              <div class="text-xs text-slate-500 mt-0.5">Account UID: <span id="modalUid" class="font-mono font-bold text-slate-700" data-no-translate></span> · Joined <span id="modalJoinedDate" class="text-slate-600" data-no-translate></span></div>
             </div>
           </div>
           <button type="button" onclick="closeAccountModal()" class="text-slate-400 hover:text-slate-700 text-xl font-bold p-1">✕</button>
@@ -337,7 +351,8 @@
     </div>
   </div>
 
-  <script src="/static/js/common.js?v=20261020-questionnaire-1"></script>
+  <script src="/static/js/page-position.js?v=20261021-restore"></script>
+  <script src="/static/js/common.js?v=20261021-nav-groups"></script>
 
   <script>
     const NAV = [
@@ -345,7 +360,8 @@
       { id: 'vacancies', ico: '📋', label: 'Job Vacancies', eyebrow: 'Vacancy management', title: 'Job vacancies' },
       { id: 'screening', ico: '🔍', label: 'Candidate Screening', eyebrow: 'Applicant assessment', title: 'Candidate screening' },
       { id: 'heatmap', ico: '🔥', label: 'Candidate Skills & Qualifications Comparison', eyebrow: 'Skills & qualifications', title: 'Candidate Skills & Qualifications Comparison' },
-      { id: 'reskill', ico: '🎓', label: 'Candidate learning suggestions', eyebrow: 'Candidate development', title: 'Candidate learning suggestions' },
+      { id: 'shortlisting', ico: '📌', label: 'Shortlisting', eyebrow: 'Interview preparation', title: 'Shortlisting & interviews' },
+      { id: 'reskill', ico: '🎓', label: 'Candidate Learning', eyebrow: 'Candidate development', title: 'Candidate Learning' },
     ];
     const TONE = { emerald: 'chip-emerald', indigo: 'chip-indigo', amber: 'chip-amber', slate: 'chip-slate' };
     const DECISIONS = ['Pending', 'Shortlist', 'Needs review', 'Hold'];
@@ -353,6 +369,7 @@
 
     let user = null, vacancies = [], scrn = null, selectedVid = null, typeFilter = 'All', heat = null, assignments = [];
     let reqSkills = [], prefSkills = [], decisions = {}, current = 'overview', loaded = {};
+    let shortlistScreens = new Map(), shortlistVersion = 0, shortlistError = '';
 
     const scoreClass = s => s >= 85 ? 'emerald' : s >= 70 ? '' : s >= 55 ? 'teal' : 'rose';
     const ringColor = s => s >= 85 ? '#10b981' : s >= 70 ? '#0ea5e9' : s >= 55 ? '#f59e0b' : '#94a3b8';
@@ -360,7 +377,7 @@
     const decKey = (v, c) => `${v}|${c}`;
 
     async function openInterviewResponses() {
-      await showTab('heatmap');
+      await showTab('shortlisting');
       const section = document.getElementById('interviewResponses');
       section.focus({preventScroll: true});
       section.scrollIntoView({block: 'start', behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth'});
@@ -480,20 +497,26 @@
     }
 
     function buildNav() {
-      buildPortalNavigation(NAV, [{label: 'Overview', ids: ['overview']}, {label: 'Hiring', ids: ['vacancies']}, {label: 'Candidate Screening', ids: ['screening']}, {label: 'Candidate Development', ids: ['heatmap', 'reskill']}]);
+      buildPortalNavigation(NAV, [{label: 'Overview', ids: ['overview']}, {label: 'Hiring', ids: ['vacancies']}, {label: 'Candidate Screening', ids: ['screening', 'heatmap', 'shortlisting'], dropdown: true}, {label: 'Candidate Learning', ids: ['reskill']}]);
     }
-    async function showTab(id) {
+    async function showTab(id, options = {}) {
+      if (!options.restore) window.PagePosition?.navigate();
       current = id;
       document.querySelectorAll('.tab').forEach(t => t.classList.add('hidden'));
       const el = document.getElementById('tab-' + id); el.classList.remove('hidden'); el.classList.add('fade-in');
       setPortalNavigation(id);
       const n = NAV.find(x => x.id === id);
       pgEyebrow.textContent = n.eyebrow; pgTitle.textContent = n.title;
+      if (['screening', 'shortlisting', 'vacancies'].includes(id)) await loadVacancies();
       if (id === 'overview') { renderOverview(); await refreshOverview(); }
-      if (id === 'screening') { renderScreenSelect(); if (selectedVid && !scrn) await loadScreen(selectedVid); else renderScreen(); }
-      if (id === 'heatmap') { await CompanyComparison.load(); await loadInvitations(true); }
+      if (id === 'screening') { renderScreenSelect(); if (selectedVid && (!scrn || Number(scrn.vacancy.id) !== Number(selectedVid))) await loadScreen(selectedVid); else renderScreen(); }
+      if (id === 'heatmap') await CompanyComparison.load();
+      if (id === 'shortlisting') { await CompanyComparison.load(); await loadShortlistCandidates(); await loadInvitations(true); }
       if (id === 'reskill') { if (!heat) await loadHeat(); renderReskill(); }
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+      if (!options.restore) {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        window.PagePosition?.complete();
+      }
     }
 
     /* ---------- vacancies ---------- */
@@ -543,7 +566,7 @@
     }
     async function toggleStatus(id, status) { await postJson(`/api/hr/vacancies/${id}/status`, { status }); toast(`Vacancy ${status.toLowerCase()}`); await loadVacancies(); }
     async function deleteVacancy(id) {
-      if (!confirm('Delete this vacancy?')) return;
+      if (!localizedConfirm('Delete this vacancy?')) return;
       await api(`/api/hr/vacancies/${id}`, { method: 'DELETE' }); scrn = null; toast('Vacancy deleted'); await loadVacancies();
     }
     async function screenVacancy(id) { selectedVid = id; scrn = null; await showTab('screening'); }
@@ -557,7 +580,9 @@
     async function loadScreen(id) {
       if (!id || isNaN(Number(id))) { scrn = null; return renderScreen(); }
       selectedVid = Number(id); const r = await api(`/api/hr/vacancies/${id}/screen`);
-      scrn = r.ok ? r.data : null; renderScreen();
+      scrn = r.ok ? r.data : null;
+      if (scrn) shortlistScreens.set(Number(id), screenShortlistRows(scrn));
+      renderScreen();
     }
     function renderScreen() {
       if (!scrn) { scSummary.innerHTML = ''; scRows.innerHTML = '<tr><td colspan="8" class="p-10 text-center text-slate-500">Create or select a vacancy to screen candidates.</td></tr>'; fairNote.textContent = ''; return; }
@@ -573,14 +598,14 @@
       scRows.innerHTML = rows.length ? rows.map((r, i) => {
         const dec = decisions[decKey(scrn.vacancy.id, r.candidate_id)] || 'Pending';
         const appliedBadges = r.is_applied_user
-          ? `<span class="chip chip-emerald" data-no-translate>✓ Applied · ${esc(r.application_uid)}</span>
-             ${r.share_organised_cv ? '<span class="chip chip-teal" data-no-translate>Organised CV</span>' : ''}
-             ${r.share_original_pdf ? '<span class="chip chip-indigo" data-no-translate>Original PDF</span>' : ''}`
+          ? `<span class="chip chip-emerald">✓ Applied · <span data-no-translate>${esc(r.application_uid)}</span></span>
+             ${r.share_organised_cv ? '<span class="chip chip-teal">Organised CV</span>' : ''}
+             ${r.share_original_pdf ? '<span class="chip chip-indigo">Original PDF</span>' : ''}`
           : '';
         return `<tr class="${r.score >= 85 ? 'screening-high-match' : ''} ${r.is_applied_user ? 'bg-emerald-50/40' : ''} hover:bg-teal-50/40 transition">
           <td class="py-3.5 px-4 font-extrabold text-slate-400">${i + 1}</td>
           <td class="py-3.5 px-4">
-            <div class="font-extrabold text-sm" data-no-translate>${esc(r.name)}</div>
+            <div data-no-translate class="font-extrabold text-sm">${esc(r.name)}</div>
             <div class="flex flex-wrap items-center gap-1.5 mt-0.5">
               <span class="chip chip-slate">${esc(r.type)}</span>
               ${r.score >= 85 ? '<span class="chip screening-highlight-badge">★ High match</span>' : ''}
@@ -602,9 +627,65 @@
       scRows.innerHTML += (scrn.restricted_applications || []).map(r => `<tr><td colspan="8" class="p-4 border-t"><b>${esc(r.candidate_name)}</b> · ${esc(r.application_uid)}<p class="text-xs text-slate-500">${esc(r.notice)}</p>${r.pdf_url ? `<a class="btn btn-soft !text-xs mt-2" href="${esc(r.pdf_url)}" target="_blank" rel="noopener">Open explicitly shared original PDF</a>` : ''}</td></tr>`).join('');
       fairNote.textContent = '⚖️ ' + scrn.fairness_note;
     }
-    function setDecision(cid, value) {
-      decisions[decKey(scrn.vacancy.id, cid)] = value; localStorage.setItem(`cl_hr_dec_${user.unique_uid}`, JSON.stringify(decisions));
+    function screenShortlistRows(data) {
+      return (data.results || []).map(c=>({...c,id:c.candidate_id,vacancy_id:data.vacancy.id,position:data.vacancy.title,
+        education_category:c.education,source:c.is_applied_user?'Application':'Demo'}));
+    }
+    function shortlistCandidates() {
+      return [...CompanyComparison.allCandidates().filter(c=>!shortlistScreens.has(Number(c.vacancy_id))),...Array.from(shortlistScreens.values()).flat()];
+    }
+    async function loadShortlistCandidates() {
+      const version=++shortlistVersion;
+      const wanted=vacancies.filter(v=>Object.entries(decisions).some(([key,value])=>value==='Shortlist'&&key.startsWith(v.id+'|')));
+      const results=await Promise.allSettled(wanted.map(v=>api(`/api/hr/vacancies/${v.id}/screen`)));
+      if(version!==shortlistVersion)return;
+      shortlistScreens=new Map();shortlistError='';
+      results.forEach((result,i)=>{
+        const response=result.status==='fulfilled'?result.value:null;
+        shortlistScreens.set(Number(wanted[i].id),response?.ok?screenShortlistRows(response.data):[]);
+        if(!response?.ok)shortlistError='Could not refresh some shortlisted candidates. Please retry.';
+      });
+      renderShortlist();
+    }
+    async function refreshShortlisting(button) {
+      button.disabled=true;
+      try { await loadVacancies(); await CompanyComparison.load(); await loadShortlistCandidates(); await loadInvitations(true); }
+      finally { button.disabled=false; }
+    }
+    function getCandidateDecision(vid, cid) { return decisions[decKey(vid, cid)] || 'Pending'; }
+    function setDecision(cid, value, vid = scrn?.vacancy.id) {
+      if (!user || !vid || !DECISIONS.includes(value)) return false;
+      const next = {...decisions, [decKey(vid, cid)]: value};
+      try { localStorage.setItem(`cl_hr_dec_${user.unique_uid}`, JSON.stringify(next)); }
+      catch (_) { toast('Could not save your decision. Please retry.', 'err'); return false; }
+      decisions = next;
+      if (scrn) renderScreen();
+      renderShortlist();
+      CompanyComparison.refresh?.();
+      window.careerLensLocale?.apply();
       toast(`Marked “${value}”`);
+      return true;
+    }
+    function shortlistCandidate(id, vid) {
+      if (!CompanyComparison.allCandidates().some(c => c.id === id && Number(c.vacancy_id) === Number(vid))) return;
+      if (!shortlistScreens.get(Number(vid))?.some(c => c.id === id)) shortlistScreens.delete(Number(vid));
+      setDecision(id, 'Shortlist', vid);
+    }
+    function renderShortlist() {
+      if (!window.HRShortlist || !user) return;
+      HRShortlist.render({document, candidates:shortlistCandidates(), vacancies, decisions, error:shortlistError,
+        translate:text=>window.careerLensLocale?.translate(text)??text,
+        onInvite:openShortlistInterview, onRemove:c=>setDecision(c.id,'Pending',c.vacancy_id)});
+      window.careerLensLocale?.apply();
+    }
+    async function openShortlistInterview(candidate) {
+      if (getCandidateDecision(candidate.vacancy_id,candidate.id) !== 'Shortlist') return;
+      if (current !== 'shortlisting') await showTab('shortlisting');
+      const eligible = shortlistCandidates().find(c=>c.id===candidate.id && Number(c.vacancy_id)===Number(candidate.vacancy_id));
+      if (!eligible) return;
+      interviewPerson={id:eligible.id,name:eligible.name};
+      interviewForm.reset();interviewCandidate.textContent=eligible.name;interviewStatus.textContent='';
+      interviewRole.value=eligible.position;interviewDialog.showModal();interviewRole.focus();
     }
 
     /* ---------- candidate insight & application-gated CV viewer ---------- */
@@ -612,7 +693,7 @@
       const r = scrn.results.find(x => x.candidate_id === cid); if (!r) return;
       const dec = decisions[decKey(scrn.vacancy.id, cid)] || 'Pending';
       const cvAccessBlock = r.is_applied_user ? `
-        <div class="tint tint-teal rounded-2xl p-4 space-y-2.5" data-no-translate>
+        <div class="tint tint-teal rounded-2xl p-4 space-y-2.5">
           <div class="flex items-center justify-between">
             <div class="text-xs font-extrabold text-teal-950">🔓 Candidate Applied · CV Access Granted</div>
             <span class="chip chip-emerald font-mono">${esc(r.application_uid)}</span>
@@ -663,7 +744,7 @@
               <span class="chip chip-teal">Applied to ${esc(ac.vacancy_title)}</span>
               <span class="chip chip-slate">Audit Logged</span>
             </div>
-            <h3 class="text-2xl font-extrabold mt-1">${esc(st.full_name || ac.candidate_name)}</h3>
+            <h3 class="text-2xl font-extrabold mt-1"><span data-no-translate>${esc(st.full_name || ac.candidate_name)}</span></h3>
             <div class="text-xs text-slate-500">${esc(st.current_role || '')} · ${esc(st.industry || '')} · ${st.years_experience == null ? "Experience not specified" : esc(st.years_experience) + " yr(s) exp"} · ${esc(st.location || '')}</div>
           </div>
           <div class="flex items-center gap-2">
@@ -674,14 +755,14 @@
 
         <div class="tint tint-teal rounded-2xl p-4 space-y-1.5">
           <div class="text-[11px] font-extrabold uppercase tracking-wider text-teal-800">Reviewed professional summary</div>
-          <p class="text-xs text-slate-700 leading-relaxed">${esc(st.executive_summary || '')}</p>
+          <p class="text-xs text-slate-700 leading-relaxed"><span data-no-translate>${esc(st.executive_summary || '')}</span></p>
         </div>
 
         <div class="grid sm:grid-cols-3 gap-3 text-xs">
           <div class="bg-white/85 rounded-2xl p-3.5 border border-slate-200/70">
             <div class="text-[10px] font-bold text-slate-400 uppercase">Contact (Shared via Application)</div>
-            <div class="font-extrabold mt-0.5">${esc(st.email || '—')}</div>
-            <div class="text-slate-500">${esc(st.phone || '—')}</div>
+            <div class="font-extrabold mt-0.5"><span data-no-translate>${esc(st.email || '—')}</span></div>
+            <div class="text-slate-500"><span data-no-translate>${esc(st.phone || '—')}</span></div>
           </div>
           <div class="bg-white/85 rounded-2xl p-3.5 border border-slate-200/70">
             <div class="text-[10px] font-bold text-slate-400 uppercase">Qualification &amp; Arrangement</div>
@@ -728,15 +809,15 @@
         <div class="grid sm:grid-cols-3 gap-3">
           <div class="bg-white/85 rounded-2xl p-4 border border-slate-200/70 space-y-1.5">
             <div class="text-xs font-extrabold text-teal-800">💼 Work Experience</div>
-            <ul class="list-disc pl-4 text-xs text-slate-600 space-y-1">${(st.work_experience || []).map(x => `<li>${esc(x)}</li>`).join('')}</ul>
+            <ul class="list-disc pl-4 text-xs text-slate-600 space-y-1">${(st.work_experience || []).map(x => `<li data-no-translate>${esc(x)}</li>`).join('')}</ul>
           </div>
           <div class="bg-white/85 rounded-2xl p-4 border border-slate-200/70 space-y-1.5">
             <div class="text-xs font-extrabold text-indigo-800">🎓 Education</div>
-            <ul class="list-disc pl-4 text-xs text-slate-600 space-y-1">${(st.education_history || []).map(x => `<li>${esc(x)}</li>`).join('')}</ul>
+            <ul class="list-disc pl-4 text-xs text-slate-600 space-y-1">${(st.education_history || []).map(x => `<li data-no-translate>${esc(x)}</li>`).join('')}</ul>
           </div>
           <div class="bg-white/85 rounded-2xl p-4 border border-slate-200/70 space-y-1.5">
             <div class="text-xs font-extrabold text-pink-800">🚀 Key Projects</div>
-            <ul class="list-disc pl-4 text-xs text-slate-600 space-y-1">${(st.projects || []).map(x => `<li>${esc(x)}</li>`).join('')}</ul>
+            <ul class="list-disc pl-4 text-xs text-slate-600 space-y-1">${(st.projects || []).map(x => `<li data-no-translate>${esc(x)}</li>`).join('')}</ul>
           </div>
         </div>
 
@@ -757,20 +838,14 @@
     async function loadHeat() { const r = await api('/api/hr/heatmap'); if (!r.ok || !Array.isArray(r.data.employees)) { toast('Team data unavailable. Please retry.', 'err'); return; } heat = r.data; assignments = (heat.assignments || []).filter(a => heat.employees.some(c => c.id === a.employee_id)); }
     async function selectComparisonVacancy(value) {
       CompanyComparison.set('vacancy',value);
-      if (value) { selectedVid=Number(value); await refreshOverview(); }
+      if (value) {
+        selectedVid=Number(value);
+        if (current === 'screening') { renderScreenSelect(); await loadScreen(value); }
+        else await refreshOverview();
+      }
     }
     let interviewPerson = null;
-    function inviteCandidate(id) {
-      interviewPerson = heat?.employees.find(c => c.id === id);
-      if (!interviewPerson) return;
-      interviewForm.reset();
-      interviewCandidate.textContent = interviewPerson.name;
-      interviewStatus.textContent = '';
-      const vacancy = vacancies.find(v => v.id === selectedVid);
-      interviewRole.value = vacancy?.title || '';
-      interviewDialog.showModal();
-      interviewRole.focus();
-    }
+    function inviteCandidate(id) { return showTab('shortlisting'); }
     function buildInterviewEmail(person, details, translate) {
       const company = user?.role_details?.company_name || 'CareerLens AI';
       const subject = `${translate('Interview invitation')} — ${details.role}`;
@@ -800,7 +875,7 @@
       rkCards.innerHTML = needing.map(e => `
         <article class="glass rounded-3xl p-5 space-y-3">
           <div class="flex items-center gap-4"><div class="ring !w-14 !h-14" style="--p:${e.readiness};--c:${ringColor(e.readiness)}"><span class="!w-11 !h-11 !text-xs">${e.readiness}</span></div>
-            <div class="flex-1 min-w-0"><div class="text-sm font-extrabold" data-no-translate>${esc(e.name)}</div><div class="text-[11px] text-slate-500">${esc(e.role)} · ${esc(e.department)}</div></div></div>
+            <div class="flex-1 min-w-0"><div class="text-sm font-extrabold">${esc(e.name)}</div><div class="text-[11px] text-slate-500">${esc(e.role)} · ${esc(e.department)}</div></div></div>
           <div class="space-y-2">${e.recommendations.map(r => { const on = hasAssign(e.id, r.skill); return `
             <div class="flex flex-wrap items-center justify-between gap-3 rounded-2xl bg-white/80 border border-white p-3">
               <div class="min-w-0"><div class="text-xs font-extrabold">${esc(r.skill)} <span class="chip chip-rose ml-1">gap ${r.gap}</span></div>
@@ -867,6 +942,7 @@
     async function init() {
       buildNav();
       const me = await api('/api/auth/me'); user = me.data.user; if (!user) return;
+      window.PagePosition?.initialize({identity:user.unique_uid,portal:'employer',getView:()=>current,isValid:id=>id==='heatmap'||(typeof id==='string'&&!!document.getElementById('tab-'+id))});
       const rd = user.role_details || {};
       const companyLabel = rd.company_name || 'Your company';
       document.getElementById('headerCompanyName').textContent = companyLabel;
@@ -882,14 +958,16 @@
       renderChips();
       document.getElementById('comparisonDemo').checked = user.unique_uid === 'CL-HR-2026-8801';
       document.getElementById('comparisonDemo').parentElement.hidden = user.unique_uid !== 'CL-HR-2026-8801';
-      await showTab('overview');
       await CompanyComparison.load();
+      if (window.PagePosition) await window.PagePosition.restore(showTab, 'overview');
+      else await showTab('overview');
       loadHeat().then(() => { if (current === 'overview') renderOverview(); }).catch(() => {});
     }
     init();
   </script>
 <script src="/static/js/questionnaire-i18n.js"></script>
-<script src="/static/js/portal-i18n.js?v=20261020-locale-audit"></script>
-<script src="/static/js/member3.js?v=20261020-questionnaire-1"></script>
+<script src="/static/js/portal-i18n.js?v=20261021-notification-preview"></script>
+<script src="/static/js/member3.js?v=20261021-i18n-audit"></script>
+<script src="/static/js/page-outline.js?v=20261021-outline-vivid"></script>
 </body>
 </html>

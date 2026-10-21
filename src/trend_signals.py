@@ -44,7 +44,7 @@ def fetch_live_arxiv_signal(query: str = "artificial+intelligence+workforce") ->
     }
 
 
-def get_trend_radar(scenario: str = "moderate") -> dict:
+def get_trend_radar(scenario: str = "moderate", signal_metadata: dict | None = None) -> dict:
     """Return emerging vs declining skills & roles adjusted by the What-If scenario slider."""
     is_fast = scenario == "fast"
     mult = 1.25 if is_fast else 1.0
@@ -62,7 +62,7 @@ def get_trend_radar(scenario: str = "moderate") -> dict:
         {"task": "Manual First-Round CV Keyword Screening", "automation_risk_pct": min(90, round(60 * mult))},
     ]
 
-    signal_meta = fetch_live_arxiv_signal()
+    signal_meta = signal_metadata if signal_metadata is not None else fetch_live_arxiv_signal()
     return {
         "scenario": scenario,
         "scenario_label": "Fast AI Disruption (Aggressive Adoption)" if is_fast else "Moderate AI Adoption (Human-AI Co-Pilot)",

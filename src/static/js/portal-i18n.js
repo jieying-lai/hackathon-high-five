@@ -626,12 +626,699 @@ If this role needed a tool you have never used, how would you get productive in 
 Which parts of your previous experience transfer most directly to this role?|Bahagian manakah dalam pengalaman terdahulu anda yang paling berkaitan dengan jawatan ini?|你过去的哪些经验最能直接应用于这个岗位？
 Describe a problem you solved that was blocking your team's delivery.|Terangkan masalah yang anda selesaikan yang pernah menghalang penyampaian pasukan anda.|请描述一次你解决了阻碍团队交付的问题的经历。
 `.trim().split('\n').map(line => line.split('|'));
+  rows.push(
+    ['Loading notifications…', 'Memuatkan pemberitahuan…', '正在加载通知……'],
+    ['Double-click the bell to open all notifications.', 'Klik dua kali pada loceng untuk membuka semua pemberitahuan.', '双击铃铛可进入完整通知页面。'],
+    ['Open notifications', 'Buka pemberitahuan', '打开通知页面'],
+    ['Candidate Learning', 'Pembelajaran Calon', '候选人学习'],
+    ['View CV-based interview questions ↻', 'Lihat soalan temu duga berdasarkan CV ↻', '查看根据简历定制的面试问题 ↻'],
+    ['CV-based interview questions', 'Soalan temu duga berdasarkan CV', '根据简历定制的面试问题'],
+    ['Back to candidate ↻', 'Kembali ke calon ↻', '翻回候选人资料 ↻'],
+    ['Suggested prompts based on shared CV evidence and role requirements. Adapt them during the interview.', 'Cadangan soalan berdasarkan bukti CV yang dikongsi dan keperluan jawatan. Sesuaikan semasa temu duga.', '根据已分享的简历依据和岗位要求准备的建议问题，可在面试中调整。'],
+    ['Not enough shared CV evidence to tailor questions. Review the candidate profile first.', 'Bukti CV yang dikongsi tidak mencukupi untuk menyesuaikan soalan. Semak profil calon dahulu.', '已分享的简历依据不足，请先查看候选人资料。'],
+    ['Shortlisting', 'Senarai pendek', '入选名单'],
+    ['Interview preparation', 'Persediaan temu duga', '面试准备'],
+    ['Shortlisting & interviews', 'Senarai pendek & temu duga', '入选名单与面试'],
+    ['Candidate skills & qualifications', 'Kemahiran & kelayakan calon', '候选人技能与资历'],
+    ['Compare CV evidence before making your shortlist decision.', 'Bandingkan bukti CV sebelum membuat keputusan senarai pendek.', '对比简历依据后，再决定入选名单。'],
+    ['Shortlist filters', 'Penapis senarai pendek', '入选名单筛选'],
+    ['Shortlisted candidates', 'Calon disenarai pendek', '已入选候选人'],
+    ['Review your shortlist and arrange interviews here.', 'Semak senarai pendek anda dan aturkan temu duga di sini.', '在这里查看入选名单并安排面试。'],
+    ['Refresh shortlist', 'Muat semula senarai pendek', '刷新入选名单'],
+    ['Back to screening', 'Kembali ke saringan', '返回候选人筛选'],
+    ['Shortlist decisions are saved on this device for your account and vacancy.', 'Keputusan senarai pendek disimpan pada peranti ini mengikut akaun dan kekosongan jawatan anda.', '入选决定按账号和职位保存在此设备上。'],
+    ['No shortlisted candidates yet.', 'Belum ada calon disenarai pendek.', '暂无入选候选人。'],
+    ['Select Shortlist in Candidate Screening to add candidates here.', 'Pilih Senarai pendek dalam Saringan Calon untuk menambah calon di sini.', '在候选人筛选中选择“入选”，即可将候选人加入这里。'],
+    ['Remove from shortlist', 'Keluarkan daripada senarai pendek', '移出入选名单'],
+    ['Shortlist candidate', 'Senarai pendekkan calon', '将候选人加入入选名单'],
+    ['Could not save your decision. Please retry.', 'Keputusan anda tidak dapat disimpan. Sila cuba lagi.', '无法保存决定，请重试。'],
+    ['Could not refresh some shortlisted candidates. Please retry.', 'Sesetengah calon dalam senarai pendek tidak dapat dimuat semula. Sila cuba lagi.', '部分入选候选人刷新失败，请重试。'],
+    ['Collapse page guide', 'Kecilkan panduan halaman', '折叠页面导航'],
+    ['Expand page guide', 'Kembangkan panduan halaman', '展开页面导航'],
+    ['Experience & qualifications', 'Pengalaman & kelayakan', '经验与资历'],
+    ['Sharing & access', 'Perkongsian & akses', '分享与访问权限'],
+    ['Job vacancies', 'Kekosongan jawatan', '招聘职位'],
+    ['Common questions', 'Soalan umum', '基本资料'],
+    ['Target role', 'Jawatan sasaran', '目标岗位'],
+    ['Company profile', 'Profil syarikat', '企业资料'],
+    ['Candidate screening', 'Saringan calon', '候选人筛选'],
+    ["On this page", "Pada halaman ini", "本页位置"],
+    ["Current section", "Bahagian semasa", "当前区块"],
+    ["Account profile", "Profil akaun", "账号资料"],
+    ["CV upload", "Muat naik CV", "上传简历"],
+    ["Review your organised profile", "Semak profil tersusun anda", "审核整理后的资料"],
+    ["Your career journey", "Perjalanan kerjaya anda", "你的职业旅程"],
+    ["Career snapshot", "Ringkasan kerjaya", "职业概览"],
+    ["Top role matches", "Padanan jawatan terbaik", "最佳匹配岗位"],
+    ["Skill verification", "Pengesahan kemahiran", "技能验证"],
+    ["AI adoption scenario", "Senario penggunaan AI", "AI 采用情景"],
+    ["Skills & automation risks", "Kemahiran & risiko automasi", "技能与自动化风险"],
+    ["Rising skills", "Kemahiran meningkat", "增长中的技能"],
+    ["Automation risks", "Risiko automasi", "自动化风险"],
+    ["Research signals", "Isyarat penyelidikan", "研究信号"],
+    ["Role matches", "Padanan jawatan", "岗位匹配"],
+    ["Learning pathway", "Laluan pembelajaran", "学习路径"],
+    ["Your SDG passport", "Pasport SDG anda", "你的 SDG 护照"],
+    ["Location & search", "Lokasi & carian", "位置与搜索"],
+    ["Nearby companies", "Syarikat berdekatan", "附近企业"],
+    ["Interview invitations", "Jemputan temu duga", "面试邀请"],
+    ["Hiring overview", "Gambaran pengambilan", "招聘概览"],
+    ["Hiring & screening", "Pengambilan & saringan", "招聘与筛选"],
+    ["Candidate ranking", "Kedudukan calon", "候选人排名"],
+    ["Screening filters", "Penapis saringan", "筛选条件"],
+    ["Screening summary", "Ringkasan saringan", "筛选概况"],
+    ["Comparison filters", "Penapis perbandingan", "对比条件"],
+    ["Skills & qualifications", "Kemahiran & kelayakan", "技能与资历"],
+    ["Candidate details", "Butiran calon", "候选人详情"],
+    ["Learning suggestions", "Cadangan pembelajaran", "学习建议"],
+    ['Scenario intensity', 'Keamatan senario', '情景强度'],
+    ['Blended AI adoption scenario', 'Senario penggunaan AI campuran', 'AI 采用混合情景'],
+    ['Drag to explore a continuous blend between Moderate and Fast. Illustrative estimates, not predictions.', 'Seret untuk meneroka peralihan berterusan antara Sederhana dan Pesat. Anggaran ilustrasi, bukan ramalan.', '拖动滑杆，连续查看中等与快速情景之间的变化。数值为示例估算，并非预测。'],
+    ['Suggested', 'Cadangan', '推荐'],
+    ['skill coverage', 'liputan kemahiran', '技能覆盖'],
+    ['Use', 'Pilih', '采用'],
+    ['Selected', 'Dipilih', '已选'],
+    ['Limited evidence', 'Bukti terhad', '依据不足'],
+    ['Why this role?', 'Mengapa jawatan ini?', '推荐依据'],
+  );
   const dictionary = new Map(rows.map(row => [row[0],row]));
+  // Additional English/Chinese UI copy; original data and API values stay unchanged.
+  const chineseRows = `
+Edit Profile ⚙️|编辑资料 ⚙️
+Talent Account|求职者账号
+Account registered|账号已注册
+Email:|邮箱：
+Email|邮箱
+Phone|电话
+Joined:|注册日期：
+Joined|注册于
+Edit Profile & Information|编辑个人资料
+Security & Password|安全与密码
+Current Role|当前岗位
+Career Field|职业领域
+Preferred Mode|意向工作模式
+Your CV, your sharing choices|你的简历，由你决定如何分享
+Private by default|默认不公开
+Your PDF and organised profile are available to your signed-in account. An employer receives only the summary and/or PDF you choose to share when applying to its vacancy. Aggregate publication is currently disabled; your optional statistics preference is off by default. You can export your profile, withdraw sharing, or delete your vault below.|PDF 和整理后的资料仅供你登录后查看。申请职位时，雇主只会收到你选择分享的摘要和／或 PDF。目前不发布汇总统计，可选统计偏好默认关闭。你可以在下方导出资料、撤回分享或删除简历库。
+Optional statistics preference (publication disabled)|可选统计偏好（目前不发布）
+Hackathon demo — use fictional CVs only.|黑客松演示——仅使用虚构简历。
+This prototype uses a local, rule-based PDF parser; it is not a trained AI model and does not verify qualifications. Do not upload real names, contact details, identity documents, or confidential information. Text-based PDFs work best; image-only scans need OCR before upload.|此原型使用本地规则式 PDF 解析器，未经 AI 模型训练，也不核实资历。请勿上传真实姓名、联系方式、身份证件或机密信息。建议使用可提取文字的 PDF；纯图片扫描件需先进行文字识别。
+Text-based PDF · maximum 8 MB|文字型 PDF · 最大 8 MB
+I confirm my custom PDF contains only fictional, synthetic information.|我确认上传的 PDF 仅包含虚构、合成的信息。
+Extract, check the evidence, then review your profile before sharing|提取内容并核对依据，审核资料后再分享
+1. Check PDF|1. 检查 PDF
+2. Extract text|2. 提取文字
+3. Review draft|3. 审核草稿
+Try without a custom upload|无需上传自己的文件即可试用
+2. Review your organised profile|2. 审核整理后的个人资料
+No PDF yet|尚未上传 PDF
+Upload a PDF CV above to extract your structured profile|请在上方上传 PDF 简历以提取结构化资料
+Review required before sharing|分享前须审核资料
+Upload a sample or fictional PDF to begin.|上传示例或虚构 PDF 以开始。
+Draft professional summary|职业摘要草稿
+Personal & career details|个人与职业资料
+Check your contact information and work preferences.|核对联系方式和工作偏好。
+Current role / headline|当前岗位／职业标题
+Industry sector|所属行业
+Not specified|未填写
+Preferred work mode|意向工作模式
+Leave blank if unknown; 0 means no experience.|不确定时请留空；0 表示没有经验。
+Experience & qualifications|经验与资历
+Keep each entry clear and supported by your CV.|请确保每项内容清晰，且有简历依据。
+Work experience|工作经历
+Projects|项目经历
+Certifications|证书
+extracted mentions are not proof of proficiency|提取到的技能名称不代表熟练程度
+Original extraction evidence (before your edits)|原始提取依据（编辑前）
+Quotes and page numbers explain the parser's draft. Your edits are self-reported and are not independently verified.|原文引用和页码用于说明解析草稿的依据。你编辑的内容属于自行申报，未经独立核实。
+I have checked the summary, contact details, sections and skills against the PDF, and corrected any mistakes. Mark this profile as reviewed when I save.|我已对照 PDF 核对摘要、联系方式、各项经历及技能，并修正错误。保存时将此资料标记为已审核。
+Browse & Apply Jobs →|浏览并申请职位 →
+Save reviewed profile →|保存已审核资料 →
+Sharing & access|分享与访问权限
+Choose who can view your CV and review their access below.|选择谁可以查看你的简历，并在下方管理访问权限。
+Share with someone you choose|分享给指定接收者
+The recipient needs a CareerLens account. Only that signed-in account can open the link. No email is sent.|接收者需要拥有 CareerLens 账号，仅该账号登录后可打开链接。系统不会发送邮件。
+Recipient account email|接收者账号邮箱
+Share reviewed summary, including contact details|分享已审核摘要（包含联系方式）
+Share complete original PDF|分享完整原始 PDF
+Access expires after|访问有效期
+1 day|1 天
+7 days|7 天
+30 days|30 天
+Create recipient access|授权接收者访问
+Editing or replacing the CV ends existing grants. Revoking access cannot retract copies already saved by a recipient.|编辑或替换简历将终止现有授权。撤销访问无法收回接收者已保存的副本。
+Recent recipient access|接收者最近的访问记录
+3. Manage employer access|3. 管理雇主访问权限
+Each application grants access only to that vacancy's company account. Withdrawal blocks future access here; it cannot retract copies already downloaded.|每次申请仅向该职位所属企业账号授权。撤回申请将阻止后续访问，但无法收回已下载的副本。
+Export profile JSON|导出资料 JSON
+Delete my vault|删除我的简历库
+Recorded employer accesses through this app|通过本应用记录的雇主访问
+Selected Location|所选位置
+Use Current Location|使用当前位置
+Search Building, Condo, Street, or Area|搜索建筑、公寓、街道或地区
+Search|搜索
+Display Scope|显示范围
+Matched Only|仅显示匹配项
+View All Nearby|查看附近全部职位
+Search Radius:|搜索半径：
+Nearby Hiring Companies|附近正在招聘的企业
+Your Location|你的位置
+CV-Matched|与简历匹配
+Other Sectors|其他行业
+Loading...|正在加载……
+Clear Company Filter|清除企业筛选
+Matched Roles|匹配岗位
+All Nearby Roles|附近全部岗位
+All Job Sectors|全部行业
+Sort: Best Match|排序：匹配度最高
+Sort: Nearest Distance|排序：距离最近
+Sort: Highest Salary|排序：薪资最高
+Load More Jobs ↓|加载更多职位 ↓
+Application Questionnaire & Skill Verification|申请问卷与技能验证
+Allow Google Gemini to process my reviewed CV summary, work/project details and questionnaire answers for role suggestions and questions. Optional; local processing sends nothing to Google.|允许 Google Gemini 处理我已审核的简历摘要、工作／项目经历和问卷答案，以推荐岗位并生成问题。此项可选；本地处理不会向 Google 发送数据。
+AI Verification|AI 验证
+3 Skill Questions|3 道技能问题
+3 AI Verification Questions|3 道 AI 技能验证题
+Targeted scenarios generated based on your uploaded CV and target role.|根据上传的简历和目标岗位生成针对性情景题。
+Generate My 3 Questions|生成我的 3 道题
+Click "Generate My 3 Questions" above to load customized skill verification scenarios.|点击上方“生成我的 3 道题”，加载定制的技能验证情景题。
+Submit Answers & Get Score →|提交答案并获取评分 →
+Refresh Trends|刷新趋势
+Data Sources & Citations|数据来源与引用
+JobStreet Malaysia Open Labour Index (2026):|JobStreet 马来西亚公开就业指数（2026）：
+Aggregated real-time job vacancy signals across 69,000+ postings[cite: 52].|汇总超过 69,000 条招聘信息的实时职位信号[cite: 52]。
+World Economic Forum (WEF) Future of Jobs Report:|世界经济论坛（WEF）《未来就业报告》：
+Benchmark technology adoption curves and AI disruption velocity models.|技术采用曲线与 AI 变革速度模型基准。
+UNESCO & SDG 4 / 8 Frameworks:|联合国教科文组织与 SDG 4／8 框架：
+Aligned with Quality Education and Decent Work & Economic Growth guidelines.|对齐优质教育、体面工作和经济增长目标。
+Share organised CV summary|分享整理后的简历摘要
+(including saved contact details, skills, education, experience, projects and certifications)|（包括已保存的联系方式、技能、教育、工作经历、项目及证书）
+Share original PDF CV|分享原始 PDF 简历
+(all content in the uploaded file; recipients may save a copy)|（包含上传文件的全部内容；接收者可保存副本）
+Permission applies only to the company account that owns this vacancy. Withdrawal stops future access here but cannot retract downloaded copies. Editing the profile or replacing the PDF revokes previous sharing. Review and share again to give access to your updates.|授权仅适用于该职位所属的企业账号。撤回将停止后续访问，但无法收回已下载的副本。编辑资料或替换 PDF 会撤销原有分享。请重新审核并分享，以授权访问更新后的内容。
+Confirm & submit application →|确认并提交申请 →
+Account Profile & Settings|账号资料与设置
+Job Seeker|求职者
+User ID:|用户编号：
+Profile Information|个人资料
+Full Name|姓名
+Email Address|邮箱地址
+Current Role / Title|当前岗位／职称
+Career Field / Industry|职业领域／行业
+Engineering & Manufacturing|工程与制造
+Healthcare & Life Sciences|医疗与生命科学
+Education & EdTech|教育与教育科技
+Preferred Work Mode|意向工作模式
+Highest Education|最高学历
+Location / City|地区／城市
+Sharing is your choice|由你决定是否分享
+Active|已启用
+Your CV stays private until you choose a recipient and access scope. This demo does not verify real-world identity or certify legal compliance.|在你选择接收者和访问范围前，简历保持私密。此演示不会核实真实身份，也不提供法律合规认证。
+Save Profile Changes →|保存资料修改 →
+Current Password|当前密码
+New Password|新密码
+Confirm New Password|确认新密码
+Update Password →|更新密码 →
+View & Edit Account Profile|查看和编辑账号资料
+Edit Profile|编辑资料
+Edit your account information|编辑账号信息
+Update password|更新密码
+Choose a fictional PDF CV|选择虚构的 PDF 简历
+Upload progress|上传进度
+Review the extracted summary. Keep only statements supported by the CV.|审核提取的摘要，仅保留有简历依据的内容。
+One entry per line|每行填写一项
+Add a skill and press Enter (e.g. Python Data Analysis)|输入技能后按 Enter 添加（例如 Python 数据分析）
+Select State or Wilayah Persekutuan|选择州属或联邦直辖区
+Enter condo, building, street, or area (e.g. Banyan Mont Kiara, PV128 Setapak, Mount Austin)...|输入公寓、建筑、街道或地区（例如 Banyan Mont Kiara、PV128 Setapak、Mount Austin）……
+Clear|清除
+Search by job title, skill, or company...|搜索职位、技能或企业……
+Filter by job sector|按行业筛选
+Sort job vacancies|职位排序
+Close application|关闭申请窗口
+Your display name|你的显示名称
+e.g. Financial Auditor / Software Dev|例如：财务审计员／软件开发人员
+Enter current password|输入当前密码
+Min. 8 chars with uppercase, lowercase, number & symbol|至少 8 个字符，包含大写、小写字母、数字和符号
+Re-type new password|再次输入新密码
+Employer Company|雇主企业
+Verified Employer|已验证雇主
+Company Workspace|企业工作区
+Login:|登录邮箱：
+Contact:|联系人：
+Edit Company Profile|编辑企业资料
+Refresh|刷新
+Employer Account Profile|雇主账号资料
+HR & Employer Portal|人力资源与雇主门户
+Account UID:|账号编号：
+Company & HR Profile|企业与人力资源资料
+HR Contact Name|人力资源联系人姓名
+Work Email Address|工作邮箱
+Company Name|企业名称
+HR / Executive Title|人力资源／管理职称
+Company Size|企业规模
+1–50 Employees (Small / Startup)|1–50 名员工（小型／初创企业）
+51–250 Employees (Medium Enterprise)|51–250 名员工（中型企业）
+250+ Employees (Large Enterprise)|250 名以上员工（大型企业）
+Industry Sector|所属行业
+General Enterprise|综合企业
+Company Headquarters / Office Location|企业总部／办公地点
+Save Company Changes →|保存企业资料修改 →
+Company Profile|企业资料
+Edit Company Account & Profile|编辑企业账号与资料
+Your full name|你的姓名
+e.g. Nexus Digital Sdn Bhd|例如：Nexus Digital Sdn Bhd
+e.g. Head of Talent & Reskilling|例如：人才与技能提升主管
+e.g. Kuala Lumpur, Malaysia|例如：马来西亚吉隆坡
+Shared CV · CareerLens|共享简历 · CareerLens
+CareerLens · Private sharing|CareerLens · 私密分享
+Access unavailable|无法访问
+Sign in / return to CareerLens|登录／返回 CareerLens
+Download shared original PDF|下载共享的原始 PDF
+Reviewed career summary|已审核的职业摘要
+Reviewed by the CV owner. CareerLens has not independently verified these qualifications or skills.|已由简历所有者审核。CareerLens 未独立核实这些资历或技能。
+The owner shared only the original PDF. Their structured profile is private.|所有者仅分享了原始 PDF，结构化资料仍为私密。
+Return to workspace|返回工作区
+PDF|PDF
+Try sample|试用示例
+No source quote available.|没有可用的原文引用。
+No field evidence available.|没有可用的字段依据。
+CV wording signals · local keyword heuristics|简历措辞信号 · 本地关键词规则分析
+(confidence not validated) · Major:|（置信度未经验证）· 专业：
+No recorded employer access.|暂无雇主访问记录。
+Withdraw & revoke access|撤回申请并撤销访问
+No active applications. No employer has permission to access this CV through an application.|暂无有效申请，没有雇主获准通过申请访问此简历。
+No skills extracted. Add only skills supported by the CV.|未提取到技能，请仅添加有简历依据的技能。
+Select State / Wilayah...|选择州属／直辖区……
+available at this company|该企业正在招聘
+Available Positions|正在招聘的职位
+View All Nearby Roles →|查看附近全部岗位 →
+APPLIED|已申请
+Applied|已申请
+Choose access for this vacancy owner|选择向该职位所属企业授权的内容
+Aggregate demo statistics|汇总演示统计
+Analyzing CV and generating 3 targeted verification scenarios...|正在分析简历并生成 3 道针对性验证情景题……
+Failed to generate questions. Please try again.|问题生成失败，请重试。
+Network error while generating questions.|生成问题时发生网络错误。
+Submission failed. Try again.|提交失败，请重试。
+Account & Profile|账号与资料
+Account & Professional Background|账号与职业背景
+Account profile & skills vault|账号资料与技能库
+Saving...|正在保存……
+Account profile updated successfully!|账号资料更新成功！
+Please enter all password fields.|请填写所有密码栏。
+New passwords do not match.|两次新密码不一致。
+Updating...|正在更新……
+Password updated successfully!|密码更新成功！
+Unsaved changes. Check your edits and confirm the review before saving.|有未保存的修改。请核对修改并确认审核后再保存。
+Unsaved changes|有未保存的修改
+Discard unsaved edits and reload the saved profile?|放弃未保存的修改并重新加载已保存的资料？
+Replace the current PDF and organised profile?|替换当前 PDF 和整理后的资料？
+Your current profile edits will be replaced.|当前资料修改将被替换。
+Any links shared with named recipients will also be revoked. Previously downloaded copies cannot be retracted.|分享给指定接收者的链接也会被撤销，已下载的副本无法收回。
+Your vault change was saved, but some related data could not refresh. Please reload.|简历库修改已保存，但部分相关数据未能刷新，请重新加载页面。
+PDF processed. Review the draft before sharing.|PDF 已处理，请在分享前审核草稿。
+Preference saved. Aggregate publication is currently disabled.|偏好已保存，目前不发布汇总统计。
+Check your profile against the PDF, then tick the review confirmation.|请对照 PDF 核对资料，然后勾选审核确认。
+Enter the name shown on the fictional CV.|请输入虚构简历上的姓名。
+Saving these edits will withdraw existing applications and revoke recipient sharing. Continue?|保存这些修改将撤回现有申请并撤销接收者访问授权，是否继续？
+Saving your reviewed profile…|正在保存已审核资料……
+Reviewed profile saved. Choose employer access when you apply.|已保存审核后的资料，请在申请职位时选择雇主访问权限。
+Exported the saved profile. Unsaved edits are not included.|已导出保存的资料，不包含未保存的修改。
+Delete your stored PDF and organised profile, withdraw all applications and revoke future employer and recipient access? This cannot be undone. Previously downloaded copies cannot be retracted.|删除已保存的 PDF 和整理后的资料，撤回所有申请并撤销雇主及接收者的后续访问权限？此操作无法撤销，已下载的副本无法收回。
+Please enter a building, street, or area name.|请输入建筑、街道或地区名称。
+Location services are unavailable in this browser.|此浏览器无法使用定位服务。
+Detecting Location...|正在获取位置……
+Location access was declined. Please search your address or select a state.|定位权限被拒绝，请搜索地址或选择州属。
+Save your reviewed CV before choosing application permissions.|请先保存已审核的简历，再选择申请权限。
+Choose what to share before applying.|申请前请选择要分享的内容。
+Save your reviewed profile before sharing.|分享前请先保存已审核的资料。
+Withdraw application and revoke future employer access? Previously downloaded copies cannot be recalled.|撤回申请并撤销雇主的后续访问权限？已下载的副本无法收回。
+3 AI Verification questions successfully generated!|已成功生成 3 道 AI 技能验证题！
+Submitting answers...|正在提交答案……
+Verification answers evaluated!|验证答案已评分！
+Open explicitly shared original PDF|打开已明确授权分享的原始 PDF
+Reviewed professional summary|已审核的职业摘要
+Review status|审核状态
+Reviewed by the CV owner|已由简历所有者审核
+Not independently verified|未经独立核实
+Access to this CV has been recorded in the candidate's access log.|此次简历访问已记录在候选人的访问日志中。
+Employer profile updated successfully!|雇主资料更新成功！
+Vacancies unavailable|招聘职位暂不可用
+Vacancy created|职位已创建
+Delete this vacancy?|删除此招聘职位？
+Vacancy deleted|职位已删除
+Questions copied|问题已复制
+Copy failed|复制失败
+Ask Lumi|询问 Lumi
+Career Advisor|职业顾问
+Preparing your career insights...|正在准备职业建议……
+Unable to start a secure session.|无法建立安全会话。
+Google processing is off. Choose a role yourself or allow processing above.|Google 处理已关闭，请自行选择岗位，或在上方授权处理。
+Recipient-only link|仅限接收者使用的链接
+Recipient-only share link|仅限接收者使用的分享链接
+Revoke access|撤销访问权限
+No active recipient shares.|暂无有效的接收者分享。
+Choose the content to share.|请选择要分享的内容。
+Recipient access revoked.|已撤销接收者访问权限。
+Could not load recipient access.|无法加载接收者访问权限。
+Could not create share.|无法创建分享。
+Could not revoke access.|无法撤销访问权限。
+Profile Information|个人资料
+Close Advisor|关闭顾问
+Lumi · Talent & Workforce Advisor|Lumi · 人才与团队顾问
+Lumi · Career Advisor|Lumi · 职业顾问
+Support for candidate screening & workforce planning|提供候选人筛选与团队规划支持
+Personalised guidance for your career, skills & job search|为你的职业、技能及求职提供个性化建议
+Open Lumi Career Advisor|打开 Lumi 职业顾问
+Lumi Career Advisor|Lumi 职业顾问
+Online|在线
+Allow Google Gemini to rewrite replies using my message and reviewed CV profile. Optional; off by default.|允许 Google Gemini 根据我的消息及已审核简历资料改写回复。此项可选，默认关闭。
+Ask about nearby roles, career paths, skills, or courses...|询问附近岗位、职业路径、技能或课程……
+Welcome! I am Lumi, your Talent & Workforce Advisor.|欢迎！我是 Lumi，你的人才与团队顾问。
+Welcome! I am Lumi, your Career Advisor.|欢迎！我是 Lumi，你的职业顾问。
+How may I assist you with|我可以如何帮助你处理
+candidate screening|候选人筛选
+submitted applications|已提交的申请
+team skill readiness|团队技能就绪度
+today?|？
+I can help you explore|我可以帮你探索
+nearby job opportunities|附近的就业机会
+future role matches|未来岗位匹配
+reskilling pathways|技能提升路径
+or review your|或查看你的
+CV profile|简历资料
+Ask me about|欢迎询问
+career pathways, nearby job matching, skill development, or candidate screening|职业路径、附近岗位匹配、技能发展或候选人筛选
+Please let me know how I can assist you.|请告诉我你需要什么帮助。
+Generating...|正在生成……
+Regenerate Questions|重新生成问题
+Type your answer or practical approach here...|在此填写你的答案或实际做法……
+Scenario-Based|情景题
+Medium|中等
+Skill Test|技能测试
+Domain & Ethics Standard|领域与道德规范
+Technical Proficiency|技术能力
+Problem Solving|问题解决
+How do you ensure data integrity, fairness, or best industry practices when deploying solutions in team environments?|在团队环境中部署方案时，你如何确保数据完整性、公平性或遵循行业最佳实践？
+Experience not specified|未填写工作经验
+Original PDF withheld|未授权原始 PDF
+Audit Logged|访问已记录
+Contact (Shared via Application)|联系方式（通过申请分享）
+Classified Profile:|分类资料：
+Source not specified|未注明来源
+unverified|未经验证
+full name|姓名
+current role|当前岗位
+years experience|工作年限
+education level|学历
+work mode preference|工作模式偏好
+executive summary|职业摘要
+work experience|工作经历
+education history|教育经历
+No summary provided.|未提供摘要。
+Name|姓名
+Role|岗位
+Qualification|学历
+Work preference|工作偏好
+Skills mentioned or owner supplied|简历提及或所有者补充的技能
+Experience|工作经历
+No linked account|未关联账号
+Accept interview|接受面试
+Decline interview|拒绝面试
+Pending|待回复
+Accepted|已接受
+Declined|已拒绝
+Cancelled|已取消
+W.P. Labuan|纳闽联邦直辖区
+Kuala Lumpur City Centre|吉隆坡市中心
+Practical Problem Solving|实际问题解决
+Technical Competency|技术能力
+Intermediate|中级
+Advanced|高级
+Describe a scenario where you optimized a workflow or resolved a critical bug/bottleneck in your past experience.|请描述你过去优化工作流程，或解决重大错误／瓶颈的一次经历。
+Counts of words and phrases are prompts for review, not proof of ability or hiring suitability.|词语和短语的统计仅供审核参考，不证明能力或岗位适配性。
+Wording signals are prompts for review, not proof of ability or hiring suitability.|措辞信号仅供审核参考，不证明能力或岗位适配性。
+Upload a fictional PDF or try a sample to create your profile.|上传虚构 PDF 或试用示例以创建资料。
+Upload a fictional PDF or choose a sample to begin.|上传虚构 PDF 或选择示例以开始。
+Saved profile is ready for your sharing choices.|资料已保存，可以选择分享权限。
+This draft cannot be shared until you review and save it.|审核并保存前，无法分享此草稿。
+Checking your PDF…|正在检查 PDF……
+Choose a PDF file.|请选择 PDF 文件。
+Confirm that this custom PDF contains only fictional information before uploading.|上传前请确认此 PDF 仅包含虚构信息。
+Checking sample PDF…|正在检查示例 PDF……
+Could not export your profile.|无法导出资料。
+Your vault could not be deleted.|无法删除简历库。
+Vault deleted and sharing revoked.|已删除简历库并撤销分享。
+This discovery listing has no recipient account for an in-app application.|此职位信息没有关联接收账号，无法在应用内申请。
+Could not submit application.|无法提交申请。
+Could not withdraw.|无法撤回。
+Access denied to CV.|无权访问此简历。
+Here is your latest career snapshot.|这是你最新的职业概览。
+Complete the steps below to unlock your full plan.|完成以下步骤，查看完整计划。
+Start by picking a sample persona or listing your skills.|请先选择示例人物或填写技能。
+We would like to invite you to an interview.|我们诚邀你参加面试。
+Please reply to confirm your availability.|请回复确认你是否可以参加。
+Why this role?|为什么推荐此岗位？
+Enter the recipient's registered CareerLens email.|请输入接收者注册 CareerLens 时使用的邮箱。
+Choose the summary, original PDF, or both to share.|请选择分享摘要、原始 PDF，或两者都分享。
+Choose an expiry of 1, 7, or 30 days.|请选择 1、7 或 30 天的有效期。
+Upload and review your CV first.|请先上传并审核简历。
+Your CV changed. Refresh and review it before sharing.|简历已更改，请刷新并审核后再分享。
+Review and save your profile before sharing.|请审核并保存资料后再分享。
+No matching recipient account. Ask them to register with this email first.|未找到对应的接收者账号，请让对方先使用此邮箱注册。
+Your own CV is already available in your vault.|你可以直接在简历库查看自己的简历。
+Account not found.|未找到账号。
+Full name must be at least 2 characters.|姓名至少需要 2 个字符。
+Please enter a valid email address.|请输入有效的邮箱。
+This email address is already in use by another account.|该邮箱已被其他账号使用。
+Please enter both your current password and a new password.|请输入当前密码和新密码。
+New passwords do not match. Please verify and re-type.|两次新密码不一致，请核对并重新输入。
+Current password is incorrect. Please try again.|当前密码不正确，请重试。
+This file is not a public synthetic demo CV.|此文件并非公开的合成示例简历。
+Your session changed. Refresh this page and try again.|会话已更改，请刷新页面后重试。
+This request must come from CareerLens.|此请求必须来自 CareerLens。
+Upload one PDF CV, no larger than 8 MB.|请上传一个不超过 8 MB 的 PDF 简历。
+The request could not be read. Refresh and try again.|无法读取请求，请刷新后重试。
+Please sign in first.|请先登录。
+Logged out successfully.|已成功退出登录。
+Unknown questionnaire action.|未知的问卷操作。
+Invalid questionnaire request.|问卷请求无效。
+For this hackathon demo, confirm this is a synthetic CV with no real personal data.|请确认此次黑客松演示使用的简历为合成简历，不含真实个人信息。
+Please select a valid .pdf CV file to upload.|请选择有效的 .pdf 简历文件上传。
+Analytics consent must be true or false.|统计授权必须选择同意或不同意。
+No CV found to export.|没有可导出的简历。
+Access revoked.|已撤销访问。
+Share not found.|未找到分享记录。
+This shared PDF is unavailable for your account.|你的账号无法访问此共享 PDF。
+No uploaded PDF CV found.|未找到已上传的 PDF 简历。
+lat and lng required|需要提供纬度和经度。
+This is a discovery listing without a connected employer account. Your CV has not been sent.|此职位信息未关联雇主账号，你的简历尚未发送。
+Trend data successfully updated!|趋势数据更新成功！
+Vacancy not found.|未找到招聘职位。
+Candidate did not grant access to their organised CV summary.|候选人未授权访问整理后的简历摘要。
+Candidate did not share the original PDF CV for this application.|候选人未在此次申请中分享原始 PDF 简历。
+Send a text message up to 4,000 characters and a valid location.|请发送不超过 4,000 个字符的文字消息，并提供有效位置。
+Choose a city or provide valid latitude and longitude.|请选择城市或提供有效经纬度。
+Answers successfully evaluated!|答案已成功评分！
+Reviewed by you|已由你审核
+Needs your review|等待你审核
+Check the draft before sharing with employers|向雇主分享前请核对草稿
+Extraction method:|提取方式：
+Local PDF text extraction|本地 PDF 文字提取
+Missing information is left blank; correct the draft using the original PDF.|缺失信息留空，请根据原始 PDF 修正草稿。
+Summary shared|摘要已分享
+Summary private|摘要未公开
+PDF shared|PDF 已分享
+PDF private|PDF 未公开
+Summary|摘要
+Original PDF|原始 PDF
+Organised CV|整理后的简历
+Shared via application|通过申请分享
+Contact|联系方式
+page|页
+Name:|姓名：
+No applications yet.|暂无申请。
+shared a CV with you|与你分享了一份简历
+Only your signed-in account can use this link. Access expires|仅你的账号登录后可以使用此链接。访问到期时间：
+The owner can revoke access or replace the CV. Please respect the agreed purpose of this share.|所有者可以撤销访问或替换简历，请按约定用途使用分享的内容。
+Application|职位申请
+Profile|个人资料
+Private sharing|私密分享
+No original PDF access|无原始 PDF 访问权限
+or|或
+Access granted for this application and resource.|已授权访问此次申请对应的内容。
+Access granted to this account. Copy the link to share it; no email was sent.|已向该账号授权。请复制链接进行分享；系统未发送邮件。
+Add at least one required skill directly related to the role.|请至少添加一项与岗位直接相关的必需技能。
+Application not found or access denied.|未找到申请，或无权访问。
+Application saved with only your selected CV resources shared.|申请已保存，仅分享了你选定的简历内容。
+Application withdrawn. Further employer access is revoked; earlier downloaded copies cannot be recalled.|申请已撤回，雇主的后续访问已撤销；之前下载的副本无法收回。
+Candidate CV not found.|未找到候选人简历。
+Choose at least one CV resource to share, or withdraw the application to revoke access.|请至少选择一项简历内容进行分享，或撤回申请以撤销访问。
+Choose whether to include your CV in aggregate statistics.|请选择是否将简历纳入汇总统计。
+No CV found.|未找到简历。
+No active application found for this vacancy.|未找到此职位的有效申请。
+No verified course is available for this skill.|暂无对应此技能的已核实课程。
+Only PDF files (.pdf) are accepted. Export your CV as a PDF and try again.|仅接受 PDF 文件（.pdf），请将简历导出为 PDF 后重试。
+PDF CVs can contain at most 20 pages. Upload a shorter version.|PDF 简历最多 20 页，请上传较短版本。
+PDF extracted locally. Review and confirm the organised draft before sharing.|已在本地提取 PDF，请在分享前审核并确认整理后的草稿。
+PDF file exceeds the 8 MB maximum size limit.|PDF 文件超过 8 MB 大小限制。
+Please choose a valid minimum education level.|请选择有效的最低学历。
+Please choose a valid work mode.|请选择有效的工作模式。
+Please upload your PDF CV first.|请先上传 PDF 简历。
+Position title must be 2–80 characters.|职位名称须为 2–80 个字符。
+Profile updated successfully!|资料更新成功！
+Review and confirm your CV details before sharing with an employer.|向雇主分享前，请审核并确认简历内容。
+Salary budget and years of experience must be numbers.|薪资预算和经验年限必须为数字。
+Salary expectation must be a non-negative number.|期望薪资必须为非负数。
+Salary maximum must be greater than or equal to the minimum.|最高薪资必须大于或等于最低薪资。
+Send a valid application.|请提交有效的申请。
+Send a valid profile update.|请提交有效的资料更新。
+Sharing choices must be true or false.|分享选项必须选择同意或不同意。
+The CV could not be stored. Please try again; your previous record was kept.|无法保存简历，请重试；之前的记录已保留。
+The PDF document contains no pages.|此 PDF 文档没有页面。
+The PDF is damaged, malformed, or uses an unsupported format. Open it in a PDF reader and export a fresh text PDF.|PDF 已损坏、格式异常或不受支持。请使用 PDF 阅读器打开，并重新导出文字型 PDF。
+The candidate has not shared this CV resource.|候选人未分享此简历内容。
+The candidate must review this CV before it can be shared.|候选人须先审核此简历，才能分享。
+The cover note or availability is invalid.|申请附言或可入职时间无效。
+The review confirmation must be true or false.|审核确认必须选择同意或不同意。
+The shared PDF is no longer available.|此共享 PDF 已不可用。
+The statistics preference must be true or false.|统计偏好必须选择同意或不同意。
+The stored file could not be removed. Please try again.|无法删除已保存的文件，请重试。
+The stored file could not be safely removed. Contact the application owner.|无法安全删除已保存的文件，请联系应用所有者。
+The uploaded PDF is empty or incomplete. Export it again and retry.|上传的 PDF 为空或不完整，请重新导出后重试。
+This CV has changed. Reload the vault before saving or confirming your review.|简历已更改，请重新加载简历库后再保存或确认审核。
+This PDF contains an unusually large page. Export a simplified text PDF and retry.|此 PDF 包含过大的页面，请导出简化的文字型 PDF 后重试。
+This PDF contains too much text to process safely. Upload a shorter CV (maximum 100,000 characters).|此 PDF 的文字过多，无法安全处理。请上传较短的简历（最多 100,000 个字符）。
+This PDF has too little selectable text and may be a scan. Use OCR or export a text-based PDF; automatic OCR is not available here.|此 PDF 可选取的文字过少，可能是扫描件。请先进行文字识别或导出文字型 PDF；此处不提供自动文字识别。
+This PDF is password-protected or encrypted. Upload an unencrypted copy that you are authorised to use.|此 PDF 受密码保护或已加密，请上传你有权使用的未加密副本。
+This discovery listing has no connected employer account. Your CV has not been sent.|此职位信息未关联雇主账号，你的简历尚未发送。
+This file is not a valid PDF. Renaming a file to .pdf does not convert it.|此文件不是有效的 PDF，将扩展名改成 .pdf 并不会转换文件格式。
+This vacancy is closed to new applications.|此职位已停止接受新申请。
+Training approved.|培训已获批准。
+Unknown CV resource.|未知的简历内容。
+Upload and review your PDF CV before applying.|申请前请先上传并审核 PDF 简历。
+Vacancy created.|职位已创建。
+Years of experience must be a number from 0 to 80, or empty.|经验年限须为 0–80 的数字，也可以留空。
+Years of relevant experience must be between 0 and 40.|相关经验年限须为 0–40 年。
+Your PDF, extracted details, applications and access history were deleted. Earlier downloaded copies cannot be recalled.|已删除 PDF、提取资料、申请和访问记录；之前下载的副本无法收回。
+Suggestion unavailable.|推荐暂不可用。
+How Lumi Helps|Lumi 如何帮助你
+CV Privacy|简历隐私
+Emerging Skills|新兴技能
+Top Candidates|优秀候选人
+Submitted CVs|已提交的简历
+Team Skill Gaps|团队技能差距
+Retention Insights|人才留任洞察
+Nearby Jobs|附近职位
+CV Summary|简历摘要
+View Reskilling Plan|查看技能提升计划
+Search Jobs & Companies|搜索职位与企业
+Open Reskilling Plan|打开技能提升计划
+Open Candidate Screening|打开候选人筛选
+Create Job Vacancy|创建招聘职位
+Screen Candidates|筛选候选人
+Approve Reskilling|批准技能提升培训
+My PDF CV|我的 PDF 简历
+Browse Matching Jobs|浏览匹配职位
+Upskill for Higher Pay|提升技能以争取更高薪资
+Upload CV|上传简历
+View CV Profile|查看简历资料
+Explore Nearby Jobs|探索附近职位
+View Access Audit Log|查看访问审计日志
+Manage Applications|管理申请
+Upload PDF CV|上传 PDF 简历
+View Role Matches|查看岗位匹配
+No opted-in CVs yet|尚无同意参与统计的简历
+Financial Reporting|财务报告
+Professional|专业人员
+Contact (Shared via Application)|联系方式（通过申请分享）
+No hiring companies within|此半径内没有招聘企业：
+No CV-matched hiring companies within|此半径内没有与简历匹配的招聘企业：
+No vacancies found within|此半径内没有找到职位：
+No CV-matched vacancies found within|此半径内没有找到与简历匹配的职位：
+of|位于
+No original PDF shared|未分享原始 PDF
+Download sample PDF|下载示例 PDF
+Consider replacing passive phrasing|建议替换被动措辞
+Your Location (Drag to reposition)|你的位置（拖动以调整）
+Quantified Impact & Action Verbs|量化成果与行动动词
+Extended Lexicon Signals & Telemetry|扩展词库信号与文本指标
+Apply & choose access →|申请并选择访问权限 →
+Qualification & Arrangement|资历与工作安排
+CV evidence for required skills|必需技能的简历依据
+This candidate explicitly applied to|此候选人已明确申请
+and consented to share their CV below.|并同意分享以下简历内容。
+`.trim().split('\n').map(line => line.split('|'));
+  const chineseDictionary = new Map(chineseRows);
   function translate(text, language) {
     const i = language === 'zh' ? 2 : language === 'ms' ? 1 : 0;
     if (!i) return text;
     const row = dictionary.get(text);
     if (row) return row[i];
+    const intensity = text.match(/^Scenario intensity: (\d+)%$/);
+    if (intensity) return i === 2 ? `情景强度：${intensity[1]}%` : `Keamatan senario: ${intensity[1]}%`;
+    if (i === 2 && chineseDictionary.has(text)) return chineseDictionary.get(text);
+    const trailingColon = text.match(/^(.+?)([:：])$/);
+    if (trailingColon) {
+      const label = translate(trailingColon[1], language);
+      if (label !== trailingColon[1]) return label + (i === 2 ? '：' : ':');
+    }
+    const coverage = text.match(/^skill coverage: (\d+)\/(\d+)$/);
+    if (coverage) return `${translate('skill coverage', language)}: ${coverage[1]}/${coverage[2]}`;
+    const coveragePercent = text.match(/^(\d+)% skill coverage$/);
+    if (coveragePercent) return `${coveragePercent[1]}% ${translate('skill coverage', language)}`;
+    if (i === 2) {
+      const patterns = [
+        [/^(\d+) open roles?$/, m => `${m[1]} 个开放职位`],
+        [/^Location set to (.+)$/, m => `位置已设为 ${m[1]}`],
+        [/^Location updated: (.+)$/, m => `位置已更新：${m[1]}`],
+        [/^Vacancy (open|closed)$/, m => `职位已${m[1] === 'open' ? '开放' : '关闭'}`],
+        [/^on (.+) and consented to share their CV below\.$/, m => `于 ${m[1]} 申请，并同意分享以下简历内容。`],
+        [/^Anonymised Talent Pool Skill Distribution \((\d+) Opt-In PDF CVs\)$/, m => `匿名人才库技能分布（${m[1]} 份已授权 PDF 简历）`],
+        [/^Explore (.+) Companies$/, m => `探索${translate(m[1], language)}企业`],
+        [/^Fly Map to (.+) \((\d+)km\)$/, m => `将地图移至 ${m[1]}（${m[2]} 公里）`],
+        [/^Question (\d+) of (\d+)(?: · (.+))?$/, m => `第 ${m[1]} / ${m[2]} 题${m[3] ? ' · ' + translate(m[3], language) : ''}`],
+        [/^Verification score: (\d+)\/100$/, m => `验证得分：${m[1]}/100`],
+        [/^In a real-world project for a (.+), how would you handle unexpected technical roadblocks or tight deadlines\?$/, m => `在担任${translate(m[1], language)}的实际项目中，你会如何应对意外技术障碍或紧迫的截止日期？`],
+        [/^(\d+) matched$/, m => `${m[1]} 个匹配项`],
+        [/^(\d+) access(?:es)?$/, m => `${m[1]} 次访问`],
+        [/^Keyword coverage (.+)$/, m => `关键词覆盖度 ${translate(m[1], language)}`],
+        [/^Impact wording (.+)$/, m => `成果措辞 ${translate(m[1], language)}`],
+        [/^(\d+) words · avg ([\d.]+) chars\/word · (\d+) numeric metrics$/, m => `${m[1]} 个词 · 平均每词 ${m[2]} 个字符 · ${m[3]} 项数字指标`],
+        [/^(\d+) page\(s\)$/, m => `${m[1]} 页`],
+        [/^Updated (.+)$/, m => `更新于 ${m[1]}`],
+        [/^File fingerprint \(SHA-256\): (.+)$/, m => `文件指纹（SHA-256）：${m[1]}`],
+        [/^Extraction method: (.+)\. Missing information is left blank; correct the draft using the original PDF\.$/, m => `提取方式：${translate(m[1], language)}。缺失信息留空，请根据原始 PDF 修正草稿。`],
+        [/^Uploading and extracting (.+)$/, m => `正在上传并提取 ${m[1]}`],
+        [/^Expand (?:Radius )?to (\d+) km$/i, m => `将搜索半径扩大至 ${m[1]} 公里`],
+        [/^([\d.]+) km away$/, m => `距离 ${m[1]} 公里`],
+        [/^([\d.]+) km$/, m => `${m[1]} 公里`],
+        [/^page (\d+)$/, m => `第 ${m[1]} 页`],
+        [/^(\d+) skills to build$/, m => `${m[1]} 项待提升技能`],
+        [/^Market demand (\d+)\/100$/, m => `市场需求 ${m[1]}/100`],
+        [/^Match for (.+)$/, m => `与${translate(m[1], language)}的匹配情况`],
+        [/^Applied to (.+)$/, m => `已申请：${m[1]}`],
+        [/^Owner-reviewed skill mentions \((\d+)\)$/, m => `所有者已审核的技能（${m[1]} 项）`],
+        [/^gap (\d+)$/, m => `差距 ${m[1]}`],
+        [/^Expires (.+)$/, m => `到期时间：${m[1]}`],
+        [/^View CV shared by (.+)$/, m => `查看 ${m[1]} 分享的简历`],
+        [/^(.+) accessed (summary|pdf|PDF|original_pdf)$/, m => `${m[1]} 访问了${/pdf/i.test(m[2]) ? '原始 PDF' : '摘要'}`],
+        [/^Searching locations for "(.+)"\.\.\.$/, m => `正在搜索“${m[1]}”的位置……`],
+        [/^No matching location found for "(.+)"\. Try entering the area or street name\.$/, m => `未找到“${m[1]}”的匹配位置，请尝试输入地区或街道名称。`],
+        [/^Opened (.+)$/, m => `已打开：${translate(m[1], language)}`],
+        [/^This area is for (.+) Portal accounts only\.$/, m => `此区域仅限${translate(m[1], language)}门户账号访问。`],
+        [/^Replace the current PDF and organised profile\? This will withdraw (\d+) active application\(s\) and revoke their access\. You must review and apply again to share the new CV\. Any links shared with named recipients will also be revoked\. Previously downloaded copies cannot be retracted\.$/, m => `替换当前 PDF 和整理后的资料？这将撤回 ${m[1]} 份有效申请并撤销访问权限。你须重新审核并申请才能分享新简历。分享给指定接收者的链接也会被撤销，已下载的副本无法收回。`],
+        [/^Replace the current PDF and organised profile\? Your current profile edits will be replaced\. Any links shared with named recipients will also be revoked\. Previously downloaded copies cannot be retracted\.$/, () => '替换当前 PDF 和整理后的资料？当前资料修改将被替换，分享给指定接收者的链接也会被撤销。已下载的副本无法收回。'],
+      ];
+      for (const [pattern, render] of patterns) {
+        const match = text.match(pattern);
+        if (match) return render(match);
+      }
+    }
+    const cvSkillPrompt = text.match(/^Your CV lists (.+)\. Describe a project where you used it, your personal contribution, and the result\.$/);
+    if (cvSkillPrompt) return i===2 ? `你的简历列出了${translate(cvSkillPrompt[1],language)}。请描述一个运用该技能的项目、你个人的贡献及成果。` : `CV anda menyenaraikan ${translate(cvSkillPrompt[1],language)}. Terangkan projek yang menggunakan kemahiran ini, sumbangan peribadi anda dan hasilnya.`;
+    const shortlistCount = text.match(/^(\d+) shortlisted candidates$/);
+    if (shortlistCount) return i===2 ? `${shortlistCount[1]} 位入选候选人` : `${shortlistCount[1]} calon disenarai pendek`;
     let dynamic = text.match(/^(\d+) (?:views?|companies|company)$/);
     if (dynamic) return `${dynamic[1]} ${/view/.test(text) ? (i===2?'次查看':'paparan') : (i===2?'家公司':'syarikat')}`;
     dynamic = text.match(/^(\d+) of (\d+) answered · draft saved on this device$/);
@@ -683,5 +1370,5 @@ Describe a problem you solved that was blocking your team's delivery.|Terangkan 
     }
     return text;
   }
-  return {translate, rows};
+  return {translate, rows, chineseRows};
 });

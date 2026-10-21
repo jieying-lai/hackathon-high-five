@@ -10,6 +10,7 @@
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <link rel="stylesheet" href="/static/css/theme.css?v=20261020-formal-lumi" />
+  <link rel="stylesheet" href="/static/css/scenario-slider.css?v=20261021-continuous" />
   <style>
     .cl-map-wrap {
       position: relative;
@@ -99,7 +100,8 @@
     }
   </style>
   <link rel="stylesheet" href="/static/css/profile.css?v=20261021-layout-1" />
-  <link rel="stylesheet" href="/static/css/responsive.css?v=20261020-minimal-2" />
+  <link rel="stylesheet" href="/static/css/responsive.css?v=20261021-notification-preview" />
+  <link rel="stylesheet" href="/static/css/page-outline.css?v=20261021-outline-offset" />
 </head>
 <body class="responsive-ui responsive-talent min-h-screen">
   <div class="aurora"></div><div class="blob b1"></div><div class="blob b2"></div>
@@ -126,7 +128,7 @@
       </div>
     </header>
 
-    <div class="flex-1 min-w-0">
+    <div class="portal-content flex-1 min-w-0">
 
       <header class="portal-mobile-header sticky top-0 z-30 glass">
         <div class="flex items-center justify-between px-4 py-2.5">
@@ -152,7 +154,7 @@
 
         <section id="tab-notifications" class="tab hidden space-y-4">
           <button class="btn btn-soft" onclick="loadInvitations(false)">Refresh notifications</button>
-          <div id="talentInvitations" class="space-y-4"></div>
+          <div data-outline-label="Interview invitations" id="talentInvitations" class="space-y-4"></div>
         </section>
 
         <section id="tab-dash" class="tab space-y-6">
@@ -161,11 +163,11 @@
             <div class="relative space-y-1"><div class="text-sm text-slate-500 font-semibold">Welcome back</div>
               <h2 id="dashHello" data-no-translate class="text-2xl font-extrabold"></h2>
               <p id="dashSub" class="text-sm text-slate-600"></p></div>
-            <div id="journey" class="journey-grid relative mt-6"></div>
+            <div data-outline-label="Your career journey" id="journey" class="journey-grid relative mt-6"></div>
           </div>
-          <div id="kpis" class="grid grid-cols-2 lg:grid-cols-4 gap-4"></div>
+          <div data-outline-label="Career snapshot" id="kpis" class="grid grid-cols-2 lg:grid-cols-4 gap-4"></div>
           <div class="grid lg:grid-cols-5 gap-6">
-            <div id="dashTop" class="lg:col-span-3 glass rounded-3xl p-6"></div>
+            <div data-outline-label="Top role matches" id="dashTop" class="lg:col-span-3 glass rounded-3xl p-6"></div>
             <div class="lg:col-span-2 tint tint-pink rounded-3xl p-6 space-y-3">
               <div class="text-[11px] font-extrabold uppercase tracking-wider text-pink-600">Next step</div>
               <div id="nextStep" class="space-y-3"></div>
@@ -176,20 +178,20 @@
         <section id="tab-profile" class="tab hidden space-y-6">
 
           <!-- Account Profile & Personal Details Card -->
-          <div class="profile-account-card glass rounded-3xl p-6 sm:p-7 space-y-4 border-2 border-indigo-100 shadow-sm" data-no-translate>
+          <div data-outline-label="Account profile" class="profile-account-card glass rounded-3xl p-6 sm:p-7 space-y-4 border-2 border-indigo-100 shadow-sm">
             <div class="flex flex-wrap items-center justify-between gap-4 border-b border-slate-200/70 pb-4">
               <div class="flex items-center gap-3.5">
-                <div id="accCardAvatar" class="h-14 w-14 rounded-2xl bg-gradient-to-br from-indigo-500 to-pink-500 text-white font-black text-2xl grid place-items-center shadow">U</div>
+                <div id="accCardAvatar" class="h-14 w-14 rounded-2xl bg-gradient-to-br from-indigo-500 to-pink-500 text-white font-black text-2xl grid place-items-center shadow" data-no-translate>U</div>
                 <div>
                   <div class="flex flex-wrap items-center gap-2">
-                    <h2 id="accCardName" class="text-xl font-extrabold text-slate-900">User</h2>
+                    <h2 id="accCardName" class="text-xl font-extrabold text-slate-900" data-no-translate>User</h2>
                     <span id="accCardBadge" class="chip chip-indigo">Talent Account</span>
                     <span class="chip chip-emerald">Account registered</span>
                   </div>
                   <div class="profile-account-meta text-xs text-slate-500 mt-1">
-                    <span>ID: <b id="accCardUid" class="font-mono text-slate-700"></b></span>
-                    <span>Email: <b id="accCardEmail" class="text-slate-700"></b></span>
-                    <span>Joined: <span id="accCardJoined" class="text-slate-600"></span></span>
+                    <span>ID: <b id="accCardUid" class="font-mono text-slate-700" data-no-translate></b></span>
+                    <span>Email: <b id="accCardEmail" class="text-slate-700" data-no-translate></b></span>
+                    <span>Joined: <span id="accCardJoined" class="text-slate-600" data-no-translate></span></span>
                   </div>
                 </div>
               </div>
@@ -226,7 +228,7 @@
             </div>
           </div>
 
-          <div class="profile-privacy tint tint-teal rounded-3xl p-5 flex flex-wrap items-center justify-between gap-4" data-no-translate>
+          <div class="profile-privacy tint tint-teal rounded-3xl p-5 flex flex-wrap items-center justify-between gap-4">
             <div class="flex items-start gap-3.5 max-w-3xl">
               <div class="h-11 w-11 rounded-2xl bg-teal-600 text-white grid place-items-center text-lg shrink-0 shadow">🔒</div>
               <div>
@@ -251,7 +253,7 @@
 
 
           <div class="profile-workflow">
-<div class="profile-upload glass rounded-3xl p-6 space-y-4">
+<div data-outline-label="CV upload" class="profile-upload glass rounded-3xl p-6 space-y-4">
                 <div class="flex items-center justify-between">
                   <div>
                     <div class="text-sm font-extrabold">1. Upload your PDF CV</div>
@@ -285,7 +287,7 @@
                   <div id="samplePdfList" class="space-y-2"></div>
                 </div>
               </div>
-<div class="profile-editor glass rounded-3xl p-6 sm:p-7 space-y-5">
+<div data-outline-label="Review your organised profile" class="profile-editor glass rounded-3xl p-6 sm:p-7 space-y-5">
                 <div class="flex flex-wrap items-start justify-between gap-3 border-b border-slate-200/70 pb-4">
                   <div>
                     <div class="flex items-center gap-2">
@@ -349,7 +351,7 @@
                   </div>
                 </div>
 
-                <div id="cvParserAnalytics" class="tint tint-teal rounded-2xl p-4 space-y-3 hidden" data-no-translate></div>
+                <div id="cvParserAnalytics" class="tint tint-teal rounded-2xl p-4 space-y-3 hidden"></div>
 
                 <div class="profile-skills">
                   <label for="skillInput" class="label">Skills <span class="text-slate-400 font-medium">· extracted mentions are not proof of proficiency</span></label>
@@ -376,8 +378,8 @@
                 </div>
               </div>
           </div>
-          <div class="profile-section-heading"><h2>Sharing &amp; access</h2><p>Choose who can view your CV and review their access below.</p></div>
-          <div class="profile-sharing-grid" data-no-translate>
+          <div data-outline-label="Sharing & access" class="profile-section-heading"><h2>Sharing &amp; access</h2><p>Choose who can view your CV and review their access below.</p></div>
+          <div class="profile-sharing-grid">
 <div class="glass rounded-3xl p-6 space-y-3">
                 <div class="text-sm font-extrabold">Share with someone you choose</div>
                 <p class="text-xs text-slate-600">The recipient needs a CareerLens account. Only that signed-in account can open the link. No email is sent.</p>
@@ -413,9 +415,9 @@
               </div>
         </section>
 
-        <section id="tab-jobs" class="tab hidden space-y-6" data-no-translate>
+        <section id="tab-jobs" class="tab hidden space-y-6">
           <!-- Card 1: Location & Search Radius -->
-          <div class="glass rounded-3xl p-6 space-y-5">
+          <div data-outline-label="Location & search" class="glass rounded-3xl p-6 space-y-5">
             <!-- Row 1: Current Location + Formal Location Controls -->
             <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
               <div class="flex items-start gap-3.5 min-w-0">
@@ -538,7 +540,7 @@
 
             <div class="grid lg:grid-cols-12 gap-5 items-stretch">
               <div class="lg:col-span-7">
-                <div id="companyMap" class="cl-map-wrap"></div>
+                <div data-outline-label="Nearby companies" id="companyMap" class="cl-map-wrap"></div>
               </div>
               <div class="lg:col-span-5 flex flex-col lg:h-[420px]">
                 <div id="mapSideCard" class="tint tint-indigo rounded-2xl p-6 flex-1 flex flex-col justify-between overflow-y-auto"></div>
@@ -581,7 +583,7 @@
               </div>
             </div>
 
-            <div id="jobsGrid" class="grid lg:grid-cols-2 gap-4 items-stretch"></div>
+            <div data-outline-label="Job vacancies" id="jobsGrid" class="grid lg:grid-cols-2 gap-4 items-stretch"></div>
 
             <div id="loadMoreJobsWrap" class="text-center pt-2 hidden">
               <button type="button" onclick="loadMoreJobs()" class="btn btn-soft !py-2.5 !px-6 !text-xs">Load More Jobs ↓</button>
@@ -602,7 +604,7 @@
           <label id="questionnaireExternalConsentLabel" class="hidden flex gap-2 text-xs text-slate-600"><input id="questionnaireExternalConsent" type="checkbox" onchange="scheduleRoleRecommendation()" />Allow Google Gemini to process my reviewed CV summary, work/project details and questionnaire answers for role suggestions and questions. Optional; local processing sends nothing to Google.</label>
 
           <!-- Dedicated 3 AI Skill Verification Questions Module -->
-          <div class="glass rounded-3xl p-6 space-y-5" data-no-translate>
+          <div class="glass rounded-3xl p-6 space-y-5">
             <div class="flex flex-wrap items-center justify-between gap-3 border-b border-slate-200/70 pb-4">
               <div>
                 <div class="flex items-center gap-2">
@@ -617,7 +619,7 @@
               </button>
             </div>
 
-            <div id="ai3QuestionsContainer" class="space-y-4">
+            <div data-outline-label="Skill verification" id="ai3QuestionsContainer" class="space-y-4">
               <div class="text-xs text-slate-400 text-center py-4">
                 Click "Generate My 3 Questions" above to load customized skill verification scenarios.
               </div>
@@ -631,10 +633,10 @@
             </div>
           </div>
 
-          <!-- Step 1: Basic Common Questions -->
-          <form id="questionnaireBasics" class="glass rounded-3xl p-6 space-y-5" onsubmit="event.preventDefault();continueQuestionnaire()">
+          <!-- Basic Common Questions -->
+          <form data-outline-label="Common questions" id="questionnaireBasics" class="glass rounded-3xl p-6 space-y-5" onsubmit="event.preventDefault();continueQuestionnaire()">
             <div>
-              <h2 class="font-extrabold">1 · Common questions</h2>
+              <h2 class="font-extrabold">Common questions</h2>
               <p class="text-xs text-slate-500 mt-1">All basic fields are required. Choose your field before selecting a role.</p>
             </div>
             <div id="commonQ" class="questionnaire-fields"></div>
@@ -642,26 +644,9 @@
               <div id="roleRecommendationStatus" role="status" aria-live="polite"></div>
               <div id="roleRecommendations"></div>
             </div>
-            <button type="submit" class="btn btn-primary">Continue to CV questions →</button>
+            <button type="submit" class="btn btn-primary">Save basic information</button>
           </form>
 
-          <!-- Step 2: Personalized CV Questions -->
-          <div id="questionnairePersonal" class="hidden tint tint-pink rounded-3xl p-6 space-y-5">
-            <div class="flex flex-wrap items-center justify-between gap-3">
-              <h2 id="personalQuestionsTitle" tabindex="-1" class="font-extrabold">2 · Personalised for your CV</h2>
-              <button class="btn btn-soft" type="button" onclick="backToQuestionnaireBasics()">← Back to basic information</button>
-            </div>
-            <p id="questionnaireProviderDescription" class="text-xs text-slate-600">
-              Generate questions using your uploaded CV summary and chosen role. Your CV summary and basic answers are sent to Google Gemini when you press Generate.
-            </p>
-            <button id="generateQuestionsButton" type="button" class="btn btn-primary" onclick="generateQuestionnaireQuestions()">Generate my CV questions</button>
-            <div id="questionnaireAIStatus" role="status" aria-live="polite"></div>
-            <form id="questionnaireAIForm" onsubmit="event.preventDefault();completeQuestionnaire()" class="space-y-4">
-              <div id="aiQ" class="space-y-4"></div>
-              <button id="completeQuestionnaireButton" type="submit" class="hidden btn btn-primary">Save questionnaire</button>
-            </form>
-            <div id="questionnaireSavedStatus" role="status" aria-live="polite"></div>
-          </div>
         </section>
 
         <section id="tab-radar" class="tab hidden space-y-6">
@@ -671,7 +656,7 @@
             <div id="trendScenarioLabel" class="text-sm font-extrabold mt-0.5"></div>
           </div>
           <div class="flex items-center gap-3">
-            <button type="button" onclick="triggerDynamicRefresh(this)" class="btn btn-soft !py-2 !px-4 !text-xs flex items-center gap-1.5">
+            <button type="button" onclick="refreshScenarioTrends(this)" class="btn btn-soft !py-2 !px-4 !text-xs flex items-center gap-1.5">
               <span>🔄 Refresh Trends</span>
             </button>
             <div class="seg">
@@ -682,14 +667,16 @@
         </div>
 
         <div class="glass rounded-3xl p-6 space-y-3">
-          <label for="scenarioSlider" class="label">What-If: AI adoption scenario</label>
-          <input id="scenarioSlider" type="range" min="0" max="1" step="1" value="0" class="w-full" aria-describedby="scenarioHelp" onchange="setScenario(this.value === '1' ? 'fast' : 'moderate')" />
-          <p id="scenarioHelp" class="hint">Two benchmark scenarios: Moderate / Fast. Estimates, not predictions.</p>
+          <label data-outline-label="AI adoption scenario" for="scenarioSlider" class="label">What-If: AI adoption scenario</label>
+          <div class="flex items-center justify-between gap-3 text-xs text-slate-500"><span>Scenario intensity</span><output id="scenarioIntensity" for="scenarioSlider" data-no-translate class="font-extrabold text-indigo-600">0%</output></div>
+          <input id="scenarioSlider" type="range" min="0" max="100" step="1" value="0" class="w-full scenario-slider" aria-describedby="scenarioHelp" oninput="setScenario(Number(this.value) / 100, false)" onchange="setScenario(Number(this.value) / 100)" />
+          <div class="flex justify-between text-xs text-slate-500"><span>🐢 Moderate</span><span>🚀 Fast disruption</span></div>
+          <p id="scenarioHelp" class="hint">Drag to explore a continuous blend between Moderate and Fast. Illustrative estimates, not predictions.</p>
           <div id="analysisStatus" role="status" aria-live="polite"></div>
           <div id="radarChart"></div>
         </div>
 
-        <div class="grid md:grid-cols-2 gap-6">
+        <div data-outline-label="Skills & automation risks" class="grid md:grid-cols-2 gap-6">
           <div class="tint tint-teal rounded-3xl p-6 space-y-4">
             <div class="text-sm font-extrabold text-teal-900">📈 Rising skills</div>
             <div id="rising" class="space-y-4"></div>
@@ -700,14 +687,14 @@
           </div>
         </div>
 
-        <div id="anonStatsCard" class="glass rounded-3xl p-6 space-y-3" data-no-translate></div>
+        <div id="anonStatsCard" class="glass rounded-3xl p-6 space-y-3"></div>
 
         <div class="tint tint-indigo rounded-3xl p-6">
           <div class="text-sm font-extrabold text-indigo-900 mb-3">📰 Recent AI research signals</div>
-          <ul id="signals" class="space-y-2 text-xs text-slate-600"></ul>
+          <ul data-outline-label="Research signals" id="signals" class="space-y-2 text-xs text-slate-600"></ul>
         </div>
 
-        <div class="glass rounded-3xl p-5 space-y-2 border border-indigo-200/70" data-no-translate>
+        <div class="glass rounded-3xl p-5 space-y-2 border border-indigo-200/70">
           <div class="text-xs font-extrabold text-indigo-900 uppercase tracking-wider">📚 Data Sources &amp; Citations</div>
           <ul class="space-y-1.5 text-xs text-slate-600 list-disc pl-4">
             <li><b>JobStreet Malaysia Open Labour Index (2026):</b> Aggregated real-time job vacancy signals across 69,000+ postings[cite: 52].</li>
@@ -722,28 +709,28 @@
             <details class="chip chip-slate"><summary>⚖️ Fairness checks</summary><p id="fairnessDetails" class="mt-2 max-w-lg">Protected attributes excluded from scoring. Statistical parity has not been audited.</p></details>
             <span class="chip chip-slate">Scores are estimates</span>
           </div>
-          <div id="roleCards" class="grid lg:grid-cols-2 gap-5"></div>
+          <div data-outline-label="Role matches" id="roleCards" class="grid lg:grid-cols-2 gap-5"></div>
         </section>
 
         <section id="tab-plan" class="tab hidden space-y-6">
           <div class="glass rounded-3xl p-5 flex flex-wrap items-center justify-between gap-3">
-            <div class="flex items-center gap-3"><span class="text-xs font-bold text-slate-500">Target role</span><select id="planRole" onchange="selectRole(this.value,false)" class="input !w-auto"></select></div>
+            <div class="flex items-center gap-3"><span class="text-xs font-bold text-slate-500">Target role</span><select data-outline-label="Target role" id="planRole" onchange="selectRole(this.value,false)" class="input !w-auto"></select></div>
             <div id="planStats" class="flex gap-2"></div>
           </div>
           <div class="grid lg:grid-cols-3 gap-6">
-            <div class="lg:col-span-2 glass rounded-3xl p-6"><div class="text-sm font-extrabold mb-5">Step-by-step path</div><div id="timeline" class="timeline space-y-5"></div></div>
+            <div class="lg:col-span-2 glass rounded-3xl p-6"><div class="text-sm font-extrabold mb-5">Step-by-step path</div><div data-outline-label="Learning pathway" id="timeline" class="timeline space-y-5"></div></div>
             <div class="space-y-4"><div class="text-[11px] font-extrabold uppercase tracking-wider text-teal-700">SDG alignment</div><div id="planSdg" class="space-y-4"></div></div>
           </div>
         </section>
 
         <section id="tab-passport" class="tab hidden">
-          <div id="passport" class="max-w-2xl mx-auto"></div>
+          <div data-outline-label="Your SDG passport" id="passport" class="max-w-2xl mx-auto"></div>
         </section>
       </main>
     </div>
   </div>
 
-  <div id="applyModalWrap" class="hidden" data-no-translate>
+  <div id="applyModalWrap" class="hidden">
     <div class="overlay" onclick="closeApplyModal(event)">
       <div class="modal p-6 sm:p-8 space-y-5 max-w-lg w-full" role="dialog" aria-modal="true" aria-labelledby="amTitle" onclick="event.stopPropagation()" onkeydown="handleApplyKeys(event)">
         <div class="flex items-start justify-between gap-3">
@@ -798,7 +785,7 @@
   </div>
 
 <!-- User Account Settings & Profile Modal -->
-  <div id="accountModalWrap" class="hidden" data-no-translate>
+  <div id="accountModalWrap" class="hidden">
     <div class="overlay" onclick="closeAccountModal(event)">
       <div class="modal p-6 sm:p-8 space-y-5 max-w-xl w-full max-h-[90vh] overflow-y-auto" onclick="event.stopPropagation()">
         <!-- Modal Header -->
@@ -810,7 +797,7 @@
                 <h3 class="text-xl font-extrabold text-slate-900">Account Profile &amp; Settings</h3>
                 <span id="modalRoleBadge" class="chip chip-indigo">Job Seeker</span>
               </div>
-              <div class="text-xs text-slate-500 mt-0.5">User ID: <span id="modalUid" class="font-mono font-bold text-slate-700"></span> · Joined <span id="modalJoinedDate" class="text-slate-600"></span></div>
+              <div class="text-xs text-slate-500 mt-0.5">User ID: <span id="modalUid" class="font-mono font-bold text-slate-700" data-no-translate></span> · Joined <span id="modalJoinedDate" class="text-slate-600" data-no-translate></span></div>
             </div>
           </div>
           <button type="button" onclick="closeAccountModal()" class="text-slate-400 hover:text-slate-700 text-xl font-bold p-1">✕</button>
@@ -919,11 +906,13 @@
     </div>
   </div>
 
-  <script src="/static/js/common.js?v=20261020-formal-lumi"></script>
+  <script src="/static/js/page-position.js?v=20261021-restore"></script>
+  <script src="/static/js/common.js?v=20261021-nav-restored"></script>
 
   <script src="/static/js/vault-shares.js"></script>
-  <script src="/static/js/interviews.js?v=20261020-4"></script>
-  <script src="/static/js/questionnaire.js?v=20261020-auto-role"></script>
+  <script src="/static/js/interviews.js?v=20261021-notification-preview"></script>
+  <script src="/static/js/questionnaire.js?v=20261021-single-verification"></script>
+  <script src="/static/js/scenario-slider.js?v=20261021-continuous"></script>
   <script>
     const NAV = [
       { id: 'notifications', ico: '🔔', label: 'Interview notifications', eyebrow: 'Notifications', title: 'Interview notifications' },
@@ -953,7 +942,7 @@
     let userLocation = { label: 'W.P. Kuala Lumpur', address: 'Kuala Lumpur City Centre', lat: 3.1579, lng: 101.7116, city: 'W.P. Kuala Lumpur', presets: [] };
     let selectedCategory = 'All', jobScope = 'relevant';
     let leafletMap = null, leafletMarkers = [], userMarker = null, activeCompanyId = null, filteredCompsCache = [];
-    let skills = [], scenario = 'moderate', trend = null, roles = [], aiQuestions = [], selected = 0;
+    let skills = [], scenario = 'moderate', trend = null, roles = [], selected = 0;
     let analysed = false; const visited = new Set(['dash']); let answers = {}; let current = 'dash';
     let uploadBusy = false, profileBusy = false, applicationBusy = false, statsBusy = false, profileDirty = false, applyReturnFocus = null;
 
@@ -1088,7 +1077,8 @@
       ];
       buildPortalNavigation(renderItems, [{label: 'Overview', ids: ['dash']}, {label: 'My Profile', ids: ['profile', 'quest']}, {label: 'Explore Careers', ids: ['jobs', 'radar', 'match']}, {label: 'My Growth', ids: ['plan', 'passport']}]);
     }
-    async function showTab(id) {
+    async function showTab(id, options = {}) {
+      if (!options.restore) window.PagePosition?.navigate();
       current = id; visited.add(id);
       document.querySelectorAll('.tab').forEach(t => t.classList.add('hidden'));
       const el = document.getElementById('tab-' + id);
@@ -1106,7 +1096,10 @@
         setTimeout(() => { if (leafletMap) leafletMap.invalidateSize(); }, 120);
       }
       if (id === 'passport') renderPassport();
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+      if (!options.restore) {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        window.PagePosition?.complete();
+      }
     }
 
     /* ---------- PDF vault, review and consent ---------- */
@@ -1166,7 +1159,7 @@
 
     async function reloadVault() {
       if (uploadBusy || profileBusy || statsBusy) return;
-      if (profileDirty && !confirm('Discard unsaved edits and reload the saved profile?')) return;
+      if (profileDirty && !localizedConfirm('Discard unsaved edits and reload the saved profile?')) return;
       try { await loadMyCv(true); } catch (error) { toast(error.message, 'err'); }
     }
 
@@ -1191,9 +1184,9 @@
       const fields = Object.entries(st.field_evidence || {});
       fieldEvidenceList.innerHTML = fields.length ? fields.map(([field, evidence]) => {
         const ev = evidence || {};
-        return `<div class="rounded-xl bg-white p-3 text-[11px]"><b>${esc(field.replaceAll('_', ' '))}</b><span class="text-slate-500"> · ${esc(ev.source || 'Source not specified')}${ev.page ? ' · page ' + esc(ev.page) : ''}</span>${ev.quote ? `<blockquote class="mt-1 text-slate-600 whitespace-pre-wrap">“${esc(ev.quote)}”</blockquote>` : '<p class="text-slate-500 mt-1">No source quote available.</p>'}</div>`;
+        return `<div class="rounded-xl bg-white p-3 text-[11px]"><b>${esc(field.replaceAll('_', ' '))}</b><span class="text-slate-500"> · ${esc(ev.source || 'Source not specified')}${ev.page ? ' · page ' + esc(ev.page) : ''}</span>${ev.quote ? `<blockquote data-no-translate class="mt-1 text-slate-600 whitespace-pre-wrap">“${esc(ev.quote)}”</blockquote>` : '<p class="text-slate-500 mt-1">No source quote available.</p>'}</div>`;
       }).join('') : '<p class="text-xs text-slate-500">No field evidence available.</p>';
-      skillEvidenceList.innerHTML = (st.skill_evidence || []).map(ev => `<div class="rounded-xl bg-white p-3 text-[11px]"><b>${esc(ev.skill)}</b><span class="text-slate-500"> · ${esc((ev.status || 'unverified').replaceAll('_', ' '))}${ev.page ? ' · page ' + esc(ev.page) : ''}</span>${ev.quote ? `<blockquote class="mt-1 text-slate-600 whitespace-pre-wrap">“${esc(ev.quote)}”</blockquote>` : ''}</div>`).join('');
+      skillEvidenceList.innerHTML = (st.skill_evidence || []).map(ev => `<div class="rounded-xl bg-white p-3 text-[11px]"><b>${esc(ev.skill)}</b><span class="text-slate-500"> · ${esc((ev.status || 'unverified').replaceAll('_', ' '))}${ev.page ? ' · page ' + esc(ev.page) : ''}</span>${ev.quote ? `<blockquote data-no-translate class="mt-1 text-slate-600 whitespace-pre-wrap">“${esc(ev.quote)}”</blockquote>` : ''}</div>`).join('');
     }
 
     function renderParserAnalytics(pa) {
@@ -1278,7 +1271,7 @@
       pProjects.value = entryText(st.projects);
       pCertifications.value = entryText(st.certifications);
       cvSeekerType.textContent = st.seeker_type || 'Not specified';
-      aiHighlights.innerHTML = (st.ai_highlights || []).map(h => `<li class="text-slate-600">${esc(h)}</li>`).join('');
+      aiHighlights.innerHTML = (st.ai_highlights || []).map(h => `<li class="text-slate-600" data-no-translate>${esc(h)}</li>`).join('');
       cvReviewHeading.textContent = isReviewed() ? 'Reviewed by you · not independently verified' : 'Check the draft before sharing with employers';
       extractionMethod.textContent = present ? 'Extraction method: ' + (st.extraction_method || 'Local PDF text extraction') + '. Missing information is left blank; correct the draft using the original PDF.' : 'Upload a fictional PDF or choose a sample to begin.';
       reviewWarnings.innerHTML = (st.review_warnings || []).map(w => `<li>${esc(typeof w === 'string' ? w : w.message || JSON.stringify(w))}</li>`).join('');
@@ -1309,7 +1302,7 @@
     function confirmReplacement() {
       if (!cvRecord) return true;
       const shares = activeShares().length;
-      return confirm('Replace the current PDF and organised profile?' + (shares ? ' This will withdraw ' + shares + ' active application(s) and revoke their access. You must review and apply again to share the new CV.' : ' Your current profile edits will be replaced.') + ' Any links shared with named recipients will also be revoked. Previously downloaded copies cannot be retracted.');
+      return localizedConfirm('Replace the current PDF and organised profile?' + (shares ? ' This will withdraw ' + shares + ' active application(s) and revoke their access. You must review and apply again to share the new CV.' : ' Your current profile edits will be replaced.') + ' Any links shared with named recipients will also be revoked. Previously downloaded copies cannot be retracted.');
     }
 
     async function refreshVaultDependents() {
@@ -1404,7 +1397,7 @@
       if (!reviewConfirm.checked) { toast('Check your profile against the PDF, then tick the review confirmation.', 'err'); reviewConfirm.focus(); return; }
       if (!pName.value.trim()) { toast('Enter the name shown on the fictional CV.', 'err'); pName.focus(); return; }
       if (!pEmail.checkValidity() || !pYears.checkValidity()) { (!pEmail.checkValidity() ? pEmail : pYears).reportValidity(); return; }
-      if (profileDirty && (activeShares().length || namedShares.length) && !confirm('Saving these edits will withdraw existing applications and revoke recipient sharing. Continue?')) return;
+      if (profileDirty && (activeShares().length || namedShares.length) && !localizedConfirm('Saving these edits will withdraw existing applications and revoke recipient sharing. Continue?')) return;
       const years = pYears.value.trim() === '' ? null : Number(pYears.value);
       profileBusy = true;
       updateVaultControls();
@@ -1447,7 +1440,7 @@
 
     async function deleteMyCv() {
       if (!cvRecord || profileBusy || uploadBusy || statsBusy) return;
-      if (!confirm('Delete your stored PDF and organised profile, withdraw all applications and revoke future employer and recipient access? This cannot be undone. Previously downloaded copies cannot be retracted.')) return;
+      if (!localizedConfirm('Delete your stored PDF and organised profile, withdraw all applications and revoke future employer and recipient access? This cannot be undone. Previously downloaded copies cannot be retracted.')) return;
       profileBusy = true;
       updateVaultControls();
       try {
@@ -2009,7 +2002,7 @@
             <span class="chip ${c.distance_km <= 15 ? 'chip-emerald' : 'chip-slate'} !text-[10px]">${c.distance_km} km away</span>
           </div>
           <div>
-            <h3 class="text-lg font-extrabold text-slate-900 leading-snug">${esc(c.name)}</h3>
+            <h3 class="text-lg font-extrabold text-slate-900 leading-snug" data-no-translate>${esc(c.name)}</h3>
             <div class="text-xs font-medium text-slate-600 mt-1">📍 ${esc(c.location || 'Malaysia')}</div>
             <div class="text-xs text-slate-500 mt-1"><b>${c.jobs || 1} open role${(c.jobs || 1) > 1 ? 's' : ''}</b> available at this company</div>
           </div>
@@ -2169,7 +2162,7 @@
     }
 
     async function withdrawJobApplication(vid) {
-      if (applicationBusy || !confirm('Withdraw application and revoke future employer access? Previously downloaded copies cannot be recalled.')) return;
+      if (applicationBusy || !localizedConfirm('Withdraw application and revoke future employer access? Previously downloaded copies cannot be recalled.')) return;
       applicationBusy = true; updateVaultControls();
       try {
         const r = await api(`/api/jobs/${vid}/apply`, { method: 'DELETE' });
@@ -2182,25 +2175,24 @@
 
 
     /* ---------- analysis ---------- */
-    let analysisVersion = 0;
+    let analysisVersion = 0, scenarioIntensity = 0, scenarioCache = null, scenarioFrame = null;
     async function runAnalysis() {
       const profile = { name: pName.value, industry: pIndustry.value, current_role: pRole.value, work_mode_preference: pMode.value, skills };
       const token = ++analysisVersion;
       document.getElementById('analysisStatus').textContent = 'Loading analysis…';
       try {
         const [t, m] = await Promise.all([
-          api(`/api/trends?scenario=${scenario}`),
-          postJson('/api/analyze', { profile, scenario }),
+          api(`/api/trends?scenario=moderate&bounds=1`),
+          postJson('/api/analyze', { profile, scenario: 'moderate', scenario_bounds: true }),
         ]);
         if (token !== analysisVersion) return false;
         if (!t.ok || !m.ok) throw new Error('Analysis unavailable. Please retry.');
         document.getElementById('analysisStatus').textContent = '';
         document.getElementById('fairnessDetails').textContent = m.data.fairness_audit;
-        trend = t.data; roles = m.data.recommended_roles || [];
-        if (selected >= roles.length) selected = 0;
+        scenarioCache = {trends: t.data.scenario_endpoints, matches: m.data.scenario_endpoints};
         analysed = true;
-        renderRadar(); renderRoles(); renderPlanSelect(); renderPlan(); renderQuestionnaire();
-        if (current === 'dash') renderDash();
+        applyScenario(true);
+        renderQuestionnaire();
         return true;
       } catch (error) {
         if (token === analysisVersion) {
@@ -2210,10 +2202,42 @@
         return false;
       }
     }
-    async function setScenario(s) {
-      scenario = s; document.getElementById('scenarioSlider').value = s === 'fast' ? '1' : '0';
-      scModerate.className = s === 'moderate' ? 'on' : ''; scFast.className = s === 'fast' ? 'on' : '';
-      await runAnalysis();
+    function setScenario(value, commit = true) {
+      scenarioIntensity = value === 'fast' ? 1 : value === 'moderate' ? 0 : CareerLensScenario.clamp(value);
+      scenario = scenarioIntensity === 1 ? 'fast' : 'moderate';
+      document.getElementById('scenarioSlider').value = String(Math.round(scenarioIntensity * 100));
+      document.getElementById('scenarioIntensity').textContent = Math.round(scenarioIntensity * 100) + '%';
+      document.getElementById('scenarioSlider').style.setProperty('--scenario-progress', Math.round(scenarioIntensity * 100) + '%');
+      scModerate.className = scenarioIntensity === 0 ? 'on' : '';
+      scFast.className = scenarioIntensity === 1 ? 'on' : '';
+      scModerate.setAttribute('aria-pressed', String(scenarioIntensity === 0));
+      scFast.setAttribute('aria-pressed', String(scenarioIntensity === 1));
+      if (!scenarioCache) return;
+      if (commit) {
+        if (scenarioFrame !== null) cancelAnimationFrame(scenarioFrame);
+        scenarioFrame = null;
+        applyScenario(true);
+      } else if (scenarioFrame === null) {
+        scenarioFrame = requestAnimationFrame(() => { scenarioFrame = null; applyScenario(false); });
+      }
+    }
+    function applyScenario(commit) {
+      if (!scenarioCache) return;
+      const roleId = roles[selected]?.role_id;
+      trend = CareerLensScenario.blendTrend(scenarioCache.trends.moderate, scenarioCache.trends.fast, scenarioIntensity);
+      roles = CareerLensScenario.blendRoles(scenarioCache.matches.moderate.recommended_roles, scenarioCache.matches.fast.recommended_roles, scenarioIntensity);
+      selected = Math.max(0, roles.findIndex(role => role.role_id === roleId));
+      renderRadar(!commit);
+      const valueText = `Scenario intensity: ${Math.round(scenarioIntensity * 100)}%`;
+      document.getElementById('scenarioSlider').setAttribute('aria-valuetext', window.careerLensLocale?.translate(valueText) ?? valueText);
+      if (commit) {
+        renderRoles(); renderPlanSelect(); renderPlan(); renderPassport();
+        if (current === 'dash') renderDash();
+      }
+    }
+    async function refreshScenarioTrends(button) {
+      button.disabled = true;
+      try { await runAnalysis(); } finally { button.disabled = false; }
     }
 
     /* ---------- dashboard ---------- */
@@ -2238,7 +2262,7 @@
         ['Best match', top ? top.match_score + '%' : '—', top ? esc(top.title) : 'Run analysis', 'indigo'],
         ['Skills to build', role ? role.skills_gap.length : '—', 'for selected role', 'pink'],
         ['Learning hours', role ? role.estimated_total_hours : '—', 'verified courses', 'amber'],
-        ['Questionnaire', `${answered}/${questionnaireFieldDefinitions().length + (aiQuestions.length || 4)}`, 'answered', 'teal'],
+        ['Questionnaire', `${answered}/${questionnaireFieldDefinitions().length}`, 'answered', 'teal'],
       ].map(k => `<div class="tint tint-${k[3]} rounded-2xl p-4"><div class="text-[11px] font-bold text-slate-500">${k[0]}</div>
         <div class="text-3xl font-extrabold mt-1">${k[1]}</div><div class="text-[11px] text-slate-500 truncate">${k[2]}</div></div>`).join('');
       dashTop.innerHTML = top ? `
@@ -2259,14 +2283,21 @@
 
     /* ---------- questionnaire ---------- */
     /* ---------- radar ---------- */
-    function renderRadar() {
+    function renderRadar(live = false) {
       if (!trend) return;
       window.renderTrendRadar?.(trend);
       const m = trend.signal_metadata;
       trendBadge.textContent = `Source: ${m.source_name} · Updated ${m.last_updated} · ${m.live_status.replace('_', ' ')}`;
-      trendScenarioLabel.textContent = trend.scenario_label;
-      rising.innerHTML = trend.emerging_skills.map(s => `<div><div class="flex justify-between text-xs mb-1"><b>${esc(s.skill)}</b><span class="font-extrabold text-teal-700">+${s.growth_pct}% <span class="text-slate-400">${esc(s.sdg)}</span></span></div><div class="bar teal"><i style="width:${Math.min(100, s.growth_pct)}%"></i></div></div>`).join('');
-      declining.innerHTML = trend.declining_tasks.map(t => `<div><div class="flex justify-between text-xs mb-1"><b>${esc(t.task)}</b><span class="font-extrabold text-rose-600">${t.automation_risk_pct}%</span></div><div class="bar rose"><i style="width:${t.automation_risk_pct}%"></i></div></div>`).join('');
+      trendScenarioLabel.textContent = window.careerLensLocale?.translate(trend.scenario_label) ?? trend.scenario_label;
+      if (live && rising.querySelectorAll('[data-growth-value]').length === trend.emerging_skills.length) {
+        rising.querySelectorAll('[data-growth-value]').forEach((node, i) => { node.textContent = '+' + trend.emerging_skills[i].growth_pct + '%'; });
+        rising.querySelectorAll('.bar i').forEach((node, i) => { node.style.width = Math.min(100, trend.emerging_skills[i].growth_pct) + '%'; });
+        declining.querySelectorAll('[data-risk-value]').forEach((node, i) => { node.textContent = trend.declining_tasks[i].automation_risk_pct + '%'; });
+        declining.querySelectorAll('.bar i').forEach((node, i) => { node.style.width = trend.declining_tasks[i].automation_risk_pct + '%'; });
+        return;
+      }
+      rising.innerHTML = trend.emerging_skills.map(s => `<div><div class="flex justify-between text-xs mb-1"><b>${esc(s.skill)}</b><span class="font-extrabold text-teal-700"><span data-growth-value>+${s.growth_pct}%</span> <span class="text-slate-400">${esc(s.sdg)}</span></span></div><div class="bar teal"><i style="width:${Math.min(100, s.growth_pct)}%"></i></div></div>`).join('');
+      declining.innerHTML = trend.declining_tasks.map(t => `<div><div class="flex justify-between text-xs mb-1"><b>${esc(t.task)}</b><span data-risk-value class="font-extrabold text-rose-600">${t.automation_risk_pct}%</span></div><div class="bar rose"><i style="width:${t.automation_risk_pct}%"></i></div></div>`).join('');
       signals.innerHTML = m.recent_signals.map(p => `<li class="flex gap-2"><span class="chip chip-indigo shrink-0">${esc(p.published)}</span><span>${esc(p.title)}</span></li>`).join('');
 
       const st = trend.anonymized_talent_pool_stats;
@@ -2360,6 +2391,7 @@
       const me = await api('/api/auth/me'); user = me.data.user;
       if (!user) return;
       if (user.role === 'hr_company') { window.location.href = '/workspace'; return; }
+      window.PagePosition?.initialize({identity:user.unique_uid,portal:'talent',getView:()=>current,isValid:id=>typeof id==='string'&&!!document.getElementById('tab-'+id)});
       uAvatar.textContent = user.full_name.charAt(0).toUpperCase(); uName.textContent = user.full_name; uUid.textContent = user.unique_uid;
       renderAccountProfileCard();
       try { answers = JSON.parse(localStorage.getItem(ansKey()) || '{}'); } catch (e) { answers = {}; }
@@ -2371,7 +2403,8 @@
       await loadMyCv();
       await loadQuestionnaireCatalog();
       await Promise.all([runAnalysis(), loadJobs()]);
-      showTab('dash');
+      if (window.PagePosition) await window.PagePosition.restore(showTab, 'dash');
+      else await showTab('dash');
     }
     profileFieldIds.filter(id => id !== 'reviewConfirm').forEach(id => {
       document.getElementById(id).addEventListener('input', markProfileDirty);
@@ -2380,8 +2413,8 @@
     init().catch(error => toast(error.message || 'Unable to load CareerLens. Refresh and retry.', 'err'));
   </script>
 <script src="/static/js/questionnaire-i18n.js"></script>
-<script src="/static/js/portal-i18n.js?v=20261020-locale-audit"></script>
-<script src="/static/js/member3.js?v=20261020-questionnaire-1"></script>
+<script src="/static/js/portal-i18n.js?v=20261021-notification-preview"></script>
+<script src="/static/js/member3.js?v=20261021-continuous"></script>
 <script>
   let generatedVerificationQ = [];
 
@@ -2451,5 +2484,6 @@ async function submit3AiVerificationAnswers() {
     }
 }
 </script>
+<script src="/static/js/page-outline.js?v=20261021-outline-vivid"></script>
 </body>
 </html>

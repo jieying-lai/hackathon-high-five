@@ -85,7 +85,20 @@
   try { language = localStorage.getItem('cl_language') || 'en'; } catch (_) {}
   if (!['en','ms','zh'].includes(language)) language = 'en';
   const originals = new WeakMap();
+  const renderedSources = new Map();
   function translate(text) {
+    // Malay place names can also be canonical values (e.g. Pulau Pinang).
+    const source = /[\u3400-\u9fff]/.test(text) ? renderedSources.get(text) || text : text;
+    const rendered = translateText(source);
+    if (rendered !== source && /[\u3400-\u9fff]/.test(rendered)) renderedSources.set(rendered, source);
+    return rendered;
+  }
+  function translateText(text) {
+    const normalized = text.replace(/\s+/g, ' ').trim();
+    if (normalized !== text) {
+      const translated = translate(normalized);
+      if (translated !== normalized) return translated;
+    }
     const questionnaireText = window.questionnaireI18n?.translate(text, language) ?? text;
     if (questionnaireText !== text) return questionnaireText;
     const authText = window.authI18n?.translate(text, language) ?? text;
@@ -94,7 +107,7 @@
     if (row) return row[language === 'zh' ? 2 : language === 'ms' ? 1 : 0];
     const portalText = window.portalI18n?.translate(text, language) ?? text;
     if (portalText !== text) return portalText;
-    const icon = text.match(/^([✓⚖️🌱⏳🎉🖨️🇲🇾★+✨👤🏢🌐🛡️✅❌⚪]+\s*)(.+)$/u);
+    const icon = text.match(/^([\p{Extended_Pictographic}\p{Regional_Indicator}\uFE0F\u200D✓★+⚪↻⬇✕]+\s*)(.+)$/u);
     if (icon) return icon[1] + translate(icon[2]);
 
     if (text.includes('·')) return text.split(/(\s*·\s*)/).map((part,index)=>index%2 ? part : translate(part)).join('');
@@ -125,10 +138,10 @@
       if (rendered !== text) node.textContent = node.textContent.replace(text, rendered);
       originals.set(node, {source, rendered});
     }
-    document.querySelectorAll('[title],[aria-label],[placeholder]').forEach(element => {
+    document.querySelectorAll('[title],[aria-label],[placeholder],[alt],optgroup[label]').forEach(element => {
       if (element.closest('[data-no-translate]')) return;
       const saved = attributeOriginals.get(element) || {};
-      for (const name of ['title','aria-label','placeholder']) {
+      for (const name of ['title','aria-label','placeholder','alt','label']) {
         if (!element.hasAttribute(name)) continue;
         const text = element.getAttribute(name);
         const previous = saved[name];
@@ -148,7 +161,7 @@
       element.value=rendered;
       generatedOriginals.set(element,{rendered});
     });
-    observer.observe(document.body, {subtree:true, childList:true, characterData:true});
+    observer.observe(document.body, {subtree:true, childList:true, characterData:true, attributes:true, attributeFilter:['title','aria-label','placeholder','alt']});
   }
   const observer = new MutationObserver(() => { clearTimeout(timer); timer = setTimeout(apply, 20); });
   let timer;
@@ -185,7 +198,14 @@
     const values = rows.map(s => Math.min(100, Math.max(0, Number(s.growth_pct) || 0)));
     const points = radius => `210,${160-radius} ${210+radius},160 210,${160+radius} ${210-radius},160`;
     const dataPoints = `${210},${160-values[0]*1.1} ${210+values[1]*1.1},160 210,${160+values[2]*1.1} ${210-values[3]*1.1},160`;
-    chart.innerHTML = `<h2 class="text-sm font-extrabold">Benchmark trend radar</h2><p class="hint">Illustrative growth (%) · not live job-market measurements</p><svg viewBox="0 0 420 325" class="trend-radar" role="img" aria-labelledby="radarTitle radarDesc"><title id="radarTitle">Benchmark trend radar</title><desc id="radarDesc">${rows.map((r,i)=>`${esc(r.skill)}: ${values[i]}%`).join('; ')}</desc>${[27.5,55,82.5,110].map(r=>`<polygon points="${points(r)}" fill="none" stroke="#cbd5e1"/>`).join('')}<path d="M210 50V270M100 160H320" stroke="#cbd5e1"/><polygon points="${dataPoints}" fill="#6366f1" fill-opacity=".22" stroke="#4f46e5" stroke-width="3"/><g fill="#334155" font-size="12" text-anchor="middle"><text x="210" y="30">LLM / RAG</text><text x="365" y="165">AI risk</text><text x="210" y="298">Automation</text><text x="52" y="165">Sustainability</text></g></svg>`;
+    const polygon = chart.querySelector('#radarData');
+    if (polygon) {
+      polygon.setAttribute('points', dataPoints);
+      const description = rows.map((r,i)=>`${esc(r.skill)}: ${values[i]}%`).join('; ');
+      chart.querySelector('#radarDesc').textContent = translate(description);
+      return;
+    }
+    chart.innerHTML = `<h2 class="text-sm font-extrabold">Benchmark trend radar</h2><p class="hint">Illustrative growth (%) · not live job-market measurements</p><svg viewBox="0 0 420 325" class="trend-radar" role="img" aria-labelledby="radarTitle radarDesc"><title id="radarTitle">Benchmark trend radar</title><desc id="radarDesc">${rows.map((r,i)=>`${esc(r.skill)}: ${values[i]}%`).join('; ')}</desc>${[27.5,55,82.5,110].map(r=>`<polygon points="${points(r)}" fill="none" stroke="#cbd5e1"/>`).join('')}<path d="M210 50V270M100 160H320" stroke="#cbd5e1"/><polygon id="radarData" points="${dataPoints}" fill="#6366f1" fill-opacity=".22" stroke="#4f46e5" stroke-width="3"/><g fill="#334155" font-size="12" text-anchor="middle"><text x="210" y="30">LLM / RAG</text><text x="365" y="165">AI risk</text><text x="210" y="298">Automation</text><text x="52" y="165">Sustainability</text></g></svg>`;
   };
   window.careerLensLocale = {apply, translate, getLanguage: () => language};
   apply();

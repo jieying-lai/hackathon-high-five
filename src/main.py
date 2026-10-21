@@ -121,7 +121,11 @@ def api_role(role):
 def index():
     if session.get("user"):
         return redirect("/workspace")
-    return render_template("index.html")
+    return render_template(
+        "index.html",
+        registration_industries=list(questionnaire_engine.CATALOG["roles"]),
+        registration_regions=questionnaire_engine.CATALOG["regions"],
+    )
 
 
 @app.route("/workspace")
@@ -482,6 +486,10 @@ def api_jobs_withdraw(vid):
 def api_trends():
     data = get_trend_radar(scenario=request.args.get("scenario", "moderate"))
     data["anonymized_talent_pool_stats"] = cv_engine.get_anonymized_cv_statistics()
+    if request.args.get("bounds") == "1":
+        moderate = dict(data) if data["scenario"] == "moderate" else get_trend_radar("moderate", data["signal_metadata"])
+        fast = dict(data) if data["scenario"] == "fast" else get_trend_radar("fast", data["signal_metadata"])
+        data["scenario_endpoints"] = {"moderate": moderate, "fast": fast}
     return jsonify(data)
 
 @app.route('/api/refresh-trends', methods=['POST'])
@@ -507,6 +515,12 @@ def api_refresh_trends():
 @api_role("job_seeker")
 def api_analyze():
     payload = json_object()
+    if payload.get("scenario_bounds") is True:
+        endpoints = {mode: match_user_to_roles(profile=payload.get("profile", {}), scenario=mode)
+                     for mode in ("moderate", "fast")}
+        data = dict(endpoints["fast" if payload.get("scenario") == "fast" else "moderate"])
+        data["scenario_endpoints"] = endpoints
+        return jsonify(data)
     return jsonify(match_user_to_roles(profile=payload.get("profile", {}), scenario=payload.get("scenario", "moderate")))
 
 
