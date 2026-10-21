@@ -16,6 +16,11 @@ from datetime import timedelta
 from functools import wraps
 from urllib.parse import urlsplit
 
+import sys
+from pathlib import Path
+_SRC_DIR = Path(__file__).resolve().parent
+if str(_SRC_DIR) not in sys.path:
+    sys.path.insert(0, str(_SRC_DIR))
 from flask import Flask, jsonify, redirect, render_template, request, send_file, session
 
 import career_pathways
