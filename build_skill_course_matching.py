@@ -1,3 +1,4 @@
+#build a conservative skill-to-course matching table for review and verification
 from pathlib import Path
 from collections import defaultdict
 import ast
