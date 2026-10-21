@@ -50,7 +50,14 @@
   const nextScope=[...main.querySelectorAll('.tab')].find(visible);
   if(!nextScope){rail.hidden=true;return;}
   let next=[...nextScope.querySelectorAll('[data-outline-label]')].filter(visible).map(target=>({target,label:target.dataset.outlineLabel}));
-  if(!next.length)next=[{target:nextScope,label:doc.getElementById('pgTitle')?.textContent||'Overview'}];
+  if(next.length <= 1){
+   rail.hidden=true;
+   list.replaceChildren();
+   buttons=[];
+   steps=[];
+   scope=nextScope;
+   return;
+  }
   rail.hidden=false;
   if(scope===nextScope&&next.length===steps.length&&next.every((step,i)=>step.target===steps[i].target&&step.label===steps[i].label)){geometry();schedule();return;}
   scope=nextScope;steps=next;active=-1;list.replaceChildren();buttons=[];

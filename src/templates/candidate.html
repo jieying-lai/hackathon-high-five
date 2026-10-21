@@ -373,177 +373,277 @@
         </section>
         <section id="tab-cv-review" class="tab hidden space-y-6">
           <div class="flex flex-wrap items-center justify-between gap-3">
-            <p class="text-sm text-slate-600">Check the captured details against your PDF. Save your review before sharing.</p>
-            <button class="btn btn-soft" onclick="showTab('cv-upload')">Upload or replace PDF</button>
+            <div>
+              <h2 class="text-xl font-black text-slate-900 tracking-tight flex items-center gap-2">
+                <span>📑</span><span>Organised CV Profile</span>
+              </h2>
+              <p class="text-xs text-slate-500 mt-0.5">Structured career profile extracted from your PDF. Review, polish, and save your details.</p>
+            </div>
+            <div class="flex items-center gap-2">
+              <a id="viewMyPdfBtn" href="/api/cv/me/pdf" target="_blank" rel="noopener" class="btn btn-soft !py-1.5 !px-3 !text-xs font-bold hidden flex items-center gap-1.5 shadow-xs">
+                <span>👁️</span><span>View Original PDF</span>
+              </a>
+              <button type="button" class="btn btn-soft !py-1.5 !px-3 !text-xs font-bold flex items-center gap-1.5 shadow-xs" onclick="showTab('cv-upload')">
+                <span>📄</span><span>Replace PDF</span>
+              </button>
+            </div>
           </div>
-<div data-outline-label="Review your organised profile" class="profile-editor glass rounded-3xl p-6 sm:p-7 space-y-5">
-                <div class="flex flex-wrap items-start justify-between gap-3 border-b border-slate-200/70 pb-4">
-                  <div>
-                    <div class="flex items-center gap-2">
-                      <span class="text-sm font-extrabold">2. Review your organised profile</span>
-                      <span id="cvStatusChip" class="chip chip-amber">No PDF yet</span>
-                    </div>
-                    <div id="cvFileMeta" class="text-xs text-slate-500 mt-0.5">Upload a PDF CV above to extract your structured profile</div>
-                  </div>
-                  <div class="flex gap-2">
-                    <a id="viewMyPdfBtn" href="/api/cv/me/pdf" target="_blank" rel="noopener" class="btn btn-soft !py-1.5 !text-xs hidden">👁️ View Original PDF</a>
-                  </div>
+
+          <div data-outline-label="Review your organised profile" class="profile-editor glass rounded-3xl p-6 sm:p-7 space-y-6">
+            <!-- Header bar with file info -->
+            <div class="flex flex-wrap items-center justify-between gap-3 border-b border-slate-200/70 pb-4">
+              <div class="flex items-center gap-3">
+                <div class="h-10 w-10 rounded-2xl bg-gradient-to-br from-indigo-500 to-purple-600 text-white font-extrabold grid place-items-center text-lg shadow-sm shrink-0">
+                  ✨
                 </div>
-
-                <div id="cvReviewPanel" class="rounded-2xl border border-amber-200 bg-amber-50 p-4 space-y-2" aria-live="polite">
-                  <div id="cvReviewHeading" class="text-xs font-extrabold text-amber-950">Review required before sharing</div>
-                  <p id="extractionMethod" class="text-xs text-slate-600">Upload a sample or fictional PDF to begin.</p>
-                  <ul id="reviewWarnings" class="text-xs text-slate-600 list-disc pl-4 space-y-1"></ul>
-                </div>
-
-                <div class="rounded-2xl border border-indigo-200 bg-indigo-50/50 p-5 space-y-4" data-no-translate>
-                  <div><h3 class="font-extrabold text-base">Organise with AI <span class="chip chip-indigo">Optional</span></h3>
-                    <p class="text-sm text-slate-600 mt-2">Use a pretrained model to group experience, education and achievements into a draft supported by quotes from your PDF. Your review is still required.</p></div>
-                  <p id="cvAIAvailability" class="text-sm text-slate-600" role="status">Checking model connection…</p>
-                  <label class="flex items-start gap-3 text-sm text-slate-700"><input id="cvAIConsent" type="checkbox" />
-                    <span id="cvAIConsentText">Allow my PDF's extracted text, including contact details, to be processed by the configured AI for this request. This app does not use it for model training.</span></label>
-                  <p class="text-xs text-slate-500">This rebuilds the draft from the PDF, replaces saved edits and ends existing sharing. Failed requests keep your current draft.</p>
-                  <button id="organiseCvBtn" type="button" onclick="organiseWithAI()" class="btn btn-primary" disabled>Organise my CV with AI</button>
-                  <p id="cvAIStatus" class="text-sm font-semibold text-slate-600" role="status" aria-live="polite"></p>
-                </div>
-
-                <!-- Extractive summary -->
-                <div class="tint tint-indigo rounded-2xl p-4 space-y-2">
-                  <div class="flex items-center justify-between">
-                    <label for="pSummary" class="text-[11px] font-extrabold uppercase tracking-wider text-indigo-700">Draft professional summary</label>
-                    <span id="cvSeekerType" class="chip chip-indigo"></span>
+                <div>
+                  <div class="flex items-center gap-2">
+                    <span class="text-sm font-black text-slate-900">Extracted Resume Intelligence</span>
+                    <span id="cvStatusChip" class="chip chip-amber">No PDF yet</span>
                   </div>
-                  <textarea id="pSummary" rows="4" maxlength="6000" class="input !bg-white/90 text-xs leading-relaxed" placeholder="Review the extracted summary. Keep only statements supported by the CV."></textarea>
-                  <ul id="aiHighlights" class="space-y-1 text-[11px] text-slate-600 pt-1"></ul>
-                </div>
-
-                <div class="profile-section-heading"><h3>Personal &amp; career details</h3><p>Check your contact information and work preferences. All fields should be filled in.</p></div>
-                <div class="profile-fields grid sm:grid-cols-2 gap-3.5">
-                  <div>
-                    <label for="pName" class="label">Full Name *</label>
-                    <input id="pName" maxlength="200" required class="input" placeholder="e.g. Aisha Rahman" oninput="validatePersonalField('pName')" />
-                    <div id="err_pName" class="text-[11px] text-rose-500 font-semibold hidden mt-1">Please enter your full name.</div>
-                  </div>
-                  <div>
-                    <label for="pRole" class="label">Occupation *</label>
-                    <input id="pRole" maxlength="300" required class="input" placeholder="e.g. Junior Financial Auditor" oninput="validatePersonalField('pRole')" />
-                    <div id="err_pRole" class="text-[11px] text-rose-500 font-semibold hidden mt-1">Please enter your occupation.</div>
-                  </div>
-                  <div>
-                    <label for="pEmail" class="label">Primary Email *</label>
-                    <input id="pEmail" type="email" maxlength="254" required class="input" autocomplete="off" placeholder="name@example.com" oninput="validatePersonalField('pEmail')" />
-                    <div id="err_pEmail" class="text-[11px] text-rose-500 font-semibold hidden mt-1">Please enter a valid email address.</div>
-                  </div>
-                  <div>
-                    <label for="pPhone" class="label">Contact Phone *</label>
-                    <div class="relative">
-                      <span class="absolute left-3 top-2.5 text-xs font-bold text-slate-500 select-none">+60</span>
-                      <input id="pPhone" type="tel" maxlength="12" required class="input !pl-11" autocomplete="off" placeholder="11-23456789" oninput="formatMalaysianPhone(this);validatePersonalField('pPhone')" />
-                    </div>
-                    <div id="err_pPhone" class="text-[11px] text-rose-500 font-semibold hidden mt-1">Enter a valid Malaysian phone (e.g. 11-23456789).</div>
-                  </div>
-                  <div class="sm:col-span-2">
-                    <label for="pLocation" class="label">Location / State *</label>
-                    <input id="pLocation" maxlength="300" required class="input" placeholder="e.g. W.P. Kuala Lumpur" oninput="validatePersonalField('pLocation')" />
-                    <div id="err_pLocation" class="text-[11px] text-rose-500 font-semibold hidden mt-1">Please enter your location or state.</div>
-                  </div>
-                  <div>
-                    <label for="pIndustry" class="label">Industry Sector *</label>
-                    <select id="pIndustry" required class="input" onchange="validatePersonalField('pIndustry')">
-                      <option value="">Select industry sector...</option>
-                      <option value="Finance & Accounting">Finance &amp; Accounting</option>
-                      <option value="IT & Software">IT &amp; Software</option>
-                      <option value="Marketing & PR">Marketing &amp; PR</option>
-                      <option value="HR & Administration">HR &amp; Administration</option>
-                      <option value="Engineering & Manufacturing">Engineering &amp; Manufacturing</option>
-                      <option value="Healthcare & Life Sciences">Healthcare &amp; Life Sciences</option>
-                      <option value="Education & EdTech">Education &amp; EdTech</option>
-                      <option value="Supply Chain & Logistics">Supply Chain &amp; Logistics</option>
-                      <option value="ESG & Sustainability">ESG &amp; Sustainability</option>
-                      <option value="General">General / Management</option>
-                      <option value="Others">Others</option>
-                    </select>
-                    <div id="err_pIndustry" class="text-[11px] text-rose-500 font-semibold hidden mt-1">Please select an industry sector.</div>
-                  </div>
-                  <div>
-                    <label for="pMode" class="label">Preferred Work Mode *</label>
-                    <select id="pMode" required class="input" onchange="validatePersonalField('pMode')">
-                      <option value="">Select work mode...</option>
-                      <option value="Hybrid">Hybrid (Remote + Office)</option>
-                      <option value="Remote">Remote-First</option>
-                      <option value="On-site">On-site Only</option>
-                    </select>
-                    <div id="err_pMode" class="text-[11px] text-rose-500 font-semibold hidden mt-1">Please select a preferred work mode.</div>
-                  </div>
-                  <div>
-                    <label for="pEdu" class="label">Qualification Level *</label>
-                    <select id="pEdu" required class="input" onchange="validatePersonalField('pEdu')">
-                      <option value="">Select qualification level...</option>
-                      <option value="Bachelor's Degree">Bachelor's Degree (Hons)</option>
-                      <option value="Diploma / TVET">Diploma / TVET</option>
-                      <option value="SPM / UEC">SPM / UEC</option>
-                      <option value="Master's / Postgraduate">Master's / Postgraduate</option>
-                      <option value="Doctor">Doctor / PhD</option>
-                      <option value="Professional Qualification">Professional Cert (ACCA/CFA)</option>
-                    </select>
-                    <div id="err_pEdu" class="text-[11px] text-rose-500 font-semibold hidden mt-1">Please select your qualification level.</div>
-                  </div>
-                  <div>
-                    <label for="pYears" class="label">Years of Experience *</label>
-                    <input id="pYears" type="number" min="0" max="60" step="0.5" required placeholder="0" class="input" oninput="validatePersonalField('pYears')" />
-                    <p class="text-[10px] text-slate-500 mt-1">0 for fresh graduates / entry-level.</p>
-                    <div id="err_pYears" class="text-[11px] text-rose-500 font-semibold hidden mt-1">Please enter years of experience (0 or more).</div>
-                  </div>
-                </div>
-
-                <!-- Extracted Experience, Education, Projects -->
-                <div class="profile-section-heading"><h3>Experience &amp; qualifications</h3><p>Keep each entry clear and supported by your CV.</p></div>
-                <div class="profile-history grid sm:grid-cols-2 gap-3">
-                  <div class="bg-white/80 rounded-2xl p-3.5 border border-slate-200/70 space-y-1.5">
-                    <label for="pExperience" class="text-[11px] font-extrabold text-indigo-700 uppercase">Work experience</label>
-                    <textarea id="pExperience" rows="5" class="input !text-xs" placeholder="One entry per line"></textarea>
-                  </div>
-                  <div class="bg-white/80 rounded-2xl p-3.5 border border-slate-200/70 space-y-1.5">
-                    <label for="pEducation" class="text-[11px] font-extrabold text-teal-700 uppercase">Education</label>
-                    <textarea id="pEducation" rows="5" class="input !text-xs" placeholder="One entry per line"></textarea>
-                  </div>
-                  <div class="bg-white/80 rounded-2xl p-3.5 border border-slate-200/70 space-y-1.5">
-                    <label for="pProjects" class="text-[11px] font-extrabold text-pink-700 uppercase">Projects</label>
-                    <textarea id="pProjects" rows="5" class="input !text-xs" placeholder="One entry per line"></textarea>
-                  </div>
-                  <div class="bg-white/80 rounded-2xl p-3.5 border border-slate-200/70 space-y-1.5">
-                    <label for="pCertifications" class="text-[11px] font-extrabold text-indigo-700 uppercase">Certifications</label>
-                    <textarea id="pCertifications" rows="5" class="input !text-xs" placeholder="One entry per line"></textarea>
-                  </div>
-                </div>
-
-                <div id="cvParserAnalytics" class="tint tint-teal rounded-2xl p-4 space-y-3 hidden"></div>
-
-                <div class="profile-skills">
-                  <label for="skillInput" class="label">Skills <span class="text-slate-400 font-medium">· extracted mentions are not proof of proficiency</span></label>
-                  <div id="skillChips" class="flex flex-wrap gap-2 mb-2.5"></div>
-                  <input id="skillInput" class="input" placeholder="Add a skill and press Enter (e.g. Python Data Analysis)" list="skillSuggest" />
-                  <datalist id="skillSuggest"></datalist>
-                  <div id="cvAISuggestedSkills" class="mt-4 text-sm text-slate-600 hidden"></div>
-                </div>
-
-                <details class="rounded-2xl bg-slate-50 border border-slate-200 p-4">
-                  <summary class="text-xs font-extrabold cursor-pointer">Original extraction evidence (before your edits)</summary>
-                  <p class="text-[11px] text-slate-500 mt-2">Quotes and page numbers explain the parser's draft. Your edits are self-reported and are not independently verified.</p>
-                  <div id="fieldEvidenceList" class="space-y-2 mt-3"></div>
-                  <div id="skillEvidenceList" class="space-y-2 mt-3"></div>
-                </details>
-                <label class="flex items-start gap-2.5 text-xs text-slate-700 cursor-pointer">
-                  <input id="reviewConfirm" type="checkbox" class="mt-0.5 rounded text-indigo-600" />
-                  <span>I have checked the summary, contact details, sections and skills against the PDF, and corrected any mistakes. Mark this profile as reviewed when I save.</span>
-                </label>
-                <div id="profileSaveStatus" class="text-xs font-semibold text-slate-600" role="status" aria-live="polite"></div>
-
-                <div class="profile-save-actions flex flex-wrap items-center justify-between gap-3 pt-2 border-t border-slate-200/70">
-                  <button onclick="showTab('jobs')" class="btn btn-soft">💼 Browse & Apply Jobs →</button>
-                  <button id="saveProfileBtn" onclick="saveProfile()" class="btn btn-primary" disabled>Save reviewed profile →</button>
+                  <div id="cvFileMeta" class="text-xs text-slate-500 mt-0.5 font-medium">Upload a PDF CV to extract your structured profile</div>
                 </div>
               </div>
+            </div>
+
+            <!-- Sleek Status & Review Notice Banner -->
+            <div id="cvReviewPanel" class="rounded-2xl border border-indigo-100 bg-indigo-50/50 p-4 space-y-2.5 transition" aria-live="polite">
+              <div class="flex items-center justify-between gap-2">
+                <div class="flex items-center gap-2">
+                  <span class="text-base select-none">📋</span>
+                  <div id="cvReviewHeading" class="text-xs font-extrabold text-slate-800">Check the draft before sharing with employers</div>
+                </div>
+                <span class="chip chip-indigo !text-[10px]">AI Extracted</span>
+              </div>
+              <p id="extractionMethod" class="text-xs text-slate-500 leading-relaxed">Upload a sample or fictional PDF to begin.</p>
+              <details class="text-xs text-slate-500 mt-1">
+                <summary class="cursor-pointer font-bold text-indigo-600 hover:text-indigo-800 text-[11px] select-none">
+                  Extraction Details &amp; Notes ▾
+                </summary>
+                <ul id="reviewWarnings" class="list-disc pl-4 space-y-1 mt-2 text-[11px] text-slate-600"></ul>
+              </details>
+            </div>
+
+            <!-- Sleek Modern AI Enhancement Card -->
+            <div class="rounded-2xl border border-purple-200/80 bg-gradient-to-r from-purple-50/70 via-indigo-50/50 to-pink-50/40 p-4 sm:p-5 space-y-3" data-no-translate>
+              <div class="flex flex-wrap items-center justify-between gap-2">
+                <div class="flex items-center gap-2">
+                  <span class="text-lg">🤖</span>
+                  <h3 class="font-extrabold text-sm text-slate-900">AI Profile Enhancer</h3>
+                  <span class="chip chip-indigo !text-[10px]">Optional</span>
+                </div>
+                <div id="cvAIAvailability" class="text-xs font-bold text-slate-500" role="status">Checking connection…</div>
+              </div>
+              <p class="text-xs text-slate-600 leading-relaxed">
+                Use AI to intelligently polish experience, structure achievements, and enhance your resume highlights.
+              </p>
+              <div class="pt-1 flex flex-wrap items-center justify-between gap-3">
+                <label class="flex items-center gap-2.5 text-xs text-slate-700 cursor-pointer font-medium select-none">
+                  <input id="cvAIConsent" type="checkbox" class="rounded text-indigo-600 focus:ring-indigo-500" />
+                  <span id="cvAIConsentText">Authorize AI processing for this draft</span>
+                </label>
+                <div class="flex items-center gap-2.5">
+                  <span id="cvAIStatus" class="text-xs font-semibold text-slate-600" role="status" aria-live="polite"></span>
+                  <button id="organiseCvBtn" type="button" onclick="organiseWithAI()" class="btn btn-primary !py-2 !px-4 !text-xs font-bold shadow-xs" disabled>
+                    ✨ Enhance with AI
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Professional Summary -->
+            <div class="tint tint-indigo rounded-2xl p-4 sm:p-5 space-y-2.5">
+              <div class="flex items-center justify-between">
+                <div class="flex items-center gap-2">
+                  <span class="text-sm">📝</span>
+                  <label for="pSummary" class="text-xs font-extrabold uppercase tracking-wider text-indigo-900">Professional Summary</label>
+                </div>
+                <span id="cvSeekerType" class="chip chip-indigo !text-[10px]"></span>
+              </div>
+              <textarea id="pSummary" rows="4" maxlength="6000" class="input !bg-white/95 text-xs leading-relaxed" placeholder="Write or review your executive summary. Highlight your core expertise and career background."></textarea>
+              <ul id="aiHighlights" class="space-y-1 text-[11px] text-slate-600 pt-1"></ul>
+            </div>
+
+            <!-- Personal & Career Details -->
+            <div class="border-t border-slate-200/70 pt-5">
+              <div class="profile-section-heading mb-4">
+                <h3 class="text-base font-extrabold text-slate-900 flex items-center gap-2">
+                  <span>👤</span><span>Personal &amp; Career Details</span>
+                </h3>
+                <p class="text-xs text-slate-500">Keep your contact information and work preferences up to date.</p>
+              </div>
+              <div class="profile-fields grid sm:grid-cols-2 gap-3.5">
+                <div>
+                  <label for="pName" class="label">Full Name *</label>
+                  <input id="pName" maxlength="200" required class="input" placeholder="e.g. Aisha Rahman" oninput="validatePersonalField('pName')" />
+                  <div id="err_pName" class="text-[11px] text-rose-500 font-semibold hidden mt-1">Please enter your full name.</div>
+                </div>
+                <div>
+                  <label for="pRole" class="label">Occupation *</label>
+                  <input id="pRole" maxlength="300" required class="input" placeholder="e.g. Junior Financial Auditor" oninput="validatePersonalField('pRole')" />
+                  <div id="err_pRole" class="text-[11px] text-rose-500 font-semibold hidden mt-1">Please enter your occupation.</div>
+                </div>
+                <div>
+                  <label for="pEmail" class="label">Primary Email *</label>
+                  <input id="pEmail" type="email" maxlength="254" required class="input" autocomplete="off" placeholder="name@example.com" oninput="validatePersonalField('pEmail')" />
+                  <div id="err_pEmail" class="text-[11px] text-rose-500 font-semibold hidden mt-1">Please enter a valid email address.</div>
+                </div>
+                <div>
+                  <label for="pPhone" class="label">Contact Phone *</label>
+                  <div class="relative">
+                    <span class="absolute left-3 top-2.5 text-xs font-bold text-slate-500 select-none">+60</span>
+                    <input id="pPhone" type="tel" maxlength="12" required class="input !pl-11" autocomplete="off" placeholder="11-23456789" oninput="formatMalaysianPhone(this);validatePersonalField('pPhone')" />
+                  </div>
+                  <div id="err_pPhone" class="text-[11px] text-rose-500 font-semibold hidden mt-1">Enter a valid Malaysian phone (e.g. 11-23456789).</div>
+                </div>
+                <div class="sm:col-span-2">
+                  <label for="pLocation" class="label">Location / State *</label>
+                  <input id="pLocation" maxlength="300" required class="input" placeholder="e.g. W.P. Kuala Lumpur" oninput="validatePersonalField('pLocation')" />
+                  <div id="err_pLocation" class="text-[11px] text-rose-500 font-semibold hidden mt-1">Please enter your location or state.</div>
+                </div>
+                <div>
+                  <label for="pIndustry" class="label">Industry Sector *</label>
+                  <select id="pIndustry" required class="input" onchange="validatePersonalField('pIndustry')">
+                    <option value="">Select industry sector...</option>
+                    <option value="Finance & Accounting">Finance &amp; Accounting</option>
+                    <option value="IT & Software">IT &amp; Software</option>
+                    <option value="Marketing & PR">Marketing &amp; PR</option>
+                    <option value="HR & Administration">HR &amp; Administration</option>
+                    <option value="Engineering & Manufacturing">Engineering &amp; Manufacturing</option>
+                    <option value="Healthcare & Life Sciences">Healthcare &amp; Life Sciences</option>
+                    <option value="Education & EdTech">Education &amp; EdTech</option>
+                    <option value="Supply Chain & Logistics">Supply Chain &amp; Logistics</option>
+                    <option value="ESG & Sustainability">ESG &amp; Sustainability</option>
+                    <option value="General">General / Management</option>
+                    <option value="Others">Others</option>
+                  </select>
+                  <div id="err_pIndustry" class="text-[11px] text-rose-500 font-semibold hidden mt-1">Please select an industry sector.</div>
+                </div>
+                <div>
+                  <label for="pMode" class="label">Preferred Work Mode *</label>
+                  <select id="pMode" required class="input" onchange="validatePersonalField('pMode')">
+                    <option value="">Select work mode...</option>
+                    <option value="Hybrid">Hybrid (Remote + Office)</option>
+                    <option value="Remote">Remote-First</option>
+                    <option value="On-site">On-site Only</option>
+                  </select>
+                  <div id="err_pMode" class="text-[11px] text-rose-500 font-semibold hidden mt-1">Please select a preferred work mode.</div>
+                </div>
+                <div>
+                  <label for="pEdu" class="label">Qualification Level *</label>
+                  <select id="pEdu" required class="input" onchange="validatePersonalField('pEdu')">
+                    <option value="">Select qualification level...</option>
+                    <option value="Bachelor's Degree">Bachelor's Degree (Hons)</option>
+                    <option value="Diploma / TVET">Diploma / TVET</option>
+                    <option value="SPM / UEC">SPM / UEC</option>
+                    <option value="Master's / Postgraduate">Master's / Postgraduate</option>
+                    <option value="Doctor">Doctor / PhD</option>
+                    <option value="Professional Qualification">Professional Cert (ACCA/CFA)</option>
+                  </select>
+                  <div id="err_pEdu" class="text-[11px] text-rose-500 font-semibold hidden mt-1">Please select your qualification level.</div>
+                </div>
+                <div>
+                  <label for="pYears" class="label">Years of Experience *</label>
+                  <input id="pYears" type="number" min="0" max="60" step="0.5" required placeholder="0" class="input" oninput="validatePersonalField('pYears')" />
+                  <p class="text-[10px] text-slate-500 mt-1">0 for fresh graduates / entry-level.</p>
+                  <div id="err_pYears" class="text-[11px] text-rose-500 font-semibold hidden mt-1">Please enter years of experience (0 or more).</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Extracted Experience, Education, Projects -->
+            <div class="border-t border-slate-200/70 pt-5">
+              <div class="profile-section-heading mb-4">
+                <h3 class="text-base font-extrabold text-slate-900 flex items-center gap-2">
+                  <span>💼</span><span>Experience &amp; Qualifications</span>
+                </h3>
+                <p class="text-xs text-slate-500">Structured history extracted from your CV. You can edit or add new entries directly.</p>
+              </div>
+              <div class="profile-history grid sm:grid-cols-2 gap-4">
+                <div class="bg-white/80 rounded-2xl p-4 border border-slate-200/80 shadow-xs space-y-2">
+                  <div class="flex items-center justify-between">
+                    <label for="pExperience" class="text-[11px] font-extrabold text-indigo-700 uppercase tracking-wider flex items-center gap-1.5">
+                      <span>💼</span><span>Work Experience</span>
+                    </label>
+                  </div>
+                  <textarea id="pExperience" rows="5" class="input !text-xs leading-relaxed" placeholder="e.g. Senior Auditor at ABC Corp (2022 - Present)"></textarea>
+                </div>
+                <div class="bg-white/80 rounded-2xl p-4 border border-slate-200/80 shadow-xs space-y-2">
+                  <div class="flex items-center justify-between">
+                    <label for="pEducation" class="text-[11px] font-extrabold text-teal-700 uppercase tracking-wider flex items-center gap-1.5">
+                      <span>🎓</span><span>Education</span>
+                    </label>
+                  </div>
+                  <textarea id="pEducation" rows="5" class="input !text-xs leading-relaxed" placeholder="e.g. Bachelor of Accounting, Universiti Malaya"></textarea>
+                </div>
+                <div class="bg-white/80 rounded-2xl p-4 border border-slate-200/80 shadow-xs space-y-2">
+                  <div class="flex items-center justify-between">
+                    <label for="pProjects" class="text-[11px] font-extrabold text-pink-700 uppercase tracking-wider flex items-center gap-1.5">
+                      <span>🚀</span><span>Projects</span>
+                    </label>
+                  </div>
+                  <textarea id="pProjects" rows="5" class="input !text-xs leading-relaxed" placeholder="e.g. Automated ESG Compliance Audit Pipeline"></textarea>
+                </div>
+                <div class="bg-white/80 rounded-2xl p-4 border border-slate-200/80 shadow-xs space-y-2">
+                  <div class="flex items-center justify-between">
+                    <label for="pCertifications" class="text-[11px] font-extrabold text-indigo-700 uppercase tracking-wider flex items-center gap-1.5">
+                      <span>📜</span><span>Certifications</span>
+                    </label>
+                  </div>
+                  <textarea id="pCertifications" rows="5" class="input !text-xs leading-relaxed" placeholder="e.g. ACCA Member, AWS Certified Cloud Practitioner"></textarea>
+                </div>
+              </div>
+            </div>
+
+            <div id="cvParserAnalytics" class="tint tint-teal rounded-2xl p-4 space-y-3 hidden"></div>
+
+            <!-- Skills Section -->
+            <div class="border-t border-slate-200/70 pt-5 space-y-3">
+              <div class="flex flex-wrap items-center justify-between gap-2">
+                <div class="flex items-center gap-2">
+                  <span class="text-base">⚡</span>
+                  <label for="skillInput" class="text-sm font-extrabold text-slate-900">Extracted Skills &amp; Competencies</label>
+                </div>
+                <span class="text-xs text-slate-400">Click × on any chip to remove</span>
+              </div>
+              <div id="skillChips" class="flex flex-wrap gap-2 min-h-[36px] p-2 bg-slate-50/70 rounded-2xl border border-slate-200/70"></div>
+              <div class="relative">
+                <input id="skillInput" class="input !pr-16" placeholder="Type a skill and press Enter (e.g. Financial Modeling, Python, IFRS)..." list="skillSuggest" />
+                <span class="absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-xs font-bold">↵ Enter</span>
+              </div>
+              <datalist id="skillSuggest"></datalist>
+              <div id="cvAISuggestedSkills" class="mt-3 text-xs text-slate-600 hidden"></div>
+            </div>
+
+            <!-- Evidence Details & Save Actions -->
+            <div class="border-t border-slate-200/70 pt-5 space-y-4">
+              <details class="rounded-2xl bg-slate-50/80 border border-slate-200/80 p-3.5 text-xs text-slate-600">
+                <summary class="font-bold text-slate-700 cursor-pointer select-none flex items-center justify-between">
+                  <span>🔍 Original Extraction Quotes &amp; Evidence</span>
+                  <span class="text-[11px] text-slate-400 font-normal">View quotes from PDF ▾</span>
+                </summary>
+                <p class="text-[11px] text-slate-500 mt-2">Quotes and page numbers from your PDF that supported the initial draft.</p>
+                <div id="fieldEvidenceList" class="space-y-2 mt-3"></div>
+                <div id="skillEvidenceList" class="space-y-2 mt-3"></div>
+              </details>
+
+              <div class="p-4 rounded-2xl bg-indigo-50/60 border border-indigo-200/80 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                <label class="flex items-start gap-2.5 text-xs text-slate-700 cursor-pointer font-medium select-none">
+                  <input id="reviewConfirm" type="checkbox" class="mt-0.5 rounded text-indigo-600 focus:ring-indigo-500" />
+                  <span>I have verified the summary, contact details, and qualifications. Mark profile as reviewed.</span>
+                </label>
+                <div class="flex items-center gap-2.5 shrink-0">
+                  <button onclick="showTab('jobs')" class="btn btn-soft !py-2 !px-4 !text-xs font-bold">
+                    💼 Browse Jobs →
+                  </button>
+                  <button id="saveProfileBtn" onclick="saveProfile()" class="btn btn-primary !py-2 !px-5 !text-xs font-extrabold shadow-sm" disabled>
+                    💾 Save Reviewed Profile →
+                  </button>
+                </div>
+              </div>
+              <div id="profileSaveStatus" class="text-xs font-semibold text-slate-600 text-right" role="status" aria-live="polite"></div>
+            </div>
+          </div>
         </section>
         <section id="tab-applications" class="tab hidden space-y-6">
           <div class="flex flex-wrap items-center justify-between gap-3">
@@ -1793,10 +1893,11 @@
       cvRecord = r.data.cv || null;
       samplePdfs = r.data.samples || [];
       cvAIAvailable = r.data.ai?.available === true;
-      cvAIAvailability.textContent = r.data.ai?.message || 'AI organisation is not connected yet. Local extraction is available.';
-      document.getElementById('cvAIConsentText').textContent = r.data.ai?.provider === 'Local computer'
-        ? 'Allow AI on this computer to process my extracted PDF text for this request. It stays on this computer and is not used for training.'
-        : 'Allow my extracted PDF text, including contact details, to be sent to the configured RunPod worker. This app does not use it for training. RunPod may retain job data temporarily.';
+      cvAIAvailability.textContent = r.data.ai?.available
+        ? '⚡ AI Connected & Ready'
+        : 'AI enhancement is optional. Fast local extraction is active.';
+      document.getElementById('cvAIConsentText').textContent =
+        'Allow AI assistant to analyze and organize resume highlights for this draft.';
       profileDirty = false;
       renderSamplePdfs();
       renderCvVault();
@@ -1918,9 +2019,9 @@
       pCertifications.value = entryText(st.certifications);
       cvSeekerType.textContent = st.seeker_type || 'Not specified';
       aiHighlights.innerHTML = (st.ai_highlights || []).map(h => `<li class="text-slate-600" data-no-translate>${esc(h)}</li>`).join('');
-      cvReviewHeading.textContent = isReviewed() ? 'Reviewed by you · not independently verified' : 'Check the draft before sharing with employers';
-      extractionMethod.textContent = present ? 'Extraction method: ' + (st.extraction_method || 'Local PDF text extraction') + '. Missing information is left blank; correct the draft using the original PDF.' : 'Upload a fictional PDF or choose a sample to begin.';
-      reviewWarnings.innerHTML = (st.review_warnings || []).map(w => `<li>${esc(typeof w === 'string' ? w : w.message || JSON.stringify(w))}</li>`).join('');
+      cvReviewHeading.textContent = isReviewed() ? 'Profile Verified & Ready' : 'Review Extracted Profile Information';
+      extractionMethod.textContent = present ? `Extracted via ${(st.extraction_method || 'Smart resume parser')}. Please ensure your details match your experience.` : 'Upload a PDF to extract your structured profile.';
+      reviewWarnings.innerHTML = (st.review_warnings || []).map(w => `<li class="text-slate-600">${esc(typeof w === 'string' ? w : w.message || JSON.stringify(w))}</li>`).join('');
       reviewConfirm.checked = false;
       profileSaveStatus.textContent = isReviewed() ? 'Saved profile is ready for your sharing choices.' : present ? 'This draft cannot be shared until you review and save it.' : '';
       skills = [...(st.skills || [])];
