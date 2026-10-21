@@ -25,7 +25,7 @@
  .responsive-employer .portal-desktop-header .language-toolbar.language-inline{height:40px;padding:0 .55rem;gap:.3rem;font-size:.75rem;background:#f8fafc;border-color:#dbe3ef;border-radius:14px;box-shadow:none}
  .responsive-employer .portal-desktop-header .language-toolbar.language-inline select{height:38px;min-height:0;width:54px;max-width:54px;padding:0;font-size:.75rem;line-height:normal}
  .responsive-employer .portal-desktop-header .language-globe{width:16px;height:16px}
- .responsive-employer .portal-desktop-header .portal-user{height:44px;max-width:170px;padding:.3rem .45rem;border-radius:14px;gap:.45rem}
+ .responsive-employer .portal-desktop-header .portal-user{height:40px;max-width:none;padding:3px 14px 3px 4px;border-radius:9999px;gap:.5rem}
  .responsive-employer .portal-desktop-header #uAvatar{width:32px;height:32px;font-size:.9rem;border-radius:10px}
  .responsive-employer .portal-desktop-header .portal-brand img{width:34px;height:34px}
 }

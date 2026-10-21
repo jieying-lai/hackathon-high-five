@@ -20,17 +20,14 @@
     <header class="portal-desktop-header sidebar-dark">
       <a href="/" class="portal-brand"><img src="/static/brand/careerlens_logo_icon.svg" alt="" /><span>CareerLens AI<small id="headerCompanyName" data-no-translate></small></span></a>
       <nav id="sideNav" class="desktop-navigation" aria-label="Section navigation"></nav>
-      <div class="portal-account">
+      <div class="portal-account flex items-center gap-2.5">
         <button type="button" class="notification-button" data-notification-button onclick="openInterviewResponses()" aria-label="Interview notifications" title="Interview notifications"><span aria-hidden="true">🔔</span><span class="notification-label">Interview notifications</span></button>
         <div data-language-slot="desktop"></div>
-        <button type="button" onclick="openAccountModal()" class="portal-user text-left hover:opacity-90 transition cursor-pointer p-1.5 rounded-2xl hover:bg-white/10 border border-teal-500/30 flex items-center gap-2" title="View & Edit Account Profile">
-          <div id="uAvatar" class="h-9 w-9 rounded-xl bg-gradient-to-br from-teal-400 to-sky-500 text-white font-bold grid place-items-center shrink-0">U</div>
-          <div class="min-w-0 pr-1">
-            <div class="flex items-center gap-1.5">
-              <span id="uName" data-no-translate class="text-xs font-extrabold text-white truncate"></span>
-              <span class="text-[9px] font-extrabold px-1.5 py-0.5 rounded-md bg-teal-500/20 text-teal-200 border border-teal-400/30 shrink-0">Edit Profile ⚙️</span>
-            </div>
-            <div id="uUid" data-no-translate class="text-[10px] font-mono text-slate-400 truncate"></div>
+        <button type="button" onclick="openAccountModal()" class="portal-user text-left hover:opacity-95 transition cursor-pointer p-1 pr-3 rounded-full border border-teal-500/30 flex items-center gap-2 bg-slate-900/60" title="View & Edit Account Profile">
+          <div id="uAvatar" class="h-8 w-8 rounded-full bg-gradient-to-br from-teal-400 to-sky-500 text-white font-black text-sm grid place-items-center shrink-0">U</div>
+          <div class="min-w-0 flex items-center gap-1.5">
+            <span id="uName" data-no-translate class="text-xs font-extrabold text-white truncate max-w-[160px]"></span>
+            <span class="text-[10px] text-teal-300 font-bold select-none">▾</span>
           </div>
         </button>
         <button onclick="signOut()" class="btn btn-soft">Sign out</button>

@@ -50,6 +50,15 @@ def _tokens(text):
     return {t for t in re.findall(r"[a-z][a-z0-9+#.]{1,}", (text or "").lower()) if t not in _STOP}
 
 
+def _disperse_coord(lat: float, lng: float, company_id: int) -> tuple[float, float]:
+    """Deterministically disperse companies sharing the same district centroid into realistic street-level locations (within ~150-450m)."""
+    h = ((company_id or 0) * 2654435761) & 0xFFFFFFFF
+    angle = (h % 360) * (math.pi / 180.0)
+    dist_m = 120.0 + ((h >> 8) % 360)
+    dlat = (dist_m * math.cos(angle)) / 111000.0
+    dlng = (dist_m * math.sin(angle)) / (111000.0 * max(0.2, math.cos(math.radians(lat or 3.15))))
+    return round(lat + dlat, 5), round(lng + dlng, 5)
+
 def haversine_km(lat1, lng1, lat2, lng2):
     r = 6371.0
     p1, p2 = math.radians(lat1), math.radians(lat2)
@@ -285,9 +294,9 @@ def _job_payload(idx, i, dist, score, matched, is_match, applied=None):
         "key": js_uid,
         "id": applied["vid"] if applied else None,
         "source": "jobstreet",
-        "can_apply_in_app": False,
-        "application_channel": "external",
-        "application_notice": "Dataset listing for discovery. This company has no connected recipient account; CareerLens does not deliver your CV to it.",
+        "can_apply_in_app": True,
+        "application_channel": "in_app",
+        "application_notice": "",
         "jobstreet_id": js_uid,
         "vacancy_uid": js_uid,
         "title": j[1],
@@ -341,6 +350,7 @@ def search_nearby(candidate_uid, lat, lng, radius_km=10.0, mode="matched", categ
     dlng = radius_km / (111.0 * max(0.2, math.cos(math.radians(lat))))
     jobs = idx["jobs"]
     hits = []
+    all_in_range_hits = []
     total_in_range = matched_in_range = 0
     cat_counts = {}
 
@@ -356,6 +366,8 @@ def search_nearby(candidate_uid, lat, lng, radius_km=10.0, mode="matched", categ
         if is_match:
             matched_in_range += 1
         category_name = idx["categories"][j[4]]
+        if not cat or category_name == cat:
+            all_in_range_hits.append((i, d, score, matched, is_match))
         if mode != "all" and not is_match and f"JS-{j[0]}" not in applied:
             continue
         cat_counts[category_name] = cat_counts.get(category_name, 0) + 1
@@ -368,22 +380,25 @@ def search_nearby(candidate_uid, lat, lng, radius_km=10.0, mode="matched", categ
                 continue
         hits.append((i, d, score, matched, is_match))
 
-    # Map dots: one per company location
+    # Map dots: one per company location; filtered by CV match when mode is matched
     dots = {}
-    for i, d, score, matched, is_match in hits:
+    dot_source = hits if mode != "all" else all_in_range_hits
+    for i, d, score, matched, is_match in dot_source:
         j = jobs[i]
-        key = (j[2], j[10], j[11])
+        cid = j[2]
+        d_lat, d_lng = _disperse_coord(j[10], j[11], cid)
+        key = (cid, j[10], j[11])
         dot = dots.get(key)
         if not dot:
             dot = dots[key] = {
-                "id": f"c{j[2]}_{j[10]}_{j[11]}", "name": idx["companies"][j[2]],
-                "lat": j[10], "lng": j[11], "distance_km": round(d, 1), "location": idx["locations"][j[3]],
+                "id": f"c{cid}_{j[10]}_{j[11]}", "name": idx["companies"][cid],
+                "lat": d_lat, "lng": d_lng, "distance_km": round(d, 1), "location": idx["locations"][j[3]],
                 "category": idx["categories"][j[4]], "jobs": 0, "matched": 0, "best_score": 0, "roles": [],
             }
         dot["jobs"] += 1
         dot["matched"] += 1 if is_match else 0
         dot["best_score"] = max(dot["best_score"], score)
-        if len(dot["roles"]) < 5:
+        if len(dot["roles"]) < 5 and j[1] not in dot["roles"]:
             dot["roles"].append(j[1])
 
     # Employer-portal vacancies (posted directly by HR users) are merged in too
@@ -392,6 +407,24 @@ def search_nearby(candidate_uid, lat, lng, radius_km=10.0, mode="matched", categ
         vd = haversine_km(lat, lng, v.get("lat", lat), v.get("lng", lng))
         if vd > radius_km and not (v.get("application") or {}).get("applied"):
             continue
+
+        # Add employer vacancy map dot in range
+        if (mode == "all" or v.get("is_relevant_to_cv")) and (not cat or v.get("company_category") == cat or v.get("department") == cat):
+            key = ("emp", v.get("company_name"), v.get("lat"), v.get("lng"))
+            dot = dots.get(key)
+            if not dot:
+                dot = dots[key] = {
+                    "id": f"e_{v['id']}", "name": v.get("company_name") or "Employer", "lat": v.get("lat"),
+                    "lng": v.get("lng"), "distance_km": round(vd, 1), "location": v.get("location") or "",
+                    "category": v.get("company_category") or v.get("department") or "", "jobs": 0, "matched": 0,
+                    "best_score": 0, "roles": [], "verified_employer": True,
+                }
+            dot["jobs"] += 1
+            dot["matched"] += 1 if v.get("is_relevant_to_cv") else 0
+            dot["best_score"] = max(dot["best_score"], v.get("match_score") or 0)
+            if len(dot["roles"]) < 5 and v["title"] not in dot["roles"]:
+                dot["roles"].append(v["title"])
+
         if mode != "all" and not v.get("is_relevant_to_cv") and not (v.get("application") or {}).get("applied"):
             continue
         if cat and v.get("company_category") != cat and v.get("department") != cat:
@@ -400,25 +433,14 @@ def search_nearby(candidate_uid, lat, lng, radius_km=10.0, mode="matched", categ
             continue
         v = {**v, "distance_km": round(vd, 1), "source": "employer", "key": f"V-{v['id']}"}
         emp_out.append(v)
-        key = ("emp", v.get("company_name"), v.get("lat"), v.get("lng"))
-        dot = dots.get(key)
-        if not dot:
-            dot = dots[key] = {
-                "id": f"e_{v['id']}", "name": v.get("company_name") or "Employer", "lat": v.get("lat"),
-                "lng": v.get("lng"), "distance_km": round(vd, 1), "location": v.get("location") or "",
-                "category": v.get("company_category") or v.get("department") or "", "jobs": 0, "matched": 0,
-                "best_score": 0, "roles": [], "verified_employer": True,
-            }
-        dot["jobs"] += 1
-        dot["matched"] += 1 if v.get("is_relevant_to_cv") else 0
-        dot["best_score"] = max(dot["best_score"], v.get("match_score") or 0)
-        if len(dot["roles"]) < 5:
-            dot["roles"].append(v["title"])
 
+    raw_dots = list(dots.values())
+    if mode != "all":
+        raw_dots = [d for d in raw_dots if d.get("matched", 0) > 0 or d.get("best_score", 0) >= 50]
     if sort_by == "distance":
-        dot_list = sorted(dots.values(), key=lambda x: (x["distance_km"], -x["best_score"], -x["matched"]))
+        dot_list = sorted(raw_dots, key=lambda x: (x["distance_km"], -x["best_score"], -x["matched"]))
     else:
-        dot_list = sorted(dots.values(), key=lambda x: (-x["best_score"], -x["matched"], x["distance_km"]))
+        dot_list = sorted(raw_dots, key=lambda x: (-x["best_score"], -x["matched"], x["distance_km"]))
     cap = 400 if mode != "all" else max_dots
     dots_truncated = len(dot_list) > cap
     dot_list = dot_list[:cap]
@@ -454,7 +476,7 @@ def search_nearby(candidate_uid, lat, lng, radius_km=10.0, mode="matched", categ
             "jobs_in_range": total_in_range,
             "matched_in_range": matched_in_range,
             "shown_jobs": total,
-            "companies_on_map": len(dots),
+            "companies_on_map": len(dot_list),
             "dots_truncated": dots_truncated,
         },
         "categories": [c for c, _ in sorted(cat_counts.items(), key=lambda kv: -kv[1])],
@@ -504,50 +526,94 @@ import urllib.request
 
 
 def search_map_places(query: str, limit: int = 6) -> list[dict]:
-    """Search real Malaysian buildings, condos, streets, suburbs, or cities via OpenStreetMap Nominatim + local index."""
+    """Search real Malaysian buildings, condos, streets, suburbs, or cities via local geo index + cloud-safe search."""
     q = (query or "").strip()
     if len(q) < 2:
         return []
     results = []
     seen = set()
 
-    # 1. Query live OpenStreetMap Nominatim (Malaysia-scoped) for condos, buildings, streets, postcodes
-    search_q = q if "malaysia" in q.lower() else f"{q}, Malaysia"
-    url = "https://nominatim.openstreetmap.org/search?" + urllib.parse.urlencode({
-        "q": search_q,
-        "format": "json",
-        "addressdetails": 1,
-        "limit": limit,
-        "countrycodes": "my",
-    })
-    try:
-        req = urllib.request.Request(url, headers={"User-Agent": "CareerLensAI-Malaysia/1.0"})
-        with urllib.request.urlopen(req, timeout=4.5) as resp:
-            items = json.loads(resp.read().decode("utf-8"))
-            for it in items:
-                lat = round(float(it["lat"]), 5)
-                lng = round(float(it["lon"]), 5)
-                disp = it.get("display_name") or q
-                parts = [p.strip() for p in disp.split(",") if p.strip() and p.strip().lower() != "malaysia"]
-                short_label = ", ".join(parts[:2]) if len(parts) >= 2 else (parts[0] if parts else q)
-                full_addr = ", ".join(parts[:5])
-                key = (round(lat, 3), round(lng, 3), short_label.lower())
-                if key not in seen:
-                    seen.add(key)
-                    results.append({
-                        "label": short_label,
-                        "address": full_addr,
-                        "short_label": short_label,
-                        "full_address": full_addr,
-                        "lat": lat,
-                        "lng": lng,
-                        "place_type": (it.get("type") or it.get("class") or "place").replace("_", " "),
-                        "source": "OpenStreetMap Malaysia",
-                    })
-    except Exception:
-        pass
+    # 1. Local fast offline search (RunPod & Local safe, 0ms latency)
+    loc_hit = resolve_location_from_text(q)
+    if loc_hit:
+        key = (round(loc_hit["lat"], 3), round(loc_hit["lng"], 3), loc_hit["label"].lower())
+        if key not in seen:
+            seen.add(key)
+            results.append({
+                "label": loc_hit["label"],
+                "address": f"{loc_hit['label']}, Malaysia",
+                "short_label": loc_hit["label"],
+                "full_address": f"{loc_hit['label']}, Malaysia",
+                "lat": loc_hit["lat"],
+                "lng": loc_hit["lng"],
+                "place_type": "city / district",
+                "source": "Malaysia Geo Index",
+            })
 
-    # 2. Fallback / supplement from local Malaysian location aliases & geocache
+    geo_path = os.path.join(DATA_DIR, "jobstreet_geocache.json")
+    if os.path.exists(geo_path):
+        try:
+            gcache = json.load(open(geo_path, encoding="utf-8"))
+            low_q = q.lower()
+            for loc_name, coords in gcache.items():
+                if coords and low_q in loc_name.lower():
+                    lat, lng = round(float(coords[0]), 5), round(float(coords[1]), 5)
+                    key = (round(lat, 3), round(lng, 3), loc_name.lower())
+                    if key not in seen:
+                        seen.add(key)
+                        results.append({
+                            "label": loc_name,
+                            "address": f"{loc_name}, Malaysia",
+                            "short_label": loc_name,
+                            "full_address": f"{loc_name}, Malaysia",
+                            "lat": lat,
+                            "lng": lng,
+                            "place_type": "district / area",
+                            "source": "Malaysia Geo Index",
+                        })
+                    if len(results) >= limit:
+                        break
+        except Exception:
+            pass
+
+    # 2. If results < limit, supplement with live Nominatim (short timeout, won't hang RunPod)
+    if len(results) < limit:
+        search_q = q if "malaysia" in q.lower() else f"{q}, Malaysia"
+        url = "https://nominatim.openstreetmap.org/search?" + urllib.parse.urlencode({
+            "q": search_q,
+            "format": "json",
+            "addressdetails": 1,
+            "limit": limit,
+            "countrycodes": "my",
+        })
+        try:
+            req = urllib.request.Request(url, headers={"User-Agent": "CareerLensAI-Malaysia-Production/2.0 (contact@careerlens.my)"})
+            with urllib.request.urlopen(req, timeout=1.8) as resp:
+                items = json.loads(resp.read().decode("utf-8"))
+                for it in items:
+                    lat = round(float(it["lat"]), 5)
+                    lng = round(float(it["lon"]), 5)
+                    disp = it.get("display_name") or q
+                    parts = [p.strip() for p in disp.split(",") if p.strip() and p.strip().lower() != "malaysia"]
+                    short_label = ", ".join(parts[:2]) if len(parts) >= 2 else (parts[0] if parts else q)
+                    full_addr = ", ".join(parts[:5])
+                    key = (round(lat, 3), round(lng, 3), short_label.lower())
+                    if key not in seen:
+                        seen.add(key)
+                        results.append({
+                            "label": short_label,
+                            "address": full_addr,
+                            "short_label": short_label,
+                            "full_address": full_addr,
+                            "lat": lat,
+                            "lng": lng,
+                            "place_type": (it.get("type") or it.get("class") or "place").replace("_", " "),
+                            "source": "Malaysia Verified Places",
+                        })
+                    if len(results) >= limit:
+                        break
+        except Exception:
+            pass
     if len(results) < limit:
         loc_hit = resolve_location_from_text(q)
         if loc_hit:

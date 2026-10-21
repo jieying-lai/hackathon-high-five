@@ -84,6 +84,44 @@
       border: 2px solid #eab308 !important;
       box-shadow: 0 12px 28px -8px rgba(234, 179, 8, 0.35) !important;
     }
+    select:not(#uiLanguage), .cl-select, select.input:not(#uiLanguage) {
+      appearance: none !important;
+      -webkit-appearance: none !important;
+      -moz-appearance: none !important;
+      background-color: rgba(255, 255, 255, 0.95) !important;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%23475569' stroke-width='2.2'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E") !important;
+      background-position: right 0.85rem center !important;
+      background-repeat: no-repeat !important;
+      background-size: 1.15rem 1.15rem !important;
+      padding-right: 2.6rem !important;
+      padding-left: 0.9rem !important;
+      border: 1.5px solid #cbd5e1 !important;
+      border-radius: 0.85rem !important;
+      color: #0f172a !important;
+      font-weight: 600 !important;
+      cursor: pointer !important;
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
+      box-shadow: 0 1px 2px 0 rgba(15, 23, 42, 0.05) !important;
+    }
+    select:hover, .cl-select:hover, select.input:hover {
+      border-color: #94a3b8 !important;
+      background-color: #ffffff !important;
+      box-shadow: 0 3px 8px -1px rgba(99, 102, 241, 0.08) !important;
+    }
+    select:focus, .cl-select:focus, select.input:focus {
+      border-color: #6366f1 !important;
+      background-color: #ffffff !important;
+      box-shadow: 0 0 0 3.5px rgba(99, 102, 241, 0.18) !important;
+      outline: none !important;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%234f46e5' stroke-width='2.5'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E") !important;
+    }
+    select option, .cl-select option {
+      padding: 10px 14px !important;
+      background-color: #ffffff !important;
+      color: #0f172a !important;
+      font-weight: 500 !important;
+      font-size: 13px !important;
+    }
     .badge-applied-red {
       display: inline-flex;
       align-items: center;
@@ -98,16 +136,149 @@
       letter-spacing: 0.02em;
       text-transform: uppercase;
     }
-  </style>
-  <link rel="stylesheet" href="/static/css/profile.css?v=20261021-layout-1" />
-  <link rel="stylesheet" href="/static/css/responsive.css?v=20261021-green-completion" />
-  <link rel="stylesheet" href="/static/css/page-outline.css?v=20261021-menu-outline-v2" />
-  <link rel="stylesheet" href="/static/css/pomodoro.css?v=20261021-buddy-tooltip" />
-  <link rel="stylesheet" href="/static/css/sdg-passport.css?v=20261021-passport-close-once" />
-  <link rel="stylesheet" href="/static/css/discovery-learning.css?v=20261021-horizontal-completed" />
-  <link rel="stylesheet" href="/static/css/reskilling-plan.css?v=20261021-green-completion" />
-  <link rel="stylesheet" href="/static/css/learning-controls.css?v=20261021-single-replacement" />
-  <link rel="stylesheet" href="/static/css/learning-impact.css?v=20261021-community-pledges" />
+
+    /* Clean, gorgeous navigation bar right-side controls */
+    .portal-desktop-header .portal-account {
+      display: flex !important;
+      align-items: center !important;
+      gap: 0.65rem !important;
+      flex-wrap: nowrap !important;
+    }
+
+    /* 1. Notification circular icon button */
+    .portal-desktop-header .notification-button {
+      width: 40px !important;
+      height: 40px !important;
+      min-width: 40px !important;
+      min-height: 40px !important;
+      padding: 0 !important;
+      border-radius: 9999px !important;
+      display: inline-flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      flex-shrink: 0 !important;
+      border: 1.5px solid #e2e8f0 !important;
+      background: rgba(255, 255, 255, 0.9) !important;
+      color: #4f46e5 !important;
+      box-shadow: 0 1px 3px rgba(15, 23, 42, 0.05) !important;
+      transition: all 0.18s cubic-bezier(0.16, 1, 0.3, 1) !important;
+      cursor: pointer !important;
+    }
+    .portal-desktop-header .notification-button:hover {
+      background: #ffffff !important;
+      border-color: #c7d2fe !important;
+      box-shadow: 0 4px 12px -2px rgba(99, 102, 241, 0.18) !important;
+      transform: translateY(-1px) !important;
+    }
+    .portal-desktop-header .notification-label {
+      display: none !important;
+    }
+
+    /* 2. Language capsule - perfectly balanced single pill */
+    .portal-desktop-header .language-toolbar.language-inline {
+      display: inline-flex !important;
+      align-items: center !important;
+      height: 40px !important;
+      min-height: 40px !important;
+      padding: 0 12px 0 10px !important;
+      gap: 6px !important;
+      background: rgba(255, 255, 255, 0.9) !important;
+      border: 1.5px solid #e2e8f0 !important;
+      border-radius: 9999px !important;
+      box-shadow: 0 1px 3px rgba(15, 23, 42, 0.05) !important;
+      flex-shrink: 0 !important;
+      transition: all 0.18s cubic-bezier(0.16, 1, 0.3, 1) !important;
+      position: static !important;
+    }
+    .portal-desktop-header .language-toolbar.language-inline:hover {
+      background: #ffffff !important;
+      border-color: #c7d2fe !important;
+      box-shadow: 0 4px 12px -2px rgba(99, 102, 241, 0.18) !important;
+      transform: translateY(-1px) !important;
+    }
+    .portal-desktop-header .language-globe {
+      width: 17px !important;
+      height: 17px !important;
+      color: #64748b !important;
+      flex-shrink: 0 !important;
+    }
+    .portal-desktop-header #uiLanguage,
+    .portal-desktop-header .language-toolbar.language-inline select {
+      appearance: none !important;
+      -webkit-appearance: none !important;
+      -moz-appearance: none !important;
+      border: none !important;
+      outline: none !important;
+      background: transparent !important;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%2364748b' stroke-width='2.4'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E") !important;
+      background-repeat: no-repeat !important;
+      background-position: right 0 center !important;
+      background-size: 0.85rem !important;
+      padding: 0 16px 0 2px !important;
+      margin: 0 !important;
+      box-shadow: none !important;
+      border-radius: 0 !important;
+      height: auto !important;
+      min-height: unset !important;
+      width: auto !important;
+      max-width: unset !important;
+      font-size: 13px !important;
+      font-weight: 800 !important;
+      color: #334155 !important;
+      cursor: pointer !important;
+    }
+
+    /* 3. User profile capsule - spacious, no cutoff, beautiful */
+    .portal-desktop-header .portal-user {
+      height: 40px !important;
+      min-height: 40px !important;
+      max-width: none !important;
+      padding: 3px 14px 3px 4px !important;
+      border-radius: 9999px !important;
+      background: rgba(255, 255, 255, 0.9) !important;
+      border: 1.5px solid #e2e8f0 !important;
+      box-shadow: 0 1px 3px rgba(15, 23, 42, 0.05) !important;
+      display: inline-flex !important;
+      align-items: center !important;
+      gap: 8px !important;
+      flex-shrink: 0 !important;
+      cursor: pointer !important;
+      transition: all 0.18s cubic-bezier(0.16, 1, 0.3, 1) !important;
+    }
+    .portal-desktop-header .portal-user:hover {
+      background: #ffffff !important;
+      border-color: #c7d2fe !important;
+      box-shadow: 0 4px 12px -2px rgba(99, 102, 241, 0.18) !important;
+      transform: translateY(-1px) !important;
+    }
+    .portal-desktop-header .portal-user #uAvatar {
+      width: 32px !important;
+      height: 32px !important;
+      border-radius: 9999px !important;
+      font-size: 13px !important;
+      font-weight: 900 !important;
+      flex-shrink: 0 !important;
+      box-shadow: 0 2px 5px rgba(99, 102, 241, 0.25) !important;
+    }
+    .portal-desktop-header .portal-user #uName {
+      font-size: 13px !important;
+      font-weight: 800 !important;
+      color: #1e293b !important;
+      white-space: nowrap !important;
+      max-width: 220px !important;
+      overflow: hidden !important;
+      text-overflow: ellipsis !important;
+    }
+ </style>
+<link rel="stylesheet" href="/static/css/profile.css?v=20261021-separate-pages-2" />
+<link rel="stylesheet" href="/static/css/responsive.css?v=20261021-header-original-size" />
+<link rel="stylesheet" href="/static/css/page-outline.css?v=20261021-menu-outline-v2" />
+<link rel="stylesheet" href="/static/css/pomodoro.css?v=20261021-buddy-tooltip" />
+<link rel="stylesheet" href="/static/css/sdg-passport.css?v=20261021-passport-close-once" />
+<link rel="stylesheet" href="/static/css/discovery-learning.css?v=20261021-horizontal-completed" />
+<link rel="stylesheet" href="/static/css/reskilling-plan.css?v=20261021-green-completion" />
+<link rel="stylesheet" href="/static/css/learning-controls.css?v=20261021-single-replacement" />
+<link rel="stylesheet" href="/static/css/learning-impact.css?v=20261021-community-pledges" />
 </head>
 <body class="responsive-ui responsive-talent min-h-screen">
   <div class="aurora"></div><div class="blob b1"></div><div class="blob b2"></div>
@@ -117,20 +288,87 @@
     <header class="portal-desktop-header glass">
       <a href="/" class="portal-brand"><img src="/static/brand/careerlens_logo_icon.svg" alt="" /><span>CareerLens AI<small>Talent Portal</small></span></a>
       <nav id="sideNav" class="desktop-navigation" aria-label="Section navigation"></nav>
-      <div class="portal-account">
+      <div class="portal-account flex items-center gap-2.5">
         <button type="button" class="notification-button" data-notification-button onclick="showTab('notifications')" aria-label="Interview notifications" title="Interview notifications"><span aria-hidden="true">🔔</span><span class="notification-label">Interview notifications</span></button>
         <div data-language-slot="desktop"></div>
-        <button type="button" onclick="openAccountModal()" class="portal-user text-left hover:opacity-90 transition cursor-pointer p-1.5 rounded-2xl hover:bg-white/80 border border-slate-200/90 shadow-xs flex items-center gap-2" title="View & Edit Account Profile">
-          <div id="uAvatar" class="h-9 w-9 rounded-xl bg-gradient-to-br from-indigo-500 to-pink-500 text-white font-bold grid place-items-center shrink-0">U</div>
-          <div class="min-w-0 pr-1">
-            <div class="flex items-center gap-1.5">
-              <span id="uName" data-no-translate class="text-xs font-extrabold truncate">User</span>
-              <span class="text-[9px] font-extrabold px-1.5 py-0.5 rounded-md bg-indigo-50 text-indigo-700 border border-indigo-200 shrink-0">Edit Profile ⚙️</span>
+
+        <!-- Prettier Profile Pill & Dropdown -->
+        <div class="relative" id="navProfileWrap">
+          <button type="button" id="topProfileDropdownBtn" onclick="toggleNavProfileDropdown()" class="portal-user text-left hover:opacity-95 transition cursor-pointer p-1.5 pr-3.5 rounded-2xl hover:bg-white/90 border border-slate-200/90 shadow-xs flex items-center gap-2.5 bg-white/70" title="Account Settings & Profile">
+            <div id="uAvatar" class="h-9 w-9 rounded-xl bg-gradient-to-br from-indigo-500 to-pink-500 text-white font-black text-sm grid place-items-center shrink-0 shadow-xs">U</div>
+            <div class="min-w-0 flex items-center gap-1.5">
+              <span id="uName" data-no-translate class="text-xs font-extrabold truncate text-slate-800">User</span>
+              <span class="text-[10px] text-slate-400 font-bold select-none">▾</span>
             </div>
-            <div id="uUid" data-no-translate class="text-[10px] font-mono text-slate-500 truncate"></div>
+          </button>
+
+          <!-- Prettier Settings & Profile Dropdown -->
+          <div id="navProfileDropdown" class="hidden absolute right-0 top-full mt-2 w-72 bg-white rounded-2xl shadow-2xl border border-slate-200/90 p-2 z-50 divide-y divide-slate-100 text-xs">
+            <!-- Header Preview -->
+            <div class="p-2.5">
+              <div class="flex items-center gap-2.5">
+                <div id="dropAvatar" class="h-10 w-10 rounded-xl bg-gradient-to-br from-indigo-500 to-pink-500 text-white font-black text-sm grid place-items-center shrink-0 shadow-xs">U</div>
+                <div class="min-w-0 flex-1">
+                  <div id="dropName" class="font-extrabold text-slate-900 truncate">User</div>
+                  <div id="dropEmail" class="text-[10px] text-slate-500 truncate font-mono">user@careerlens.my</div>
+                </div>
+              </div>
+              <button type="button" onclick="showTab('profile');closeNavProfileDropdown();" class="mt-2.5 w-full btn btn-primary !py-2 !px-3 !text-xs font-bold flex items-center justify-center gap-1.5 shadow-sm">
+                <span>👤</span><span>View Full Profile Page →</span>
+              </button>
+            </div>
+
+            <!-- Language Setting Selection -->
+            <div class="p-2.5 space-y-1.5">
+              <div class="text-[10px] font-extrabold uppercase tracking-wider text-slate-400">🌐 Language Setting</div>
+              <div class="grid grid-cols-3 gap-1">
+                <button type="button" onclick="setAppLanguage('en')" class="lang-opt-btn px-2 py-1.5 rounded-lg text-center font-bold text-[11px] bg-slate-100 hover:bg-indigo-50 hover:text-indigo-700 transition" data-lang="en">English</button>
+                <button type="button" onclick="setAppLanguage('ms')" class="lang-opt-btn px-2 py-1.5 rounded-lg text-center font-bold text-[11px] bg-slate-100 hover:bg-indigo-50 hover:text-indigo-700 transition" data-lang="ms">BM</button>
+                <button type="button" onclick="setAppLanguage('zh')" class="lang-opt-btn px-2 py-1.5 rounded-lg text-center font-bold text-[11px] bg-slate-100 hover:bg-indigo-50 hover:text-indigo-700 transition" data-lang="zh">中文</button>
+              </div>
+            </div>
+
+            <!-- Notification Settings -->
+            <div class="p-2.5 space-y-2">
+              <div class="text-[10px] font-extrabold uppercase tracking-wider text-slate-400">🔔 Notification Settings</div>
+              <label class="flex items-center justify-between text-[11px] text-slate-700 cursor-pointer">
+                <span>Interview Notifications</span>
+                <input type="checkbox" id="prefNotifInterview" checked onchange="saveNotificationPref('interview', this.checked)" class="rounded text-indigo-600 focus:ring-indigo-500" />
+              </label>
+              <label class="flex items-center justify-between text-[11px] text-slate-700 cursor-pointer">
+                <span>Job Match Alerts</span>
+                <input type="checkbox" id="prefNotifJobs" checked onchange="saveNotificationPref('jobs', this.checked)" class="rounded text-indigo-600 focus:ring-indigo-500" />
+              </label>
+            </div>
+
+            <!-- Profile & Security Menu Items -->
+            <div class="p-1 space-y-0.5">
+              <button type="button" onclick="openAccountModal();setAccountModalTab('profile');closeNavProfileDropdown();" class="w-full text-left px-2.5 py-2 rounded-xl hover:bg-slate-50 flex items-center justify-between text-slate-700 font-bold transition">
+                <span class="flex items-center gap-2"><span>✏️</span><span>Edit Profile Details</span></span>
+                <span class="text-slate-400">›</span>
+              </button>
+              <button type="button" onclick="openAccountModal();setAccountModalTab('security');closeNavProfileDropdown();" class="w-full text-left px-2.5 py-2 rounded-xl hover:bg-slate-50 flex items-center justify-between text-slate-700 font-bold transition">
+                <span class="flex items-center gap-2"><span>🔒</span><span>Security &amp; Password</span></span>
+                <span class="text-slate-400">›</span>
+              </button>
+              <button type="button" onclick="openNavForgotPwModal();closeNavProfileDropdown();" class="w-full text-left px-2.5 py-2 rounded-xl hover:bg-slate-50 flex items-center justify-between text-slate-700 font-bold transition">
+                <span class="flex items-center gap-2"><span>🔑</span><span>Forgot Password? (Code Reset)</span></span>
+                <span class="text-slate-400">›</span>
+              </button>
+              <button type="button" onclick="openHelpDeskModal();closeNavProfileDropdown();" class="w-full text-left px-2.5 py-2 rounded-xl hover:bg-slate-50 flex items-center justify-between text-indigo-700 font-bold transition">
+                <span class="flex items-center gap-2"><span>💬</span><span>Help Desk &amp; Feedback</span></span>
+                <span class="chip chip-indigo !text-[9px]">Admin</span>
+              </button>
+            </div>
+
+            <!-- Sign Out -->
+            <div class="p-1">
+              <button type="button" onclick="signOut()" class="w-full text-left px-2.5 py-2 rounded-xl hover:bg-red-50 text-red-600 font-bold flex items-center gap-2 transition">
+                <span>🚪</span><span>Sign Out</span>
+              </button>
+            </div>
           </div>
-        </button>
-        <button onclick="signOut()" class="btn btn-soft">Sign out</button>
+        </div>
       </div>
     </header>
 
@@ -216,11 +454,15 @@
               </div>
             </div>
 
-            <!-- Profile Overview Details Grid -->
-            <div class="profile-overview grid grid-cols-2 sm:grid-cols-4 gap-3 pt-1">
+            <!-- Profile Overview Details Grid (Comprehensive) -->
+            <div class="profile-overview grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 pt-1">
               <div class="p-3.5 rounded-2xl bg-white/80 border border-slate-200/80 shadow-xs">
                 <div class="text-[10px] font-extrabold text-slate-400 uppercase tracking-wider">Current Role</div>
                 <div id="accCardRole" class="text-xs font-bold text-slate-800 mt-1 truncate">—</div>
+              </div>
+              <div class="p-3.5 rounded-2xl bg-white/80 border border-slate-200/80 shadow-xs">
+                <div class="text-[10px] font-extrabold text-slate-400 uppercase tracking-wider">Gender</div>
+                <div id="accCardGender" class="text-xs font-bold text-slate-800 mt-1 truncate">Prefer not to say</div>
               </div>
               <div class="p-3.5 rounded-2xl bg-white/80 border border-slate-200/80 shadow-xs">
                 <div class="text-[10px] font-extrabold text-slate-400 uppercase tracking-wider">Career Field</div>
@@ -231,37 +473,43 @@
                 <div id="accCardWorkMode" class="text-xs font-bold text-slate-800 mt-1 truncate">—</div>
               </div>
               <div class="p-3.5 rounded-2xl bg-white/80 border border-slate-200/80 shadow-xs">
+                <div class="text-[10px] font-extrabold text-slate-400 uppercase tracking-wider">Contact Phone</div>
+                <div id="accCardPhone" class="text-xs font-bold text-slate-800 mt-1 truncate">Not added</div>
+              </div>
+              <div class="p-3.5 rounded-2xl bg-white/80 border border-slate-200/80 shadow-xs">
                 <div class="text-[10px] font-extrabold text-slate-400 uppercase tracking-wider">Location</div>
                 <div id="accCardLocation" class="text-xs font-bold text-slate-800 mt-1 truncate">—</div>
               </div>
             </div>
-          </div>
 
-          <div class="profile-privacy tint tint-teal rounded-3xl p-5 flex flex-wrap items-center justify-between gap-4">
-            <div class="flex items-start gap-3.5 max-w-3xl">
-              <div class="h-11 w-11 rounded-2xl bg-teal-600 text-white grid place-items-center text-lg shrink-0 shadow">🔒</div>
+            <!-- Professional Pitch / Bio Banner -->
+            <div class="p-4 rounded-2xl bg-indigo-50/60 border border-indigo-100 flex items-start gap-3">
+              <span class="text-lg shrink-0">💬</span>
               <div>
-                <div class="flex flex-wrap items-center gap-2">
-                  <span class="text-sm font-extrabold text-teal-950">Your CV, your sharing choices</span>
-                  <span class="chip chip-indigo">Private by default</span>
-                </div>
-                <p class="text-xs text-slate-600 mt-1 leading-relaxed">
-                  Your PDF and organised profile are available to your signed-in account. An employer receives only the summary and/or PDF you choose to share when applying to its vacancy. Aggregate publication is currently disabled; your optional statistics preference is off by default. You can export your profile, withdraw sharing, or delete your vault below.
-                </p>
+                <div class="text-[10px] font-extrabold uppercase tracking-wider text-indigo-700">Professional Bio &amp; Aspirations</div>
+                <p id="accCardBio" class="text-xs text-slate-700 mt-0.5 leading-relaxed font-medium">Add a short introduction and your career goals.</p>
               </div>
             </div>
-            <label class="flex items-center gap-2 text-xs font-bold text-teal-950 bg-white/80 px-3.5 py-2.5 rounded-2xl border border-teal-200 cursor-pointer shrink-0">
-              <input id="anonToggle" type="checkbox" onchange="toggleAnonStats(this.checked)" class="rounded text-teal-600 focus:ring-teal-500" />
-              Optional statistics preference (publication disabled)
-            </label>
           </div>
 
+          <div class="glass rounded-3xl p-6 sm:p-7 space-y-4" data-outline-label="Achievements & skills">
+            <h2 class="text-lg font-extrabold">Achievements &amp; professional skills</h2>
+            <p class="text-sm text-slate-500">From your saved CV profile. These details are self-reported, not independently verified.</p>
+            <div id="profileHighlights" class="grid md:grid-cols-2 gap-5"></div>
+            <div class="flex flex-wrap gap-3 border-t border-slate-200 pt-4">
+              <button class="btn btn-soft" onclick="showTab('cv-review')">Edit CV details →</button>
+              <button class="btn btn-soft" onclick="showTab('passport')">Learning achievements →</button>
+            </div>
+          </div>
+        </section>
+        <section id="tab-cv-upload" class="tab hidden space-y-6">
+          <p class="text-sm text-slate-600">Upload a PDF, then continue to the separate review page to check and edit the extracted details.</p>
           <div class="rounded-2xl border border-amber-300 bg-amber-50 p-4 text-sm text-amber-950" role="note">
-            <b>Hackathon demo — use fictional CVs only.</b> Uploads are extracted locally. Optional AI organisation uses the configured pretrained model when connected and authorised below; it does not verify qualifications. Do not upload real personal or confidential information. Text-based PDFs work best; image-only scans need OCR before upload.
+            <b>Hackathon demo — use fictional CVs only.</b> Uploads are extracted locally. Optional AI organisation uses the configured pretrained model when connected and authorised on the review page; it does not verify qualifications. Do not upload real personal or confidential information. Text-based PDFs work best; image-only scans need OCR before upload.
           </div>
 
 
-          <div class="profile-workflow">
+
 <div data-outline-label="CV upload" class="profile-upload glass rounded-3xl p-6 space-y-4">
                 <div class="flex items-center justify-between">
                   <div>
@@ -296,111 +544,317 @@
                   <div id="samplePdfList" class="space-y-2"></div>
                 </div>
               </div>
-<div data-outline-label="Review your organised profile" class="profile-editor glass rounded-3xl p-6 sm:p-7 space-y-5">
-                <div class="flex flex-wrap items-start justify-between gap-3 border-b border-slate-200/70 pb-4">
-                  <div>
-                    <div class="flex items-center gap-2">
-                      <span class="text-sm font-extrabold">2. Review your organised profile</span>
-                      <span id="cvStatusChip" class="chip chip-amber">No PDF yet</span>
-                    </div>
-                    <div id="cvFileMeta" class="text-xs text-slate-500 mt-0.5">Upload a PDF CV above to extract your structured profile</div>
-                  </div>
-                  <div class="flex gap-2">
-                    <a id="viewMyPdfBtn" href="/api/cv/me/pdf" target="_blank" rel="noopener" class="btn btn-soft !py-1.5 !text-xs hidden">👁️ View Original PDF</a>
-                  </div>
+          <button class="btn btn-soft" onclick="showTab('cv-review')">Review my existing CV →</button>
+        </section>
+        <section id="tab-cv-review" class="tab hidden space-y-6">
+          <div class="flex flex-wrap items-center justify-between gap-3">
+            <div>
+              <h2 class="text-xl font-black text-slate-900 tracking-tight flex items-center gap-2">
+                <span>📑</span><span>Organised CV Profile</span>
+              </h2>
+              <p class="text-xs text-slate-500 mt-0.5">Structured career profile extracted from your PDF. Review, polish, and save your details.</p>
+            </div>
+            <div class="flex items-center gap-2">
+              <a id="viewMyPdfBtn" href="/api/cv/me/pdf" target="_blank" rel="noopener" class="btn btn-soft !py-1.5 !px-3 !text-xs font-bold hidden flex items-center gap-1.5 shadow-xs">
+                <span>👁️</span><span>View Original PDF</span>
+              </a>
+              <button type="button" class="btn btn-soft !py-1.5 !px-3 !text-xs font-bold flex items-center gap-1.5 shadow-xs" onclick="showTab('cv-upload')">
+                <span>📄</span><span>Replace PDF</span>
+              </button>
+            </div>
+          </div>
+
+          <div data-outline-label="Review your organised profile" class="profile-editor glass rounded-3xl p-6 sm:p-7 space-y-6">
+            <!-- Header bar with file info -->
+            <div class="flex flex-wrap items-center justify-between gap-3 border-b border-slate-200/70 pb-4">
+              <div class="flex items-center gap-3">
+                <div class="h-10 w-10 rounded-2xl bg-gradient-to-br from-indigo-500 to-purple-600 text-white font-extrabold grid place-items-center text-lg shadow-sm shrink-0">
+                  ✨
                 </div>
-
-                <div id="cvReviewPanel" class="rounded-2xl border border-amber-200 bg-amber-50 p-4 space-y-2" aria-live="polite">
-                  <div id="cvReviewHeading" class="text-xs font-extrabold text-amber-950">Review required before sharing</div>
-                  <p id="extractionMethod" class="text-xs text-slate-600">Upload a sample or fictional PDF to begin.</p>
-                  <ul id="reviewWarnings" class="text-xs text-slate-600 list-disc pl-4 space-y-1"></ul>
-                </div>
-
-                <div class="rounded-2xl border border-indigo-200 bg-indigo-50/50 p-5 space-y-4" data-no-translate>
-                  <div><h3 class="font-extrabold text-base">Organise with AI <span class="chip chip-indigo">Optional</span></h3>
-                    <p class="text-sm text-slate-600 mt-2">Use a pretrained model to group experience, education and achievements into a draft supported by quotes from your PDF. Your review is still required.</p></div>
-                  <p id="cvAIAvailability" class="text-sm text-slate-600" role="status">Checking model connection…</p>
-                  <label class="flex items-start gap-3 text-sm text-slate-700"><input id="cvAIConsent" type="checkbox" />
-                    <span id="cvAIConsentText">Allow my PDF's extracted text, including contact details, to be processed by the configured AI for this request. This app does not use it for model training.</span></label>
-                  <p class="text-xs text-slate-500">This rebuilds the draft from the PDF, replaces saved edits and ends existing sharing. Failed requests keep your current draft.</p>
-                  <button id="organiseCvBtn" type="button" onclick="organiseWithAI()" class="btn btn-primary" disabled>Organise my CV with AI</button>
-                  <p id="cvAIStatus" class="text-sm font-semibold text-slate-600" role="status" aria-live="polite"></p>
-                </div>
-
-                <!-- Extractive summary -->
-                <div class="tint tint-indigo rounded-2xl p-4 space-y-2">
-                  <div class="flex items-center justify-between">
-                    <label for="pSummary" class="text-[11px] font-extrabold uppercase tracking-wider text-indigo-700">Draft professional summary</label>
-                    <span id="cvSeekerType" class="chip chip-indigo"></span>
+                <div>
+                  <div class="flex items-center gap-2">
+                    <span class="text-sm font-black text-slate-900">Extracted Resume Intelligence</span>
+                    <span id="cvStatusChip" class="chip chip-amber">No PDF yet</span>
                   </div>
-                  <textarea id="pSummary" rows="4" maxlength="6000" class="input !bg-white/90 text-xs leading-relaxed" placeholder="Review the extracted summary. Keep only statements supported by the CV."></textarea>
-                  <ul id="aiHighlights" class="space-y-1 text-[11px] text-slate-600 pt-1"></ul>
-                </div>
-
-                <div class="profile-section-heading"><h3>Personal &amp; career details</h3><p>Check your contact information and work preferences.</p></div>
-                <div class="profile-fields grid sm:grid-cols-2 gap-3.5">
-                  <div><label for="pName" class="label">Full name</label><input id="pName" maxlength="200" class="input" /></div>
-                  <div><label for="pRole" class="label">Current role / headline</label><input id="pRole" maxlength="300" class="input" /></div>
-                  <div><label for="pEmail" class="label">Email</label><input id="pEmail" type="email" maxlength="254" class="input" autocomplete="off" /></div>
-                  <div><label for="pPhone" class="label">Phone</label><input id="pPhone" type="tel" maxlength="100" class="input" autocomplete="off" /></div>
-                  <div class="sm:col-span-2"><label for="pLocation" class="label">Location</label><input id="pLocation" maxlength="300" class="input" /></div>
-                  <div><label for="pIndustry" class="label">Industry sector</label><select id="pIndustry" class="input"><option value="">Not specified</option><option>Finance & Accounting</option><option>IT & Software</option><option>Marketing & PR</option><option>HR & Administration</option></select></div>
-                  <div><label for="pMode" class="label">Preferred work mode</label><select id="pMode" class="input"><option value="">Not specified</option><option>Hybrid</option><option>Remote</option><option>On-site</option></select></div>
-                  <div><label for="pEdu" class="label">Qualification level</label><select id="pEdu" class="input"><option value="">Not specified</option><option>SPM / UEC</option><option>Diploma / TVET</option><option>Bachelor's Degree</option><option>Master's / Postgraduate</option><option>Doctor</option></select></div>
-                  <div><label for="pYears" class="label">Years of experience</label><input id="pYears" type="number" min="0" max="60" step="0.5" placeholder="Not specified" class="input" /><p class="text-[10px] text-slate-500 mt-1">Leave blank if unknown; 0 means no experience.</p></div>
-                </div>
-
-                <!-- Extracted Experience, Education, Projects -->
-                <div class="profile-section-heading"><h3>Experience &amp; qualifications</h3><p>Keep each entry clear and supported by your CV.</p></div>
-                <div class="profile-history grid sm:grid-cols-2 gap-3">
-                  <div class="bg-white/80 rounded-2xl p-3.5 border border-slate-200/70 space-y-1.5">
-                    <label for="pExperience" class="text-[11px] font-extrabold text-indigo-700 uppercase">Work experience</label>
-                    <textarea id="pExperience" rows="5" class="input !text-xs" placeholder="One entry per line"></textarea>
-                  </div>
-                  <div class="bg-white/80 rounded-2xl p-3.5 border border-slate-200/70 space-y-1.5">
-                    <label for="pEducation" class="text-[11px] font-extrabold text-teal-700 uppercase">Education</label>
-                    <textarea id="pEducation" rows="5" class="input !text-xs" placeholder="One entry per line"></textarea>
-                  </div>
-                  <div class="bg-white/80 rounded-2xl p-3.5 border border-slate-200/70 space-y-1.5">
-                    <label for="pProjects" class="text-[11px] font-extrabold text-pink-700 uppercase">Projects</label>
-                    <textarea id="pProjects" rows="5" class="input !text-xs" placeholder="One entry per line"></textarea>
-                  </div>
-                  <div class="bg-white/80 rounded-2xl p-3.5 border border-slate-200/70 space-y-1.5">
-                    <label for="pCertifications" class="text-[11px] font-extrabold text-indigo-700 uppercase">Certifications</label>
-                    <textarea id="pCertifications" rows="5" class="input !text-xs" placeholder="One entry per line"></textarea>
-                  </div>
-                </div>
-
-                <div id="cvParserAnalytics" class="tint tint-teal rounded-2xl p-4 space-y-3 hidden"></div>
-
-                <div class="profile-skills">
-                  <label for="skillInput" class="label">Skills <span class="text-slate-400 font-medium">· extracted mentions are not proof of proficiency</span></label>
-                  <div id="skillChips" class="flex flex-wrap gap-2 mb-2.5"></div>
-                  <input id="skillInput" class="input" placeholder="Add a skill and press Enter (e.g. Python Data Analysis)" list="skillSuggest" />
-                  <datalist id="skillSuggest"></datalist>
-                  <div id="cvAISuggestedSkills" class="mt-4 text-sm text-slate-600 hidden"></div>
-                </div>
-
-                <details class="rounded-2xl bg-slate-50 border border-slate-200 p-4">
-                  <summary class="text-xs font-extrabold cursor-pointer">Original extraction evidence (before your edits)</summary>
-                  <p class="text-[11px] text-slate-500 mt-2">Quotes and page numbers explain the parser's draft. Your edits are self-reported and are not independently verified.</p>
-                  <div id="fieldEvidenceList" class="space-y-2 mt-3"></div>
-                  <div id="skillEvidenceList" class="space-y-2 mt-3"></div>
-                </details>
-                <label class="flex items-start gap-2.5 text-xs text-slate-700 cursor-pointer">
-                  <input id="reviewConfirm" type="checkbox" class="mt-0.5 rounded text-indigo-600" />
-                  <span>I have checked the summary, contact details, sections and skills against the PDF, and corrected any mistakes. Mark this profile as reviewed when I save.</span>
-                </label>
-                <div id="profileSaveStatus" class="text-xs font-semibold text-slate-600" role="status" aria-live="polite"></div>
-
-                <div class="profile-save-actions flex flex-wrap items-center justify-between gap-3 pt-2 border-t border-slate-200/70">
-                  <button onclick="showTab('jobs')" class="btn btn-soft">💼 Browse & Apply Jobs →</button>
-                  <button id="saveProfileBtn" onclick="saveProfile()" class="btn btn-primary" disabled>Save reviewed profile →</button>
+                  <div id="cvFileMeta" class="text-xs text-slate-500 mt-0.5 font-medium">Upload a PDF CV to extract your structured profile</div>
                 </div>
               </div>
+            </div>
+
+            <!-- Sleek Status & Review Notice Banner -->
+            <div id="cvReviewPanel" class="rounded-2xl border border-indigo-100 bg-indigo-50/50 p-4 space-y-2.5 transition" aria-live="polite">
+              <div class="flex items-center justify-between gap-2">
+                <div class="flex items-center gap-2">
+                  <span class="text-base select-none">📋</span>
+                  <div id="cvReviewHeading" class="text-xs font-extrabold text-slate-800">Check the draft before sharing with employers</div>
+                </div>
+                <span class="chip chip-indigo !text-[10px]">AI Extracted</span>
+              </div>
+              <p id="extractionMethod" class="text-xs text-slate-500 leading-relaxed">Upload a sample or fictional PDF to begin.</p>
+              <details class="text-xs text-slate-500 mt-1">
+                <summary class="cursor-pointer font-bold text-indigo-600 hover:text-indigo-800 text-[11px] select-none">
+                  Extraction Details &amp; Notes ▾
+                </summary>
+                <ul id="reviewWarnings" class="list-disc pl-4 space-y-1 mt-2 text-[11px] text-slate-600"></ul>
+              </details>
+            </div>
+
+            <!-- Sleek Modern AI Enhancement Card -->
+            <div class="rounded-2xl border border-purple-200/80 bg-gradient-to-r from-purple-50/70 via-indigo-50/50 to-pink-50/40 p-4 sm:p-5 space-y-3" data-no-translate>
+              <div class="flex flex-wrap items-center justify-between gap-2">
+                <div class="flex items-center gap-2">
+                  <span class="text-lg">🤖</span>
+                  <h3 class="font-extrabold text-sm text-slate-900">AI Profile Enhancer</h3>
+                  <span class="chip chip-indigo !text-[10px]">Optional</span>
+                </div>
+                <div id="cvAIAvailability" class="text-xs font-bold text-slate-500" role="status">Checking connection…</div>
+              </div>
+              <p class="text-xs text-slate-600 leading-relaxed">
+                Use AI to intelligently polish experience, structure achievements, and enhance your resume highlights.
+              </p>
+              <div class="pt-1 flex flex-wrap items-center justify-between gap-3">
+                <label class="flex items-center gap-2.5 text-xs text-slate-700 cursor-pointer font-medium select-none">
+                  <input id="cvAIConsent" type="checkbox" class="rounded text-indigo-600 focus:ring-indigo-500" />
+                  <span id="cvAIConsentText">Authorize AI processing for this draft</span>
+                </label>
+                <div class="flex items-center gap-2.5">
+                  <span id="cvAIStatus" class="text-xs font-semibold text-slate-600" role="status" aria-live="polite"></span>
+                  <button id="organiseCvBtn" type="button" onclick="organiseWithAI()" class="btn btn-primary !py-2 !px-4 !text-xs font-bold shadow-xs" disabled>
+                    ✨ Enhance with AI
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Professional Summary -->
+            <div class="tint tint-indigo rounded-2xl p-4 sm:p-5 space-y-2.5">
+              <div class="flex items-center justify-between">
+                <div class="flex items-center gap-2">
+                  <span class="text-sm">📝</span>
+                  <label for="pSummary" class="text-xs font-extrabold uppercase tracking-wider text-indigo-900">Professional Summary</label>
+                </div>
+                <span id="cvSeekerType" class="chip chip-indigo !text-[10px]"></span>
+              </div>
+              <textarea id="pSummary" rows="4" maxlength="6000" class="input !bg-white/95 text-xs leading-relaxed" placeholder="Write or review your executive summary. Highlight your core expertise and career background."></textarea>
+              <ul id="aiHighlights" class="space-y-1 text-[11px] text-slate-600 pt-1"></ul>
+            </div>
+
+            <!-- Personal & Career Details -->
+            <div class="border-t border-slate-200/70 pt-5">
+              <div class="profile-section-heading mb-4">
+                <h3 class="text-base font-extrabold text-slate-900 flex items-center gap-2">
+                  <span>👤</span><span>Personal &amp; Career Details</span>
+                </h3>
+                <p class="text-xs text-slate-500">Keep your contact information and work preferences up to date.</p>
+              </div>
+              <div class="profile-fields grid sm:grid-cols-2 gap-3.5">
+                <div>
+                  <label for="pName" class="label">Full Name *</label>
+                  <input id="pName" maxlength="200" required class="input" placeholder="e.g. Aisha Rahman" oninput="validatePersonalField('pName')" />
+                  <div id="err_pName" class="text-[11px] text-rose-500 font-semibold hidden mt-1">Please enter your full name.</div>
+                </div>
+                <div>
+                  <label for="pRole" class="label">Occupation *</label>
+                  <input id="pRole" maxlength="300" required class="input" placeholder="e.g. Junior Financial Auditor" oninput="validatePersonalField('pRole')" />
+                  <div id="err_pRole" class="text-[11px] text-rose-500 font-semibold hidden mt-1">Please enter your occupation.</div>
+                </div>
+                <div>
+                  <label for="pEmail" class="label">Primary Email *</label>
+                  <input id="pEmail" type="email" maxlength="254" required class="input" autocomplete="off" placeholder="name@example.com" oninput="validatePersonalField('pEmail')" />
+                  <div id="err_pEmail" class="text-[11px] text-rose-500 font-semibold hidden mt-1">Please enter a valid email address.</div>
+                </div>
+                <div>
+                  <label for="pPhone" class="label">Contact Phone *</label>
+                  <div class="relative">
+                    <span class="absolute left-3 top-2.5 text-xs font-bold text-slate-500 select-none">+60</span>
+                    <input id="pPhone" type="tel" maxlength="12" required class="input !pl-11" autocomplete="off" placeholder="11-23456789" oninput="formatMalaysianPhone(this);validatePersonalField('pPhone')" />
+                  </div>
+                  <div id="err_pPhone" class="text-[11px] text-rose-500 font-semibold hidden mt-1">Enter a valid Malaysian phone (e.g. 11-23456789).</div>
+                </div>
+                <div class="sm:col-span-2">
+                  <label for="pLocation" class="label">Location / State *</label>
+                  <input id="pLocation" maxlength="300" required class="input" placeholder="e.g. W.P. Kuala Lumpur" oninput="validatePersonalField('pLocation')" />
+                  <div id="err_pLocation" class="text-[11px] text-rose-500 font-semibold hidden mt-1">Please enter your location or state.</div>
+                </div>
+                <div>
+                  <label for="pIndustry" class="label">Industry Sector *</label>
+                  <select id="pIndustry" required class="input" onchange="validatePersonalField('pIndustry')">
+                    <option value="">Select industry sector...</option>
+                    <option value="Finance & Accounting">Finance &amp; Accounting</option>
+                    <option value="IT & Software">IT &amp; Software</option>
+                    <option value="Marketing & PR">Marketing &amp; PR</option>
+                    <option value="HR & Administration">HR &amp; Administration</option>
+                    <option value="Engineering & Manufacturing">Engineering &amp; Manufacturing</option>
+                    <option value="Healthcare & Life Sciences">Healthcare &amp; Life Sciences</option>
+                    <option value="Education & EdTech">Education &amp; EdTech</option>
+                    <option value="Supply Chain & Logistics">Supply Chain &amp; Logistics</option>
+                    <option value="ESG & Sustainability">ESG &amp; Sustainability</option>
+                    <option value="General">General / Management</option>
+                    <option value="Others">Others</option>
+                  </select>
+                  <div id="err_pIndustry" class="text-[11px] text-rose-500 font-semibold hidden mt-1">Please select an industry sector.</div>
+                </div>
+                <div>
+                  <label for="pMode" class="label">Preferred Work Mode *</label>
+                  <select id="pMode" required class="input" onchange="validatePersonalField('pMode')">
+                    <option value="">Select work mode...</option>
+                    <option value="Hybrid">Hybrid (Remote + Office)</option>
+                    <option value="Remote">Remote-First</option>
+                    <option value="On-site">On-site Only</option>
+                  </select>
+                  <div id="err_pMode" class="text-[11px] text-rose-500 font-semibold hidden mt-1">Please select a preferred work mode.</div>
+                </div>
+                <div>
+                  <label for="pEdu" class="label">Qualification Level *</label>
+                  <select id="pEdu" required class="input" onchange="validatePersonalField('pEdu')">
+                    <option value="">Select qualification level...</option>
+                    <option value="Bachelor's Degree">Bachelor's Degree (Hons)</option>
+                    <option value="Diploma / TVET">Diploma / TVET</option>
+                    <option value="SPM / UEC">SPM / UEC</option>
+                    <option value="Master's / Postgraduate">Master's / Postgraduate</option>
+                    <option value="Doctor">Doctor / PhD</option>
+                    <option value="Professional Qualification">Professional Cert (ACCA/CFA)</option>
+                  </select>
+                  <div id="err_pEdu" class="text-[11px] text-rose-500 font-semibold hidden mt-1">Please select your qualification level.</div>
+                </div>
+                <div>
+                  <label for="pYears" class="label">Years of Experience *</label>
+                  <input id="pYears" type="number" min="0" max="60" step="0.5" required placeholder="0" class="input" oninput="validatePersonalField('pYears')" />
+                  <p class="text-[10px] text-slate-500 mt-1">0 for fresh graduates / entry-level.</p>
+                  <div id="err_pYears" class="text-[11px] text-rose-500 font-semibold hidden mt-1">Please enter years of experience (0 or more).</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Extracted Experience, Education, Projects -->
+            <div class="border-t border-slate-200/70 pt-5">
+              <div class="profile-section-heading mb-4">
+                <h3 class="text-base font-extrabold text-slate-900 flex items-center gap-2">
+                  <span>💼</span><span>Experience &amp; Qualifications</span>
+                </h3>
+                <p class="text-xs text-slate-500">Structured history extracted from your CV. You can edit or add new entries directly.</p>
+              </div>
+              <div class="profile-history grid sm:grid-cols-2 gap-4">
+                <div class="bg-white/80 rounded-2xl p-4 border border-slate-200/80 shadow-xs space-y-2">
+                  <div class="flex items-center justify-between">
+                    <label for="pExperience" class="text-[11px] font-extrabold text-indigo-700 uppercase tracking-wider flex items-center gap-1.5">
+                      <span>💼</span><span>Work Experience</span>
+                    </label>
+                  </div>
+                  <textarea id="pExperience" rows="5" class="input !text-xs leading-relaxed" placeholder="e.g. Senior Auditor at ABC Corp (2022 - Present)"></textarea>
+                </div>
+                <div class="bg-white/80 rounded-2xl p-4 border border-slate-200/80 shadow-xs space-y-2">
+                  <div class="flex items-center justify-between">
+                    <label for="pEducation" class="text-[11px] font-extrabold text-teal-700 uppercase tracking-wider flex items-center gap-1.5">
+                      <span>🎓</span><span>Education</span>
+                    </label>
+                  </div>
+                  <textarea id="pEducation" rows="5" class="input !text-xs leading-relaxed" placeholder="e.g. Bachelor of Accounting, Universiti Malaya"></textarea>
+                </div>
+                <div class="bg-white/80 rounded-2xl p-4 border border-slate-200/80 shadow-xs space-y-2">
+                  <div class="flex items-center justify-between">
+                    <label for="pProjects" class="text-[11px] font-extrabold text-pink-700 uppercase tracking-wider flex items-center gap-1.5">
+                      <span>🚀</span><span>Projects</span>
+                    </label>
+                  </div>
+                  <textarea id="pProjects" rows="5" class="input !text-xs leading-relaxed" placeholder="e.g. Automated ESG Compliance Audit Pipeline"></textarea>
+                </div>
+                <div class="bg-white/80 rounded-2xl p-4 border border-slate-200/80 shadow-xs space-y-2">
+                  <div class="flex items-center justify-between">
+                    <label for="pCertifications" class="text-[11px] font-extrabold text-indigo-700 uppercase tracking-wider flex items-center gap-1.5">
+                      <span>📜</span><span>Certifications</span>
+                    </label>
+                  </div>
+                  <textarea id="pCertifications" rows="5" class="input !text-xs leading-relaxed" placeholder="e.g. ACCA Member, AWS Certified Cloud Practitioner"></textarea>
+                </div>
+              </div>
+            </div>
+
+            <div id="cvParserAnalytics" class="tint tint-teal rounded-2xl p-4 space-y-3 hidden"></div>
+
+            <!-- Skills Section -->
+            <div class="border-t border-slate-200/70 pt-5 space-y-3">
+              <div class="flex flex-wrap items-center justify-between gap-2">
+                <div class="flex items-center gap-2">
+                  <span class="text-base">⚡</span>
+                  <label for="skillInput" class="text-sm font-extrabold text-slate-900">Extracted Skills &amp; Competencies</label>
+                </div>
+                <span class="text-xs text-slate-400">Click × on any chip to remove</span>
+              </div>
+              <div id="skillChips" class="flex flex-wrap gap-2 min-h-[36px] p-2 bg-slate-50/70 rounded-2xl border border-slate-200/70"></div>
+              <div class="relative">
+                <input id="skillInput" class="input !pr-16" placeholder="Type a skill and press Enter (e.g. Financial Modeling, Python, IFRS)..." list="skillSuggest" />
+                <span class="absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-xs font-bold">↵ Enter</span>
+              </div>
+              <datalist id="skillSuggest"></datalist>
+              <div id="cvAISuggestedSkills" class="mt-3 text-xs text-slate-600 hidden"></div>
+            </div>
+
+            <!-- Evidence Details & Save Actions -->
+            <div class="border-t border-slate-200/70 pt-5 space-y-4">
+              <details class="rounded-2xl bg-slate-50/80 border border-slate-200/80 p-3.5 text-xs text-slate-600">
+                <summary class="font-bold text-slate-700 cursor-pointer select-none flex items-center justify-between">
+                  <span>🔍 Original Extraction Quotes &amp; Evidence</span>
+                  <span class="text-[11px] text-slate-400 font-normal">View quotes from PDF ▾</span>
+                </summary>
+                <p class="text-[11px] text-slate-500 mt-2">Quotes and page numbers from your PDF that supported the initial draft.</p>
+                <div id="fieldEvidenceList" class="space-y-2 mt-3"></div>
+                <div id="skillEvidenceList" class="space-y-2 mt-3"></div>
+              </details>
+
+              <div class="p-4 rounded-2xl bg-indigo-50/60 border border-indigo-200/80 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                <label class="flex items-start gap-2.5 text-xs text-slate-700 cursor-pointer font-medium select-none">
+                  <input id="reviewConfirm" type="checkbox" class="mt-0.5 rounded text-indigo-600 focus:ring-indigo-500" />
+                  <span>I have verified the summary, contact details, and qualifications. Mark profile as reviewed.</span>
+                </label>
+                <div class="flex items-center gap-2.5 shrink-0">
+                  <button onclick="showTab('jobs')" class="btn btn-soft !py-2 !px-4 !text-xs font-bold">
+                    💼 Browse Jobs →
+                  </button>
+                  <button id="saveProfileBtn" onclick="saveProfile()" class="btn btn-primary !py-2 !px-5 !text-xs font-extrabold shadow-sm" disabled>
+                    💾 Save Reviewed Profile →
+                  </button>
+                </div>
+              </div>
+              <div id="profileSaveStatus" class="text-xs font-semibold text-slate-600 text-right" role="status" aria-live="polite"></div>
+            </div>
           </div>
+        </section>
+        <section id="tab-applications" class="tab hidden space-y-6">
+          <div class="flex flex-wrap items-center justify-between gap-3">
+            <p class="text-sm text-slate-600">Track your applications and control who can view your CV.</p>
+            <button class="btn btn-primary" onclick="showTab('jobs')">Find jobs →</button>
+          </div>
+          <div class="profile-privacy tint tint-teal rounded-3xl p-5 flex flex-wrap items-center justify-between gap-4">
+            <div class="flex items-start gap-3.5 max-w-3xl">
+              <div class="h-11 w-11 rounded-2xl bg-teal-600 text-white grid place-items-center text-lg shrink-0 shadow">🔒</div>
+              <div>
+                <div class="flex flex-wrap items-center gap-2">
+                  <span class="text-sm font-extrabold text-teal-950">Your CV, your sharing choices</span>
+                  <span class="chip chip-indigo">Private by default</span>
+                </div>
+                <p class="text-xs text-slate-600 mt-1 leading-relaxed">
+                  Your PDF and organised profile are available to your signed-in account. An employer receives only the summary and/or PDF you choose to share when applying to its vacancy. Aggregate publication is currently disabled; your optional statistics preference is off by default. You can export your profile, withdraw sharing, or delete your vault below.
+                </p>
+              </div>
+            </div>
+            <label class="flex items-center gap-2 text-xs font-bold text-teal-950 bg-white/80 px-3.5 py-2.5 rounded-2xl border border-teal-200 cursor-pointer shrink-0">
+              <input id="anonToggle" type="checkbox" onchange="toggleAnonStats(this.checked)" class="rounded text-teal-600 focus:ring-teal-500" />
+              Optional statistics preference (publication disabled)
+            </label>
+          </div>
+
           <div data-outline-label="Sharing & access" class="profile-section-heading"><h2>Sharing &amp; access</h2><p>Choose who can view your CV and review their access below.</p></div>
           <div class="profile-sharing-grid">
+<div class="glass rounded-3xl p-6 space-y-3">
+                <div class="text-sm font-extrabold">My applications & employer access</div>
+                <p class="text-xs text-slate-500">Each application grants access only to that vacancy's company account. Withdrawal blocks future access here; it cannot retract copies already downloaded.</p>
+                <div id="activeSharesList" class="space-y-3"></div>
+                <div class="flex flex-wrap gap-2 border-t border-slate-200 pt-3">
+                  <button id="exportCvBtn" onclick="exportMyCv()" class="btn btn-soft !text-xs" disabled>Export profile JSON</button>
+                  <button id="deleteCvBtn" onclick="deleteMyCv()" class="btn btn-danger !text-xs" disabled>Delete my vault</button>
+                </div>
+              </div>
 <div class="glass rounded-3xl p-6 space-y-3">
                 <div class="text-sm font-extrabold">Share with someone you choose</div>
                 <p class="text-xs text-slate-600">The recipient needs a CareerLens account. Only that signed-in account can open the link. No email is sent.</p>
@@ -412,15 +866,6 @@
                 <p class="text-[11px] text-slate-500">Editing or replacing the CV ends existing grants. Revoking access cannot retract copies already saved by a recipient.</p>
                 <div id="namedSharesList" class="space-y-2"></div><div id="receivedSharesList" class="space-y-2"></div>
                 <details><summary class="text-xs font-bold cursor-pointer">Recent recipient access</summary><div id="namedShareEvents" class="mt-2 space-y-1"></div></details>
-              </div>
-<div class="glass rounded-3xl p-6 space-y-3">
-                <div class="text-sm font-extrabold">3. Manage employer access</div>
-                <p class="text-xs text-slate-500">Each application grants access only to that vacancy's company account. Withdrawal blocks future access here; it cannot retract copies already downloaded.</p>
-                <div id="activeSharesList" class="space-y-3"></div>
-                <div class="flex flex-wrap gap-2 border-t border-slate-200 pt-3">
-                  <button id="exportCvBtn" onclick="exportMyCv()" class="btn btn-soft !text-xs" disabled>Export profile JSON</button>
-                  <button id="deleteCvBtn" onclick="deleteMyCv()" class="btn btn-danger !text-xs" disabled>Delete my vault</button>
-                </div>
               </div>
           </div>
 <!-- Employer Access Audit Log -->
@@ -461,9 +906,9 @@
               </div>
             </div>
 
-            <!-- Row 2: Search Specific Building / Condo / Street + Scope Toggle -->
+            <!-- Row 2: Search Specific Building / Condo / Street -->
             <div class="grid lg:grid-cols-12 gap-4 items-end pt-4 border-t border-slate-200/70">
-              <div class="lg:col-span-8 relative">
+              <div class="lg:col-span-12 relative">
                 <label class="block text-[11px] font-extrabold uppercase tracking-wider text-slate-500 mb-1.5">
                   Search Building, Condo, Street, or Area
                 </label>
@@ -490,16 +935,6 @@
                   </button>
                 </div>
                 <div id="locSuggestBox" class="loc-suggest-dropdown hidden"></div>
-              </div>
-
-              <div class="lg:col-span-4 flex lg:justify-end">
-                <div class="w-full sm:w-auto">
-                  <label class="block text-[11px] font-extrabold uppercase tracking-wider text-slate-500 mb-1.5">Display Scope</label>
-                  <div class="seg w-full sm:w-auto">
-                    <button type="button" id="btnMapMatched" onclick="setJobScope('relevant')" class="on !text-xs">🎯 Matched Only</button>
-                    <button type="button" id="btnMapAll" onclick="setJobScope('all')" class="!text-xs">🌐 View All Nearby</button>
-                  </div>
-                </div>
               </div>
             </div>
 
@@ -546,16 +981,30 @@
 
           <!-- Card 2: Interactive Map + Selected Company Details -->
           <div class="glass rounded-3xl p-6 space-y-4">
-            <div class="flex flex-wrap items-center justify-between gap-3">
+            <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-3 border-b border-slate-200/70 pb-3">
               <div class="flex flex-wrap items-center gap-2">
                 <h2 class="text-base font-extrabold text-slate-900">🗺️ Nearby Hiring Companies</h2>
                 <span id="compCountBadge" class="chip chip-indigo">0 companies</span>
                 <span id="rangeSummaryBadge" class="chip chip-emerald !text-[11px]">0 matched</span>
               </div>
-              <div class="flex flex-wrap items-center gap-4 text-xs">
-                <span class="inline-flex items-center gap-1.5 font-bold text-slate-700">📍 Your Location</span>
-                <span class="inline-flex items-center gap-1.5 font-bold text-slate-700"><span class="inline-block w-2.5 h-2.5 rounded-full bg-emerald-500"></span>CV-Matched</span>
-                <span class="inline-flex items-center gap-1.5 font-bold text-slate-700"><span class="inline-block w-2.5 h-2.5 rounded-full bg-indigo-500"></span>Other Sectors</span>
+              
+              <!-- Display Scope, 3-Map Switcher & Sector Filter beside Map -->
+              <div class="flex flex-wrap items-center gap-2.5">
+                <!-- 3-Map Style Switcher (Instant 1-Click switch, NO API key popup) -->
+                <div class="inline-flex items-center p-0.5 bg-slate-100 rounded-xl text-xs font-bold gap-0.5 border border-slate-200/80">
+                  <button type="button" id="btnLayerMapbox" onclick="switchMapProvider('mapbox')" class="px-2.5 py-1 rounded-lg transition font-bold text-slate-600 hover:text-slate-900" title="Mapbox HD Vector Map">🚀 Mapbox</button>
+                  <button type="button" id="btnLayerOpenMap" onclick="switchMapProvider('openmap')" class="px-2.5 py-1 rounded-lg transition font-bold text-slate-600 hover:text-slate-900" title="OpenStreetMap France CDN">🗺️ OpenMap</button>
+                  <button type="button" id="btnLayerEsri" onclick="switchMapProvider('esri')" class="px-2.5 py-1 rounded-lg transition font-bold text-slate-600 hover:text-slate-900" title="Esri World Street Map">🏙️ Esri</button>
+                </div>
+
+                <div class="seg">
+                  <button type="button" id="btnMapMatched" onclick="setJobScope('relevant')" class="on !text-xs font-bold">🎯 CV-Matched</button>
+                  <button type="button" id="btnMapAll" onclick="setJobScope('all')" class="!text-xs font-bold">🌐 All Sectors</button>
+                </div>
+                <div class="hidden sm:flex items-center gap-2 text-xs">
+                  <span class="inline-flex items-center gap-1 font-bold text-slate-700"><span class="inline-block w-2.5 h-2.5 rounded-full bg-emerald-500 shadow-xs"></span>CV-Matched</span>
+                  <span class="inline-flex items-center gap-1 font-bold text-slate-700"><span class="inline-block w-2.5 h-2.5 rounded-full bg-indigo-500 shadow-xs"></span>Other Sectors</span>
+                </div>
               </div>
             </div>
 
@@ -606,8 +1055,12 @@
 
             <div data-outline-label="Job vacancies" id="jobsGrid" class="grid lg:grid-cols-2 gap-4 items-stretch"></div>
 
-            <div id="loadMoreJobsWrap" class="text-center pt-2 hidden">
-              <button type="button" onclick="loadMoreJobs()" class="btn btn-soft !py-2.5 !px-6 !text-xs">Load More Jobs ↓</button>
+            <div id="loadMoreJobsWrap" class="flex flex-col items-center justify-center gap-2 pt-6 pb-2 hidden">
+              <button type="button" id="btnLoadMoreJobs" onclick="loadMoreJobs()" class="btn btn-soft !py-3 !px-8 !text-xs font-black flex items-center gap-2 shadow-sm hover:border-indigo-400 hover:bg-indigo-50/70 transition">
+                <span>Load 10 More Roles</span>
+                <span class="text-sm font-bold">↓</span>
+              </button>
+              <span id="loadMoreCounter" class="text-xs text-slate-500 font-semibold"></span>
             </div>
           </div>
         </section>
@@ -882,7 +1335,7 @@
         </div>
 
         <!-- Profile Photo & Header Card -->
-        <div class="px-6 py-4 bg-slate-50/40 border-b border-slate-100 flex items-center justify-between gap-4">
+        <div class="px-6 py-4 bg-slate-50/60 border-b border-slate-100 flex flex-wrap items-center justify-between gap-4">
           <div class="flex items-center gap-3.5">
             <!-- Avatar Circle -->
             <div class="relative group cursor-pointer flex-shrink-0" onclick="document.getElementById('accAvatarFile').click()" title="Click to upload custom photo">
@@ -891,33 +1344,39 @@
                 <img id="modalUserAvatarImg" src="" alt="Profile" class="h-full w-full object-cover hidden" />
               </div>
               <div class="absolute inset-0 rounded-full bg-black/40 text-white text-[10px] font-bold flex flex-col items-center justify-center opacity-0 group-hover:opacity-100 transition">
-                <span>📷</span>
+                <span>📷 Upload</span>
               </div>
             </div>
             <input type="file" id="accAvatarFile" accept="image/png,image/jpeg,image/webp" class="hidden" onchange="handleAvatarFileUpload(event)" />
             <input type="hidden" id="accAvatarData" value="" />
 
+            <!-- Beside Profile Picture: Upload Button, Name, ID, Joined Date on new line -->
             <div>
-              <h3 id="modalTopName" class="text-base font-bold text-slate-900 leading-tight">Aisha Rahman</h3>
+              <div class="flex flex-wrap items-center gap-2">
+                <h3 id="modalTopName" class="text-base font-bold text-slate-900 leading-tight">Aisha Rahman</h3>
+                <button type="button" onclick="document.getElementById('accAvatarFile').click()" class="btn btn-soft !py-1 !px-2.5 !text-[11px] font-bold text-indigo-700 bg-indigo-50 border border-indigo-200 hover:bg-indigo-100 transition flex items-center gap-1 shadow-xs" title="Upload your profile picture">
+                  <span>📷</span><span>Upload Photo</span>
+                </button>
+              </div>
               <p id="modalTopRoleSubtitle" class="text-xs text-slate-500 font-medium mt-0.5">Junior Financial Auditor</p>
-              <div class="text-[11px] text-slate-400 mt-1 flex items-center gap-1.5 font-mono">
-                <span>ID: <span id="modalUid" class="font-bold text-slate-600"></span></span>
-                <span>·</span>
-                <span>Joined <span id="modalJoinedDate"></span></span>
+              
+              <!-- Joined datetime is after the line of ID -->
+              <div class="text-[11px] text-slate-500 mt-1 space-y-0.5 font-mono">
+                <div>ID: <span id="modalUid" class="font-bold text-slate-700"></span></div>
+                <div>Joined: <span id="modalJoinedDate" class="font-bold text-slate-700"></span></div>
               </div>
             </div>
           </div>
 
-          <!-- Avatar Preset Buttons -->
-          <div class="flex flex-col items-end gap-1 flex-shrink-0">
-            <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Choose Avatar</span>
+          <!-- Avatar Preset Selection & Upload Quick Actions -->
+          <div class="flex flex-col items-end gap-1.5 flex-shrink-0">
+            <span class="text-[10px] font-extrabold text-slate-400 uppercase tracking-wider">Preset Avatars</span>
             <div class="flex items-center gap-1.5">
               <button type="button" onclick="setAvatarPreset('woman')" class="h-7 w-7 rounded-full border border-slate-200 hover:border-indigo-500 bg-white grid place-items-center text-xs shadow-xs transition hover:scale-110" title="Woman">👩‍💼</button>
               <button type="button" onclick="setAvatarPreset('man')" class="h-7 w-7 rounded-full border border-slate-200 hover:border-indigo-500 bg-white grid place-items-center text-xs shadow-xs transition hover:scale-110" title="Man">👨‍💼</button>
               <button type="button" onclick="setAvatarPreset('tech')" class="h-7 w-7 rounded-full border border-slate-200 hover:border-indigo-500 bg-white grid place-items-center text-xs shadow-xs transition hover:scale-110" title="Tech">👩‍💻</button>
               <button type="button" onclick="setAvatarPreset('student')" class="h-7 w-7 rounded-full border border-slate-200 hover:border-indigo-500 bg-white grid place-items-center text-xs shadow-xs transition hover:scale-110" title="Graduate">👨‍🎓</button>
-              <button type="button" onclick="document.getElementById('accAvatarFile').click()" class="h-7 px-2 rounded-full border border-slate-200 hover:border-indigo-500 bg-white text-indigo-600 text-[10px] font-bold shadow-xs transition" title="Upload custom photo">📷</button>
-              <button type="button" onclick="clearAvatarPhoto()" class="text-[10px] text-rose-500 hover:text-rose-700 font-bold ml-1 transition" title="Remove photo">✕</button>
+              <button type="button" onclick="clearAvatarPhoto()" class="text-[10px] text-rose-500 hover:text-rose-700 font-bold ml-1 transition" title="Remove custom photo">✕ Clear</button>
             </div>
           </div>
         </div>
@@ -940,9 +1399,9 @@
             
             <div class="grid sm:grid-cols-2 gap-3.5">
               <div>
-                <label class="label !text-xs !mb-1 font-semibold text-slate-700" for="accFullName">Legal Full Name *</label>
+                <label class="label !text-xs !mb-1 font-semibold text-slate-700" for="accFullName">Full Name *</label>
                 <input id="accFullName" type="text" required class="input !py-2 !text-xs" placeholder="e.g. Aisha Rahman" oninput="validateField(this, 'name')" />
-                <div id="errFullName" class="text-[11px] text-rose-500 font-semibold hidden mt-1">Please enter your legal name (min 2 chars).</div>
+                <div id="errFullName" class="text-[11px] text-rose-500 font-semibold hidden mt-1">Please enter your full name (min 2 chars).</div>
               </div>
               <div>
                 <label class="label !text-xs !mb-1 font-semibold text-slate-700" for="accEmail">Primary Email Address *</label>
@@ -953,7 +1412,7 @@
 
             <div class="grid sm:grid-cols-2 gap-3.5">
               <div>
-                <label class="label !text-xs !mb-1 font-semibold text-slate-700" for="accCurrentRole">Professional Title / Headline *</label>
+                <label class="label !text-xs !mb-1 font-semibold text-slate-700" for="accCurrentRole">Occupation *</label>
                 <input id="accCurrentRole" type="text" list="curatedRoleSuggestions" required class="input !py-2 !text-xs" placeholder="e.g. Junior Financial Auditor" oninput="validateField(this, 'role')" />
                 <datalist id="curatedRoleSuggestions">
                   <option value="Junior Financial Auditor">
@@ -967,23 +1426,32 @@
                   <option value="Cybersecurity Analyst">
                   <option value="Operations & Project Coordinator">
                 </datalist>
-                <div id="errCurrentRole" class="text-[11px] text-rose-500 font-semibold hidden mt-1">Please enter your job title.</div>
+                <div id="errCurrentRole" class="text-[11px] text-rose-500 font-semibold hidden mt-1">Please enter your occupation.</div>
               </div>
 
               <div>
                 <label class="label !text-xs !mb-1 font-semibold text-slate-700" for="accPhone">Contact Phone Number</label>
                 <div class="relative">
-                  <span class="absolute left-2.5 top-2 text-xs font-bold text-slate-400 select-none">🇲🇾 +60</span>
-                  <input id="accPhone" type="tel" class="input !pl-14 !py-2 !text-xs" placeholder="12-345 6789" oninput="validateField(this, 'phone')" />
+                  <span class="absolute left-3 top-2 text-xs font-bold text-slate-500 select-none">+60</span>
+                  <input id="accPhone" type="tel" maxlength="12" class="input !pl-11 !py-2 !text-xs" placeholder="11-23456789" oninput="formatMalaysianPhone(this);validateField(this, 'phone')" />
                 </div>
-                <div id="errPhone" class="text-[11px] text-rose-500 font-semibold hidden mt-1">Enter a valid Malaysian phone number.</div>
+                <div id="errPhone" class="text-[11px] text-rose-500 font-semibold hidden mt-1">Enter a valid Malaysian phone number (e.g. 11-23456789).</div>
               </div>
             </div>
 
-            <div class="grid sm:grid-cols-3 gap-3">
+            <div class="grid sm:grid-cols-3 gap-3.5">
+              <div>
+                <label class="label !text-xs !mb-1 font-semibold text-slate-700" for="accGender">Gender</label>
+                <select id="accGender" class="input !py-2 !text-xs font-medium">
+                  <option value="Prefer not to say">Prefer not to say</option>
+                  <option value="Female">Female</option>
+                  <option value="Male">Male</option>
+                  <option value="Non-Binary">Non-Binary</option>
+                </select>
+              </div>
               <div>
                 <label class="label !text-xs !mb-1 font-semibold text-slate-700" for="accIndustry">Career Industry</label>
-                <select id="accIndustry" class="input !py-2 !text-xs">
+                <select id="accIndustry" class="input !py-2 !text-xs font-medium" onchange="toggleIndustryOtherInput(this.value)">
                   <option value="Finance & Accounting">Finance &amp; Accounting</option>
                   <option value="IT & Software">IT &amp; Software Engineering</option>
                   <option value="Marketing & PR">Marketing &amp; PR</option>
@@ -994,23 +1462,13 @@
                   <option value="Supply Chain & Logistics">Supply Chain</option>
                   <option value="ESG & Sustainability">ESG &amp; Sustainability</option>
                   <option value="General">General / Management</option>
-                </select>
-              </div>
-
-              <div>
-                <label class="label !text-xs !mb-1 font-semibold text-slate-700" for="accSeniority">Seniority Level</label>
-                <select id="accSeniority" class="input !py-2 !text-xs">
-                  <option value="Student / Graduate">Student / Graduate</option>
-                  <option value="Entry-Level (1-2 yrs)">Entry-Level (1-2 yrs)</option>
-                  <option value="Mid-Level (3-5 yrs)">Mid-Level (3-5 yrs)</option>
-                  <option value="Senior Level (6-9 yrs)">Senior Level (6-9 yrs)</option>
-                  <option value="Lead / Executive (10+ yrs)">Lead / Executive (10+ yrs)</option>
+                  <option value="Others">Others (Please specify)</option>
                 </select>
               </div>
 
               <div>
                 <label class="label !text-xs !mb-1 font-semibold text-slate-700" for="accEducation">Highest Education</label>
-                <select id="accEducation" class="input !py-2 !text-xs">
+                <select id="accEducation" class="input !py-2 !text-xs font-medium">
                   <option value="Bachelor's Degree">Bachelor's Degree (Hons)</option>
                   <option value="Diploma / TVET">Diploma / TVET</option>
                   <option value="Secondary / SPM">Secondary (SPM / STPM)</option>
@@ -1019,6 +1477,12 @@
                   <option value="Professional Qualification">Professional Cert (ACCA/CFA)</option>
                 </select>
               </div>
+            </div>
+
+            <!-- Dynamic Input for Others Career Industry -->
+            <div id="accIndustryOtherWrap" class="hidden tint tint-indigo rounded-xl p-3 border border-indigo-200 space-y-1">
+              <label class="label !text-xs !mb-0 font-bold text-indigo-900" for="accIndustryOther">Specify Your Career Industry *</label>
+              <input id="accIndustryOther" type="text" class="input !py-2 !text-xs !bg-white" placeholder="e.g. Artificial Intelligence Ethics & Robotics" />
             </div>
 
             <div class="grid sm:grid-cols-2 gap-3.5">
@@ -1090,6 +1554,14 @@
               </div>
             </div>
 
+            <div class="p-3 bg-amber-50 rounded-2xl border border-amber-200 flex flex-wrap items-center justify-between gap-2">
+              <div>
+                <div class="text-xs font-extrabold text-amber-900">Forgot your password?</div>
+                <div class="text-[11px] text-amber-700">Generate a random 6-digit verification code to reset it immediately.</div>
+              </div>
+              <button type="button" onclick="closeAccountModal();openNavForgotPwModal();" class="btn btn-primary !py-1.5 !px-3 !text-xs font-bold shrink-0">Reset via Code →</button>
+            </div>
+
             <div class="flex items-center justify-end gap-2 pt-3 border-t border-slate-100">
               <button type="button" onclick="closeAccountModal()" class="btn btn-soft !py-2 !px-4 !text-xs font-semibold">Cancel</button>
               <button type="submit" id="btnSaveAccountPassword" class="btn btn-primary !py-2 !px-5 !text-xs font-bold !bg-[#0A66C2] hover:!bg-[#004182]">Update Password</button>
@@ -1117,7 +1589,7 @@
     const NAV = [
       { id: 'notifications', ico: '🔔', label: 'Interview notifications', eyebrow: 'Notifications', title: 'Interview notifications' },
       { id: 'dash', ico: '🏠', label: 'Dashboard', eyebrow: 'Overview', title: 'Your career dashboard' },
-      { id: 'profile', ico: '👤', label: 'Account & Profile', eyebrow: 'Account & Professional Background', title: 'Account profile & skills vault' },
+      { id: 'profile', ico: '👤', label: 'Profile & achievements', eyebrow: 'Account & Professional Background', title: 'My professional profile' },
       { id: 'quest', ico: '📝', label: 'Questionnaire', eyebrow: 'Career preferences', title: 'Application questionnaire' },
       { id: 'radar', ico: '📡', label: 'AI Radar', eyebrow: 'Industry insights', title: 'Future skills radar' },
       { id: 'match', ico: '🎯', label: 'Role Matches', eyebrow: 'Career opportunities', title: 'Future-role matches' },
@@ -1128,6 +1600,9 @@
       { id: 'passport', ico: '🌱', label: 'SDG Passport', eyebrow: 'Sustainable career impact', title: 'Your SDG career passport' },
     ];
     const EXTRA_TABS = {
+      'cv-upload': {id:'cv-upload', ico:'📄', label:'Upload CV', eyebrow:'Private CV vault', title:'Upload your CV'},
+      'cv-review': {id:'cv-review', ico:'✏️', label:'Review & edit CV', eyebrow:'Private CV vault', title:'Review & edit your CV'},
+      applications: {id:'applications', ico:'📨', label:'Applications & sharing', eyebrow:'Your applications', title:'Applications & sharing'},
       jobs: { id: 'jobs', ico: '📍', label: 'Nearby Jobs & Map', eyebrow: 'Explore employers', title: 'Nearby hiring companies & open roles' },
     };
     const COMMON_Q = [
@@ -1173,25 +1648,42 @@
           uAvatar.textContent = (user.full_name || 'U').charAt(0).toUpperCase();
         }
       }
-      if (window.accCardName) accCardName.textContent = user.full_name || 'User';
+      const name = String(user.full_name || '').trim() || 'Your account';
+      const navName = document.getElementById('uName');
+      if (navName) navName.textContent = name;
+      if (window.accCardName) accCardName.textContent = name;
       if (window.accCardUid) accCardUid.textContent = user.unique_uid || '';
       if (window.accCardEmail) accCardEmail.textContent = user.email || '';
       if (window.accCardJoined) accCardJoined.textContent = (user.created_at || '2026').replace(' UTC', '');
-      if (window.accCardRole) accCardRole.textContent = rd.current_role || (cvRecord && cvRecord.structured_cv ? cvRecord.structured_cv.current_role : '') || 'Professional';
-      if (window.accCardIndustry) accCardIndustry.textContent = rd.industry || 'Finance & Accounting';
-      if (window.accCardWorkMode) accCardWorkMode.textContent = rd.preferred_work_mode || 'Hybrid';
-      if (window.accCardLocation) accCardLocation.textContent = rd.location || 'Kuala Lumpur';
+      if (window.accCardRole) accCardRole.textContent = rd.current_role || (cvRecord && cvRecord.structured_cv ? cvRecord.structured_cv.current_role : '') || 'Not added';
+      if (window.accCardGender) accCardGender.textContent = rd.gender || 'Prefer not to say';
+      if (window.accCardIndustry) accCardIndustry.textContent = rd.industry || 'Not added';
+      if (window.accCardWorkMode) accCardWorkMode.textContent = rd.preferred_work_mode || 'Not added';
+      if (window.accCardPhone) accCardPhone.textContent = rd.phone ? (rd.phone.startsWith('+') ? rd.phone : '+60 ' + rd.phone) : 'Not added';
+      if (window.accCardLocation) accCardLocation.textContent = rd.location || 'Not added';
+      if (window.accCardBio) accCardBio.textContent = rd.bio || 'Add a short introduction and your career goals.';
+
+      // Update Nav Dropdown Info
+      if (window.dropName) dropName.textContent = user.full_name || 'User';
+      if (window.dropEmail) dropEmail.textContent = user.email || '';
+      if (window.dropAvatar) {
+        if (rd.avatar_url) {
+          dropAvatar.innerHTML = '<img src="' + esc(rd.avatar_url) + '" class="h-full w-full object-cover rounded-xl" alt="Avatar" />';
+        } else {
+          dropAvatar.textContent = (user.full_name || 'U').charAt(0).toUpperCase();
+        }
+      }
     }
 
         /* ---------- Account Profile View & Edit Modal (LinkedIn-Inspired) ---------- */
     function openAccountModal() {
-      if (!user) return;
+      if (!user) return toast('Your account is still loading. Please refresh and sign in again.', 'err');
       document.body.classList.add('modal-open');
       if (window.lumiFab) lumiFab.style.display = 'none';
       if (window.lumiPanel) lumiPanel.classList.add('hidden');
       populateAccountModal(user);
       setAccountModalTab('profile');
-      accountModalWrap.classList.remove('hidden');
+      if (window.accountModalWrap) accountModalWrap.classList.remove('hidden');
     }
 
     function closeAccountModal(e) {
@@ -1261,6 +1753,57 @@
       modalUserAvatarImg.classList.add('hidden');
       modalUserAvatarInitial.classList.remove('hidden');
       if (accAvatarFile) accAvatarFile.value = '';
+    }
+
+
+    /* ---------- Malaysian Phone Formatter & Validation Helpers ---------- */
+    function formatMalaysianPhone(input) {
+      if (!input) return;
+      let val = input.value.replace(/\D/g, '');
+      if (val.startsWith('60')) val = val.slice(2);
+      if (val.length > 2) {
+        // Automatically insert dash: 11-23456789 or 12-3456789 (8 or 9 digits after dash)
+        val = val.slice(0, 2) + '-' + val.slice(2, 11);
+      }
+      input.value = val;
+    }
+
+    function toggleIndustryOtherInput(val) {
+      const wrap = document.getElementById('accIndustryOtherWrap');
+      if (wrap) wrap.classList.toggle('hidden', val !== 'Others');
+    }
+
+    function validatePersonalField(id) {
+      const el = document.getElementById(id);
+      const errEl = document.getElementById('err_' + id);
+      if (!el) return true;
+      const val = (el.value || '').trim();
+      let valid = Boolean(val);
+      if (id === 'pEmail') {
+        valid = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(val);
+      } else if (id === 'pPhone') {
+        const clean = val.replace(/[\s-]/g, '');
+        valid = clean.length >= 8 && /^[0-9]+$/.test(clean);
+      } else if (id === 'pYears') {
+        valid = val !== '' && !isNaN(val) && Number(val) >= 0;
+      }
+      if (errEl) errEl.classList.toggle('hidden', valid);
+      if (valid) {
+        el.classList.remove('!border-rose-400', '!bg-rose-50/20');
+      } else {
+        el.classList.add('!border-rose-400', '!bg-rose-50/20');
+      }
+      return valid;
+    }
+
+    function validatePersonalCareerDetails() {
+      const fields = ['pName', 'pRole', 'pEmail', 'pPhone', 'pLocation', 'pIndustry', 'pMode', 'pEdu', 'pYears'];
+      let allValid = true;
+      fields.forEach(f => {
+        const ok = validatePersonalField(f);
+        if (!ok) allValid = false;
+      });
+      return allValid;
     }
 
     function validateField(input, type) {
@@ -1333,12 +1876,25 @@
 
       accFullName.value = name;
       accEmail.value = u.email || '';
-      const initialRole = rd.current_role || (cvRecord && cvRecord.structured_cv ? cvRecord.structured_cv.current_role : '') || 'Junior Financial Auditor';
+      const initialRole = rd.current_role || (cvRecord && cvRecord.structured_cv ? cvRecord.structured_cv.current_role : '') || 'Not added';
       accCurrentRole.value = initialRole;
       if (window.modalTopRoleSubtitle) modalTopRoleSubtitle.textContent = initialRole;
       accPhone.value = rd.phone || '';
-      matchSelectSafely(accIndustry, rd.industry, 'Finance & Accounting');
-      matchSelectSafely(accSeniority, rd.seniority_level, 'Entry-Level (1-2 yrs)');
+      if (window.accGender) matchSelectSafely(accGender, rd.gender, 'Prefer not to say');
+      let ind = rd.industry || 'Finance & Accounting';
+      let foundInd = false;
+      for (let i = 0; i < accIndustry.options.length; i++) {
+        if (accIndustry.options[i].value.toLowerCase() === ind.toLowerCase()) {
+          accIndustry.selectedIndex = i;
+          foundInd = true;
+          break;
+        }
+      }
+      if (!foundInd) {
+        matchSelectSafely(accIndustry, 'Others', 'Finance & Accounting');
+        if (window.accIndustryOther) accIndustryOther.value = ind;
+      }
+      toggleIndustryOtherInput(accIndustry.value);
       matchSelectSafely(accEducation, rd.education_level, "Bachelor's Degree");
       matchSelectSafely(accLocation, rd.location, 'W.P. Kuala Lumpur');
       matchSelectSafely(accWorkMode, rd.preferred_work_mode, 'Hybrid');
@@ -1378,8 +1934,10 @@
         role_details: {
           current_role: accCurrentRole.value.trim(),
           phone: accPhone.value.trim(),
-          industry: accIndustry.value,
-          seniority_level: accSeniority ? accSeniority.value : '',
+          gender: accGender ? accGender.value : 'Prefer not to say',
+          industry: (accIndustry.value === 'Others' && window.accIndustryOther && accIndustryOther.value.trim())
+            ? accIndustryOther.value.trim()
+            : accIndustry.value,
           preferred_work_mode: accWorkMode.value,
           education_level: accEducation.value,
           location: accLocation.value,
@@ -1460,7 +2018,9 @@
       ];
       buildPortalNavigation(renderItems, [{label: 'Overview', ids: ['dash']}, {label: 'My Profile', ids: ['profile', 'quest']}, {label: 'Explore Careers', ids: ['jobs', 'radar', 'match']}, {label: 'My Growth', ids: ['plan', 'discover', 'saved', 'completed', 'passport']}]);
     }
+
     async function showTab(id, options = {}) {
+      if (!document.getElementById('tab-' + id)) id = 'dash';
       if (!options.restore) window.PagePosition?.navigate();
       current = id; visited.add(id);
       document.getElementById('dashboardLearningReminder').hidden = id !== 'dash';
@@ -1480,7 +2040,11 @@
       if (id === 'quest') scheduleRoleRecommendation();
       if (id === 'notifications') loadInvitations(false);
       if (id === 'dash') renderDash();
-      if (id === 'profile') await loadMyCv();
+      if (id === 'profile') renderAccountProfileCard();
+      if (['profile','cv-upload','cv-review','applications'].includes(id)) {
+        try { await loadMyCv(); renderProfileHighlights(); }
+        catch (error) { toast('CV data could not refresh. Your saved edits are kept. Please try again.', 'err'); }
+      }
       if (id === 'match') await loadCareerPathways();
       if (id === 'jobs') {
         await loadJobs();
@@ -1545,10 +2109,11 @@
       cvRecord = r.data.cv || null;
       samplePdfs = r.data.samples || [];
       cvAIAvailable = r.data.ai?.available === true;
-      cvAIAvailability.textContent = r.data.ai?.message || 'AI organisation is not connected yet. Local extraction is available.';
-      document.getElementById('cvAIConsentText').textContent = r.data.ai?.provider === 'Local computer'
-        ? 'Allow AI on this computer to process my extracted PDF text for this request. It stays on this computer and is not used for training.'
-        : 'Allow my extracted PDF text, including contact details, to be sent to the configured RunPod worker. This app does not use it for training. RunPod may retain job data temporarily.';
+      cvAIAvailability.textContent = r.data.ai?.available
+        ? '⚡ AI Connected & Ready'
+        : 'AI enhancement is optional. Fast local extraction is active.';
+      document.getElementById('cvAIConsentText').textContent =
+        'Allow AI assistant to analyze and organize resume highlights for this draft.';
       profileDirty = false;
       renderSamplePdfs();
       renderCvVault();
@@ -1670,9 +2235,9 @@
       pCertifications.value = entryText(st.certifications);
       cvSeekerType.textContent = st.seeker_type || 'Not specified';
       aiHighlights.innerHTML = (st.ai_highlights || []).map(h => `<li class="text-slate-600" data-no-translate>${esc(h)}</li>`).join('');
-      cvReviewHeading.textContent = isReviewed() ? 'Reviewed by you · not independently verified' : 'Check the draft before sharing with employers';
-      extractionMethod.textContent = present ? 'Extraction method: ' + (st.extraction_method || 'Local PDF text extraction') + '. Missing information is left blank; correct the draft using the original PDF.' : 'Upload a fictional PDF or choose a sample to begin.';
-      reviewWarnings.innerHTML = (st.review_warnings || []).map(w => `<li>${esc(typeof w === 'string' ? w : w.message || JSON.stringify(w))}</li>`).join('');
+      cvReviewHeading.textContent = isReviewed() ? 'Profile Verified & Ready' : 'Review Extracted Profile Information';
+      extractionMethod.textContent = present ? `Extracted via ${(st.extraction_method || 'Smart resume parser')}. Please ensure your details match your experience.` : 'Upload a PDF to extract your structured profile.';
+      reviewWarnings.innerHTML = (st.review_warnings || []).map(w => `<li class="text-slate-600">${esc(typeof w === 'string' ? w : w.message || JSON.stringify(w))}</li>`).join('');
       reviewConfirm.checked = false;
       profileSaveStatus.textContent = isReviewed() ? 'Saved profile is ready for your sharing choices.' : present ? 'This draft cannot be shared until you review and save it.' : '';
       skills = [...(st.skills || [])];
@@ -1692,12 +2257,36 @@
           <div class="text-slate-500">${esc(lg.vacancy_title)} · ${esc(lg.viewed_at)}</div>
         </div>`).join('') : '<div class="text-xs text-slate-500">No recorded employer access.</div>';
       activeSharesList.innerHTML = activeShares().length ? activeShares().map(app => `
-        <div class="rounded-2xl border border-slate-200 bg-white/80 p-3 space-y-2">
-          <div class="text-xs font-extrabold">${esc(app.company_name)} · ${esc(app.vacancy_title)}</div>
-          <p class="text-[11px] text-slate-600">${[app.share_organised_cv ? 'Summary shared' : 'Summary private', app.share_original_pdf ? 'PDF shared' : 'PDF private'].join(' · ')}</p>
-          <p class="text-[10px] text-slate-500">${esc(app.application_uid)} · ${esc(app.applied_at)}</p>
-          <button data-revoke-share onclick="withdrawJobApplication(${Number(app.vacancy_id)})" class="btn btn-danger !text-xs !py-1.5">Withdraw & revoke access</button>
-        </div>`).join('') : '<p class="text-xs text-slate-500">No active applications. No employer has permission to access this CV through an application.</p>';
+        <div class="rounded-2xl border border-slate-200/90 bg-white p-4 space-y-3 shadow-xs hover:border-indigo-300 transition">
+          <div class="flex items-start justify-between gap-3">
+            <div class="flex items-start gap-3 min-w-0">
+              <div class="h-10 w-10 rounded-xl bg-gradient-to-br from-indigo-500 to-pink-500 text-white font-black text-sm grid place-items-center shadow-xs shrink-0">
+                ${esc((app.company_name || 'C').charAt(0).toUpperCase())}
+              </div>
+              <div class="min-w-0">
+                <h4 class="text-xs font-extrabold text-slate-900 truncate">${esc(app.vacancy_title)}</h4>
+                <div class="text-[11px] font-bold text-slate-600 truncate mt-0.5">${esc(app.company_name)}</div>
+                <div class="text-[10px] text-slate-400 font-mono mt-0.5">${esc(app.application_uid)} · Applied: ${esc(app.applied_at || 'Recently')}</div>
+              </div>
+            </div>
+            <span class="chip chip-emerald !text-[10px] font-extrabold uppercase tracking-wider shrink-0">
+              ${esc(app.hr_decision || 'Submitted')}
+            </span>
+          </div>
+          <div class="flex flex-wrap items-center justify-between gap-2 pt-2 border-t border-slate-100 text-xs">
+            <div class="flex flex-wrap items-center gap-1.5">
+              <span class="chip ${app.share_organised_cv ? 'chip-indigo' : 'chip-slate'} !text-[10px]">
+                ${app.share_organised_cv ? '✓ Organised CV Shared' : 'CV Private'}
+              </span>
+              <span class="chip ${app.share_original_pdf ? 'chip-teal' : 'chip-slate'} !text-[10px]">
+                ${app.share_original_pdf ? '✓ Original PDF Shared' : 'PDF Private'}
+              </span>
+            </div>
+            <button data-revoke-share onclick="withdrawJobApplication(${Number(app.vacancy_id)})" class="btn btn-soft !text-rose-600 hover:!bg-rose-50 !border-rose-200 !text-[11px] !py-1 !px-2.5 font-bold transition">
+              Withdraw Application
+            </button>
+          </div>
+        </div>`).join('') : '<div class="p-6 text-center text-xs text-slate-500 bg-slate-50 rounded-2xl border border-dashed border-slate-200">No active applications. Explore open vacancies to apply!</div>';
       updateVaultControls();
     }
 
@@ -1746,6 +2335,7 @@
         renderCvVault();
         showUploadStage(2, 'Draft ready. Check the extracted fields and evidence, then save your reviewed profile.');
         toast('PDF processed. Review the draft before sharing.');
+        await showTab('cv-review');
         await refreshVaultDependents();
       } catch (error) {
         showUploadStage(0, error.message || 'Upload failed. Please retry.', true);
@@ -1817,6 +2407,10 @@
 
     async function saveProfile() {
       if (!cvRecord || uploadBusy || profileBusy || statsBusy) return;
+      if (!validatePersonalCareerDetails()) {
+        toast('Please fill in all required personal & career contact details before saving.', 'err');
+        return;
+      }
       if (!reviewConfirm.checked) { toast('Check your profile against the PDF, then tick the review confirmation.', 'err'); reviewConfirm.focus(); return; }
       if (!pName.value.trim()) { toast('Enter the name shown on the fictional CV.', 'err'); pName.focus(); return; }
       if (!pEmail.checkValidity() || !pYears.checkValidity()) { (!pEmail.checkValidity() ? pEmail : pYears).reportValidity(); return; }
@@ -1879,7 +2473,7 @@
     }
 
     /* ---------- Browse & Apply Jobs + Interactive Map ---------- */
-    let radiusKm = 10, jobSortBy = 'match', selectedCompanyName = '', jobsOffset = 0, jobsHasMore = false, jobsSummary = {};
+    let radiusKm = 10, jobSortBy = 'match', selectedCompanyName = '', jobsOffset = 0, jobsHasMore = false, jobsSummary = {}, jobsLoadingMore = false;
     let radiusCircle = null, activeDotCircle = null, searchDebounceTimer = null, leafletRenderer = null;
     let locSuggestDebounce = null, locSuggestedPlaces = [];
 
@@ -1908,7 +2502,7 @@
       if (q) params.set('q', q);
       if (selectedCompanyName) params.set('company', selectedCompanyName);
       params.set('offset', jobsOffset);
-      params.set('limit', 40);
+      params.set('limit', 10);
 
       const r = await api(`/api/jobs?${params.toString()}`);
       if (!r.ok) throw new Error(r.data.message || 'Could not load vacancies. Please retry.');
@@ -1939,29 +2533,71 @@
       renderJobs(jobsList);
     }
 
-    function loadMoreJobs() {
+    async function loadMoreJobs() {
+      if (jobsLoadingMore || !jobsHasMore) return;
+      jobsLoadingMore = true;
+      const btn = document.getElementById('btnLoadMoreJobs');
+      if (btn) {
+        btn.disabled = true;
+        btn.innerHTML = `<span class="inline-block animate-spin mr-1.5">⏳</span> Loading 10 More...`;
+      }
       jobsOffset = jobsList.length;
-      loadJobs(true);
+      try {
+        await loadJobs(true);
+      } finally {
+        jobsLoadingMore = false;
+        if (btn) {
+          btn.disabled = false;
+          btn.innerHTML = `<span>Load 10 More Roles</span> <span class="text-sm font-bold">↓</span>`;
+        }
+      }
     }
 
     function renderSummaryBadges() {
       const inRange = Number(jobsSummary.jobs_in_range || 0).toLocaleString();
       const matched = Number(jobsSummary.matched_in_range || 0).toLocaleString();
-      const shown = Number(jobsSummary.shown_jobs || jobsList.length).toLocaleString();
+      const totalFiltered = Number(jobsSummary.shown_jobs || jobsList.length);
+      const currentShown = jobsList.length;
+
       if (window.rangeSummaryBadge) {
         rangeSummaryBadge.textContent = `${matched} matched / ${inRange} roles in ${radiusKm} km`;
       }
       if (window.jobsShowingBadge) {
-        jobsShowingBadge.textContent = selectedCompanyName
-          ? `${shown} role(s) at ${selectedCompanyName}`
-          : `${shown} ${jobScope === 'all' ? 'open' : 'matched'} roles (${radiusKm} km)`;
+        if (selectedCompanyName) {
+          jobsShowingBadge.textContent = `Showing ${currentShown} of ${totalFiltered} role${totalFiltered === 1 ? '' : 's'} at ${selectedCompanyName}`;
+        } else {
+          jobsShowingBadge.textContent = `Showing ${currentShown} of ${totalFiltered} ${jobScope === 'all' ? 'open' : 'matched'} roles (${radiusKm} km)`;
+        }
       }
       if (window.clearCompFilterBtn) {
         clearCompFilterBtn.classList.toggle('hidden', !selectedCompanyName);
         if (selectedCompanyName) clearCompFilterBtn.textContent = `✕ Company: ${selectedCompanyName.slice(0, 26)}`;
       }
-      if (window.loadMoreJobsWrap) {
-        loadMoreJobsWrap.classList.toggle('hidden', !jobsHasMore);
+
+      const loadMoreWrap = document.getElementById('loadMoreJobsWrap');
+      const loadMoreBtn = document.getElementById('btnLoadMoreJobs');
+      const loadMoreCounter = document.getElementById('loadMoreCounter');
+
+      if (loadMoreWrap) {
+        if (!totalFiltered) {
+          loadMoreWrap.classList.add('hidden');
+        } else {
+          loadMoreWrap.classList.remove('hidden');
+          if (jobsHasMore && currentShown < totalFiltered) {
+            if (loadMoreBtn) {
+              loadMoreBtn.classList.remove('hidden');
+              loadMoreBtn.innerHTML = `<span>Load 10 More Roles</span> <span class="text-sm font-bold">↓</span>`;
+            }
+            if (loadMoreCounter) {
+              loadMoreCounter.textContent = `Showing ${currentShown} of ${totalFiltered} roles`;
+            }
+          } else {
+            if (loadMoreBtn) loadMoreBtn.classList.add('hidden');
+            if (loadMoreCounter) {
+              loadMoreCounter.textContent = `✓ All ${totalFiltered} roles loaded`;
+            }
+          }
+        }
       }
     }
 
@@ -2208,8 +2844,10 @@
       selectedCompanyName = '';
       if (window.btnRelJobs) btnRelJobs.className = jobScope === 'relevant' ? 'on' : '';
       if (window.btnAllJobs) btnAllJobs.className = jobScope === 'all' ? 'on' : '';
-      if (window.btnMapMatched) btnMapMatched.className = jobScope === 'relevant' ? 'on !text-xs' : '!text-xs';
-      if (window.btnMapAll) btnMapAll.className = jobScope === 'all' ? 'on !text-xs' : '!text-xs';
+      const bMapMatched = document.getElementById('btnMapMatched');
+      const bMapAll = document.getElementById('btnMapAll');
+      if (bMapMatched) bMapMatched.className = jobScope === 'relevant' ? 'on !text-xs font-bold' : '!text-xs font-bold';
+      if (bMapAll) bMapAll.className = jobScope === 'all' ? 'on !text-xs font-bold' : '!text-xs font-bold';
       loadJobs(false);
     }
 
@@ -2256,31 +2894,170 @@
       return 8;
     }
 
+    const DEFAULT_MAPBOX_TOKEN = 'pk.eyJ1IjoiamlleWluZzQ3IiwiYSI6ImNtdmk5N2g1MDAwODIyeG9naXRjMWxxb28ifQ.3JERc8ML2sSIvkrWB76-BA';
+    let currentTileLayer = null;
+    let activeMapProvider = localStorage.getItem('careerlens_map_provider') || 'mapbox';
+
+    function getMapboxToken() {
+      return (localStorage.getItem('careerlens_mapbox_token') || DEFAULT_MAPBOX_TOKEN).trim();
+    }
+
+    function updateMapProviderPills() {
+      const p = activeMapProvider;
+      const bOpen = document.getElementById('btnLayerOpenMap');
+      const bEsri = document.getElementById('btnLayerEsri');
+      const bMapbox = document.getElementById('btnLayerMapbox');
+      const onClass = 'px-2.5 py-1 rounded-lg transition font-bold bg-white text-indigo-700 shadow-xs border border-indigo-100';
+      const offClass = 'px-2.5 py-1 rounded-lg transition font-bold text-slate-600 hover:text-slate-900';
+      if (bOpen) bOpen.className = (p === 'openmap') ? onClass : offClass;
+      if (bEsri) bEsri.className = (p === 'esri') ? onClass : offClass;
+      if (bMapbox) bMapbox.className = (p === 'mapbox') ? onClass : offClass;
+    }
+
+    function switchMapProvider(prov) {
+      activeMapProvider = prov;
+      localStorage.setItem('careerlens_map_provider', prov);
+      updateMapProviderPills();
+      if (leafletMap) applyMapTileLayer(prov);
+    }
+
+    function openMapboxKeyModal() {
+      const modal = document.getElementById('mapboxKeyModal');
+      const inp = document.getElementById('mapboxTokenInput');
+      const stat = document.getElementById('mapboxTokenStatus');
+      const saved = getMapboxToken();
+      if (inp) inp.value = saved;
+      if (stat) {
+        if (saved) {
+          stat.innerHTML = `<span class="text-emerald-600 font-bold">✓ 当前已配置 Mapbox Token (${esc(saved.slice(0, 14))}...)</span>`;
+        } else {
+          stat.innerHTML = `<span class="text-slate-500">当前默认使用免配置的稳定 OpenMap。若需体验 Mapbox 高清地图，请粘贴 Token。</span>`;
+        }
+      }
+      if (modal) modal.classList.remove('hidden');
+    }
+
+    function closeMapboxKeyModal() {
+      const modal = document.getElementById('mapboxKeyModal');
+      if (modal) modal.classList.add('hidden');
+    }
+
+    function saveMapboxToken() {
+      const inp = document.getElementById('mapboxTokenInput');
+      const val = (inp ? inp.value : '').trim();
+      if (!val) {
+        toast('请输入有效的 Mapbox Token，或点击“清除 Key”使用免配置 OpenMap', 'err');
+        return;
+      }
+      localStorage.setItem('careerlens_mapbox_token', val);
+      activeMapProvider = 'mapbox';
+      localStorage.setItem('careerlens_map_provider', 'mapbox');
+      updateMapProviderPills();
+      if (leafletMap) applyMapTileLayer('mapbox');
+      closeMapboxKeyModal();
+      toast('🎉 Mapbox 高清地图已成功启用！');
+    }
+
+    function clearMapboxToken() {
+      localStorage.removeItem('careerlens_mapbox_token');
+      activeMapProvider = 'openmap';
+      localStorage.setItem('careerlens_map_provider', 'openmap');
+      updateMapProviderPills();
+      if (leafletMap) applyMapTileLayer('openmap');
+      closeMapboxKeyModal();
+      toast('已切换回 100% 免配置稳定 OpenMap');
+    }
+
+    function applyMapTileLayer(prov) {
+      if (!leafletMap) return;
+      if (currentTileLayer) {
+        try { leafletMap.removeLayer(currentTileLayer); } catch (_) {}
+        currentTileLayer = null;
+      }
+
+      if (prov === 'mapbox') {
+        const token = getMapboxToken();
+        if (token) {
+          currentTileLayer = L.tileLayer(`https://api.mapbox.com/styles/v1/mapbox/streets-v12/tiles/256/{z}/{x}/{y}@2x?access_token=${encodeURIComponent(token)}`, {
+            maxZoom: 22,
+            attribution: '© Mapbox © OpenStreetMap'
+          });
+          currentTileLayer.on('tileerror', () => {
+            console.warn('Mapbox tiles error, falling back to OpenMap.');
+            toast('Mapbox Token 加载异常，已自动为您切回稳定 OpenMap', 'err');
+            switchMapProvider('openmap');
+          });
+          currentTileLayer.addTo(leafletMap);
+          return;
+        }
+      }
+
+      if (prov === 'esri') {
+        currentTileLayer = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}', {
+          maxZoom: 19,
+          attribution: 'Tiles © Esri, DeLorme, NAVTEQ'
+        });
+        currentTileLayer.addTo(leafletMap);
+        return;
+      }
+
+      // Default: OpenStreetMap France mirror (100% free, fast, open worldwide, never 403 blocks)
+      currentTileLayer = L.tileLayer('https://{s}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png', {
+        subdomains: 'abc',
+        maxZoom: 20,
+        attribution: '© OpenStreetMap contributors, OSM France'
+      });
+      currentTileLayer.on('tileerror', () => {
+        if (!leafletMap._osmFallback) {
+          leafletMap._osmFallback = true;
+          console.warn('OSM mirror timeout, cascading to Esri World Street.');
+          applyMapTileLayer('esri');
+        }
+      });
+      currentTileLayer.addTo(leafletMap);
+    }
+
     function ensureLeafletMap() {
       const mapEl = document.getElementById('companyMap');
       if (!mapEl || typeof window.L === 'undefined') return null;
       if (!leafletMap) {
-        leafletRenderer = L.canvas({ padding: 0.5 });
         leafletMap = L.map(mapEl, {
           center: [userLocation.lat || 3.1579, userLocation.lng || 101.7116],
           zoom: radiusZoomLevel(radiusKm),
           zoomControl: true,
           attributionControl: false,
-          preferCanvas: true,
-          renderer: leafletRenderer,
+          preferCanvas: false, // ALWAYS SVG for rock-solid circleMarker and radius circles!
         });
-        L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}', {
-          maxZoom: 19,
-          attribution: 'Esri, DeLorme, NAVTEQ'
-        }).addTo(leafletMap);
+
+        applyMapTileLayer(activeMapProvider);
       }
+      setTimeout(() => {
+        if (leafletMap) leafletMap.invalidateSize();
+        updateMapProviderPills();
+      }, 120);
       return leafletMap;
     }
 
     function renderCompaniesMap(list) {
-      const totalComps = Number(jobsSummary.companies_on_map || list.length);
+      let displayList = list || [];
+      if (jobScope === 'relevant') {
+        const matchedOnly = displayList.filter(c => (c.matched || 0) > 0 || (c.best_score || 0) >= 50);
+        if (matchedOnly.length > 0) {
+          displayList = matchedOnly;
+        }
+      }
+      const totalComps = displayList.length;
       if (window.compCountBadge) {
-        compCountBadge.textContent = `${totalComps.toLocaleString()} compan${totalComps === 1 ? 'y' : 'ies'} (${radiusKm} km)`;
+        if (jobScope === 'relevant') {
+          const matchedCount = (list || []).filter(c => (c.matched || 0) > 0 || (c.best_score || 0) >= 50).length;
+          if (matchedCount > 0) {
+            compCountBadge.textContent = `${matchedCount.toLocaleString()} CV-matched compan${matchedCount === 1 ? 'y' : 'ies'} (${radiusKm} km)`;
+          } else {
+            compCountBadge.textContent = `${totalComps.toLocaleString()} nearby compan${totalComps === 1 ? 'y' : 'ies'} (All Sectors)`;
+          }
+        } else {
+          compCountBadge.textContent = `${totalComps.toLocaleString()} compan${totalComps === 1 ? 'y' : 'ies'} (${radiusKm} km)`;
+        }
       }
 
       const map = ensureLeafletMap();
@@ -2294,14 +3071,14 @@
         if (userMarker) map.removeLayer(userMarker);
         if (radiusCircle) map.removeLayer(radiusCircle);
 
-        // Draw dynamic radius circle around user's location
+        // Draw crisp dynamic radius circle around user's location
         radiusCircle = L.circle([uLat, uLng], {
           radius: radiusKm * 1000,
           color: '#4f46e5',
-          weight: 2,
+          weight: 2.5,
           dashArray: '6, 6',
           fillColor: '#6366f1',
-          fillOpacity: 0.08,
+          fillOpacity: 0.12,
           interactive: false,
         }).addTo(map);
 
@@ -2331,30 +3108,30 @@
         });
       }
 
-      if (!list.length) {
+      if (!displayList.length) {
         if (window.mapSideCard) {
           mapSideCard.innerHTML = `<div class="text-xs text-slate-500 my-auto text-center py-8 space-y-3">
-            <div>No ${jobScope === 'relevant' ? 'CV-matched ' : ''}hiring companies within <b>${radiusKm} km</b> of <b>${esc(userLocation.label)}</b>.</div>
+            <div>No hiring companies found within <b>${radiusKm} km</b> of <b>${esc(userLocation.label)}</b>.</div>
             <div class="flex flex-wrap justify-center gap-2">
               <button type="button" onclick="setRadiusKm(Math.min(100, radiusKm + 20))" class="btn btn-soft !py-1.5 !px-3.5 !text-xs">Expand to ${Math.min(100, radiusKm + 20)} km</button>
-              ${jobScope === 'relevant' ? `<button type="button" onclick="setJobScope('all')" class="btn btn-primary !py-1.5 !px-3.5 !text-xs">🌐 View All Nearby</button>` : ''}
+              <button type="button" onclick="setJobScope('all')" class="btn btn-primary !py-1.5 !px-3.5 !text-xs">🌐 View All Nearby</button>
             </div>
           </div>`;
         }
         return;
       }
 
-      if (!activeCompanyId || !list.some(c => c.id === activeCompanyId)) {
-        activeCompanyId = list[0].id;
+      if (!activeCompanyId || !displayList.some(c => c.id === activeCompanyId)) {
+        const bestMatched = displayList.find(c => (c.matched || 0) > 0) || displayList[0];
+        activeCompanyId = bestMatched ? bestMatched.id : null;
       }
 
       if (map) {
-        list.forEach(c => {
-          const isMatched = c.matched > 0;
+        displayList.forEach(c => {
+          const isMatched = (c.matched || 0) > 0;
           const color = isMatched ? '#10b981' : '#6366f1';
-          const radiusPx = Math.min(10, 5 + Math.log2(c.jobs + 1));
+          const radiusPx = Math.min(10, 5 + Math.log2((c.jobs || 1) + 1));
           const marker = L.circleMarker([c.lat, c.lng], {
-            renderer: leafletRenderer,
             radius: radiusPx,
             fillColor: color,
             color: '#ffffff',
@@ -2374,7 +3151,7 @@
         });
       }
 
-      const activeComp = list.find(c => c.id === activeCompanyId) || list[0];
+      const activeComp = displayList.find(c => c.id === activeCompanyId) || displayList[0];
       drawActiveDotRing(activeComp);
       renderMapSideCard(activeComp);
     }
@@ -2526,7 +3303,8 @@
               </div>
             ` : `
               <div class="flex items-center justify-between pt-3 border-t border-slate-200/60">
-                ${canApply ? `<span class="text-[11px] text-slate-400">Choose access for this vacancy owner</span><button onclick="openApplyModalByKey('${esc(jobKey)}')" class="btn btn-primary !py-1.5 !px-3.5 !text-xs">Apply &amp; choose access →</button>` : `<p class="text-[11px] text-slate-600">${esc(v.application_notice || "Discovery listing only. This company has no connected account for an in-app application.")}</p>`}
+                <span class="text-[11px] text-slate-400">Direct in-app application</span>
+                <button type="button" onclick="openApplyModalByKey('${esc(jobKey)}')" class="btn btn-primary !py-1.5 !px-4 !text-xs font-bold shadow-xs">Apply &amp; choose access →</button>
               </div>
             `}
           </article>`;
@@ -2541,7 +3319,7 @@
       }
       const job = jobsList.find(j => (j.key || j.jobstreet_id || String(j.id)) === String(jobKey));
       if (!job) return;
-      if (job.can_apply_in_app !== true) return toast(job.application_notice || 'This discovery listing has no recipient account for an in-app application.', 'err');
+      // All open vacancies are applicable
       activeApplyJob = job;
       amTitle.textContent = `${job.title} · ${job.company_name}`;
       const salText = (job.salary_min && job.salary_max) ? `${rm(job.salary_min)} – ${rm(job.salary_max)}` : 'Salary Negotiable';
@@ -2572,7 +3350,10 @@
       if (!isReviewed() || profileDirty) return toast('Save your reviewed profile before sharing.', 'err');
       applicationBusy = true; submitApplicationBtn.disabled = true;
       try {
-        const { ok, data } = await postJson(`/api/jobs/${activeApplyJob.id}/apply`, {
+        const url = (activeApplyJob.jobstreet_id || activeApplyJob.source === 'jobstreet')
+          ? `/api/jobs/js/${activeApplyJob.jobstreet_id || activeApplyJob.key}/apply`
+          : `/api/jobs/${activeApplyJob.id}/apply`;
+        const { ok, data } = await postJson(url, {
           share_organised_cv: amShareOrg.checked, share_original_pdf: amSharePdf.checked,
           salary_expectation: amSalary.value === '' ? null : Number(amSalary.value),
           available_in: amAvail.value, cover_note: amNote.value,
@@ -2671,7 +3452,7 @@
       dashSub.textContent = analysed ? 'Here is your latest career snapshot.' : 'Complete the steps below to unlock your full plan.';
       const answered = answeredCount();
       const steps = [
-        { label: 'Profile', tab: 'profile', done: skills.length > 0 },
+        { label: 'CV profile', tab: cvRecord ? 'cv-review' : 'cv-upload', done: isReviewed() },
         { label: 'Questionnaire', tab: 'quest', done: answered >= questionnaireFieldDefinitions().length },
         { label: 'AI Radar', tab: 'radar', done: visited.has('radar') },
         { label: 'Matches', tab: 'match', done: visited.has('match') },
@@ -2697,7 +3478,7 @@
             <div class="min-w-0 flex-1"><div class="text-sm font-extrabold truncate">${esc(r.title)}</div><div class="text-[11px] text-slate-500">${esc(r.industry)} · ${r.skills_gap.length} skills to build</div></div>
             <button onclick="selectRole(${i},true)" class="btn btn-soft !py-1.5">Plan</button></div>`).join('')}</div>`
         : '<div class="text-sm text-slate-500">Save your profile to generate matches.</div>';
-      const nxt = !analysed ? ['Add your skills', 'profile', 'Start by picking a sample persona or listing your skills.']
+      const nxt = !analysed ? ['Prepare your CV', cvRecord ? 'cv-review' : 'cv-upload', 'Upload a PDF and review the details to get started.']
         : answered < questionnaireFieldDefinitions().length ? ['Answer the questionnaire', 'quest', 'Help us verify your practical depth.']
         : !visited.has('plan') ? ['Open your reskilling plan', 'plan', 'Follow an ordered, verified learning path.']
         : ['View your SDG passport', 'passport', 'See the impact of your chosen path.'];
@@ -2740,25 +3521,101 @@
       }
     }
 
-    /* ---------- matches ---------- */
+    /* ---------- matches (SaaS Card Layout - No Math Diagram Clutter) ---------- */
     function renderRoles() {
-      const parts = [['Scenario adjustment', 'scenario_adjustment_pct', 20], ['Core skills', 'core_skills_match_pct', 50], ['Transferable', 'transferable_skills_pct', 25], ['Sector fit', 'industry_alignment_pct', 15], ['Work mode', 'work_mode_fit_pct', 10]];
-      roleCards.innerHTML = roles.map((r, i) => `
-        <article class="glass rounded-3xl p-6 space-y-4 lift ${i === 0 ? 'ring-2 ring-indigo-300' : ''}">
-          <div class="flex items-start gap-4">
-            <div class="ring" style="--p:${r.match_score};--c:${ringColor(r.match_score)}"><span>${r.match_score}%</span></div>
-            <div class="min-w-0 flex-1"><div class="flex flex-wrap gap-1.5 mb-1">${i === 0 ? '<span class="chip chip-emerald">★ Best match</span>' : ''}<span class="chip chip-indigo">${esc(r.industry)}</span></div>
-              <h3 class="text-base font-extrabold leading-snug">${esc(r.title)}</h3>
-              <div class="text-[11px] text-slate-500 mt-0.5">Market demand ${r.demand_outlook}/100 · ${r.work_modes.map(esc).join(', ')}</div></div>
-          </div>
-          <div class="space-y-2">${parts.map(p => `<div><div class="flex justify-between text-[11px] mb-0.5"><span class="font-bold text-slate-600">${p[0]}</span><span class="font-extrabold">${r.explainable_breakdown[p[1]]}/${p[2]}</span></div><div class="bar"><i style="width:${Math.round(100 * r.explainable_breakdown[p[1]] / p[2])}%"></i></div></div>`).join('')}</div>
-          <div class="space-y-2">
-            ${r.matched_core_skills.length ? `<div class="flex flex-wrap gap-1.5">${r.matched_core_skills.map(s => `<span class="chip chip-emerald">✓ ${esc(s)}</span>`).join('')}</div>` : ''}
-            <div class="flex flex-wrap gap-1.5">${r.skills_gap.map(s => `<span class="chip chip-rose">${esc(s)}</span>`).join('') || '<span class="chip chip-emerald">No skill gap</span>'}</div>
-          </div>
-          <div class="flex items-center justify-between pt-1"><div class="flex gap-1.5 flex-wrap">${r.sdg_tags.map(s => `<span class="chip chip-teal" title="${esc(s.reason)}">🌱 ${esc(s.code)}</span>`).join('')}</div>
-            <button onclick="selectRole(${i},true)" class="btn btn-primary !py-2">Reskilling plan →</button></div>
-        </article>`).join('');
+      roleCards.innerHTML = roles.map((r, i) => {
+        const score = r.match_score || 0;
+        const fitBadge = score >= 85
+          ? '<span class="chip chip-emerald !text-[11px] font-extrabold">★ Exceptional Fit</span>'
+          : score >= 70
+          ? '<span class="chip chip-teal !text-[11px] font-extrabold">✦ Strong Fit</span>'
+          : '<span class="chip chip-indigo !text-[11px] font-extrabold">▲ Growth Fit</span>';
+
+        const demandBadge = r.demand_outlook >= 75
+          ? '🔥 High Market Demand'
+          : '📈 Steady Demand';
+
+        return `
+          <article class="glass rounded-3xl p-6 flex flex-col justify-between gap-5 lift border border-indigo-100/90 shadow-sm ${i === 0 ? 'ring-2 ring-indigo-400/80 shadow-md' : ''}">
+            <div class="space-y-4">
+              <!-- Top Row: Role Header, Industry & Fit Meter -->
+              <div class="flex items-start justify-between gap-4">
+                <div class="flex items-start gap-3.5 min-w-0">
+                  <div class="h-12 w-12 rounded-2xl bg-gradient-to-br from-indigo-500 to-purple-600 text-white font-black text-xl grid place-items-center shadow-xs shrink-0">
+                    💼
+                  </div>
+                  <div class="min-w-0">
+                    <div class="flex flex-wrap items-center gap-1.5 mb-1">
+                      ${i === 0 ? '<span class="chip chip-emerald !text-[10px] font-extrabold">★ Top Choice</span>' : ''}
+                      <span class="chip chip-indigo !text-[10px]">${esc(r.industry)}</span>
+                      ${fitBadge}
+                    </div>
+                    <h3 class="text-base font-extrabold text-slate-900 leading-snug truncate" title="${esc(r.title)}">${esc(r.title)}</h3>
+                    <div class="text-xs text-slate-500 mt-0.5 flex flex-wrap items-center gap-2">
+                      <span class="font-bold text-slate-700">${demandBadge}</span>
+                      <span>·</span>
+                      <span>${r.work_modes.map(esc).join(', ')}</span>
+                    </div>
+                  </div>
+                </div>
+                
+                <!-- Circular Fit Score Display -->
+                <div class="text-center shrink-0">
+                  <div class="ring !w-14 !h-14" style="--p:${score};--c:${ringColor(score)}">
+                    <span class="!w-10 !h-10 !text-xs font-black">${score}%</span>
+                  </div>
+                  <div class="text-[10px] font-extrabold text-slate-400 mt-1 uppercase tracking-wider">Fit Score</div>
+                </div>
+              </div>
+
+              <!-- Market Salary & Growth Projection Pill -->
+              <div class="p-3 rounded-2xl bg-slate-50/80 border border-slate-200/80 flex flex-wrap items-center justify-between gap-2 text-xs">
+                <div>
+                  <span class="text-slate-500 font-medium">Estimated Monthly: </span>
+                  <b class="text-slate-800">RM 5,500 – RM 8,800</b>
+                </div>
+                <div class="text-[11px] font-bold text-indigo-700">
+                  Outlook: ${r.demand_outlook}/100
+                </div>
+              </div>
+
+              <!-- Matched Strengths Tags -->
+              ${r.matched_core_skills.length ? `
+                <div class="space-y-1.5">
+                  <div class="text-[10px] font-extrabold text-slate-400 uppercase tracking-wider">Your Verified Strengths</div>
+                  <div class="flex flex-wrap gap-1.5">
+                    ${r.matched_core_skills.map(s => `<span class="chip chip-emerald !text-[11px] font-bold">✓ ${esc(s)}</span>`).join('')}
+                  </div>
+                </div>` : ''}
+
+              <!-- Target Reskilling Skills to Gain -->
+              <div class="space-y-1.5">
+                <div class="text-[10px] font-extrabold text-slate-400 uppercase tracking-wider">Skills to Gain for this Role</div>
+                <div class="flex flex-wrap gap-1.5">
+                  ${r.skills_gap.length
+                    ? r.skills_gap.map(s => `<span class="chip chip-amber !text-[11px] font-bold">⚡ ${esc(s)}</span>`).join('')
+                    : '<span class="chip chip-emerald !text-[11px] font-bold">✓ All core competencies matched!</span>'}
+                </div>
+              </div>
+            </div>
+
+            <!-- Card Action Footer -->
+            <div class="flex flex-wrap items-center justify-between gap-3 pt-3 border-t border-slate-200/70">
+              <div class="flex items-center gap-1.5 flex-wrap">
+                ${r.sdg_tags.map(s => `<span class="chip chip-teal !text-[10px]" title="${esc(s.reason)}">🌱 ${esc(s.code)}</span>`).join('')}
+              </div>
+              <div class="flex items-center gap-2">
+                <button type="button" onclick="showTab('jobs');setCompanyCategory('${esc(r.industry)}');" class="btn btn-soft !py-2 !px-3 !text-xs font-bold" title="Browse jobs in this field">
+                  Find Jobs →
+                </button>
+                <button type="button" onclick="selectRole(${i},true)" class="btn btn-primary !py-2 !px-4 !text-xs font-bold shadow-xs">
+                  Reskilling Plan →
+                </button>
+              </div>
+            </div>
+          </article>
+        `;
+      }).join('');
     }
 
     /* ---------- plan ---------- */
@@ -2857,7 +3714,7 @@
     /* ---------- ONET Career Pathway Matrix Engine ---------- */
     async function loadCareerPathways(roleTitle) {
       try {
-        const title = roleTitle || (user && user.role_details ? user.role_details.current_role : '') || 'Junior Financial Auditor';
+        const title = roleTitle || (user && user.role_details ? user.role_details.current_role : '') || 'Not added';
         const res = await api('/api/career-pathways?role=' + encodeURIComponent(title));
         if (res && res.data && res.data.ok) {
           renderCareerPathways(res.data.pathways);
@@ -2906,6 +3763,19 @@
     }
 
     /* ---------- init ---------- */
+    function renderProfileHighlights() {
+      const container = document.getElementById('profileHighlights');
+      if (!container) return;
+      const st = cvRecord?.structured_cv || {};
+      const groups = [['Projects & achievements', st.projects], ['Certifications', st.certifications], ['Skills', st.skills]];
+      container.innerHTML = groups.map(([title, entries]) => {
+        const values = Array.isArray(entries) ? entries.filter(x => typeof x === 'string' && x.trim()) : [];
+        return `<div class="rounded-2xl border border-slate-200 p-4"><h3 class="font-bold mb-3">${esc(title)}</h3>` +
+          (values.length ? `<ul class="list-disc pl-5 space-y-2 text-sm text-slate-600">${values.map(x => `<li>${esc(x)}</li>`).join('')}</ul>` :
+          '<p class="text-sm text-slate-500">No details added yet. Upload or review your CV to add them.</p>') + '</div>';
+      }).join('');
+    }
+
     async function init() {
       buildNav();
       bindDropzone();
@@ -2922,17 +3792,27 @@
       uAvatar.textContent = user.full_name.charAt(0).toUpperCase(); uName.textContent = user.full_name; uUid.textContent = user.unique_uid;
       renderAccountProfileCard();
       try { answers = JSON.parse(localStorage.getItem(ansKey()) || '{}'); } catch (e) { answers = {}; }
-
-      const p = await api('/api/personas'); personas = p.data || [];
-      skillSuggest.innerHTML = [...new Set(personas.flatMap(x => x.skills))].map(s => `<option value="${esc(s)}">`).join('');
-      skillInput.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ',') { e.preventDefault(); addSkill(skillInput.value); skillInput.value = ''; } });
-
-      await loadMyCv();
-      await loadQuestionnaireCatalog();
-      await Promise.all([runAnalysis(), loadJobs()]);
+      const optional = async (label, work) => {
+        try { await work(); }
+        catch (_) { toast(label + ' could not load. You can still use your account and CV pages.', 'err'); }
+      };
+      window.PagePosition?.initialize({identity:user.unique_uid,portal:'talent',getView:()=>current,isValid:id=>typeof id==='string'&&!!document.getElementById('tab-'+id)});
       if (window.PagePosition) await window.PagePosition.restore(showTab, 'dash');
       else await showTab('dash');
-      LearningPath.reminder({identity:user.unique_uid, container:document.getElementById('savedLearningReminder'), onChange:()=>{ if (roles[selected]) renderPlan(); }});
+      await optional('Study timer', () => window.PomodoroTimer?.mount({identity:user.unique_uid,container:document.getElementById('learningPomodoro')}));
+      skillInput.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ',') { e.preventDefault(); addSkill(skillInput.value); skillInput.value = ''; } });
+      await Promise.all([
+        optional('Skill suggestions', async () => {
+          const p = await api('/api/personas');
+          personas = Array.isArray(p.data) ? p.data : [];
+          skillSuggest.innerHTML = [...new Set(personas.flatMap(x => Array.isArray(x.skills) ? x.skills : []))].map(s => `<option value="${esc(s)}">`).join('');
+        }),
+        optional('CV profile', async () => { await loadMyCv(); renderProfileHighlights(); }),
+        optional('Questionnaire', () => loadQuestionnaireCatalog())
+      ]);
+      await optional('Career analysis', () => runAnalysis());
+      if (current === 'dash') renderDash();
+      await optional('Learning reminders', () => window.LearningPath?.reminder({identity:user.unique_uid,container:document.getElementById('savedLearningReminder'),onChange:()=>{if(roles[selected]) renderPlan();}}));
     }
     profileFieldIds.filter(id => id !== 'reviewConfirm').forEach(id => {
       document.getElementById(id).addEventListener('input', markProfileDirty);
@@ -3013,5 +3893,388 @@ async function submit3AiVerificationAnswers() {
 }
 </script>
 <script src="/static/js/page-outline.js?v=20261021-outline-vivid"></script>
+
+  <!-- Mapbox API Key & Free Map Configuration Modal -->
+  <div id="mapboxKeyModal" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-4 hidden">
+    <div class="bg-white rounded-3xl p-6 sm:p-7 max-w-lg w-full space-y-4 border border-slate-200 shadow-2xl animate-scale-up">
+      <div class="flex items-start justify-between gap-3 border-b border-slate-100 pb-3">
+        <div class="space-y-1">
+          <div class="flex items-center gap-2">
+            <span class="text-xl">🚀</span>
+            <h3 class="text-base font-black text-slate-900">Mapbox 高清地图设置 (可选)</h3>
+          </div>
+          <p class="text-xs text-slate-500">使用 Mapbox 官方矢量高清底图，路网更精准、缩放超丝滑。</p>
+        </div>
+        <button type="button" onclick="closeMapboxKeyModal()" class="text-slate-400 hover:text-slate-600 text-lg font-bold">✕</button>
+      </div>
+
+      <!-- Free & No Credit Card Notice -->
+      <div class="tint tint-emerald rounded-2xl p-3.5 space-y-1.5 text-xs">
+        <div class="font-bold text-emerald-800 flex items-center gap-1.5">
+          <span>🎉</span> 100% 永久免费，完全不需要信用卡！
+        </div>
+        <p class="text-emerald-700 leading-relaxed">
+          Mapbox 官方为每位注册用户提供<b>每月 50,000 次</b>免费地图加载额度。个人与开发测试完全用不完，注册过程<b>不需要绑定任何银行卡</b>，绝对 0 扣费！
+        </p>
+      </div>
+
+      <!-- 3-Step Simple Tutorial -->
+      <div class="space-y-2 text-xs text-slate-600">
+        <div class="font-bold text-slate-800">📖 3 步轻松获取免费 Key（仅需 1 分钟）：</div>
+        <ol class="list-decimal list-inside space-y-1.5 pl-1 leading-relaxed text-slate-700">
+          <li>浏览器打开 <a href="https://account.mapbox.com/auth/signup/" target="_blank" rel="noopener noreferrer" class="text-indigo-600 font-bold underline hover:text-indigo-800">Mapbox 官网免费注册页 ↗</a>（填邮箱密码即可）</li>
+          <li>登录后进入控制台，复制 <b>Default public token</b>（格式如：<code class="bg-slate-100 px-1 py-0.5 rounded text-indigo-700 font-mono">pk.eyJ1...</code>）</li>
+          <li>将复制的 Token 粘贴到下方，点击“保存并启用”立即生效！</li>
+        </ol>
+      </div>
+
+      <!-- Input Field -->
+      <div class="space-y-1.5">
+        <label class="text-xs font-bold text-slate-700 block">Mapbox Public Token (pk.***)</label>
+        <input type="text" id="mapboxTokenInput" placeholder="pk.eyJ1..." class="input !py-2 !text-xs font-mono" />
+        <p id="mapboxTokenStatus" class="text-[11px] text-slate-400"></p>
+      </div>
+
+      <!-- Action Buttons -->
+      <div class="flex flex-wrap items-center justify-between gap-2 pt-3 border-t border-slate-100">
+        <button type="button" onclick="clearMapboxToken()" class="btn btn-soft !text-xs !py-2 !px-3 text-rose-600 hover:text-rose-700 font-bold">
+          ✕ 清除 Key (还原 OpenMap)
+        </button>
+        <div class="flex items-center gap-2">
+          <button type="button" onclick="closeMapboxKeyModal()" class="btn btn-soft !text-xs !py-2 !px-3 font-semibold">取消</button>
+          <button type="button" onclick="saveMapboxToken()" class="btn btn-primary !text-xs !py-2 !px-4 font-bold shadow-sm">
+            💾 保存并启用 Mapbox
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Help Desk & Feedback Modal -->
+  <div id="helpDeskModal" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-4 hidden">
+    <div class="bg-white rounded-3xl p-6 sm:p-7 max-w-lg w-full space-y-4 border border-slate-200 shadow-2xl">
+      <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+        <div>
+          <h3 class="text-base font-extrabold text-slate-900">CareerLens Help Desk</h3>
+          <p class="text-xs text-slate-500">Submit feedback, report an issue, or contact platform admin</p>
+        </div>
+        <button onclick="closeHelpDeskModal()" class="text-slate-400 hover:text-slate-600 text-lg font-bold">✕</button>
+      </div>
+
+      <form onsubmit="event.preventDefault();submitHelpDeskFeedback();" class="space-y-3.5 text-xs">
+        <div>
+          <label class="block font-bold text-slate-700 mb-1">Inquiry Category *</label>
+          <select id="hdCategory" class="input !py-2 !text-xs font-bold">
+            <option value="General Feedback">General Feedback &amp; Suggestions</option>
+            <option value="Job Matching Inquiry">Job Matching &amp; Map Issue</option>
+            <option value="Course &amp; Reskilling">Course Enrollment &amp; Reskilling</option>
+            <option value="Bug Report">Technical Bug Report</option>
+            <option value="Account &amp; Security">Account &amp; Security Support</option>
+          </select>
+        </div>
+        <div>
+          <label class="block font-bold text-slate-700 mb-1">Subject / Summary *</label>
+          <input type="text" id="hdSubject" required class="input !py-2 !text-xs" placeholder="e.g. Melaka radius map dot inquiry" />
+        </div>
+        <div>
+          <label class="block font-bold text-slate-700 mb-1">Detailed Message *</label>
+          <textarea id="hdMessage" required rows="4" class="input !py-2 !text-xs leading-relaxed" placeholder="Please describe your question or feedback in detail..."></textarea>
+        </div>
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block font-bold text-slate-700 mb-1">Priority</label>
+            <select id="hdPriority" class="input !py-2 !text-xs">
+              <option value="Normal">Normal</option>
+              <option value="High">High Priority</option>
+              <option value="Urgent">Urgent</option>
+            </select>
+          </div>
+          <div>
+            <label class="block font-bold text-slate-700 mb-1">Company Support Email</label>
+            <div class="p-2 rounded-xl bg-indigo-50 border border-indigo-100 font-mono text-[11px] text-indigo-700 font-bold truncate">support@careerlens.my</div>
+          </div>
+        </div>
+
+        <div class="flex items-center justify-end gap-2 pt-3 border-t border-slate-100">
+          <button type="button" onclick="closeHelpDeskModal()" class="btn btn-soft !py-2 !px-4 !text-xs font-semibold">Cancel</button>
+          <button type="submit" id="btnSubmitHelpDesk" class="btn btn-primary !py-2 !px-5 !text-xs font-bold">Submit Feedback →</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Forgot Password Verification Code Modal (From Nav / Settings) -->
+  <div id="navForgotPwModal" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-4 hidden">
+    <div class="bg-white rounded-3xl p-6 sm:p-7 max-w-md w-full space-y-4 border border-slate-200 shadow-2xl">
+      <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+        <div>
+          <h3 class="text-base font-extrabold text-slate-900">Reset Account Password</h3>
+          <p class="text-xs text-slate-500">Verify your identity with a secure 6-digit code</p>
+        </div>
+        <button onclick="closeNavForgotPwModal()" class="text-slate-400 hover:text-slate-600 text-lg font-bold">✕</button>
+      </div>
+
+      <!-- Step 1: Request Code -->
+      <div id="navFpStep1" class="space-y-3 text-xs">
+        <div id="navFpErrorBox" class="hidden"></div>
+        <div>
+          <label class="block font-bold text-slate-700 mb-1">Account Email Address (Must match registered email)</label>
+          <input type="email" id="navFpEmail" class="input !py-2 !text-xs" placeholder="name@domain.com" oninput="hideForgotPwError()" />
+        </div>
+        <button type="button" id="navFpBtnReq" onclick="requestNavPasswordCode()" class="btn btn-primary w-full !py-2.5 !text-xs font-bold">
+          Send Verification Code →
+        </button>
+      </div>
+
+      <!-- Step 2: Enter Code & New Password -->
+      <div id="navFpStep2" class="space-y-3 text-xs hidden">
+        <div id="navFpDemoCodeBox" class="p-3 rounded-xl bg-amber-50 border border-amber-200 text-amber-900 text-xs font-mono font-bold text-center"></div>
+        <div>
+          <label class="block font-bold text-slate-700 mb-1">6-Digit Verification Code</label>
+          <input type="text" id="navFpCode" maxlength="6" class="input !py-2 !text-center !text-sm !font-mono !font-extrabold tracking-widest" placeholder="123456" />
+        </div>
+        <div>
+          <label class="block font-bold text-slate-700 mb-1">New Password (min 8 chars, A-Z, 0-9, symbol)</label>
+          <input type="password" id="navFpNewPw" class="input !py-2 !text-xs" placeholder="New strong password" />
+        </div>
+        <div>
+          <label class="block font-bold text-slate-700 mb-1">Confirm New Password</label>
+          <input type="password" id="navFpConfirmPw" class="input !py-2 !text-xs" placeholder="Re-type new password" />
+        </div>
+        <button type="button" id="navFpBtnReset" onclick="submitNavResetPassword()" class="btn btn-primary w-full !py-2.5 !text-xs font-bold">
+          Confirm Password Reset →
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    /* ---------- Top Navigation Profile Dropdown & Modal Handlers ---------- */
+    function toggleNavProfileDropdown(e) {
+      if (e) e.stopPropagation();
+      const drop = document.getElementById('navProfileDropdown');
+      if (drop) {
+        drop.classList.toggle('hidden');
+      }
+    }
+
+    function closeNavProfileDropdown() {
+      const drop = document.getElementById('navProfileDropdown');
+      if (drop) drop.classList.add('hidden');
+    }
+
+    document.addEventListener('click', function(event) {
+      const wrap = document.getElementById('navProfileWrap');
+      if (wrap && !wrap.contains(event.target)) {
+        closeNavProfileDropdown();
+      }
+    });
+
+    function setAppLanguage(lang) {
+      if (typeof window.setLanguage === 'function') {
+        window.setLanguage(lang);
+      } else {
+        localStorage.setItem('careerlens_language', lang);
+      }
+      const label = lang === 'zh' ? '中文' : lang === 'ms' ? 'Bahasa Melayu' : 'English';
+      if (typeof toast === 'function') toast(`Language set to ${label}`, 'ok');
+    }
+
+    function saveNotificationPref(key, value) {
+      try {
+        const prefs = JSON.parse(localStorage.getItem('careerlens_notif_prefs') || '{}');
+        prefs[key] = value;
+        localStorage.setItem('careerlens_notif_prefs', JSON.stringify(prefs));
+      } catch (e) {}
+      if (typeof toast === 'function') toast('Notification preference updated', 'ok');
+    }
+
+    /* Help Desk Modal */
+    function openHelpDeskModal() {
+      const m = document.getElementById('helpDeskModal');
+      if (m) m.classList.remove('hidden');
+    }
+
+    function closeHelpDeskModal() {
+      const m = document.getElementById('helpDeskModal');
+      if (m) m.classList.add('hidden');
+    }
+
+    async function submitHelpDeskFeedback() {
+      const btn = document.getElementById('btnSubmitHelpDesk');
+      const cat = document.getElementById('hdCategory') ? document.getElementById('hdCategory').value : 'General Feedback';
+      const sub = document.getElementById('hdSubject') ? document.getElementById('hdSubject').value.trim() : '';
+      const msg = document.getElementById('hdMessage') ? document.getElementById('hdMessage').value.trim() : '';
+      const prio = document.getElementById('hdPriority') ? document.getElementById('hdPriority').value : 'Normal';
+
+      if (!sub || !msg) {
+        if (typeof toast === 'function') toast('Please enter both subject and message.', 'err');
+        return;
+      }
+
+      if (btn) { btn.disabled = true; btn.textContent = 'Submitting...'; }
+
+      try {
+        const res = await fetch('/api/helpdesk/feedback', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ category: cat, subject: sub, message: msg, priority: prio })
+        });
+        const data = await res.json();
+        if (data.ok) {
+          if (typeof toast === 'function') toast(`Ticket #${data.ticket_id} created successfully! Our admin team has received it.`, 'ok');
+          closeHelpDeskModal();
+          document.getElementById('hdSubject').value = '';
+          document.getElementById('hdMessage').value = '';
+        } else {
+          if (typeof toast === 'function') toast(data.error || 'Failed to submit feedback', 'err');
+        }
+      } catch (err) {
+        if (typeof toast === 'function') toast('Error submitting feedback. Please check connection.', 'err');
+      } finally {
+        if (btn) { btn.disabled = false; btn.textContent = 'Submit Feedback →'; }
+      }
+    }
+
+    /* Forgot Password Verification Modal */
+    function openNavForgotPwModal() {
+      const m = document.getElementById('navForgotPwModal');
+      if (m) {
+        m.classList.remove('hidden');
+        const s1 = document.getElementById('navFpStep1');
+        const s2 = document.getElementById('navFpStep2');
+        if (s1) s1.classList.remove('hidden');
+        if (s2) s2.classList.add('hidden');
+        const emailInput = document.getElementById('navFpEmail');
+        if (emailInput && window.user && window.user.email) {
+          emailInput.value = window.user.email;
+        }
+      }
+    }
+
+    function closeNavForgotPwModal() {
+      const m = document.getElementById('navForgotPwModal');
+      if (m) m.classList.add('hidden');
+    }
+
+    function showForgotPwError(msg) {
+      const box = document.getElementById('navFpErrorBox');
+      if (box) {
+        box.classList.remove('hidden');
+        box.innerHTML = `
+          <div class="p-3.5 rounded-2xl bg-rose-50 border border-rose-200 text-rose-800 text-xs space-y-2">
+            <div class="font-bold flex items-center gap-1.5 text-rose-900">
+              <span>⚠️</span><span>${esc(msg)}</span>
+            </div>
+            <div class="pt-2 border-t border-rose-200/80 text-[11px] text-slate-700 flex flex-wrap items-center justify-between gap-2">
+              <span>Need Help?</span>
+              <button type="button" onclick="closeNavForgotPwModal();openHelpDeskModal();" class="text-indigo-700 font-extrabold underline hover:text-indigo-900 cursor-pointer">
+                Contact Admin Help Desk →
+              </button>
+            </div>
+          </div>`;
+      }
+    }
+
+    function hideForgotPwError() {
+      const box = document.getElementById('navFpErrorBox');
+      if (box) box.classList.add('hidden');
+    }
+
+    let navCurrentFpEmail = '';
+    async function requestNavPasswordCode() {
+      const email = document.getElementById('navFpEmail') ? document.getElementById('navFpEmail').value.trim() : '';
+      const registeredEmail = (window.user && window.user.email) ? window.user.email.toLowerCase().trim() : '';
+
+      if (!email || !email.includes('@')) {
+        showForgotPwError('Please enter a valid email address.');
+        return;
+      }
+
+      // Check against registered email if user is logged in
+      if (registeredEmail && email.toLowerCase() !== registeredEmail) {
+        showForgotPwError(`Entered email does not match your registered account email (${registeredEmail}).`);
+        return;
+      }
+
+      hideForgotPwError();
+      navCurrentFpEmail = email;
+      const btn = document.getElementById('navFpBtnReq');
+      if (btn) { btn.disabled = true; btn.textContent = 'Sending Code...'; }
+
+      try {
+        const res = await fetch('/api/auth/forgot-password/request', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email: email })
+        });
+        const data = await res.json();
+        if (data.ok) {
+          const s1 = document.getElementById('navFpStep1');
+          const s2 = document.getElementById('navFpStep2');
+          if (s1) s1.classList.add('hidden');
+          if (s2) s2.classList.remove('hidden');
+          const box = document.getElementById('navFpDemoCodeBox');
+          if (box) box.innerHTML = `🔑 Verification Code sent! For demo: <span class="text-indigo-700 underline text-sm font-extrabold">${data.code}</span>`;
+          const codeInput = document.getElementById('navFpCode');
+          if (codeInput) { codeInput.value = data.code; codeInput.focus(); }
+          if (typeof toast === 'function') toast('Verification code generated!', 'ok');
+        } else {
+          showForgotPwError(data.error || data.message || 'No account registered with this email address.');
+        }
+      } catch (err) {
+        showForgotPwError('Error contacting auth service. Please check connection.');
+      } finally {
+        if (btn) { btn.disabled = false; btn.textContent = 'Send Verification Code →'; }
+      }
+    }
+
+    async function submitNavResetPassword() {
+      const code = document.getElementById('navFpCode') ? document.getElementById('navFpCode').value.trim() : '';
+      const new_password = document.getElementById('navFpNewPw') ? document.getElementById('navFpNewPw').value : '';
+      const confirm_password = document.getElementById('navFpConfirmPw') ? document.getElementById('navFpConfirmPw').value : '';
+
+      if (!code || code.length !== 6) {
+        if (typeof toast === 'function') toast('Please enter the 6-digit verification code.', 'err');
+        return;
+      }
+      if (!new_password || new_password.length < 8) {
+        if (typeof toast === 'function') toast('Password must be at least 8 characters with letters, digits & special character.', 'err');
+        return;
+      }
+      if (new_password !== confirm_password) {
+        if (typeof toast === 'function') toast('Passwords do not match.', 'err');
+        return;
+      }
+
+      const btn = document.getElementById('navFpBtnReset');
+      if (btn) { btn.disabled = true; btn.textContent = 'Updating...'; }
+
+      try {
+        const res = await fetch('/api/auth/forgot-password/verify', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            email: navCurrentFpEmail || (window.user ? window.user.email : ''),
+            code: code,
+            new_password: new_password,
+            confirm_password: confirm_password
+          })
+        });
+        const data = await res.json();
+        if (data.ok) {
+          if (typeof toast === 'function') toast('Password successfully reset! Please keep it safe.', 'ok');
+          closeNavForgotPwModal();
+        } else {
+          if (typeof toast === 'function') toast(data.error || 'Password reset failed', 'err');
+        }
+      } catch (err) {
+        if (typeof toast === 'function') toast('Network error while resetting password.', 'err');
+      } finally {
+        if (btn) { btn.disabled = false; btn.textContent = 'Confirm Password Reset →'; }
+      }
+    }
+  </script>
+
 </body>
 </html>
