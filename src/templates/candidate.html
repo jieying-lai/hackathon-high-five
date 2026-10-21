@@ -84,6 +84,44 @@
       border: 2px solid #eab308 !important;
       box-shadow: 0 12px 28px -8px rgba(234, 179, 8, 0.35) !important;
     }
+    select, .cl-select, select.input {
+      appearance: none !important;
+      -webkit-appearance: none !important;
+      -moz-appearance: none !important;
+      background-color: rgba(255, 255, 255, 0.95) !important;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%23475569' stroke-width='2.2'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E") !important;
+      background-position: right 0.85rem center !important;
+      background-repeat: no-repeat !important;
+      background-size: 1.15rem 1.15rem !important;
+      padding-right: 2.6rem !important;
+      padding-left: 0.9rem !important;
+      border: 1.5px solid #cbd5e1 !important;
+      border-radius: 0.85rem !important;
+      color: #0f172a !important;
+      font-weight: 600 !important;
+      cursor: pointer !important;
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
+      box-shadow: 0 1px 2px 0 rgba(15, 23, 42, 0.05) !important;
+    }
+    select:hover, .cl-select:hover, select.input:hover {
+      border-color: #94a3b8 !important;
+      background-color: #ffffff !important;
+      box-shadow: 0 3px 8px -1px rgba(99, 102, 241, 0.08) !important;
+    }
+    select:focus, .cl-select:focus, select.input:focus {
+      border-color: #6366f1 !important;
+      background-color: #ffffff !important;
+      box-shadow: 0 0 0 3.5px rgba(99, 102, 241, 0.18) !important;
+      outline: none !important;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%234f46e5' stroke-width='2.5'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E") !important;
+    }
+    select option, .cl-select option {
+      padding: 10px 14px !important;
+      background-color: #ffffff !important;
+      color: #0f172a !important;
+      font-weight: 500 !important;
+      font-size: 13px !important;
+    }
     .badge-applied-red {
       display: inline-flex;
       align-items: center;
@@ -873,8 +911,12 @@
 
             <div data-outline-label="Job vacancies" id="jobsGrid" class="grid lg:grid-cols-2 gap-4 items-stretch"></div>
 
-            <div id="loadMoreJobsWrap" class="text-center pt-2 hidden">
-              <button type="button" onclick="loadMoreJobs()" class="btn btn-soft !py-2.5 !px-6 !text-xs">Load More Jobs ↓</button>
+            <div id="loadMoreJobsWrap" class="flex flex-col items-center justify-center gap-2 pt-6 pb-2 hidden">
+              <button type="button" id="btnLoadMoreJobs" onclick="loadMoreJobs()" class="btn btn-soft !py-3 !px-8 !text-xs font-black flex items-center gap-2 shadow-sm hover:border-indigo-400 hover:bg-indigo-50/70 transition">
+                <span>Load 10 More Roles</span>
+                <span class="text-sm font-bold">↓</span>
+              </button>
+              <span id="loadMoreCounter" class="text-xs text-slate-500 font-semibold"></span>
             </div>
           </div>
         </section>
@@ -2257,7 +2299,7 @@
     }
 
     /* ---------- Browse & Apply Jobs + Interactive Map ---------- */
-    let radiusKm = 10, jobSortBy = 'match', selectedCompanyName = '', jobsOffset = 0, jobsHasMore = false, jobsSummary = {};
+    let radiusKm = 10, jobSortBy = 'match', selectedCompanyName = '', jobsOffset = 0, jobsHasMore = false, jobsSummary = {}, jobsLoadingMore = false;
     let radiusCircle = null, activeDotCircle = null, searchDebounceTimer = null, leafletRenderer = null;
     let locSuggestDebounce = null, locSuggestedPlaces = [];
 
@@ -2286,7 +2328,7 @@
       if (q) params.set('q', q);
       if (selectedCompanyName) params.set('company', selectedCompanyName);
       params.set('offset', jobsOffset);
-      params.set('limit', 40);
+      params.set('limit', 10);
 
       const r = await api(`/api/jobs?${params.toString()}`);
       if (!r.ok) throw new Error(r.data.message || 'Could not load vacancies. Please retry.');
@@ -2317,29 +2359,71 @@
       renderJobs(jobsList);
     }
 
-    function loadMoreJobs() {
+    async function loadMoreJobs() {
+      if (jobsLoadingMore || !jobsHasMore) return;
+      jobsLoadingMore = true;
+      const btn = document.getElementById('btnLoadMoreJobs');
+      if (btn) {
+        btn.disabled = true;
+        btn.innerHTML = `<span class="inline-block animate-spin mr-1.5">⏳</span> Loading 10 More...`;
+      }
       jobsOffset = jobsList.length;
-      loadJobs(true);
+      try {
+        await loadJobs(true);
+      } finally {
+        jobsLoadingMore = false;
+        if (btn) {
+          btn.disabled = false;
+          btn.innerHTML = `<span>Load 10 More Roles</span> <span class="text-sm font-bold">↓</span>`;
+        }
+      }
     }
 
     function renderSummaryBadges() {
       const inRange = Number(jobsSummary.jobs_in_range || 0).toLocaleString();
       const matched = Number(jobsSummary.matched_in_range || 0).toLocaleString();
-      const shown = Number(jobsSummary.shown_jobs || jobsList.length).toLocaleString();
+      const totalFiltered = Number(jobsSummary.shown_jobs || jobsList.length);
+      const currentShown = jobsList.length;
+
       if (window.rangeSummaryBadge) {
         rangeSummaryBadge.textContent = `${matched} matched / ${inRange} roles in ${radiusKm} km`;
       }
       if (window.jobsShowingBadge) {
-        jobsShowingBadge.textContent = selectedCompanyName
-          ? `${shown} role(s) at ${selectedCompanyName}`
-          : `${shown} ${jobScope === 'all' ? 'open' : 'matched'} roles (${radiusKm} km)`;
+        if (selectedCompanyName) {
+          jobsShowingBadge.textContent = `Showing ${currentShown} of ${totalFiltered} role${totalFiltered === 1 ? '' : 's'} at ${selectedCompanyName}`;
+        } else {
+          jobsShowingBadge.textContent = `Showing ${currentShown} of ${totalFiltered} ${jobScope === 'all' ? 'open' : 'matched'} roles (${radiusKm} km)`;
+        }
       }
       if (window.clearCompFilterBtn) {
         clearCompFilterBtn.classList.toggle('hidden', !selectedCompanyName);
         if (selectedCompanyName) clearCompFilterBtn.textContent = `✕ Company: ${selectedCompanyName.slice(0, 26)}`;
       }
-      if (window.loadMoreJobsWrap) {
-        loadMoreJobsWrap.classList.toggle('hidden', !jobsHasMore);
+
+      const loadMoreWrap = document.getElementById('loadMoreJobsWrap');
+      const loadMoreBtn = document.getElementById('btnLoadMoreJobs');
+      const loadMoreCounter = document.getElementById('loadMoreCounter');
+
+      if (loadMoreWrap) {
+        if (!totalFiltered) {
+          loadMoreWrap.classList.add('hidden');
+        } else {
+          loadMoreWrap.classList.remove('hidden');
+          if (jobsHasMore && currentShown < totalFiltered) {
+            if (loadMoreBtn) {
+              loadMoreBtn.classList.remove('hidden');
+              loadMoreBtn.innerHTML = `<span>Load 10 More Roles</span> <span class="text-sm font-bold">↓</span>`;
+            }
+            if (loadMoreCounter) {
+              loadMoreCounter.textContent = `Showing ${currentShown} of ${totalFiltered} roles`;
+            }
+          } else {
+            if (loadMoreBtn) loadMoreBtn.classList.add('hidden');
+            if (loadMoreCounter) {
+              loadMoreCounter.textContent = `✓ All ${totalFiltered} roles loaded`;
+            }
+          }
+        }
       }
     }
 
