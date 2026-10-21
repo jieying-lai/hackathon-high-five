@@ -34,7 +34,7 @@ def settings():
 
 def status():
     cfg = settings()
-    if cfg['provider']=='desktop':
+    if cfg.get('provider') == 'desktop':
         return {'available':True,'model':cfg['model'],'provider':'Local computer',
                 'message':'AI runs on this computer; no API key or RunPod connection required. CPU processing may take a few minutes.',
                 'training_status':'CV organisation uses the pretrained base model, not the interview adapter.'}
@@ -47,7 +47,7 @@ def status():
 
 def request_draft(pages):
     cfg = settings()
-    if cfg['provider']=='desktop':
+    if cfg.get('provider') == 'desktop':
         validate_pages(pages)
         try:
             response=requests.post(cfg['local_url'],json={'pages':pages},timeout=(3,1200))
