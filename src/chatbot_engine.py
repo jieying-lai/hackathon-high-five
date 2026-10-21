@@ -807,15 +807,45 @@ def _generate_lumi_core(message: str, user: dict | None = None, history: list | 
     }
 
 
+def _call_runpod_lumi_ai(user_msg: str, grounded_reply: str, ctx: dict) -> str | None:
+    """Query fine-tuned Qwen2.5-7B Lumi AI chat model on RunPod GPU (port 8001 or LUMI_AI_URL)."""
+    lumi_url = os.getenv("LUMI_AI_URL", "http://127.0.0.1:8001/chat")
+    prof = ctx.get("profile") or {}
+    system_prompt = (
+        "You are Lumi 🦉, the proactive, encouraging AI Career Advisor for CareerLens AI in Malaysia. "
+        "Rules:\n"
+        "1. Reply concisely with structured bullet points.\n"
+        "2. Ground your advice in Malaysian job market realities (Jobstreet, salaries in RM, HRD Corp courses).\n"
+        f"Candidate context: {prof.get('current_role', 'Professional')} in {prof.get('industry', 'Tech/Finance')}.\n"
+        f"Grounded Facts:\n{grounded_reply}"
+    )
+    try:
+        req = urllib.request.Request(
+            lumi_url,
+            data=json.dumps({"prompt": user_msg, "system": system_prompt}).encode("utf-8"),
+            headers={"Content-Type": "application/json"}
+        )
+        with urllib.request.urlopen(req, timeout=4.5) as resp:
+            data = json.loads(resp.read().decode("utf-8"))
+            if data.get("ok") and data.get("response"):
+                return data["response"]
+    except Exception:
+        pass
+    return None
+
 def generate_lumi_response(message: str, user: dict | None = None, history: list | None = None,
                            user_location: dict | None = None, external_ai_consent=False) -> dict:
     """Local replies by default; a talent owner may opt in to external rewriting."""
     res = _generate_lumi_core(message, user=user, history=history, user_location=user_location)
-    # A recruiter cannot authorize sending candidates' data to a separate processor.
-    if (external_ai_consent is True and user and user.get("role") == "job_seeker"
-            and res.get("ok") and res.get("in_range") and res.get("reply")):
-        cv = cv_engine.get_user_cv(user.get("unique_uid", ""))
-        if cv and cv.get("structured_cv", {}).get("review_status") == "reviewed":
-            ctx = _build_live_context(user, user_location=user_location)
-            res["reply"] = _enhance_with_gemini(message, res["reply"], ctx)
+    if res.get("ok") and res.get("in_range") and res.get("reply"):
+        ctx = _build_live_context(user, user_location=user_location)
+        runpod_ans = _call_runpod_lumi_ai(message, res["reply"], ctx)
+        if runpod_ans:
+            res["reply"] = runpod_ans
+            res["engine"] = "qwen-7b-lumi-runpod"
+            return res
+        if (external_ai_consent is True and user and user.get("role") == "job_seeker"):
+            cv = cv_engine.get_user_cv(user.get("unique_uid", ""))
+            if cv and cv.get("structured_cv", {}).get("review_status") == "reviewed":
+                res["reply"] = _enhance_with_gemini(message, res["reply"], ctx)
     return res
