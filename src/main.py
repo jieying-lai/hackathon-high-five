@@ -26,6 +26,7 @@ from flask import Flask, jsonify, redirect, render_template, request, send_file,
 import career_pathways
 import chatbot_engine
 import cv_engine
+import cv_ai
 import hr_engine
 import vault_sharing
 import job_index
@@ -279,7 +280,18 @@ def api_cv_me():
         "ok": True,
         "cv": cv_engine.get_user_cv(_owner()),
         "samples": cv_engine.ensure_sample_pdfs(),
+        "ai": cv_ai.status(),
     })
+
+
+@app.route("/api/cv/me/organise", methods=["POST"])
+@api_role("job_seeker")
+def api_cv_organise():
+    try:
+        cv = cv_ai.organise(_owner(), json_object())
+        return jsonify(ok=True, cv=cv, message="AI draft saved privately. Review it before sharing; previous sharing has ended.")
+    except cv_ai.CVAIError as exc:
+        return jsonify(ok=False, message=str(exc)), exc.status
 
 
 @app.route("/api/cv/upload", methods=["POST"])

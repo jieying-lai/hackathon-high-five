@@ -1,16 +1,6 @@
-"""RunPod serverless handler.
+"""RunPod entrypoint for the CV model (separate from the interview service)."""
+from cv_worker import handler
 
-Deploy this file as a RunPod Serverless Endpoint.
-Replace the placeholder logic with your model inference.
-"""
-
-import runpod
-
-
-def handler(job: dict) -> dict:
-    prompt = job["input"].get("prompt", "")
-    # TODO: load your model and run inference here
-    return {"output": f"Echo: {prompt}"}
-
-
-runpod.serverless.start({"handler": handler})
+if __name__ == '__main__':
+    import runpod
+    runpod.serverless.start({'handler': handler})

@@ -17,11 +17,11 @@ CareerLens turns a CV into a structured profile that the person can check, corre
 
 ## What the AI currently is — and is not
 
-The inspected project did **not** contain a working trained CV summarization model. `runpod/handler.py` is an echo placeholder. The CV engine uses PDF text extraction, section rules and a skill taxonomy. The latest project's resume lexicon and competency/impact panel are retained as heuristic text analysis, not measured skill proficiency or model confidence. PDF extraction itself sends no CV content to an outside AI service.
+The default CV engine uses local PDF text extraction, section rules and a skill taxonomy. PDF extraction itself sends no CV content to an outside AI service. The optional **Organise my CV with AI** flow now connects to a real Qwen2.5-7B-Instruct worker on RunPod, replacing the old echo placeholder. It requires explicit consent, validates returned excerpts against PDF pages, and saves an unreviewed draft. Deployment, GPU execution and CV-specific quality evaluation remain pending until performed on an authorised RunPod endpoint. See [CV model and RunPod setup](CV_MODEL_RUNPOD.md) for the implementation, training and evaluation workflow.
 
 The latest project separately supports optional Google Gemini questionnaire generation and Lumi answer rewriting. Local processing remains the default. Both external paths require a separate unchecked consent control and a reviewed profile. The questionnaire discloses that work/project details and basic answers are sent; Lumi discloses the message and reviewed CV profile. Recruiter chat cannot send candidate data to Gemini. Consent to share with an employer does not authorize an external AI processor. Do not mistake optional Gemini calls for a custom-trained CV model.
 
-This implementation improves intake, review and privacy while preserving the latest account settings, location-based job discovery, interviews, questionnaire, comparison and language features. It does not train a model, claim model accuracy, connect an unknown CV-model endpoint, or advertise legal certification. Selecting and evaluating a CV summarization model remains a separate decision.
+This implementation preserves account settings, job discovery, interviews, questionnaires, comparison and language features. It includes an optional pretrained model integration and scripts for later CV-specific adapter training. It does not claim an executed training run, measured model accuracy or legal certification. The default remains local until a dedicated CV endpoint is configured.
 
 ### Contract for connecting your trained model
 

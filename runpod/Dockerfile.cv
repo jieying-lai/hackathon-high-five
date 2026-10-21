@@ -1,0 +1,8 @@
+FROM pytorch/pytorch:2.8.0-cuda12.8-cudnn9-runtime
+WORKDIR /app
+COPY runpod/requirements-cv.txt /app/requirements-cv.txt
+RUN python -m pip install --no-cache-dir -r requirements-cv.txt
+COPY src/cv_model_contract.py /app/src/cv_model_contract.py
+COPY runpod/handler.py runpod/cv_worker.py /app/runpod/
+ENV PYTHONUNBUFFERED=1 HF_HOME=/runpod-volume/huggingface TOKENIZERS_PARALLELISM=false
+CMD ["python", "-u", "/app/runpod/handler.py"]

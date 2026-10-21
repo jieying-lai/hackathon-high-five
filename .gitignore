@@ -25,3 +25,5 @@ SDC_Hackathon_2026_Master_Plan_and_Setup_Guide.docx
 source-manifest*.json
 *.db-wal
 *.db-shm
+model-artifacts/
+training-data/private/

@@ -77,6 +77,45 @@ class VaultRouteTests(unittest.TestCase):
         self.assertEqual(self.owner.get("/workspace").status_code, 200)
         self.assertEqual(self.owner.get("/api/cv/me/export").status_code, 200)
 
+    def test_cv_ai_requires_consent_ownership_and_csrf(self):
+        import cv_ai
+        with patch.object(cv_ai, 'status', return_value={'available': True}), patch.object(cv_ai, 'request_draft') as request:
+            self.assertEqual(self.owner.post('/api/cv/me/organise', json={}).status_code, 403)
+            self.assertEqual(self.change(self.owner, '/api/cv/me/organise', {}).status_code, 400)
+            self.assertEqual(self.change(self.stranger, '/api/cv/me/organise', {'external_ai_consent': True}).status_code, 404)
+        request.assert_not_called()
+
+    def test_cv_ai_draft_revokes_shares_and_needs_review(self):
+        import cv_ai
+        from cv_model_contract import SCALARS, SECTIONS, MODEL_ID
+        share = self.grant()
+        prior = cv_engine.get_user_cv('owner')
+        def result(pages):
+            draft = {'fields': {k: None for k in SCALARS}, 'sections': {k: [] for k in SECTIONS}}
+            draft['sections']['summary'] = [{'text': pages[0].splitlines()[0], 'page': 1}]
+            return draft, {'model_id': MODEL_ID}
+        with patch.object(cv_ai, 'status', return_value={'available': True}), patch.object(cv_ai, 'request_draft', side_effect=result):
+            response = self.change(self.owner, '/api/cv/me/organise', {'external_ai_consent': True,
+                'expected_file_sha256': self.digest, 'expected_vault_version': prior['structured_cv']['vault_version_id']})
+        self.assertEqual(response.status_code, 200, response.get_json())
+        self.assertEqual(response.get_json()['cv']['structured_cv']['review_status'], 'needs_review')
+        self.assertEqual(self.recipient.get(share['url']).status_code, 404)
+
+    def test_cv_ai_cannot_overwrite_an_edit_made_during_inference(self):
+        import cv_ai
+        from cv_model_contract import SCALARS, SECTIONS, MODEL_ID
+        prior = cv_engine.get_user_cv('owner')
+        def concurrent_edit(pages):
+            cv_engine.update_user_structured_cv('owner', {'full_name': 'Owner correction', 'expected_file_sha256': self.digest})
+            draft = {'fields': {k: None for k in SCALARS}, 'sections': {k: [] for k in SECTIONS}}
+            draft['sections']['summary'] = [{'text': pages[0].splitlines()[0], 'page': 1}]
+            return draft, {'model_id': MODEL_ID}
+        with patch.object(cv_ai, 'status', return_value={'available': True}), patch.object(cv_ai, 'request_draft', side_effect=concurrent_edit):
+            response = self.change(self.owner, '/api/cv/me/organise', {'external_ai_consent': True,
+                'expected_file_sha256': self.digest, 'expected_vault_version': prior['structured_cv']['vault_version_id']})
+        self.assertEqual(response.status_code, 409)
+        self.assertEqual(cv_engine.get_user_cv('owner')['structured_cv']['full_name'], 'Owner correction')
+
     def test_csrf_and_cross_origin_mutations_fail_closed(self):
         self.assertEqual(self.owner.delete("/api/cv/me").status_code, 403)
         result = self.owner.delete("/api/cv/me", headers={"X-CSRF-Token": "test-token", "Origin": "https://evil.example"})

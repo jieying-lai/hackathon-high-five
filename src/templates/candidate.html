@@ -249,7 +249,7 @@
           </div>
 
           <div class="rounded-2xl border border-amber-300 bg-amber-50 p-4 text-sm text-amber-950" role="note">
-            <b>Hackathon demo — use fictional CVs only.</b> This prototype uses a local, rule-based PDF parser; it is not a trained AI model and does not verify qualifications. Do not upload real names, contact details, identity documents, or confidential information. Text-based PDFs work best; image-only scans need OCR before upload.
+            <b>Hackathon demo — use fictional CVs only.</b> Uploads are extracted locally. Optional AI organisation uses a pretrained model on RunPod when connected and authorised below; it does not verify qualifications. Do not upload real personal or confidential information. Text-based PDFs work best; image-only scans need OCR before upload.
           </div>
 
 
@@ -308,6 +308,17 @@
                   <ul id="reviewWarnings" class="text-xs text-slate-600 list-disc pl-4 space-y-1"></ul>
                 </div>
 
+                <div class="rounded-2xl border border-indigo-200 bg-indigo-50/50 p-5 space-y-4" data-no-translate>
+                  <div><h3 class="font-extrabold text-base">Organise with AI <span class="chip chip-indigo">Optional</span></h3>
+                    <p class="text-sm text-slate-600 mt-2">Use a pretrained model to group experience, education and achievements into a draft supported by quotes from your PDF. Your review is still required.</p></div>
+                  <p id="cvAIAvailability" class="text-sm text-slate-600" role="status">Checking model connection…</p>
+                  <label class="flex items-start gap-3 text-sm text-slate-700"><input id="cvAIConsent" type="checkbox" />
+                    <span>Allow my PDF's extracted text, including any contact details, to be processed by the configured RunPod service for this request. This app does not use it for model training. RunPod may retain job data temporarily.</span></label>
+                  <p class="text-xs text-slate-500">This rebuilds the draft from the PDF, replaces saved edits and ends existing sharing. Failed requests keep your current draft.</p>
+                  <button id="organiseCvBtn" type="button" onclick="organiseWithAI()" class="btn btn-primary" disabled>Organise my CV with AI</button>
+                  <p id="cvAIStatus" class="text-sm font-semibold text-slate-600" role="status" aria-live="polite"></p>
+                </div>
+
                 <!-- Extractive summary -->
                 <div class="tint tint-indigo rounded-2xl p-4 space-y-2">
                   <div class="flex items-center justify-between">
@@ -359,6 +370,7 @@
                   <div id="skillChips" class="flex flex-wrap gap-2 mb-2.5"></div>
                   <input id="skillInput" class="input" placeholder="Add a skill and press Enter (e.g. Python Data Analysis)" list="skillSuggest" />
                   <datalist id="skillSuggest"></datalist>
+                  <div id="cvAISuggestedSkills" class="mt-4 text-sm text-slate-600 hidden"></div>
                 </div>
 
                 <details class="rounded-2xl bg-slate-50 border border-slate-200 p-4">
@@ -992,6 +1004,7 @@
     let skills = [], scenario = 'moderate', trend = null, roles = [], selected = 0;
     let analysed = false; const visited = new Set(['dash']); let answers = {}; let current = 'dash';
     let uploadBusy = false, profileBusy = false, applicationBusy = false, statsBusy = false, profileDirty = false, applyReturnFocus = null;
+    let cvAIAvailable = false;
 
     const ringColor = s => s >= 80 ? '#10b981' : s >= 60 ? '#6366f1' : '#f59e0b';
     const rm = n => 'RM ' + Number(n).toLocaleString();
@@ -1171,6 +1184,8 @@
       deleteCvBtn.disabled = busy || !cvRecord;
       document.querySelectorAll('[data-revoke-share]').forEach(b => { b.disabled = busy || applicationBusy; });
       saveProfileBtn.textContent = profileBusy ? 'Saving…' : 'Save reviewed profile →';
+      organiseCvBtn.disabled = busy || !cvRecord || !cvAIAvailable;
+      cvAIConsent.disabled = busy || !cvRecord || !cvAIAvailable;
     }
 
     function markProfileDirty() {
@@ -1199,6 +1214,8 @@
       if (!r.ok) throw new Error(r.data.message || 'Could not load your vault. Please try again.');
       cvRecord = r.data.cv || null;
       samplePdfs = r.data.samples || [];
+      cvAIAvailable = r.data.ai?.available === true;
+      cvAIAvailability.textContent = r.data.ai?.message || 'AI organisation is not connected yet. Local extraction is available.';
       profileDirty = false;
       renderSamplePdfs();
       renderCvVault();
@@ -1329,6 +1346,10 @@
       renderSkills();
       renderEvidence(st);
       renderParserAnalytics(st.parser_analytics);
+      cvAIConsent.checked = false;
+      const aiSkills = st.ai_suggested_skills || [];
+      cvAISuggestedSkills.classList.toggle('hidden', !aiSkills.length);
+      cvAISuggestedSkills.innerHTML = aiSkills.length ? '<b>AI suggestions — review before adding</b><ul class="list-disc pl-5 mt-2">' + aiSkills.map(item => `<li>${esc(item.text)} <span class="text-slate-500">(PDF page ${esc(item.page)})</span></li>`).join('') + '</ul><p class="mt-2">Use the skill field above to add only supported skills. These suggestions are not used for matching automatically.</p>' : '';
       const logs = cvRecord?.access_logs || [];
       const logCount = cvRecord?.access_logs_total ?? logs.length;
       accessCountBadge.textContent = `${logCount} access${logCount === 1 ? '' : 'es'}`;
@@ -1356,6 +1377,27 @@
     async function refreshVaultDependents() {
       try { await Promise.all([runAnalysis(), loadJobs(), loadNamedShares()]); }
       catch (error) { toast('Your vault change was saved, but some related data could not refresh. Please reload.', 'err'); }
+    }
+
+    async function organiseWithAI() {
+      if (!cvRecord || uploadBusy || profileBusy || statsBusy || !cvAIAvailable) return;
+      if (!cvAIConsent.checked) { toast('Confirm RunPod processing first.', 'err'); cvAIConsent.focus(); return; }
+      if (profileDirty) return toast('Save or discard your unsaved edits before rebuilding the draft.', 'err');
+      if (!confirm('Rebuild this draft from the PDF using RunPod? This replaces saved edits and ends current employer and recipient sharing. You must review and share again.')) return;
+      profileBusy = true;
+      updateVaultControls();
+      cvAIStatus.textContent = 'Organising your CV… the model may need a moment to start.';
+      try {
+        const r = await postJson('/api/cv/me/organise', {external_ai_consent: true,
+          expected_file_sha256: cvRecord.file_sha256,
+          expected_vault_version: cvRecord.structured_cv.vault_version_id});
+        if (!r.ok || !r.data.cv) throw new Error(r.data.message || 'AI organisation failed. Your current draft is unchanged.');
+        cvRecord = r.data.cv; profileDirty = false;
+        renderCvVault();
+        cvAIStatus.textContent = 'AI draft ready. Check the source evidence, make corrections, then save your reviewed profile.';
+        await refreshVaultDependents();
+      } catch (error) { cvAIStatus.textContent = error.message; }
+      finally { profileBusy = false; cvAIConsent.checked = false; updateVaultControls(); }
     }
 
     async function uploadPdfRequest(request, label) {

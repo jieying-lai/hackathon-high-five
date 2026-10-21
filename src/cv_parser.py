@@ -373,5 +373,5 @@ def parse_and_summarize_pdf_cv(pdf_bytes: bytes, filename: str,
     fields.update(structured_dimensions(fields))
     fields["experience_known"] = fields["years_experience"] is not None
     return True, "PDF extracted locally. Review and confirm the organised draft before sharing.", {
-        "page_count": page_count, "raw_text": raw_text, "structured_cv": fields,
+        "page_count": page_count, "raw_text": raw_text, "structured_cv": fields, "page_texts": page_texts,
     }

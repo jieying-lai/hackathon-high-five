@@ -1,0 +1,10 @@
+# Only the inference worker and its shared contract enter the build context.
+# Excludes .env, databases, uploaded CVs, local snapshots and model artifacts.
+**
+!runpod/
+!runpod/Dockerfile.cv
+!runpod/requirements-cv.txt
+!runpod/handler.py
+!runpod/cv_worker.py
+!src/
+!src/cv_model_contract.py
