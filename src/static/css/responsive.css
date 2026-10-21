@@ -1,4 +1,27 @@
 /* Minimal responsive corrections. Original theme, typography, spacing and desktop composition are retained. */
+.learning-step-completed{filter:grayscale(1)}
+.learning-step-completed>article{background:#f1f5f9;border-color:#cbd5e1;box-shadow:none}
+@media(min-width:1280px){
+ .responsive-ui .portal-desktop-header{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr)}
+ .responsive-ui .portal-desktop-header .desktop-navigation{justify-self:center}
+ .responsive-ui .portal-desktop-header .portal-account{justify-self:end;max-width:100%;flex-wrap:wrap;justify-content:flex-end}
+ .responsive-ui .portal-desktop-header .portal-brand{min-width:0;max-width:100%}
+ .responsive-employer .portal-desktop-header{padding:.65rem 1.1rem;gap:.65rem}
+ .responsive-employer .portal-desktop-header .portal-account{flex-wrap:nowrap;align-items:center;gap:.5rem;max-width:none}
+ .responsive-employer .portal-desktop-header .desktop-navigation{gap:.2rem}
+ .responsive-employer .portal-desktop-header .desktop-navigation>.nav-item,
+ .responsive-employer .portal-desktop-header .nav-group summary{font-size:.78rem;padding:.65rem .6rem;gap:.4rem}
+ .responsive-employer .portal-desktop-header .portal-account>.btn{height:42px;font-size:.75rem;padding:0 .9rem;white-space:nowrap;flex-shrink:0;border-radius:14px}
+ .responsive-employer .portal-desktop-header .notification-button{width:40px;height:40px;min-width:40px;min-height:40px;padding:0;flex-shrink:0}
+ .responsive-employer .portal-desktop-header .notification-label{display:none}
+ .responsive-employer .portal-desktop-header [data-language-slot]{display:flex;align-items:center;flex-shrink:0}
+ .responsive-employer .portal-desktop-header .language-toolbar.language-inline{height:40px;padding:0 .55rem;gap:.3rem;font-size:.75rem;background:#f8fafc;border-color:#dbe3ef;border-radius:14px;box-shadow:none}
+ .responsive-employer .portal-desktop-header .language-toolbar.language-inline select{height:38px;min-height:0;width:54px;max-width:54px;padding:0;font-size:.75rem;line-height:normal}
+ .responsive-employer .portal-desktop-header .language-globe{width:16px;height:16px}
+ .responsive-employer .portal-desktop-header .portal-user{height:44px;max-width:170px;padding:.3rem .45rem;border-radius:14px;gap:.45rem}
+ .responsive-employer .portal-desktop-header #uAvatar{width:32px;height:32px;font-size:.9rem;border-radius:10px}
+ .responsive-employer .portal-desktop-header .portal-brand img{width:34px;height:34px}
+}
 .notification-preview{position:fixed;z-index:80;width:min(340px,calc(100vw - 24px));max-height:calc(100dvh - 130px);overflow-y:auto;padding:18px;border:1px solid #c7d2fe;border-radius:20px;background:#fffffff5;color:#334155;box-shadow:0 16px 44px #312e8125;backdrop-filter:blur(16px);font-size:13px}
 .notification-preview[hidden]{display:none}
 .notification-preview h2{font-size:14px;font-weight:800;margin-bottom:12px}

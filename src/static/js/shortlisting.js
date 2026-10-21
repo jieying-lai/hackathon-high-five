@@ -1,11 +1,10 @@
 /* Shortlists contain only explicit HR decisions for a specific vacancy. */
 (function(root,factory){const api=factory();if(typeof module==='object'&&module.exports)module.exports=api;else root.HRShortlist=api;})(typeof window==='undefined'?globalThis:window,function(){
  const esc=value=>String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+ const generated=new Map();
+ const questionKey=c=>JSON.stringify([c.id,c.vacancy_id,c.matched_required,c.to_confirm,c.projects]);
  function questions(candidate){
-  const confirmed=(candidate.matched_required||[]).slice(0,2).map(skill=>`Your CV lists ${skill}. Describe a project where you used it, your personal contribution, and the result.`);
-  const followUps=candidate.follow_up_questions||[];
-  const projectPrompts=followUps.filter(question=>question.startsWith('In "'));
-  return [...new Set([...confirmed,...projectPrompts,...followUps])].slice(0,5);
+  return generated.get(questionKey(candidate))||[];
  }
  function rows(candidates,decisions,vacancy=''){
   const unique=new Map();
@@ -28,12 +27,29 @@
    <div class="flex flex-wrap gap-3"><button type="button" class="btn btn-hr" data-shortlist-action="invite">Invite to interview</button><button type="button" class="btn btn-soft" data-shortlist-action="remove">Remove from shortlist</button></div>
   </div><div class="shortlist-face shortlist-back glass rounded-3xl p-6 space-y-4" aria-hidden="true" inert>
    <div class="flex flex-wrap justify-between items-start gap-3"><div><h3 class="font-extrabold">CV-based interview questions</h3><p data-no-translate class="text-sm font-bold text-teal-700">${esc(c.name)}</p><p class="text-sm">${esc(c.position)}</p></div><button type="button" class="btn btn-soft" data-shortlist-action="back">Back to candidate ↻</button></div>
-   <p class="hint">Suggested prompts based on shared CV evidence and role requirements. Adapt them during the interview.</p>
-   ${questions(c).length?`<ol class="list-decimal pl-5 space-y-3">${questions(c).map(q=>`<li class="text-sm leading-relaxed">${esc(q)}</li>`).join('')}</ol>`:'<p class="hint">Not enough shared CV evidence to tailor questions. Review the candidate profile first.</p>'}
+   <div data-interview-question-list>${questions(c).length?`<ol class="list-decimal pl-5 space-y-3" data-no-translate>${questions(c).map(q=>`<li class="text-sm leading-relaxed">${esc(q)}</li>`).join('')}</ol>`:''}</div>
+   <div class="space-y-3"><button type="button" class="btn btn-hr" data-shortlist-action="regenerate">Auto generate</button><p class="hint" role="status" aria-live="polite" data-question-status></p></div>
   </div></div></article>`).join(''):'<div class="glass rounded-3xl p-8 space-y-2"><h3 class="font-extrabold">No shortlisted candidates yet.</h3><p class="hint">Select Shortlist in Candidate Screening to add candidates here.</p></div>';
-  container.querySelectorAll('[data-shortlist-action]').forEach(button=>button.addEventListener('click',()=>{
+  container.querySelectorAll('[data-shortlist-action]').forEach(button=>button.addEventListener('click',async()=>{
    const row=selectedRows[Number(button.closest('[data-shortlist-index]').dataset.shortlistIndex)];
    if(!row||decisions[String(row.vacancy_id)+'|'+row.id]!=='Shortlist')return;
+   if(button.dataset.shortlistAction==='regenerate'){
+    const card=button.closest('[data-shortlist-index]'),status=card.querySelector('[data-question-status]');
+    const tr=text=>options.translate?.(text)??text;
+    button.disabled=true;button.setAttribute('aria-busy','true');
+    status.textContent=tr('Generating new interview questions…');
+    try{
+     const response=await options.onGenerate(row,'',questions(row));
+     if(!card.isConnected)return;
+     if(!response.ok||!response.data.ok)throw Error(response.data.message||'Could not generate new questions. Your current questions are unchanged. Please retry.');
+     if(!Array.isArray(response.data.questions)||!response.data.questions.length)throw Error('Could not generate new questions. Your current questions are unchanged. Please retry.');
+     generated.set(questionKey(row),response.data.questions);
+     card.querySelector('[data-interview-question-list]').innerHTML='<ol class="list-decimal pl-5 space-y-3" data-no-translate>'+response.data.questions.map(q=>`<li class="text-sm leading-relaxed">${esc(q)}</li>`).join('')+'</ol>';
+     status.textContent=tr('New AI interview questions are ready. Review before use.');
+    }catch(error){if(card.isConnected)status.textContent=tr(error.message||'Could not generate new questions. Your current questions are unchanged. Please retry.');}
+    finally{button.disabled=false;button.removeAttribute('aria-busy');}
+    return;
+   }
    if(['flip','back'].includes(button.dataset.shortlistAction)){
     const card=button.closest('[data-shortlist-index]'),flipped=button.dataset.shortlistAction==='flip';
     card.classList.toggle('is-flipped',flipped);

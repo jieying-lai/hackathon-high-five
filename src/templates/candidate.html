@@ -100,7 +100,7 @@
     }
   </style>
   <link rel="stylesheet" href="/static/css/profile.css?v=20261021-layout-1" />
-  <link rel="stylesheet" href="/static/css/responsive.css?v=20261021-notification-preview" />
+  <link rel="stylesheet" href="/static/css/responsive.css?v=20261021-learning-completed" />
   <link rel="stylesheet" href="/static/css/page-outline.css?v=20261021-outline-offset" />
 </head>
 <body class="responsive-ui responsive-talent min-h-screen">
@@ -146,6 +146,7 @@
       </header>
 
       <main class="p-4 sm:p-6 lg:p-8 max-w-6xl mx-auto space-y-6" style="padding-bottom: 140px">
+        <aside id="savedLearningReminder" class="tint tint-indigo rounded-2xl p-4" aria-live="polite" hidden></aside>
         <div class="flex flex-wrap items-end justify-between gap-3">
           <div><div id="pgEyebrow" class="text-[11px] font-extrabold uppercase tracking-wider text-indigo-600"></div>
             <h1 id="pgTitle" class="text-2xl sm:text-3xl font-extrabold tracking-tight"></h1></div>
@@ -717,9 +718,10 @@
             <div class="flex items-center gap-3"><span class="text-xs font-bold text-slate-500">Target role</span><select data-outline-label="Target role" id="planRole" onchange="selectRole(this.value,false)" class="input !w-auto"></select></div>
             <div id="planStats" class="flex gap-2"></div>
           </div>
+          <div id="learningProgress" class="glass rounded-2xl p-5 space-y-3"></div>
           <div class="grid lg:grid-cols-3 gap-6">
             <div class="lg:col-span-2 glass rounded-3xl p-6"><div class="text-sm font-extrabold mb-5">Step-by-step path</div><div data-outline-label="Learning pathway" id="timeline" class="timeline space-y-5"></div></div>
-            <div class="space-y-4"><div class="text-[11px] font-extrabold uppercase tracking-wider text-teal-700">SDG alignment</div><div id="planSdg" class="space-y-4"></div></div>
+            <div class="space-y-4"><div id="learningGoal"></div><div class="text-[11px] font-extrabold uppercase tracking-wider text-teal-700">SDG alignment</div><div id="planSdg" class="space-y-4"></div></div>
           </div>
         </section>
 
@@ -907,6 +909,7 @@
   </div>
 
   <script src="/static/js/page-position.js?v=20261021-restore"></script>
+  <script src="/static/js/learning-path.js?v=20261021-learning-completed"></script>
   <script src="/static/js/common.js?v=20261021-nav-restored"></script>
 
   <script src="/static/js/vault-shares.js"></script>
@@ -2343,15 +2346,9 @@
     function renderPlan() {
       const r = roles[selected]; if (!r) return;
       planStats.innerHTML = `<span class="chip chip-amber">⏳ ${r.estimated_total_hours} hours</span><span class="chip chip-indigo">${r.ordered_pathway.length} steps</span>`;
-      timeline.innerHTML = r.ordered_pathway.length ? r.ordered_pathway.map(s => `
-        <div class="relative pl-12"><span class="step-dot absolute left-0 top-0 bg-gradient-to-br from-indigo-500 to-pink-500 text-white">${s.step}</span>
-          <div class="tint tint-indigo rounded-2xl p-4 space-y-2">
-            <div class="flex flex-wrap items-center justify-between gap-2"><span class="text-[11px] font-extrabold text-indigo-600">${esc(s.phase)} · ${esc(s.difficulty)}</span><span class="chip chip-amber">${s.hours} h · ${esc(s.cost_type)}</span></div>
-            <div class="text-sm font-extrabold">${esc(s.target_skill)}</div>
-            <div class="text-xs text-slate-600">${esc(s.course_title)} · <i>${esc(s.provider)}</i></div>
-            <div class="flex items-center justify-between pt-1"><div class="flex gap-1.5 flex-wrap"><span class="chip chip-teal">${esc(s.malaysia_badge)}</span><span class="chip chip-emerald">${esc(s.sdg)}</span></div>
-              <a href="${esc(s.url)}" target="_blank" rel="noopener" class="text-xs font-extrabold text-indigo-600 hover:underline">Open course ↗</a></div>
-          </div></div>`).join('') : '<div class="text-sm font-bold text-emerald-700">🎉 You already cover every core skill for this role.</div>';
+      LearningPath.render({role:r, identity:user.unique_uid, timeline,
+        progress:document.getElementById('learningProgress'), goal:document.getElementById('learningGoal'),
+        refresh:renderPlan, locale:window.careerLensLocale});
       planSdg.innerHTML = r.sdg_tags.map(s => `<div class="tint tint-teal rounded-2xl p-4"><div class="text-sm font-extrabold text-teal-900">🌱 ${esc(s.code)}</div><div class="text-xs font-bold">${esc(s.name)}</div><p class="text-[11px] text-slate-600 mt-1">${esc(s.reason)}</p></div>`).join('');
     }
 
@@ -2391,6 +2388,7 @@
       const me = await api('/api/auth/me'); user = me.data.user;
       if (!user) return;
       if (user.role === 'hr_company') { window.location.href = '/workspace'; return; }
+      LearningPath.reminder({identity:user.unique_uid, container:document.getElementById('savedLearningReminder'), onChange:()=>{ if (roles[selected]) renderPlan(); }});
       window.PagePosition?.initialize({identity:user.unique_uid,portal:'talent',getView:()=>current,isValid:id=>typeof id==='string'&&!!document.getElementById('tab-'+id)});
       uAvatar.textContent = user.full_name.charAt(0).toUpperCase(); uName.textContent = user.full_name; uUid.textContent = user.unique_uid;
       renderAccountProfileCard();
@@ -2413,7 +2411,7 @@
     init().catch(error => toast(error.message || 'Unable to load CareerLens. Refresh and retry.', 'err'));
   </script>
 <script src="/static/js/questionnaire-i18n.js"></script>
-<script src="/static/js/portal-i18n.js?v=20261021-notification-preview"></script>
+<script src="/static/js/portal-i18n.js?v=20261021-learning-reminder"></script>
 <script src="/static/js/member3.js?v=20261021-continuous"></script>
 <script>
   let generatedVerificationQ = [];

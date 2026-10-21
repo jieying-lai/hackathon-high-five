@@ -611,6 +611,17 @@ def api_hr_heatmap():
     return jsonify({"ok": True, **hr_engine.get_heatmap(_owner()), "assignments": hr_engine.list_assignments(_owner())})
 
 
+@app.route('/api/hr/interview-questions', methods=['POST'])
+@api_role('hr_company')
+def api_hr_interview_questions():
+    from hr_interview_ai import generate
+    try:
+        result = generate(_owner(), json_object())
+        return jsonify(ok=True, **result)
+    except questionnaire_engine.QuestionnaireError as exc:
+        return jsonify(ok=False, message=str(exc)), exc.status
+
+
 @app.route("/api/hr/assignments", methods=["POST"])
 @api_role("hr_company")
 def api_hr_assign():
