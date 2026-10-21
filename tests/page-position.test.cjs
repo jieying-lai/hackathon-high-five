@@ -1,8 +1,8 @@
 const assert=require('node:assert/strict');
 const create=require('../src/static/js/page-position.js');
-function browser(storage=new Map(),maxY=5000){
+function browser(storage=new Map(),maxY=5000,navigationType='reload'){
  const handlers={},docHandlers={},timers=new Map();let timerId=0;
- const win={location:{pathname:'/workspace'},history:{},scrollX:0,scrollY:0,maxY,
+ const win={performance:{getEntriesByType:()=>[{type:navigationType}]},location:{pathname:'/workspace'},history:{},scrollX:0,scrollY:0,maxY,
   sessionStorage:{getItem:key=>storage.get(key)||null,setItem:(key,value)=>storage.set(key,value),removeItem:key=>storage.delete(key)},
   document:{body:{},visibilityState:'visible',addEventListener:(type,fn)=>docHandlers[type]=fn},
   addEventListener:(type,fn)=>handlers[type]=fn,
@@ -25,6 +25,8 @@ function browser(storage=new Map(),maxY=5000){
  reload.maxY=5000;reload.resize();assert.equal(reload.scrollY,930,'Late layout changes restore original position');
  reload.fire('wheel');reload.scrollY=1200;reload.fire('scroll');reload.flush(100);assert.equal(JSON.parse(store.get(key)).y,1200);
  assert.equal(reload.resize,null,'User interaction stops automatic scrolling');
+ const loginStore=new Map(store),login=browser(loginStore,5000,'navigate'),loginApi=create(login);view='dash';
+ loginApi.initialize(options);await loginApi.restore(async id=>{view=id},'dash');assert.equal(view,'dash','Fresh login starts at Dashboard, not a stale profile page');
  const other=browser(store),otherApi=create(other);view='dash';otherApi.initialize({...options,identity:'user-b'});
  await otherApi.restore(async id=>{view=id},'dash');assert.equal(view,'dash');assert.equal(other.scrollY,0);
  const malformed=browser(new Map([[key,'{"view":"missing","x":0,"y":1000}']])),malformedApi=create(malformed);

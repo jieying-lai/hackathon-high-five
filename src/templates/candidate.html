@@ -99,7 +99,7 @@
       text-transform: uppercase;
     }
   </style>
-  <link rel="stylesheet" href="/static/css/profile.css?v=20261021-layout-1" />
+  <link rel="stylesheet" href="/static/css/profile.css?v=20261021-separate-pages-2" />
   <link rel="stylesheet" href="/static/css/responsive.css?v=20261021-header-original-size" />
   <link rel="stylesheet" href="/static/css/page-outline.css?v=20261021-menu-outline-v2" />
   <link rel="stylesheet" href="/static/css/pomodoro.css?v=20261021-study-buddy" />
@@ -299,7 +299,7 @@
               </div>
               <div class="p-3.5 rounded-2xl bg-white/80 border border-slate-200/80 shadow-xs">
                 <div class="text-[10px] font-extrabold text-slate-400 uppercase tracking-wider">Contact Phone</div>
-                <div id="accCardPhone" class="text-xs font-bold text-slate-800 mt-1 truncate">+60 12-345 6789</div>
+                <div id="accCardPhone" class="text-xs font-bold text-slate-800 mt-1 truncate">Not added</div>
               </div>
               <div class="p-3.5 rounded-2xl bg-white/80 border border-slate-200/80 shadow-xs">
                 <div class="text-[10px] font-extrabold text-slate-400 uppercase tracking-wider">Location</div>
@@ -312,250 +312,29 @@
               <span class="text-lg shrink-0">💬</span>
               <div>
                 <div class="text-[10px] font-extrabold uppercase tracking-wider text-indigo-700">Professional Bio &amp; Aspirations</div>
-                <p id="accCardBio" class="text-xs text-slate-700 mt-0.5 leading-relaxed font-medium">Aspiring professional actively reskilling in digital analytics and sustainable technologies.</p>
+                <p id="accCardBio" class="text-xs text-slate-700 mt-0.5 leading-relaxed font-medium">Add a short introduction and your career goals.</p>
               </div>
             </div>
           </div>
 
-          <!-- Section: Achievements & SDG 8 Career Milestones Showcase -->
-          <div data-outline-label="Achievements & Milestones" class="glass rounded-3xl p-6 sm:p-7 space-y-4 border border-slate-200/80 shadow-xs">
-            <div class="flex flex-wrap items-center justify-between gap-3 border-b border-slate-200/70 pb-3">
-              <div>
-                <div class="text-[11px] font-extrabold uppercase tracking-wider text-emerald-600">Verified Credentials</div>
-                <h3 class="text-lg font-extrabold text-slate-900">🏆 Achievements &amp; SDG 8 Passport Milestones</h3>
-              </div>
-              <span class="chip chip-emerald !text-[11px] font-bold">SDG 8 Champion · Level 3</span>
-            </div>
-
-            <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-3.5">
-              <div class="p-4 rounded-2xl bg-gradient-to-br from-emerald-50 to-teal-50 border border-emerald-200/80 shadow-xs flex items-center gap-3">
-                <div class="h-12 w-12 rounded-xl bg-emerald-600 text-white font-black text-xl grid place-items-center shadow-xs">🌱</div>
-                <div>
-                  <div class="text-[10px] font-black uppercase text-emerald-800">SDG 8 Passport</div>
-                  <div class="text-sm font-extrabold text-slate-900">Decent Work Verified</div>
-                  <div class="text-[10px] text-slate-500">Tier 1 Ethical Readiness</div>
-                </div>
-              </div>
-
-              <div class="p-4 rounded-2xl bg-gradient-to-br from-indigo-50 to-purple-50 border border-indigo-200/80 shadow-xs flex items-center gap-3">
-                <div class="h-12 w-12 rounded-xl bg-indigo-600 text-white font-black text-xl grid place-items-center shadow-xs">🎯</div>
-                <div>
-                  <div class="text-[10px] font-black uppercase text-indigo-800">Skill Readiness</div>
-                  <div class="text-sm font-extrabold text-slate-900">88% Benchmark Match</div>
-                  <div class="text-[10px] text-slate-500">Ahead of 78% of peers</div>
-                </div>
-              </div>
-
-              <div class="p-4 rounded-2xl bg-gradient-to-br from-amber-50 to-orange-50 border border-amber-200/80 shadow-xs flex items-center gap-3">
-                <div class="h-12 w-12 rounded-xl bg-amber-500 text-white font-black text-xl grid place-items-center shadow-xs">★</div>
-                <div>
-                  <div class="text-[10px] font-black uppercase text-amber-800">AI Verified Candidate</div>
-                  <div class="text-sm font-extrabold text-slate-900">Pre-Screened Talent</div>
-                  <div class="text-[10px] text-slate-500">Priority Review by HR</div>
-                </div>
-              </div>
-
-              <div class="p-4 rounded-2xl bg-gradient-to-br from-pink-50 to-rose-50 border border-pink-200/80 shadow-xs flex items-center gap-3">
-                <div class="h-12 w-12 rounded-xl bg-pink-600 text-white font-black text-xl grid place-items-center shadow-xs">🤝</div>
-                <div>
-                  <div class="text-[10px] font-black uppercase text-pink-800">Data Sovereignty</div>
-                  <div class="text-sm font-extrabold text-slate-900">PDPA Compliant</div>
-                  <div class="text-[10px] text-slate-500">100% Consent Controlled</div>
-                </div>
-              </div>
+          <div class="glass rounded-3xl p-6 sm:p-7 space-y-4" data-outline-label="Achievements & skills">
+            <h2 class="text-lg font-extrabold">Achievements &amp; professional skills</h2>
+            <p class="text-sm text-slate-500">From your saved CV profile. These details are self-reported, not independently verified.</p>
+            <div id="profileHighlights" class="grid md:grid-cols-2 gap-5"></div>
+            <div class="flex flex-wrap gap-3 border-t border-slate-200 pt-4">
+              <button class="btn btn-soft" onclick="showTab('cv-review')">Edit CV details →</button>
+              <button class="btn btn-soft" onclick="showTab('passport')">Learning achievements →</button>
             </div>
           </div>
-
-          <!-- Section: Enrolled Courses Through CareerLens to Respective Providers -->
-          <div data-outline-label="Enrolled Courses" class="glass rounded-3xl p-6 sm:p-7 space-y-4 border border-slate-200/80 shadow-xs">
-            <div class="flex flex-wrap items-center justify-between gap-3 border-b border-slate-200/70 pb-3">
-              <div>
-                <div class="text-[11px] font-extrabold uppercase tracking-wider text-indigo-600">Learning &amp; Up-skilling</div>
-                <h3 class="text-lg font-extrabold text-slate-900">🎓 Enrolled Courses &amp; Provider Certifications</h3>
-                <p class="text-xs text-slate-500 mt-0.5">Courses and reskilling programs enrolled through CareerLens AI to external providers</p>
-              </div>
-              <button type="button" onclick="showTab('plan')" class="btn btn-primary !py-2 !px-4 !text-xs font-bold">
-                + Explore More Courses
-              </button>
-            </div>
-
-            <div id="enrolledCoursesList" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-3.5">
-              <!-- Course Card 1 -->
-              <div class="p-4 rounded-2xl bg-white border border-slate-200/90 shadow-xs flex flex-col justify-between space-y-3">
-                <div>
-                  <div class="flex items-center justify-between gap-2 mb-1.5">
-                    <span class="chip chip-emerald !text-[9px]">HRD Corp Claimable</span>
-                    <span class="text-[10px] font-bold text-slate-400">40 Hours</span>
-                  </div>
-                  <h4 class="text-xs font-extrabold text-slate-900 leading-snug">AI-Powered Financial Analytics &amp; ESG Reporting</h4>
-                  <div class="text-[11px] text-slate-500 mt-1">Provider: <b>Digital Penang / HRD Corp</b></div>
-                </div>
-                <div class="space-y-2 pt-2 border-t border-slate-100">
-                  <div class="flex items-center justify-between text-[11px]">
-                    <span class="text-slate-500 font-bold">Progress:</span>
-                    <span class="text-emerald-700 font-black">75% Completed</span>
-                  </div>
-                  <div class="w-full h-2 rounded-full bg-slate-100 overflow-hidden">
-                    <div class="h-full bg-emerald-500 rounded-full" style="width: 75%"></div>
-                  </div>
-                  <a href="https://hrdcorp.gov.my/" target="_blank" rel="noopener" class="w-full btn btn-soft !py-1.5 !text-center !text-[11px] font-bold block mt-2">
-                    Open Provider Portal ↗
-                  </a>
-                </div>
-              </div>
-
-              <!-- Course Card 2 -->
-              <div class="p-4 rounded-2xl bg-white border border-slate-200/90 shadow-xs flex flex-col justify-between space-y-3">
-                <div>
-                  <div class="flex items-center justify-between gap-2 mb-1.5">
-                    <span class="chip chip-indigo !text-[9px]">Coursera / MDEC</span>
-                    <span class="text-[10px] font-bold text-slate-400">32 Hours</span>
-                  </div>
-                  <h4 class="text-xs font-extrabold text-slate-900 leading-snug">Data Analytics &amp; BI Visualization Professional Cert</h4>
-                  <div class="text-[11px] text-slate-500 mt-1">Provider: <b>Google / Coursera</b></div>
-                </div>
-                <div class="space-y-2 pt-2 border-t border-slate-100">
-                  <div class="flex items-center justify-between text-[11px]">
-                    <span class="text-slate-500 font-bold">Progress:</span>
-                    <span class="text-indigo-700 font-black">100% Completed</span>
-                  </div>
-                  <div class="w-full h-2 rounded-full bg-slate-100 overflow-hidden">
-                    <div class="h-full bg-indigo-600 rounded-full" style="width: 100%"></div>
-                  </div>
-                  <a href="https://www.coursera.org" target="_blank" rel="noopener" class="w-full btn btn-soft !py-1.5 !text-center !text-[11px] font-bold block mt-2">
-                    View Certificate ↗
-                  </a>
-                </div>
-              </div>
-
-              <!-- Course Card 3 -->
-              <div class="p-4 rounded-2xl bg-white border border-slate-200/90 shadow-xs flex flex-col justify-between space-y-3">
-                <div>
-                  <div class="flex items-center justify-between gap-2 mb-1.5">
-                    <span class="chip chip-teal !text-[9px]">TVET Malaysia</span>
-                    <span class="text-[10px] font-bold text-slate-400">24 Hours</span>
-                  </div>
-                  <h4 class="text-xs font-extrabold text-slate-900 leading-snug">Sustainable Workforce Practices &amp; Green Economy</h4>
-                  <div class="text-[11px] text-slate-500 mt-1">Provider: <b>SDG Academy Malaysia</b></div>
-                </div>
-                <div class="space-y-2 pt-2 border-t border-slate-100">
-                  <div class="flex items-center justify-between text-[11px]">
-                    <span class="text-slate-500 font-bold">Progress:</span>
-                    <span class="text-teal-700 font-black">50% In Progress</span>
-                  </div>
-                  <div class="w-full h-2 rounded-full bg-slate-100 overflow-hidden">
-                    <div class="h-full bg-teal-500 rounded-full" style="width: 50%"></div>
-                  </div>
-                  <a href="https://www.edx.org" target="_blank" rel="noopener" class="w-full btn btn-soft !py-1.5 !text-center !text-[11px] font-bold block mt-2">
-                    Resume Learning ↗
-                  </a>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Section: Comprehensive Skills Portfolio (In Full) -->
-          <div data-outline-label="Full Skills Portfolio" class="glass rounded-3xl p-6 sm:p-7 space-y-4 border border-slate-200/80 shadow-xs">
-            <div class="flex flex-wrap items-center justify-between gap-3 border-b border-slate-200/70 pb-3">
-              <div>
-                <div class="text-[11px] font-extrabold uppercase tracking-wider text-pink-600">Skills Portfolio</div>
-                <h3 class="text-lg font-extrabold text-slate-900">⚡ Comprehensive Skills &amp; Competencies (Full View)</h3>
-                <p class="text-xs text-slate-500 mt-0.5">All detected, verified, and mapped skills without truncation</p>
-              </div>
-              <span id="fullSkillCountBadge" class="chip chip-pink !text-[11px] font-bold">18 Total Skills</span>
-            </div>
-
-            <!-- Skills Categories Grid -->
-            <div class="grid md:grid-cols-2 gap-4">
-              <!-- Technical & Engineering Skills -->
-              <div class="p-4 rounded-2xl bg-white border border-slate-200/80 space-y-2.5">
-                <div class="flex items-center justify-between">
-                  <span class="text-xs font-black text-slate-800 uppercase tracking-wider">💻 Technical &amp; Engineering Skills</span>
-                  <span class="chip chip-indigo !text-[10px]">Verified</span>
-                </div>
-                <div class="flex flex-wrap gap-1.5" id="fullTechSkills">
-                  <span class="chip chip-indigo !text-xs">Python</span>
-                  <span class="chip chip-indigo !text-xs">SQL &amp; Relational DBs</span>
-                  <span class="chip chip-indigo !text-xs">Power BI</span>
-                  <span class="chip chip-indigo !text-xs">Tableau</span>
-                  <span class="chip chip-indigo !text-xs">Financial Modeling</span>
-                  <span class="chip chip-indigo !text-xs">Audit Sampling</span>
-                  <span class="chip chip-indigo !text-xs">SAP ERP</span>
-                  <span class="chip chip-indigo !text-xs">Excel Macros (VBA)</span>
-                </div>
-              </div>
-
-              <!-- Domain & ESG Expertise -->
-              <div class="p-4 rounded-2xl bg-white border border-slate-200/80 space-y-2.5">
-                <div class="flex items-center justify-between">
-                  <span class="text-xs font-black text-slate-800 uppercase tracking-wider">🌱 Domain &amp; Sustainability Skills</span>
-                  <span class="chip chip-emerald !text-[10px]">Aligned</span>
-                </div>
-                <div class="flex flex-wrap gap-1.5" id="fullDomainSkills">
-                  <span class="chip chip-emerald !text-xs">ESG Disclosure Frameworks</span>
-                  <span class="chip chip-emerald !text-xs">Tax Compliance (LHDN)</span>
-                  <span class="chip chip-emerald !text-xs">Risk Assessment</span>
-                  <span class="chip chip-emerald !text-xs">Internal Controls</span>
-                  <span class="chip chip-emerald !text-xs">Carbon Accounting</span>
-                  <span class="chip chip-emerald !text-xs">Governance &amp; Ethics</span>
-                </div>
-              </div>
-
-              <!-- Soft & Human-Centric Skills -->
-              <div class="p-4 rounded-2xl bg-white border border-slate-200/80 space-y-2.5">
-                <div class="flex items-center justify-between">
-                  <span class="text-xs font-black text-slate-800 uppercase tracking-wider">🤝 Human-Centric &amp; Leadership Skills</span>
-                  <span class="chip chip-slate !text-[10px]">Critical</span>
-                </div>
-                <div class="flex flex-wrap gap-1.5" id="fullSoftSkills">
-                  <span class="chip chip-slate !text-xs">Stakeholder Communication</span>
-                  <span class="chip chip-slate !text-xs">Analytical Problem Solving</span>
-                  <span class="chip chip-slate !text-xs">Cross-Functional Collaboration</span>
-                  <span class="chip chip-slate !text-xs">Adaptability to AI Tools</span>
-                  <span class="chip chip-slate !text-xs">Professional Ethics</span>
-                </div>
-              </div>
-
-              <!-- Certifications & Credentials -->
-              <div class="p-4 rounded-2xl bg-white border border-slate-200/80 space-y-2.5">
-                <div class="flex items-center justify-between">
-                  <span class="text-xs font-black text-slate-800 uppercase tracking-wider">📜 Licenses &amp; Certifications</span>
-                  <span class="chip chip-teal !text-[10px]">Active</span>
-                </div>
-                <div class="flex flex-wrap gap-1.5" id="fullCertSkills">
-                  <span class="chip chip-teal !text-xs">ACCA Affiliate / Part-Qualified</span>
-                  <span class="chip chip-teal !text-xs">Google Data Analytics Professional</span>
-                  <span class="chip chip-teal !text-xs">HRD Corp Certified Trainee</span>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="profile-privacy tint tint-teal rounded-3xl p-5 flex flex-wrap items-center justify-between gap-4">
-            <div class="flex items-start gap-3.5 max-w-3xl">
-              <div class="h-11 w-11 rounded-2xl bg-teal-600 text-white grid place-items-center text-lg shrink-0 shadow">🔒</div>
-              <div>
-                <div class="flex flex-wrap items-center gap-2">
-                  <span class="text-sm font-extrabold text-teal-950">Your CV, your sharing choices</span>
-                  <span class="chip chip-indigo">Private by default</span>
-                </div>
-                <p class="text-xs text-slate-600 mt-1 leading-relaxed">
-                  Your PDF and organised profile are available to your signed-in account. An employer receives only the summary and/or PDF you choose to share when applying to its vacancy. Aggregate publication is currently disabled; your optional statistics preference is off by default. You can export your profile, withdraw sharing, or delete your vault below.
-                </p>
-              </div>
-            </div>
-            <label class="flex items-center gap-2 text-xs font-bold text-teal-950 bg-white/80 px-3.5 py-2.5 rounded-2xl border border-teal-200 cursor-pointer shrink-0">
-              <input id="anonToggle" type="checkbox" onchange="toggleAnonStats(this.checked)" class="rounded text-teal-600 focus:ring-teal-500" />
-              Optional statistics preference (publication disabled)
-            </label>
-          </div>
-
+        </section>
+        <section id="tab-cv-upload" class="tab hidden space-y-6">
+          <p class="text-sm text-slate-600">Upload a PDF, then continue to the separate review page to check and edit the extracted details.</p>
           <div class="rounded-2xl border border-amber-300 bg-amber-50 p-4 text-sm text-amber-950" role="note">
-            <b>Hackathon demo — use fictional CVs only.</b> Uploads are extracted locally. Optional AI organisation uses the configured pretrained model when connected and authorised below; it does not verify qualifications. Do not upload real personal or confidential information. Text-based PDFs work best; image-only scans need OCR before upload.
+            <b>Hackathon demo — use fictional CVs only.</b> Uploads are extracted locally. Optional AI organisation uses the configured pretrained model when connected and authorised on the review page; it does not verify qualifications. Do not upload real personal or confidential information. Text-based PDFs work best; image-only scans need OCR before upload.
           </div>
 
 
-          <div class="profile-workflow">
+
 <div data-outline-label="CV upload" class="profile-upload glass rounded-3xl p-6 space-y-4">
                 <div class="flex items-center justify-between">
                   <div>
@@ -590,6 +369,13 @@
                   <div id="samplePdfList" class="space-y-2"></div>
                 </div>
               </div>
+          <button class="btn btn-soft" onclick="showTab('cv-review')">Review my existing CV →</button>
+        </section>
+        <section id="tab-cv-review" class="tab hidden space-y-6">
+          <div class="flex flex-wrap items-center justify-between gap-3">
+            <p class="text-sm text-slate-600">Check the captured details against your PDF. Save your review before sharing.</p>
+            <button class="btn btn-soft" onclick="showTab('cv-upload')">Upload or replace PDF</button>
+          </div>
 <div data-outline-label="Review your organised profile" class="profile-editor glass rounded-3xl p-6 sm:p-7 space-y-5">
                 <div class="flex flex-wrap items-start justify-between gap-3 border-b border-slate-200/70 pb-4">
                   <div>
@@ -692,9 +478,42 @@
                   <button id="saveProfileBtn" onclick="saveProfile()" class="btn btn-primary" disabled>Save reviewed profile →</button>
                 </div>
               </div>
+        </section>
+        <section id="tab-applications" class="tab hidden space-y-6">
+          <div class="flex flex-wrap items-center justify-between gap-3">
+            <p class="text-sm text-slate-600">Track your applications and control who can view your CV.</p>
+            <button class="btn btn-primary" onclick="showTab('jobs')">Find jobs →</button>
           </div>
+          <div class="profile-privacy tint tint-teal rounded-3xl p-5 flex flex-wrap items-center justify-between gap-4">
+            <div class="flex items-start gap-3.5 max-w-3xl">
+              <div class="h-11 w-11 rounded-2xl bg-teal-600 text-white grid place-items-center text-lg shrink-0 shadow">🔒</div>
+              <div>
+                <div class="flex flex-wrap items-center gap-2">
+                  <span class="text-sm font-extrabold text-teal-950">Your CV, your sharing choices</span>
+                  <span class="chip chip-indigo">Private by default</span>
+                </div>
+                <p class="text-xs text-slate-600 mt-1 leading-relaxed">
+                  Your PDF and organised profile are available to your signed-in account. An employer receives only the summary and/or PDF you choose to share when applying to its vacancy. Aggregate publication is currently disabled; your optional statistics preference is off by default. You can export your profile, withdraw sharing, or delete your vault below.
+                </p>
+              </div>
+            </div>
+            <label class="flex items-center gap-2 text-xs font-bold text-teal-950 bg-white/80 px-3.5 py-2.5 rounded-2xl border border-teal-200 cursor-pointer shrink-0">
+              <input id="anonToggle" type="checkbox" onchange="toggleAnonStats(this.checked)" class="rounded text-teal-600 focus:ring-teal-500" />
+              Optional statistics preference (publication disabled)
+            </label>
+          </div>
+
           <div data-outline-label="Sharing & access" class="profile-section-heading"><h2>Sharing &amp; access</h2><p>Choose who can view your CV and review their access below.</p></div>
           <div class="profile-sharing-grid">
+<div class="glass rounded-3xl p-6 space-y-3">
+                <div class="text-sm font-extrabold">My applications & employer access</div>
+                <p class="text-xs text-slate-500">Each application grants access only to that vacancy's company account. Withdrawal blocks future access here; it cannot retract copies already downloaded.</p>
+                <div id="activeSharesList" class="space-y-3"></div>
+                <div class="flex flex-wrap gap-2 border-t border-slate-200 pt-3">
+                  <button id="exportCvBtn" onclick="exportMyCv()" class="btn btn-soft !text-xs" disabled>Export profile JSON</button>
+                  <button id="deleteCvBtn" onclick="deleteMyCv()" class="btn btn-danger !text-xs" disabled>Delete my vault</button>
+                </div>
+              </div>
 <div class="glass rounded-3xl p-6 space-y-3">
                 <div class="text-sm font-extrabold">Share with someone you choose</div>
                 <p class="text-xs text-slate-600">The recipient needs a CareerLens account. Only that signed-in account can open the link. No email is sent.</p>
@@ -706,15 +525,6 @@
                 <p class="text-[11px] text-slate-500">Editing or replacing the CV ends existing grants. Revoking access cannot retract copies already saved by a recipient.</p>
                 <div id="namedSharesList" class="space-y-2"></div><div id="receivedSharesList" class="space-y-2"></div>
                 <details><summary class="text-xs font-bold cursor-pointer">Recent recipient access</summary><div id="namedShareEvents" class="mt-2 space-y-1"></div></details>
-              </div>
-<div class="glass rounded-3xl p-6 space-y-3">
-                <div class="text-sm font-extrabold">3. Manage employer access</div>
-                <p class="text-xs text-slate-500">Each application grants access only to that vacancy's company account. Withdrawal blocks future access here; it cannot retract copies already downloaded.</p>
-                <div id="activeSharesList" class="space-y-3"></div>
-                <div class="flex flex-wrap gap-2 border-t border-slate-200 pt-3">
-                  <button id="exportCvBtn" onclick="exportMyCv()" class="btn btn-soft !text-xs" disabled>Export profile JSON</button>
-                  <button id="deleteCvBtn" onclick="deleteMyCv()" class="btn btn-danger !text-xs" disabled>Delete my vault</button>
-                </div>
               </div>
           </div>
 <!-- Employer Access Audit Log -->
@@ -1409,7 +1219,7 @@
     const NAV = [
       { id: 'notifications', ico: '🔔', label: 'Interview notifications', eyebrow: 'Notifications', title: 'Interview notifications' },
       { id: 'dash', ico: '🏠', label: 'Dashboard', eyebrow: 'Overview', title: 'Your career dashboard' },
-      { id: 'profile', ico: '👤', label: 'Account & Profile', eyebrow: 'Account & Professional Background', title: 'Account profile & skills vault' },
+      { id: 'profile', ico: '👤', label: 'Profile & achievements', eyebrow: 'Account & Professional Background', title: 'My professional profile' },
       { id: 'quest', ico: '📝', label: 'Questionnaire', eyebrow: 'Career preferences', title: 'Application questionnaire' },
       { id: 'radar', ico: '📡', label: 'AI Radar', eyebrow: 'Industry insights', title: 'Future skills radar' },
       { id: 'match', ico: '🎯', label: 'Role Matches', eyebrow: 'Career opportunities', title: 'Future-role matches' },
@@ -1417,6 +1227,9 @@
       { id: 'passport', ico: '🌱', label: 'SDG Passport', eyebrow: 'Sustainable career impact', title: 'Your SDG career passport' },
     ];
     const EXTRA_TABS = {
+      'cv-upload': {id:'cv-upload', ico:'📄', label:'Upload CV', eyebrow:'Private CV vault', title:'Upload your CV'},
+      'cv-review': {id:'cv-review', ico:'✏️', label:'Review & edit CV', eyebrow:'Private CV vault', title:'Review & edit your CV'},
+      applications: {id:'applications', ico:'📨', label:'Applications & sharing', eyebrow:'Your applications', title:'Applications & sharing'},
       jobs: { id: 'jobs', ico: '📍', label: 'Nearby Jobs & Map', eyebrow: 'Explore employers', title: 'Nearby hiring companies & open roles' },
     };
     const COMMON_Q = [
@@ -1462,17 +1275,20 @@
           uAvatar.textContent = (user.full_name || 'U').charAt(0).toUpperCase();
         }
       }
-      if (window.accCardName) accCardName.textContent = user.full_name || 'User';
+      const name = String(user.full_name || '').trim() || 'Your account';
+      const navName = document.getElementById('uName');
+      if (navName) navName.textContent = name;
+      if (window.accCardName) accCardName.textContent = name;
       if (window.accCardUid) accCardUid.textContent = user.unique_uid || '';
       if (window.accCardEmail) accCardEmail.textContent = user.email || '';
       if (window.accCardJoined) accCardJoined.textContent = (user.created_at || '2026').replace(' UTC', '');
-      if (window.accCardRole) accCardRole.textContent = rd.current_role || (cvRecord && cvRecord.structured_cv ? cvRecord.structured_cv.current_role : '') || 'Junior Financial Auditor';
+      if (window.accCardRole) accCardRole.textContent = rd.current_role || (cvRecord && cvRecord.structured_cv ? cvRecord.structured_cv.current_role : '') || 'Not added';
       if (window.accCardGender) accCardGender.textContent = rd.gender || 'Prefer not to say';
-      if (window.accCardIndustry) accCardIndustry.textContent = rd.industry || 'Finance & Accounting';
-      if (window.accCardWorkMode) accCardWorkMode.textContent = rd.preferred_work_mode || 'Hybrid';
-      if (window.accCardPhone) accCardPhone.textContent = rd.phone ? '+60 ' + rd.phone : '+60 12-345 6789';
-      if (window.accCardLocation) accCardLocation.textContent = rd.location || 'Kuala Lumpur';
-      if (window.accCardBio && rd.bio) accCardBio.textContent = rd.bio;
+      if (window.accCardIndustry) accCardIndustry.textContent = rd.industry || 'Not added';
+      if (window.accCardWorkMode) accCardWorkMode.textContent = rd.preferred_work_mode || 'Not added';
+      if (window.accCardPhone) accCardPhone.textContent = rd.phone ? (rd.phone.startsWith('+') ? rd.phone : '+60 ' + rd.phone) : 'Not added';
+      if (window.accCardLocation) accCardLocation.textContent = rd.location || 'Not added';
+      if (window.accCardBio) accCardBio.textContent = rd.bio || 'Add a short introduction and your career goals.';
 
       // Update Nav Dropdown Info
       if (window.dropName) dropName.textContent = user.full_name || 'User';
@@ -1488,22 +1304,7 @@
 
         /* ---------- Account Profile View & Edit Modal (LinkedIn-Inspired) ---------- */
     function openAccountModal() {
-      if (!user) {
-        user = {
-          full_name: (window.uName && uName.textContent && uName.textContent !== 'User') ? uName.textContent : 'Aisha Rahman',
-          email: 'aisha.demo@careerlens.my',
-          unique_uid: 'MY-TALENT-2026-DEMO',
-          role_details: {
-            current_role: 'Junior Financial Auditor',
-            gender: 'Female',
-            phone: '12-345 6789',
-            industry: 'Finance & Accounting',
-            preferred_work_mode: 'Hybrid',
-            location: 'W.P. Kuala Lumpur',
-            bio: 'Passionate financial analyst specializing in ESG auditing, sustainable investments, and fintech solutions.'
-          }
-        };
-      }
+      if (!user) return toast('Your account is still loading. Please refresh and sign in again.', 'err');
       document.body.classList.add('modal-open');
       if (window.lumiFab) lumiFab.style.display = 'none';
       if (window.lumiPanel) lumiPanel.classList.add('hidden');
@@ -1651,7 +1452,7 @@
 
       accFullName.value = name;
       accEmail.value = u.email || '';
-      const initialRole = rd.current_role || (cvRecord && cvRecord.structured_cv ? cvRecord.structured_cv.current_role : '') || 'Junior Financial Auditor';
+      const initialRole = rd.current_role || (cvRecord && cvRecord.structured_cv ? cvRecord.structured_cv.current_role : '') || 'Not added';
       accCurrentRole.value = initialRole;
       if (window.modalTopRoleSubtitle) modalTopRoleSubtitle.textContent = initialRole;
       accPhone.value = rd.phone || '';
@@ -1771,16 +1572,16 @@
     }
 
     function buildNav() {
-      const renderItems = [
-        NAV[0],
-        NAV[1],
-        NAV[2],
-        EXTRA_TABS.jobs,
-        ...NAV.slice(3),
-      ];
-      buildPortalNavigation(renderItems, [{label: 'Overview', ids: ['dash']}, {label: 'My Profile', ids: ['profile', 'quest']}, {label: 'Explore Careers', ids: ['jobs', 'radar', 'match']}, {label: 'My Growth', ids: ['plan', 'passport']}]);
+      buildPortalNavigation([...NAV, ...Object.values(EXTRA_TABS)], [
+        {label:'Overview', ids:['dash']},
+        {label:'My Profile', ids:['profile','cv-upload','cv-review','quest']},
+        {label:'Explore Careers', ids:['jobs','applications','radar','match']},
+        {label:'My Growth', ids:['plan','passport']}
+      ]);
     }
+
     async function showTab(id, options = {}) {
+      if (!document.getElementById('tab-' + id)) id = 'dash';
       if (!options.restore) window.PagePosition?.navigate();
       current = id; visited.add(id);
       document.getElementById('dashboardLearningReminder').hidden = id !== 'dash';
@@ -1794,7 +1595,11 @@
       if (id === 'quest') scheduleRoleRecommendation();
       if (id === 'notifications') loadInvitations(false);
       if (id === 'dash') renderDash();
-      if (id === 'profile') await loadMyCv();
+      if (id === 'profile') renderAccountProfileCard();
+      if (['profile','cv-upload','cv-review','applications'].includes(id)) {
+        try { await loadMyCv(); renderProfileHighlights(); }
+        catch (error) { toast('CV data could not refresh. Your saved edits are kept. Please try again.', 'err'); }
+      }
       if (id === 'match') await loadCareerPathways();
       if (id === 'jobs') {
         await loadJobs();
@@ -2060,6 +1865,7 @@
         renderCvVault();
         showUploadStage(2, 'Draft ready. Check the extracted fields and evidence, then save your reviewed profile.');
         toast('PDF processed. Review the draft before sharing.');
+        await showTab('cv-review');
         await refreshVaultDependents();
       } catch (error) {
         showUploadStage(0, error.message || 'Upload failed. Please retry.', true);
@@ -2981,7 +2787,7 @@
       dashSub.textContent = analysed ? 'Here is your latest career snapshot.' : 'Complete the steps below to unlock your full plan.';
       const answered = answeredCount();
       const steps = [
-        { label: 'Profile', tab: 'profile', done: skills.length > 0 },
+        { label: 'CV profile', tab: cvRecord ? 'cv-review' : 'cv-upload', done: isReviewed() },
         { label: 'Questionnaire', tab: 'quest', done: answered >= questionnaireFieldDefinitions().length },
         { label: 'AI Radar', tab: 'radar', done: visited.has('radar') },
         { label: 'Matches', tab: 'match', done: visited.has('match') },
@@ -3007,7 +2813,7 @@
             <div class="min-w-0 flex-1"><div class="text-sm font-extrabold truncate">${esc(r.title)}</div><div class="text-[11px] text-slate-500">${esc(r.industry)} · ${r.skills_gap.length} skills to build</div></div>
             <button onclick="selectRole(${i},true)" class="btn btn-soft !py-1.5">Plan</button></div>`).join('')}</div>`
         : '<div class="text-sm text-slate-500">Save your profile to generate matches.</div>';
-      const nxt = !analysed ? ['Add your skills', 'profile', 'Start by picking a sample persona or listing your skills.']
+      const nxt = !analysed ? ['Prepare your CV', cvRecord ? 'cv-review' : 'cv-upload', 'Upload a PDF and review the details to get started.']
         : answered < questionnaireFieldDefinitions().length ? ['Answer the questionnaire', 'quest', 'Help us verify your practical depth.']
         : !visited.has('plan') ? ['Open your reskilling plan', 'plan', 'Follow an ordered, verified learning path.']
         : ['View your SDG passport', 'passport', 'See the impact of your chosen path.'];
@@ -3135,7 +2941,7 @@
     /* ---------- ONET Career Pathway Matrix Engine ---------- */
     async function loadCareerPathways(roleTitle) {
       try {
-        const title = roleTitle || (user && user.role_details ? user.role_details.current_role : '') || 'Junior Financial Auditor';
+        const title = roleTitle || (user && user.role_details ? user.role_details.current_role : '') || 'Not added';
         const res = await api('/api/career-pathways?role=' + encodeURIComponent(title));
         if (res && res.data && res.data.ok) {
           renderCareerPathways(res.data.pathways);
@@ -3184,28 +2990,49 @@
     }
 
     /* ---------- init ---------- */
+    function renderProfileHighlights() {
+      const container = document.getElementById('profileHighlights');
+      if (!container) return;
+      const st = cvRecord?.structured_cv || {};
+      const groups = [['Projects & achievements', st.projects], ['Certifications', st.certifications], ['Skills', st.skills]];
+      container.innerHTML = groups.map(([title, entries]) => {
+        const values = Array.isArray(entries) ? entries.filter(x => typeof x === 'string' && x.trim()) : [];
+        return `<div class="rounded-2xl border border-slate-200 p-4"><h3 class="font-bold mb-3">${esc(title)}</h3>` +
+          (values.length ? `<ul class="list-disc pl-5 space-y-2 text-sm text-slate-600">${values.map(x => `<li>${esc(x)}</li>`).join('')}</ul>` :
+          '<p class="text-sm text-slate-500">No details added yet. Upload or review your CV to add them.</p>') + '</div>';
+      }).join('');
+    }
+
     async function init() {
       buildNav();
       bindDropzone();
-      const me = await api('/api/auth/me'); user = me.data.user;
-      if (!user) return;
-      if (user.role === 'hr_company') { window.location.href = '/workspace'; return; }
-      window.PomodoroTimer.mount({identity:user.unique_uid, container:document.getElementById('learningPomodoro')});
-      window.PagePosition?.initialize({identity:user.unique_uid,portal:'talent',getView:()=>current,isValid:id=>typeof id==='string'&&!!document.getElementById('tab-'+id)});
-      uAvatar.textContent = user.full_name.charAt(0).toUpperCase(); uName.textContent = user.full_name; uUid.textContent = user.unique_uid;
+      const me = await api('/api/auth/me');
+      user = me.data?.user;
+      if (!me.ok || !user) { window.location.href = '/'; return; }
+      if (user.role !== 'job_seeker') { window.location.href = '/workspace'; return; }
       renderAccountProfileCard();
       try { answers = JSON.parse(localStorage.getItem(ansKey()) || '{}'); } catch (e) { answers = {}; }
-
-      const p = await api('/api/personas'); personas = p.data || [];
-      skillSuggest.innerHTML = [...new Set(personas.flatMap(x => x.skills))].map(s => `<option value="${esc(s)}">`).join('');
-      skillInput.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ',') { e.preventDefault(); addSkill(skillInput.value); skillInput.value = ''; } });
-
-      await loadMyCv();
-      await loadQuestionnaireCatalog();
-      await Promise.all([runAnalysis(), loadJobs()]);
+      const optional = async (label, work) => {
+        try { await work(); }
+        catch (_) { toast(label + ' could not load. You can still use your account and CV pages.', 'err'); }
+      };
+      window.PagePosition?.initialize({identity:user.unique_uid,portal:'talent',getView:()=>current,isValid:id=>typeof id==='string'&&!!document.getElementById('tab-'+id)});
       if (window.PagePosition) await window.PagePosition.restore(showTab, 'dash');
       else await showTab('dash');
-      LearningPath.reminder({identity:user.unique_uid, container:document.getElementById('savedLearningReminder'), onChange:()=>{ if (roles[selected]) renderPlan(); }});
+      await optional('Study timer', () => window.PomodoroTimer?.mount({identity:user.unique_uid,container:document.getElementById('learningPomodoro')}));
+      skillInput.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ',') { e.preventDefault(); addSkill(skillInput.value); skillInput.value = ''; } });
+      await Promise.all([
+        optional('Skill suggestions', async () => {
+          const p = await api('/api/personas');
+          personas = Array.isArray(p.data) ? p.data : [];
+          skillSuggest.innerHTML = [...new Set(personas.flatMap(x => Array.isArray(x.skills) ? x.skills : []))].map(s => `<option value="${esc(s)}">`).join('');
+        }),
+        optional('CV profile', async () => { await loadMyCv(); renderProfileHighlights(); }),
+        optional('Questionnaire', () => loadQuestionnaireCatalog())
+      ]);
+      await optional('Career analysis', () => runAnalysis());
+      if (current === 'dash') renderDash();
+      await optional('Learning reminders', () => window.LearningPath?.reminder({identity:user.unique_uid,container:document.getElementById('savedLearningReminder'),onChange:()=>{if(roles[selected]) renderPlan();}}));
     }
     profileFieldIds.filter(id => id !== 'reviewConfirm').forEach(id => {
       document.getElementById(id).addEventListener('input', markProfileDirty);
