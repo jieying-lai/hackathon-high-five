@@ -244,7 +244,7 @@ async function signOut() {
         </div>
 
         <!-- Neatly Aligned 2x2 Quick Selection Grid (Never clipped) -->
-        ${lumiPortal === 'job_seeker' ? '<label class="flex gap-2 text-[10px] text-slate-500 mb-2"><input type="checkbox" id="lumiExternalConsent" />Allow Google Gemini to rewrite replies using my message and reviewed CV profile. Optional; off by default.</label>' : ''}
+        
         <div id="lumiQuickBar" class="px-3.5 py-2.5 border-t border-slate-200/70 bg-slate-50/90 grid grid-cols-2 gap-1.5"></div>
 
         <!-- Input Bar -->
