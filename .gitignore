@@ -27,3 +27,10 @@ source-manifest*.json
 *.db-shm
 model-artifacts/
 training-data/private/
+
+# Jupyter & GPU caches
+.ipynb_checkpoints/
+*/.ipynb_checkpoints/
+unsloth_compiled_cache/
+outputs/
+*.zip
