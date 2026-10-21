@@ -855,9 +855,10 @@
               <div class="flex flex-wrap items-center gap-2.5">
                 <!-- Map Layer Switcher Pill -->
                 <div class="inline-flex items-center p-0.5 bg-slate-100 rounded-xl text-xs font-bold gap-0.5 border border-slate-200/80">
-                  <button type="button" id="btnLayerOpenMap" onclick="switchMapProvider('openmap')" class="px-2.5 py-1 rounded-lg transition text-slate-700 hover:text-slate-900" title="OpenMap (100% Free, No Key Required)">🗺️ OpenMap</button>
-                  <button type="button" id="btnLayerEsri" onclick="switchMapProvider('esri')" class="px-2.5 py-1 rounded-lg transition text-slate-700 hover:text-slate-900" title="Esri Street Map (High Stability, Free)">🏙️ Esri</button>
-                  <button type="button" id="btnLayerMapbox" onclick="openMapboxKeyModal()" class="px-2.5 py-1 rounded-lg transition text-slate-700 hover:text-slate-900" title="Mapbox HD (Free API Key)">🚀 Mapbox</button>
+                  <button type="button" id="btnLayerMapbox" onclick="switchMapProvider('mapbox')" class="px-2.5 py-1 rounded-lg transition text-slate-700 hover:text-slate-900" title="Mapbox HD (官方默认)">🚀 Mapbox</button>
+                  <button type="button" id="btnLayerOpenMap" onclick="switchMapProvider('openmap')" class="px-2.5 py-1 rounded-lg transition text-slate-700 hover:text-slate-900" title="OpenMap (免Key备选)">🗺️ OpenMap</button>
+                  <button type="button" id="btnLayerEsri" onclick="switchMapProvider('esri')" class="px-2.5 py-1 rounded-lg transition text-slate-700 hover:text-slate-900" title="Esri Street Map (街景备选)">🏙️ Esri</button>
+                  <button type="button" onclick="openMapboxKeyModal()" class="px-1.5 py-1 text-slate-400 hover:text-indigo-600 transition" title="管理/更换 Mapbox Key">⚙️</button>
                 </div>
 
                 <div class="seg">
@@ -2727,8 +2728,13 @@
       return 8;
     }
 
+    const DEFAULT_MAPBOX_TOKEN = 'pk.eyJ1IjoiamlleWluZzQ3IiwiYSI6ImNtdmk5N2g1MDAwODIyeG9naXRjMWxxb28ifQ.3JERc8ML2sSIvkrWB76-BA';
     let currentTileLayer = null;
-    let activeMapProvider = localStorage.getItem('careerlens_map_provider') || 'openmap';
+    let activeMapProvider = localStorage.getItem('careerlens_map_provider') || 'mapbox';
+
+    function getMapboxToken() {
+      return (localStorage.getItem('careerlens_mapbox_token') || DEFAULT_MAPBOX_TOKEN).trim();
+    }
 
     function updateMapProviderPills() {
       const p = activeMapProvider;
@@ -2743,7 +2749,7 @@
     }
 
     function switchMapProvider(prov) {
-      if (prov === 'mapbox' && !(localStorage.getItem('careerlens_mapbox_token') || '').trim()) {
+      if (prov === 'mapbox' && !getMapboxToken()) {
         openMapboxKeyModal();
         return;
       }
@@ -2757,7 +2763,7 @@
       const modal = document.getElementById('mapboxKeyModal');
       const inp = document.getElementById('mapboxTokenInput');
       const stat = document.getElementById('mapboxTokenStatus');
-      const saved = (localStorage.getItem('careerlens_mapbox_token') || '').trim();
+      const saved = getMapboxToken();
       if (inp) inp.value = saved;
       if (stat) {
         if (saved) {
@@ -2808,7 +2814,7 @@
       }
 
       if (prov === 'mapbox') {
-        const token = (localStorage.getItem('careerlens_mapbox_token') || '').trim();
+        const token = getMapboxToken();
         if (token) {
           currentTileLayer = L.tileLayer(`https://api.mapbox.com/styles/v1/mapbox/streets-v12/tiles/256/{z}/{x}/{y}@2x?access_token=${encodeURIComponent(token)}`, {
             maxZoom: 22,
