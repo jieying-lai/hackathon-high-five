@@ -33,6 +33,12 @@
 .shortlist-question-name{color:#6d28d9}
 .shortlist-back [data-interview-question-list]:not(:empty){padding:1rem 1.25rem;border:1px solid #ddd6fe;border-radius:16px;background:#ffffffb8}
 .shortlist-back .hint{color:#65517f}
+.shortlist-interview-tips{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;list-style:none;margin:0;padding:0}
+.shortlist-interview-tips>li{display:flex;gap:12px;align-items:flex-start;padding:16px;border:1px solid #ddd6fe;border-radius:16px;background:#ffffffc9;min-width:0}
+.shortlist-tip-number{display:grid;place-items:center;flex:0 0 28px;height:28px;border-radius:50%;background:#ede9fe;color:#6d28d9;font-weight:800;font-size:13px}
+.shortlist-interview-tips h4{font-size:14px;font-weight:800;color:#4c1d95;margin:0 0 5px}
+.shortlist-interview-tips p{font-size:13px;line-height:1.65;color:#65517f;margin:0;overflow-wrap:anywhere}
+@media(max-width:640px){.shortlist-interview-tips{grid-template-columns:1fr}}
 .btn.shortlist-ai-generate{color:#fff;background:linear-gradient(135deg,#7c3aed,#a21caf);border:1px solid #7c3aed;box-shadow:0 8px 20px #7c3aed33;gap:.55rem}
 .btn.shortlist-ai-generate:hover:not(:disabled){background:linear-gradient(135deg,#6d28d9,#86198f);box-shadow:0 10px 24px #7c3aed44;transform:translateY(-1px)}
 .btn.shortlist-ai-generate:focus-visible{outline:3px solid #a78bfa;outline-offset:3px}
@@ -43,3 +49,8 @@
 .shortlist-name:hover{background:#14b8a615}
 .shortlist-name:focus-visible{outline:3px solid #14b8a6;outline-offset:4px}
 @media(prefers-reduced-motion:reduce){.shortlist-flip-inner{transition:none}}
+
+.shortlist-tip-evidence{margin:8px 0 10px;padding:10px 12px;background:#f5f3ff;border-radius:10px;overflow-wrap:anywhere}
+.shortlist-tip-evidence>span{font-size:11px;font-weight:700;color:#6d28d9}
+.shortlist-tip-evidence ul{list-style:disc;padding-left:18px;margin:5px 0 0}
+.shortlist-tip-evidence li{font-size:13px;line-height:1.6;color:#4c1d95}

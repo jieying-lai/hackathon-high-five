@@ -8,7 +8,7 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/static/css/theme.css?v=20261021-menu-outline-v2" />
-  <link rel="stylesheet" href="/static/css/candidate-comparison.css?v=20261021-ai-card-colors" />
+  <link rel="stylesheet" href="/static/css/candidate-comparison.css?v=20261022-cv-interview-notes" />
   <link rel="stylesheet" href="/static/css/responsive.css?v=20261021-hr-header-spacing" />
   <link rel="stylesheet" href="/static/css/page-outline.css?v=20261021-menu-outline-v2" />
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -437,7 +437,7 @@
   </div>
 
   <script src="/static/js/candidate-comparison.js?v=20261021-shortlisting"></script>
-  <script src="/static/js/shortlisting.js?v=20261021-ai-card-colors"></script>
+  <script src="/static/js/shortlisting.js?v=20261022-cv-interview-notes"></script>
   <script src="/static/js/interviews.js?v=20261021-notification-preview"></script>
   <!-- Enhanced Interview Dispatch Modal (Online / Face-to-Face) -->
   <dialog id="interviewDialog" class="rounded-3xl p-6 w-full max-w-lg shadow-2xl backdrop:bg-slate-900/40">
@@ -1132,9 +1132,6 @@
       if (!window.HRShortlist || !user) return;
       HRShortlist.render({document, candidates:shortlistCandidates(), vacancies, decisions, error:shortlistError,
         translate:text=>window.careerLensLocale?.translate(text)??text,
-        onGenerate:(candidate,focus,previous)=>postJson('/api/hr/interview-questions', {
-          candidate_id:candidate.id, vacancy_id:candidate.vacancy_id, focus,
-          previous_questions:previous, language:window.careerLensLocale?.getLanguage()||'en'}),
         onInvite:openShortlistInterview, onRemove:c=>setDecision(c.id,'Pending',c.vacancy_id)});
       window.careerLensLocale?.apply();
     }
@@ -1601,7 +1598,7 @@
     init();
   </script>
 <script src="/static/js/questionnaire-i18n.js"></script>
-<script src="/static/js/portal-i18n.js?v=20261021-local-ai-startup"></script>
+<script src="/static/js/portal-i18n.js?v=20261022-cv-interview-notes"></script>
 <script src="/static/js/member3.js?v=20261021-i18n-audit"></script>
 <script src="/static/js/page-outline.js?v=20261021-outline-vivid"></script>
 </body>

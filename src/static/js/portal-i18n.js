@@ -19,6 +19,7 @@ registered users|pengguna berdaftar|位注册用户
 badge contributors|penyumbang lencana|位徽章贡献者
 Includes a USD 5 demo opening balance.|Termasuk baki permulaan demo USD 5.|包含 USD 5 演示初始余额。
 Selected recipient: WFP. Transfer dates are awaiting confirmation. Listing a recipient does not imply a formal partnership.|Penerima dipilih: WFP. Tarikh pemindahan menunggu pengesahan. Penyenaraian bukan perkongsian rasmi.|已选择 WFP 为接收机构，汇款日期待确认；展示接收机构不代表已建立正式合作。
+CV-based questions are ready. Review before use.|Soalan berasaskan CV tersedia. Semak sebelum digunakan.|基于简历的问题已生成，请审核后使用。
 Learning milestones|Pencapaian pembelajaran|学习里程碑
 Syncing your learning milestones…|Menyegerakkan pencapaian pembelajaran…|正在同步学习里程碑……
 Could not sync learning milestones. Please retry.|Tidak dapat menyegerakkan pencapaian. Sila cuba lagi.|暂时无法同步学习里程碑，请重试。
@@ -1178,6 +1179,40 @@ Confirm New Password|Sahkan Kata Laluan Baharu|确认新密码
     ['Candidate Learning', 'Pembelajaran Calon', '候选人学习'],
     ['View CV-based interview questions ↻', 'Lihat soalan temu duga berdasarkan CV ↻', '查看根据简历定制的面试问题 ↻'],
     ['CV-based interview questions', 'Soalan temu duga berdasarkan CV', '根据简历定制的面试问题'],
+    ["View CV interview notes ↻", "Lihat nota temu duga CV ↻", "查看基于简历的面试提示 ↻"],
+    ["CV-based interview notes", "Nota temu duga berdasarkan CV", "基于简历的面试注意事项"],
+    ["Based on this candidate’s available CV and the selected vacancy. Confirm details during the interview.", "Berdasarkan CV calon yang tersedia dan jawatan dipilih. Sahkan butiran semasa temu duga.", "根据这位候选人目前可用的简历及所选岗位整理，请在面试中确认具体情况。"],
+    ["Explore the matched skills", "Terokai kemahiran yang sepadan", "深入了解匹配技能"],
+    ["CV skills matching this role", "Kemahiran CV yang sepadan dengan jawatan", "简历中与岗位匹配的技能"],
+    ["Ask for a concrete example using these skills. Clarify the candidate’s own contribution, tools used and how the outcome was checked.", "Minta contoh khusus menggunakan kemahiran ini. Jelaskan sumbangan calon sendiri, alat yang digunakan dan cara hasil disemak.", "请候选人举例说明如何使用这些技能，重点确认个人贡献、使用的工具以及验证成果的方法。"],
+    ["No matched skills are recorded in the available CV summary. Ask the candidate to describe experience relevant to this role.", "Tiada kemahiran sepadan direkodkan dalam ringkasan CV tersedia. Minta calon menerangkan pengalaman berkaitan jawatan.", "目前简历摘要没有记录匹配技能，请候选人补充与岗位相关的经历。"],
+    ["Clarify skills not yet evidenced", "Jelaskan kemahiran yang belum dibuktikan", "确认简历尚未明确体现的技能"],
+    ["Role requirements to confirm", "Keperluan jawatan untuk disahkan", "需要进一步确认的岗位要求"],
+    ["These requirements are not clearly evidenced in the available CV. Ask about relevant experience or a practical approach; do not treat an omission as inability.", "Keperluan ini belum jelas dalam CV tersedia. Tanya pengalaman berkaitan atau pendekatan praktikal; ketiadaan maklumat bukan bermaksud tidak mampu.", "现有简历尚未明确体现这些要求。请询问相关经历或实际处理方法；没有写到不代表不会。"],
+    ["No additional skill gaps are flagged in this summary. Confirm depth and practical application rather than assuming proficiency.", "Tiada jurang kemahiran tambahan ditandakan. Sahkan tahap kefahaman dan aplikasi praktikal tanpa menganggap kemahiran telah dikuasai.", "摘要没有标出其他待确认技能，仍需通过实例了解掌握深度和实际应用情况。"],
+    ["Discuss the listed projects", "Bincangkan projek yang disenaraikan", "围绕简历项目深入了解"],
+    ["Projects recorded in the CV", "Projek yang direkodkan dalam CV", "简历中记录的项目"],
+    ["Use these projects as discussion anchors. Clarify ownership, challenges, decisions and measurable outcomes; distinguish team results from individual work.", "Gunakan projek ini sebagai asas perbincangan. Jelaskan tanggungjawab, cabaran, keputusan dan hasil yang boleh diukur; bezakan hasil pasukan daripada kerja individu.", "围绕这些项目确认负责范围、难点、决策过程及可衡量成果，区分团队成果和候选人的个人工作。"],
+    ["No project details are recorded in the available CV. Invite an example from work, study or volunteering and clarify the candidate’s contribution.", "Tiada butiran projek direkodkan dalam CV tersedia. Minta contoh kerja, pengajian atau sukarelawan dan jelaskan sumbangan calon.", "现有简历没有记录项目细节，可请候选人提供工作、学习或志愿服务中的例子，并说明个人贡献。"],
+    ["Confirm the experience context", "Sahkan konteks pengalaman", "确认经验年限的具体构成"],
+    ["Years of experience recorded in the CV", "Tahun pengalaman yang direkodkan dalam CV", "简历中记录的经验年数"],
+    ["Experience duration is not specified in the available CV summary. Confirm the timeline and which work is relevant to this role.", "Tempoh pengalaman tidak dinyatakan dalam ringkasan CV tersedia. Sahkan garis masa dan kerja yang berkaitan dengan jawatan.", "现有简历摘要未注明经验年限，请确认经历时间线及与岗位相关的工作内容。"],
+    ["Confirm which roles and responsibilities make up this duration and how they relate to the vacancy. The number alone does not establish expertise.", "Sahkan jawatan dan tanggungjawab sepanjang tempoh ini serta kaitannya dengan kekosongan. Angka sahaja tidak membuktikan kepakaran.", "请确认这些年限对应的职位、职责及与当前岗位的关联。年数本身不能证明熟练程度。"],
+    ['View interview tips ↻', 'Lihat panduan temu duga ↻', '查看面试注意事项 ↻'],
+    ['Interview tips', 'Panduan temu duga', '面试注意事项'],
+    ['A practical checklist for a focused, respectful interview.', 'Senarai panduan untuk temu duga yang terarah dan saling menghormati.', '让面试更有条理、彼此尊重的实用清单。'],
+    ['Prepare before the interview', 'Bersedia sebelum temu duga', '面试前做好准备'],
+    ['Review the CV and role requirements. Choose the skills and experience you want to explore.', 'Semak CV dan keperluan jawatan. Pilih kemahiran dan pengalaman yang ingin diterokai.', '阅读简历与岗位要求，明确需要了解的技能和经历。'],
+    ['Set expectations', 'Jelaskan jangkaan', '说明面试安排'],
+    ['Introduce yourself, explain the interview structure and timing, and give the candidate time to settle in.', 'Perkenalkan diri, jelaskan susunan dan tempoh temu duga, dan beri calon masa untuk bersedia.', '先自我介绍，说明面试流程和时长，给候选人适应的时间。'],
+    ['Ask for concrete examples', 'Minta contoh khusus', '通过具体例子了解经历'],
+    ['Explore the situation, the candidate’s own actions and the results. Clarify details without assuming missing experience.', 'Terokai situasi, tindakan calon sendiri dan hasilnya. Jelaskan butiran tanpa menganggap pengalaman yang tidak dinyatakan.', '了解当时的情境、候选人亲自采取的行动及结果；对未说明的经历先询问确认。'],
+    ['Keep the discussion job-related', 'Fokus pada perkara berkaitan kerja', '围绕岗位展开讨论'],
+    ['Use consistent criteria for candidates applying for the same role. Avoid unrelated personal questions and assumptions.', 'Gunakan kriteria yang konsisten bagi jawatan yang sama. Elakkan soalan peribadi yang tidak berkaitan dan andaian.', '对同一岗位的候选人使用一致标准，避免无关的私人问题和主观假设。'],
+    ['Listen and take useful notes', 'Dengar dan catat perkara penting', '认真倾听并记录依据'],
+    ['Let the candidate finish. Record examples and evidence, and separate observations from impressions.', 'Beri calon ruang untuk selesai bercakap. Catat contoh dan bukti, serta bezakan pemerhatian daripada tanggapan.', '让候选人完整表达，记录具体例子与依据，并区分观察事实和个人印象。'],
+    ['Close with clear next steps', 'Akhiri dengan langkah seterusnya', '清楚说明后续安排'],
+    ['Leave time for the candidate’s questions. Explain the next stage, expected timeline and how you will follow up.', 'Sediakan masa untuk soalan calon. Jelaskan peringkat seterusnya, jangka masa dan cara susulan.', '留出候选人提问的时间，说明下一阶段、预计时间及后续联系方式。'],
     ['Back to candidate ↻', 'Kembali ke calon ↻', '翻回候选人资料 ↻'],
     ['Suggested prompts based on shared CV evidence and role requirements. Adapt them during the interview.', 'Cadangan soalan berdasarkan bukti CV yang dikongsi dan keperluan jawatan. Sesuaikan semasa temu duga.', '根据已分享的简历依据和岗位要求准备的建议问题，可在面试中调整。'],
     ['Not enough shared CV evidence to tailor questions. Review the candidate profile first.', 'Bukti CV yang dikongsi tidak mencukupi untuk menyesuaikan soalan. Semak profil calon dahulu.', '已分享的简历依据不足，请先查看候选人资料。'],

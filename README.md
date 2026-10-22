@@ -1,43 +1,43 @@
 # CareerLens AI
 
-## Run on your own computer — teammates and judges
+## Share the website with friends — no visitor setup
 
-1. Download this GitHub project (**Code → Download ZIP**), then extract it completely.
-2. **Windows 10/11 x64:** double-click `Start.cmd` in the extracted folder.
-   **macOS / Linux:** open a terminal in that folder and run `bash start.sh`.
-3. Wait for the browser to open. Keep the startup window open while using the app.
+Deploy the website once and share its HTTPS URL. Visitors only need a browser;
+they do not download this repository, run Start.cmd, install Python or load a model.
+The HR **Auto generate** button now defaults to a lightweight CV-based question
+builder (`HR_INTERVIEW_PROVIDER=rules`). It builds four interview prompts from the
+authorised candidate skills/projects and vacancy requirements, supports English,
+Bahasa Malaysia and Chinese, and avoids the previous batch when regenerating.
+This is rules-based generation, not inference from the trained LoRA model. No API
+key, GPU, Torch or multi-GB model is required for this feature. HR reviews the
+questions before use; they do not score or decide candidate suitability.
 
-The launcher automatically installs a private Python 3.12 environment and CPU AI
-libraries, downloads the public Qwen base model, loads our included trained LoRA
-adapter, and starts both the website and AI service on your computer. No paid API
-key, RunPod account, GPU, separate model download, or existing Python installation
-is required. This includes **Auto generate** on HR shortlisted candidates.
+The existing Replit run/deployment commands now install `requirements-web.txt`
+and run `scripts/serve_web.py` with the lightweight provider. **Republish the
+updated project** to update an already published site. This repository edit does
+not publish a live site automatically. For other hosts and persistent data see
+[shared website deployment](docs/SHARED_WEBSITE.zh-CN.md).
 
-**First startup needs internet, several GB of downloads and approximately 10 GB
-of free disk space. 16 GB RAM is recommended; CPU generation may take minutes.**
-Later starts reuse the installed environment and model. Live trends, maps, CDN
-styling and external courses still need internet. This is not an entirely offline
-website. Optional CV organisation also runs locally with the pretrained base
-model; the interview adapter is not a CV-trained model.
+## Optional local preview for the maintainer
+
+On Windows double-click `Start.cmd`; on macOS/Linux run `bash start.sh`.
+The default launcher installs only website dependencies and opens the browser.
+It does not download the Qwen base model or start model inference. Existing local
+accounts in `state/local/careerlens.db` are preserved. First-time preview still
+needs internet to install Python and website packages; ordinary website visitors
+do not run this launcher.
 
 | Portal | Demo email | Demo password |
 | --- | --- | --- |
 | Talent | aisha.demo@careerlens.my | CareerLens@2026 |
 | HR | hr.demo@nexussme.my | CareerLens@2026 |
 
-Each computer gets its own local database and uploaded files. Data is not shared
-between teammates. Press **Ctrl+C** in the startup window to stop both services.
-For troubleshooting and feature coverage see [local startup guide](docs/LOCAL_START.zh-CN.md).
-
-The roughly 25 MB adapter/tokenizer is included under `models/interview-adapter`;
-the ~3.1 GB base weights and installed environment are downloaded automatically
-and excluded from Git. HR must review generated questions before use. There is
-no question-bank/template fallback when generation fails.
-
-Optional hosted RunPod deployment files are retained separately; they are not
-needed for local startup. In the team Git checkout, Publish-to-GitHub.cmd pushes
-already committed changes using your normal Git login. It is not a startup step
-for judges.
+Optional advanced mode: set `CAREERLENS_LOCAL_MODEL=1` before launching to install
+and run the original trained local model. That opt-in mode still requires the
+large model download and substantial RAM. `HR_INTERVIEW_PROVIDER=local` explicitly
+selects that model on a provisioned server; `gemini` selects the existing cloud
+connector. The default never sends CV content to a cloud AI provider. Optional
+CV AI organisation is a separate feature with its own provider requirements.
 
 ## Member 3 frontend update (2026-10-20)
 

@@ -26,18 +26,21 @@ def main():
     created = not python.exists()
     if created:
         subprocess.run([args.uv, 'venv', '--python', sys.executable, str(environment)], check=True, cwd=ROOT)
-    signature = hashlib.sha256(b'local-runtime-v1' + platform.platform().encode() +
-        (ROOT / 'requirements.txt').read_bytes() + (ROOT / 'requirements-local.txt').read_bytes()).hexdigest()
+    full_model = os.getenv('CAREERLENS_LOCAL_MODEL') == '1'
+    requirements = ROOT / ('requirements-local.txt' if full_model else 'requirements-web.txt')
+    signature = hashlib.sha256(b'local-runtime-v2' + platform.platform().encode() +
+        (ROOT / 'requirements.txt').read_bytes() + requirements.read_bytes()).hexdigest()
     marker = runtime / 'installed.txt'
     if created or not marker.exists() or marker.read_text().strip() != signature:
-        print('Installing website and AI dependencies. First startup can take several minutes.', flush=True)
-        if platform.system() != 'Darwin' and platform.machine().lower() in ('amd64', 'x86_64'):
+        print('Installing ' + ('website and AI' if full_model else 'lightweight website') + ' dependencies.', flush=True)
+        if full_model and platform.system() != 'Darwin' and platform.machine().lower() in ('amd64', 'x86_64'):
             subprocess.run([args.uv, 'pip', 'install', '--python', str(python), 'torch==2.6.0',
                 '--index-url', 'https://download.pytorch.org/whl/cpu'], check=True, cwd=ROOT)
         subprocess.run([args.uv, 'pip', 'install', '--python', str(python),
-            '-r', str(ROOT / 'requirements-local.txt')], check=True, cwd=ROOT)
+            '-r', str(requirements)], check=True, cwd=ROOT)
         marker.write_text(signature, encoding='utf-8')
-    result = subprocess.run([str(python), '-u', str(ROOT / 'scripts/run_local.py')], cwd=ROOT)
+    launcher = 'run_local.py' if full_model else 'run_web.py'
+    result = subprocess.run([str(python), '-u', str(ROOT / 'scripts' / launcher)], cwd=ROOT)
     return result.returncode
 
 
