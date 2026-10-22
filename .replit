@@ -4,6 +4,7 @@ modules = ["python-3.11"]
 
 [nix]
 channel = "stable-24_05"
+packages = ["glibcLocales"]
 
 [deployment]
 run = ["sh", "-c", "pip install -q -r requirements.txt && HOST=0.0.0.0 python src/main.py"]
