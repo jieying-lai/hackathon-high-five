@@ -81,19 +81,17 @@ def match_user_to_roles(profile: dict, scenario: str = "moderate") -> dict:
         matched_trans = [item["required_skill"] for item in trans_matches]
         missing_skills = [s for s in role["core_skills"] if s not in matched_core]
 
-        # The fit score reflects profile skills and stated preferences only.
-        # Market demand and AI-adoption scenarios are shown separately.
-        core_pts = round((len(core_matches) / max(1, len(core_set))) * 70)
-        trans_pts = round((len(trans_matches) / max(1, len(trans_set))) * 20)
+        core_pts = round((len(core_matches) / max(1, len(core_set))) * 50)
+        trans_pts = round((len(trans_matches) / max(1, len(trans_set))) * 25)
         industry_match = bool(user_industry) and role["industry"].strip().casefold() == str(user_industry).strip().casefold()
-        industry_pts = 7 if industry_match else 0
+        industry_pts = 15 if industry_match else 8
         mode_match = bool(user_work_mode) and user_work_mode.strip().casefold() in {m.casefold() for m in role["work_modes"]}
-        mode_pts = 3 if mode_match else 0
+        mode_pts = 10 if mode_match else 5
 
         market = get_role_market_signal(role, demand)
-        market_pts = market["market_adjustment_pts"]  # shown as market context, not candidate fit
+        market_pts = market["market_adjustment_pts"]  # bounded +/-3, from measured postings only
         scenario_delta = role["fast_ai_boost"] if scenario == "fast" else 0  # stated What-If assumption
-        total_score = max(0, min(100, core_pts + trans_pts + industry_pts + mode_pts))
+        total_score = max(0, min(98, core_pts + trans_pts + industry_pts + mode_pts + market_pts + (scenario_delta // 2)))
 
         score_components = [
             {"key": "core_skills", "points": core_pts, "max_points": 70,
@@ -143,13 +141,14 @@ def match_user_to_roles(profile: dict, scenario: str = "moderate") -> dict:
             },
             "work_modes": role["work_modes"],
             "explainable_breakdown": {
-                "core_skills_match_pct": round((len(core_matches) / max(1, len(core_set))) * 100),
-                "transferable_skills_pct": round((len(trans_matches) / max(1, len(trans_set))) * 100),
-                "industry_alignment_pct": 100 if industry_match else 0,
-                "work_mode_fit_pct": 100 if mode_match else 0,
+                "core_skills_match_pct": core_pts,
+                "transferable_skills_pct": trans_pts,
+                "industry_alignment_pct": industry_pts,
+                "work_mode_fit_pct": mode_pts,
                 "market_demand_adjustment_pts": market_pts,
-                "gap_to_close_pct": round((len(missing_skills) / max(1, len(core_set))) * 100),
-                "scenario_adjustment_pct": 0,
+                "market_demand_pct": market_pts,
+                "gap_to_close_pct": max(0, 100 - total_score),
+                "scenario_adjustment_pct": total_score - (core_pts + trans_pts + industry_pts + mode_pts + market_pts),
             },
             "score_components": score_components,
             "score_method": "skills_first_v2",

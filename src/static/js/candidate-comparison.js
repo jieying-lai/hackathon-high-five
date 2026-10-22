@@ -95,8 +95,45 @@ const CompanyComparison = (() => {
       lastPodiumMarkup=html;
     }
   }
+  let cmpPage = 1;
+  const CMP_PAGE_SIZE = 10;
   function table(rows) {
-    document.getElementById('comparisonRows').innerHTML=rows.map(c=>`<tr><th scope="row"><span data-no-translate>${esc(c.name)}</span><small>${esc(c.source)}</small></th><td>${esc(c.department)}<small>${esc(c.position)}</small></td><td>${c.experience_known?`<span data-no-translate>${c.years}</span>`:'To confirm'}</td><td>${esc(c.education_category)}<small data-no-translate>${esc(c.institution.join(' · ') || '—')}<br>${esc(c.major.join(' · ') || '—')}</small></td><td><b data-no-translate>${c.score}%</b></td><td><details><summary>Skills & experience</summary><p>Hard skills</p><p>${c.hard_skills.map(s=>text(s)).join(' · ')||'—'}</p><p>Soft skills</p><p>${c.soft_skills.map(s=>text(s)).join(' · ')||'—'}</p><p data-no-translate>${esc(c.past_positions.join(' · ')||'—')}</p><p>To confirm</p><p>${c.to_confirm.map(s=>text(s)).join(' · ')||'—'}</p></details></td><td><select class="input !text-xs" onchange="setDecision('${esc(c.id)}',this.value,${c.vacancy_id})">${['Pending','Shortlist','Needs review','Hold'].map(d=>option(d,d,window.getCandidateDecision?.(c.vacancy_id,c.id)||'Pending')).join('')}</select></td></tr>`).join('') || '<tr><td colspan="7">No candidates match these filters.</td></tr>';
+    const total = rows.length;
+    const totalPages = Math.ceil(total / CMP_PAGE_SIZE) || 1;
+    if (cmpPage > totalPages) cmpPage = totalPages;
+    if (cmpPage < 1) cmpPage = 1;
+    const start = (cmpPage - 1) * CMP_PAGE_SIZE;
+    const end = Math.min(start + CMP_PAGE_SIZE, total);
+    const paged = rows.slice(start, end);
+
+    document.getElementById('comparisonRows').innerHTML=paged.map(c=>`<tr><th scope="row"><span data-no-translate>${esc(c.name)}</span><small>${esc(c.source)}</small></th><td>${esc(c.department)}<small>${esc(c.position)}</small></td><td>${c.experience_known?`<span data-no-translate>${c.years}</span>`:'To confirm'}</td><td>${esc(c.education_category)}<small data-no-translate>${esc(c.institution.join(' · ') || '—')}<br>${esc(c.major.join(' · ') || '—')}</small></td><td><b data-no-translate>${c.score}%</b></td><td><details><summary>Skills & experience</summary><p>Hard skills</p><p>${c.hard_skills.map(s=>text(s)).join(' · ')||'—'}</p><p>Soft skills</p><p>${c.soft_skills.map(s=>text(s)).join(' · ')||'—'}</p><p data-no-translate>${esc(c.past_positions.join(' · ')||'—')}</p><p>To confirm</p><p>${c.to_confirm.map(s=>text(s)).join(' · ')||'—'}</p></details></td><td><select class="input !text-xs" onchange="setDecision('${esc(c.id)}',this.value,${c.vacancy_id})">${['Pending','Shortlist','Needs review','Hold'].map(d=>option(d,d,window.getCandidateDecision?.(c.vacancy_id,c.id)||'Pending')).join('')}</select></td></tr>`).join('') || '<tr><td colspan="7">No candidates match these filters.</td></tr>';
+
+    let pagContainer = document.getElementById('comparisonPagination');
+    if (!pagContainer) {
+      pagContainer = document.createElement('div');
+      pagContainer.id = 'comparisonPagination';
+      pagContainer.className = 'flex flex-wrap items-center justify-between gap-3 p-4 border-t border-slate-200/80 bg-slate-50/70 mt-2 rounded-2xl';
+      document.getElementById('comparisonRows')?.closest('.table-scroll')?.after(pagContainer);
+    }
+    if (total > 0 && pagContainer) {
+      let pagePills = '';
+      for (let p = 1; p <= totalPages; p++) {
+        pagePills += `<button type="button" onclick="CompanyComparison.setPage(${p})" class="btn !py-1 !px-3 !text-xs ${p === cmpPage ? 'btn-hr font-extrabold shadow-sm' : 'btn-soft'}">${p}</button>`;
+      }
+      pagContainer.innerHTML = `
+        <div class="text-xs text-slate-500 font-medium">
+          Showing <b class="text-slate-800">${start + 1}</b>–<b class="text-slate-800">${end}</b> of <b class="text-slate-800">${total}</b> candidates (10 per page)
+        </div>
+        <div class="flex items-center gap-1.5">
+          <button type="button" onclick="CompanyComparison.setPage(${cmpPage - 1})" ${cmpPage <= 1 ? 'disabled' : ''} class="btn btn-soft !py-1 !px-2.5 !text-xs font-bold ${cmpPage <= 1 ? 'opacity-40 cursor-not-allowed' : ''}">‹ Prev</button>
+          ${pagePills}
+          <button type="button" onclick="CompanyComparison.setPage(${cmpPage + 1})" ${cmpPage >= totalPages ? 'disabled' : ''} class="btn btn-soft !py-1 !px-2.5 !text-xs font-bold ${cmpPage >= totalPages ? 'opacity-40 cursor-not-allowed' : ''}">Next ›</button>
+        </div>
+      `;
+      pagContainer.hidden = false;
+    } else if (pagContainer) {
+      pagContainer.hidden = true;
+    }
   }
   function snapshot(rows) {
     const container=document.getElementById('comparisonSnapshot'); if(!container)return;
@@ -114,7 +151,7 @@ const CompanyComparison = (() => {
     pie(rows); skillsChart(rows); snapshot(rows); table(rows); podium(rows);
     window.careerLensLocale?.apply();
   }
-  function reset() { Object.assign(state,{department:'',years:0,education:0,sort:'match',query:''}); document.getElementById('comparisonFilters').reset(); render(); }
+  function reset() { cmpPage = 1; Object.assign(state,{department:'',years:0,education:0,sort:'match',query:''}); document.getElementById('comparisonFilters').reset(); render(); }
   function shortlist(id,vid) {
     const candidate=data?.candidates.find(c=>c.id===id && Number(c.vacancy_id)===Number(vid));
     if(candidate)window.shortlistCandidate?.(id,vid);
@@ -123,5 +160,5 @@ const CompanyComparison = (() => {
     if(typeof window.showTab === 'function') await window.showTab('shortlisting');
   }
   document.addEventListener('change',e=>{if(e.target.id==='uiLanguage') setTimeout(render,0);});
-  return {load,set,reset,invite,shortlist,filtered,refresh:render,allCandidates:()=>data?.candidates||[]};
+  return {load,set,reset,invite,shortlist,filtered,refresh:render,allCandidates:()=>data?.candidates||[],setPage:p=>{cmpPage=p;render();}};
 })();

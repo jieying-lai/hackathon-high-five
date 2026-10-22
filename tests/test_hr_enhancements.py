@@ -58,6 +58,7 @@ class TestHrEnhancements(unittest.TestCase):
         # 2. Secondary screening sub-navigation
         self.assertIn("data-screening-navigation", html)
         self.assertIn("renderScreeningNavigation", html)
+        self.assertIn("screening-nav", html)
 
         # 3. Decision Status Legend with 4 color badges
         self.assertIn("HR Decision Status Legend", html)
@@ -86,6 +87,19 @@ class TestHrEnhancements(unittest.TestCase):
         # 8. Meeting interview format options
         self.assertIn("Online Video Meeting", html)
         self.assertIn("Face-to-Face Meeting", html)
+
+        # 9. Overview 4 subtabs and in-page navigation
+        self.assertIn("overview-subnav", html)
+        self.assertIn("ovtab-pulse", html)
+        self.assertIn("ovtab-analytics", html)
+        self.assertIn("ovtab-strategy", html)
+        self.assertIn("ovtab-podium", html)
+        self.assertIn("showOvTab", html)
+
+        # 10. 10-Row Pagination for candidate screening
+        self.assertIn("scPagination", html)
+        self.assertIn("SCREEN_PAGE_SIZE = 10", html)
+        self.assertIn("setScreenPage", html)
 
 
 if __name__ == "__main__":

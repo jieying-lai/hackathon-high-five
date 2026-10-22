@@ -12,6 +12,71 @@
   <link rel="stylesheet" href="/static/css/responsive.css?v=20261021-hr-header-spacing" />
   <link rel="stylesheet" href="/static/css/page-outline.css?v=20261021-menu-outline-v2" />
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    /* Premium Sub-Navigation Pill Bar */
+    .screening-nav, .overview-subnav {
+      display: inline-flex !important;
+      align-items: center !important;
+      gap: 0.45rem !important;
+      padding: 0.35rem 0.5rem !important;
+      background: rgba(255, 255, 255, 0.9) !important;
+      backdrop-filter: blur(14px) !important;
+      -webkit-backdrop-filter: blur(14px) !important;
+      border: 1.5px solid rgba(20, 184, 166, 0.3) !important;
+      border-radius: 9999px !important;
+      box-shadow: 0 4px 16px -2px rgba(15, 23, 42, 0.06) !important;
+      margin-bottom: 1.25rem !important;
+      width: fit-content !important;
+      max-width: 100% !important;
+      overflow-x: auto !important;
+    }
+    .screening-nav button, .overview-subnav button {
+      display: inline-flex !important;
+      align-items: center !important;
+      gap: 0.45rem !important;
+      padding: 0.5rem 1.15rem !important;
+      border-radius: 9999px !important;
+      font-size: 0.8125rem !important;
+      font-weight: 700 !important;
+      color: #475569 !important;
+      white-space: nowrap !important;
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
+      border: none !important;
+      background: transparent !important;
+      cursor: pointer !important;
+    }
+    .screening-nav button:hover, .overview-subnav button:hover {
+      color: #0f172a !important;
+      background: rgba(241, 245, 249, 0.95) !important;
+    }
+    .screening-nav button[aria-current="page"], .overview-subnav button[aria-current="page"],
+    .screening-nav button.active, .overview-subnav button.active {
+      color: #ffffff !important;
+      background: linear-gradient(135deg, #0d9488 0%, #0284c7 100%) !important;
+      box-shadow: 0 4px 14px rgba(13, 148, 136, 0.35) !important;
+      font-weight: 800 !important;
+    }
+
+    /* Candidate screening table layout & chip whitespace fixes */
+    #scRows tr td {
+      vertical-align: middle !important;
+      padding-top: 0.75rem !important;
+      padding-bottom: 0.75rem !important;
+    }
+    #scRows .chip {
+      white-space: nowrap !important;
+      max-width: none !important;
+      display: inline-flex !important;
+      align-items: center !important;
+      line-height: 1.2 !important;
+    }
+    .screening-actions {
+      display: flex !important;
+      align-items: center !important;
+      gap: 0.35rem !important;
+      white-space: nowrap !important;
+    }
+  </style>
 </head>
 <body class="responsive-ui responsive-employer hr min-h-screen company-comparison-portal">
   <div class="aurora"></div><div class="blob b1"></div><div class="blob b2"></div>
@@ -59,127 +124,153 @@
         </div>
 
         <section id="tab-overview" class="tab space-y-6">
-          <!-- Employer Company Account & Profile Card -->
-          <div data-outline-label="Company profile" class="glass rounded-3xl p-6 space-y-4 border border-teal-200 shadow-sm">
-            <div class="flex flex-wrap items-center justify-between gap-4">
-              <div class="flex items-center gap-3.5">
-                <div id="hrCardAvatar" class="h-12 w-12 rounded-2xl bg-gradient-to-br from-teal-500 to-sky-600 text-white font-black text-xl grid place-items-center shadow">🏢</div>
+          <!-- Overview In-Page Sub-Navigation Pill Bar -->
+          <nav class="overview-subnav" data-overview-subnav aria-label="Workforce Overview Sections">
+            <button type="button" data-subtab="ovtab-pulse" onclick="showOvTab('ovtab-pulse')" aria-current="page" class="active">
+              <span aria-hidden="true">🏢</span> <span>Company Pulse &amp; Vacancies</span>
+            </button>
+            <button type="button" data-subtab="ovtab-analytics" onclick="showOvTab('ovtab-analytics')">
+              <span aria-hidden="true">📊</span> <span>Recruitment Analytics &amp; Charts</span>
+            </button>
+            <button type="button" data-subtab="ovtab-strategy" onclick="showOvTab('ovtab-strategy')">
+              <span aria-hidden="true">🧠</span> <span>AI Growth &amp; Expansion Advisory</span>
+            </button>
+            <button type="button" data-subtab="ovtab-podium" onclick="showOvTab('ovtab-podium')">
+              <span aria-hidden="true">🏆</span> <span>Top Recommendations Podium</span>
+            </button>
+          </nav>
+
+          <!-- Subtab 1: Company Profile, KPIs, Open Vacancies & Pipeline -->
+          <div id="ovtab-pulse" class="ovtab-pane space-y-6">
+            <!-- Employer Company Account & Profile Card -->
+            <div data-outline-label="Company profile" class="glass rounded-3xl p-6 space-y-4 border border-teal-200 shadow-sm">
+              <div class="flex flex-wrap items-center justify-between gap-4">
+                <div class="flex items-center gap-3.5">
+                  <div id="hrCardAvatar" class="h-12 w-12 rounded-2xl bg-gradient-to-br from-teal-500 to-sky-600 text-white font-black text-xl grid place-items-center shadow">🏢</div>
+                  <div>
+                    <div class="flex flex-wrap items-center gap-2">
+                      <h2 id="hrCardName" class="text-xl font-extrabold text-slate-900" data-no-translate>Employer Company</h2>
+                      <span class="chip chip-teal">Verified Employer</span>
+                      <span class="chip chip-emerald">Company Workspace</span>
+                    </div>
+                    <div class="text-xs text-slate-500 mt-1 flex flex-wrap items-center gap-2">
+                      <span>ID: <b id="hrCardUid" class="font-mono text-slate-700" data-no-translate></b></span>
+                      <span>•</span>
+                      <span>Login: <b id="hrCardEmail" class="text-slate-700" data-no-translate></b></span>
+                      <span>•</span>
+                      <span>Contact: <b id="hrCardContact" class="text-slate-700" data-no-translate></b></span>
+                    </div>
+                  </div>
+                </div>
+                <div class="flex items-center gap-2 shrink-0">
+                  <button type="button" onclick="openAccountModal()" class="btn btn-primary !py-2 !px-4 flex items-center gap-1.5 text-xs font-bold shadow-sm" title="Edit Company Account & Profile">
+                    <span>✏️</span>
+                    <span>Edit Company Profile</span>
+                  </button>
+                  <button type="button" onclick="openAccountModal();setAccountModalTab('security');" class="btn btn-soft !py-2 !px-3.5 text-xs flex items-center gap-1.5 font-bold" title="Update password">
+                    <span>🔒</span>
+                    <span>Password</span>
+                  </button>
+                  <button type="button" id="overviewRefresh" class="btn btn-soft !py-2 !px-3.5 text-xs" onclick="refreshOverview()">↻ Refresh</button>
+                </div>
+              </div>
+            </div>
+
+            <div data-outline-label="Hiring overview" id="kpis" class="grid grid-cols-2 lg:grid-cols-4 gap-4"></div>
+            <div data-outline-label="Hiring & screening" class="grid lg:grid-cols-5 gap-6">
+              <div class="lg:col-span-3 glass rounded-3xl p-6 space-y-4">
+                <div class="flex items-center justify-between"><div class="text-sm font-extrabold">Open vacancies</div><button onclick="showTab('vacancies')" class="text-xs font-bold text-teal-700">Manage →</button></div>
+                <div id="ovVacancies" class="space-y-3"></div>
+              </div>
+              <div class="lg:col-span-2 space-y-6">
+                <div class="tint tint-teal rounded-3xl p-6"><div class="text-sm font-extrabold mb-1">Screening pipeline</div><div id="ovPipelineTitle" class="text-[11px] text-slate-500 mb-4"></div><div id="ovPipeline" class="space-y-3"></div></div>
+                <div class="tint tint-indigo rounded-3xl p-6 space-y-2.5">
+                  <div class="text-sm font-extrabold">Responsible AI checks</div><p class="hint">Protected attributes excluded. Statistical parity has not been audited.</p>
+                  <div class="flex flex-wrap gap-2">
+                    <span class="chip chip-emerald">✓ Job-relevant criteria only</span><span class="chip chip-emerald">✓ Protected attributes excluded</span>
+                    <span class="chip chip-emerald">✓ CV gaps = “To confirm”</span><span class="chip chip-emerald">✓ Explainable scores</span><span class="chip chip-emerald">✓ HR final decision</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Subtab 2: Recruitment Analytics & Interactive Charts -->
+          <div id="ovtab-analytics" class="ovtab-pane hidden space-y-6">
+            <div data-outline-label="Workforce Analytics & Charts" class="space-y-6">
+              <div class="flex flex-wrap items-center justify-between gap-3">
                 <div>
-                  <div class="flex flex-wrap items-center gap-2">
-                    <h2 id="hrCardName" class="text-xl font-extrabold text-slate-900" data-no-translate>Employer Company</h2>
-                    <span class="chip chip-teal">Verified Employer</span>
-                    <span class="chip chip-emerald">Company Workspace</span>
-                  </div>
-                  <div class="text-xs text-slate-500 mt-1 flex flex-wrap items-center gap-2">
-                    <span>ID: <b id="hrCardUid" class="font-mono text-slate-700" data-no-translate></b></span>
-                    <span>•</span>
-                    <span>Login: <b id="hrCardEmail" class="text-slate-700" data-no-translate></b></span>
-                    <span>•</span>
-                    <span>Contact: <b id="hrCardContact" class="text-slate-700" data-no-translate></b></span>
-                  </div>
+                  <h2 class="text-xl font-extrabold text-slate-900">Workforce Intelligence &amp; Recruitment Analytics</h2>
+                  <p class="hint">Live aggregation across your active vacancies and applicant talent pool</p>
+                </div>
+                <div class="flex items-center gap-2">
+                  <button type="button" onclick="openReportModal()" class="btn btn-hr !py-2 !px-4 text-xs font-bold flex items-center gap-1.5 shadow-sm">
+                    <span>📄</span> <span>Generate Executive Report</span>
+                  </button>
                 </div>
               </div>
-              <div class="flex items-center gap-2 shrink-0">
-                <button type="button" onclick="openAccountModal()" class="btn btn-primary !py-2 !px-4 flex items-center gap-1.5 text-xs font-bold shadow-sm" title="Edit Company Account & Profile">
-                  <span>✏️</span>
-                  <span>Edit Company Profile</span>
-                </button>
-                <button type="button" onclick="openAccountModal();setAccountModalTab('security');" class="btn btn-soft !py-2 !px-3.5 text-xs flex items-center gap-1.5 font-bold" title="Update password">
-                  <span>🔒</span>
-                  <span>Password</span>
-                </button>
-                <button type="button" id="overviewRefresh" class="btn btn-soft !py-2 !px-3.5 text-xs" onclick="refreshOverview()">↻ Refresh</button>
+
+              <div class="grid lg:grid-cols-3 gap-6">
+                <!-- Chart 1: Vacancy Applicant Inflow -->
+                <div class="glass rounded-3xl p-6 space-y-3">
+                  <div class="flex items-center justify-between">
+                    <h3 class="text-sm font-extrabold text-slate-800">Applications per Vacancy</h3>
+                    <span class="chip chip-teal text-[10px]">Live Inflow</span>
+                  </div>
+                  <div class="relative h-64">
+                    <canvas id="chartVacancyInflow"></canvas>
+                  </div>
+                  <p class="text-[11px] text-slate-500">Applicant volume distributed across open engineering and finance postings.</p>
+                </div>
+
+                <!-- Chart 2: Candidate Skill Clusters -->
+                <div class="glass rounded-3xl p-6 space-y-3">
+                  <div class="flex items-center justify-between">
+                    <h3 class="text-sm font-extrabold text-slate-800">Talent Skill Clusters</h3>
+                    <span class="chip chip-indigo text-[10px]">Core Competencies</span>
+                  </div>
+                  <div class="relative h-64">
+                    <canvas id="chartSkillClusters"></canvas>
+                  </div>
+                  <p class="text-[11px] text-slate-500">Breakdown of primary skills present across candidate profiles.</p>
+                </div>
+
+                <!-- Chart 3: Experience Pipeline -->
+                <div class="glass rounded-3xl p-6 space-y-3">
+                  <div class="flex items-center justify-between">
+                    <h3 class="text-sm font-extrabold text-slate-800">Experience &amp; Seniority Mix</h3>
+                    <span class="chip chip-amber text-[10px]">Seniority Levels</span>
+                  </div>
+                  <div class="relative h-64">
+                    <canvas id="chartExperienceMix"></canvas>
+                  </div>
+                  <p class="text-[11px] text-slate-500">Distribution between fresh talent, mid-level executors, and senior leads.</p>
+                </div>
               </div>
             </div>
           </div>
 
-          <div data-outline-label="Hiring overview" id="kpis" class="grid grid-cols-2 lg:grid-cols-4 gap-4"></div>
-          <div data-outline-label="Hiring & screening" class="grid lg:grid-cols-5 gap-6">
-            <div class="lg:col-span-3 glass rounded-3xl p-6 space-y-4">
-              <div class="flex items-center justify-between"><div class="text-sm font-extrabold">Open vacancies</div><button onclick="showTab('vacancies')" class="text-xs font-bold text-teal-700">Manage →</button></div>
-              <div id="ovVacancies" class="space-y-3"></div>
-            </div>
-            <div class="lg:col-span-2 space-y-6">
-              <div class="tint tint-teal rounded-3xl p-6"><div class="text-sm font-extrabold mb-1">Screening pipeline</div><div id="ovPipelineTitle" class="text-[11px] text-slate-500 mb-4"></div><div id="ovPipeline" class="space-y-3"></div></div>
-              <div class="tint tint-indigo rounded-3xl p-6 space-y-2.5">
-                <div class="text-sm font-extrabold">Responsible AI checks</div><p class="hint">Protected attributes excluded. Statistical parity has not been audited.</p>
-                <div class="flex flex-wrap gap-2">
-                  <span class="chip chip-emerald">✓ Job-relevant criteria only</span><span class="chip chip-emerald">✓ Protected attributes excluded</span>
-                  <span class="chip chip-emerald">✓ CV gaps = “To confirm”</span><span class="chip chip-emerald">✓ Explainable scores</span><span class="chip chip-emerald">✓ HR final decision</span>
-                </div>
-              </div>
-            </div>
-          </div>
-          <!-- Employer Workforce Analytics & AI Company Growth Advisory -->
-          <div data-outline-label="Workforce Analytics & Charts" class="space-y-6">
-            <div class="flex flex-wrap items-center justify-between gap-3">
-              <div>
-                <h2 class="text-xl font-extrabold text-slate-900">Workforce Intelligence &amp; Recruitment Analytics</h2>
-                <p class="hint">Live aggregation across your active vacancies and applicant talent pool</p>
-              </div>
-              <div class="flex items-center gap-2">
-                <button type="button" onclick="openReportModal()" class="btn btn-hr !py-2 !px-4 text-xs font-bold flex items-center gap-1.5 shadow-sm">
-                  <span>📄</span> <span>Generate Executive Report</span>
-                </button>
-              </div>
-            </div>
-
-            <div class="grid lg:grid-cols-3 gap-6">
-              <!-- Chart 1: Vacancy Applicant Inflow -->
-              <div class="glass rounded-3xl p-6 space-y-3">
-                <div class="flex items-center justify-between">
-                  <h3 class="text-sm font-extrabold text-slate-800">Applications per Vacancy</h3>
-                  <span class="chip chip-teal text-[10px]">Live Inflow</span>
-                </div>
-                <div class="relative h-56">
-                  <canvas id="chartVacancyInflow"></canvas>
-                </div>
-                <p class="text-[11px] text-slate-500">Applicant volume distributed across open engineering and finance postings.</p>
-              </div>
-
-              <!-- Chart 2: Candidate Skill Clusters -->
-              <div class="glass rounded-3xl p-6 space-y-3">
-                <div class="flex items-center justify-between">
-                  <h3 class="text-sm font-extrabold text-slate-800">Talent Skill Clusters</h3>
-                  <span class="chip chip-indigo text-[10px]">Core Competencies</span>
-                </div>
-                <div class="relative h-56">
-                  <canvas id="chartSkillClusters"></canvas>
-                </div>
-                <p class="text-[11px] text-slate-500">Breakdown of primary skills present across candidate profiles.</p>
-              </div>
-
-              <!-- Chart 3: Experience Pipeline -->
-              <div class="glass rounded-3xl p-6 space-y-3">
-                <div class="flex items-center justify-between">
-                  <h3 class="text-sm font-extrabold text-slate-800">Experience &amp; Seniority Mix</h3>
-                  <span class="chip chip-amber text-[10px]">Seniority Levels</span>
-                </div>
-                <div class="relative h-56">
-                  <canvas id="chartExperienceMix"></canvas>
-                </div>
-                <p class="text-[11px] text-slate-500">Distribution between fresh talent, mid-level executors, and senior leads.</p>
-              </div>
-            </div>
-
-            <!-- Trained AI Strategic Business Growth & Expansion Advisory -->
-            <div class="glass rounded-3xl p-6 sm:p-7 border-2 border-teal-200/70 space-y-5 bg-gradient-to-br from-white/95 via-teal-50/20 to-sky-50/20 shadow-sm">
+          <!-- Subtab 3: Trained AI Strategic Growth & Market Expansion -->
+          <div id="ovtab-strategy" class="ovtab-pane hidden space-y-6">
+            <div class="glass rounded-3xl p-6 sm:p-7 border-2 border-teal-200/70 space-y-6 bg-gradient-to-br from-white/95 via-teal-50/20 to-sky-50/20 shadow-sm">
               <div class="flex flex-wrap items-center justify-between gap-3 border-b border-teal-100 pb-4">
                 <div class="flex items-center gap-3">
-                  <div class="h-10 w-10 rounded-2xl bg-gradient-to-br from-teal-500 to-sky-600 text-white font-extrabold text-lg grid place-items-center shadow">🧠</div>
+                  <div class="h-11 w-11 rounded-2xl bg-gradient-to-br from-teal-500 to-sky-600 text-white font-extrabold text-xl grid place-items-center shadow">🧠</div>
                   <div>
-                    <h3 class="text-lg font-extrabold text-slate-900">Trained AI Strategic Workforce &amp; Expansion Advisory</h3>
+                    <h3 class="text-xl font-extrabold text-slate-900">Trained AI Strategic Workforce &amp; Expansion Advisory</h3>
                     <p class="text-xs text-slate-500">Macro-economic data models &amp; talent pipeline growth forecasts (IT 2030 &amp; Future Demand)</p>
                   </div>
                 </div>
-                <span class="chip chip-emerald font-bold">Model: Trained Workforce Forecaster</span>
+                <div class="flex items-center gap-2">
+                  <span class="chip chip-emerald font-bold">Model: Trained Workforce Forecaster</span>
+                </div>
               </div>
 
               <div class="grid md:grid-cols-3 gap-5">
                 <!-- Card A: Growth Benefit Assessment -->
-                <div class="tint tint-teal rounded-2xl p-4 space-y-2">
+                <div class="tint tint-teal rounded-2xl p-5 space-y-2.5">
                   <div class="flex items-center gap-2">
-                    <span class="text-base">📈</span>
+                    <span class="text-lg">📈</span>
                     <b class="text-xs text-teal-950 font-extrabold">Is Current Hiring Beneficial to Growth?</b>
                   </div>
                   <p class="text-xs text-slate-700 leading-relaxed">
@@ -188,21 +279,21 @@
                 </div>
 
                 <!-- Card B: New Market Expansion -->
-                <div class="tint tint-indigo rounded-2xl p-4 space-y-2">
+                <div class="tint tint-indigo rounded-2xl p-5 space-y-2.5">
                   <div class="flex items-center gap-2">
-                    <span class="text-base">🚀</span>
+                    <span class="text-lg">🚀</span>
                     <b class="text-xs text-indigo-950 font-extrabold">Recommended Market Expansion Vectors</b>
                   </div>
                   <p class="text-xs text-slate-700 leading-relaxed">
-                    <b>1. AI Financial Auditing &amp; Automation:</b> Combine Python and database talent to offer high-margin continuous compliance auditing.<br>
+                    <b>1. AI Financial Auditing &amp; Automation:</b> Combine Python and database talent to offer high-margin continuous compliance auditing.<br><br>
                     <b>2. ASEAN ESG &amp; Green Finance Analytics:</b> Capitalize on mandatory sustainability reporting mandates by pairing data analysts with ESG frameworks.
                   </p>
                 </div>
 
                 <!-- Card C: Core Specialization & Talent Moat -->
-                <div class="tint tint-amber rounded-2xl p-4 space-y-2">
+                <div class="tint tint-amber rounded-2xl p-5 space-y-2.5">
                   <div class="flex items-center gap-2">
-                    <span class="text-base">🛡️</span>
+                    <span class="text-lg">🛡️</span>
                     <b class="text-xs text-amber-950 font-extrabold">Company Specialization &amp; Hiring Moat</b>
                   </div>
                   <p class="text-xs text-slate-700 leading-relaxed">
@@ -213,11 +304,17 @@
             </div>
           </div>
 
-          <section data-outline-label="Candidate ranking" id="overviewRanking" class="glass rounded-3xl p-6 space-y-4">
-            <div class="flex flex-wrap justify-between items-center gap-3"><h2 class="text-lg font-extrabold">Top 3 candidate recommendations</h2><label>Vacancy<select id="podiumVacancy" class="input" onchange="selectComparisonVacancy(this.value)"></select></label></div>
-            <p class="hint">Ranking follows comparison filters and selected vacancy. Scores use job criteria; equal scores use candidate ID for stable ordering. HR makes the final decision.</p>
-            <div id="overviewPodium" class="podium" aria-live="polite"></div>
-          </section>
+          <!-- Subtab 4: Candidate Recommendations Podium -->
+          <div id="ovtab-podium" class="ovtab-pane hidden space-y-6">
+            <section data-outline-label="Candidate ranking" id="overviewRanking" class="glass rounded-3xl p-6 space-y-4">
+              <div class="flex flex-wrap justify-between items-center gap-3">
+                <h2 class="text-lg font-extrabold">Top 3 candidate recommendations</h2>
+                <label>Vacancy<select id="podiumVacancy" class="input" onchange="selectComparisonVacancy(this.value)"></select></label>
+              </div>
+              <p class="hint">Ranking follows comparison filters and selected vacancy. Scores use job criteria; equal scores use candidate ID for stable ordering. HR makes the final decision.</p>
+              <div id="overviewPodium" class="podium" aria-live="polite"></div>
+            </section>
+          </div>
         </section>
 
         <section id="tab-vacancies" class="tab hidden">
@@ -244,7 +341,7 @@
         </section>
 
         <section id="tab-screening" class="tab hidden space-y-5">
-          <nav class="growth-navigation" data-screening-navigation aria-label="Candidate Screening"></nav>
+          <nav class="screening-nav" data-screening-navigation aria-label="Candidate Screening"></nav>
           <div class="glass rounded-3xl p-5 flex flex-wrap items-center justify-between gap-4">
             <div class="flex items-center gap-3"><span class="text-xs font-bold text-slate-500">Vacancy</span><select id="scVacancy" onchange="loadScreen(this.value)" class="input vacancy-picker"></select></div>
             <div data-outline-label="Screening filters" id="typeFilter" class="seg"></div>
@@ -295,13 +392,14 @@
               <thead><tr class="bg-slate-50/80 text-slate-500 border-b border-slate-200"><th class="py-3 px-4 w-12">#</th><th class="py-3 px-4">Candidate</th><th class="py-3 px-4">Relevant exp.</th><th class="py-3 px-4 min-w-[9rem]">Match</th><th class="py-3 px-4">To confirm</th><th class="py-3 px-4">Suggested action</th><th class="py-3 px-4">HR decision</th><th class="py-3 px-4"></th></tr></thead>
               <tbody id="scRows" class="divide-y divide-slate-200/60"></tbody>
             </table></div>
+            <div id="scPagination" class="flex flex-wrap items-center justify-between gap-3 p-4 border-t border-slate-200/80 bg-slate-50/70"></div>
           </div>
           <p class="hint"><span class="screening-highlight-key" aria-hidden="true"></span>Gold highlight: match score 85% or above. HR review required.</p>
           <div id="fairNote" class="text-[11px] text-slate-500 px-1"></div>
         </section>
 
         <section id="tab-heatmap" class="tab hidden space-y-6">
-          <nav class="growth-navigation" data-screening-navigation aria-label="Candidate Screening"></nav>
+          <nav class="screening-nav" data-screening-navigation aria-label="Candidate Screening"></nav>
           <p id="comparisonStatus" class="hint" role="status"></p>
           <div class="glass rounded-3xl p-5 space-y-4">
             <label class="flex items-center gap-2"><input id="comparisonDemo" type="checkbox" onchange="CompanyComparison.load()">Include labelled demo candidates</label>
@@ -328,7 +426,7 @@
         </section>
 
         <section id="tab-shortlisting" class="tab hidden space-y-6">
-          <nav class="growth-navigation" data-screening-navigation aria-label="Candidate Screening"></nav>
+          <nav class="screening-nav" data-screening-navigation aria-label="Candidate Screening"></nav>
           <div data-outline-label="Shortlist filters" class="glass rounded-3xl p-6 space-y-4">
             <div class="flex flex-wrap items-center justify-between gap-3">
               <div><h2 class="font-extrabold">Shortlisted candidates</h2><p class="hint">Review your shortlist and arrange interviews here.</p></div>
@@ -765,6 +863,34 @@
       return esc(String(x));
     }
 
+    let currentOvTab = 'ovtab-pulse';
+    function showOvTab(subId) {
+      currentOvTab = subId;
+      document.querySelectorAll('.ovtab-pane').forEach(el => el.classList.add('hidden'));
+      const target = document.getElementById(subId);
+      if (target) {
+        target.classList.remove('hidden');
+        target.classList.add('fade-in');
+      }
+      document.querySelectorAll('[data-overview-subnav] button').forEach(btn => {
+        const isCur = btn.getAttribute('data-subtab') === subId;
+        btn.toggleAttribute('aria-current', isCur);
+        btn.classList.toggle('active', isCur);
+      });
+      if (subId === 'ovtab-analytics') {
+        setTimeout(initHrCharts, 50);
+      }
+    }
+
+    let screenPage = 1;
+    const SCREEN_PAGE_SIZE = 10;
+    function setScreenPage(p) {
+      screenPage = p;
+      renderScreen();
+      const wrap = document.querySelector('[data-outline-label="Candidate screening"]');
+      if (wrap) wrap.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+
     function renderScreeningNavigation() {
       const items = [
         { id: 'screening', ico: '🔍', label: 'Applicant Screening' },
@@ -772,8 +898,9 @@
         { id: 'shortlisting', ico: '📌', label: 'Shortlisting & Pipeline' },
       ];
       document.querySelectorAll('[data-screening-navigation]').forEach(nav => {
+        nav.className = 'screening-nav';
         nav.innerHTML = items.map(item => `
-          <button type="button" onclick="showTab('${item.id}')" ${current === item.id ? 'aria-current="page"' : ''}>
+          <button type="button" onclick="showTab('${item.id}')" ${current === item.id ? 'aria-current="page" class="active"' : ''}>
             <span aria-hidden="true">${item.ico}</span> <span>${esc(item.label)}</span>
           </button>`).join('');
       });
@@ -892,7 +1019,7 @@
       scVacancy.innerHTML = vacancies.length ? vacancies.map(v => `<option value="${v.id}" ${v.id === Number(selectedVid) ? 'selected' : ''}>${esc(v.title)} · ${esc(v.vacancy_uid)}${v.status === 'Closed' ? ' (closed)' : ''}</option>`).join('') : '<option>No vacancies</option>';
       document.getElementById('typeFilter').innerHTML = TYPES.map(t => `<button onclick="setType('${t}')" class="${t === typeFilter ? 'on' : ''}">${t === 'Experienced Worker' ? 'Experienced' : t}</button>`).join('');
     }
-    function setType(t) { typeFilter = t; renderScreenSelect(); renderScreen(); }
+    function setType(t) { typeFilter = t; screenPage = 1; renderScreenSelect(); renderScreen(); }
     async function loadScreen(id) {
       if (!id || isNaN(Number(id))) { scrn = null; return renderScreen(); }
       selectedVid = Number(id); const r = await api(`/api/hr/vacancies/${id}/screen`);
@@ -911,7 +1038,16 @@
       ];
       scSummary.innerHTML = tiles.map(t => `<div class="tint tint-${t[2]} rounded-2xl p-4"><div class="text-[11px] font-bold text-slate-500">${t[0]}</div><div class="text-3xl font-extrabold mt-1">${t[1]}</div></div>`).join('');
       const rows = scrn.results.filter(r => typeFilter === 'All' || r.type === typeFilter);
-      scRows.innerHTML = rows.length ? rows.map((r, i) => {
+      const totalCount = rows.length;
+      const totalPages = Math.ceil(totalCount / SCREEN_PAGE_SIZE) || 1;
+      if (screenPage > totalPages) screenPage = totalPages;
+      if (screenPage < 1) screenPage = 1;
+      const startIdx = (screenPage - 1) * SCREEN_PAGE_SIZE;
+      const endIdx = Math.min(startIdx + SCREEN_PAGE_SIZE, totalCount);
+      const pagedRows = rows.slice(startIdx, endIdx);
+
+      scRows.innerHTML = pagedRows.length ? pagedRows.map((r, i) => {
+        const itemIdx = startIdx + i + 1;
         const dec = decisions[decKey(scrn.vacancy.id, r.candidate_id)] || 'Pending';
         const appliedBadges = r.is_applied_user
           ? `<span class="chip chip-emerald">✓ Applied · <span data-no-translate>${esc(r.application_uid)}</span></span>
@@ -919,7 +1055,7 @@
              ${r.share_original_pdf ? '<span class="chip chip-indigo">Original PDF</span>' : ''}`
           : '';
         return `<tr class="${r.score >= 85 ? 'screening-high-match' : ''} ${r.is_applied_user ? 'bg-emerald-50/40' : ''} hover:bg-teal-50/40 transition">
-          <td class="py-3.5 px-4 font-extrabold text-slate-400">${i + 1}</td>
+          <td class="py-3.5 px-4 font-extrabold text-slate-400">${itemIdx}</td>
           <td class="py-3.5 px-4">
             <div data-no-translate class="font-extrabold text-sm">${esc(r.name)}</div>
             <div class="flex flex-wrap items-center gap-1.5 mt-0.5">
@@ -942,6 +1078,28 @@
           </td></tr>`;
       }).join('') : '<tr><td colspan="8" class="p-8 text-center text-slate-500">No candidates in this group.</td></tr>';
       scRows.innerHTML += (scrn.restricted_applications || []).map(r => `<tr><td colspan="8" class="p-4 border-t"><b>${esc(r.candidate_name)}</b> · ${esc(r.application_uid)}<p class="text-xs text-slate-500">${esc(r.notice)}</p>${r.pdf_url ? `<a class="btn btn-soft !text-xs mt-2" href="${esc(r.pdf_url)}" target="_blank" rel="noopener">Open explicitly shared original PDF</a>` : ''}</td></tr>`).join('');
+
+      if (totalCount > 0) {
+        let pageBtns = '';
+        for (let p = 1; p <= totalPages; p++) {
+          pageBtns += `<button type="button" onclick="setScreenPage(${p})" class="btn !py-1 !px-3 !text-xs ${p === screenPage ? 'btn-hr font-extrabold shadow-sm' : 'btn-soft'}">${p}</button>`;
+        }
+        scPagination.innerHTML = `
+          <div class="text-xs text-slate-500 font-medium">
+            Showing <b class="text-slate-800">${startIdx + 1}</b>–<b class="text-slate-800">${endIdx}</b> of <b class="text-slate-800">${totalCount}</b> candidates (10 per page)
+          </div>
+          <div class="flex items-center gap-1.5">
+            <button type="button" onclick="setScreenPage(${screenPage - 1})" ${screenPage <= 1 ? 'disabled' : ''} class="btn btn-soft !py-1 !px-2.5 !text-xs font-bold ${screenPage <= 1 ? 'opacity-40 cursor-not-allowed' : ''}">‹ Prev</button>
+            ${pageBtns}
+            <button type="button" onclick="setScreenPage(${screenPage + 1})" ${screenPage >= totalPages ? 'disabled' : ''} class="btn btn-soft !py-1 !px-2.5 !text-xs font-bold ${screenPage >= totalPages ? 'opacity-40 cursor-not-allowed' : ''}">Next ›</button>
+          </div>
+        `;
+        scPagination.classList.remove('hidden');
+      } else {
+        scPagination.innerHTML = '';
+        scPagination.classList.add('hidden');
+      }
+
       fairNote.textContent = '⚖️ ' + scrn.fairness_note;
     }
     function screenShortlistRows(data) {
