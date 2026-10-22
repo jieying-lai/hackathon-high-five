@@ -1,0 +1,27 @@
+/* Scoped layout: long badges must never steal width from numeric columns. */
+.responsive-employer .screening-table {table-layout:fixed;width:100%;min-width:1080px!important;overflow-wrap:normal;word-break:normal;font-size:13px}
+.screening-table th {text-align:left;font-size:12px;font-weight:700;line-height:1.5;vertical-align:middle;padding:16px 12px!important}
+.screening-table th:nth-child(1){width:4%}.screening-table th:nth-child(2){width:21%}.screening-table th:nth-child(3){width:8%}.screening-table th:nth-child(4){width:10%}.screening-table th:nth-child(5){width:16%}.screening-table th:nth-child(6){width:15%}.screening-table th:nth-child(7){width:12%}.screening-table th:nth-child(8){width:14%}
+.screening-table #scRows td {padding:18px 12px;vertical-align:top;line-height:1.6;overflow-wrap:break-word}
+.screening-table #scRows td:nth-child(3){white-space:nowrap;overflow-wrap:normal}
+.screening-table #scRows .chip {white-space:normal!important;max-width:100%!important;overflow-wrap:break-word;word-break:normal;line-height:1.5;display:inline-block}
+.screening-table #scRows .screening-actions {display:flex;flex-wrap:wrap;gap:8px;white-space:normal}
+.screening-table #scRows .screening-actions .btn {min-width:0;max-width:100%;font-size:12px;padding:8px 10px}
+.screening-table #scRows select {width:100%!important;max-width:100%;min-width:0;font-size:12px!important;background:white}
+.screening-table #scRows td:nth-child(4) .bar {min-width:25px;margin-top:2px}
+.screening-table #scRows td:nth-child(4) span {flex-shrink:0}
+.screening-table tbody tr {border-bottom:1px solid #e2e8f0}
+@media(max-width:767px){
+ .responsive-employer .screening-table{display:block;min-width:0!important}
+ .screening-table thead{position:absolute;width:1px;height:1px;padding:0;overflow:hidden;clip-path:inset(50%)}
+ .screening-table #scRows{display:grid;gap:16px;padding:12px}
+ .screening-table #scRows tr{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:12px;background:white;border:1px solid #cbd5e1;border-radius:16px;padding:16px}
+ .screening-table #scRows td{display:block;padding:0;min-width:0;border:0}
+ .screening-table #scRows td:before{content:attr(data-label);display:block;color:#64748b;font-size:11px;font-weight:700;margin-bottom:6px}
+ .screening-table #scRows td:nth-child(1){display:none}
+ .screening-table #scRows td:nth-child(2),.screening-table #scRows td:nth-child(5),.screening-table #scRows td:nth-child(6),.screening-table #scRows td:nth-child(8),.screening-table #scRows td[colspan]{grid-column:1/-1}
+ .screening-table #scRows select{font-size:16px!important;min-height:44px}
+ body.responsive-employer.page-outline-enabled main{max-width:100%!important;padding:16px!important}
+ body.responsive-employer #pageOutline{display:none!important}
+}
+.responsive-employer .screening-table #scRows .screening-actions{width:auto;min-width:0;flex-wrap:wrap}

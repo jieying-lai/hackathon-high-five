@@ -57,26 +57,8 @@
       font-weight: 800 !important;
     }
 
-    /* Candidate screening table layout & chip whitespace fixes */
-    #scRows tr td {
-      vertical-align: middle !important;
-      padding-top: 0.75rem !important;
-      padding-bottom: 0.75rem !important;
-    }
-    #scRows .chip {
-      white-space: nowrap !important;
-      max-width: none !important;
-      display: inline-flex !important;
-      align-items: center !important;
-      line-height: 1.2 !important;
-    }
-    .screening-actions {
-      display: flex !important;
-      align-items: center !important;
-      gap: 0.35rem !important;
-      white-space: nowrap !important;
-    }
   </style>
+<link rel="stylesheet" href="/static/css/employer-screening.css?v=20261022" />
 </head>
 <body class="responsive-ui responsive-employer hr min-h-screen company-comparison-portal">
   <div class="aurora"></div><div class="blob b1"></div><div class="blob b2"></div>
@@ -388,8 +370,8 @@
             </div>
           </div>
           <div data-outline-label="Candidate screening" class="glass rounded-3xl overflow-hidden">
-            <div class="overflow-x-auto table-scroll" tabindex="0" role="region" aria-label="Scrollable data table"><table class="w-full text-left text-xs">
-              <thead><tr class="bg-slate-50/80 text-slate-500 border-b border-slate-200"><th class="py-3 px-4 w-12">#</th><th class="py-3 px-4">Candidate</th><th class="py-3 px-4">Relevant exp.</th><th class="py-3 px-4 min-w-[9rem]">Match</th><th class="py-3 px-4">To confirm</th><th class="py-3 px-4">Suggested action</th><th class="py-3 px-4">HR decision</th><th class="py-3 px-4"></th></tr></thead>
+            <div class="overflow-x-auto table-scroll" tabindex="0" role="region" aria-label="Scrollable data table"><table class="screening-table w-full text-left text-xs">
+              <thead><tr class="bg-slate-50/80 text-slate-500 border-b border-slate-200"><th class="py-3 px-4 w-12">#</th><th class="py-3 px-4">Candidate</th><th class="py-3 px-4">Relevant exp.</th><th class="py-3 px-4 min-w-[9rem]">Match</th><th class="py-3 px-4">To confirm</th><th class="py-3 px-4">Suggested action</th><th class="py-3 px-4">HR decision</th><th class="py-3 px-4">Actions</th></tr></thead>
               <tbody id="scRows" class="divide-y divide-slate-200/60"></tbody>
             </table></div>
             <div id="scPagination" class="flex flex-wrap items-center justify-between gap-3 p-4 border-t border-slate-200/80 bg-slate-50/70"></div>
@@ -1055,8 +1037,8 @@
              ${r.share_original_pdf ? '<span class="chip chip-indigo">Original PDF</span>' : ''}`
           : '';
         return `<tr class="${r.score >= 85 ? 'screening-high-match' : ''} ${r.is_applied_user ? 'bg-emerald-50/40' : ''} hover:bg-teal-50/40 transition">
-          <td class="py-3.5 px-4 font-extrabold text-slate-400">${itemIdx}</td>
-          <td class="py-3.5 px-4">
+          <td data-label="Rank" class="py-3.5 px-4 font-extrabold text-slate-400">${itemIdx}</td>
+          <td data-label="Candidate" class="py-3.5 px-4">
             <div data-no-translate class="font-extrabold text-sm">${esc(r.name)}</div>
             <div class="flex flex-wrap items-center gap-1.5 mt-0.5">
               <span class="chip chip-slate">${esc(r.type)}</span>
@@ -1064,12 +1046,12 @@
               ${appliedBadges}
             </div>
           </td>
-          <td class="py-3.5 px-4 font-bold">${r.years == null ? 'Not specified' : r.years === 0 ? '0 years' : r.years + ' yr' + (r.years > 1 ? 's' : '')}</td>
-          <td class="py-3.5 px-4"><div class="flex items-center gap-2"><span class="font-extrabold text-sm w-10">${r.score}%</span><div class="bar flex-1 ${r.score >= 85 ? 'emerald' : r.score >= 70 ? 'teal' : r.score >= 55 ? '' : 'rose'}"><i style="width:${r.score}%"></i></div></div></td>
-          <td class="py-3.5 px-4">${r.to_confirm.length ? `<div class="flex flex-wrap gap-1">${r.to_confirm.slice(0, 2).map(s => `<span class="chip chip-amber">${esc(s)}</span>`).join('')}${r.to_confirm.length > 2 ? `<span class="chip chip-slate">+${r.to_confirm.length - 2}</span>` : ''}</div>` : '<span class="chip chip-emerald">All covered</span>'}</td>
-          <td class="py-3.5 px-4"><span class="chip ${TONE[r.tone]}">${esc(r.action)}</span></td>
-          <td class="py-3.5 px-4"><select class="input !py-1.5 !text-[11px] !w-auto" onchange="setDecision('${r.candidate_id}',this.value)">${DECISIONS.map(d => `<option ${d === dec ? 'selected' : ''}>${d}</option>`).join('')}</select></td>
-          <td class="py-3.5 px-4">
+          <td data-label="Experience" class="py-3.5 px-4 font-bold">${r.years == null ? 'Not specified' : r.years === 0 ? '0 years' : r.years + ' yr' + (r.years > 1 ? 's' : '')}</td>
+          <td data-label="Match" class="py-3.5 px-4"><div class="flex items-center gap-2"><span class="font-extrabold text-sm w-10">${r.score}%</span><div class="bar flex-1 ${r.score >= 85 ? 'emerald' : r.score >= 70 ? 'teal' : r.score >= 55 ? '' : 'rose'}"><i style="width:${r.score}%"></i></div></div></td>
+          <td data-label="To confirm" class="py-3.5 px-4">${r.to_confirm.length ? `<div class="flex flex-wrap gap-1">${r.to_confirm.slice(0, 2).map(s => `<span class="chip chip-amber">${esc(s)}</span>`).join('')}${r.to_confirm.length > 2 ? `<span class="chip chip-slate">+${r.to_confirm.length - 2}</span>` : ''}</div>` : '<span class="chip chip-emerald">All covered</span>'}</td>
+          <td data-label="Suggested action" class="py-3.5 px-4"><span class="chip ${TONE[r.tone]}">${esc(r.action)}</span></td>
+          <td data-label="HR decision" class="py-3.5 px-4"><select class="input !py-1.5 !text-[11px] !w-auto" onchange="setDecision('${r.candidate_id}',this.value)">${DECISIONS.map(d => `<option ${d === dec ? 'selected' : ''}>${d}</option>`).join('')}</select></td>
+          <td data-label="Actions" class="py-3.5 px-4">
             <div class="screening-actions flex items-center gap-1.5">
               ${r.is_applied_user && r.share_organised_cv ? `<button onclick="openOrganisedCv(${r.application_id})" class="btn btn-hr !py-1.5 !px-2.5 !text-[11px]" data-no-translate>📄 CV</button>` : ''}
               <button onclick="openInsight('${r.candidate_id}')" class="btn btn-soft !py-1.5">Insight</button>
