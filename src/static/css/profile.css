@@ -60,3 +60,49 @@
   :is(#tab-profile, #tab-cv-upload, #tab-cv-review, #tab-applications) #uploadStages { grid-template-columns: minmax(0,1fr); gap: 6px; }
   :is(#tab-profile, #tab-cv-upload, #tab-cv-review, #tab-applications) .profile-upload > div:first-child, :is(#tab-profile, #tab-cv-upload, #tab-cv-review, #tab-applications) .profile-upload > div:last-child > div:first-child { flex-wrap: wrap; gap: 8px; }
 }
+
+/* Focused career workspaces: native disclosures preserve keyboard access and edits. */
+.career-quick-actions {display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
+.career-quick-actions button {display:grid;grid-template-columns:1fr auto;gap:8px;text-align:left;background:white;border:1px solid #e0e7ff;border-radius:20px;padding:20px;transition:transform .15s,box-shadow .15s;min-width:0}
+.career-quick-actions button:hover {transform:translateY(-3px);box-shadow:0 8px 24px #6366f11a;border-color:#a5b4fc}
+.career-quick-actions strong,.career-quick-actions small {grid-column:1/-1}
+.career-quick-actions small {color:#64748b;line-height:1.5}
+.quick-icon {color:#6366f1;font-weight:800;letter-spacing:.1em}
+.career-disclosure {border:1px solid #e2e8f0;border-radius:18px;background:#fff;min-width:0}
+.career-disclosure>summary {cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:20px;list-style:none;min-height:64px}
+.career-disclosure>summary::-webkit-details-marker {display:none}
+.career-disclosure>summary:after {content:'+';color:#6366f1;font-size:24px;flex-shrink:0}
+.career-disclosure[open]>summary:after {content:'−'}
+.career-disclosure summary strong,.career-disclosure summary small {display:block}
+.career-disclosure summary small {font-size:12px;color:#64748b;margin-top:5px;font-weight:400}
+.disclosure-body {padding:0 20px 20px}
+.career-disclosure .profile-section-heading {display:none}
+.career-disclosure .border-t {border-top:0;padding-top:0}
+:is(#tab-profile,#tab-cv-review,#tab-dash) :is(button,summary,a):focus-visible {outline:3px solid #818cf8;outline-offset:3px}
+#tab-profile .profile-account-card {background:linear-gradient(135deg,#fff,#f5f3ff)}
+#tab-profile .profile-overview {grid-template-columns:repeat(3,minmax(0,1fr))}
+:is(#tab-profile,#tab-cv-review) :is(.flex>div,.grid>div) {min-width:0}
+#tab-cv-review .profile-editor {max-width:1100px;margin-inline:auto}
+#tab-cv-review .profile-section-heading {margin-top:0;padding-top:0;border:0}
+@media(max-width:1023px){.career-quick-actions{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:639px){
+ .career-quick-actions{gap:10px}.career-quick-actions button{padding:14px;border-radius:16px}.career-quick-actions small{display:none}
+ #tab-dash #journey{grid-template-columns:repeat(2,minmax(0,1fr))}
+ #tab-profile .profile-overview{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+ #tab-profile .profile-overview>div{padding:12px}
+ :is(#tab-profile,#tab-cv-review) .glass{padding:18px!important;border-radius:20px}
+ #tab-cv-review .input{font-size:16px!important}
+ .career-disclosure>summary{padding:16px}.disclosure-body{padding:0 14px 16px}
+ #tab-cv-review .profile-fields{gap:16px}
+ #tab-cv-review .profile-save-actions{display:grid;grid-template-columns:minmax(0,1fr)}
+ #tab-profile .profile-account-meta{font-size:12px}
+ #tab-cv-review .flex{flex-wrap:wrap}
+}
+@media(prefers-reduced-motion:reduce){.career-quick-actions button{transition:none}.career-quick-actions button:hover{transform:none}}
+@media(max-width:639px){
+ body.responsive-talent.page-outline-enabled main{max-width:100%!important;width:100%;padding:20px 16px!important}
+ body.responsive-talent #pageOutline{display:none!important}
+ body.responsive-talent #lumiFab{max-width:54px;width:54px;height:54px;overflow:hidden;padding:8px}
+ body.responsive-talent #lumiFab>.text-left{display:none}
+ body.responsive-talent #tab-profile .profile-account-card>div:first-child>div:first-child{align-items:flex-start;width:100%}
+}

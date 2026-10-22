@@ -57,7 +57,7 @@
  win.document.addEventListener('visibilitychange',()=>{if(win.document.visibilityState==='hidden')save();});
  for(const type of ['wheel','touchstart','pointerdown','keydown'])win.addEventListener(type,()=>{
   if(locked)unlock();
-  else if(key&&!ready){interrupted=true;pending=null;ready=true;save();}
+  else if(key&&!ready){pending=null;}
  },{passive:true});
  return {initialize,restore,navigate,complete,save,clear};
 });

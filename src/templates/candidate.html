@@ -270,7 +270,7 @@
       text-overflow: ellipsis !important;
     }
  </style>
-<link rel="stylesheet" href="/static/css/profile.css?v=20261021-separate-pages-2" />
+<link rel="stylesheet" href="/static/css/profile.css?v=20261022-dashboard-review" />
 <link rel="stylesheet" href="/static/css/responsive.css?v=20261021-header-original-size" />
 <link rel="stylesheet" href="/static/css/page-outline.css?v=20261021-menu-outline-v2" />
 <link rel="stylesheet" href="/static/css/pomodoro.css?v=20261021-buddy-tooltip" />
@@ -408,10 +408,16 @@
           <div class="glass rounded-3xl p-6 sm:p-8 relative overflow-hidden">
             <div class="absolute -right-10 -top-10 h-48 w-48 rounded-full bg-gradient-to-br from-pink-300/50 to-indigo-300/50 blur-2xl"></div>
             <div class="relative space-y-1"><div class="text-sm text-slate-500 font-semibold">Welcome back</div>
-              <h2 id="dashHello" data-no-translate class="text-2xl font-extrabold"></h2>
+              <h2 id="dashHello" data-no-translate class="text-2xl font-extrabold">Your career dashboard</h2>
               <p id="dashSub" class="text-sm text-slate-600"></p></div>
             <div data-outline-label="Your career journey" id="journey" class="journey-grid relative mt-6"></div>
           </div>
+          <nav class="career-quick-actions" aria-label="Career shortcuts">
+<button onclick="showTab('profile')"><span class="quick-icon">01</span><strong>My profile</strong><small>Update your professional story</small><span aria-hidden="true">→</span></button>
+<button onclick="showTab('cv-review')"><span class="quick-icon">02</span><strong>Review my CV</strong><small>Check and refine your extracted details</small><span aria-hidden="true">→</span></button>
+<button onclick="showTab('jobs')"><span class="quick-icon">03</span><strong>Find opportunities</strong><small>Explore vacancies for your next move</small><span aria-hidden="true">→</span></button>
+<button onclick="showTab('applications')"><span class="quick-icon">04</span><strong>My applications</strong><small>Manage applications and CV access</small><span aria-hidden="true">→</span></button>
+</nav>
           <div data-outline-label="Career snapshot" id="kpis" class="grid grid-cols-2 lg:grid-cols-4 gap-4"></div>
           <div class="grid lg:grid-cols-5 gap-6">
             <div data-outline-label="Top role matches" id="dashTop" class="lg:col-span-3 glass rounded-3xl p-6"></div>
@@ -454,7 +460,7 @@
               </div>
             </div>
 
-            <!-- Profile Overview Details Grid (Comprehensive) -->
+<details class="career-disclosure"><summary><span><strong>Personal & career details</strong><small>View contact information and work preferences</small></span></summary><div class="disclosure-body">            <!-- Profile Overview Details Grid (Comprehensive) -->
             <div class="profile-overview grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 pt-1">
               <div class="p-3.5 rounded-2xl bg-white/80 border border-slate-200/80 shadow-xs">
                 <div class="text-[10px] font-extrabold text-slate-400 uppercase tracking-wider">Current Role</div>
@@ -482,6 +488,7 @@
               </div>
             </div>
 
+</div></details>
             <!-- Professional Pitch / Bio Banner -->
             <div class="p-4 rounded-2xl bg-indigo-50/60 border border-indigo-100 flex items-start gap-3">
               <span class="text-lg shrink-0">💬</span>
@@ -550,9 +557,9 @@
           <div class="flex flex-wrap items-center justify-between gap-3">
             <div>
               <h2 class="text-xl font-black text-slate-900 tracking-tight flex items-center gap-2">
-                <span>📑</span><span>Organised CV Profile</span>
+                <span>📑</span><span>Review your professional story</span>
               </h2>
-              <p class="text-xs text-slate-500 mt-0.5">Structured career profile extracted from your PDF. Review, polish, and save your details.</p>
+              <p class="text-xs text-slate-500 mt-0.5">Work through one section at a time. Check the original PDF, refine your details, then save your reviewed CV.</p>
             </div>
             <div class="flex items-center gap-2">
               <a id="viewMyPdfBtn" href="/api/cv/me/pdf" target="_blank" rel="noopener" class="btn btn-soft !py-1.5 !px-3 !text-xs font-bold hidden flex items-center gap-1.5 shadow-xs">
@@ -573,7 +580,7 @@
                 </div>
                 <div>
                   <div class="flex items-center gap-2">
-                    <span class="text-sm font-black text-slate-900">Extracted Resume Intelligence</span>
+                    <span class="text-sm font-black text-slate-900">Your CV workspace</span>
                     <span id="cvStatusChip" class="chip chip-amber">No PDF yet</span>
                   </div>
                   <div id="cvFileMeta" class="text-xs text-slate-500 mt-0.5 font-medium">Upload a PDF CV to extract your structured profile</div>
@@ -599,7 +606,7 @@
               </details>
             </div>
 
-            <!-- Sleek Modern AI Enhancement Card -->
+<details class="career-disclosure"><summary><span><strong>Optional AI organisation</strong><small>Connection status and processing consent</small></span></summary><div class="disclosure-body">            <!-- Sleek Modern AI Enhancement Card -->
             <div class="rounded-2xl border border-purple-200/80 bg-gradient-to-r from-purple-50/70 via-indigo-50/50 to-pink-50/40 p-4 sm:p-5 space-y-3" data-no-translate>
               <div class="flex flex-wrap items-center justify-between gap-2">
                 <div class="flex items-center gap-2">
@@ -626,6 +633,7 @@
               </div>
             </div>
 
+</div></details>
             <!-- Professional Summary -->
             <div class="tint tint-indigo rounded-2xl p-4 sm:p-5 space-y-2.5">
               <div class="flex items-center justify-between">
@@ -639,7 +647,7 @@
               <ul id="aiHighlights" class="space-y-1 text-[11px] text-slate-600 pt-1"></ul>
             </div>
 
-            <!-- Personal & Career Details -->
+<details class="career-disclosure"><summary><span><strong>Contact & career preferences</strong><small>Your contact details, occupation and work preferences</small></span></summary><div class="disclosure-body">            <!-- Personal & Career Details -->
             <div class="border-t border-slate-200/70 pt-5">
               <div class="profile-section-heading mb-4">
                 <h3 class="text-base font-extrabold text-slate-900 flex items-center gap-2">
@@ -726,7 +734,8 @@
               </div>
             </div>
 
-            <!-- Extracted Experience, Education, Projects -->
+</div></details>
+<details class="career-disclosure"><summary><span><strong>Experience, education & projects</strong><small>Open to review your professional history</small></span></summary><div class="disclosure-body">            <!-- Extracted Experience, Education, Projects -->
             <div class="border-t border-slate-200/70 pt-5">
               <div class="profile-section-heading mb-4">
                 <h3 class="text-base font-extrabold text-slate-900 flex items-center gap-2">
@@ -790,6 +799,7 @@
               <div id="cvAISuggestedSkills" class="mt-3 text-xs text-slate-600 hidden"></div>
             </div>
 
+</div></details>
             <!-- Evidence Details & Save Actions -->
             <div class="border-t border-slate-200/70 pt-5 space-y-4">
               <details class="rounded-2xl bg-slate-50/80 border border-slate-200/80 p-3.5 text-xs text-slate-600">
@@ -2031,12 +2041,13 @@
       const n = NAV.find(x => x.id === id) || EXTRA_TABS[id] || NAV[1];
       document.getElementById('pgEyebrow').textContent = n.eyebrow;
       document.getElementById('pgTitle').textContent = n.title;
-      renderGrowthNavigation();
+      if (id === 'dash') renderDash();
+      try { renderGrowthNavigation(); } catch (_) { /* Optional learning navigation must not block the account. */ }
       if (id === 'plan') renderPlan();
       if (id === 'discover') renderDiscoveryLearning();
       if (id === 'saved') renderSavedCourses();
       if (id === 'completed') renderCompletedLearning();
-      window.PomodoroTimer.setVisible(document.getElementById('learningPomodoro'),id==='plan'||id==='discover');
+      window.PomodoroTimer?.setVisible(document.getElementById('learningPomodoro'),id==='plan'||id==='discover');
       if (id === 'quest') scheduleRoleRecommendation();
       if (id === 'notifications') loadInvitations(false);
       if (id === 'dash') renderDash();
@@ -2408,6 +2419,10 @@
     async function saveProfile() {
       if (!cvRecord || uploadBusy || profileBusy || statsBusy) return;
       if (!validatePersonalCareerDetails()) {
+        const section = pName.closest('details');
+        if (section) section.open = true;
+        const firstInvalid = [pName,pRole,pEmail,pPhone,pLocation,pIndustry,pMode,pEdu,pYears].find(el => !validatePersonalField(el.id));
+        firstInvalid?.focus();
         toast('Please fill in all required personal & career contact details before saving.', 'err');
         return;
       }
@@ -3770,26 +3785,18 @@
       const groups = [['Projects & achievements', st.projects], ['Certifications', st.certifications], ['Skills', st.skills]];
       container.innerHTML = groups.map(([title, entries]) => {
         const values = Array.isArray(entries) ? entries.filter(x => typeof x === 'string' && x.trim()) : [];
-        return `<div class="rounded-2xl border border-slate-200 p-4"><h3 class="font-bold mb-3">${esc(title)}</h3>` +
+        return `<details class="career-disclosure"><summary><span><strong>${esc(title)}</strong><small>${values.length} saved ${values.length === 1 ? 'item' : 'items'}</small></span></summary><div class="disclosure-body">` +
           (values.length ? `<ul class="list-disc pl-5 space-y-2 text-sm text-slate-600">${values.map(x => `<li>${esc(x)}</li>`).join('')}</ul>` :
-          '<p class="text-sm text-slate-500">No details added yet. Upload or review your CV to add them.</p>') + '</div>';
+          '<p class="text-sm text-slate-500">No details added yet. Upload or review your CV to add them.</p>') + '</div></details>';
       }).join('');
     }
 
     async function init() {
       buildNav();
       bindDropzone();
-      const me = await api('/api/auth/me'); user = me.data.user;
-      if (!user) return;
+      const me = await api('/api/auth/me'); user = me.data?.user;
+      if (!me.ok || !user) { window.location.href = '/'; return; }
       if (user.role === 'hr_company') { window.location.href = '/workspace'; return; }
-      window.LearningImpact.initialize({identity:user.unique_uid});
-      renderDiscoveryLearning();
-      window.PomodoroTimer.mount({identity:user.unique_uid, container:document.getElementById('learningPomodoro'),floating:true});
-      syncGrowthHeaderOffset();
-      if(window.ResizeObserver){const observer=new ResizeObserver(syncGrowthHeaderOffset);document.querySelectorAll('.portal-desktop-header,.portal-mobile-header').forEach(header=>observer.observe(header));}
-      window.addEventListener('resize',syncGrowthHeaderOffset);
-      window.PagePosition?.initialize({identity:user.unique_uid,portal:'talent',getView:()=>current,isValid:id=>typeof id==='string'&&!!document.getElementById('tab-'+id)});
-      uAvatar.textContent = user.full_name.charAt(0).toUpperCase(); uName.textContent = user.full_name; uUid.textContent = user.unique_uid;
       renderAccountProfileCard();
       try { answers = JSON.parse(localStorage.getItem(ansKey()) || '{}'); } catch (e) { answers = {}; }
       const optional = async (label, work) => {
@@ -3799,7 +3806,14 @@
       window.PagePosition?.initialize({identity:user.unique_uid,portal:'talent',getView:()=>current,isValid:id=>typeof id==='string'&&!!document.getElementById('tab-'+id)});
       if (window.PagePosition) await window.PagePosition.restore(showTab, 'dash');
       else await showTab('dash');
-      await optional('Study timer', () => window.PomodoroTimer?.mount({identity:user.unique_uid,container:document.getElementById('learningPomodoro')}));
+      await optional('Learning widgets', () => {
+        window.LearningImpact?.initialize({identity:user.unique_uid});
+        renderDiscoveryLearning();
+        syncGrowthHeaderOffset();
+        if(window.ResizeObserver){const observer=new ResizeObserver(syncGrowthHeaderOffset);document.querySelectorAll('.portal-desktop-header,.portal-mobile-header').forEach(header=>observer.observe(header));}
+        window.addEventListener('resize',syncGrowthHeaderOffset);
+      });
+      await optional('Study timer', () => window.PomodoroTimer?.mount({identity:user.unique_uid,container:document.getElementById('learningPomodoro'),floating:true}));
       skillInput.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ',') { e.preventDefault(); addSkill(skillInput.value); skillInput.value = ''; } });
       await Promise.all([
         optional('Skill suggestions', async () => {

@@ -34,6 +34,9 @@ function browser(storage=new Map(),maxY=5000,navigationType='reload'){
  const interrupted=browser(store),interruptApi=create(interrupted);view='dash';interruptApi.initialize(options);
  interruptApi.navigate();view='plan';interrupted.scrollY=250;interruptApi.complete();
  let rendered=false;await interruptApi.restore(()=>{rendered=true},'dash');assert.equal(rendered,false);assert.equal(view,'plan');assert.equal(interrupted.scrollY,250);
+ const early=browser(),earlyApi=create(early);view='dash';earlyApi.initialize(options);early.fire('pointerdown');
+ let firstRender=false;await earlyApi.restore(async id=>{firstRender=true;view=id},'dash');
+ assert.equal(firstRender,true,'A touch during loading must not suppress the initial dashboard');
  const unavailable=browser();unavailable.sessionStorage={getItem(){throw Error('blocked')},setItem(){throw Error('blocked')},removeItem(){throw Error('blocked')}};
  const fallback=create(unavailable);fallback.initialize(options);await fallback.restore(async id=>view=id,'dash');fallback.save();fallback.clear();
  api.clear();assert.equal(store.has(key),false,'Sign out clears the current account position');

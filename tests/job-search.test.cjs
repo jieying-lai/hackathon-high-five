@@ -4,7 +4,7 @@ const fs = require('node:fs');
 const vm = require('node:vm');
 const html = fs.readFileSync('src/templates/candidate.html', 'utf8');
 const between = (start, end) => html.slice(html.indexOf(start), html.indexOf(end, html.indexOf(start)));
-const loader = between('    async function loadJobs(', '    function loadMoreJobs(');
+const loader = between('    async function loadJobs(', '    async function loadMoreJobs(');
 const search = between('    function syncJobSearchInputs(', '    function renderCategoryPills(');
 
 function setup(elements = {jobSearchInput: {value: ''}, mapJobSearchInput: {value: ''}}) {

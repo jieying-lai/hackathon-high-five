@@ -11,10 +11,10 @@ function setup(failures = false) {
   const account = {full_name:'Mira Example',unique_uid:'TEST-42',email:'mira@example.test',role:'job_seeker',role_details:{}};
   const elements = Object.fromEntries(['accCardName','accCardAvatar','accCardUid','accCardEmail','accCardJoined','accCardRole','accCardIndustry','accCardWorkMode','accCardPhone','accCardLocation','accCardBio','uName','uAvatar','dropName','dropEmail','dropAvatar'].map(id=>[id,{textContent:''}]));
   const events = [];
-  const c = vm.createContext({...elements, window:{...elements,location:{}},document:{getElementById:id=>elements[id]},
+  const c = vm.createContext({...elements, window:{...elements,location:{},addEventListener(){}},document:{getElementById:id=>elements[id]},
     user:null,cvRecord:null,current:'dash',roles:[],selected:0,personas:[],answers:{},
     localStorage:{getItem:()=>null},ansKey:()=> 'answers',esc:String,
-    buildNav(){},bindDropzone(){},showTab:async id=>events.push(id),
+    buildNav(){},bindDropzone(){},renderDiscoveryLearning(){},syncGrowthHeaderOffset(){},showTab:async id=>events.push(id),
     renderDash:()=>events.push('renderDash'),renderProfileHighlights(){},
     api:async url=> url==='/api/auth/me'?{ok:true,data:{user:account}}:{ok:true,data:[]},
     skillSuggest:{innerHTML:''},skillInput:{addEventListener(){}},
