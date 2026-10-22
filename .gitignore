@@ -37,4 +37,5 @@ training-data/private/
 */.ipynb_checkpoints/
 unsloth_compiled_cache/
 outputs/
+outputs_lumi/
 *.zip
