@@ -3856,7 +3856,7 @@ async function generate3AiVerificationQuestions() {
 
         if (res.ok && res.data.questions) {
             generatedVerificationQ = res.data.questions;
-            render3AiQuestions(generatedVerificationQ);
+            render3AiQuestions(generatedVerificationQ, res.data.provider);
             document.getElementById('ai3SubmitBox').classList.remove('hidden');
             toast("3 AI Verification questions successfully generated!");
         } else {
@@ -3870,9 +3870,10 @@ async function generate3AiVerificationQuestions() {
     }
 }
 
-function render3AiQuestions(questions) {
+function render3AiQuestions(questions, provider) {
     const container = document.getElementById('ai3QuestionsContainer');
-    container.innerHTML = questions.map((q, idx) => `
+    const badge = provider ? `<div class="flex items-center justify-between pb-1 text-[11px] text-indigo-600 font-semibold"><span>🎯 Role-tailored Competency Scenarios</span><span class="chip chip-emerald !text-[9px] font-mono">⚡ ${esc(provider)}</span></div>` : '';
+    container.innerHTML = badge + questions.map((q, idx) => `
         <div class="tint tint-indigo rounded-2xl p-4 space-y-2 border border-indigo-100">
             <div class="flex items-center justify-between">
                 <span class="text-[11px] font-extrabold uppercase tracking-wider text-indigo-700">Question ${idx + 1} of 3 · ${esc(q.category || 'Skill Test')}</span>
@@ -3893,10 +3894,18 @@ async function submit3AiVerificationAnswers() {
     const statusMsg = document.getElementById('ai3StatusMsg');
     statusMsg.textContent = "⏳ Submitting answers...";
 
-    const res = await postJson('/api/questionnaire/submit-3-verification-answers', { answers });
+    const res = await postJson('/api/questionnaire/submit-3-verification-answers', { 
+        answers,
+        target_role: (document.getElementById('pRole') ? pRole.value : '') || "Professional",
+        skills: skills || []
+    });
 
     if (res.ok) {
-        statusMsg.innerHTML = `<span class="text-emerald-600 font-bold">✅ Verification score: ${res.data.verification_score}/100</span>`;
+        let feedbackHtml = '';
+        if (res.data.feedback) {
+            feedbackHtml = `<p class="text-[11px] text-slate-600 font-medium mt-1 leading-snug">${esc(res.data.feedback)}</p>`;
+        }
+        statusMsg.innerHTML = `<span class="text-emerald-600 font-bold">✅ Verification score: ${res.data.verification_score}/100</span>${feedbackHtml}`;
         if (typeof saveUserWorkspaceProgress === 'function') {
             saveUserWorkspaceProgress('ai_verification_complete', res.data);
         }

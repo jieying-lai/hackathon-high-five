@@ -33,6 +33,7 @@ import hr_engine
 import vault_sharing
 import job_index
 import questionnaire_engine
+import verification_ai
 from ai_matcher import load_json, match_user_to_roles
 import auth_db
 from auth_db import (authenticate_user, get_user_by_uid, init_db, register_user, update_user_password, update_user_profile)
@@ -881,30 +882,19 @@ def main() -> None:
 def api_generate_3_verification_questions():
     try:
         data = request.get_json(force=True) or {}
-        role = data.get("target_role", "Software Engineer")
+        role = (data.get("target_role") or "").strip() or "Professional"
+        skills = data.get("skills", [])
 
-        questions = [
-            {
-                "id": "q1",
-                "category": "Practical Problem Solving",
-                "difficulty": "Intermediate",
-                "question_text": f"In a real-world project for a {role}, how would you handle unexpected technical roadblocks or tight deadlines?"
-            },
-            {
-                "id": "q2",
-                "category": "Technical Competency",
-                "difficulty": "Advanced",
-                "question_text": "Describe a scenario where you optimized a workflow or resolved a critical bug/bottleneck in your past experience."
-            },
-            {
-                "id": "q3",
-                "category": "Domain & Ethics Standard",
-                "difficulty": "Scenario-Based",
-                "question_text": "How do you ensure data integrity, fairness, or best industry practices when deploying solutions in team environments?"
-            }
-        ]
-        return jsonify({"ok": True, "questions": questions}), 200
+        user_cv = None
+        try:
+            user_cv = cv_engine.get_user_cv(_owner())
+        except Exception:
+            pass
+
+        questions, provider = verification_ai.generate_verification_questions(role, skills, user_cv)
+        return jsonify({"ok": True, "questions": questions, "provider": provider}), 200
     except Exception as e:
+        app.logger.exception("Verification questions generation failed")
         return jsonify({"ok": False, "message": str(e)}), 500
 
 
@@ -914,15 +904,14 @@ def api_submit_3_verification_answers():
     try:
         data = request.get_json(force=True) or {}
         answers = data.get("answers", [])
+        role = data.get("target_role", "")
+        skills = data.get("skills", [])
 
-        answered_count = sum(1 for a in answers if len(a.get("answer", "").strip()) > 5)
-        verification_score = 60 + (answered_count * 13)
-
+        eval_result = verification_ai.evaluate_verification_answers(answers, role, skills)
         return jsonify({
             "ok": True,
             "message": "Answers successfully evaluated!",
-            "verification_score": min(verification_score, 98),
-            "answered_count": answered_count
+            **eval_result
         }), 200
     except Exception as e:
         return jsonify({"ok": False, "message": str(e)}), 500
