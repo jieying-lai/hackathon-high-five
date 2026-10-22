@@ -10,6 +10,7 @@ from urllib.parse import urlsplit, urlunsplit
 from auth_db import DB_PATH
 
 MILESTONES = (10, 20, 30, 40, 50)
+PLEDGE_PER_BADGE_CENTS = 10
 DEFAULT_RECIPIENT = 'World Food Programme (WFP)'
 WFP_DONATION_URL = 'https://www.wfp.org/support-us/stories/donate-now'
 SUGGESTED_ORGANISATIONS = [
@@ -19,7 +20,7 @@ SUGGESTED_ORGANISATIONS = [
 
 def campaign():
     demo = os.getenv('CAREERLENS_DEMO', '1') == '1'
-    return os.getenv('CAREERLENS_IMPACT_CAMPAIGN', 'learning-for-food-demo-v1' if demo else 'learning-for-food-v1'), demo
+    return os.getenv('CAREERLENS_IMPACT_CAMPAIGN', 'learning-for-food-demo-v2' if demo else 'learning-for-food-v2'), demo
 
 
 def connect():
@@ -89,12 +90,14 @@ def summary(conn, uid):
     contributors = conn.execute('SELECT COUNT(DISTINCT uid) FROM learning_impact_badges WHERE campaign=?', (campaign_id,)).fetchone()[0]
     # A fixed campaign-wide demo opening balance, never added per request or user.
     opening_cents = 500 if demo else 0
-    return {'ok': True, 'campaign': campaign_id, 'demo': demo, 'currency': 'USD', 'pledge_per_badge_cents': 100,
+    return {'ok': True, 'campaign': campaign_id, 'demo': demo, 'currency': 'USD',
+            'pledge_per_badge_cents': PLEDGE_PER_BADGE_CENTS,
             'milestones': list(MILESTONES), 'lifetime_completed': count, 'earned': earned,
             'registered_users': registered_users, 'badge_contributors': contributors, 'demo_opening_cents': opening_cents,
-            'personal_pledged_cents': len(earned)*100, 'company_pledged_cents': opening_cents + totals['total']*100,
-            'company_pending_cents': opening_cents + (totals['total']-totals['sent'])*100,
-            'company_sent_cents': totals['sent']*100, 'receipts': receipts, 'schedule': schedule(),
+            'personal_pledged_cents': len(earned)*PLEDGE_PER_BADGE_CENTS,
+            'company_pledged_cents': opening_cents + totals['total']*PLEDGE_PER_BADGE_CENTS,
+            'company_pending_cents': opening_cents + (totals['total']-totals['sent'])*PLEDGE_PER_BADGE_CENTS,
+            'company_sent_cents': totals['sent']*PLEDGE_PER_BADGE_CENTS, 'receipts': receipts, 'schedule': schedule(),
             'completion_basis': 'self_reported', 'automatic_payments': False}
 
 
@@ -133,8 +136,8 @@ def record_transfer(amount_cents, recipient, receipt_url, paid_at):
     campaign_id, demo = campaign()
     if demo:
         raise ValueError('Real transfer receipts cannot be recorded in the demo campaign.')
-    if type(amount_cents) is not int or amount_cents <= 0 or amount_cents % 100:
-        raise ValueError('Amount must allocate a whole number of USD 1 pledges.')
+    if type(amount_cents) is not int or amount_cents <= 0 or amount_cents % PLEDGE_PER_BADGE_CENTS:
+        raise ValueError('Amount must allocate a whole number of USD 0.10 pledges.')
     if not recipient.strip() or not canonical_url(receipt_url) or not receipt_url.startswith('https://'):
         raise ValueError('Recipient and a public HTTPS receipt URL are required.')
     paid = date.fromisoformat(paid_at)
@@ -144,8 +147,8 @@ def record_transfer(amount_cents, recipient, receipt_url, paid_at):
         with conn:
             conn.execute('BEGIN IMMEDIATE')
             pending = conn.execute('''SELECT uid,target FROM learning_impact_badges WHERE campaign=? AND payout_id IS NULL
-                                     ORDER BY earned_at,uid,target LIMIT ?''', (campaign_id, amount_cents//100)).fetchall()
-            if len(pending)*100 != amount_cents:
+                                     ORDER BY earned_at,uid,target LIMIT ?''', (campaign_id, amount_cents//PLEDGE_PER_BADGE_CENTS)).fetchall()
+            if len(pending)*PLEDGE_PER_BADGE_CENTS != amount_cents:
                 raise ValueError('The amount exceeds the pending pledge balance.')
             cursor = conn.execute('INSERT INTO learning_impact_payouts(campaign,amount_cents,paid_at,recipient,receipt_url) VALUES (?,?,?,?,?)',
                                   (campaign_id, amount_cents, paid.isoformat(), recipient.strip()[:200], receipt_url))

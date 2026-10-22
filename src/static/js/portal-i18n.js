@@ -26,7 +26,7 @@ Learning badge unlocked! View your milestones in Completed Learning.|Lencana pem
 Small steps, shared kindness|Langkah kecil, kebaikan bersama|小小进步，汇聚善意
 Learn. Earn a badge. Make a little difference.|Belajar. Raih lencana. Bawa sedikit perubahan.|学习、获得徽章，让善意多一点。
 Complete 10, 20, 30, 40 and 50 courses to collect five milestone badges.|Lengkapkan 10, 20, 30, 40 dan 50 kursus untuk mengumpul lima lencana.|完成 10、20、30、40、50 门课程，逐步收集五枚里程碑徽章。
-1 badge = USD 1 company pledge|1 lencana = USD 1 ikrar syarikat|1 枚徽章 = 公司承诺捐出 USD 1
+1 badge = USD 0.10 company pledge|1 lencana = ikrar syarikat USD 0.10|1 枚徽章 = 公司承诺捐出 USD 0.10
 Earned|Diperoleh|已获得
 Not yet earned|Belum diperoleh|尚未获得
 Next milestone|Pencapaian seterusnya|下个里程碑
@@ -36,7 +36,7 @@ A little piggy bank for shared kindness|Tabung kecil untuk kebaikan bersama|汇�
 Your unlocked pledge|Ikrar yang anda buka|你已解锁的捐款承诺
 Funded by CareerLens, not charged to you.|Dibiayai CareerLens, tiada caj kepada anda.|由 CareerLens 公司出资，不向你收费。
 Our kindness piggy bank|Tabung kebaikan kita|我们的爱心扑满
-For every milestone badge earned, CareerLens pledges USD 1 towards hunger relief.|Bagi setiap lencana, CareerLens berikrar USD 1 untuk bantuan kelaparan.|每获得一枚里程碑徽章，CareerLens 承诺捐出 USD 1 支持抗饥饿援助。
+For every milestone badge earned, CareerLens pledges USD 0.10 towards hunger relief.|Bagi setiap lencana, CareerLens berikrar USD 0.10 untuk bantuan kelaparan.|每获得一枚里程碑徽章，CareerLens 承诺捐出 USD 0.10 支持抗饥饿援助。
 Company total pledged|Jumlah ikrar syarikat|公司累计承诺
 Awaiting transfer|Menunggu pemindahan|待汇出
 Recorded as sent|Direkodkan dihantar|已登记汇出
@@ -71,7 +71,26 @@ Follow the cards from left to right. Open a step for details.|Ikuti kad dari kir
 Completed courses|Kursus selesai|已完成课程
 Recorded course hours|Jam kursus direkodkan|已记录课程学时
 Additional courses completed|Kursus tambahan selesai|已完成额外课程
-Completion is self-reported. Hours use available course estimates, not tracked study time.|Penyelesaian dilaporkan sendiri. Jam berdasarkan anggaran kursus yang tersedia, bukan masa belajar dijejaki.|完成状态由你自行记录；学时采用课程已有估算，并非实际计时。
+Completion is self-reported. Course estimates are used when available; additional courses without a listed duration are estimated at 2 hours each. These are estimates, not tracked study time.|Penyelesaian dilaporkan sendiri. Anggaran kursus digunakan apabila tersedia; kursus tambahan tanpa tempoh yang disenaraikan dianggarkan selama 2 jam setiap satu. Ini ialah anggaran, bukan masa belajar yang dijejaki.|完成状态由你自行记录；有课程时长时采用已有估算，没有时长的额外课程按每门 2 小时估算。学时仅供估算，并非实际计时。
+estimated|anggaran|估算
+No Poverty|Tiada Kemiskinan|消除贫困
+Zero Hunger|Kelaparan Sifar|零饥饿
+Good Health and Well-Being|Kesihatan Baik dan Kesejahteraan|良好健康与福祉
+Quality Education|Pendidikan Berkualiti|优质教育
+Gender Equality|Kesaksamaan Gender|性别平等
+Clean Water and Sanitation|Air Bersih dan Sanitasi|清洁饮水和卫生设施
+Affordable and Clean Energy|Tenaga Mampu Milik dan Bersih|经济适用的清洁能源
+Decent Work and Economic Growth|Pekerjaan Layak dan Pertumbuhan Ekonomi|体面工作和经济增长
+Industry, Innovation and Infrastructure|Industri, Inovasi dan Infrastruktur|产业、创新和基础设施
+Reduced Inequalities|Mengurangkan Ketidaksamaan|减少不平等
+Sustainable Cities and Communities|Bandar dan Komuniti Mampan|可持续城市和社区
+Responsible Consumption and Production|Penggunaan dan Pengeluaran Bertanggungjawab|负责任消费和生产
+Climate Action|Tindakan Iklim|气候行动
+Life Below Water|Kehidupan di Bawah Air|水下生物
+Life on Land|Kehidupan di Darat|陆地生物
+Peace, Justice and Strong Institutions|Keamanan, Keadilan dan Institusi Kukuh|和平、正义与强大机构
+Partnerships for the Goals|Kerjasama demi Matlamat|促进目标实现的伙伴关系
+learning support|sokongan pembelajaran|学习支持
 All learning|Semua pembelajaran|全部学习
 Career plan|Pelan kerjaya|职业学习计划
 Completed on|Selesai pada|完成于
@@ -752,6 +771,17 @@ Describe a problem you solved that was blocking your team's delivery.|Terangkan 
     ['Nature & ecology', 'Alam & ekologi', '自然与生态'],
     ['People & inclusion', 'Masyarakat & keterangkuman', '人际与包容'],
     ['Sustainable living', 'Kehidupan lestari', '可持续生活'],
+    ['Arts & creativity', 'Seni & kreativiti', '艺术与创意'],
+    ['Technology', 'Teknologi', '科技'],
+    ['Business', 'Perniagaan', '商业'],
+    ['Health & wellbeing', 'Kesihatan & kesejahteraan', '健康与身心福祉'],
+    ['Languages & communication', 'Bahasa & komunikasi', '语言与沟通'],
+    ['Science & space', 'Sains & angkasa', '科学与太空'],
+    ['Food & cooking', 'Makanan & masakan', '美食与烹饪'],
+    ['Sports & fitness', 'Sukan & kecergasan', '运动与健身'],
+    ['Travel & culture', 'Kembara & budaya', '旅行与文化'],
+    ['History & philosophy', 'Sejarah & falsafah', '历史与哲学'],
+    ['Animals & wildlife', 'Haiwan & hidupan liar', '动物与野生生物'],
     ['Suggestions adapt to your interests, saved learning and stamps.', 'Cadangan mengikut minat, pembelajaran tersimpan dan cop anda.', '推荐会随你的兴趣、收藏和已有印章调整。'],
     ['Matches an interest you chose.', 'Sepadan dengan minat pilihan anda.', '符合你选择的兴趣。'],
     ['You saved this for later.', 'Anda menyimpannya untuk kemudian.', '你之前收藏过这项学习。'],

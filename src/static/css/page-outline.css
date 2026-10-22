@@ -9,6 +9,7 @@
 .outline-step.is-past .outline-number{color:#fff;background:var(--outline-color);border-color:var(--outline-color);font-weight:700;box-shadow:0 2px 8px rgba(var(--outline-rgb),.2)}
 .outline-step.is-active .outline-number{transform:scale(1.16);background:var(--outline-gradient);border-color:var(--outline-color);color:#fff;font-weight:800;box-shadow:0 0 20px rgba(var(--outline-rgb),.48)}
 .outline-label{display:none;position:absolute;left:48px;max-width:180px;width:max-content;padding:7px 11px;border-radius:10px;background:rgba(var(--outline-rgb),.1);color:var(--outline-color);font-size:12px;font-weight:650;line-height:1.5;overflow-wrap:anywhere}
+.outline-step.is-active .outline-label{display:block}
 .outline-step:hover .outline-label,.outline-step:focus-visible .outline-label{display:block}
 .outline-step:focus-visible{outline:3px solid rgba(var(--outline-rgb),.4);outline-offset:3px}
 .outline-track{position:absolute;left:19px;width:1px;border-left:1px dashed rgba(var(--outline-rgb),.28);pointer-events:none}
