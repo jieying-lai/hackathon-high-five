@@ -24,7 +24,7 @@
           <div class="text-[11px] text-slate-500 font-medium">Future-Ready Workforce & Reskilling</div>
         </div>
       </a>
-      <nav class="homepage-navigation" aria-label="Main navigation"><a class="nav-item" href="#home-intro">Overview</a><a class="nav-item" href="#home-intro">✨ Career Totem</a><a class="nav-item" href="#home-portals">Our Portals</a></nav>
+      <nav class="homepage-navigation" aria-label="Main navigation"><a class="nav-item" href="#home-intro">Overview</a><a class="nav-item" href="#home-portals">Our Portals</a></nav>
       <div class="landing-actions flex items-center gap-2.5">
         <div data-language-slot></div>
         <button onclick="openAuth('login')" class="btn btn-soft">Sign In</button>
@@ -33,7 +33,7 @@
     </div>
     <div class="homepage-mobile-controls">
       <button id="homeNavToggle" type="button" class="nav-toggle" aria-controls="homeNav" aria-expanded="false" aria-label="Toggle navigation"><span class="hamburger" aria-hidden="true"><i></i><i></i><i></i></span>Menu</button>
-      <nav id="homeNav" class="mobile-nav" aria-label="Main navigation" hidden><a class="nav-item" href="#home-intro">Overview</a><a class="nav-item" href="#home-intro">✨ Career Totem</a><a class="nav-item" href="#home-portals">Our Portals</a><button class="nav-item" onclick="openAuth('login')">Sign In</button><button class="nav-item" onclick="openAuth('register')">Create Account</button></nav>
+      <nav id="homeNav" class="mobile-nav" aria-label="Main navigation" hidden><a class="nav-item" href="#home-intro">Overview</a><a class="nav-item" href="#home-portals">Our Portals</a><button class="nav-item" onclick="openAuth('login')">Sign In</button><button class="nav-item" onclick="openAuth('register')">Create Account</button></nav>
     </div>
   </header>
 
@@ -47,7 +47,7 @@
         
         <!-- Main Headline (From Section 1, Elevated & Magnetic) -->
         <h1 class="text-3xl sm:text-5xl lg:text-[3.5rem] font-black text-white tracking-tight leading-[1.12]">
-          Find your place in the <span class="bg-gradient-to-r from-teal-300 via-indigo-300 to-pink-300 bg-clip-text text-transparent">AI era</span>
+          Find your place in the <span class="bg-gradient-to-r from-teal-300 via-sky-200 to-indigo-300 bg-clip-text text-transparent">AI era</span>
         </h1>
 
         <!-- Engaging Subtitle -->
@@ -56,50 +56,51 @@
         </p>
 
         <!-- Main Actions -->
-        <div class="flex flex-wrap items-center justify-center gap-3.5 pt-2">
-          <button type="button" onclick="startTotemQuiz()" class="btn btn-primary !text-sm !font-black !px-8 !py-3.5 shadow-xl shadow-indigo-600/30 hover:scale-105 transition flex items-center gap-2">
+        <div class="flex flex-wrap items-center justify-center gap-4 pt-2">
+          <button type="button" onclick="startTotemQuiz()" class="totem-btn-primary">
             <span>✨</span>
             <span>Awaken Career Totem (Start 2-Min Quiz)</span>
           </button>
-          <button type="button" onclick="openAuth('login')" class="btn btn-soft !text-sm !font-bold !px-7 !py-3.5 border border-white/20 text-white hover:bg-white/10 transition">
+          <button type="button" onclick="openAuth('login')" class="totem-btn-secondary">
             Sign In Directly
           </button>
-          <button type="button" onclick="skipTotemQuiz()" class="text-xs text-slate-400 hover:text-teal-300 font-bold transition px-2 py-1">
-            Explore Portals ↓
+          <button type="button" onclick="skipTotemQuiz()" class="totem-link-skip">
+            <span>Explore Portals</span>
+            <span>↓</span>
           </button>
         </div>
 
         <!-- 6 Totem Archetype Badges Teaser -->
-        <div class="grid grid-cols-3 sm:grid-cols-6 gap-2.5 pt-6 border-t border-white/10 max-w-2xl mx-auto text-center">
-          <div class="p-2.5 rounded-2xl bg-white/5 border border-white/5 hover:border-teal-400/30 transition">
+        <div class="grid grid-cols-3 sm:grid-cols-6 gap-3 pt-6 border-t border-white/10 max-w-2xl mx-auto text-center">
+          <div class="p-3 rounded-2xl bg-white/[0.06] border border-white/[0.12] hover:bg-white/[0.12] hover:border-teal-400/40 hover:-translate-y-0.5 transition shadow-sm">
             <div class="text-2xl">🦉</div>
-            <div class="text-[10px] font-bold text-slate-200 mt-1">Night Owl</div>
-            <div class="text-[9px] text-teal-400 font-mono">Systems</div>
+            <div class="text-[11px] font-bold text-white mt-1.5">Night Owl</div>
+            <div class="text-[9px] text-teal-300 font-mono font-semibold">Systems</div>
           </div>
-          <div class="p-2.5 rounded-2xl bg-white/5 border border-white/5 hover:border-indigo-400/30 transition">
+          <div class="p-3 rounded-2xl bg-white/[0.06] border border-white/[0.12] hover:bg-white/[0.12] hover:border-indigo-400/40 hover:-translate-y-0.5 transition shadow-sm">
             <div class="text-2xl">🦮</div>
-            <div class="text-[10px] font-bold text-slate-200 mt-1">Retriever</div>
-            <div class="text-[9px] text-indigo-300 font-mono">Empathy</div>
+            <div class="text-[11px] font-bold text-white mt-1.5">Retriever</div>
+            <div class="text-[9px] text-indigo-300 font-mono font-semibold">Empathy</div>
           </div>
-          <div class="p-2.5 rounded-2xl bg-white/5 border border-white/5 hover:border-purple-400/30 transition">
+          <div class="p-3 rounded-2xl bg-white/[0.06] border border-white/[0.12] hover:bg-white/[0.12] hover:border-purple-400/40 hover:-translate-y-0.5 transition shadow-sm">
             <div class="text-2xl">🐆</div>
-            <div class="text-[10px] font-bold text-slate-200 mt-1">Leopard</div>
-            <div class="text-[9px] text-purple-300 font-mono">Autonomy</div>
+            <div class="text-[11px] font-bold text-white mt-1.5">Leopard</div>
+            <div class="text-[9px] text-purple-300 font-mono font-semibold">Autonomy</div>
           </div>
-          <div class="p-2.5 rounded-2xl bg-white/5 border border-white/5 hover:border-teal-400/30 transition">
+          <div class="p-3 rounded-2xl bg-white/[0.06] border border-white/[0.12] hover:bg-white/[0.12] hover:border-teal-400/40 hover:-translate-y-0.5 transition shadow-sm">
             <div class="text-2xl">🐋</div>
-            <div class="text-[10px] font-bold text-slate-200 mt-1">Titan Whale</div>
-            <div class="text-[9px] text-teal-300 font-mono">Purpose</div>
+            <div class="text-[11px] font-bold text-white mt-1.5">Titan Whale</div>
+            <div class="text-[9px] text-teal-300 font-mono font-semibold">Purpose</div>
           </div>
-          <div class="p-2.5 rounded-2xl bg-white/5 border border-white/5 hover:border-pink-400/30 transition">
+          <div class="p-3 rounded-2xl bg-white/[0.06] border border-white/[0.12] hover:bg-white/[0.12] hover:border-pink-400/40 hover:-translate-y-0.5 transition shadow-sm">
             <div class="text-2xl">🦊</div>
-            <div class="text-[10px] font-bold text-slate-200 mt-1">Arctic Fox</div>
-            <div class="text-[9px] text-pink-300 font-mono">Aesthetics</div>
+            <div class="text-[11px] font-bold text-white mt-1.5">Arctic Fox</div>
+            <div class="text-[9px] text-pink-300 font-mono font-semibold">Aesthetics</div>
           </div>
-          <div class="p-2.5 rounded-2xl bg-white/5 border border-white/5 hover:border-amber-400/30 transition">
+          <div class="p-3 rounded-2xl bg-white/[0.06] border border-white/[0.12] hover:bg-white/[0.12] hover:border-amber-400/40 hover:-translate-y-0.5 transition shadow-sm">
             <div class="text-2xl">🦅</div>
-            <div class="text-[10px] font-bold text-slate-200 mt-1">Hawk</div>
-            <div class="text-[9px] text-amber-300 font-mono">Command</div>
+            <div class="text-[11px] font-bold text-white mt-1.5">Hawk</div>
+            <div class="text-[9px] text-amber-300 font-mono font-semibold">Command</div>
           </div>
         </div>
 

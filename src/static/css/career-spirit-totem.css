@@ -35,6 +35,70 @@
   pointer-events: none;
 }
 
+/* ==========================================================================
+   Hero CTA Buttons (High contrast, crystal clear on dark backgrounds)
+   ========================================================================== */
+.totem-btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.85rem 1.85rem;
+  font-size: 0.875rem;
+  font-weight: 800;
+  color: #ffffff !important;
+  background: linear-gradient(135deg, #4f46e5 0%, #6366f1 55%, #06b6d4 100%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.25) !important;
+  border-radius: 1rem;
+  box-shadow: 0 10px 25px -5px rgba(79, 70, 229, 0.45);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  cursor: pointer;
+}
+.totem-btn-primary:hover {
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 14px 32px -4px rgba(79, 70, 229, 0.6);
+  background: linear-gradient(135deg, #4338ca 0%, #4f46e5 55%, #0891b2 100%) !important;
+}
+
+.totem-btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.85rem 1.75rem;
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: #ffffff !important;
+  background: rgba(255, 255, 255, 0.08) !important;
+  border: 1.5px solid rgba(255, 255, 255, 0.22) !important;
+  border-radius: 1rem;
+  backdrop-filter: blur(12px);
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+.totem-btn-secondary:hover {
+  background: rgba(255, 255, 255, 0.18) !important;
+  border-color: rgba(255, 255, 255, 0.45) !important;
+  color: #ffffff !important;
+  transform: translateY(-1px);
+}
+
+.totem-link-skip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #94a3b8 !important;
+  padding: 0.5rem 0.85rem;
+  border-radius: 0.75rem;
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+.totem-link-skip:hover {
+  color: #2dd4bf !important;
+  background: rgba(255, 255, 255, 0.06);
+}
+
 /* 5-point Likert Scale UI */
 .likert-scale-container {
   display: flex;
