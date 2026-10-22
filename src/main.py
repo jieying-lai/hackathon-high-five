@@ -275,7 +275,7 @@ def api_admin_users():
     search = request.args.get("search", type=str)
     sort_by = request.args.get("sort_by", default="id", type=str)
     sort_order = request.args.get("sort_order", default="asc", type=str)
-    reveal = request.args.get("reveal", default="0") in ("1", "true")
+    reveal = request.args.get("reveal", default="1") in ("1", "true")
 
     if page is None:
         users = auth_db.list_all_users(mask_pii=not reveal)
@@ -293,7 +293,7 @@ def api_admin_applications():
     search = request.args.get("search", type=str)
     sort_by = request.args.get("sort_by", default="id", type=str)
     sort_order = request.args.get("sort_order", default="desc", type=str)
-    reveal = request.args.get("reveal", default="0") in ("1", "true")
+    reveal = request.args.get("reveal", default="1") in ("1", "true")
 
     data = auth_db.list_all_applications(page=page, per_page=per_page, search=search, sort_by=sort_by, sort_order=sort_order, mask_pii=not reveal)
     return jsonify({"ok": True, "applications": data["applications"], "pagination": data})
@@ -307,7 +307,7 @@ def api_admin_curated_cvs():
     search = request.args.get("search", type=str)
     sort_by = request.args.get("sort_by", default="id", type=str)
     sort_order = request.args.get("sort_order", default="asc", type=str)
-    reveal = request.args.get("reveal", default="0") in ("1", "true")
+    reveal = request.args.get("reveal", default="1") in ("1", "true")
 
     data = cv_dataset_manager.list_curated_benchmarks(page=page, per_page=per_page, search=search, sort_by=sort_by, sort_order=sort_order, mask_pii=not reveal)
     return jsonify({"ok": True, "curated_cvs": data["items"], "pagination": data})

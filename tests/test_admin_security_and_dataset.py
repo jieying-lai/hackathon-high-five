@@ -55,10 +55,16 @@ class TestAdminSecurityAndDataset(unittest.TestCase):
         data = res.get_json()
         self.assertTrue(data["ok"])
         self.assertGreaterEqual(data["pagination"]["total"], 1)
-        # Verify default PII masking
+        # Verify unmasked by default for admin
         first_app = data["applications"][0]
-        self.assertTrue(first_app["is_masked"])
-        self.assertIn("*", first_app["candidate_name"])
+        self.assertFalse(first_app["is_masked"])
+        self.assertNotIn("*", first_app["candidate_name"])
+
+        # Verify masked when reveal=0 requested
+        m_res = self.client.get("/api/admin/applications?page=1&per_page=15&reveal=0")
+        m_data = m_res.get_json()
+        self.assertTrue(m_data["applications"][0]["is_masked"])
+        self.assertIn("*", m_data["applications"][0]["candidate_name"])
 
     def test_pii_masking_helpers(self):
         self.assertEqual(mask_email("aisha.rahman@careerlens.my"), "a***n@careerlens.my")

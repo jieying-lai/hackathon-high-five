@@ -607,7 +607,7 @@ def list_users_paginated(
     search: str = None,
     sort_by: str = "id",
     sort_order: str = "asc",
-    mask_pii: bool = True
+    mask_pii: bool = False
 ) -> dict:
     """Paginated user listing (15 rows per page) with search and sorting."""
     all_users = list_all_users(mask_pii=mask_pii)
@@ -656,7 +656,7 @@ def list_all_applications(
     search: str = None,
     sort_by: str = "id",
     sort_order: str = "desc",
-    mask_pii: bool = True
+    mask_pii: bool = False
 ) -> dict:
     """Paginated listing of all submitted job applications across the platform."""
     conn = get_db_connection()

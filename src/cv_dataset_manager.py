@@ -124,7 +124,7 @@ def list_curated_benchmarks(
     search: Optional[str] = None,
     sort_by: str = "id",
     sort_order: str = "asc",
-    mask_pii: bool = True,
+    mask_pii: bool = False,
 ) -> Dict[str, Any]:
     """Retrieve paginated and sorted curated benchmark CVs for Admin backdesk."""
     conn = get_db_connection()
