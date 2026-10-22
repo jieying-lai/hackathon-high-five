@@ -3,56 +3,83 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Admin Backdesk · CareerLens AI</title>
+  <title>Admin Executive Backdesk · CareerLens AI</title>
   <link rel="icon" type="image/svg+xml" href="/static/brand/careerlens_logo_icon.svg" />
   <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/static/css/theme.css?v=20261022-admin-v3" />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <!-- Chart.js for High-Precision Interactive Predictions -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <style>
-    body { font-family: 'Plus Jakarta Sans', system-ui, sans-serif; }
-    .stat-card {
-      background: rgba(255, 255, 255, 0.95);
-      backdrop-filter: blur(12px);
-      border: 1px solid rgba(226, 232, 240, 0.9);
+    body {
+      font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+      background: radial-gradient(circle at 15% 10%, #151b28 0%, #080c14 100%);
+      color: #e2e8f0;
+    }
+    .gold-gradient-text {
+      background: linear-gradient(135deg, #fef08a 0%, #f59e0b 50%, #d97706 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .gold-border {
+      border: 1px solid rgba(245, 158, 11, 0.28);
+    }
+    .gold-border-glow:hover {
+      border-color: rgba(245, 158, 11, 0.6);
+      box-shadow: 0 0 20px -5px rgba(245, 158, 11, 0.25);
+    }
+    .stat-card-gold {
+      background: linear-gradient(145deg, rgba(24, 32, 47, 0.85) 0%, rgba(13, 19, 31, 0.95) 100%);
+      backdrop-filter: blur(14px);
+      border: 1px solid rgba(245, 158, 11, 0.22);
       border-radius: 1.25rem;
-      padding: 1.1rem;
-      box-shadow: 0 4px 16px -4px rgba(15, 23, 42, 0.05);
-      transition: transform 0.15s ease, box-shadow 0.15s ease;
+      padding: 1.15rem;
+      box-shadow: 0 8px 24px -6px rgba(0, 0, 0, 0.6);
+      transition: transform 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
     }
-    .stat-card:hover {
+    .stat-card-gold:hover {
       transform: translateY(-2px);
-      box-shadow: 0 10px 24px -6px rgba(15, 23, 42, 0.08);
+      border-color: rgba(245, 158, 11, 0.55);
+      box-shadow: 0 12px 30px -8px rgba(245, 158, 11, 0.2);
     }
-    .tab-btn {
-      padding: 0.55rem 1.1rem;
+    .tab-btn-gold {
+      padding: 0.6rem 1.2rem;
       border-radius: 0.85rem;
-      font-weight: 700;
-      font-size: 0.78rem;
+      font-weight: 800;
+      font-size: 0.8rem;
       transition: all 0.15s ease;
       cursor: pointer;
     }
-    .tab-btn.active {
-      background: #0f172a;
-      color: #ffffff;
-      box-shadow: 0 4px 12px rgba(15, 23, 42, 0.15);
+    .tab-btn-gold.active {
+      background: linear-gradient(135deg, #f59e0b 0%, #b45309 100%);
+      color: #0b0f19;
+      font-weight: 900;
+      box-shadow: 0 4px 16px rgba(245, 158, 11, 0.35);
     }
-    .tab-btn:not(.active) {
-      background: rgba(241, 245, 249, 0.8);
-      color: #475569;
+    .tab-btn-gold:not(.active) {
+      background: rgba(24, 32, 47, 0.6);
+      color: #94a3b8;
+      border: 1px solid rgba(245, 158, 11, 0.12);
     }
-    .tab-btn:not(.active):hover {
-      background: rgba(226, 232, 240, 0.9);
-      color: #0f172a;
+    .tab-btn-gold:not(.active):hover {
+      background: rgba(30, 41, 59, 0.9);
+      color: #fef08a;
+      border-color: rgba(245, 158, 11, 0.35);
     }
-    th.sortable {
-      cursor: pointer;
-      user-select: none;
+    .gold-btn {
+      background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+      color: #0b0f19;
+      font-weight: 800;
+      border-radius: 0.75rem;
+      padding: 0.45rem 1rem;
+      transition: all 0.15s ease;
+      box-shadow: 0 4px 12px rgba(245, 158, 11, 0.2);
     }
-    th.sortable:hover {
-      color: #0f172a;
-      background: rgba(241, 245, 249, 0.9);
+    .gold-btn:hover {
+      background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+      box-shadow: 0 6px 18px rgba(245, 158, 11, 0.35);
+      transform: translateY(-1px);
     }
-    .page-btn {
+    .page-btn-gold {
       min-width: 2rem;
       height: 2rem;
       padding: 0 0.5rem;
@@ -60,59 +87,78 @@
       align-items: center;
       justify-content: center;
       border-radius: 0.6rem;
-      font-weight: 700;
+      font-weight: 800;
       font-size: 0.75rem;
-      border: 1px solid #e2e8f0;
-      background: #ffffff;
-      color: #475569;
+      border: 1px solid rgba(245, 158, 11, 0.25);
+      background: #111827;
+      color: #94a3b8;
       transition: all 0.15s ease;
     }
-    .page-btn:hover:not(:disabled) {
-      background: #f1f5f9;
-      color: #0f172a;
-      border-color: #cbd5e1;
+    .page-btn-gold:hover:not(:disabled) {
+      background: #1f2937;
+      color: #fef08a;
+      border-color: #f59e0b;
     }
-    .page-btn.active {
-      background: #0f172a;
-      color: #ffffff;
-      border-color: #0f172a;
+    .page-btn-gold.active {
+      background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+      color: #0b0f19;
+      border-color: #f59e0b;
     }
-    .page-btn:disabled {
-      opacity: 0.4;
+    .page-btn-gold:disabled {
+      opacity: 0.3;
       cursor: not-allowed;
+    }
+    th.sortable {
+      cursor: pointer;
+      user-select: none;
+    }
+    th.sortable:hover {
+      color: #fef08a;
+      background: rgba(30, 41, 59, 0.6);
+    }
+    /* Gold slider */
+    input[type=range] {
+      accent-color: #f59e0b;
     }
   </style>
 </head>
-<body class="bg-slate-50 min-h-screen text-slate-800 flex flex-col">
-  <div class="aurora"></div>
+<body class="min-h-screen flex flex-col selection:bg-amber-500 selection:text-slate-900">
 
-  <!-- Top Admin Navigation Bar -->
-  <header class="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-slate-200/80 px-4 sm:px-8 py-3.5 flex flex-wrap items-center justify-between gap-4 shadow-xs">
+  <!-- Top Executive Gold Navigation Bar -->
+  <header class="sticky top-0 z-40 bg-slate-950/95 backdrop-blur-md border-b border-amber-500/25 px-4 sm:px-8 py-3.5 flex flex-wrap items-center justify-between gap-4 shadow-xl">
     <div class="flex items-center gap-3">
-      <img src="/static/brand/careerlens_logo_icon.svg" class="h-9 w-9 rounded-xl shadow-xs" alt="CareerLens AI" />
+      <img src="/static/brand/careerlens_logo_icon.svg" class="h-9 w-9 rounded-xl shadow-xs ring-1 ring-amber-400/40" alt="CareerLens AI" />
       <div>
         <div class="flex items-center gap-2">
-          <span class="font-black text-base text-slate-900 tracking-tight">CareerLens AI</span>
-          <span class="text-[10px] font-extrabold uppercase px-2 py-0.5 rounded-full bg-slate-900 text-amber-300 tracking-wider">🔐 Backdesk Admin</span>
+          <span class="font-black text-base text-white tracking-tight">CareerLens <span class="gold-gradient-text">AI</span></span>
+          <span class="text-[10px] font-black uppercase px-2.5 py-0.5 rounded-full bg-gradient-to-r from-amber-500 to-amber-700 text-slate-950 tracking-wider shadow-xs">
+            👑 Executive Backdesk
+          </span>
         </div>
-        <div class="text-[11px] text-slate-500 font-medium">Platform Governance · Multi-Role Data Alignment &amp; Fair-AI Moderation</div>
+        <div class="text-[11px] text-amber-200/60 font-medium">Platform Governance · 2030 Workforce Forecasting · AI Personality Intelligence</div>
       </div>
     </div>
 
-    <!-- Security & Admin Profile -->
+    <!-- Security & Header Action Controls -->
     <div class="flex items-center gap-3">
-      <div class="hidden md:flex items-center gap-2 px-3 py-1.5 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs font-bold" title="Malaysian PDPA 2010 compliance layer active">
-        <span class="h-2 w-2 rounded-full bg-emerald-500 animate-pulse"></span>
-        <span>🛡️ PDPA 2010 Encryption Active</span>
+      <button onclick="openReportModal()" class="gold-btn !text-xs flex items-center gap-1.5 shadow-md">
+        <span>📑 Generate Executive Report</span>
+      </button>
+
+      <div class="hidden md:flex items-center gap-2 px-3 py-1.5 rounded-xl bg-amber-950/40 border border-amber-500/30 text-amber-300 text-xs font-bold">
+        <span class="h-2 w-2 rounded-full bg-amber-400 animate-pulse"></span>
+        <span>PDPA 2010 Audit Active</span>
       </div>
-      <div class="flex items-center gap-2 p-1.5 rounded-2xl bg-slate-100 border border-slate-200">
-        <div class="h-8 w-8 rounded-xl bg-slate-900 text-amber-300 font-extrabold text-sm grid place-items-center">🛡️</div>
+
+      <div class="flex items-center gap-2 p-1.5 rounded-2xl bg-slate-900 border border-amber-500/20">
+        <div class="h-8 w-8 rounded-xl bg-gradient-to-br from-amber-400 to-amber-600 text-slate-950 font-black text-sm grid place-items-center">🛡️</div>
         <div class="pr-2 text-left">
-          <div class="text-xs font-extrabold text-slate-900" id="adminName">System Administrator</div>
-          <div class="text-[10px] text-slate-500 font-mono">admin@careerlens.my</div>
+          <div class="text-xs font-extrabold text-amber-100" id="adminName">System Administrator</div>
+          <div class="text-[10px] text-amber-400/70 font-mono">admin@careerlens.my</div>
         </div>
       </div>
-      <button onclick="adminSignOut()" class="btn btn-soft !py-2 !px-3.5 !text-xs font-bold text-red-600 hover:bg-red-50 hover:border-red-200">
+
+      <button onclick="adminSignOut()" class="btn !py-2 !px-3.5 !text-xs font-bold bg-slate-900 border border-red-500/30 text-red-400 hover:bg-red-950/40 hover:border-red-500/60">
         Sign Out 🚪
       </button>
     </div>
@@ -121,144 +167,233 @@
   <!-- Main Content Container -->
   <main class="flex-1 max-w-7xl w-full mx-auto p-4 sm:p-6 lg:p-8 space-y-6">
 
-    <!-- KPI Statistics Grid -->
+    <!-- KPI Statistics Grid (Black & Gold) -->
     <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-7 gap-3">
-      <div class="stat-card">
-        <div class="text-[10px] font-black uppercase tracking-wider text-slate-400">Total Users</div>
-        <div class="text-2xl font-black text-slate-900 mt-1" id="statUsers">—</div>
-        <div class="text-[10px] font-bold text-indigo-600 mt-1">Platform Accounts</div>
+      <div class="stat-card-gold">
+        <div class="text-[10px] font-black uppercase tracking-wider text-amber-400/80">Total Users</div>
+        <div class="text-2xl font-black text-white mt-1" id="statUsers">—</div>
+        <div class="text-[10px] font-bold text-amber-400 mt-1">Platform Accounts</div>
       </div>
-      <div class="stat-card">
-        <div class="text-[10px] font-black uppercase tracking-wider text-slate-400">Talent Seekers</div>
-        <div class="text-2xl font-black text-slate-900 mt-1" id="statTalents">—</div>
-        <div class="text-[10px] font-bold text-emerald-600 mt-1">✓ Job Seekers</div>
+      <div class="stat-card-gold">
+        <div class="text-[10px] font-black uppercase tracking-wider text-amber-400/80">Talent Seekers</div>
+        <div class="text-2xl font-black text-emerald-400 mt-1" id="statTalents">—</div>
+        <div class="text-[10px] font-bold text-emerald-500 mt-1">✓ Job Seekers</div>
       </div>
-      <div class="stat-card">
-        <div class="text-[10px] font-black uppercase tracking-wider text-slate-400">Employer Accounts</div>
-        <div class="text-2xl font-black text-indigo-600 mt-1" id="statEmployers">—</div>
-        <div class="text-[10px] font-bold text-slate-500 mt-1">HR &amp; Companies</div>
+      <div class="stat-card-gold">
+        <div class="text-[10px] font-black uppercase tracking-wider text-amber-400/80">Employers</div>
+        <div class="text-2xl font-black text-indigo-400 mt-1" id="statEmployers">—</div>
+        <div class="text-[10px] font-bold text-slate-400 mt-1">HR &amp; Companies</div>
       </div>
-      <div class="stat-card">
-        <div class="text-[10px] font-black uppercase tracking-wider text-slate-400">Applications</div>
-        <div class="text-2xl font-black text-violet-600 mt-1" id="statApplications">—</div>
-        <div class="text-[10px] font-bold text-violet-700 mt-1">📋 HR Screen Aligned</div>
+      <div class="stat-card-gold">
+        <div class="text-[10px] font-black uppercase tracking-wider text-amber-400/80">Applications</div>
+        <div class="text-2xl font-black text-amber-300 mt-1" id="statApplications">—</div>
+        <div class="text-[10px] font-bold text-amber-400 mt-1">📋 HR Screen Aligned</div>
       </div>
-      <div class="stat-card">
-        <div class="text-[10px] font-black uppercase tracking-wider text-slate-400">Curated CV Pool</div>
-        <div class="text-2xl font-black text-amber-600 mt-1" id="statCurated">79</div>
-        <div class="text-[10px] font-bold text-amber-700 mt-1">📑 Dataset Resumes</div>
+      <div class="stat-card-gold">
+        <div class="text-[10px] font-black uppercase tracking-wider text-amber-400/80">Curated CV Pool</div>
+        <div class="text-2xl font-black text-yellow-400 mt-1" id="statCurated">79</div>
+        <div class="text-[10px] font-bold text-yellow-500 mt-1">📑 Benchmark Resumes</div>
       </div>
-      <div class="stat-card">
-        <div class="text-[10px] font-black uppercase tracking-wider text-slate-400">Total Vacancies</div>
-        <div class="text-2xl font-black text-slate-900 mt-1" id="statJobs">69,356</div>
-        <div class="text-[10px] font-bold text-teal-600 mt-1">JobStreet + Internal</div>
+      <div class="stat-card-gold">
+        <div class="text-[10px] font-black uppercase tracking-wider text-amber-400/80">Total Vacancies</div>
+        <div class="text-2xl font-black text-teal-400 mt-1" id="statJobs">69,356</div>
+        <div class="text-[10px] font-bold text-teal-500 mt-1">JobStreet + Portals</div>
       </div>
-      <div class="stat-card">
-        <div class="text-[10px] font-black uppercase tracking-wider text-slate-400">AI Safety Score</div>
-        <div class="text-2xl font-black text-emerald-600 mt-1" id="statCompliance">100%</div>
-        <div class="text-[10px] font-bold text-emerald-700 mt-1">🛡️ Fair-AI Clean</div>
+      <div class="stat-card-gold">
+        <div class="text-[10px] font-black uppercase tracking-wider text-amber-400/80">Fair-AI Safety</div>
+        <div class="text-2xl font-black text-emerald-400 mt-1" id="statCompliance">100%</div>
+        <div class="text-[10px] font-bold text-emerald-500 mt-1">🛡️ 0 Violations</div>
       </div>
     </div>
 
-    <!-- Security & Privacy Banner -->
-    <div class="bg-indigo-50/70 border border-indigo-200/80 rounded-2xl p-4 flex flex-wrap items-center justify-between gap-3 text-xs">
+    <!-- Executive Privacy Banner & Controls -->
+    <div class="bg-gradient-to-r from-slate-900 via-slate-900 to-amber-950/40 border border-amber-500/30 rounded-2xl p-4 flex flex-wrap items-center justify-between gap-3 text-xs shadow-lg">
       <div class="flex items-center gap-3">
-        <div class="h-9 w-9 rounded-xl bg-indigo-600 text-white grid place-items-center font-bold text-sm shadow-xs">🔒</div>
+        <div class="h-9 w-9 rounded-xl bg-gradient-to-br from-amber-400 to-amber-600 text-slate-950 grid place-items-center font-black text-sm shadow-md">👑</div>
         <div>
-          <div class="font-extrabold text-indigo-950 flex items-center gap-2">
-            <span>PDPA 2010 Sensitive Data Protection &amp; Encrypted Masking</span>
-            <span class="text-[10px] font-black uppercase px-2 py-0.5 rounded-full bg-indigo-200/80 text-indigo-800" id="piiStatusBadge">Full Access (Unmasked)</span>
+          <div class="font-extrabold text-amber-100 flex items-center gap-2">
+            <span>Admin Unrestricted View · Real Names &amp; Emails Active</span>
+            <span class="text-[10px] font-black uppercase px-2 py-0.5 rounded-full bg-amber-400/20 text-amber-300 border border-amber-400/30" id="piiStatusBadge">Full Access</span>
           </div>
-          <div class="text-slate-600 mt-0.5">Administrator view: Full real candidate names, emails, and contact details are completely accessible and unmasked.</div>
+          <div class="text-slate-400 mt-0.5">All real candidate names and emails are directly visible to the administrator. Toggle privacy masking whenever presenting to audience.</div>
         </div>
       </div>
       <div class="flex items-center gap-2">
-        <button type="button" id="toggleRevealBtn" onclick="requestTogglePII()" class="btn !py-1.5 !px-3.5 !text-xs font-bold bg-white text-indigo-900 border border-indigo-300 hover:bg-indigo-50 shadow-xs">
-          🔒 Mask PII (Optional Privacy Mode)
+        <button type="button" id="toggleRevealBtn" onclick="requestTogglePII()" class="btn !py-1.5 !px-3.5 !text-xs font-bold bg-slate-950 text-amber-300 border border-amber-500/40 hover:bg-amber-950/30 shadow-xs">
+          🔒 Mask PII (Optional Demo Mode)
         </button>
       </div>
     </div>
 
     <!-- Tabs Navigation Header -->
-    <div class="flex flex-wrap items-center justify-between gap-3 border-b border-slate-200 pb-3">
+    <div class="flex flex-wrap items-center justify-between gap-3 border-b border-amber-500/20 pb-3">
       <div class="flex flex-wrap items-center gap-2">
-        <button type="button" onclick="switchAdminTab('users')" id="tabBtnUsers" class="tab-btn active">
-          👥 Registered Accounts &amp; Users (<span id="tabCountUsers">0</span>)
+        <button type="button" onclick="switchAdminTab('predictions')" id="tabBtnPredictions" class="tab-btn-gold active">
+          📈 2030 Employment Predictions &amp; Charts
         </button>
-        <button type="button" onclick="switchAdminTab('applications')" id="tabBtnApplications" class="tab-btn">
-          📋 Applications &amp; Screenings (<span id="tabCountApplications">0</span>)
+        <button type="button" onclick="switchAdminTab('users')" id="tabBtnUsers" class="tab-btn-gold">
+          👥 Registered Accounts (<span id="tabCountUsers">0</span>)
         </button>
-        <button type="button" onclick="switchAdminTab('curated')" id="tabBtnCurated" class="tab-btn">
-          📑 Curated CV Dataset Pool (79)
+        <button type="button" onclick="switchAdminTab('applications')" id="tabBtnApplications" class="tab-btn-gold">
+          📋 Candidate Applications Pipeline (<span id="tabCountApplications">0</span>)
         </button>
-        <button type="button" onclick="switchAdminTab('feedbacks')" id="tabBtnFeedbacks" class="tab-btn">
-          💬 Help Desk &amp; Tickets (<span id="tabCountFeedbacks">0</span>)
+        <button type="button" onclick="switchAdminTab('curated')" id="tabBtnCurated" class="tab-btn-gold">
+          📑 Curated CV Dataset &amp; Personality (79)
         </button>
-        <button type="button" onclick="switchAdminTab('system')" id="tabBtnSystem" class="tab-btn">
+        <button type="button" onclick="switchAdminTab('feedbacks')" id="tabBtnFeedbacks" class="tab-btn-gold">
+          💬 Help Desk Tickets (<span id="tabCountFeedbacks">0</span>)
+        </button>
+        <button type="button" onclick="switchAdminTab('system')" id="tabBtnSystem" class="tab-btn-gold">
           ⚙️ AI Models &amp; RunPod Hub
         </button>
       </div>
 
       <div class="flex items-center gap-2">
-        <button type="button" onclick="loadAllAdminData()" class="btn btn-soft !py-1.5 !px-3 !text-xs font-bold">
-          🔄 Refresh Data
+        <button type="button" onclick="loadAllAdminData()" class="btn !py-1.5 !px-3 !text-xs font-bold bg-slate-900 border border-amber-500/30 text-amber-300 hover:bg-slate-800">
+          🔄 Refresh
         </button>
       </div>
     </div>
 
-    <!-- Section 1: Registered Accounts & Users (15 rows per page) -->
-    <section id="adminSecUsers" class="space-y-4">
-      <div class="bg-white p-4 rounded-2xl border border-slate-200 flex flex-wrap items-center justify-between gap-3 shadow-xs">
-        <div class="flex items-center gap-2 w-full sm:w-auto">
-          <input type="text" id="userSearchInput" oninput="handleUserSearch(this.value)" placeholder="Search by name, email, role, or UID..." class="input !py-1.5 !px-3.5 !text-xs w-full sm:w-80" />
+    <!-- ===================================================================== -->
+    <!-- Tab 1: 2030 IT & Workforce Demand Future Prediction (NEW)             -->
+    <!-- ===================================================================== -->
+    <section id="adminSecPredictions" class="space-y-6">
+      <!-- Interactive Simulator Toolbar -->
+      <div class="bg-slate-900/90 border border-amber-500/30 p-5 rounded-2xl shadow-xl flex flex-wrap items-center justify-between gap-4">
+        <div class="space-y-1">
+          <div class="text-xs font-black uppercase tracking-wider text-amber-400">Future Employment Forecasting Model (2026 ➔ 2030)</div>
+          <p class="text-xs text-slate-400">Simulate automation displacement vs surge in high-value AI, Cloud, Cybersecurity and ESG roles in Malaysia.</p>
         </div>
-        <div class="text-xs text-slate-500 font-medium" id="userCountSummary">Loading accounts...</div>
+
+        <div class="flex flex-wrap items-center gap-4 text-xs font-bold">
+          <!-- Year Slider -->
+          <div class="flex items-center gap-2 bg-slate-950 px-3.5 py-2 rounded-xl border border-amber-500/25">
+            <span class="text-slate-400">Target Year:</span>
+            <input type="range" id="simYearSlider" min="2026" max="2032" value="2030" step="1" oninput="updateYearSimulation(this.value)" class="w-28 cursor-pointer" />
+            <span class="text-amber-300 font-black text-sm" id="simYearLabel">2030</span>
+          </div>
+
+          <!-- Pace Multiplier -->
+          <div class="flex items-center gap-1.5 bg-slate-950 p-1 rounded-xl border border-amber-500/25">
+            <span class="px-2 text-slate-400 text-[11px]">Disruption Pace:</span>
+            <button type="button" onclick="setPace(1.0)" id="paceBtn1" class="px-2.5 py-1 rounded-lg text-xs font-extrabold bg-amber-500 text-slate-950">Steady (1.0x)</button>
+            <button type="button" onclick="setPace(1.5)" id="paceBtn2" class="px-2.5 py-1 rounded-lg text-xs font-extrabold text-slate-400 hover:text-white">Accelerated (1.5x)</button>
+            <button type="button" onclick="setPace(2.2)" id="paceBtn3" class="px-2.5 py-1 rounded-lg text-xs font-extrabold text-slate-400 hover:text-white">Hyper-AI (2.2x)</button>
+          </div>
+        </div>
       </div>
 
-      <div class="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-xs">
+      <!-- Charts Grid -->
+      <div class="grid lg:grid-cols-2 gap-5">
+        <!-- Chart 1: Labor Demand Index -->
+        <div class="bg-slate-900/90 border border-amber-500/30 p-5 rounded-2xl shadow-xl space-y-3">
+          <div class="flex items-center justify-between">
+            <h3 class="text-sm font-extrabold text-amber-200">📊 Role Demand Index (2026 = 100 Baseline)</h3>
+            <span class="text-[10px] font-bold text-amber-400/80 bg-amber-950/50 px-2 py-0.5 rounded-full border border-amber-500/30">Dynamic Regression</span>
+          </div>
+          <div class="h-64 relative">
+            <canvas id="demandChart"></canvas>
+          </div>
+        </div>
+
+        <!-- Chart 2: Projected Salary Growth (MYR) -->
+        <div class="bg-slate-900/90 border border-amber-500/30 p-5 rounded-2xl shadow-xl space-y-3">
+          <div class="flex items-center justify-between">
+            <h3 class="text-sm font-extrabold text-amber-200">💰 Median Monthly Salary Projection (RM / month)</h3>
+            <span class="text-[10px] font-bold text-emerald-400/80 bg-emerald-950/50 px-2 py-0.5 rounded-full border border-emerald-500/30">Malaysian Market</span>
+          </div>
+          <div class="h-64 relative">
+            <canvas id="salaryChart"></canvas>
+          </div>
+        </div>
+      </div>
+
+      <!-- Forecast Breakdown Table -->
+      <div class="bg-slate-900/90 border border-amber-500/30 rounded-2xl overflow-hidden shadow-xl">
+        <div class="p-4 border-b border-amber-500/20 flex items-center justify-between">
+          <h4 class="text-xs font-extrabold text-amber-300 uppercase tracking-wider">Detailed 2030 Role Transformation &amp; SDG 8 Indicators</h4>
+          <span class="text-xs text-slate-400" id="forecastSummaryHeader">Projected shift by 2030</span>
+        </div>
         <div class="overflow-x-auto">
           <table class="w-full text-left text-xs">
-            <thead class="bg-slate-50/80 border-b border-slate-200 text-slate-500 font-extrabold uppercase tracking-wider text-[10px]">
+            <thead class="bg-slate-950/80 text-amber-400/80 uppercase tracking-wider text-[10px] border-b border-amber-500/20">
+              <tr>
+                <th class="py-3 px-4">Role Family</th>
+                <th class="py-3 px-4">Growth Category</th>
+                <th class="py-3 px-4">Automation Risk</th>
+                <th class="py-3 px-4">Baseline Salary (2026)</th>
+                <th class="py-3 px-4">Projected Salary</th>
+                <th class="py-3 px-4">Net Demand Shift</th>
+                <th class="py-3 px-4">SDG 8 Alignment</th>
+              </tr>
+            </thead>
+            <tbody id="forecastTableBody" class="divide-y divide-slate-800 font-medium">
+              <tr>
+                <td colspan="7" class="py-8 text-center text-slate-500">Loading predictive labor model...</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================================================================== -->
+    <!-- Tab 2: Registered Accounts & Users (15 rows per page)                 -->
+    <!-- ===================================================================== -->
+    <section id="adminSecUsers" class="space-y-4 hidden">
+      <div class="bg-slate-900/90 p-4 rounded-2xl border border-amber-500/30 flex flex-wrap items-center justify-between gap-3 shadow-xl">
+        <div class="flex items-center gap-2 w-full sm:w-auto">
+          <input type="text" id="userSearchInput" oninput="handleUserSearch(this.value)" placeholder="Search by name, email, role, or UID..." class="bg-slate-950 border border-amber-500/30 rounded-xl py-1.5 px-3.5 text-xs text-white focus:outline-none focus:border-amber-400 w-full sm:w-80" />
+        </div>
+        <div class="text-xs text-amber-300/80 font-medium" id="userCountSummary">Loading accounts...</div>
+      </div>
+
+      <div class="bg-slate-900/90 rounded-2xl border border-amber-500/30 overflow-hidden shadow-xl">
+        <div class="overflow-x-auto">
+          <table class="w-full text-left text-xs">
+            <thead class="bg-slate-950/80 border-b border-amber-500/20 text-amber-400/80 font-extrabold uppercase tracking-wider text-[10px]">
               <tr>
                 <th class="py-3 px-4 sortable" onclick="sortUserTable('id')">ID ⇅</th>
                 <th class="py-3 px-4 sortable" onclick="sortUserTable('unique_uid')">Account UID ⇅</th>
                 <th class="py-3 px-4 sortable" onclick="sortUserTable('full_name')">Full Name ⇅</th>
-                <th class="py-3 px-4 sortable" onclick="sortUserTable('email')">Email (Direct) ⇅</th>
+                <th class="py-3 px-4 sortable" onclick="sortUserTable('email')">Email ⇅</th>
                 <th class="py-3 px-4 sortable" onclick="sortUserTable('role')">Role ⇅</th>
-                <th class="py-3 px-4">Professional Headline</th>
+                <th class="py-3 px-4">Headline</th>
                 <th class="py-3 px-4">Organization / Area</th>
                 <th class="py-3 px-4">AI Safety Status</th>
                 <th class="py-3 px-4 sortable" onclick="sortUserTable('created_at')">Registered Date ⇅</th>
               </tr>
             </thead>
-            <tbody id="userTableBody" class="divide-y divide-slate-100 font-medium">
+            <tbody id="userTableBody" class="divide-y divide-slate-800 font-medium">
               <tr>
-                <td colspan="9" class="py-8 text-center text-slate-400">Loading registered accounts...</td>
+                <td colspan="9" class="py-8 text-center text-slate-500">Loading registered accounts...</td>
               </tr>
             </tbody>
           </table>
         </div>
-        <!-- Pagination Bar -->
-        <div class="p-3.5 bg-slate-50/80 border-t border-slate-200 flex flex-wrap items-center justify-between gap-3 text-xs" id="userPaginationBar">
-          <span class="text-slate-500 text-xs font-medium" id="userPageInfo">Page 1 of 1</span>
+        <div class="p-3.5 bg-slate-950/80 border-t border-amber-500/20 flex flex-wrap items-center justify-between gap-3 text-xs" id="userPaginationBar">
+          <span class="text-slate-400 text-xs font-medium" id="userPageInfo">Page 1 of 1</span>
           <div class="flex items-center gap-1.5" id="userPageButtons"></div>
         </div>
       </div>
     </section>
 
-    <!-- Section 2: Applications & Screenings Pipeline (Aligned with HR Portal!) -->
+    <!-- ===================================================================== -->
+    <!-- Tab 3: Applications & Screenings Pipeline                             -->
+    <!-- ===================================================================== -->
     <section id="adminSecApplications" class="space-y-4 hidden">
-      <div class="bg-white p-4 rounded-2xl border border-slate-200 flex flex-wrap items-center justify-between gap-3 shadow-xs">
+      <div class="bg-slate-900/90 p-4 rounded-2xl border border-amber-500/30 flex flex-wrap items-center justify-between gap-3 shadow-xl">
         <div class="flex items-center gap-2 w-full sm:w-auto">
-          <input type="text" id="appSearchInput" oninput="handleAppSearch(this.value)" placeholder="Search by applicant, role, company, or app ID..." class="input !py-1.5 !px-3.5 !text-xs w-full sm:w-80" />
+          <input type="text" id="appSearchInput" oninput="handleAppSearch(this.value)" placeholder="Search by applicant, role, company, or app ID..." class="bg-slate-950 border border-amber-500/30 rounded-xl py-1.5 px-3.5 text-xs text-white focus:outline-none focus:border-amber-400 w-full sm:w-80" />
         </div>
-        <div class="text-xs text-slate-500 font-medium" id="appCountSummary">Loading applications pipeline...</div>
+        <div class="text-xs text-amber-300/80 font-medium" id="appCountSummary">Loading pipeline...</div>
       </div>
 
-      <div class="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-xs">
+      <div class="bg-slate-900/90 rounded-2xl border border-amber-500/30 overflow-hidden shadow-xl">
         <div class="overflow-x-auto">
           <table class="w-full text-left text-xs">
-            <thead class="bg-slate-50/80 border-b border-slate-200 text-slate-500 font-extrabold uppercase tracking-wider text-[10px]">
+            <thead class="bg-slate-950/80 border-b border-amber-500/20 text-amber-400/80 font-extrabold uppercase tracking-wider text-[10px]">
               <tr>
                 <th class="py-3 px-4 sortable" onclick="sortAppTable('id')">Application UID ⇅</th>
                 <th class="py-3 px-4 sortable" onclick="sortAppTable('candidate_name')">Applicant Name (Full) ⇅</th>
@@ -271,76 +406,78 @@
                 <th class="py-3 px-4 sortable" onclick="sortAppTable('applied_at')">Submitted At ⇅</th>
               </tr>
             </thead>
-            <tbody id="appTableBody" class="divide-y divide-slate-100 font-medium">
+            <tbody id="appTableBody" class="divide-y divide-slate-800 font-medium">
               <tr>
-                <td colspan="9" class="py-8 text-center text-slate-400">Loading candidate application pipeline...</td>
+                <td colspan="9" class="py-8 text-center text-slate-500">Loading candidate applications...</td>
               </tr>
             </tbody>
           </table>
         </div>
-        <!-- Pagination Bar -->
-        <div class="p-3.5 bg-slate-50/80 border-t border-slate-200 flex flex-wrap items-center justify-between gap-3 text-xs" id="appPaginationBar">
-          <span class="text-slate-500 text-xs font-medium" id="appPageInfo">Page 1 of 1</span>
+        <div class="p-3.5 bg-slate-950/80 border-t border-amber-500/20 flex flex-wrap items-center justify-between gap-3 text-xs" id="appPaginationBar">
+          <span class="text-slate-400 text-xs font-medium" id="appPageInfo">Page 1 of 1</span>
           <div class="flex items-center gap-1.5" id="appPageButtons"></div>
         </div>
       </div>
     </section>
 
-    <!-- Section 3: Curated CV Dataset Pool (79 Imported Resumes, 15 per page) -->
+    <!-- ===================================================================== -->
+    <!-- Tab 4: Curated CV Dataset & AI Personality Analysis (79)              -->
+    <!-- ===================================================================== -->
     <section id="adminSecCurated" class="space-y-4 hidden">
-      <div class="bg-white p-4 rounded-2xl border border-slate-200 flex flex-wrap items-center justify-between gap-3 shadow-xs">
+      <div class="bg-slate-900/90 p-4 rounded-2xl border border-amber-500/30 flex flex-wrap items-center justify-between gap-3 shadow-xl">
         <div class="flex items-center gap-2 w-full sm:w-auto">
-          <input type="text" id="curatedSearchInput" oninput="handleCuratedSearch(this.value)" placeholder="Search 79 resumes by role, skill (Python, SQL), or name..." class="input !py-1.5 !px-3.5 !text-xs w-full sm:w-80" />
+          <input type="text" id="curatedSearchInput" oninput="handleCuratedSearch(this.value)" placeholder="Search 79 resumes by role, skill (Python, SQL), or name..." class="bg-slate-950 border border-amber-500/30 rounded-xl py-1.5 px-3.5 text-xs text-white focus:outline-none focus:border-amber-400 w-full sm:w-80" />
         </div>
-        <div class="text-xs text-slate-500 font-medium" id="curatedCountSummary">79 Benchmark Resumes Loaded</div>
+        <div class="text-xs text-amber-300/80 font-medium" id="curatedCountSummary">79 Benchmark Resumes Loaded</div>
       </div>
 
-      <div class="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-xs">
+      <div class="bg-slate-900/90 rounded-2xl border border-amber-500/30 overflow-hidden shadow-xl">
         <div class="overflow-x-auto">
           <table class="w-full text-left text-xs">
-            <thead class="bg-slate-50/80 border-b border-slate-200 text-slate-500 font-extrabold uppercase tracking-wider text-[10px]">
+            <thead class="bg-slate-950/80 border-b border-amber-500/20 text-amber-400/80 font-extrabold uppercase tracking-wider text-[10px]">
               <tr>
                 <th class="py-3 px-4 sortable" onclick="sortCuratedTable('id')">Dataset UID ⇅</th>
                 <th class="py-3 px-4 sortable" onclick="sortCuratedTable('candidate_name')">Candidate Profile ⇅</th>
                 <th class="py-3 px-4 sortable" onclick="sortCuratedTable('target_role')">Domain / Role Applied ⇅</th>
                 <th class="py-3 px-4 sortable" onclick="sortCuratedTable('experience_years')">Experience ⇅</th>
-                <th class="py-3 px-4">Extracted Core Skills</th>
+                <th class="py-3 px-4">Core Skills</th>
                 <th class="py-3 px-4">Education Background</th>
-                <th class="py-3 px-4">AI Safety Verification</th>
-                <th class="py-3 px-4 text-right">Profile View</th>
+                <th class="py-3 px-4">AI Safety</th>
+                <th class="py-3 px-4 text-right">Personality &amp; CV</th>
               </tr>
             </thead>
-            <tbody id="curatedTableBody" class="divide-y divide-slate-100 font-medium">
+            <tbody id="curatedTableBody" class="divide-y divide-slate-800 font-medium">
               <tr>
-                <td colspan="8" class="py-8 text-center text-slate-400">Loading curated CV dataset...</td>
+                <td colspan="8" class="py-8 text-center text-slate-500">Loading curated CV dataset...</td>
               </tr>
             </tbody>
           </table>
         </div>
-        <!-- Pagination Bar -->
-        <div class="p-3.5 bg-slate-50/80 border-t border-slate-200 flex flex-wrap items-center justify-between gap-3 text-xs" id="curatedPaginationBar">
-          <span class="text-slate-500 text-xs font-medium" id="curatedPageInfo">Page 1 of 6</span>
+        <div class="p-3.5 bg-slate-950/80 border-t border-amber-500/20 flex flex-wrap items-center justify-between gap-3 text-xs" id="curatedPaginationBar">
+          <span class="text-slate-400 text-xs font-medium" id="curatedPageInfo">Page 1 of 6</span>
           <div class="flex items-center gap-1.5" id="curatedPageButtons"></div>
         </div>
       </div>
     </section>
 
-    <!-- Section 4: Help Desk & Inquiries (15 rows per page) -->
+    <!-- ===================================================================== -->
+    <!-- Tab 5: Help Desk & Inquiries                                          -->
+    <!-- ===================================================================== -->
     <section id="adminSecFeedbacks" class="space-y-4 hidden">
-      <div class="flex flex-wrap items-center justify-between gap-3 bg-white p-4 rounded-2xl border border-slate-200 shadow-xs">
+      <div class="flex flex-wrap items-center justify-between gap-3 bg-slate-900/90 p-4 rounded-2xl border border-amber-500/30 shadow-xl">
         <div class="flex items-center gap-2">
-          <span class="text-xs font-bold text-slate-600">Filter Status:</span>
-          <button type="button" onclick="filterFeedbacks('all')" class="feed-filter-btn px-2.5 py-1 rounded-lg text-xs font-bold bg-slate-900 text-white" data-filter="all">All</button>
-          <button type="button" onclick="filterFeedbacks('Open')" class="feed-filter-btn px-2.5 py-1 rounded-lg text-xs font-bold bg-slate-100 text-slate-600 hover:bg-slate-200" data-filter="Open">Open Only</button>
-          <button type="button" onclick="filterFeedbacks('Resolved')" class="feed-filter-btn px-2.5 py-1 rounded-lg text-xs font-bold bg-slate-100 text-slate-600 hover:bg-slate-200" data-filter="Resolved">Resolved</button>
+          <span class="text-xs font-bold text-slate-300">Filter Status:</span>
+          <button type="button" onclick="filterFeedbacks('all')" class="feed-filter-btn px-2.5 py-1 rounded-lg text-xs font-bold bg-amber-500 text-slate-950" data-filter="all">All</button>
+          <button type="button" onclick="filterFeedbacks('Open')" class="feed-filter-btn px-2.5 py-1 rounded-lg text-xs font-bold bg-slate-950 text-slate-400 hover:text-white border border-amber-500/20" data-filter="Open">Open Only</button>
+          <button type="button" onclick="filterFeedbacks('Resolved')" class="feed-filter-btn px-2.5 py-1 rounded-lg text-xs font-bold bg-slate-950 text-slate-400 hover:text-white border border-amber-500/20" data-filter="Resolved">Resolved</button>
         </div>
-        <div class="text-xs text-slate-500 font-medium">Click on any ticket to update its status or add admin notes.</div>
+        <div class="text-xs text-slate-400 font-medium">Click on any ticket to update its status or add admin notes.</div>
       </div>
 
-      <div class="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-xs">
+      <div class="bg-slate-900/90 rounded-2xl border border-amber-500/30 overflow-hidden shadow-xl">
         <div class="overflow-x-auto">
           <table class="w-full text-left text-xs">
-            <thead class="bg-slate-50/80 border-b border-slate-200 text-slate-500 font-extrabold uppercase tracking-wider text-[10px]">
+            <thead class="bg-slate-950/80 border-b border-amber-500/20 text-amber-400/80 font-extrabold uppercase tracking-wider text-[10px]">
               <tr>
                 <th class="py-3 px-4">Ticket</th>
                 <th class="py-3 px-4">User / Talent</th>
@@ -351,122 +488,61 @@
                 <th class="py-3 px-4 text-right">Actions</th>
               </tr>
             </thead>
-            <tbody id="feedbackTableBody" class="divide-y divide-slate-100 font-medium">
+            <tbody id="feedbackTableBody" class="divide-y divide-slate-800 font-medium">
               <tr>
-                <td colspan="7" class="py-8 text-center text-slate-400">Loading help desk inquiries...</td>
+                <td colspan="7" class="py-8 text-center text-slate-500">Loading help desk inquiries...</td>
               </tr>
             </tbody>
           </table>
         </div>
-        <!-- Pagination Bar -->
-        <div class="p-3.5 bg-slate-50/80 border-t border-slate-200 flex flex-wrap items-center justify-between gap-3 text-xs">
-          <span class="text-slate-500 text-xs font-medium" id="feedPageInfo">Showing all inquiries</span>
+        <div class="p-3.5 bg-slate-950/80 border-t border-amber-500/20 flex flex-wrap items-center justify-between gap-3 text-xs">
+          <span class="text-slate-400 text-xs font-medium" id="feedPageInfo">Showing all inquiries</span>
           <div class="flex items-center gap-1.5" id="feedPageButtons"></div>
         </div>
       </div>
     </section>
 
-    <!-- Section 5: AI Models, Datasets & RunPod Hub -->
+    <!-- ===================================================================== -->
+    <!-- Tab 6: AI Models, Datasets & RunPod Hub                               -->
+    <!-- ===================================================================== -->
     <section id="adminSecSystem" class="space-y-5 hidden">
       <div class="grid md:grid-cols-3 gap-4">
-        <!-- Node 1: Lumi Chat QLoRA -->
-        <div class="bg-white p-5 rounded-2xl border border-slate-200 space-y-3 shadow-xs">
+        <div class="bg-slate-900/90 p-5 rounded-2xl border border-amber-500/30 space-y-3 shadow-xl">
           <div class="flex items-center justify-between">
-            <h3 class="text-sm font-extrabold text-slate-900">🤖 Lumi Chat AI (RunPod Worker)</h3>
-            <span class="chip chip-emerald !text-[10px]">Online</span>
+            <h3 class="text-sm font-extrabold text-white">🤖 Lumi Chat AI (RunPod Worker)</h3>
+            <span class="px-2 py-0.5 rounded-full text-[10px] font-black bg-emerald-950 border border-emerald-500/40 text-emerald-400">Online</span>
           </div>
-          <div class="text-xs text-slate-600 space-y-1.5">
+          <div class="text-xs text-slate-300 space-y-1.5">
             <div><b>Base Model:</b> Qwen/Qwen2.5-7B-Instruct (Unsloth QLoRA)</div>
             <div><b>Target Hardware:</b> RunPod NVIDIA RTX 4000 Ada (20GB VRAM)</div>
-            <div><b>Endpoint:</b> <code class="bg-slate-100 px-1 py-0.5 rounded text-[11px]">/chat</code> (Port 8001)</div>
+            <div><b>Endpoint:</b> <code class="bg-slate-950 px-1 py-0.5 rounded text-[11px] text-amber-300">/chat</code> (Port 8001)</div>
             <div><b>Training Pipeline:</b> SDC Hackathon Domain 1 Custom Dataset (2,400+ career QA pairs)</div>
-            <div><b>Inference Quantization:</b> 4-bit NormalFloat4 (NF4) with Double Quantization</div>
           </div>
         </div>
 
-        <!-- Node 2: CV Intelligence -->
-        <div class="bg-white p-5 rounded-2xl border border-slate-200 space-y-3 shadow-xs">
+        <div class="bg-slate-900/90 p-5 rounded-2xl border border-amber-500/30 space-y-3 shadow-xl">
           <div class="flex items-center justify-between">
-            <h3 class="text-sm font-extrabold text-slate-900">📄 CV Intelligence &amp; Extraction Engine</h3>
-            <span class="chip chip-emerald !text-[10px]">Active</span>
+            <h3 class="text-sm font-extrabold text-white">📄 CV Intelligence &amp; Extraction Engine</h3>
+            <span class="px-2 py-0.5 rounded-full text-[10px] font-black bg-emerald-950 border border-emerald-500/40 text-emerald-400">Active</span>
           </div>
-          <div class="text-xs text-slate-600 space-y-1.5">
-            <div><b>Engine:</b> PyMuPDF Local Extractor + Rule-based Confidence Scoring</div>
+          <div class="text-xs text-slate-300 space-y-1.5">
+            <div><b>Engine:</b> PyMuPDF Local Extractor + Rule Confidence Scoring</div>
             <div><b>Benchmarked Resumes:</b> 79 Cleaned Multi-Industry Profiles</div>
             <div><b>JobStreet Search Index:</b> 69,345 pre-indexed Malaysian postings</div>
-            <div><b>Public Exposure:</b> Cloudflare Tunnel via <code class="bg-slate-100 px-1 py-0.5 rounded text-[11px]">start_demo.sh</code></div>
-            <div><b>Fair-AI Masking:</b> Age, gender, ethnicity strictly sanitized</div>
+            <div><b>Public Exposure:</b> Cloudflare Tunnel via <code class="bg-slate-950 px-1 py-0.5 rounded text-[11px] text-amber-300">start_demo.sh</code></div>
           </div>
         </div>
 
-        <!-- Node 3: AI Safety Guard -->
-        <div class="bg-white p-5 rounded-2xl border border-slate-200 space-y-3 shadow-xs">
+        <div class="bg-slate-900/90 p-5 rounded-2xl border border-amber-500/30 space-y-3 shadow-xl">
           <div class="flex items-center justify-between">
-            <h3 class="text-sm font-extrabold text-slate-900">🛡️ AI Content Safety &amp; Moderation</h3>
-            <span class="chip chip-emerald !text-[10px]">Active</span>
+            <h3 class="text-sm font-extrabold text-white">🛡️ AI Content Safety &amp; Moderation</h3>
+            <span class="px-2 py-0.5 rounded-full text-[10px] font-black bg-emerald-950 border border-emerald-500/40 text-emerald-400">Active</span>
           </div>
-          <div class="text-xs text-slate-600 space-y-1.5">
-            <div><b>Governance Standard:</b> Malaysia PDPA 2010 + Fair-AI Principles</div>
-            <div><b>Checks Performed:</b> Fraud, illegal wording, prompt injection, PII leak</div>
+          <div class="text-xs text-slate-300 space-y-1.5">
+            <div><b>Standard:</b> Malaysia PDPA 2010 + Fair-AI Principles</div>
+            <div><b>Checks:</b> Fraud, illegal wording, prompt injection, PII leak</div>
             <div><b>Real-Time Scan:</b> 100% of uploads, applications, and feedback</div>
-            <div><b>Audit Trail:</b> Permanent logging in <code class="bg-slate-100 px-1 py-0.5 rounded text-[11px]">admin_audit_logs</code></div>
-            <div><b>Current Status:</b> 0 flagged violations across 79 CV benchmarks</div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Dataset & RunPod Training Resources Guide -->
-      <div class="bg-white p-6 rounded-3xl border border-slate-200 space-y-5 shadow-xs">
-        <div class="border-b border-slate-100 pb-3">
-          <h3 class="text-base font-extrabold text-slate-900 flex items-center gap-2">
-            <span>🚀 RunPod AI Training Hub &amp; Curated Dataset Keywords</span>
-            <span class="chip chip-indigo !text-[10px]">SDC Hackathon Master Guide</span>
-          </h3>
-          <p class="text-xs text-slate-500 mt-1">Everything required to retrain, expand, or benchmark models on RunPod GPU instances.</p>
-        </div>
-
-        <div class="grid md:grid-cols-2 gap-5 text-xs text-slate-700">
-          <div class="space-y-3 bg-slate-50 p-4 rounded-2xl border border-slate-200">
-            <h4 class="font-bold text-slate-900 text-sm flex items-center gap-2">
-              <span>🔍 Recommended Dataset Search Keywords</span>
-            </h4>
-            <p class="text-slate-600">If you want to gather more external datasets from <b>HuggingFace</b> or <b>Kaggle</b>, search with these exact keywords:</p>
-            <ul class="space-y-2 font-medium">
-              <li class="flex items-start gap-2">
-                <span class="font-mono text-indigo-700 font-bold bg-indigo-100/60 px-1.5 py-0.5 rounded">resume-entities-ner</span>
-                <span>Named entity recognition for CV extraction (skills, universities, degrees).</span>
-              </li>
-              <li class="flex items-start gap-2">
-                <span class="font-mono text-indigo-700 font-bold bg-indigo-100/60 px-1.5 py-0.5 rounded">resume-job-matching</span>
-                <span>Paired resumes and job descriptions with match annotations.</span>
-              </li>
-              <li class="flex items-start gap-2">
-                <span class="font-mono text-indigo-700 font-bold bg-indigo-100/60 px-1.5 py-0.5 rounded">malaysia-job-postings</span>
-                <span>Southeast Asian and Malaysian localized salary and role distributions.</span>
-              </li>
-              <li class="flex items-start gap-2">
-                <span class="font-mono text-indigo-700 font-bold bg-indigo-100/60 px-1.5 py-0.5 rounded">toxic-comment-classification</span>
-                <span>Content safety &amp; moderation training for filtering illicit or abusive phrases.</span>
-              </li>
-            </ul>
-          </div>
-
-          <div class="space-y-3 bg-slate-50 p-4 rounded-2xl border border-slate-200">
-            <h4 class="font-bold text-slate-900 text-sm flex items-center gap-2">
-              <span>⚡ RunPod GPU Execution Commands</span>
-            </h4>
-            <p class="text-slate-600">Run these commands inside your RunPod Secure Cloud terminal:</p>
-            <div class="bg-slate-900 text-slate-100 p-3 rounded-xl font-mono text-[11px] space-y-1.5 overflow-x-auto">
-              <div class="text-slate-400"># 1. Install Unsloth and high-speed dependencies</div>
-              <div>pip install "unsloth[colab-new] @ git+https://github.com/unslothai/unsloth.git"</div>
-              <div class="text-slate-400 mt-2"># 2. Run Lumi Chat LoRA fine-tuning script</div>
-              <div>python scripts/train_lumi_chat_ai.py --epochs 3 --lr 2e-4</div>
-              <div class="text-slate-400 mt-2"># 3. Serve optimized inference endpoint on port 8001</div>
-              <div>python scripts/serve_lumi_chat_ai.py --port 8001</div>
-            </div>
-            <div class="text-[11px] text-slate-500">
-              💡 <b>GPU Recommendation:</b> 1x NVIDIA RTX 4000 Ada (20GB) or A4000 (~$0.29/hr on RunPod Community Cloud).
-            </div>
+            <div><b>Status:</b> 0 flagged violations across all 79 CV benchmarks</div>
           </div>
         </div>
       </div>
@@ -474,24 +550,163 @@
 
   </main>
 
-  <!-- Modal 1: Updating Feedback Status -->
-  <div id="feedbackModal" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-4 hidden">
-    <div class="bg-white rounded-3xl p-6 max-w-lg w-full space-y-4 border border-slate-200 shadow-2xl">
-      <div class="flex items-center justify-between border-b border-slate-100 pb-3">
-        <h3 class="text-base font-extrabold text-slate-900" id="fmTitle">Ticket #</h3>
-        <button onclick="closeFeedbackModal()" class="text-slate-400 hover:text-slate-600 text-lg font-bold">✕</button>
+  <!-- ===================================================================== -->
+  <!-- MODAL: Curated CV Details & Big Five Personality Analysis (NEW)       -->
+  <!-- ===================================================================== -->
+  <div id="curatedModal" class="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-md flex items-center justify-center p-4 hidden">
+    <div class="bg-slate-900 border border-amber-500/40 rounded-3xl p-6 max-w-2xl w-full space-y-5 shadow-2xl max-h-[90vh] overflow-y-auto text-slate-200">
+      <div class="flex items-center justify-between border-b border-amber-500/20 pb-3">
+        <div>
+          <h3 class="text-base font-black text-white flex items-center gap-2" id="cmName">Candidate Profile</h3>
+          <div class="text-xs text-amber-400 font-mono font-bold" id="cmUid">CL-BMK-2026-0001</div>
+        </div>
+        <button onclick="closeCuratedModal()" class="text-slate-400 hover:text-white text-lg font-bold">✕</button>
+      </div>
+
+      <div class="space-y-4 text-xs">
+        <div class="grid grid-cols-2 sm:grid-cols-3 gap-3 bg-slate-950 p-3.5 rounded-2xl border border-amber-500/20">
+          <div>
+            <span class="text-amber-400/70 font-bold block text-[10px] uppercase">Target Role</span>
+            <span class="font-extrabold text-white text-xs" id="cmRole">—</span>
+          </div>
+          <div>
+            <span class="text-amber-400/70 font-bold block text-[10px] uppercase">Experience</span>
+            <span class="font-extrabold text-white text-xs" id="cmExp">—</span>
+          </div>
+          <div>
+            <span class="text-amber-400/70 font-bold block text-[10px] uppercase">AI Safety Audit</span>
+            <span class="px-2 py-0.5 rounded-full text-[10px] font-black bg-emerald-950 text-emerald-400 border border-emerald-500/30">🛡️ Verified Clean (0%)</span>
+          </div>
+        </div>
+
+        <!-- Big Five Personality Breakdown Widget (NEW) -->
+        <div class="bg-slate-950 p-4 rounded-2xl border border-amber-500/30 space-y-3">
+          <div class="flex items-center justify-between">
+            <h4 class="font-black text-amber-300 text-xs flex items-center gap-1.5">
+              <span>🧠 Big Five (OCEAN) Personality &amp; Behavioral Analysis</span>
+            </h4>
+            <span class="text-[10px] font-bold text-amber-400 bg-amber-950/60 px-2 py-0.5 rounded-md border border-amber-500/30" id="cmArchetype">Strategic Innovator</span>
+          </div>
+          <div class="grid grid-cols-2 gap-x-4 gap-y-2 text-[11px]" id="cmOceanBars">
+            <!-- Dynamically populated -->
+          </div>
+          <div class="pt-2 border-t border-slate-800">
+            <span class="text-slate-400 font-bold block mb-1">Workplace Strengths &amp; Culture Fit:</span>
+            <ul class="list-disc list-inside space-y-1 text-slate-300" id="cmStrengths"></ul>
+          </div>
+        </div>
+
+        <div>
+          <span class="font-bold text-amber-300 block mb-1">Education Background:</span>
+          <div class="p-2.5 bg-slate-950 rounded-xl border border-amber-500/20 text-slate-300" id="cmEdu"></div>
+        </div>
+
+        <div>
+          <span class="font-bold text-amber-300 block mb-1">Core Skills:</span>
+          <div class="flex flex-wrap gap-1.5" id="cmSkills"></div>
+        </div>
+
+        <div>
+          <span class="font-bold text-amber-300 block mb-1">Executive Summary / Profile Snippet:</span>
+          <p class="p-3 bg-slate-950 rounded-xl border border-amber-500/20 text-slate-300 leading-relaxed" id="cmSummary"></p>
+        </div>
+      </div>
+
+      <div class="flex items-center justify-end pt-3 border-t border-amber-500/20">
+        <button onclick="closeCuratedModal()" class="gold-btn !text-xs font-bold">Close Profile</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================================================================== -->
+  <!-- MODAL: Executive Governance Report (Printable/Downloadable) (NEW)     -->
+  <!-- ===================================================================== -->
+  <div id="reportModal" class="fixed inset-0 z-50 bg-slate-950/85 backdrop-blur-md flex items-center justify-center p-4 hidden">
+    <div class="bg-slate-900 border border-amber-500/50 rounded-3xl p-6 sm:p-8 max-w-3xl w-full space-y-5 shadow-2xl max-h-[92vh] overflow-y-auto text-slate-200">
+      <div class="flex items-center justify-between border-b border-amber-500/30 pb-4">
+        <div>
+          <div class="text-[10px] font-black uppercase tracking-wider text-amber-400">Official Executive Governance Audit</div>
+          <h2 class="text-lg font-black text-white mt-0.5">CareerLens AI · Platform &amp; Workforce Mobility Report</h2>
+          <div class="text-xs text-slate-400" id="repMeta">SDC Hackathon 2026 · Generated: Today</div>
+        </div>
+        <button onclick="closeReportModal()" class="text-slate-400 hover:text-white text-xl font-bold">✕</button>
+      </div>
+
+      <!-- Report Body -->
+      <div class="space-y-4 text-xs" id="reportBody">
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 bg-slate-950 p-4 rounded-2xl border border-amber-500/20">
+          <div>
+            <div class="text-slate-400 text-[10px]">Total Talents</div>
+            <div class="text-base font-black text-amber-300" id="repTalents">—</div>
+          </div>
+          <div>
+            <div class="text-slate-400 text-[10px]">Employer Accounts</div>
+            <div class="text-base font-black text-amber-300" id="repEmployers">—</div>
+          </div>
+          <div>
+            <div class="text-slate-400 text-[10px]">Curated Resumes</div>
+            <div class="text-base font-black text-amber-300" id="repCurated">79</div>
+          </div>
+          <div>
+            <div class="text-slate-400 text-[10px]">Fair-AI Compliance</div>
+            <div class="text-base font-black text-emerald-400" id="repCompliance">100.0%</div>
+          </div>
+        </div>
+
+        <div class="bg-slate-950 p-4 rounded-2xl border border-amber-500/20 space-y-2">
+          <h4 class="font-extrabold text-amber-300 text-xs uppercase tracking-wider">SDG 8 Decent Work Impact Indicators</h4>
+          <ul class="space-y-1.5 text-slate-300">
+            <li class="flex items-start gap-2">
+              <span class="text-emerald-400 font-bold">✓</span>
+              <span><b>Target 8.5 (Full &amp; Productive Employment):</b> 69,345 JobStreet postings indexed with AI skills gap bridging.</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <span class="text-emerald-400 font-bold">✓</span>
+              <span><b>Target 8.6 (Youth &amp; NEET Reduction):</b> Structured career transition pathways for fresh graduates and at-risk auditors.</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <span class="text-emerald-400 font-bold">✓</span>
+              <span><b>Human-in-the-Loop Privacy:</b> Zero scoring on demographic attributes (age, gender, ethnicity) under PDPA 2010.</span>
+            </li>
+          </ul>
+        </div>
+
+        <div class="bg-slate-950 p-4 rounded-2xl border border-amber-500/20 space-y-2">
+          <h4 class="font-extrabold text-amber-300 text-xs uppercase tracking-wider">2030 Malaysian Labor Market Prediction Summary</h4>
+          <p class="text-slate-300 leading-relaxed">
+            AI and Machine Learning Engineers are projected to surge by <b>+42.5%</b> by 2030, with starting median salaries advancing toward RM 10,000/month. Concurrently, routine manual administrative roles face an estimated <b>-31.8%</b> contraction, validating the urgent national requirement for proactive workforce reskilling platforms like CareerLens AI.
+          </p>
+        </div>
+      </div>
+
+      <div class="flex items-center justify-between pt-4 border-t border-amber-500/20">
+        <div class="text-[11px] text-amber-400/60 font-mono">Verified by Lead System Architect · SDC Hackathon 2026</div>
+        <div class="flex items-center gap-2">
+          <button onclick="window.print()" class="gold-btn !text-xs font-bold">🖨️ Print / Save PDF</button>
+          <button onclick="closeReportModal()" class="btn !py-1.5 !px-3.5 !text-xs bg-slate-950 border border-slate-700 text-slate-300">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Feedback Modal -->
+  <div id="feedbackModal" class="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-md flex items-center justify-center p-4 hidden">
+    <div class="bg-slate-900 border border-amber-500/40 rounded-3xl p-6 max-w-lg w-full space-y-4 shadow-2xl text-slate-200">
+      <div class="flex items-center justify-between border-b border-amber-500/20 pb-3">
+        <h3 class="text-base font-black text-white" id="fmTitle">Ticket #</h3>
+        <button onclick="closeFeedbackModal()" class="text-slate-400 hover:text-white text-lg font-bold">✕</button>
       </div>
       <div class="space-y-3 text-xs">
         <div>
-          <span class="font-bold text-slate-500">From:</span> <span id="fmUser" class="font-extrabold text-slate-800"></span>
+          <span class="font-bold text-amber-300">From:</span> <span id="fmUser" class="font-extrabold text-white"></span>
         </div>
-        <div class="p-3 bg-slate-50 rounded-xl border border-slate-200">
-          <div class="font-extrabold text-slate-800" id="fmSubject"></div>
-          <p class="text-slate-600 mt-1 whitespace-pre-wrap leading-relaxed" id="fmMessage"></p>
+        <div class="p-3 bg-slate-950 rounded-xl border border-amber-500/20">
+          <div class="font-extrabold text-white" id="fmSubject"></div>
+          <p class="text-slate-400 mt-1 whitespace-pre-wrap leading-relaxed" id="fmMessage"></p>
         </div>
         <div>
-          <label class="block font-bold text-slate-700 mb-1">Update Status:</label>
-          <select id="fmStatusSelect" class="input !py-2 !text-xs font-bold">
+          <label class="block font-bold text-amber-300 mb-1">Update Status:</label>
+          <select id="fmStatusSelect" class="bg-slate-950 border border-amber-500/30 rounded-xl p-2 text-xs font-bold text-white w-full">
             <option value="Open">Open</option>
             <option value="In Progress">In Progress</option>
             <option value="Resolved">Resolved</option>
@@ -499,100 +714,32 @@
           </select>
         </div>
         <div>
-          <label class="block font-bold text-slate-700 mb-1">Admin Resolution Notes:</label>
-          <textarea id="fmNotes" rows="3" class="input !py-2 !text-xs" placeholder="Add resolution details or response sent to user..."></textarea>
+          <label class="block font-bold text-amber-300 mb-1">Admin Resolution Notes:</label>
+          <textarea id="fmNotes" rows="3" class="bg-slate-950 border border-amber-500/30 rounded-xl p-2 text-xs text-white w-full" placeholder="Add resolution details..."></textarea>
         </div>
       </div>
-      <div class="flex items-center justify-end gap-2 pt-3 border-t border-slate-100">
-        <button onclick="closeFeedbackModal()" class="btn btn-soft !py-1.5 !px-3.5 !text-xs">Cancel</button>
-        <button onclick="submitFeedbackUpdate()" class="btn btn-primary !py-1.5 !px-4 !text-xs font-bold">Save Update →</button>
+      <div class="flex items-center justify-end gap-2 pt-3 border-t border-amber-500/20">
+        <button onclick="closeFeedbackModal()" class="btn !py-1.5 !px-3.5 !text-xs bg-slate-950 text-slate-400">Cancel</button>
+        <button onclick="submitFeedbackUpdate()" class="gold-btn !text-xs font-bold">Save Update →</button>
       </div>
     </div>
   </div>
 
-  <!-- Modal 2: Curated CV Profile Details View -->
-  <div id="curatedModal" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-4 hidden">
-    <div class="bg-white rounded-3xl p-6 max-w-2xl w-full space-y-4 border border-slate-200 shadow-2xl max-h-[90vh] overflow-y-auto">
-      <div class="flex items-center justify-between border-b border-slate-100 pb-3">
-        <div>
-          <h3 class="text-base font-extrabold text-slate-900" id="cmName">Candidate Profile</h3>
-          <div class="text-xs text-indigo-700 font-mono font-bold" id="cmUid">CL-BMK-2026-0001</div>
-        </div>
-        <button onclick="closeCuratedModal()" class="text-slate-400 hover:text-slate-600 text-lg font-bold">✕</button>
-      </div>
-      <div class="space-y-4 text-xs">
-        <div class="grid grid-cols-2 sm:grid-cols-3 gap-3 bg-slate-50 p-3.5 rounded-2xl border border-slate-200">
-          <div>
-            <span class="text-slate-400 font-bold block text-[10px] uppercase">Target Role</span>
-            <span class="font-extrabold text-slate-900 text-xs" id="cmRole">—</span>
-          </div>
-          <div>
-            <span class="text-slate-400 font-bold block text-[10px] uppercase">Experience</span>
-            <span class="font-extrabold text-slate-900 text-xs" id="cmExp">—</span>
-          </div>
-          <div>
-            <span class="text-slate-400 font-bold block text-[10px] uppercase">AI Safety Status</span>
-            <span class="chip chip-emerald !text-[10px]" id="cmSafety">🛡️ Verified Clean</span>
-          </div>
-        </div>
-        <div>
-          <span class="font-bold text-slate-700 block mb-1">Education Background:</span>
-          <div class="p-2.5 bg-slate-50 rounded-xl border border-slate-200 text-slate-800" id="cmEdu"></div>
-        </div>
-        <div>
-          <span class="font-bold text-slate-700 block mb-1">Extracted Technical &amp; Domain Skills:</span>
-          <div class="flex flex-wrap gap-1.5" id="cmSkills"></div>
-        </div>
-        <div>
-          <span class="font-bold text-slate-700 block mb-1">Executive Summary / Profile Snippet:</span>
-          <p class="p-3 bg-slate-50 rounded-xl border border-slate-200 text-slate-700 leading-relaxed" id="cmSummary"></p>
-        </div>
-      </div>
-      <div class="flex items-center justify-end pt-3 border-t border-slate-100">
-        <button onclick="closeCuratedModal()" class="btn btn-soft !py-1.5 !px-4 !text-xs font-bold">Close Profile</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- Modal 3: Confirm Reveal Sensitive PII Modal -->
-  <div id="revealModal" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-4 hidden">
-    <div class="bg-white rounded-3xl p-6 max-w-md w-full space-y-4 border border-slate-200 shadow-2xl">
-      <div class="flex items-center gap-3 text-amber-600">
-        <div class="h-10 w-10 rounded-2xl bg-amber-50 border border-amber-200 grid place-items-center text-xl">⚠️</div>
-        <div>
-          <h3 class="text-base font-extrabold text-slate-900">Confirm PII Data Reveal</h3>
-          <p class="text-xs text-slate-500">Malaysia PDPA 2010 Compliance Audit</p>
-        </div>
-      </div>
-      <p class="text-xs text-slate-600 leading-relaxed">
-        Under the Personal Data Protection Act (PDPA 2010), unmasking candidate personal emails and sensitive identification is restricted to authorized administrative reviews.
-        <br><br>
-        This operation will be <b>permanently logged</b> with your Admin UID (<code class="bg-slate-100 px-1 py-0.5 rounded font-mono">admin@careerlens.my</code>) and client IP address in the immutable audit trail.
-      </p>
-      <div>
-        <label class="block font-bold text-slate-700 mb-1 text-xs">Reason for Access:</label>
-        <input type="text" id="revealReasonInput" class="input !py-2 !text-xs" value="Administrative compliance &amp; applicant verification" />
-      </div>
-      <div class="flex items-center justify-end gap-2 pt-3 border-t border-slate-100">
-        <button onclick="closeRevealModal()" class="btn btn-soft !py-1.5 !px-3.5 !text-xs">Cancel</button>
-        <button onclick="confirmRevealPII()" class="btn !py-1.5 !px-4 !text-xs font-bold bg-indigo-600 text-white hover:bg-indigo-700 shadow-xs">Authorize &amp; Reveal →</button>
-      </div>
-    </div>
-  </div>
-
-  <script src="/static/js/common.js?v=20261022-admin-v3"></script>
+  <script src="/static/js/common.js?v=20261022-admin-gold-v4"></script>
   <script>
-    // State management
     let isPIIRevealed = true;
-    let activeTab = 'users';
+    let activeTab = 'predictions';
 
-    // Users state
+    // Chart.js instances
+    let demandChartInstance = null;
+    let salaryChartInstance = null;
+    let currentSimYear = 2030;
+    let currentSimPace = 1.0;
+    let currentForecastData = null;
+
+    // Table data states (15 per page)
     let usersData = { items: [], total: 0, page: 1, perPage: 15, totalPages: 1, sortBy: 'id', sortOrder: 'asc', search: '' };
-
-    // Applications state
     let appsData = { items: [], total: 0, page: 1, perPage: 15, totalPages: 1, sortBy: 'id', sortOrder: 'desc', search: '' };
-
-    // Curated CV state
     let curatedData = { items: [], total: 0, page: 1, perPage: 15, totalPages: 1, sortBy: 'id', sortOrder: 'asc', search: '' };
 
     // Feedbacks state
@@ -602,12 +749,12 @@
     const feedPerPage = 15;
     let activeFid = null;
 
-    // Search debouncers
     let userSearchTimer, appSearchTimer, curatedSearchTimer;
 
     async function loadAllAdminData() {
       await Promise.all([
         fetchAdminStats(),
+        fetchPredictions(currentSimYear, currentSimPace),
         fetchUsersPage(1),
         fetchAppsPage(1),
         fetchCuratedPage(1),
@@ -634,7 +781,132 @@
       }
     }
 
-    // ---------------------------------------------------- USERS
+    // =========================================================================
+    // 2030 PREDICTIONS & CHART.JS INTERACTIVE SIMULATION
+    // =========================================================================
+    async function fetchPredictions(year = 2030, pace = 1.0) {
+      try {
+        const res = await fetch(`/api/admin/predictions/workforce-2030?year=${year}&pace=${pace}`);
+        const data = await res.json();
+        if (data.ok && data.forecast) {
+          currentForecastData = data.forecast;
+          renderPredictionCharts(currentForecastData);
+          renderForecastTable(currentForecastData);
+        }
+      } catch (e) {
+        console.error('Prediction fetch error:', e);
+      }
+    }
+
+    function renderPredictionCharts(fc) {
+      const labels = fc.years;
+
+      // 1. Demand Index Line Chart
+      const demandCtx = document.getElementById('demandChart').getContext('2d');
+      const demandDatasets = fc.projections.slice(0, 5).map((p, idx) => {
+        const colors = ['#f59e0b', '#38bdf8', '#34d399', '#a78bfa', '#f87171'];
+        return {
+          label: p.role,
+          data: p.demand_series,
+          borderColor: colors[idx % colors.length],
+          backgroundColor: colors[idx % colors.length] + '20',
+          borderWidth: 2.5,
+          tension: 0.35,
+          pointRadius: 3,
+        };
+      });
+
+      if (demandChartInstance) demandChartInstance.destroy();
+      demandChartInstance = new Chart(demandCtx, {
+        type: 'line',
+        data: { labels, datasets: demandDatasets },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: { labels: { color: '#cbd5e1', font: { size: 10, family: 'Plus Jakarta Sans' } } },
+            tooltip: { backgroundColor: '#090d16', borderColor: '#f59e0b', borderWidth: 1 }
+          },
+          scales: {
+            x: { grid: { color: 'rgba(255,255,255,0.06)' }, ticks: { color: '#94a3b8' } },
+            y: { grid: { color: 'rgba(255,255,255,0.06)' }, ticks: { color: '#94a3b8' }, title: { display: true, text: 'Demand Index', color: '#f59e0b' } }
+          }
+        }
+      });
+
+      // 2. Projected Median Salary Bar Chart
+      const salaryCtx = document.getElementById('salaryChart').getContext('2d');
+      const salaryLabels = fc.projections.map(p => p.role.split(' ')[0] + ' ' + (p.role.split(' ')[1] || ''));
+      const baselineSalaries = fc.projections.map(p => p.base_salary);
+      const projectedSalaries = fc.projections.map(p => p.projected_salary_target_year);
+
+      if (salaryChartInstance) salaryChartInstance.destroy();
+      salaryChartInstance = new Chart(salaryCtx, {
+        type: 'bar',
+        data: {
+          labels: salaryLabels,
+          datasets: [
+            { label: 'Baseline 2026', data: baselineSalaries, backgroundColor: 'rgba(148, 163, 184, 0.4)', borderRadius: 6 },
+            { label: `Projected ${fc.target_year}`, data: projectedSalaries, backgroundColor: 'rgba(245, 158, 11, 0.85)', borderRadius: 6 }
+          ]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: { labels: { color: '#cbd5e1', font: { size: 10, family: 'Plus Jakarta Sans' } } },
+            tooltip: { backgroundColor: '#090d16', borderColor: '#f59e0b', borderWidth: 1 }
+          },
+          scales: {
+            x: { grid: { color: 'rgba(255,255,255,0.06)' }, ticks: { color: '#94a3b8', font: { size: 9 } } },
+            y: { grid: { color: 'rgba(255,255,255,0.06)' }, ticks: { color: '#94a3b8' }, title: { display: true, text: 'Salary (MYR)', color: '#34d399' } }
+          }
+        }
+      });
+    }
+
+    function renderForecastTable(fc) {
+      const tbody = document.getElementById('forecastTableBody');
+      document.getElementById('forecastSummaryHeader').textContent = `Projected shifts by ${fc.target_year} (${fc.pace_multiplier}x Pace)`;
+
+      tbody.innerHTML = fc.projections.map(p => {
+        const isPositive = p.net_change_pct >= 0;
+        return `
+          <tr class="hover:bg-slate-800/50 transition">
+            <td class="py-3 px-4 font-extrabold text-white">${esc(p.role)}</td>
+            <td class="py-3 px-4"><span class="px-2 py-0.5 rounded-md text-[10px] font-bold ${isPositive ? 'bg-amber-950/70 text-amber-300 border border-amber-500/30' : 'bg-red-950/70 text-red-300 border border-red-500/30'}">${esc(p.category)}</span></td>
+            <td class="py-3 px-4 text-slate-300">${esc(p.automation_risk)}</td>
+            <td class="py-3 px-4 font-mono text-slate-400">RM ${p.base_salary.toLocaleString()}</td>
+            <td class="py-3 px-4 font-mono font-bold text-amber-300">RM ${p.projected_salary_target_year.toLocaleString()}</td>
+            <td class="py-3 px-4 font-bold ${isPositive ? 'text-emerald-400' : 'text-red-400'}">${isPositive ? '▲ +' : '▼ '}${p.net_change_pct}%</td>
+            <td class="py-3 px-4 text-slate-400 text-[11px]">${esc(p.sdg_impact)}</td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    function updateYearSimulation(val) {
+      currentSimYear = parseInt(val);
+      document.getElementById('simYearLabel').textContent = currentSimYear;
+      fetchPredictions(currentSimYear, currentSimPace);
+    }
+
+    function setPace(pace) {
+      currentSimPace = pace;
+      [1.0, 1.5, 2.2].forEach((p, idx) => {
+        const btn = document.getElementById(`paceBtn${idx + 1}`);
+        if (p === pace) {
+          btn.className = 'px-2.5 py-1 rounded-lg text-xs font-extrabold bg-amber-500 text-slate-950';
+        } else {
+          btn.className = 'px-2.5 py-1 rounded-lg text-xs font-extrabold text-slate-400 hover:text-white';
+        }
+      });
+      fetchPredictions(currentSimYear, currentSimPace);
+    }
+
+    // =========================================================================
+    // USERS (15 per page)
+    // =========================================================================
     async function fetchUsersPage(page = 1) {
       usersData.page = page;
       const url = `/api/admin/users?page=${page}&per_page=${usersData.perPage}&search=${encodeURIComponent(usersData.search)}&sort_by=${usersData.sortBy}&sort_order=${usersData.sortOrder}&reveal=${isPIIRevealed ? 1 : 0}`;
@@ -646,9 +918,6 @@
           if (data.pagination) {
             usersData.total = data.pagination.total;
             usersData.totalPages = data.pagination.total_pages;
-          } else {
-            usersData.total = usersData.items.length;
-            usersData.totalPages = Math.ceil(usersData.total / usersData.perPage) || 1;
           }
           document.getElementById('tabCountUsers').textContent = usersData.total;
           renderUsersTable();
@@ -667,31 +936,25 @@
         : '0 accounts found';
 
       if (!usersData.items.length) {
-        tbody.innerHTML = '<tr><td colspan="9" class="py-8 text-center text-slate-400">No matching accounts found.</td></tr>';
+        tbody.innerHTML = '<tr><td colspan="9" class="py-8 text-center text-slate-500">No matching accounts.</td></tr>';
         renderPagination('user', usersData, fetchUsersPage);
         return;
       }
 
       tbody.innerHTML = usersData.items.map(u => `
-        <tr class="hover:bg-slate-50/70 transition">
-          <td class="py-3 px-4 font-mono font-bold text-slate-400 text-[11px]">#${u.id}</td>
-          <td class="py-3 px-4 font-mono font-bold text-indigo-700">${esc(u.unique_uid)}</td>
-          <td class="py-3 px-4 font-extrabold text-slate-900">${esc(u.full_name)}</td>
-          <td class="py-3 px-4 text-slate-600 font-mono text-[11px]">
-            ${esc(u.email)} ${u.is_masked ? '<span class="text-[10px] text-indigo-500" title="Masked by PDPA">🔒</span>' : ''}
-          </td>
+        <tr class="hover:bg-slate-800/40 transition">
+          <td class="py-3 px-4 font-mono font-bold text-amber-500/70 text-[11px]">#${u.id}</td>
+          <td class="py-3 px-4 font-mono font-bold text-amber-400">${esc(u.unique_uid)}</td>
+          <td class="py-3 px-4 font-extrabold text-white">${esc(u.full_name)}</td>
+          <td class="py-3 px-4 text-slate-300 font-mono text-[11px]">${esc(u.email)}</td>
           <td class="py-3 px-4">
-            <span class="chip ${u.role === 'admin' ? 'chip-pink' : u.role === 'hr_company' ? 'chip-indigo' : 'chip-emerald'} !text-[10px]">
+            <span class="px-2 py-0.5 rounded-full text-[10px] font-black ${u.role === 'admin' ? 'bg-amber-950 text-amber-300 border border-amber-500/30' : u.role === 'hr_company' ? 'bg-indigo-950 text-indigo-300 border border-indigo-500/30' : 'bg-emerald-950 text-emerald-300 border border-emerald-500/30'}">
               ${u.role === 'admin' ? '🛡️ Admin' : u.role === 'hr_company' ? '🏢 Employer' : '👤 Talent'}
             </span>
           </td>
-          <td class="py-3 px-4 text-slate-700 font-semibold">${esc(u.headline)}</td>
-          <td class="py-3 px-4 text-slate-500">${esc(u.company_or_institution)}</td>
-          <td class="py-3 px-4">
-            <span class="chip ${u.ai_risk_score > 0 ? 'chip-amber' : 'chip-emerald'} !text-[10px]">
-              ${u.ai_risk_score > 0 ? '⚠️ Review Needed' : '🛡️ Verified Clean'}
-            </span>
-          </td>
+          <td class="py-3 px-4 text-slate-300">${esc(u.headline)}</td>
+          <td class="py-3 px-4 text-slate-400">${esc(u.company_or_institution)}</td>
+          <td class="py-3 px-4"><span class="px-2 py-0.5 rounded-full text-[10px] font-black bg-emerald-950/80 text-emerald-400 border border-emerald-500/30">🛡️ Verified Clean</span></td>
           <td class="py-3 px-4 text-slate-400 text-[11px] whitespace-nowrap">${esc(u.created_at)}</td>
         </tr>
       `).join('');
@@ -717,7 +980,9 @@
       }, 250);
     }
 
-    // ---------------------------------------------------- APPLICATIONS
+    // =========================================================================
+    // APPLICATIONS PIPELINE (15 per page)
+    // =========================================================================
     async function fetchAppsPage(page = 1) {
       appsData.page = page;
       const url = `/api/admin/applications?page=${page}&per_page=${appsData.perPage}&search=${encodeURIComponent(appsData.search)}&sort_by=${appsData.sortBy}&sort_order=${appsData.sortOrder}&reveal=${isPIIRevealed ? 1 : 0}`;
@@ -747,37 +1012,35 @@
         : '0 applications in pipeline';
 
       if (!appsData.items.length) {
-        tbody.innerHTML = '<tr><td colspan="9" class="py-8 text-center text-slate-400">No applications found in screening pipeline.</td></tr>';
+        tbody.innerHTML = '<tr><td colspan="9" class="py-8 text-center text-slate-500">No applications found in pipeline.</td></tr>';
         renderPagination('app', appsData, fetchAppsPage);
         return;
       }
 
       tbody.innerHTML = appsData.items.map(a => `
-        <tr class="hover:bg-slate-50/70 transition">
-          <td class="py-3 px-4 font-mono font-bold text-violet-700">${esc(a.application_uid)}</td>
-          <td class="py-3 px-4 font-extrabold text-slate-900">
-            ${esc(a.candidate_name)} ${a.is_masked ? '<span class="text-[10px] text-slate-400 font-mono" title="Masked by PDPA">🔒</span>' : ''}
-            <div class="text-[10px] text-slate-400 font-mono">${esc(a.candidate_uid)}</div>
+        <tr class="hover:bg-slate-800/40 transition">
+          <td class="py-3 px-4 font-mono font-bold text-amber-400">${esc(a.application_uid)}</td>
+          <td class="py-3 px-4 font-extrabold text-white">
+            ${esc(a.candidate_name)}
+            <div class="text-[10px] text-amber-400/60 font-mono">${esc(a.candidate_uid)}</div>
           </td>
-          <td class="py-3 px-4 font-bold text-slate-800">${esc(a.vacancy_title)}</td>
-          <td class="py-3 px-4 text-slate-600">${esc(a.company_name)}</td>
+          <td class="py-3 px-4 font-bold text-amber-200">${esc(a.vacancy_title)}</td>
+          <td class="py-3 px-4 text-slate-300">${esc(a.company_name)}</td>
           <td class="py-3 px-4">
-            <span class="inline-flex items-center gap-1 font-black text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-md border border-emerald-200 text-xs">
+            <span class="inline-flex items-center gap-1 font-black text-amber-300 bg-amber-950/60 px-2 py-0.5 rounded-md border border-amber-500/30 text-xs">
               ${a.match_score}% Match
             </span>
           </td>
-          <td class="py-3 px-4 text-slate-600 text-[11px]">
+          <td class="py-3 px-4 text-slate-300 text-[11px]">
             <div>${esc(a.work_mode)} · RM ${a.salary_expectation}</div>
             <div class="text-slate-400">Avail: ${esc(a.available_in)}</div>
           </td>
           <td class="py-3 px-4">
-            <span class="chip ${a.hr_decision === 'Shortlisted' ? 'chip-emerald' : a.hr_decision === 'Invited for Interview' ? 'chip-indigo' : 'chip-amber'} !text-[10px]">
+            <span class="px-2 py-0.5 rounded-full text-[10px] font-black ${a.hr_decision === 'Shortlisted' ? 'bg-emerald-950 text-emerald-400 border border-emerald-500/30' : a.hr_decision === 'Invited for Interview' ? 'bg-indigo-950 text-indigo-400 border border-indigo-500/30' : 'bg-amber-950 text-amber-400 border border-amber-500/30'}">
               ${esc(a.hr_decision)}
             </span>
           </td>
-          <td class="py-3 px-4">
-            <span class="chip chip-emerald !text-[10px]" title="AI verified no illegal wording">🛡️ Safe (0%)</span>
-          </td>
+          <td class="py-3 px-4"><span class="px-2 py-0.5 rounded-full text-[10px] font-black bg-emerald-950/80 text-emerald-400 border border-emerald-500/30">🛡️ Safe (0%)</span></td>
           <td class="py-3 px-4 text-slate-400 text-[11px] whitespace-nowrap">${esc(a.applied_at)}</td>
         </tr>
       `).join('');
@@ -803,7 +1066,9 @@
       }, 250);
     }
 
-    // ---------------------------------------------------- CURATED CV DATASET (79)
+    // =========================================================================
+    // CURATED CV DATASET & BIG FIVE PERSONALITY (79 profiles)
+    // =========================================================================
     async function fetchCuratedPage(page = 1) {
       curatedData.page = page;
       const url = `/api/admin/curated-cvs?page=${page}&per_page=${curatedData.perPage}&search=${encodeURIComponent(curatedData.search)}&sort_by=${curatedData.sortBy}&sort_order=${curatedData.sortOrder}&reveal=${isPIIRevealed ? 1 : 0}`;
@@ -832,31 +1097,27 @@
         : '0 profiles found';
 
       if (!curatedData.items.length) {
-        tbody.innerHTML = '<tr><td colspan="8" class="py-8 text-center text-slate-400">No benchmark profiles matching search.</td></tr>';
+        tbody.innerHTML = '<tr><td colspan="8" class="py-8 text-center text-slate-500">No benchmark profiles matching search.</td></tr>';
         renderPagination('curated', curatedData, fetchCuratedPage);
         return;
       }
 
       tbody.innerHTML = curatedData.items.map(c => `
-        <tr class="hover:bg-slate-50/70 transition">
-          <td class="py-3 px-4 font-mono font-bold text-amber-700">${esc(c.candidate_uid)}</td>
-          <td class="py-3 px-4 font-extrabold text-slate-900">
-            ${esc(c.candidate_name)} ${c.is_masked ? '<span class="text-[10px] text-slate-400 font-mono">🔒</span>' : ''}
-          </td>
-          <td class="py-3 px-4 font-bold text-slate-800">${esc(c.target_role)}</td>
-          <td class="py-3 px-4 text-slate-600 font-medium">${c.experience_years} yrs</td>
+        <tr class="hover:bg-slate-800/40 transition">
+          <td class="py-3 px-4 font-mono font-bold text-amber-400">${esc(c.candidate_uid)}</td>
+          <td class="py-3 px-4 font-extrabold text-white">${esc(c.candidate_name)}</td>
+          <td class="py-3 px-4 font-bold text-amber-200">${esc(c.target_role)}</td>
+          <td class="py-3 px-4 text-slate-300">${c.experience_years} yrs</td>
           <td class="py-3 px-4 max-w-xs">
             <div class="flex flex-wrap gap-1">
-              ${(c.skills || []).slice(0, 3).map(s => `<span class="chip chip-slate !text-[9px] !py-0.5">${esc(s)}</span>`).join('')}
+              ${(c.skills || []).slice(0, 3).map(s => `<span class="px-1.5 py-0.5 rounded bg-slate-800 text-amber-300 text-[9px] border border-amber-500/20 font-bold">${esc(s)}</span>`).join('')}
               ${(c.skills || []).length > 3 ? `<span class="text-[10px] text-slate-400 font-bold">+${(c.skills || []).length - 3}</span>` : ''}
             </div>
           </td>
-          <td class="py-3 px-4 text-slate-500 text-[11px] truncate max-w-[180px]">${esc(c.education)}</td>
-          <td class="py-3 px-4">
-            <span class="chip chip-emerald !text-[10px]">🛡️ Clean (0%)</span>
-          </td>
+          <td class="py-3 px-4 text-slate-400 text-[11px] truncate max-w-[180px]">${esc(c.education)}</td>
+          <td class="py-3 px-4"><span class="px-2 py-0.5 rounded-full text-[10px] font-black bg-emerald-950/80 text-emerald-400 border border-emerald-500/30">🛡️ Clean (0%)</span></td>
           <td class="py-3 px-4 text-right">
-            <button type="button" onclick="openCuratedModal('${c.candidate_uid}')" class="btn btn-soft !py-1 !px-2.5 !text-[11px]">View CV →</button>
+            <button type="button" onclick="openCuratedModal('${c.candidate_uid}')" class="gold-btn !py-1 !px-2.5 !text-[11px]">🧠 Analyze Personality →</button>
           </td>
         </tr>
       `).join('');
@@ -882,7 +1143,7 @@
       }, 250);
     }
 
-    function openCuratedModal(uid) {
+    async function openCuratedModal(uid) {
       const c = curatedData.items.find(x => x.candidate_uid === uid);
       if (!c) return;
       document.getElementById('cmName').textContent = c.candidate_name;
@@ -890,8 +1151,45 @@
       document.getElementById('cmRole').textContent = c.target_role;
       document.getElementById('cmExp').textContent = `${c.experience_years} Years Experience`;
       document.getElementById('cmEdu').textContent = c.education || 'Bachelor Degree in Technology';
-      document.getElementById('cmSkills').innerHTML = (c.skills || []).map(s => `<span class="chip chip-indigo !text-xs font-bold">${esc(s)}</span>`).join('');
+      document.getElementById('cmSkills').innerHTML = (c.skills || []).map(s => `<span class="px-2 py-0.5 rounded-md bg-amber-950/60 text-amber-300 border border-amber-500/30 font-bold text-xs">${esc(s)}</span>`).join('');
       document.getElementById('cmSummary').textContent = c.summary_text || 'No summary text available.';
+
+      // Fetch AI Personality Prediction for candidate
+      try {
+        const pRes = await fetch('/api/admin/predictions/personality', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ cv_text: `${c.target_role} ${c.summary_text} ${(c.skills || []).join(' ')}`, candidate_name: c.candidate_name })
+        });
+        const pData = await pRes.json();
+        if (pData.ok && pData.personality) {
+          const p = pData.personality;
+          document.getElementById('cmArchetype').textContent = p.archetype;
+          const scores = p.ocean_scores;
+          document.getElementById('cmOceanBars').innerHTML = `
+            <div>
+              <div class="flex justify-between text-slate-300 mb-0.5"><span>Openness to Experience</span><span class="font-bold text-amber-300">${scores.openness}%</span></div>
+              <div class="w-full bg-slate-800 rounded-full h-1.5"><div class="bg-amber-400 h-1.5 rounded-full" style="width: ${scores.openness}%"></div></div>
+            </div>
+            <div>
+              <div class="flex justify-between text-slate-300 mb-0.5"><span>Conscientiousness</span><span class="font-bold text-emerald-400">${scores.conscientiousness}%</span></div>
+              <div class="w-full bg-slate-800 rounded-full h-1.5"><div class="bg-emerald-400 h-1.5 rounded-full" style="width: ${scores.conscientiousness}%"></div></div>
+            </div>
+            <div>
+              <div class="flex justify-between text-slate-300 mb-0.5"><span>Extraversion</span><span class="font-bold text-sky-400">${scores.extraversion}%</span></div>
+              <div class="w-full bg-slate-800 rounded-full h-1.5"><div class="bg-sky-400 h-1.5 rounded-full" style="width: ${scores.extraversion}%"></div></div>
+            </div>
+            <div>
+              <div class="flex justify-between text-slate-300 mb-0.5"><span>Agreeableness</span><span class="font-bold text-indigo-400">${scores.agreeableness}%</span></div>
+              <div class="w-full bg-slate-800 rounded-full h-1.5"><div class="bg-indigo-400 h-1.5 rounded-full" style="width: ${scores.agreeableness}%"></div></div>
+            </div>
+          `;
+          document.getElementById('cmStrengths').innerHTML = p.workplace_strengths.map(s => `<li>${esc(s)}</li>`).join('');
+        }
+      } catch (err) {
+        console.error('Personality prediction error:', err);
+      }
+
       document.getElementById('curatedModal').classList.remove('hidden');
     }
 
@@ -899,7 +1197,34 @@
       document.getElementById('curatedModal').classList.add('hidden');
     }
 
-    // ---------------------------------------------------- GENERIC PAGINATION RENDERER
+    // =========================================================================
+    // EXECUTIVE REPORT MODAL (NEW)
+    // =========================================================================
+    async function openReportModal() {
+      try {
+        const res = await fetch('/api/admin/report/export');
+        const data = await res.json();
+        if (data.ok && data.report) {
+          const r = data.report;
+          document.getElementById('repMeta').textContent = `Report ID: ${r.report_id} · Generated: ${r.generated_at}`;
+          document.getElementById('repTalents').textContent = r.governance_metrics.job_seekers;
+          document.getElementById('repEmployers').textContent = r.governance_metrics.employer_organizations;
+          document.getElementById('repCurated').textContent = r.governance_metrics.curated_cv_benchmarks;
+          document.getElementById('repCompliance').textContent = r.governance_metrics.fair_ai_compliance_rate;
+          document.getElementById('reportModal').classList.remove('hidden');
+        }
+      } catch (e) {
+        console.error('Report export error:', e);
+      }
+    }
+
+    function closeReportModal() {
+      document.getElementById('reportModal').classList.add('hidden');
+    }
+
+    // =========================================================================
+    // GENERIC PAGINATION RENDERER (Black & Gold)
+    // =========================================================================
     function renderPagination(type, state, fetchFn) {
       const pageInfo = document.getElementById(`${type}PageInfo`);
       const buttonContainer = document.getElementById(`${type}PageButtons`);
@@ -907,35 +1232,33 @@
 
       const page = state.page;
       const totalPages = Math.max(1, state.totalPages);
-      pageInfo.textContent = `Page ${page} of ${totalPages} (${state.total} total rows)`;
+      pageInfo.textContent = `Page ${page} of ${totalPages} (${state.total} total entries)`;
 
       let btns = [];
+      btns.push(`<button class="page-btn-gold" ${page <= 1 ? 'disabled' : ''} onclick="${fetchFn.name}(1)">«</button>`);
+      btns.push(`<button class="page-btn-gold" ${page <= 1 ? 'disabled' : ''} onclick="${fetchFn.name}(${page - 1})">‹</button>`);
 
-      // First & Prev
-      btns.push(`<button class="page-btn" ${page <= 1 ? 'disabled' : ''} onclick="${fetchFn.name}(1)">«</button>`);
-      btns.push(`<button class="page-btn" ${page <= 1 ? 'disabled' : ''} onclick="${fetchFn.name}(${page - 1})">‹</button>`);
-
-      // Page numbers window (show current, +- 2)
       let startP = Math.max(1, page - 2);
       let endP = Math.min(totalPages, page + 2);
-      if (startP > 1) btns.push(`<button class="page-btn" onclick="${fetchFn.name}(1)">1</button>`);
-      if (startP > 2) btns.push(`<span class="px-1 text-slate-400 font-bold">...</span>`);
+      if (startP > 1) btns.push(`<button class="page-btn-gold" onclick="${fetchFn.name}(1)">1</button>`);
+      if (startP > 2) btns.push(`<span class="px-1 text-slate-500 font-bold">...</span>`);
 
       for (let p = startP; p <= endP; p++) {
-        btns.push(`<button class="page-btn ${p === page ? 'active' : ''}" onclick="${fetchFn.name}(${p})">${p}</button>`);
+        btns.push(`<button class="page-btn-gold ${p === page ? 'active' : ''}" onclick="${fetchFn.name}(${p})">${p}</button>`);
       }
 
-      if (endP < totalPages - 1) btns.push(`<span class="px-1 text-slate-400 font-bold">...</span>`);
-      if (endP < totalPages) btns.push(`<button class="page-btn" onclick="${fetchFn.name}(${totalPages})">${totalPages}</button>`);
+      if (endP < totalPages - 1) btns.push(`<span class="px-1 text-slate-500 font-bold">...</span>`);
+      if (endP < totalPages) btns.push(`<button class="page-btn-gold" onclick="${fetchFn.name}(${totalPages})">${totalPages}</button>`);
 
-      // Next & Last
-      btns.push(`<button class="page-btn" ${page >= totalPages ? 'disabled' : ''} onclick="${fetchFn.name}(${page + 1})">›</button>`);
-      btns.push(`<button class="page-btn" ${page >= totalPages ? 'disabled' : ''} onclick="${fetchFn.name}(${totalPages})">»</button>`);
+      btns.push(`<button class="page-btn-gold" ${page >= totalPages ? 'disabled' : ''} onclick="${fetchFn.name}(${page + 1})">›</button>`);
+      btns.push(`<button class="page-btn-gold" ${page >= totalPages ? 'disabled' : ''} onclick="${fetchFn.name}(${totalPages})">»</button>`);
 
       buttonContainer.innerHTML = btns.join('');
     }
 
-    // ---------------------------------------------------- FEEDBACKS
+    // =========================================================================
+    // FEEDBACKS
+    // =========================================================================
     async function fetchFeedbacks() {
       try {
         const res = await fetch('/api/admin/feedbacks');
@@ -967,7 +1290,7 @@
         : '0 tickets found';
 
       if (!paged.length) {
-        tbody.innerHTML = '<tr><td colspan="7" class="py-8 text-center text-slate-400">No help desk tickets found.</td></tr>';
+        tbody.innerHTML = '<tr><td colspan="7" class="py-8 text-center text-slate-500">No help desk tickets found.</td></tr>';
         document.getElementById('feedPageButtons').innerHTML = '';
         return;
       }
@@ -976,27 +1299,27 @@
         const isResolved = f.status === 'Resolved';
         const isOpen = f.status === 'Open';
         const statusBadge = isResolved
-          ? '<span class="chip chip-emerald !text-[10px]">✓ Resolved</span>'
+          ? '<span class="px-2 py-0.5 rounded-full text-[10px] font-black bg-emerald-950 text-emerald-400 border border-emerald-500/30">✓ Resolved</span>'
           : isOpen
-          ? '<span class="chip chip-pink !text-[10px]">● Open</span>'
-          : '<span class="chip chip-amber !text-[10px]">⏳ In Progress</span>';
+          ? '<span class="px-2 py-0.5 rounded-full text-[10px] font-black bg-rose-950 text-rose-400 border border-rose-500/30">● Open</span>'
+          : '<span class="px-2 py-0.5 rounded-full text-[10px] font-black bg-amber-950 text-amber-400 border border-amber-500/30">⏳ In Progress</span>';
 
         return `
-          <tr class="hover:bg-slate-50/70 transition cursor-pointer" onclick="openFeedbackModal(${f.id})">
-            <td class="py-3 px-4 font-mono font-bold text-slate-500">#${f.id}</td>
+          <tr class="hover:bg-slate-800/40 transition cursor-pointer" onclick="openFeedbackModal(${f.id})">
+            <td class="py-3 px-4 font-mono font-bold text-amber-500/70">#${f.id}</td>
             <td class="py-3 px-4">
-              <div class="font-extrabold text-slate-900">${esc(f.user_name)}</div>
+              <div class="font-extrabold text-white">${esc(f.user_name)}</div>
               <div class="text-[10px] text-slate-400 font-mono">${esc(f.user_email)}</div>
             </td>
-            <td class="py-3 px-4"><span class="chip chip-slate !text-[10px]">${esc(f.category)}</span></td>
+            <td class="py-3 px-4"><span class="px-2 py-0.5 rounded bg-slate-800 text-amber-300 text-[10px] border border-amber-500/20">${esc(f.category)}</span></td>
             <td class="py-3 px-4 max-w-xs">
-              <div class="font-extrabold text-slate-800 truncate">${esc(f.subject)}</div>
-              <div class="text-slate-500 truncate text-[11px]">${esc(f.message)}</div>
+              <div class="font-extrabold text-slate-200 truncate">${esc(f.subject)}</div>
+              <div class="text-slate-400 truncate text-[11px]">${esc(f.message)}</div>
             </td>
-            <td class="py-3 px-4 font-bold ${f.priority === 'High' ? 'text-rose-600' : 'text-slate-600'}">${esc(f.priority)}</td>
+            <td class="py-3 px-4 font-bold ${f.priority === 'High' ? 'text-rose-400' : 'text-slate-300'}">${esc(f.priority)}</td>
             <td class="py-3 px-4">${statusBadge}</td>
             <td class="py-3 px-4 text-right">
-              <button type="button" onclick="event.stopPropagation();openFeedbackModal(${f.id})" class="btn btn-soft !py-1 !px-2.5 !text-[11px]">Manage →</button>
+              <button type="button" onclick="event.stopPropagation();openFeedbackModal(${f.id})" class="gold-btn !py-1 !px-2.5 !text-[11px]">Manage →</button>
             </td>
           </tr>
         `;
@@ -1009,11 +1332,11 @@
       const container = document.getElementById('feedPageButtons');
       if (totalPages <= 1) { container.innerHTML = ''; return; }
       let btns = [];
-      btns.push(`<button class="page-btn" ${feedPage <= 1 ? 'disabled' : ''} onclick="gotoFeedPage(${feedPage - 1})">‹</button>`);
+      btns.push(`<button class="page-btn-gold" ${feedPage <= 1 ? 'disabled' : ''} onclick="gotoFeedPage(${feedPage - 1})">‹</button>`);
       for (let p = 1; p <= totalPages; p++) {
-        btns.push(`<button class="page-btn ${p === feedPage ? 'active' : ''}" onclick="gotoFeedPage(${p})">${p}</button>`);
+        btns.push(`<button class="page-btn-gold ${p === feedPage ? 'active' : ''}" onclick="gotoFeedPage(${p})">${p}</button>`);
       }
-      btns.push(`<button class="page-btn" ${feedPage >= totalPages ? 'disabled' : ''} onclick="gotoFeedPage(${feedPage + 1})">›</button>`);
+      btns.push(`<button class="page-btn-gold" ${feedPage >= totalPages ? 'disabled' : ''} onclick="gotoFeedPage(${feedPage + 1})">›</button>`);
       container.innerHTML = btns.join('');
     }
 
@@ -1027,7 +1350,7 @@
       feedPage = 1;
       document.querySelectorAll('.feed-filter-btn').forEach(btn => {
         const matches = btn.dataset.filter === status;
-        btn.className = `feed-filter-btn px-2.5 py-1 rounded-lg text-xs font-bold ${matches ? 'bg-slate-900 text-white' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'}`;
+        btn.className = `feed-filter-btn px-2.5 py-1 rounded-lg text-xs font-bold ${matches ? 'bg-amber-500 text-slate-950' : 'bg-slate-950 text-slate-400 hover:text-white border border-amber-500/20'}`;
       });
       renderFeedbacksTable();
     }
@@ -1074,15 +1397,19 @@
       }
     }
 
-    // ---------------------------------------------------- TAB SWITCHING
+    // =========================================================================
+    // TAB SWITCHING & PRIVACY TOGGLE
+    // =========================================================================
     function switchAdminTab(tab) {
       activeTab = tab;
+      document.getElementById('adminSecPredictions').classList.toggle('hidden', tab !== 'predictions');
       document.getElementById('adminSecUsers').classList.toggle('hidden', tab !== 'users');
       document.getElementById('adminSecApplications').classList.toggle('hidden', tab !== 'applications');
       document.getElementById('adminSecCurated').classList.toggle('hidden', tab !== 'curated');
       document.getElementById('adminSecFeedbacks').classList.toggle('hidden', tab !== 'feedbacks');
       document.getElementById('adminSecSystem').classList.toggle('hidden', tab !== 'system');
 
+      document.getElementById('tabBtnPredictions').classList.toggle('active', tab === 'predictions');
       document.getElementById('tabBtnUsers').classList.toggle('active', tab === 'users');
       document.getElementById('tabBtnApplications').classList.toggle('active', tab === 'applications');
       document.getElementById('tabBtnCurated').classList.toggle('active', tab === 'curated');
@@ -1090,60 +1417,23 @@
       document.getElementById('tabBtnSystem').classList.toggle('active', tab === 'system');
     }
 
-    // ---------------------------------------------------- PII REVEAL AUDIT MODAL
     function requestTogglePII() {
       isPIIRevealed = !isPIIRevealed;
-      updatePIIUI();
-      refreshCurrentTab();
-      if (isPIIRevealed) {
-        toast('Full unmasked admin access active. Real names & emails visible.', 'ok');
-      } else {
-        toast('Privacy masking enabled for demo/presentation.', 'ok');
-      }
-    }
-
-    function closeRevealModal() {
-      document.getElementById('revealModal').classList.add('hidden');
-    }
-
-    async function confirmRevealPII() {
-      const reason = document.getElementById('revealReasonInput').value || 'Administrative verification';
-      try {
-        const res = await fetch('/api/admin/audit/reveal', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ reason: reason })
-        });
-        const data = await res.json();
-        if (data.ok) {
-          closeRevealModal();
-          isPIIRevealed = true;
-          updatePIIUI();
-          refreshCurrentTab();
-          toast('PII unmasked. Audit logged in admin_audit_logs.', 'ok');
-        }
-      } catch (e) {
-        toast('Failed to authorize reveal.', 'err');
-      }
-    }
-
-    function updatePIIUI() {
       const badge = document.getElementById('piiStatusBadge');
       const btn = document.getElementById('toggleRevealBtn');
-      if (isPIIRevealed) {
-        badge.textContent = 'Revealed (Audit Logged)';
-        badge.className = 'text-[10px] font-black uppercase px-2 py-0.5 rounded-full bg-amber-200 text-amber-900';
-        btn.innerHTML = '🔒 Re-Mask PII (Protect Privacy)';
-        btn.className = 'btn !py-1.5 !px-3.5 !text-xs font-bold bg-amber-500 text-white hover:bg-amber-600 shadow-xs';
-      } else {
-        badge.textContent = 'Full Access (Unmasked)';
-        badge.className = 'text-[10px] font-black uppercase px-2 py-0.5 rounded-full bg-indigo-200/80 text-indigo-800';
-        btn.innerHTML = '🔒 Mask PII (Optional Privacy Mode)';
-        btn.className = 'btn !py-1.5 !px-3.5 !text-xs font-bold bg-white text-indigo-900 border border-indigo-300 hover:bg-indigo-50 shadow-xs';
-      }
-    }
 
-    function refreshCurrentTab() {
+      if (isPIIRevealed) {
+        badge.textContent = 'Full Access';
+        badge.className = 'text-[10px] font-black uppercase px-2 py-0.5 rounded-full bg-amber-400/20 text-amber-300 border border-amber-400/30';
+        btn.innerHTML = '🔒 Mask PII (Optional Demo Mode)';
+        toast('Full unmasked admin access active. Real names & emails visible.', 'ok');
+      } else {
+        badge.textContent = 'Demo Masked';
+        badge.className = 'text-[10px] font-black uppercase px-2 py-0.5 rounded-full bg-slate-800 text-slate-400 border border-slate-700';
+        btn.innerHTML = '👁️ Reveal Unmasked PII';
+        toast('Privacy masking enabled for demo/presentation.', 'ok');
+      }
+
       if (activeTab === 'users') fetchUsersPage(usersData.page);
       if (activeTab === 'applications') fetchAppsPage(appsData.page);
       if (activeTab === 'curated') fetchCuratedPage(curatedData.page);

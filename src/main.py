@@ -22,6 +22,12 @@ from pathlib import Path
 _SRC_DIR = Path(__file__).resolve().parent
 if str(_SRC_DIR) not in sys.path:
     sys.path.insert(0, str(_SRC_DIR))
+try:
+    from dotenv import load_dotenv
+    load_dotenv()
+except Exception:
+    pass
+
 from flask import Flask, jsonify, redirect, render_template, request, send_file, session
 
 import career_pathways
@@ -38,6 +44,7 @@ import verification_ai
 from ai_matcher import load_json, match_user_to_roles
 import auth_db
 import cv_dataset_manager
+import predictions_engine
 from auth_db import (authenticate_user, get_user_by_uid, init_db, register_user, update_user_password, update_user_profile)
 from trend_signals import get_trend_radar
 from utils import format_greeting
@@ -324,6 +331,33 @@ def api_admin_audit_reveal():
 
     auth_db.log_admin_audit(admin_uid, "REVEAL_SENSITIVE_PII", target_uid=target_uid, details=reason, ip_address=ip_addr)
     return jsonify({"ok": True, "message": "Sensitive data reveal audit logged.", "audit_logged": True})
+
+
+@app.route("/api/admin/predictions/workforce-2030", methods=["GET"])
+@api_role("admin")
+def api_admin_predictions_workforce():
+    year = request.args.get("year", default=2030, type=int)
+    pace = request.args.get("pace", default=1.0, type=float)
+    data = predictions_engine.forecast_workforce_demand_2030(target_year=year, pace_multiplier=pace)
+    return jsonify({"ok": True, "forecast": data})
+
+
+@app.route("/api/admin/predictions/personality", methods=["POST"])
+@api_role("admin")
+def api_admin_predictions_personality():
+    data = json_object()
+    cv_text = data.get("cv_text", "")
+    name = data.get("candidate_name", "Candidate")
+    result = predictions_engine.predict_cv_personality(cv_text, candidate_name=name)
+    return jsonify({"ok": True, "personality": result})
+
+
+@app.route("/api/admin/report/export", methods=["GET"])
+@api_role("admin")
+def api_admin_report_export():
+    stats = auth_db.get_admin_stats()
+    report = predictions_engine.generate_executive_report(stats)
+    return jsonify({"ok": True, "report": report})
 
 
 @app.route("/api/auth/me", methods=["GET"])

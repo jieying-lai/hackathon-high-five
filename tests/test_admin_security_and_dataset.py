@@ -101,6 +101,35 @@ class TestAdminSecurityAndDataset(unittest.TestCase):
         self.assertTrue(data["ok"])
         self.assertTrue(data["audit_logged"])
 
+    def test_future_workforce_predictions_and_personality(self):
+        # 1. 2030 predictions
+        w_res = self.client.get("/api/admin/predictions/workforce-2030?year=2030&pace=1.5")
+        self.assertEqual(w_res.status_code, 200)
+        w_data = w_res.get_json()
+        self.assertTrue(w_data["ok"])
+        self.assertEqual(w_data["forecast"]["target_year"], 2030)
+        self.assertGreater(len(w_data["forecast"]["projections"]), 3)
+
+        # 2. Personality prediction from CV text
+        p_res = self.client.post(
+            "/api/admin/predictions/personality",
+            json={"cv_text": "Experienced Python researcher with PyTorch, LoRA, and innovative system architecture.", "candidate_name": "Test Candidate"},
+            headers={"X-CSRF-Token": self.get_csrf()}
+        )
+        self.assertEqual(p_res.status_code, 200)
+        p_data = p_res.get_json()
+        self.assertTrue(p_data["ok"])
+        self.assertIn("ocean_scores", p_data["personality"])
+        self.assertGreaterEqual(p_data["personality"]["ocean_scores"]["openness"], 70)
+
+        # 3. Executive governance report export
+        r_res = self.client.get("/api/admin/report/export")
+        self.assertEqual(r_res.status_code, 200)
+        r_data = r_res.get_json()
+        self.assertTrue(r_data["ok"])
+        self.assertIn("report_id", r_data["report"])
+        self.assertEqual(r_data["report"]["governance_metrics"]["fair_ai_compliance_rate"], "100.0%")
+
 
 if __name__ == "__main__":
     unittest.main()
