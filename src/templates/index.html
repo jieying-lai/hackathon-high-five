@@ -153,24 +153,109 @@
       <div class="feature-explorer"><div id="feature-steps"></div><aside id="feature-preview" class="glass feature-preview" aria-live="polite"></aside></div>
     </section>
 
-    <section id="home-portals" class="scroll-mt-24 pt-6 pb-12 space-y-6">
-      <div class="text-center max-w-xl mx-auto space-y-2">
+    <section id="home-portals" class="scroll-mt-24 pt-8 pb-16 space-y-8">
+      <div class="text-center max-w-2xl mx-auto space-y-2.5">
         <span class="chip chip-indigo !text-xs font-bold">✨ Two Dedicated Portals</span>
-        <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900">Choose your gateway</h2>
-        <p class="text-xs sm:text-sm text-slate-500">Whether you are developing your career or building your workforce, CareerLens has a purpose-built workspace for you.</p>
+        <h2 class="text-2xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">Choose your gateway</h2>
+        <p class="text-xs sm:text-base text-slate-600">Whether you are developing your career or building your workforce, CareerLens has a purpose-built workspace engineered for you.</p>
       </div>
-      <div class="grid md:grid-cols-2 gap-6">
-      <div class="tint tint-indigo rounded-3xl p-7 lift space-y-4">
-        <div class="flex items-center gap-3"><div class="h-12 w-12 rounded-2xl bg-gradient-to-br from-indigo-500 to-pink-500 grid place-items-center text-xl text-white">👤</div>
-          <div><div class="text-[11px] font-extrabold uppercase tracking-wider text-indigo-600">For individuals</div><h3 class="text-lg font-extrabold">Talent Portal</h3></div></div>
-        <div class="flex flex-wrap gap-2"><span class="chip chip-indigo">Skills profile</span><span class="chip chip-pink">AI trend radar</span><span class="chip chip-teal">Role matching</span><span class="chip chip-amber">Reskilling plan</span><span class="chip chip-emerald">SDG passport</span></div>
-        <button onclick="openAuth('register','job_seeker')" class="btn btn-primary">Join as Talent →</button>
-      </div>
-      <div class="tint tint-teal rounded-3xl p-7 lift space-y-4">
-        <div class="flex items-center gap-3"><div class="h-12 w-12 rounded-2xl bg-gradient-to-br from-teal-500 to-sky-500 grid place-items-center text-xl text-white">🏢</div>
-          <div><div class="text-[11px] font-extrabold uppercase tracking-wider text-teal-700">For HR & companies</div><h3 class="text-lg font-extrabold">Employer Portal</h3></div></div>
-        <div class="flex flex-wrap gap-2"><span class="chip chip-teal">Job vacancies</span><span class="chip chip-indigo">Fair candidate screening</span><span class="chip chip-amber">Skills-gap heatmap</span><span class="chip chip-emerald">Reskilling plans</span></div>
-        <button onclick="openAuth('register','hr_company')" class="btn btn-hr">Join as Employer →</button>
+
+      <div class="grid md:grid-cols-2 gap-8 max-w-6xl mx-auto">
+        <!-- Talent Portal Card (Enriched) -->
+        <div class="tint tint-indigo rounded-[2rem] p-7 sm:p-9 lift space-y-6 flex flex-col justify-between border border-indigo-100 shadow-md">
+          <div class="space-y-5">
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-3.5">
+                <div class="h-14 w-14 rounded-2xl bg-gradient-to-br from-indigo-500 to-pink-500 grid place-items-center text-2xl text-white shadow-sm">👤</div>
+                <div>
+                  <div class="text-xs font-black uppercase tracking-wider text-indigo-600">For Individuals &amp; Job Seekers</div>
+                  <h3 class="text-xl sm:text-2xl font-black text-slate-900">Talent Portal</h3>
+                </div>
+              </div>
+              <span class="chip chip-emerald !text-[11px] font-bold">✓ Free for Talent</span>
+            </div>
+
+            <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
+              Empower your career transition with ethical AI. Bridge skills gaps, understand automation risk, and build your certified green &amp; digital workforce passport.
+            </p>
+
+            <div class="grid sm:grid-cols-2 gap-3 text-xs">
+              <div class="bg-white/90 rounded-2xl p-3 border border-indigo-50 shadow-2xs space-y-1">
+                <div class="font-extrabold text-indigo-950 flex items-center gap-1.5"><span>📄</span> Private CV Vault</div>
+                <div class="text-[11px] text-slate-500">Fast local PDF extraction; zero PII leakage with owner-controlled consent.</div>
+              </div>
+              <div class="bg-white/90 rounded-2xl p-3 border border-indigo-50 shadow-2xs space-y-1">
+                <div class="font-extrabold text-indigo-950 flex items-center gap-1.5"><span>📡</span> AI Disruption Radar</div>
+                <div class="text-[11px] text-slate-500">Real-time analysis of what AI automates vs your human advantage in Malaysia.</div>
+              </div>
+              <div class="bg-white/90 rounded-2xl p-3 border border-indigo-50 shadow-2xs space-y-1">
+                <div class="font-extrabold text-indigo-950 flex items-center gap-1.5"><span>🎯</span> 69k+ Role Matches</div>
+                <div class="text-[11px] text-slate-500">Live Malaysian job indexing with proximity search and map exploration.</div>
+              </div>
+              <div class="bg-white/90 rounded-2xl p-3 border border-indigo-50 shadow-2xs space-y-1">
+                <div class="font-extrabold text-indigo-950 flex items-center gap-1.5"><span>🌱</span> SDG 8 Passport</div>
+                <div class="text-[11px] text-slate-500">Verifiable micro-courses aligned with UN Sustainable Development Goals.</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="pt-4 border-t border-indigo-100 flex flex-wrap items-center justify-between gap-3">
+            <button onclick="openAuth('register','job_seeker')" class="btn btn-primary !py-3 !px-6 !text-xs font-black shadow-md">
+              Launch Talent Portal →
+            </button>
+            <button onclick="quickLogin('job_seeker')" class="text-xs font-bold text-indigo-600 hover:text-indigo-800 transition">
+              ⚡ Try Demo: Aisha Rahman
+            </button>
+          </div>
+        </div>
+
+        <!-- Employer Portal Card (Enriched) -->
+        <div class="tint tint-teal rounded-[2rem] p-7 sm:p-9 lift space-y-6 flex flex-col justify-between border border-teal-100 shadow-md">
+          <div class="space-y-5">
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-3.5">
+                <div class="h-14 w-14 rounded-2xl bg-gradient-to-br from-teal-500 to-sky-500 grid place-items-center text-2xl text-white shadow-sm">🏢</div>
+                <div>
+                  <div class="text-xs font-black uppercase tracking-wider text-teal-700">For HR, Leaders &amp; Companies</div>
+                  <h3 class="text-xl sm:text-2xl font-black text-slate-900">Employer Portal</h3>
+                </div>
+              </div>
+              <span class="chip chip-teal !text-[11px] font-bold">🛡️ Zero Bias AI</span>
+            </div>
+
+            <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
+              Screen candidates with complete fairness, plan team reskilling, and schedule interviews seamlessly while staying 100% compliant with Malaysia PDPA 2010.
+            </p>
+
+            <div class="grid sm:grid-cols-2 gap-3 text-xs">
+              <div class="bg-white/90 rounded-2xl p-3 border border-teal-50 shadow-2xs space-y-1">
+                <div class="font-extrabold text-teal-950 flex items-center gap-1.5"><span>⚖️</span> Fair Screening Pipeline</div>
+                <div class="text-[11px] text-slate-500">Strictly evaluates verifiable competency without scoring age or ethnicity.</div>
+              </div>
+              <div class="bg-white/90 rounded-2xl p-3 border border-teal-50 shadow-2xs space-y-1">
+                <div class="font-extrabold text-teal-950 flex items-center gap-1.5"><span>🔥</span> Live Skills Heatmap</div>
+                <div class="text-[11px] text-slate-500">Benchmark applicant capabilities against team requirements and roles.</div>
+              </div>
+              <div class="bg-white/90 rounded-2xl p-3 border border-teal-50 shadow-2xs space-y-1">
+                <div class="font-extrabold text-teal-950 flex items-center gap-1.5"><span>📅</span> Direct Interview Dispatch</div>
+                <div class="text-[11px] text-slate-500">Send online video or in-person invitations directly into candidate dashboards.</div>
+              </div>
+              <div class="bg-white/90 rounded-2xl p-3 border border-teal-50 shadow-2xs space-y-1">
+                <div class="font-extrabold text-teal-950 flex items-center gap-1.5"><span>📈</span> AI Strategic Analytics</div>
+                <div class="text-[11px] text-slate-500">Data-driven expansion recommendations and custom printable reports.</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="pt-4 border-t border-teal-100 flex flex-wrap items-center justify-between gap-3">
+            <button onclick="openAuth('register','hr_company')" class="btn btn-hr !py-3 !px-6 !text-xs font-black shadow-md">
+              Launch Employer Workspace →
+            </button>
+            <button onclick="quickLogin('hr_company')" class="text-xs font-bold text-teal-700 hover:text-teal-900 transition">
+              ⚡ Try Demo: Nexus Digital Sdn Bhd
+            </button>
+          </div>
+        </div>
       </div>
     </section>
   </main>
@@ -329,7 +414,8 @@
           <input id="regConsent" type="checkbox" class="mt-0.5 h-4 w-4" />
           <span>I agree to the <button type="button" onclick="event.preventDefault();toggleTerms(true)" class="font-bold text-indigo-600 underline">Privacy, PDPA & Fair-AI terms</button>.</span>
         </label>
-        <button onclick="submitRegistration()" class="btn btn-primary w-full py-3 text-sm">Create Account</button>
+        <button onclick="submitRegistration()" class="btn btn-primary w-full py-3 text-sm">Create Account</button>
+
         <div id="regAlertBox" class="hidden mt-3 rounded-2xl p-3.5 text-xs font-bold border bg-rose-50 text-rose-700 border-rose-200 text-center"></div>
       </div>
     </div>
@@ -426,19 +512,32 @@
         window.PagePosition?.complete();
       }
     }
-    function showAlert(msg) {
-      const isReg = !document.getElementById('registerPane').classList.contains('hidden');
-      const targetId = isReg ? 'regAlertBox' : 'alertBox';
-      const b = document.getElementById(targetId) || document.getElementById('alertBox');
-      b.textContent = msg;
-      b.classList.remove('hidden');
-      if (isReg) b.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-    }
-    function hideAlerts() {
-      const b1 = document.getElementById('alertBox');
-      const b2 = document.getElementById('regAlertBox');
-      if (b1) { b1.classList.add('hidden'); b1.textContent = ''; }
-      if (b2) { b2.classList.add('hidden'); b2.textContent = ''; }
+    function showAlert(msg) {
+
+      const isReg = !document.getElementById('registerPane').classList.contains('hidden');
+
+      const targetId = isReg ? 'regAlertBox' : 'alertBox';
+
+      const b = document.getElementById(targetId) || document.getElementById('alertBox');
+
+      b.textContent = msg;
+
+      b.classList.remove('hidden');
+
+      if (isReg) b.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+
+    }
+
+    function hideAlerts() {
+
+      const b1 = document.getElementById('alertBox');
+
+      const b2 = document.getElementById('regAlertBox');
+
+      if (b1) { b1.classList.add('hidden'); b1.textContent = ''; }
+
+      if (b2) { b2.classList.add('hidden'); b2.textContent = ''; }
+
     }
     function toggleTerms(show) { document.getElementById('termsModal').classList.toggle('hidden', !show); }
     function openSso(p) { document.getElementById('ssoTitle').textContent = `Continue with ${p}`; document.getElementById('ssoModal').classList.remove('hidden'); }
@@ -661,13 +760,20 @@
         alert('Failed to reset password.');
       }
     }
-    ['registerPane', 'loginPane'].forEach(id => {
-      const el = document.getElementById(id);
-      if (el) {
-        el.addEventListener('input', hideAlerts);
-        el.addEventListener('focusin', hideAlerts);
-      }
-    });
+    ['registerPane', 'loginPane'].forEach(id => {
+
+      const el = document.getElementById(id);
+
+      if (el) {
+
+        el.addEventListener('input', hideAlerts);
+
+        el.addEventListener('focusin', hideAlerts);
+
+      }
+
+    });
+
     if (window.PagePosition) {
       window.PagePosition.initialize({identity:'guest',portal:'landing',
         getView:()=>document.getElementById('auth').classList.contains('hidden')?'landing':document.getElementById('loginPane').classList.contains('hidden')?'register':'login',
