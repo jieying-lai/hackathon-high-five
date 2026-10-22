@@ -51,7 +51,7 @@
 
   <!-- Top Admin Navigation Bar -->
   <header class="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-slate-200/80 px-4 sm:px-8 py-3.5 flex flex-wrap items-center justify-between gap-4 shadow-xs">
-    <div class="flex items-center gap-3">
+    <div class="flex flex-wrap items-center gap-3">
       <img src="/static/brand/careerlens_logo_icon.svg" class="h-9 w-9 rounded-xl shadow-xs" alt="CareerLens AI" />
       <div>
         <div class="flex items-center gap-2">
@@ -63,11 +63,12 @@
     </div>
 
     <!-- System Status & Admin Profile -->
-    <div class="flex items-center gap-3">
+    <div class="flex flex-wrap items-center gap-3">
       <div class="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs font-bold">
         <span class="h-2 w-2 rounded-full bg-emerald-500 animate-pulse"></span>
         <span>RunPod &amp; Cloudflare Tunnel Active</span>
       </div>
+      <div data-language-slot="admin"></div>
       <div class="flex items-center gap-2 p-1.5 rounded-2xl bg-slate-100 border border-slate-200">
         <div class="h-8 w-8 rounded-xl bg-slate-900 text-amber-300 font-extrabold text-sm grid place-items-center">🛡️</div>
         <div class="pr-2 text-left">
@@ -76,7 +77,7 @@
         </div>
       </div>
       <button onclick="adminSignOut()" class="btn btn-soft !py-2 !px-3.5 !text-xs font-bold text-red-600 hover:bg-red-50 hover:border-red-200">
-        Sign Out 🚪
+        <span>Sign Out</span> <span aria-hidden="true">🚪</span>
       </button>
     </div>
   </header>
@@ -122,7 +123,7 @@
     <div class="flex flex-wrap items-center justify-between gap-3 border-b border-slate-200 pb-3">
       <div class="flex flex-wrap items-center gap-2">
         <button type="button" onclick="switchAdminTab('feedbacks')" id="tabBtnFeedbacks" class="tab-btn active">
-          💬 Help Desk &amp; Feedback Tickets (<span id="tabCountFeedbacks">0</span>)
+          <span>💬 Help Desk &amp; Feedback Tickets</span> (<span id="tabCountFeedbacks" data-no-translate>0</span>)
         </button>
         <button type="button" onclick="switchAdminTab('users')" id="tabBtnUsers" class="tab-btn">
           👥 Registered Accounts &amp; Users
@@ -216,9 +217,9 @@
             <span class="chip chip-emerald !text-[10px]">Online</span>
           </div>
           <div class="text-xs text-slate-600 space-y-1.5">
-            <div><b>Model Architecture:</b> Qwen2.5-7B-Instruct (Unsloth QLoRA)</div>
-            <div><b>Target Hardware:</b> RunPod NVIDIA RTX 4000 Ada (20GB VRAM)</div>
-            <div><b>Port:</b> 8001 (Endpoint: <code class="bg-slate-100 px-1 py-0.5 rounded text-[11px]">/chat</code>)</div>
+            <div><b>Model Architecture:</b> <span data-no-translate>Qwen2.5-7B-Instruct (Unsloth QLoRA)</span></div>
+            <div><b>Target Hardware:</b> <span data-no-translate>RunPod NVIDIA RTX 4000 Ada (20GB VRAM)</span></div>
+            <div><b>Port:</b> 8001 (<span>Endpoint:</span> <code data-no-translate class="bg-slate-100 px-1 py-0.5 rounded text-[11px]">/chat</code>)</div>
             <div><b>Training Pipeline:</b> SDC Hackathon Domain 1 Custom Dataset (2,400+ career QA pairs)</div>
           </div>
         </div>
@@ -232,7 +233,7 @@
             <div><b>Engine:</b> PyMuPDF Local Extractor + Rule-based Confidence Scoring</div>
             <div><b>Jobstreet Search Index:</b> 69,345 pre-indexed Malaysian postings</div>
             <div><b>Geospatial Engine:</b> Esri ArcGIS World Street Maps (Zero API Block, High Precision)</div>
-            <div><b>Public Exposure:</b> Cloudflare Tunnel via <code class="bg-slate-100 px-1 py-0.5 rounded text-[11px]">start_demo.sh</code></div>
+            <div><b>Public Exposure:</b> <span>Cloudflare Tunnel via</span> <code data-no-translate class="bg-slate-100 px-1 py-0.5 rounded text-[11px]">start_demo.sh</code></div>
           </div>
         </div>
       </div>
@@ -249,11 +250,11 @@
       </div>
       <div class="space-y-3 text-xs">
         <div>
-          <span class="font-bold text-slate-500">From:</span> <span id="fmUser" class="font-extrabold text-slate-800"></span>
+          <span class="font-bold text-slate-500">From:</span> <span id="fmUser" data-no-translate class="font-extrabold text-slate-800"></span>
         </div>
         <div class="p-3 bg-slate-50 rounded-xl border border-slate-200">
-          <div class="font-extrabold text-slate-800" id="fmSubject"></div>
-          <p class="text-slate-600 mt-1 whitespace-pre-wrap leading-relaxed" id="fmMessage"></p>
+          <div class="font-extrabold text-slate-800" id="fmSubject" data-no-translate></div>
+          <p class="text-slate-600 mt-1 whitespace-pre-wrap leading-relaxed" id="fmMessage" data-no-translate></p>
         </div>
         <div>
           <label class="block font-bold text-slate-700 mb-1">Update Status:</label>
@@ -277,6 +278,9 @@
   </div>
 
   <script src="/static/js/common.js?v=20261021-admin-v1"></script>
+  <script src="/static/js/portal-i18n.js?v=20261022-admin-languages"></script>
+  <script src="/static/js/auth-i18n.js?v=20261022-admin-languages"></script>
+  <script src="/static/js/member3.js?v=20261022-admin-languages"></script>
   <script>
     let currentFeedbacks = [];
     let currentUsers = [];
@@ -327,19 +331,21 @@
           ? '<span class="chip chip-emerald !text-[10px]">✓ Resolved</span>'
           : isOpen
           ? '<span class="chip chip-pink !text-[10px]">● Open</span>'
+          : f.status === 'Closed'
+          ? '<span class="chip chip-slate !text-[10px]">Closed</span>'
           : '<span class="chip chip-amber !text-[10px]">⏳ In Progress</span>';
 
         return `
           <tr class="hover:bg-slate-50/70 transition cursor-pointer" onclick="openFeedbackModal(${f.id})">
             <td class="py-3 px-4 font-mono font-bold text-slate-500">#${f.id}</td>
             <td class="py-3 px-4">
-              <div class="font-extrabold text-slate-900">${esc(f.user_name)}</div>
-              <div class="text-[10px] text-slate-400 font-mono">${esc(f.user_email)}</div>
+              <div data-no-translate class="font-extrabold text-slate-900">${esc(f.user_name)}</div>
+              <div data-no-translate class="text-[10px] text-slate-400 font-mono">${esc(f.user_email)}</div>
             </td>
             <td class="py-3 px-4"><span class="chip chip-slate !text-[10px]">${esc(f.category)}</span></td>
             <td class="py-3 px-4 max-w-xs">
-              <div class="font-extrabold text-slate-800 truncate">${esc(f.subject)}</div>
-              <div class="text-slate-500 truncate text-[11px]">${esc(f.message)}</div>
+              <div data-no-translate class="font-extrabold text-slate-800 truncate">${esc(f.subject)}</div>
+              <div data-no-translate class="text-slate-500 truncate text-[11px]">${esc(f.message)}</div>
             </td>
             <td class="py-3 px-4 font-bold ${f.priority === 'High' ? 'text-rose-600' : 'text-slate-600'}">${esc(f.priority)}</td>
             <td class="py-3 px-4">${statusBadge}</td>
@@ -360,17 +366,17 @@
       }
       tbody.innerHTML = list.map(u => `
         <tr class="hover:bg-slate-50/70 transition">
-          <td class="py-3 px-4 font-mono font-bold text-indigo-700">${esc(u.unique_uid)}</td>
-          <td class="py-3 px-4 font-extrabold text-slate-900">${esc(u.full_name)}</td>
-          <td class="py-3 px-4 text-slate-600 font-mono text-[11px]">${esc(u.email)}</td>
+          <td data-no-translate class="py-3 px-4 font-mono font-bold text-indigo-700">${esc(u.unique_uid)}</td>
+          <td data-no-translate class="py-3 px-4 font-extrabold text-slate-900">${esc(u.full_name)}</td>
+          <td data-no-translate class="py-3 px-4 text-slate-600 font-mono text-[11px]">${esc(u.email)}</td>
           <td class="py-3 px-4">
             <span class="chip ${u.role === 'admin' ? 'chip-pink' : u.role === 'hr_company' ? 'chip-indigo' : 'chip-emerald'} !text-[10px]">
               ${u.role === 'admin' ? '🛡️ Admin' : u.role === 'hr_company' ? '🏢 Employer' : '👤 Talent'}
             </span>
           </td>
-          <td class="py-3 px-4 text-slate-700">${esc(u.headline)}</td>
-          <td class="py-3 px-4 text-slate-500">${esc(u.company_or_institution)}</td>
-          <td class="py-3 px-4 text-slate-400 text-[11px] whitespace-nowrap">${esc(u.created_at)}</td>
+          <td data-no-translate class="py-3 px-4 text-slate-700">${esc(u.headline)}</td>
+          <td data-no-translate class="py-3 px-4 text-slate-500">${esc(u.company_or_institution)}</td>
+          <td data-no-translate class="py-3 px-4 text-slate-400 text-[11px] whitespace-nowrap">${esc(u.created_at)}</td>
         </tr>
       `).join('');
     }

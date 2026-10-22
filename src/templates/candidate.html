@@ -11,6 +11,7 @@
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <link rel="stylesheet" href="/static/css/theme.css?v=20261022-sdg-hover-explanation" />
   <link rel="stylesheet" href="/static/css/scenario-slider.css?v=20261021-continuous" />
+  <link rel="stylesheet" href="/static/css/career-characters.css?v=20261022-character-duo" />
   <style>
     .cl-map-wrap {
       position: relative;
@@ -992,9 +993,9 @@
               <div class="flex flex-wrap items-center gap-2.5">
                 <!-- 3-Map Style Switcher (Instant 1-Click switch, NO API key popup) -->
                 <div class="inline-flex items-center p-0.5 bg-slate-100 rounded-xl text-xs font-bold gap-0.5 border border-slate-200/80">
-                  <button type="button" id="btnLayerMapbox" onclick="switchMapProvider('mapbox')" class="px-2.5 py-1 rounded-lg transition font-bold text-slate-600 hover:text-slate-900" title="Mapbox HD Vector Map">🚀 Mapbox</button>
-                  <button type="button" id="btnLayerOpenMap" onclick="switchMapProvider('openmap')" class="px-2.5 py-1 rounded-lg transition font-bold text-slate-600 hover:text-slate-900" title="OpenStreetMap France CDN">🗺️ OpenMap</button>
-                  <button type="button" id="btnLayerEsri" onclick="switchMapProvider('esri')" class="px-2.5 py-1 rounded-lg transition font-bold text-slate-600 hover:text-slate-900" title="Esri World Street Map">🏙️ Esri</button>
+                  <button type="button" id="btnLayerMapbox" onclick="switchMapProvider('mapbox')" class="px-2.5 py-1 rounded-lg transition font-bold text-slate-600 hover:text-slate-900" title="Mapbox HD Vector Map" data-no-translate>🚀 Mapbox</button>
+                  <button type="button" id="btnLayerOpenMap" onclick="switchMapProvider('openmap')" class="px-2.5 py-1 rounded-lg transition font-bold text-slate-600 hover:text-slate-900" title="OpenStreetMap France CDN" data-no-translate>🗺️ OpenMap</button>
+                  <button type="button" id="btnLayerEsri" onclick="switchMapProvider('esri')" class="px-2.5 py-1 rounded-lg transition font-bold text-slate-600 hover:text-slate-900" title="Esri World Street Map" data-no-translate>🏙️ Esri</button>
                 </div>
 
                 <div class="seg">
@@ -1184,7 +1185,7 @@
             <span class="chip chip-slate">Scores are estimates</span>
           </div>
           <!-- JobGalaxy Style Career Progression & Mobility Matrix (Powered by ONET 29.0) -->
-          <div class="glass rounded-3xl p-6 space-y-5 border border-indigo-100 shadow-sm" data-no-translate>
+          <div data-outline-label="Career pathways" class="glass rounded-3xl p-6 space-y-5 border border-indigo-100 shadow-sm">
             <div class="flex flex-wrap items-center justify-between gap-3 border-b border-slate-200/80 pb-4">
               <div class="flex items-center gap-3">
                 <div class="h-11 w-11 rounded-2xl bg-indigo-600 text-white font-black text-xl grid place-items-center shadow">🗺️</div>
@@ -1227,7 +1228,7 @@
             </div>
           </div>
 
-          <div data-outline-label="Role matches" id="roleCards" class="grid lg:grid-cols-2 gap-5"></div>
+          <div data-outline-label="Role matches" id="roleCards" class="career-characters"></div>
         </section>
 
         <section id="tab-plan" class="tab hidden space-y-6">
@@ -1353,7 +1354,7 @@
             <!-- Beside Profile Picture: Upload Button, Name, ID, Joined Date on new line -->
             <div>
               <div class="flex flex-wrap items-center gap-2">
-                <h3 id="modalTopName" class="text-base font-bold text-slate-900 leading-tight">Aisha Rahman</h3>
+                <h3 id="modalTopName" data-no-translate class="text-base font-bold text-slate-900 leading-tight">Aisha Rahman</h3>
                 <button type="button" onclick="document.getElementById('accAvatarFile').click()" class="btn btn-soft !py-1 !px-2.5 !text-[11px] font-bold text-indigo-700 bg-indigo-50 border border-indigo-200 hover:bg-indigo-100 transition flex items-center gap-1 shadow-xs" title="Upload your profile picture">
                   <span>📷</span><span>Upload Photo</span>
                 </button>
@@ -2929,9 +2930,9 @@
       if (inp) inp.value = saved;
       if (stat) {
         if (saved) {
-          stat.innerHTML = `<span class="text-emerald-600 font-bold">✓ 当前已配置 Mapbox Token (${esc(saved.slice(0, 14))}...)</span>`;
+          stat.innerHTML = `<span class="text-emerald-600 font-bold">✓ Mapbox token configured (${esc(saved.slice(0, 14))}...)</span>`;
         } else {
-          stat.innerHTML = `<span class="text-slate-500">当前默认使用免配置的稳定 OpenMap。若需体验 Mapbox 高清地图，请粘贴 Token。</span>`;
+          stat.innerHTML = `<span class="text-slate-500">OpenMap is active by default without a token. Paste a Mapbox token to use the HD map.</span>`;
         }
       }
       if (modal) modal.classList.remove('hidden');
@@ -2946,7 +2947,7 @@
       const inp = document.getElementById('mapboxTokenInput');
       const val = (inp ? inp.value : '').trim();
       if (!val) {
-        toast('请输入有效的 Mapbox Token，或点击“清除 Key”使用免配置 OpenMap', 'err');
+        toast('Enter a valid Mapbox token, or select “Clear Key” to use OpenMap without setup.', 'err');
         return;
       }
       localStorage.setItem('careerlens_mapbox_token', val);
@@ -2955,7 +2956,7 @@
       updateMapProviderPills();
       if (leafletMap) applyMapTileLayer('mapbox');
       closeMapboxKeyModal();
-      toast('🎉 Mapbox 高清地图已成功启用！');
+      toast('🎉 Mapbox HD maps enabled successfully!');
     }
 
     function clearMapboxToken() {
@@ -2965,7 +2966,7 @@
       updateMapProviderPills();
       if (leafletMap) applyMapTileLayer('openmap');
       closeMapboxKeyModal();
-      toast('已切换回 100% 免配置稳定 OpenMap');
+      toast('Switched back to the setup-free OpenMap.');
     }
 
     function applyMapTileLayer(prov) {
@@ -2984,7 +2985,7 @@
           });
           currentTileLayer.on('tileerror', () => {
             console.warn('Mapbox tiles error, falling back to OpenMap.');
-            toast('Mapbox Token 加载异常，已自动为您切回稳定 OpenMap', 'err');
+            toast('Mapbox token failed to load. Switched back to the stable OpenMap automatically.', 'err');
             switchMapProvider('openmap');
           });
           currentTileLayer.addTo(leafletMap);
@@ -3521,104 +3522,94 @@
       }
     }
 
-    /* ---------- matches (SaaS Card Layout - No Math Diagram Clutter) ---------- */
+    /* ---------- character career matches ---------- */
+    const careerCharacterAssignments = new Map();
+    const careerCharacterOptions = [
+      {name:'otter',src:'/static/brand/career-otter.png',width:1278,height:1230},
+      {name:'sloth',src:'/static/brand/career-sloth.png',width:1254,height:1254}
+    ];
+    let careerCharacterPool = [];
+    function careerCharacterFor(role) {
+      const key = role.role_id || role.title;
+      if (!careerCharacterAssignments.has(key)) {
+        if (!careerCharacterPool.length) {
+          careerCharacterPool = [...careerCharacterOptions];
+          if (Math.random() < .5) careerCharacterPool.reverse();
+        }
+        careerCharacterAssignments.set(key, careerCharacterPool.pop());
+      }
+      return careerCharacterAssignments.get(key);
+    }
     function renderRoles() {
+      const callouts = (items, strength) => items.map(skill => `
+        <li class="career-skill-callout ${strength ? 'is-strength' : ''}">
+          <span class="career-skill-symbol" aria-hidden="true">${strength ? '✓' : '⚡'}</span>
+          <span>${esc(skill)}</span>
+        </li>`).join('');
       roleCards.innerHTML = roles.map((r, i) => {
+        const character = careerCharacterFor(r);
         const score = r.match_score || 0;
         const fitBadge = score >= 85
-          ? '<span class="chip chip-emerald !text-[11px] font-extrabold">★ Exceptional Fit</span>'
+          ? '<span class="chip chip-emerald">★ Exceptional Fit</span>'
           : score >= 70
-          ? '<span class="chip chip-teal !text-[11px] font-extrabold">✦ Strong Fit</span>'
-          : '<span class="chip chip-indigo !text-[11px] font-extrabold">▲ Growth Fit</span>';
-
-        const demandBadge = r.demand_outlook >= 75
-          ? '🔥 High Market Demand'
-          : '📈 Steady Demand';
-
+          ? '<span class="chip chip-teal">✦ Strong Fit</span>'
+          : '<span class="chip chip-indigo">▲ Growth Fit</span>';
+        const demandBadge = r.demand_outlook >= 75 ? '🔥 High Market Demand' : '📈 Steady Demand';
         return `
-          <article class="glass rounded-3xl p-6 flex flex-col justify-between gap-5 lift border border-indigo-100/90 shadow-sm ${i === 0 ? 'ring-2 ring-indigo-400/80 shadow-md' : ''}">
-            <div class="space-y-4">
-              <!-- Top Row: Role Header, Industry & Fit Meter -->
-              <div class="flex items-start justify-between gap-4">
-                <div class="flex items-start gap-3.5 min-w-0">
-                  <div class="h-12 w-12 rounded-2xl bg-gradient-to-br from-indigo-500 to-purple-600 text-white font-black text-xl grid place-items-center shadow-xs shrink-0">
-                    💼
+          <article class="career-character-card ${i === 0 ? 'is-top-choice' : ''}" aria-labelledby="career-character-title-${i}">
+            <div class="career-character-portrait career-character-portrait--${character.name}" aria-hidden="true">
+              <img src="${character.src}" alt="" width="${character.width}" height="${character.height}" loading="lazy" decoding="async">
+            </div>
+            <div class="career-character-content">
+              <header class="career-character-header">
+                <div class="career-character-heading">
+                  <div class="career-character-badges">
+                    ${i === 0 ? '<span class="chip career-top-choice-badge">★ Top Choice</span>' : ''}
+                    <span class="chip chip-indigo">${esc(r.industry)}</span>
+                    ${fitBadge}
                   </div>
-                  <div class="min-w-0">
-                    <div class="flex flex-wrap items-center gap-1.5 mb-1">
-                      ${i === 0 ? '<span class="chip chip-emerald !text-[10px] font-extrabold">★ Top Choice</span>' : ''}
-                      <span class="chip chip-indigo !text-[10px]">${esc(r.industry)}</span>
-                      ${fitBadge}
-                    </div>
-                    <h3 class="text-base font-extrabold text-slate-900 leading-snug truncate" title="${esc(r.title)}">${esc(r.title)}</h3>
-                    <div class="text-xs text-slate-500 mt-0.5 flex flex-wrap items-center gap-2">
-                      <span class="font-bold text-slate-700">${demandBadge}</span>
-                      <span>·</span>
-                      <span>${r.work_modes.map(esc).join(', ')}</span>
-                    </div>
+                  <h3 id="career-character-title-${i}">${esc(r.title)}</h3>
+                  <div class="career-character-meta">
+                    <strong>${demandBadge}</strong><span aria-hidden="true">·</span>
+                    <span>${r.work_modes.map(esc).join(', ')}</span>
                   </div>
                 </div>
-                
-                <!-- Circular Fit Score Display -->
-                <div class="text-center shrink-0">
-                  <div class="ring !w-14 !h-14" style="--p:${score};--c:${ringColor(score)}">
-                    <span class="!w-10 !h-10 !text-xs font-black">${score}%</span>
-                  </div>
-                  <div class="text-[10px] font-extrabold text-slate-400 mt-1 uppercase tracking-wider">Fit Score</div>
+                <div class="career-character-score">
+                  <div class="ring" style="--p:${score};--c:${ringColor(score)}"><span>${score}%</span></div>
+                  <span>Fit Score</span>
                 </div>
+              </header>
+              <div class="career-character-market">
+                <div><span>Estimated Monthly: </span><b>RM 5,500 – RM 8,800</b></div>
+                <div class="career-character-outlook">Outlook: ${r.demand_outlook}/100</div>
               </div>
-
-              <!-- Market Salary & Growth Projection Pill -->
-              <div class="p-3 rounded-2xl bg-slate-50/80 border border-slate-200/80 flex flex-wrap items-center justify-between gap-2 text-xs">
-                <div>
-                  <span class="text-slate-500 font-medium">Estimated Monthly: </span>
-                  <b class="text-slate-800">RM 5,500 – RM 8,800</b>
-                </div>
-                <div class="text-[11px] font-bold text-indigo-700">
-                  Outlook: ${r.demand_outlook}/100
-                </div>
-              </div>
-
-              <!-- Matched Strengths Tags -->
-              ${r.matched_core_skills.length ? `
-                <div class="space-y-1.5">
-                  <div class="text-[10px] font-extrabold text-slate-400 uppercase tracking-wider">Your Verified Strengths</div>
-                  <div class="flex flex-wrap gap-1.5">
-                    ${r.matched_core_skills.map(s => `<span class="chip chip-emerald !text-[11px] font-bold">✓ ${esc(s)}</span>`).join('')}
-                  </div>
-                </div>` : ''}
-
-              <!-- Target Reskilling Skills to Gain -->
-              <div class="space-y-1.5">
-                <div class="text-[10px] font-extrabold text-slate-400 uppercase tracking-wider">Skills to Gain for this Role</div>
-                <div class="flex flex-wrap gap-1.5">
-                  ${r.skills_gap.length
-                    ? r.skills_gap.map(s => `<span class="chip chip-amber !text-[11px] font-bold">⚡ ${esc(s)}</span>`).join('')
-                    : '<span class="chip chip-emerald !text-[11px] font-bold">✓ All core competencies matched!</span>'}
-                </div>
+              <div class="career-character-skills">
+                ${r.matched_core_skills.length ? `
+                  <section><h4>Your Verified Strengths</h4>
+                    <ul class="career-skill-callouts">${callouts(r.matched_core_skills, true)}</ul>
+                  </section>` : ''}
+                <section><h4>Skills to Gain for this Role</h4>
+                  <ul class="career-skill-callouts">${r.skills_gap.length
+                    ? callouts(r.skills_gap, false)
+                    : '<li class="career-skill-callout is-strength"><span>✓ All core competencies matched!</span></li>'}</ul>
+                </section>
               </div>
             </div>
-
-            <!-- Card Action Footer -->
-            <div class="flex flex-wrap items-center justify-between gap-3 pt-3 border-t border-slate-200/70">
-              <div class="flex items-center gap-1.5 flex-wrap">
+            <footer class="career-character-footer">
+              <div class="career-character-sdgs">
                 ${r.sdg_tags.map((s, sdgIndex) => {
                   const tooltipId = `role-sdg-${r.role_id}-${sdgIndex}`;
-                  return `<span class="chip chip-teal !text-[10px] sdg-explain-chip" tabindex="0" aria-describedby="${esc(tooltipId)}" aria-label="${esc(`${s.code} ${s.name}. Why this role fits: ${s.reason}`)}">🌱 ${esc(s.code)}<span id="${esc(tooltipId)}" class="sdg-explain-tooltip" role="tooltip"><strong>${esc(s.code)} · ${esc(s.name)}</strong><span>Why this role fits: ${esc(s.reason)}</span></span></span>`;
+                  return `<span class="chip chip-teal sdg-explain-chip" tabindex="0" aria-describedby="${esc(tooltipId)}" aria-label="${esc(`${s.code} ${s.name}. Why this role fits: ${s.reason}`)}">🌱 ${esc(s.code)}<span id="${esc(tooltipId)}" class="sdg-explain-tooltip" role="tooltip"><strong>${esc(s.code)} · ${esc(s.name)}</strong><span>Why this role fits: ${esc(s.reason)}</span></span></span>`;
                 }).join('')}
               </div>
-              <div class="flex items-center gap-2">
-                <button type="button" onclick="showTab('jobs');setCompanyCategory('${esc(r.industry)}');" class="btn btn-soft !py-2 !px-3 !text-xs font-bold" title="Browse jobs in this field">
-                  Find Jobs →
-                </button>
-                <button type="button" onclick="selectRole(${i},true)" class="btn btn-primary !py-2 !px-4 !text-xs font-bold shadow-xs">
-                  Reskilling Plan →
-                </button>
+              <div class="career-character-actions">
+                <button type="button" onclick="showTab('jobs');setCompanyCategory('${esc(r.industry)}');" class="btn btn-soft" title="Browse jobs in this field">Find Jobs →</button>
+                <button type="button" onclick="selectRole(${i},true)" class="btn btn-primary">Reskilling Plan →</button>
               </div>
-            </div>
-          </article>
-        `;
+            </footer>
+          </article>`;
       }).join('');
+      window.careerLensLocale?.apply();
     }
 
     /* ---------- plan ---------- */
@@ -3763,6 +3754,7 @@
           `).join('');
         }
       }
+      window.careerLensLocale?.apply();
     }
 
     /* ---------- init ---------- */
@@ -3907,9 +3899,9 @@ async function submit3AiVerificationAnswers() {
         <div class="space-y-1">
           <div class="flex items-center gap-2">
             <span class="text-xl">🚀</span>
-            <h3 class="text-base font-black text-slate-900">Mapbox 高清地图设置 (可选)</h3>
+            <h3 class="text-base font-black text-slate-900">Mapbox HD Map Settings (Optional)</h3>
           </div>
-          <p class="text-xs text-slate-500">使用 Mapbox 官方矢量高清底图，路网更精准、缩放超丝滑。</p>
+          <p class="text-xs text-slate-500">Use Mapbox’s official vector map for precise roads and smooth zooming.</p>
         </div>
         <button type="button" onclick="closeMapboxKeyModal()" class="text-slate-400 hover:text-slate-600 text-lg font-bold">✕</button>
       </div>
@@ -3917,39 +3909,39 @@ async function submit3AiVerificationAnswers() {
       <!-- Free & No Credit Card Notice -->
       <div class="tint tint-emerald rounded-2xl p-3.5 space-y-1.5 text-xs">
         <div class="font-bold text-emerald-800 flex items-center gap-1.5">
-          <span>🎉</span> 100% 永久免费，完全不需要信用卡！
+          <span>🎉</span> 100% free, no credit card required!
         </div>
         <p class="text-emerald-700 leading-relaxed">
-          Mapbox 官方为每位注册用户提供<b>每月 50,000 次</b>免费地图加载额度。个人与开发测试完全用不完，注册过程<b>不需要绑定任何银行卡</b>，绝对 0 扣费！
+          Mapbox gives each registered user <b>50,000 free map loads per month</b>. That is plenty for personal use and development testing. No payment card is required during sign-up, and there are no charges.
         </p>
       </div>
 
       <!-- 3-Step Simple Tutorial -->
       <div class="space-y-2 text-xs text-slate-600">
-        <div class="font-bold text-slate-800">📖 3 步轻松获取免费 Key（仅需 1 分钟）：</div>
+        <div class="font-bold text-slate-800">📖 Get a free key in 3 steps (about 1 minute):</div>
         <ol class="list-decimal list-inside space-y-1.5 pl-1 leading-relaxed text-slate-700">
-          <li>浏览器打开 <a href="https://account.mapbox.com/auth/signup/" target="_blank" rel="noopener noreferrer" class="text-indigo-600 font-bold underline hover:text-indigo-800">Mapbox 官网免费注册页 ↗</a>（填邮箱密码即可）</li>
-          <li>登录后进入控制台，复制 <b>Default public token</b>（格式如：<code class="bg-slate-100 px-1 py-0.5 rounded text-indigo-700 font-mono">pk.eyJ1...</code>）</li>
-          <li>将复制的 Token 粘贴到下方，点击“保存并启用”立即生效！</li>
+          <li>Open the <a href="https://account.mapbox.com/auth/signup/" target="_blank" rel="noopener noreferrer" class="text-indigo-600 font-bold underline hover:text-indigo-800">free Mapbox sign-up page ↗</a> (email and password only).</li>
+          <li>After signing in, open your dashboard and copy the <b>Default public token</b> (it looks like <code data-no-translate class="bg-slate-100 px-1 py-0.5 rounded text-indigo-700 font-mono">pk.eyJ1...</code>).</li>
+          <li>Paste the token below, then select “Save and Enable”.</li>
         </ol>
       </div>
 
       <!-- Input Field -->
       <div class="space-y-1.5">
         <label class="text-xs font-bold text-slate-700 block">Mapbox Public Token (pk.***)</label>
-        <input type="text" id="mapboxTokenInput" placeholder="pk.eyJ1..." class="input !py-2 !text-xs font-mono" />
+        <input type="text" id="mapboxTokenInput" placeholder="pk.eyJ1..." data-no-translate class="input !py-2 !text-xs font-mono" />
         <p id="mapboxTokenStatus" class="text-[11px] text-slate-400"></p>
       </div>
 
       <!-- Action Buttons -->
       <div class="flex flex-wrap items-center justify-between gap-2 pt-3 border-t border-slate-100">
         <button type="button" onclick="clearMapboxToken()" class="btn btn-soft !text-xs !py-2 !px-3 text-rose-600 hover:text-rose-700 font-bold">
-          ✕ 清除 Key (还原 OpenMap)
+          ✕ Clear Key (Restore OpenMap)
         </button>
         <div class="flex items-center gap-2">
-          <button type="button" onclick="closeMapboxKeyModal()" class="btn btn-soft !text-xs !py-2 !px-3 font-semibold">取消</button>
+          <button type="button" onclick="closeMapboxKeyModal()" class="btn btn-soft !text-xs !py-2 !px-3 font-semibold">Cancel</button>
           <button type="button" onclick="saveMapboxToken()" class="btn btn-primary !text-xs !py-2 !px-4 font-bold shadow-sm">
-            💾 保存并启用 Mapbox
+            💾 Save and Enable Mapbox
           </button>
         </div>
       </div>

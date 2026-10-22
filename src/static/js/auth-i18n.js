@@ -11,6 +11,7 @@ W.P. Labuan|Wilayah Persekutuan Labuan|纳闽联邦直辖区
 State / federal territory|Negeri / wilayah persekutuan|州属／联邦直辖区
 District / area|Daerah / kawasan|地区／县区
 CareerLens AI — Workforce Intelligence & Reskilling|CareerLens AI — Kecerdasan Tenaga Kerja & Latihan Semula|CareerLens AI — 职场洞察与技能提升
+AI Workforce Navigation & Reskilling Platform|Platform Panduan Kerjaya dan Latihan Semula Tenaga Kerja AI|AI 职业导航与技能提升平台
 Future-Ready Workforce & Reskilling|Tenaga Kerja Sedia Masa Depan & Latihan Semula|面向未来的职场与技能提升
 Sign In|Log Masuk|登录
 Create Account|Cipta Akaun|创建账号
@@ -19,6 +20,28 @@ Find your place in the|Cari tempat anda dalam|找到你在
 AI era|era AI|AI 时代的位置
 Match today's skills to tomorrow's roles, with transparent scores, verified courses and a clear path.|Padankan kemahiran hari ini dengan jawatan masa depan, melalui skor telus, kursus dalam katalog dan laluan yang jelas.|将今天的技能与未来的岗位匹配，通过透明评分、目录课程和清晰路径规划下一步。
 Get Started|Mula Sekarang|开始探索
+Get Started →|Mula Sekarang →|开始使用 →
+CareerLens AI Radar|Radar AI CareerLens|CareerLens AI 职业雷达
+Workforce Mobility & Matching Engine|Enjin Mobiliti dan Padanan Tenaga Kerja|人才流动与匹配引擎
+● Active Engine|● Enjin Aktif|● 引擎运行中
+Skill Extraction & Verification|Pengekstrakan dan Pengesahan Kemahiran|技能提取与核验
+Instant CV parsing across 400+ national taxonomy skills|Penghuraian CV segera merangkumi lebih 400 kemahiran dalam taksonomi kebangsaan|即时解析简历，覆盖 400 多项国家职业分类技能
+Future-Role Fit Scoring|Skor Kesepadanan Jawatan Masa Depan|未来职位匹配评分
+Transparent fit breakdown powered by O*NET 29.0 & MASCO|Pecahan kesepadanan yang telus berasaskan O*NET 29.0 dan MASCO|基于 O*NET 29.0 与 MASCO 的透明匹配评分明细
+Personalised Reskilling Plan|Pelan Latihan Semula Peribadi|个性化技能提升计划
+live postings indexed|iklan jawatan aktif telah diindeks|条实时职位信息已编入索引
+Explore Roles →|Teroka Jawatan →|探索职位 →
+Forgot password?|Lupa kata laluan?|忘记密码？
+Admin Backdesk|Panel Pentadbir|管理员后台
+Admin|Pentadbir|管理员
+System Admin · Statistics & Control|Pentadbir Sistem · Statistik & Kawalan|系统管理员 · 统计与控制
+Reset Account Password|Tetapkan Semula Kata Laluan Akaun|重置账号密码
+Verify your identity with a secure 6-digit code|Sahkan identiti anda menggunakan kod 6 digit yang selamat|使用安全的 6 位验证码确认身份
+Registered Email Address|Alamat E-mel Berdaftar|注册邮箱
+Send Verification Code →|Hantar Kod Pengesahan →|发送验证码 →
+6-Digit Verification Code|Kod Pengesahan 6 Digit|6 位验证码
+New Password (min 8 chars, A-Z, 0-9, symbol)|Kata Laluan Baharu (min. 8 aksara, A-Z, 0-9, simbol)|新密码（至少 8 个字符，含 A-Z、0-9 和符号）
+Confirm Password Reset →|Sahkan Tetapan Semula Kata Laluan →|确认重置密码 →
 use AI vs trained (MY)|guna AI berbanding telah dilatih (MY)|使用 AI／接受过培训（马来西亚）
 workers to reskill|pekerja memerlukan latihan semula|需要提升技能的员工
 impact alignment|penjajaran impak|影响目标对齐
@@ -53,7 +76,9 @@ Confirm password *|Sahkan kata laluan *|确认密码 *
 At least 2 characters.|Sekurang-kurangnya 2 aksara.|至少 2 个字符。
 Valid, unregistered email.|E-mel sah yang belum didaftarkan.|请输入有效且未注册的邮箱。
 Create a password|Cipta kata laluan|设置密码
+New strong password|Kata laluan baharu yang kukuh|新的强密码
 Re-enter password|Masukkan semula kata laluan|再次输入密码
+Re-type new password|Taip semula kata laluan baharu|再次输入新密码
 8+ characters|8+ aksara|至少 8 个字符
 Uppercase|Huruf besar|大写字母
 Lowercase|Huruf kecil|小写字母

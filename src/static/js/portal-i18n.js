@@ -730,6 +730,7 @@ Manual First-Round CV Keyword Screening|Saringan Kata Kunci CV Peringkat Pertama
 Demo|Demo|演示
 Undated demo fixture|Data demo tanpa tarikh|无日期的演示数据
 Diploma / TVET|Diploma / TVET|文凭／技术与职业教育
+Diploma / TVET|Diploma / Pendidikan dan Latihan Teknikal dan Vokasional (TVET)|文凭／技术与职业教育（TVET）
 Bachelor's Degree|Ijazah Sarjana Muda|学士学位
 Master's / Postgraduate|Sarjana / Pascasiswazah|硕士／研究生
 AI Financial Compliance Analyst|Penganalisis Pematuhan Kewangan AI|AI 金融合规分析师
@@ -757,7 +758,290 @@ Immediately|Serta-merta|可立即入职
 If this role needed a tool you have never used, how would you get productive in the first month?|Jika jawatan ini memerlukan alat yang belum pernah anda gunakan, bagaimanakah anda akan bekerja secara produktif pada bulan pertama?|如果岗位要求使用你从未接触过的工具，你会如何在第一个月内掌握并投入工作？
 Which parts of your previous experience transfer most directly to this role?|Bahagian manakah dalam pengalaman terdahulu anda yang paling berkaitan dengan jawatan ini?|你过去的哪些经验最能直接应用于这个岗位？
 Describe a problem you solved that was blocking your team's delivery.|Terangkan masalah yang anda selesaikan yang pernah menghalang penyampaian pasukan anda.|请描述一次你解决了阻碍团队交付的问题的经历。
+View Full Profile Page →|Lihat Halaman Profil Penuh →|查看完整个人资料页 →
+Language Setting|Tetapan Bahasa|语言设置
+English|Bahasa Inggeris|英语
+🔔 Notification Settings|🔔 Tetapan Pemberitahuan|🔔 通知设置
+Interview Notifications|Pemberitahuan Temu Duga|面试通知
+Job Match Alerts|Makluman Padanan Kerja|职位匹配提醒
+Edit Profile Details|Edit Butiran Profil|编辑个人资料
+Forgot Password? (Code Reset)|Lupa Kata Laluan? (Tetapan Semula Kod)|忘记密码？（验证码重置）
+Help Desk & Feedback|Pusat Bantuan & Maklum Balas|帮助与反馈
+Sign Out|Log Keluar|退出登录
+Gender|Jantina|性别
+Prefer not to say|Tidak mahu menyatakan|不愿透露
+Contact Phone|Telefon untuk Dihubungi|联系电话
+Not added|Belum ditambah|尚未添加
+Professional Bio & Aspirations|Profil Profesional & Aspirasi|职业简介与发展目标
+Add a short introduction and your career goals.|Tambahkan pengenalan ringkas dan matlamat kerjaya anda.|填写简短介绍和职业目标。
+Achievements & professional skills|Pencapaian & kemahiran profesional|成就与专业技能
+From your saved CV profile. These details are self-reported, not independently verified.|Daripada profil CV tersimpan anda. Maklumat ini dilaporkan sendiri dan belum disahkan secara bebas.|来自你保存的简历资料。内容由本人填写，未经独立核实。
+Edit CV details →|Edit Butiran CV →|编辑简历资料 →
+Learning achievements →|Pencapaian Pembelajaran →|学习成果 →
+Upload a PDF, then continue to the separate review page to check and edit the extracted details.|Muat naik PDF, kemudian teruskan ke halaman semakan berasingan untuk menyemak dan mengedit maklumat yang diekstrak.|上传 PDF 后，前往独立的审核页面检查并编辑提取出的资料。
+Uploads are extracted locally. Optional AI organisation uses the configured pretrained model when connected and authorised on the review page; it does not verify qualifications. Do not upload real personal or confidential information. Text-based PDFs work best; image-only scans need OCR before upload.|Fail dimuat naik diekstrak secara setempat. Jika disambungkan dan dibenarkan pada halaman semakan, model pralatih yang dikonfigurasi boleh menyusun maklumat dengan AI; proses ini tidak mengesahkan kelayakan. Jangan muat naik maklumat peribadi sebenar atau sulit. PDF berasaskan teks paling sesuai; imbasan imej sahaja memerlukan OCR.|上传文件会在本地提取内容。若审核页已连接并授权，可使用配置的预训练模型辅助整理，但不会核实资历。请勿上传真实个人资料或机密信息。文本型 PDF 效果较好；纯图片扫描件需先进行 OCR。
+Review my existing CV →|Semak CV sedia ada →|审核现有简历 →
+Organised CV Profile|Profil CV Tersusun|整理后的简历资料
+Structured career profile extracted from your PDF. Review, polish, and save your details.|Profil kerjaya berstruktur yang diekstrak daripada PDF anda. Semak, kemas kini dan simpan maklumat anda.|从 PDF 提取的结构化职业资料。请检查、修改并保存。
+View Original PDF|Lihat PDF Asal|查看原始 PDF
+Replace PDF|Gantikan PDF|替换 PDF
+Extracted Resume Intelligence|Maklumat Resume yang Diekstrak|简历解析结果
+Upload a PDF CV to extract your structured profile|Muat naik CV PDF untuk mengekstrak profil berstruktur anda|上传 PDF 简历以提取结构化资料
+AI Extracted|Diekstrak oleh AI|AI 提取
+Extraction Details & Notes ▾|Butiran dan Nota Pengekstrakan ▾|提取详情与备注 ▾
+Professional Summary|Ringkasan Profesional|职业摘要
+Personal & Career Details|Butiran Peribadi & Kerjaya|个人与职业资料
+Keep your contact information and work preferences up to date.|Pastikan maklumat hubungan dan pilihan kerja anda sentiasa terkini.|请保持联系方式和工作偏好为最新。
+Please enter your full name.|Sila masukkan nama penuh anda.|请输入你的姓名。
+Occupation *|Pekerjaan *|职业 *
+Please enter your occupation.|Sila masukkan pekerjaan anda.|请输入你的职业。
+Primary Email *|E-mel Utama *|主要邮箱 *
+Contact Phone *|Telefon untuk Dihubungi *|联系电话 *
+Enter a valid Malaysian phone (e.g. 11-23456789).|Masukkan nombor telefon Malaysia yang sah (cth. 11-23456789).|请输入有效的马来西亚电话号码（例如 11-23456789）。
+Location / State *|Lokasi / Negeri *|地点／州属 *
+Location / State|Lokasi / Negeri|地点／州属
+🌐 All Sectors|🌐 Semua Sektor|🌐 所有行业
+Please enter your location or state.|Sila masukkan lokasi atau negeri anda.|请输入地点或州属。
+Select industry sector...|Pilih sektor industri...|选择行业领域……
+Supply Chain & Logistics|Rantaian Bekalan & Logistik|供应链与物流
+ESG & Sustainability|ESG & Kemampanan|ESG 与可持续发展
+Others|Lain-lain|其他
+Please select an industry sector.|Sila pilih sektor industri.|请选择行业领域。
+Select work mode...|Pilih mod kerja...|选择工作模式……
+Hybrid (Remote + Office)|Hibrid (Jarak Jauh + Pejabat)|混合办公（远程＋办公室）
+Remote-First|Utamakan Kerja Jarak Jauh|远程优先
+On-site Only|Di Pejabat Sahaja|仅限现场办公
+Please select a preferred work mode.|Sila pilih mod kerja pilihan.|请选择偏好的工作模式。
+Qualification Level *|Tahap Kelayakan *|学历 *
+Select qualification level...|Pilih tahap kelayakan...|选择学历……
+Bachelor's Degree (Hons)|Ijazah Sarjana Muda (Kepujian)|荣誉学士学位
+Professional Cert (ACCA/CFA)|Sijil Profesional (ACCA/CFA)|专业证书（ACCA/CFA）
+Please select your qualification level.|Sila pilih tahap kelayakan anda.|请选择你的学历。
+Years of Experience *|Tahun Pengalaman *|工作年限 *
+0 for fresh graduates / entry-level.|Isi 0 untuk graduan baharu / peringkat permulaan.|应届毕业生／入门级请填 0。
+Please enter years of experience (0 or more).|Sila masukkan tahun pengalaman (0 atau lebih).|请输入工作年限（0 或以上）。
+Experience & Qualifications|Pengalaman & Kelayakan|工作经历与资历
+Structured history extracted from your CV. You can edit or add new entries directly.|Sejarah berstruktur yang diekstrak daripada CV anda. Anda boleh mengedit atau menambah entri baharu.|从简历提取的结构化经历。你可以直接编辑或添加条目。
+Work Experience|Pengalaman Kerja|工作经历
+Extracted Skills & Competencies|Kemahiran & Kompetensi Diekstrak|提取的技能与能力
+Click × on any chip to remove|Klik × pada mana-mana cip untuk membuangnya|点击任一标签上的 × 即可移除
+↵ Enter|↵ Enter|↵ 回车
+🔍 Original Extraction Quotes & Evidence|🔍 Petikan & Bukti Pengekstrakan Asal|🔍 原始提取语句与依据
+View quotes from PDF ▾|Lihat petikan daripada PDF ▾|查看 PDF 引文 ▾
+Quotes and page numbers from your PDF that supported the initial draft.|Petikan dan nombor halaman daripada PDF anda yang menyokong draf awal.|支持初始草稿的 PDF 引文及页码。
+I have verified the summary, contact details, and qualifications. Mark profile as reviewed.|Saya telah mengesahkan ringkasan, maklumat hubungan dan kelayakan. Tandakan profil sebagai telah disemak.|我已核实摘要、联系方式和资历。将资料标记为已审核。
+💼 Browse Jobs →|💼 Layari Kerja →|💼 浏览职位 →
+💾 Save Reviewed Profile →|💾 Simpan Profil yang Disemak →|💾 保存已审核资料 →
+Track your applications and control who can view your CV.|Jejaki permohonan anda dan kawal pihak yang boleh melihat CV anda.|追踪申请，并管理谁可以查看你的简历。
+Find jobs →|Cari Kerja →|查找职位 →
+My applications & employer access|Permohonan Saya & Akses Majikan|我的申请与雇主访问记录
+Load 10 More Roles|Muatkan 10 Jawatan Lagi|再加载 10 个职位
+Edit Profile & Background|Edit Profil & Latar Belakang|编辑资料与背景
+📷 Upload|📷 Muat Naik|📷 上传
+Upload Photo|Muat Naik Foto|上传照片
+Preset Avatars|Avatar Sedia Ada|预设头像
+Profile Info|Maklumat Profil|个人资料
+Login & Security|Log Masuk & Keselamatan|登录与安全
+Please enter your full name (min 2 chars).|Sila masukkan nama penuh anda (min. 2 aksara).|请输入姓名（至少 2 个字符）。
+Primary Email Address *|Alamat E-mel Utama *|主要邮箱地址 *
+Contact Phone Number|Nombor Telefon untuk Dihubungi|联系电话号码
+Enter a valid Malaysian phone number (e.g. 11-23456789).|Masukkan nombor telefon Malaysia yang sah (cth. 11-23456789).|请输入有效的马来西亚电话号码（例如 11-23456789）。
+Female|Perempuan|女性
+Male|Lelaki|男性
+Non-Binary|Bukan Binari|非二元性别
+Career Industry|Industri Kerjaya|职业行业
+IT & Software Engineering|Kejuruteraan IT & Perisian|信息技术与软件工程
+HR & Admin|Sumber Manusia & Pentadbiran|人力资源与行政
+Supply Chain|Rantaian Bekalan|供应链
+Others (Please specify)|Lain-lain (Sila nyatakan)|其他（请注明）
+Secondary (SPM / STPM)|Menengah (SPM / STPM)|中学（SPM／STPM）
+Master's Degree|Ijazah Sarjana|硕士学位
+Doctorate / PhD|Doktorat / PhD|博士学位
+Specify Your Career Industry *|Nyatakan Industri Kerjaya Anda *|请填写你的职业行业 *
+Selangor (PJ, Cyberjaya)|Selangor (PJ, Cyberjaya)|雪兰莪（八打灵再也、赛城）
+Penang (George Town)|Pulau Pinang (George Town)|槟城（乔治市）
+Johor (Johor Bahru)|Johor (Johor Bahru)|柔佛（新山）
+Perak (Ipoh)|Perak (Ipoh)|霹雳（怡保）
+Sarawak (Kuching)|Sarawak (Kuching)|砂拉越（古晋）
+Sabah (Kota Kinabalu)|Sabah (Kota Kinabalu)|沙巴（亚庇）
+Remote (Anywhere in Malaysia)|Jarak Jauh (Di Mana-mana di Malaysia)|远程（马来西亚境内）
+Work Mode|Mod Kerja|工作模式
+Remote-First (Work from Home)|Utamakan Jarak Jauh (Bekerja dari Rumah)|远程优先（居家办公）
+On-site Only (Office)|Di Pejabat Sahaja|仅限办公室办公
+Professional Pitch / Bio|Pengenalan Profesional / Bio|职业介绍／简介
+(Optional)|(Pilihan)|（选填）
+Save Changes|Simpan Perubahan|保存更改
+Must contain at least 8 characters with letters, numbers, and symbols.|Mesti mengandungi sekurang-kurangnya 8 aksara, termasuk huruf, nombor dan simbol.|至少包含 8 个字符，并含字母、数字和符号。
+Forgot your password?|Lupa kata laluan anda?|忘记密码？
+Generate a random 6-digit verification code to reset it immediately.|Jana kod pengesahan rawak 6 digit untuk menetapkan semula kata laluan dengan segera.|生成随机 6 位验证码以立即重置密码。
+Reset via Code →|Tetapkan Semula melalui Kod →|通过验证码重置 →
+Update Password|Kemas Kini Kata Laluan|更新密码
+Default public token|Token awam lalai|默认公开令牌
+pk.eyJ1...|pk.eyJ1...|pk.eyJ1...
+Mapbox Public Token (pk.***)|Token Awam Mapbox (pk.***)|Mapbox 公开令牌（pk.***）
+CareerLens Help Desk|Pusat Bantuan CareerLens|CareerLens 帮助中心
+Submit feedback, report an issue, or contact platform admin|Hantar maklum balas, laporkan isu atau hubungi pentadbir platform|提交反馈、报告问题或联系平台管理员
+Inquiry Category *|Kategori Pertanyaan *|问题类别 *
+General Feedback & Suggestions|Maklum Balas & Cadangan Umum|一般反馈与建议
+Job Matching & Map Issue|Isu Padanan Kerja & Peta|职位匹配与地图问题
+Course Enrollment & Reskilling|Pendaftaran Kursus & Latihan Semula|课程报名与技能提升
+Technical Bug Report|Laporan Pepijat Teknikal|技术错误报告
+Account & Security Support|Bantuan Akaun & Keselamatan|账号与安全支持
+Detailed Message *|Mesej Terperinci *|详细内容 *
+Priority|Keutamaan|优先级
+Normal|Biasa|普通
+High Priority|Keutamaan Tinggi|高优先级
+Urgent|Segera|紧急
+Company Support Email|E-mel Sokongan Syarikat|企业支持邮箱
+Submit Feedback →|Hantar Maklum Balas →|提交反馈 →
+Account Email Address (Must match registered email)|Alamat E-mel Akaun (Mesti sama dengan e-mel berdaftar)|账号邮箱（必须与注册邮箱一致）
+Confirm New Password|Sahkan Kata Laluan Baharu|确认新密码
 `.trim().split('\n').map(line => line.split('|'));
+  rows.push(
+    ['Security & Password', 'Keselamatan & Kata Laluan', '安全与密码'],
+    ['Talent Account', 'Akaun Bakat', '求职者账号'],
+    ['Account registered', 'Akaun didaftarkan', '账号已注册'],
+    ['Email:', 'E-mel:', '邮箱：'], ['Joined:', 'Tarikh Daftar:', '注册时间：'],
+    ['Edit Profile & Information', 'Edit Profil & Maklumat', '编辑资料与信息'],
+    ['Current Role', 'Jawatan Semasa', '当前职位'], ['Career Field', 'Bidang Kerjaya', '职业领域'],
+    ['Preferred Mode', 'Mod Pilihan', '偏好模式'],
+    ['Hackathon demo — use fictional CVs only.', 'Demo hackathon — gunakan CV fiksyen sahaja.', '黑客松演示，请仅使用虚构简历。'],
+    ['Text-based PDF · maximum 8 MB', 'PDF berasaskan teks · maksimum 8 MB', '文本型 PDF · 最大 8 MB'],
+    ['I confirm my custom PDF contains only fictional, synthetic information.', 'Saya mengesahkan PDF tersuai saya hanya mengandungi maklumat fiksyen dan sintetik.', '我确认自定义 PDF 仅含虚构的合成信息。'],
+    ['Extract, check the evidence, then review your profile before sharing', 'Ekstrak, semak bukti, kemudian semak profil anda sebelum berkongsi', '提取内容、核对依据，再审核资料后分享'],
+    ['1. Check PDF', '1. Semak PDF', '1. 检查 PDF'], ['2. Extract text', '2. Ekstrak teks', '2. 提取文本'], ['3. Review draft', '3. Semak draf', '3. 审核草稿'],
+    ['Try without a custom upload', 'Cuba tanpa muat naik tersuai', '不上传自定义文件先试用'], ['No PDF yet', 'Belum ada PDF', '尚未上传 PDF'],
+    ['Check the draft before sharing with employers', 'Semak draf sebelum berkongsi dengan majikan', '分享给雇主前请先检查草稿'],
+    ['Upload a sample or fictional PDF to begin.', 'Muat naik PDF contoh atau fiksyen untuk bermula.', '上传示例或虚构 PDF 以开始。'],
+    ['Full Name *', 'Nama Penuh *', '姓名 *'], ['Please enter a valid email address.', 'Sila masukkan alamat e-mel yang sah.', '请输入有效的邮箱地址。'],
+    ['Industry Sector *', 'Sektor Industri *', '行业领域 *'], ['Engineering & Manufacturing', 'Kejuruteraan & Pembuatan', '工程与制造'],
+    ['Healthcare & Life Sciences', 'Penjagaan Kesihatan & Sains Hayat', '医疗保健与生命科学'],
+    ['Education & EdTech', 'Pendidikan & Teknologi Pendidikan', '教育与教育科技'],
+    ['Preferred Work Mode *', 'Mod Kerja Pilihan *', '偏好的工作模式 *'], ['Projects', 'Projek', '项目'], ['Certifications', 'Pensijilan', '证书'],
+    ['Your CV, your sharing choices', 'CV Anda, Pilihan Perkongsian Anda', '你的简历，由你决定如何分享'], ['Private by default', 'Peribadi secara lalai', '默认保持私密'],
+    ['Your PDF and organised profile are available to your signed-in account. An employer receives only the summary and/or PDF you choose to share when applying to its vacancy. Aggregate publication is currently disabled; your optional statistics preference is off by default. You can export your profile, withdraw sharing, or delete your vault below.', 'PDF dan profil tersusun anda hanya tersedia kepada akaun yang telah log masuk. Majikan hanya menerima ringkasan dan/atau PDF yang anda pilih semasa memohon jawatannya. Penerbitan agregat kini dinyahaktifkan; pilihan statistik adalah dimatikan secara lalai. Anda boleh mengeksport profil, menarik balik perkongsian atau memadam peti simpanan di bawah.', '只有已登录的账号可以查看你的 PDF 和整理后的资料。申请职位时，雇主只能收到你选择分享的摘要和／或 PDF。目前已关闭汇总发布；统计分享选项默认关闭。你可以在下方导出资料、撤销分享或删除资料库。'],
+    ['Optional statistics preference (publication disabled)', 'Pilihan statistik (penerbitan dinyahaktifkan)', '可选统计分享设置（目前未发布）'],
+    ['Choose who can view your CV and review their access below.', 'Pilih pihak yang boleh melihat CV anda dan semak akses mereka di bawah.', '选择谁可以查看你的简历，并在下方检查其访问权限。'],
+    ["Each application grants access only to that vacancy's company account. Withdrawal blocks future access here; it cannot retract copies already downloaded.", 'Setiap permohonan memberikan akses hanya kepada akaun syarikat bagi jawatan tersebut. Penarikan balik menyekat akses seterusnya di sini; salinan yang telah dimuat turun tidak dapat ditarik balik.', '每次申请仅向该职位所属企业账号授予访问权限。撤回后会阻止后续访问，但无法收回已下载的副本。'],
+    ['Export profile JSON', 'Eksport Profil JSON', '导出 JSON 资料'], ['Delete my vault', 'Padam Peti Simpanan Saya', '删除我的资料库'],
+    ['Share with someone you choose', 'Kongsi dengan Pihak Pilihan Anda', '分享给指定对象'],
+    ['The recipient needs a CareerLens account. Only that signed-in account can open the link. No email is sent.', 'Penerima memerlukan akaun CareerLens. Hanya akaun tersebut yang telah log masuk boleh membuka pautan. Tiada e-mel dihantar.', '接收者需要拥有 CareerLens 账号，且只有该账号登录后才能打开链接。系统不会发送邮件。'],
+    ['Recipient account email', 'E-mel Akaun Penerima', '接收者账号邮箱'],
+    ['Share reviewed summary, including contact details', 'Kongsi ringkasan yang disemak, termasuk maklumat hubungan', '分享已审核的摘要，包括联系方式'],
+    ['Share complete original PDF', 'Kongsi PDF asal yang lengkap', '分享完整的原始 PDF'], ['Access expires after', 'Akses tamat selepas', '访问权限于以下时间后到期'],
+    ['1 day', '1 hari', '1 天'], ['7 days', '7 hari', '7 天'], ['30 days', '30 hari', '30 天'], ['Create recipient access', 'Berikan Akses kepada Penerima', '创建接收者访问权限'],
+    ['Editing or replacing the CV ends existing grants. Revoking access cannot retract copies already saved by a recipient.', 'Mengedit atau menggantikan CV menamatkan kebenaran sedia ada. Pembatalan akses tidak dapat menarik balik salinan yang telah disimpan oleh penerima.', '编辑或替换简历会终止现有授权。撤销访问权限无法收回接收者已保存的副本。'],
+    ['Recent recipient access', 'Akses Penerima Terkini', '接收者最近的访问记录'], ['Recorded employer accesses through this app', 'Akses majikan yang direkodkan melalui aplikasi ini', '此应用记录的雇主访问记录'],
+    ['Selected Location', 'Lokasi Dipilih', '已选地点'], ['📍 W.P. Kuala Lumpur', '📍 Wilayah Persekutuan Kuala Lumpur', '📍 吉隆坡联邦直辖区'],
+    ['Kuala Lumpur City Centre', 'Pusat Bandar Kuala Lumpur', '吉隆坡市中心'], ['📍 Use Current Location', '📍 Gunakan Lokasi Semasa', '📍 使用当前位置'],
+    ['Search Building, Condo, Street, or Area', 'Cari Bangunan, Kondominium, Jalan atau Kawasan', '搜索建筑、公寓、街道或地区'], ['Search', 'Cari', '搜索'], ['Search Radius:', 'Jejari Carian:', '搜索半径：'],
+    ['🗺️ Nearby Hiring Companies', '🗺️ Syarikat yang Mengambil Pekerja Berdekatan', '🗺️ 附近招聘企业'], ['0 matched', '0 sepadan', '匹配 0 项'],
+    ['🎯 CV-Matched', '🎯 Sepadan dengan CV', '🎯 与简历匹配'], ['CV-Matched', 'Sepadan dengan CV', '与简历匹配'], ['Other Sectors', 'Sektor Lain', '其他行业'],
+    ['Loading...', 'Sedang memuatkan...', '加载中……'], ['✕ Clear Company Filter', '✕ Kosongkan Penapis Syarikat', '✕ 清除企业筛选'],
+    ['🎯 Matched Roles', '🎯 Jawatan Sepadan', '🎯 匹配职位'], ['🌐 All Nearby Roles', '🌐 Semua Jawatan Berdekatan', '🌐 附近所有职位'],
+    ['All Job Sectors', 'Semua Sektor Pekerjaan', '所有职位行业'], ['Sort: Best Match', 'Susun: Padanan Terbaik', '排序：最匹配'],
+    ['Sort: Nearest Distance', 'Susun: Jarak Terdekat', '排序：距离最近'], ['Sort: Highest Salary', 'Susun: Gaji Tertinggi', '排序：薪资最高'],
+    ['Application Questionnaire & Skill Verification', 'Soal Selidik Permohonan & Pengesahan Kemahiran', '申请问卷与技能核验'],
+    ['Allow Google Gemini to process my reviewed CV summary, work/project details and questionnaire answers for role suggestions and questions. Optional; local processing sends nothing to Google.', 'Benarkan Google Gemini memproses ringkasan CV, butiran kerja/projek dan jawapan soal selidik saya yang telah disemak untuk cadangan jawatan dan soalan. Pilihan; pemprosesan setempat tidak menghantar data kepada Google.', '允许 Google Gemini 处理我已审核的简历摘要、工作／项目详情及问卷答案，以提供职位建议和问题。此项为可选；本地处理不会向 Google 发送数据。'],
+    ['✨ AI Verification', '✨ Pengesahan AI', '✨ AI 核验'], ['3 Skill Questions', '3 Soalan Kemahiran', '3 个技能问题'], ['3 AI Verification Questions', '3 Soalan Pengesahan AI', '3 个 AI 核验问题'],
+    ['Targeted scenarios generated based on your uploaded CV and target role.', 'Senario khusus dijana berdasarkan CV yang dimuat naik dan jawatan sasaran anda.', '根据你上传的简历和目标职位生成针对性情景。'],
+    ['✨ Generate My 3 Questions', '✨ Jana 3 Soalan Saya', '✨ 生成我的 3 个问题'],
+    ['Click "Generate My 3 Questions" above to load customized skill verification scenarios.', 'Klik "Jana 3 Soalan Saya" di atas untuk memuatkan senario pengesahan kemahiran tersuai.', '点击上方“生成我的 3 个问题”以加载定制的技能核验情景。'],
+    ['Submit Answers & Get Score →', 'Hantar Jawapan & Dapatkan Skor →', '提交答案并查看评分 →'], ['🔄 Refresh Trends', '🔄 Muat Semula Trend', '🔄 刷新趋势'],
+    ['📚 Data Sources & Citations', '📚 Sumber Data & Rujukan', '📚 数据来源与引用'],
+    ['JobStreet Malaysia Open Labour Index (2026):', 'Indeks Pasaran Buruh Terbuka JobStreet Malaysia (2026):', 'JobStreet 马来西亚开放劳动力指数（2026）：'],
+    ['Aggregated real-time job vacancy signals across 69,000+ postings[cite: 52].', 'Isyarat kekosongan kerja masa nyata yang diagregatkan daripada lebih 69,000 iklan[cite: 52].', '汇总了 69,000 多条招聘信息的实时职位空缺信号[cite: 52]。'],
+    ['World Economic Forum (WEF) Future of Jobs Report:', 'Laporan Masa Depan Pekerjaan Forum Ekonomi Dunia (WEF):', '世界经济论坛（WEF）《未来就业报告》：'],
+    ['Benchmark technology adoption curves and AI disruption velocity models.', 'Lengkung penanda aras penggunaan teknologi dan model kadar perubahan akibat AI.', '技术采用曲线及 AI 影响速度模型的基准参考。'],
+    ['UNESCO & SDG 4 / 8 Frameworks:', 'Rangka Kerja UNESCO & SDG 4 / 8:', 'UNESCO 与 SDG 4／8 框架：'],
+    ['Aligned with Quality Education and Decent Work & Economic Growth guidelines.', 'Selaras dengan panduan Pendidikan Berkualiti serta Pekerjaan Layak dan Pertumbuhan Ekonomi.', '符合优质教育、体面工作与经济增长的相关指引。'],
+    ['Share organised CV summary', 'Kongsi Ringkasan CV Tersusun', '分享整理后的简历摘要'],
+    ['(including saved contact details, skills, education, experience, projects and certifications)', '(termasuk maklumat hubungan, kemahiran, pendidikan, pengalaman, projek dan pensijilan yang disimpan)', '（包括已保存的联系方式、技能、教育、经历、项目和证书）'],
+    ['Share original PDF CV', 'Kongsi CV PDF Asal', '分享原始 PDF 简历'],
+    ['(all content in the uploaded file; recipients may save a copy)', '(semua kandungan dalam fail yang dimuat naik; penerima boleh menyimpan salinan)', '（上传文件中的全部内容；接收者可以保存副本）'],
+    ['Permission applies only to the company account that owns this vacancy. Withdrawal stops future access here but cannot retract downloaded copies. Editing the profile or replacing the PDF revokes previous sharing. Review and share again to give access to your updates.', 'Kebenaran hanya terpakai kepada akaun syarikat yang memiliki jawatan ini. Penarikan balik menghentikan akses seterusnya di sini, tetapi salinan yang dimuat turun tidak dapat ditarik balik. Mengedit profil atau menggantikan PDF membatalkan perkongsian terdahulu. Semak dan kongsi semula untuk memberikan akses kepada maklumat terkini.', '权限仅适用于发布此职位的企业账号。撤回后会阻止后续访问，但无法收回已下载的副本。编辑资料或替换 PDF 会撤销之前的分享。请重新审核并分享，接收者才能查看更新。'],
+    ['Confirm & submit application →', 'Sahkan & Hantar Permohonan →', '确认并提交申请 →'], ['Job Seeker', 'Pencari Kerja', '求职者'], ['✕ Clear', '✕ Kosongkan', '✕ 清除'],
+    ['Highest Education', 'Pendidikan Tertinggi', '最高学历'], ['W.P. Kuala Lumpur', 'Wilayah Persekutuan Kuala Lumpur', '吉隆坡联邦直辖区'],
+    ['Melaka', 'Melaka', '马六甲'], ['Negeri Sembilan', 'Negeri Sembilan', '森美兰'], ['Pahang', 'Pahang', '彭亨'], ['Kedah', 'Kedah', '吉打'],
+    ['Terengganu', 'Terengganu', '登嘉楼'], ['Kelantan', 'Kelantan', '吉兰丹'], ['Perlis', 'Perlis', '玻璃市'], ['W.P. Putrajaya', 'Wilayah Persekutuan Putrajaya', '布城联邦直辖区'],
+    ['Current Password *', 'Kata Laluan Semasa *', '当前密码 *'], ['New Password *', 'Kata Laluan Baharu *', '新密码 *'], ['Subject / Summary *', 'Subjek / Ringkasan *', '主题／摘要 *'],
+    ['Mapbox HD Map Settings (Optional)', 'Tetapan Peta HD Mapbox (Pilihan)', 'Mapbox 高清地图设置（可选）'],
+    ['Use Mapbox’s official vector map for precise roads and smooth zooming.', 'Gunakan peta vektor rasmi Mapbox untuk paparan jalan yang tepat dan zum yang lancar.', '使用 Mapbox 官方矢量地图，查看更精准的道路并流畅缩放。'],
+    ['100% free, no credit card required!', 'Percuma sepenuhnya, kad kredit tidak diperlukan!', '完全免费，无需信用卡！'],
+    ['Mapbox gives each registered user 50,000 free map loads per month. That is plenty for personal use and development testing. No payment card is required during sign-up, and there are no charges.', 'Setiap pengguna berdaftar Mapbox mendapat 50,000 pemuatan peta percuma sebulan. Jumlah ini mencukupi untuk kegunaan peribadi dan ujian pembangunan. Kad pembayaran tidak diperlukan semasa pendaftaran dan tiada caj dikenakan.', 'Mapbox 为每位注册用户每月提供 50,000 次免费地图加载，足以用于个人使用和开发测试。注册时无需绑定银行卡，也不会产生费用。'],
+    ['Mapbox gives each registered user', 'Setiap pengguna berdaftar Mapbox mendapat', 'Mapbox 为每位注册用户提供'],
+    ['50,000 free map loads per month', '50,000 pemuatan peta percuma sebulan', '每月 50,000 次免费地图加载'],
+    ['. That is plenty for personal use and development testing. No payment card is required during sign-up, and there are no charges.', '. Jumlah ini mencukupi untuk kegunaan peribadi dan ujian pembangunan. Kad pembayaran tidak diperlukan semasa pendaftaran dan tiada caj dikenakan.', '。这足以满足个人使用和开发测试。注册时无需绑定银行卡，也不会产生费用。'],
+    ['📖 Get a free key in 3 steps (about 1 minute):', '📖 Dapatkan kunci percuma dalam 3 langkah (kira-kira 1 minit):', '📖 三步获取免费密钥（约 1 分钟）：'],
+    ['Open the', 'Buka', '打开'], ['free Mapbox sign-up page ↗', 'halaman pendaftaran percuma Mapbox ↗', 'Mapbox 免费注册页面 ↗'],
+    ['(email and password only).', '(hanya memerlukan e-mel dan kata laluan).', '（只需填写邮箱和密码）。'],
+    ['After signing in, open your dashboard and copy the', 'Selepas log masuk, buka papan pemuka dan salin', '登录后打开控制台并复制'],
+    ['(it looks like', '(formatnya seperti', '（格式类似'], [').', ').', '）。'],
+    ['Paste the token below, then select “Save and Enable”.', 'Tampal token di bawah, kemudian pilih “Simpan dan Aktifkan”.', '将令牌粘贴到下方，然后点击“保存并启用”。'],
+    ['✕ Clear Key (Restore OpenMap)', '✕ Kosongkan Kunci (Pulihkan OpenMap)', '✕ 清除密钥（恢复 OpenMap）'],
+    ['Cancel', 'Batal', '取消'], ['💾 Save and Enable Mapbox', '💾 Simpan dan Aktifkan Mapbox', '💾 保存并启用 Mapbox'],
+    ['Generate My 3 Questions', 'Jana 3 Soalan Saya', '生成我的 3 个问题'],
+    ['OpenMap is active by default without a token. Paste a Mapbox token to use the HD map.', 'OpenMap digunakan secara lalai tanpa token. Tampal token Mapbox untuk menggunakan peta HD.', '默认使用无需令牌的 OpenMap。如需使用高清地图，请粘贴 Mapbox 令牌。'],
+    ['Enter a valid Mapbox token, or select “Clear Key” to use OpenMap without setup.', 'Masukkan token Mapbox yang sah atau pilih “Kosongkan Kunci” untuk menggunakan OpenMap tanpa persediaan.', '请输入有效的 Mapbox 令牌，或点击“清除密钥”以免配置方式使用 OpenMap。'],
+    ['🎉 Mapbox HD maps enabled successfully!', '🎉 Peta HD Mapbox berjaya diaktifkan!', '🎉 Mapbox 高清地图已成功启用！'],
+    ['Switched back to the setup-free OpenMap.', 'Kembali menggunakan OpenMap tanpa persediaan.', '已切换回无需配置的 OpenMap。'],
+    ['Mapbox token failed to load. Switched back to the stable OpenMap automatically.', 'Token Mapbox gagal dimuatkan. Sistem bertukar semula kepada OpenMap yang stabil secara automatik.', 'Mapbox 令牌加载失败，已自动切换回稳定的 OpenMap。'],
+    ['Verified Employer', 'Majikan Disahkan', '已核实雇主'], ['Company Workspace', 'Ruang Kerja Syarikat', '企业工作区'],
+    ['Login:', 'Log Masuk:', '登录：'], ['Contact:', 'Hubungi:', '联系方式：'], ['Edit Company Profile', 'Edit Profil Syarikat', '编辑企业资料'],
+    ['↻ Refresh', '↻ Muat Semula', '↻ 刷新'], ['Employer Account Profile', 'Profil Akaun Majikan', '雇主账号资料'],
+    ['HR & Employer Portal', 'Portal HR & Majikan', 'HR 与雇主门户'], ['Account UID:', 'UID Akaun:', '账号 UID：'], ['· Joined', '· Menyertai', '· 加入时间'],
+    ['🏢 Company & HR Profile', '🏢 Profil Syarikat & HR', '🏢 企业与 HR 资料'], ['HR Contact Name *', 'Nama Pegawai HR *', 'HR 联系人姓名 *'],
+    ['Work Email Address *', 'Alamat E-mel Kerja *', '工作邮箱 *'], ['Company Name *', 'Nama Syarikat *', '企业名称 *'],
+    ['HR / Executive Title *', 'Jawatan HR / Eksekutif *', 'HR／管理职位 *'], ['Company Size', 'Saiz Syarikat', '企业规模'],
+    ['1–50 Employees (Small / Startup)', '1–50 Pekerja (Kecil / Syarikat Pemula)', '1–50 名员工（小型／初创企业）'],
+    ['51–250 Employees (Medium Enterprise)', '51–250 Pekerja (Perusahaan Sederhana)', '51–250 名员工（中型企业）'],
+    ['250+ Employees (Large Enterprise)', '250+ Pekerja (Perusahaan Besar)', '250 名以上员工（大型企业）'],
+    ['Industry Sector', 'Sektor Industri', '行业领域'], ['General Enterprise', 'Perusahaan Umum', '综合企业'],
+    ['Company Headquarters / Office Location', 'Ibu Pejabat / Lokasi Pejabat Syarikat', '企业总部／办公地点'],
+    ['Save Company Changes →', 'Simpan Perubahan Syarikat →', '保存企业信息 →'], ['Update Password →', 'Kemas Kini Kata Laluan →', '更新密码 →'],
+    ['CareerLens · Private sharing', 'CareerLens · Perkongsian Peribadi', 'CareerLens · 私密分享'],
+    ['Access unavailable', 'Akses tidak tersedia', '无法访问'], ['Sign in / return to CareerLens', 'Log masuk / kembali ke CareerLens', '登录／返回 CareerLens'],
+    ['shared a CV with you', 'berkongsi CV dengan anda', '与你分享了一份简历'],
+    ['Only your signed-in account can use this link. Access expires', 'Hanya akaun anda yang telah log masuk boleh menggunakan pautan ini. Akses tamat', '只有已登录的账号可以使用此链接。访问权限到期时间'],
+    ['The owner can revoke access or replace the CV. Please respect the agreed purpose of this share.', 'Pemilik boleh membatalkan akses atau menggantikan CV. Sila hormati tujuan perkongsian yang dipersetujui.', '所有者可以撤销访问权限或替换简历。请遵守双方约定的分享用途。'],
+    ['Download shared original PDF', 'Muat Turun PDF Asal yang Dikongsi', '下载分享的原始 PDF'], ['Reviewed career summary', 'Ringkasan Kerjaya yang Disemak', '已审核的职业摘要'],
+    ['No summary provided.', 'Tiada ringkasan diberikan.', '未提供摘要。'], ['Not specified', 'Tidak dinyatakan', '未填写'],
+    ['Reviewed by the CV owner. CareerLens has not independently verified these qualifications or skills.', 'Disemak oleh pemilik CV. CareerLens tidak mengesahkan kelayakan atau kemahiran ini secara bebas.', '由简历所有者审核。CareerLens 未独立核实这些资历或技能。'],
+    ['The owner shared only the original PDF. Their structured profile is private.', 'Pemilik hanya berkongsi PDF asal. Profil berstruktur mereka kekal peribadi.', '所有者只分享了原始 PDF，其结构化资料仍为私密。'],
+    ['Return to workspace', 'Kembali ke ruang kerja', '返回工作区'],
+    ['Account Settings & Profile', 'Tetapan Akaun & Profil', '账号设置与个人资料'],
+    ['Write or review your executive summary. Highlight your core expertise and career background.', 'Tulis atau semak ringkasan profesional anda. Nyatakan kepakaran utama dan latar belakang kerjaya.', '填写或检查职业摘要，突出你的核心专长和职业背景。'],
+    ['e.g. Aisha Rahman', 'cth. Aisha Rahman', '例如：Aisha Rahman'], ['e.g. Junior Financial Auditor', 'cth. Juruaudit Kewangan Junior', '例如：初级财务审计师'],
+    ['e.g. W.P. Kuala Lumpur', 'cth. Wilayah Persekutuan Kuala Lumpur', '例如：吉隆坡联邦直辖区'],
+    ['e.g. Senior Auditor at ABC Corp (2022 - Present)', 'cth. Juruaudit Kanan di ABC Corp (2022 - Kini)', '例如：ABC 公司高级审计师（2022 年至今）'],
+    ['e.g. Bachelor of Accounting, Universiti Malaya', 'cth. Ijazah Sarjana Muda Perakaunan, Universiti Malaya', '例如：马来亚大学会计学学士'],
+    ['e.g. Automated ESG Compliance Audit Pipeline', 'cth. Aliran Kerja Audit Pematuhan ESG Automatik', '例如：自动化 ESG 合规审计流程'],
+    ['e.g. ACCA Member, AWS Certified Cloud Practitioner', 'cth. Ahli ACCA, AWS Certified Cloud Practitioner', '例如：ACCA 会员、AWS 云从业者认证'],
+    ['Type a skill and press Enter (e.g. Financial Modeling, Python, IFRS)...', 'Taip kemahiran dan tekan Enter (cth. Pemodelan Kewangan, Python, IFRS)...', '输入技能并按回车（例如财务建模、Python、IFRS）……'],
+    ['Your learning overview', 'Ringkasan pembelajaran anda', '你的学习概览'], ['Pomodoro study timer', 'Pemasa belajar Pomodoro', '番茄钟学习计时器'],
+    ['Learning steps, scroll horizontally', 'Langkah pembelajaran, tatal secara mendatar', '学习步骤，可横向滚动'],
+    ['Click to upload custom photo', 'Klik untuk memuat naik foto tersuai', '点击上传自定义照片'], ['Upload your profile picture', 'Muat naik gambar profil anda', '上传个人头像'],
+    ['Woman', 'Wanita', '女性'], ['Man', 'Lelaki', '男性'], ['Tech', 'Teknologi', '科技'], ['Graduate', 'Graduan', '毕业生'],
+    ['Remove custom photo', 'Buang foto tersuai', '移除自定义照片'],
+    ['e.g. Artificial Intelligence Ethics & Robotics', 'cth. Etika Kecerdasan Buatan & Robotik', '例如：人工智能伦理与机器人技术'],
+    ['Summarize your key strengths, certifications, or career aspirations...', 'Ringkaskan kekuatan utama, pensijilan atau aspirasi kerjaya anda...', '概述你的核心优势、证书或职业目标……'],
+    ['Min. 8 characters', 'Min. 8 aksara', '至少 8 个字符'],
+    ['e.g. Melaka radius map dot inquiry', 'cth. pertanyaan peta radius Melaka', '例如：询问马六甲附近地图搜索'],
+    ['Please describe your question or feedback in detail...', 'Sila terangkan soalan atau maklum balas anda dengan terperinci...', '请详细描述你的问题或反馈……'],
+    ['Edit Profile', 'Edit Profil', '编辑资料'], ['Edit your account information', 'Edit maklumat akaun anda', '编辑账号信息'],
+    ['Update password', 'Kemas kini kata laluan', '更新密码'], ['Choose a fictional PDF CV', 'Pilih CV PDF fiksyen', '选择虚构的 PDF 简历'],
+    ['Upload progress', 'Kemajuan muat naik', '上传进度'], ['Select State or Wilayah Persekutuan', 'Pilih Negeri atau Wilayah Persekutuan', '选择州属或联邦直辖区'],
+    ['Enter condo, building, street, or area (e.g. Banyan Mont Kiara, PV128 Setapak, Mount Austin)...', 'Masukkan kondominium, bangunan, jalan atau kawasan (cth. Banyan Mont Kiara, PV128 Setapak, Mount Austin)...', '输入公寓、建筑、街道或地区（例如 Banyan Mont Kiara、PV128 Setapak、Mount Austin）……'],
+    ['Clear', 'Kosongkan', '清除'], ['🔍 Search by job title, skill, or company...', '🔍 Cari mengikut jawatan, kemahiran atau syarikat...', '🔍 按职位、技能或企业搜索……'],
+    ['Filter by job sector', 'Tapis mengikut sektor pekerjaan', '按职位行业筛选'], ['Sort job vacancies', 'Susun kekosongan kerja', '排序招聘职位'],
+    ['Close application', 'Tutup permohonan', '关闭申请'], ['Enter current password', 'Masukkan kata laluan semasa', '输入当前密码'],
+    ['View & Edit Account Profile', 'Lihat & Edit Profil Akaun', '查看和编辑账号资料'], ['Company Profile', 'Profil Syarikat', '企业资料'],
+    ['Edit Company Account & Profile', 'Edit Akaun & Profil Syarikat', '编辑企业账号与资料'], ['Your full name', 'Nama penuh anda', '你的姓名'],
+    ['e.g. Nexus Digital Sdn Bhd', 'cth. Nexus Digital Sdn Bhd', '例如：Nexus Digital Sdn Bhd'],
+    ['e.g. Head of Talent & Reskilling', 'cth. Ketua Bakat & Latihan Semula', '例如：人才与技能提升主管'],
+    ['e.g. Kuala Lumpur, Malaysia', 'cth. Kuala Lumpur, Malaysia', '例如：马来西亚吉隆坡'],
+    ['Min. 8 chars with uppercase, lowercase, number & symbol', 'Min. 8 aksara dengan huruf besar, huruf kecil, nombor & simbol', '至少 8 个字符，包含大写字母、小写字母、数字和符号']
+  );
   rows.push(
     ['Auto generate', 'Jana automatik', '自动生成'],
     ['Pomodoro buddy', 'Teman Pomodoro', '番茄学习搭子'],
@@ -961,6 +1245,465 @@ Describe a problem you solved that was blocking your team's delivery.|Terangkan 
     ['Selected', 'Dipilih', '已选'],
     ['Limited evidence', 'Bukti terhad', '依据不足'],
     ['Why this role?', 'Mengapa jawatan ini?', '推荐依据'],
+  );
+  rows.push(
+    ['Edit Profile ⚙️', 'Edit Profil ⚙️', '编辑资料 ⚙️'], ['Email', 'E-mel', '邮箱'], ['Phone', 'Telefon', '电话'], ['Joined', 'Menyertai', '加入时间'],
+    ['This prototype uses a local, rule-based PDF parser; it is not a trained AI model and does not verify qualifications. Do not upload real names, contact details, identity documents, or confidential information. Text-based PDFs work best; image-only scans need OCR before upload.', 'Prototaip ini menggunakan penghurai PDF setempat berasaskan peraturan; ia bukan model AI terlatih dan tidak mengesahkan kelayakan. Jangan muat naik nama sebenar, maklumat hubungan, dokumen pengenalan atau maklumat sulit. PDF berasaskan teks memberikan hasil terbaik; imbasan imej memerlukan OCR.', '此原型使用本地规则式 PDF 解析器，并非训练过的 AI 模型，也不会核实资历。请勿上传真实姓名、联系方式、身份证件或机密信息。文本型 PDF 效果较好；纯图片扫描件需要 OCR。'],
+    ['2. Review your organised profile', '2. Semak profil tersusun anda', '2. 审核整理后的资料'],
+    ['Upload a PDF CV above to extract your structured profile', 'Muat naik CV PDF di atas untuk mengekstrak profil berstruktur anda', '上传上方的 PDF 简历以提取结构化资料'],
+    ['Review required before sharing', 'Semakan diperlukan sebelum perkongsian', '分享前必须审核'],
+    ['Draft professional summary', 'Draf ringkasan profesional', '职业摘要草稿'], ['Personal & career details', 'Butiran peribadi & kerjaya', '个人与职业资料'],
+    ['Check your contact information and work preferences.', 'Semak maklumat hubungan dan pilihan kerja anda.', '检查你的联系方式和工作偏好。'],
+    ['Current role / headline', 'Jawatan semasa / tajuk profil', '当前职位／个人简介'], ['Industry sector', 'Sektor industri', '行业领域'],
+    ['Preferred work mode', 'Mod kerja pilihan', '偏好的工作模式'], ['Leave blank if unknown; 0 means no experience.', 'Biarkan kosong jika tidak diketahui; 0 bermaksud tiada pengalaman.', '未知可留空；0 表示没有经验。'],
+    ['Keep each entry clear and supported by your CV.', 'Pastikan setiap entri jelas dan disokong oleh CV anda.', '请确保每项内容清晰，并有简历内容作为依据。'],
+    ['Work experience', 'Pengalaman kerja', '工作经历'], ['extracted mentions are not proof of proficiency', 'sebutan yang diekstrak bukan bukti kemahiran', '简历提及不代表已证明熟练掌握'],
+    ['Original extraction evidence (before your edits)', 'Bukti pengekstrakan asal (sebelum suntingan anda)', '原始提取依据（修改前）'],
+    ['Quotes and page numbers explain the parser\'s draft. Your edits are self-reported and are not independently verified.', 'Petikan dan nombor halaman menerangkan draf penghurai. Suntingan anda dilaporkan sendiri dan tidak disahkan secara bebas.', '引文和页码用于说明解析器生成的草稿。你的修改属于自行申报，未经独立核实。'],
+    ['I have checked the summary, contact details, sections and skills against the PDF, and corrected any mistakes. Mark this profile as reviewed when I save.', 'Saya telah menyemak ringkasan, maklumat hubungan, bahagian dan kemahiran berdasarkan PDF serta membetulkan kesilapan. Tandakan profil ini sebagai disemak apabila saya menyimpannya.', '我已对照 PDF 检查摘要、联系方式、各部分和技能，并更正错误。保存时请将资料标记为已审核。'],
+    ['Browse & Apply Jobs →', 'Layari & Mohon Kerja →', '浏览并申请职位 →'], ['Save reviewed profile →', 'Simpan profil yang disemak →', '保存已审核的资料 →'],
+    ['3. Manage employer access', '3. Urus akses majikan', '3. 管理雇主访问权限'],
+    ['Use Current Location', 'Gunakan Lokasi Semasa', '使用当前位置'], ['Display Scope', 'Skop Paparan', '显示范围'], ['Matched Only', 'Padanan Sahaja', '仅显示匹配项'],
+    ['View All Nearby', 'Lihat Semua yang Berdekatan', '查看附近全部'], ['Nearby Hiring Companies', 'Syarikat yang Mengambil Pekerja Berdekatan', '附近招聘企业'],
+    ['Your Location', 'Lokasi Anda', '你的位置'], ['Clear Company Filter', 'Kosongkan Penapis Syarikat', '清除企业筛选'], ['Matched Roles', 'Jawatan Sepadan', '匹配职位'],
+    ['All Nearby Roles', 'Semua Jawatan Berdekatan', '附近所有职位'], ['Load More Jobs ↓', 'Muatkan Lebih Banyak Kerja ↓', '加载更多职位 ↓'],
+    ['AI Verification', 'Pengesahan AI', 'AI 核验'], ['Refresh Trends', 'Muat Semula Trend', '刷新趋势'], ['Data Sources & Citations', 'Sumber Data & Rujukan', '数据来源与引用'],
+    ['Account Profile & Settings', 'Profil Akaun & Tetapan', '账号资料与设置'], ['User ID:', 'ID Pengguna:', '用户编号：'], ['Profile Information', 'Maklumat Profil', '个人资料'],
+    ['Full Name', 'Nama Penuh', '姓名'], ['Email Address', 'Alamat E-mel', '邮箱地址'], ['Current Role / Title', 'Jawatan Semasa / Gelaran', '当前职位／职称'],
+    ['Career Field / Industry', 'Bidang Kerjaya / Industri', '职业领域／行业'], ['Preferred Work Mode', 'Mod Kerja Pilihan', '偏好的工作模式'], ['Location / City', 'Lokasi / Bandar', '地点／城市'],
+    ['Sharing is your choice', 'Perkongsian ialah pilihan anda', '是否分享由你决定'], ['Active', 'Aktif', '有效'],
+    ['Your CV stays private until you choose a recipient and access scope. This demo does not verify real-world identity or certify legal compliance.', 'CV anda kekal peribadi sehingga anda memilih penerima dan skop akses. Demo ini tidak mengesahkan identiti sebenar atau memperakui pematuhan undang-undang.', '在你选择接收者和访问范围前，简历会保持私密。本演示不会核实真实身份或认证法律合规性。'],
+    ['Save Profile Changes →', 'Simpan Perubahan Profil →', '保存资料修改 →'], ['Current Password', 'Kata Laluan Semasa', '当前密码'], ['New Password', 'Kata Laluan Baharu', '新密码'],
+    ['Review the extracted summary. Keep only statements supported by the CV.', 'Semak ringkasan yang diekstrak. Kekalkan hanya kenyataan yang disokong oleh CV.', '检查提取的摘要，只保留简历有依据的内容。'],
+    ['One entry per line', 'Satu entri setiap baris', '每行填写一项'], ['Add a skill and press Enter (e.g. Python Data Analysis)', 'Tambah kemahiran dan tekan Enter (cth. Analisis Data Python)', '添加技能并按回车（例如 Python 数据分析）'],
+    ['Search by job title, skill, or company...', 'Cari mengikut jawatan, kemahiran atau syarikat...', '按职位、技能或企业搜索……'],
+    ['Your display name', 'Nama paparan anda', '你的显示名称'], ['e.g. Financial Auditor / Software Dev', 'cth. Juruaudit Kewangan / Pembangun Perisian', '例如：财务审计师／软件开发人员'],
+    ['Re-type new password', 'Taip semula kata laluan baharu', '再次输入新密码'], ['Employer Company', 'Syarikat Majikan', '雇主企业'], ['Refresh', 'Muat Semula', '刷新'],
+    ['Company & HR Profile', 'Profil Syarikat & HR', '企业与 HR 资料'], ['HR Contact Name', 'Nama Pegawai HR', 'HR 联系人姓名'],
+    ['Work Email Address', 'Alamat E-mel Kerja', '工作邮箱'], ['Company Name', 'Nama Syarikat', '企业名称'], ['HR / Executive Title', 'Jawatan HR / Eksekutif', 'HR／管理职位'],
+    ['Shared CV · CareerLens', 'CV Dikongsi · CareerLens', '共享简历 · CareerLens'], ['PDF', 'PDF', 'PDF'], ['Try sample', 'Cuba sampel', '试用示例'],
+    ['No source quote available.', 'Tiada petikan sumber tersedia.', '没有可用的原文引述。'], ['No field evidence available.', 'Tiada bukti medan tersedia.', '没有可用的字段依据。'],
+    ['CV wording signals · local keyword heuristics', 'Petunjuk perkataan CV · heuristik kata kunci setempat', '简历措辞信号 · 本地关键词规则'],
+    ['(confidence not validated) · Major:', '(keyakinan belum disahkan) · Pengkhususan:', '（置信度未验证）· 专业：'],
+    ['No recorded employer access.', 'Tiada akses majikan direkodkan.', '尚无雇主访问记录。'], ['Withdraw & revoke access', 'Tarik Balik & Batalkan Akses', '撤回申请并取消访问权限'],
+    ['No active applications. No employer has permission to access this CV through an application.', 'Tiada permohonan aktif. Tiada majikan dibenarkan mengakses CV ini melalui permohonan.', '目前没有有效申请。没有雇主通过申请获准访问此简历。'],
+    ['No skills extracted. Add only skills supported by the CV.', 'Tiada kemahiran diekstrak. Tambah hanya kemahiran yang disokong oleh CV.', '未提取到技能。请只添加简历内容能够证明的技能。'],
+    ['Select State / Wilayah...', 'Pilih Negeri / Wilayah...', '选择州属／联邦直辖区……'], ['available at this company', 'tersedia di syarikat ini', '此企业提供'],
+    ['Available Positions', 'Jawatan Tersedia', '可申请职位'], ['View All Nearby Roles →', 'Lihat Semua Jawatan Berdekatan →', '查看附近所有职位 →'],
+    ['APPLIED', 'DIPOHON', '已申请'], ['Applied', 'Telah Dipohon', '已申请'], ['Choose access for this vacancy owner', 'Pilih akses untuk pemilik jawatan ini', '选择向此职位发布企业提供的访问权限'],
+    ['Aggregate demo statistics', 'Statistik demo agregat', '汇总演示统计数据'],
+  );
+  rows.push(
+    ["Analyzing CV and generating 3 targeted verification scenarios...","Menganalisis CV dan menjana 3 senario pengesahan yang disasarkan...","正在分析简历并生成 3 道针对性验证情景题……"],
+    ["Failed to generate questions. Please try again.","Gagal menjana soalan. Sila cuba lagi.","问题生成失败，请重试。"],
+    ["Network error while generating questions.","Ralat rangkaian semasa menjana soalan.","生成问题时发生网络错误。"],
+    ["Submission failed. Try again.","Penghantaran gagal. Sila cuba lagi.","提交失败，请重试。"],
+    ["Account & Profile","Akaun & Profil","账号与资料"],
+    ["Account & Professional Background","Akaun & Latar Belakang Profesional","账号与职业背景"],
+    ["Account profile & skills vault","Profil akaun & peti kemahiran","账号资料与技能库"],
+    ["Saving...","Menyimpan...","正在保存……"],
+    ["Account profile updated successfully!","Profil akaun berjaya dikemas kini!","账号资料更新成功！"],
+    ["Please enter all password fields.","Sila isi semua ruangan kata laluan.","请填写所有密码栏。"],
+    ["New passwords do not match.","Kata laluan baharu tidak sepadan.","两次新密码不一致。"],
+    ["Updating...","Sedang mengemas kini...","正在更新……"],
+    ["Password updated successfully!","Kata laluan berjaya dikemas kini!","密码更新成功！"],
+    ["Unsaved changes. Check your edits and confirm the review before saving.","Perubahan belum disimpan. Semak suntingan anda dan sahkan semakan sebelum menyimpan.","有未保存的修改。请核对修改并确认审核后再保存。"],
+    ["Unsaved changes","Perubahan belum disimpan","有未保存的修改"],
+    ["Discard unsaved edits and reload the saved profile?","Buang suntingan yang belum disimpan dan muat semula profil tersimpan?","放弃未保存的修改并重新加载已保存的资料？"],
+    ["Replace the current PDF and organised profile?","Gantikan PDF dan profil tersusun yang sedang digunakan?","替换当前 PDF 和整理后的资料？"],
+    ["Your current profile edits will be replaced.","Suntingan profil semasa anda akan digantikan.","当前资料修改将被替换。"],
+    ["Any links shared with named recipients will also be revoked. Previously downloaded copies cannot be retracted.","Semua pautan yang dikongsi dengan penerima bernama turut dibatalkan. Salinan yang telah dimuat turun tidak dapat ditarik balik.","分享给指定接收者的链接也会被撤销，已下载的副本无法收回。"],
+    ["Your vault change was saved, but some related data could not refresh. Please reload.","Perubahan peti anda telah disimpan, tetapi sebahagian data berkaitan gagal dimuat semula. Sila muat semula.","简历库修改已保存，但部分相关数据未能刷新，请重新加载页面。"],
+    ["PDF processed. Review the draft before sharing.","PDF telah diproses. Semak draf sebelum berkongsi.","PDF 已处理，请在分享前审核草稿。"],
+    ["Preference saved. Aggregate publication is currently disabled.","Keutamaan disimpan. Penerbitan data agregat dimatikan buat masa ini.","偏好已保存，目前不发布汇总统计。"],
+    ["Check your profile against the PDF, then tick the review confirmation.","Bandingkan profil anda dengan PDF, kemudian tandakan pengesahan semakan.","请对照 PDF 核对资料，然后勾选审核确认。"],
+    ["Enter the name shown on the fictional CV.","Masukkan nama yang tertera pada CV rekaan.","请输入虚构简历上的姓名。"],
+    ["Saving these edits will withdraw existing applications and revoke recipient sharing. Continue?","Menyimpan suntingan ini akan menarik balik permohonan sedia ada dan membatalkan perkongsian kepada penerima. Teruskan?","保存这些修改将撤回现有申请并撤销接收者访问授权，是否继续？"],
+    ["Saving your reviewed profile…","Menyimpan profil yang telah disemak…","正在保存已审核资料……"],
+    ["Reviewed profile saved. Choose employer access when you apply.","Profil yang disemak telah disimpan. Pilih akses majikan semasa memohon.","已保存审核后的资料，请在申请职位时选择雇主访问权限。"],
+    ["Exported the saved profile. Unsaved edits are not included.","Profil tersimpan telah dieksport. Suntingan yang belum disimpan tidak disertakan.","已导出保存的资料，不包含未保存的修改。"],
+    ["Delete your stored PDF and organised profile, withdraw all applications and revoke future employer and recipient access? This cannot be undone. Previously downloaded copies cannot be retracted.","Padam PDF dan profil tersusun yang disimpan, tarik balik semua permohonan serta batalkan akses majikan dan penerima pada masa hadapan? Tindakan ini tidak boleh dibuat asal. Salinan yang telah dimuat turun tidak dapat ditarik balik.","删除已保存的 PDF 和整理后的资料，撤回所有申请并撤销雇主及接收者的后续访问权限？此操作无法撤销，已下载的副本无法收回。"],
+    ["Please enter a building, street, or area name.","Sila masukkan nama bangunan, jalan atau kawasan.","请输入建筑、街道或地区名称。"],
+    ["Location services are unavailable in this browser.","Perkhidmatan lokasi tidak tersedia dalam pelayar ini.","此浏览器无法使用定位服务。"],
+    ["Detecting Location...","Mengesan lokasi...","正在获取位置……"],
+    ["Location access was declined. Please search your address or select a state.","Akses lokasi ditolak. Sila cari alamat anda atau pilih negeri.","定位权限被拒绝，请搜索地址或选择州属。"],
+    ["Save your reviewed CV before choosing application permissions.","Simpan CV yang telah disemak sebelum memilih kebenaran permohonan.","请先保存已审核的简历，再选择申请权限。"],
+    ["Choose what to share before applying.","Pilih perkara yang ingin dikongsi sebelum memohon.","申请前请选择要分享的内容。"],
+    ["Save your reviewed profile before sharing.","Simpan profil yang telah disemak sebelum berkongsi.","分享前请先保存已审核的资料。"],
+    ["Withdraw application and revoke future employer access? Previously downloaded copies cannot be recalled.","Tarik balik permohonan dan batalkan akses majikan pada masa hadapan? Salinan yang telah dimuat turun tidak dapat ditarik balik.","撤回申请并撤销雇主的后续访问权限？已下载的副本无法收回。"],
+    ["3 AI Verification questions successfully generated!","3 soalan Pengesahan AI berjaya dijana!","已成功生成 3 道 AI 技能验证题！"],
+    ["Submitting answers...","Menghantar jawapan...","正在提交答案……"],
+    ["Verification answers evaluated!","Jawapan pengesahan telah dinilai!","验证答案已评分！"],
+    ["Open explicitly shared original PDF","Buka PDF asal yang dikongsi secara jelas","打开已明确授权分享的原始 PDF"],
+    ["Reviewed professional summary","Ringkasan profesional yang disemak","已审核的职业摘要"],
+    ["Review status","Status semakan","审核状态"],
+    ["Reviewed by the CV owner","Disemak oleh pemilik CV","已由简历所有者审核"],
+    ["Not independently verified","Tidak disahkan secara bebas","未经独立核实"],
+    ["Access to this CV has been recorded in the candidate's access log.","Akses kepada CV ini telah direkodkan dalam log akses calon.","此次简历访问已记录在候选人的访问日志中。"],
+    ["Employer profile updated successfully!","Profil majikan berjaya dikemas kini!","雇主资料更新成功！"],
+    ["Vacancies unavailable","Kekosongan jawatan tidak tersedia","招聘职位暂不可用"],
+    ["Vacancy created","Kekosongan jawatan telah dibuat","职位已创建"],
+    ["Delete this vacancy?","Padam kekosongan jawatan ini?","删除此招聘职位？"],
+    ["Vacancy deleted","Kekosongan jawatan dipadam","职位已删除"],
+    ["Questions copied","Soalan disalin","问题已复制"],
+    ["Copy failed","Gagal menyalin","复制失败"],
+    ["Ask Lumi","Tanya Lumi","询问 Lumi"],
+    ["Career Advisor","Penasihat Kerjaya","职业顾问"],
+    ["Preparing your career insights...","Menyediakan pandangan kerjaya anda...","正在准备职业建议……"],
+    ["Unable to start a secure session.","Tidak dapat memulakan sesi yang selamat.","无法建立安全会话。"],
+    ["Google processing is off. Choose a role yourself or allow processing above.","Pemprosesan Google dimatikan. Pilih jawatan sendiri atau benarkan pemprosesan di atas.","Google 处理已关闭，请自行选择岗位，或在上方授权处理。"],
+    ["Recipient-only link","Pautan untuk penerima sahaja","仅限接收者使用的链接"],
+    ["Recipient-only share link","Pautan perkongsian untuk penerima sahaja","仅限接收者使用的分享链接"],
+    ["Revoke access","Batalkan akses","撤销访问权限"],
+    ["No active recipient shares.","Tiada perkongsian penerima yang aktif.","暂无有效的接收者分享。"],
+    ["Choose the content to share.","Pilih kandungan untuk dikongsi.","请选择要分享的内容。"],
+    ["Recipient access revoked.","Akses penerima telah dibatalkan.","已撤销接收者访问权限。"],
+    ["Could not load recipient access.","Tidak dapat memuatkan akses penerima.","无法加载接收者访问权限。"],
+    ["Could not create share.","Tidak dapat membuat perkongsian.","无法创建分享。"],
+    ["Could not revoke access.","Tidak dapat membatalkan akses.","无法撤销访问权限。"],
+    ["Close Advisor","Tutup Penasihat","关闭顾问"],
+    ["Lumi · Talent & Workforce Advisor","Lumi · Penasihat Bakat & Tenaga Kerja","Lumi · 人才与团队顾问"],
+    ["Lumi · Career Advisor","Lumi · Penasihat Kerjaya","Lumi · 职业顾问"],
+    ["Support for candidate screening & workforce planning","Sokongan untuk saringan calon & perancangan tenaga kerja","提供候选人筛选与团队规划支持"],
+    ["Personalised guidance for your career, skills & job search","Panduan peribadi untuk kerjaya, kemahiran & pencarian kerja anda","为你的职业、技能及求职提供个性化建议"],
+    ["Open Lumi Career Advisor","Buka Penasihat Kerjaya Lumi","打开 Lumi 职业顾问"],
+    ["Lumi Career Advisor","Penasihat Kerjaya Lumi","Lumi 职业顾问"],
+    ["Online","Dalam talian","在线"],
+    ["Allow Google Gemini to rewrite replies using my message and reviewed CV profile. Optional; off by default.","Benarkan Google Gemini menulis semula balasan menggunakan mesej dan profil CV saya yang telah disemak. Pilihan ini dimatikan secara lalai.","允许 Google Gemini 根据我的消息及已审核简历资料改写回复。此项可选，默认关闭。"],
+    ["Ask about nearby roles, career paths, skills, or courses...","Tanya tentang jawatan berdekatan, laluan kerjaya, kemahiran atau kursus...","询问附近岗位、职业路径、技能或课程……"],
+    ["Welcome! I am Lumi, your Talent & Workforce Advisor.","Selamat datang! Saya Lumi, Penasihat Bakat & Tenaga Kerja anda.","欢迎！我是 Lumi，你的人才与团队顾问。"],
+    ["Welcome! I am Lumi, your Career Advisor.","Selamat datang! Saya Lumi, Penasihat Kerjaya anda.","欢迎！我是 Lumi，你的职业顾问。"],
+    ["How may I assist you with","Bagaimanakah saya boleh membantu anda tentang","我可以如何帮助你处理"],
+    ["candidate screening","saringan calon","候选人筛选"],
+    ["submitted applications","permohonan yang dihantar","已提交的申请"],
+    ["team skill readiness","kesediaan kemahiran pasukan","团队技能就绪度"],
+    ["today?","hari ini?","？"],
+    ["I can help you explore","Saya boleh membantu anda meneroka","我可以帮你探索"],
+    ["nearby job opportunities","peluang pekerjaan berdekatan","附近的就业机会"],
+    ["future role matches","padanan jawatan pada masa hadapan","未来岗位匹配"],
+    ["reskilling pathways","laluan latihan semula","技能提升路径"],
+    ["or review your","atau menyemak","或查看你的"],
+    ["CV profile","profil CV","简历资料"],
+    ["Ask me about","Tanya saya tentang","欢迎询问"],
+    ["career pathways, nearby job matching, skill development, or candidate screening","laluan kerjaya, padanan kerja berdekatan, pembangunan kemahiran atau saringan calon","职业路径、附近岗位匹配、技能发展或候选人筛选"],
+    ["Please let me know how I can assist you.","Beritahu saya bagaimana saya boleh membantu anda.","请告诉我你需要什么帮助。"],
+    ["Generating...","Sedang menjana...","正在生成……"],
+    ["Regenerate Questions","Jana Semula Soalan","重新生成问题"],
+    ["Type your answer or practical approach here...","Taip jawapan atau pendekatan praktikal anda di sini...","在此填写你的答案或实际做法……"],
+    ["Scenario-Based","Berasaskan Senario","情景题"],
+    ["Medium","Sederhana","中等"],
+    ["Skill Test","Ujian Kemahiran","技能测试"],
+    ["Domain & Ethics Standard","Piawaian Bidang & Etika","领域与道德规范"],
+    ["Technical Proficiency","Kecekapan Teknikal","技术能力"],
+    ["Problem Solving","Penyelesaian Masalah","问题解决"],
+    ["How do you ensure data integrity, fairness, or best industry practices when deploying solutions in team environments?","Bagaimanakah anda memastikan integriti data, keadilan atau amalan industri terbaik semasa melaksanakan penyelesaian dalam persekitaran pasukan?","在团队环境中部署方案时，你如何确保数据完整性、公平性或遵循行业最佳实践？"],
+    ["Experience not specified","Pengalaman tidak dinyatakan","未填写工作经验"],
+    ["Source not specified","Sumber tidak dinyatakan","未注明来源"],
+    ["unverified","belum disahkan","未经验证"],
+    ["full name","nama penuh","姓名"],
+    ["current role","jawatan semasa","当前岗位"],
+    ["years experience","tahun pengalaman","工作年限"],
+    ["education level","tahap pendidikan","学历"],
+    ["work mode preference","pilihan mod kerja","工作模式偏好"],
+    ["executive summary","ringkasan eksekutif","职业摘要"],
+    ["work experience","pengalaman kerja","工作经历"],
+    ["education history","sejarah pendidikan","教育经历"],
+    ["Name","Nama","姓名"],
+    ["Role","Jawatan","岗位"],
+    ["Qualification","Kelayakan","学历"],
+    ["Work preference","Pilihan kerja","工作偏好"],
+    ["Skills mentioned or owner supplied","Kemahiran yang disebut atau diberikan oleh pemilik","简历提及或所有者补充的技能"],
+    ["Experience","Pengalaman","工作经历"],
+    ["Practical Problem Solving","Penyelesaian Masalah Praktikal","实际问题解决"],
+    ["Technical Competency","Kecekapan Teknikal","技术能力"],
+    ["Intermediate","Pertengahan","中级"],
+    ["Advanced","Lanjutan","高级"],
+    ["Describe a scenario where you optimized a workflow or resolved a critical bug/bottleneck in your past experience.","Huraikan situasi apabila anda mengoptimumkan aliran kerja atau menyelesaikan pepijat kritikal atau kesesakan berdasarkan pengalaman lalu.","请描述你过去优化工作流程，或解决重大错误／瓶颈的一次经历。"],
+    ["Counts of words and phrases are prompts for review, not proof of ability or hiring suitability.","Kiraan perkataan dan frasa ialah petunjuk untuk disemak, bukannya bukti kebolehan atau kesesuaian untuk diambil bekerja.","词语和短语的统计仅供审核参考，不证明能力或岗位适配性。"],
+    ["Wording signals are prompts for review, not proof of ability or hiring suitability.","Petunjuk perkataan ialah panduan untuk disemak, bukannya bukti kebolehan atau kesesuaian untuk diambil bekerja.","措辞信号仅供审核参考，不证明能力或岗位适配性。"],
+    ["Upload a fictional PDF or try a sample to create your profile.","Muat naik PDF rekaan atau cuba sampel untuk mencipta profil anda.","上传虚构 PDF 或试用示例以创建资料。"],
+    ["Upload a fictional PDF or choose a sample to begin.","Muat naik PDF rekaan atau pilih sampel untuk bermula.","上传虚构 PDF 或选择示例以开始。"],
+    ["Saved profile is ready for your sharing choices.","Profil tersimpan sedia untuk pilihan perkongsian anda.","资料已保存，可以选择分享权限。"],
+    ["This draft cannot be shared until you review and save it.","Draf ini tidak boleh dikongsi sehingga anda menyemak dan menyimpannya.","审核并保存前，无法分享此草稿。"],
+    ["Checking your PDF…","Menyemak PDF anda…","正在检查 PDF……"],
+    ["Choose a PDF file.","Pilih fail PDF.","请选择 PDF 文件。"],
+    ["Confirm that this custom PDF contains only fictional information before uploading.","Sahkan bahawa PDF tersuai ini hanya mengandungi maklumat rekaan sebelum memuat naik.","上传前请确认此 PDF 仅包含虚构信息。"],
+    ["Checking sample PDF…","Menyemak PDF sampel…","正在检查示例 PDF……"],
+    ["Could not export your profile.","Tidak dapat mengeksport profil anda.","无法导出资料。"],
+    ["Your vault could not be deleted.","Peti anda tidak dapat dipadam.","无法删除简历库。"],
+    ["Vault deleted and sharing revoked.","Peti dipadam dan perkongsian dibatalkan.","已删除简历库并撤销分享。"],
+    ["This discovery listing has no recipient account for an in-app application.","Penyenaraian penemuan ini tidak mempunyai akaun penerima untuk permohonan dalam aplikasi.","此职位信息没有关联接收账号，无法在应用内申请。"],
+    ["Could not submit application.","Tidak dapat menghantar permohonan.","无法提交申请。"],
+    ["Could not withdraw.","Tidak dapat menarik balik.","无法撤回。"],
+    ["Access denied to CV.","Akses kepada CV ditolak.","无权访问此简历。"],
+    ["Here is your latest career snapshot.","Berikut ialah gambaran kerjaya terkini anda.","这是你最新的职业概览。"],
+    ["Complete the steps below to unlock your full plan.","Lengkapkan langkah di bawah untuk membuka pelan penuh anda.","完成以下步骤，查看完整计划。"],
+    ["Start by picking a sample persona or listing your skills.","Mulakan dengan memilih persona sampel atau menyenaraikan kemahiran anda.","请先选择示例人物或填写技能。"],
+    ["Enter the recipient's registered CareerLens email.","Masukkan e-mel CareerLens berdaftar penerima.","请输入接收者注册 CareerLens 时使用的邮箱。"],
+    ["Choose the summary, original PDF, or both to share.","Pilih ringkasan, PDF asal atau kedua-duanya untuk dikongsi.","请选择分享摘要、原始 PDF，或两者都分享。"],
+    ["Choose an expiry of 1, 7, or 30 days.","Pilih tempoh luput 1, 7 atau 30 hari.","请选择 1、7 或 30 天的有效期。"],
+    ["Upload and review your CV first.","Muat naik dan semak CV anda dahulu.","请先上传并审核简历。"],
+    ["Your CV changed. Refresh and review it before sharing.","CV anda telah berubah. Muat semula dan semak sebelum berkongsi.","简历已更改，请刷新并审核后再分享。"],
+    ["Review and save your profile before sharing.","Semak dan simpan profil anda sebelum berkongsi.","请审核并保存资料后再分享。"],
+    ["No matching recipient account. Ask them to register with this email first.","Tiada akaun penerima yang sepadan. Minta mereka mendaftar menggunakan e-mel ini dahulu.","未找到对应的接收者账号，请让对方先使用此邮箱注册。"],
+    ["Your own CV is already available in your vault.","CV anda sendiri sudah tersedia dalam peti anda.","你可以直接在简历库查看自己的简历。"],
+    ["Account not found.","Akaun tidak ditemui.","未找到账号。"],
+    ["Full name must be at least 2 characters.","Nama penuh mestilah sekurang-kurangnya 2 aksara.","姓名至少需要 2 个字符。"],
+    ["This email address is already in use by another account.","Alamat e-mel ini telah digunakan oleh akaun lain.","该邮箱已被其他账号使用。"],
+    ["Please enter both your current password and a new password.","Sila masukkan kata laluan semasa dan kata laluan baharu.","请输入当前密码和新密码。"],
+    ["New passwords do not match. Please verify and re-type.","Kata laluan baharu tidak sepadan. Sila semak dan taip semula.","两次新密码不一致，请核对并重新输入。"],
+    ["Current password is incorrect. Please try again.","Kata laluan semasa tidak betul. Sila cuba lagi.","当前密码不正确，请重试。"],
+    ["This file is not a public synthetic demo CV.","Fail ini bukan CV demo sintetik awam.","此文件并非公开的合成示例简历。"],
+    ["Your session changed. Refresh this page and try again.","Sesi anda telah berubah. Muat semula halaman ini dan cuba lagi.","会话已更改，请刷新页面后重试。"],
+    ["This request must come from CareerLens.","Permintaan ini mesti berasal daripada CareerLens.","此请求必须来自 CareerLens。"],
+    ["Upload one PDF CV, no larger than 8 MB.","Muat naik satu CV PDF yang saiznya tidak melebihi 8 MB.","请上传一个不超过 8 MB 的 PDF 简历。"],
+    ["The request could not be read. Refresh and try again.","Permintaan tidak dapat dibaca. Muat semula dan cuba lagi.","无法读取请求，请刷新后重试。"],
+    ["Please sign in first.","Sila log masuk dahulu.","请先登录。"],
+    ["Logged out successfully.","Berjaya log keluar.","已成功退出登录。"],
+    ["Unknown questionnaire action.","Tindakan soal selidik tidak diketahui.","未知的问卷操作。"],
+    ["Invalid questionnaire request.","Permintaan soal selidik tidak sah.","问卷请求无效。"],
+    ["For this hackathon demo, confirm this is a synthetic CV with no real personal data.","Untuk demo hackathon ini, sahkan bahawa CV ini ialah CV sintetik tanpa data peribadi sebenar.","请确认此次黑客松演示使用的简历为合成简历，不含真实个人信息。"],
+    ["Please select a valid .pdf CV file to upload.","Sila pilih fail CV .pdf yang sah untuk dimuat naik.","请选择有效的 .pdf 简历文件上传。"],
+    ["Analytics consent must be true or false.","Persetujuan analitik mesti bernilai benar atau palsu.","统计授权必须选择同意或不同意。"],
+    ["No CV found to export.","Tiada CV ditemui untuk dieksport.","没有可导出的简历。"],
+    ["Access revoked.","Akses dibatalkan.","已撤销访问。"],
+    ["Share not found.","Perkongsian tidak ditemui.","未找到分享记录。"],
+    ["This shared PDF is unavailable for your account.","PDF yang dikongsi ini tidak tersedia untuk akaun anda.","你的账号无法访问此共享 PDF。"],
+    ["No uploaded PDF CV found.","Tiada CV PDF yang dimuat naik ditemui.","未找到已上传的 PDF 简历。"],
+    ["lat and lng required","Latitud dan longitud diperlukan","需要提供纬度和经度。"],
+    ["This is a discovery listing without a connected employer account. Your CV has not been sent.","Ini ialah penyenaraian penemuan tanpa akaun majikan yang disambungkan. CV anda tidak dihantar.","此职位信息未关联雇主账号，你的简历尚未发送。"],
+    ["Trend data successfully updated!","Data trend berjaya dikemas kini!","趋势数据更新成功！"],
+    ["Vacancy not found.","Kekosongan jawatan tidak ditemui.","未找到招聘职位。"],
+    ["Candidate did not grant access to their organised CV summary.","Calon tidak memberikan akses kepada ringkasan CV tersusun mereka.","候选人未授权访问整理后的简历摘要。"],
+    ["Candidate did not share the original PDF CV for this application.","Calon tidak berkongsi CV PDF asal untuk permohonan ini.","候选人未在此次申请中分享原始 PDF 简历。"],
+    ["Send a text message up to 4,000 characters and a valid location.","Hantar mesej teks sehingga 4,000 aksara dan lokasi yang sah.","请发送不超过 4,000 个字符的文字消息，并提供有效位置。"],
+    ["Choose a city or provide valid latitude and longitude.","Pilih bandar atau berikan latitud dan longitud yang sah.","请选择城市或提供有效经纬度。"],
+    ["Answers successfully evaluated!","Jawapan berjaya dinilai!","答案已成功评分！"],
+    ["Reviewed by you","Disemak oleh anda","已由你审核"],
+    ["Needs your review","Memerlukan semakan anda","等待你审核"],
+    ["Extraction method:","Kaedah pengekstrakan:","提取方式："],
+    ["Local PDF text extraction","Pengekstrakan teks PDF setempat","本地 PDF 文字提取"],
+    ["Missing information is left blank; correct the draft using the original PDF.","Maklumat yang tiada dibiarkan kosong; betulkan draf dengan merujuk PDF asal.","缺失信息留空，请根据原始 PDF 修正草稿。"],
+    ["Summary shared","Ringkasan dikongsi","摘要已分享"],
+    ["Summary private","Ringkasan peribadi","摘要未公开"],
+    ["PDF shared","PDF dikongsi","PDF 已分享"],
+    ["PDF private","PDF peribadi","PDF 未公开"],
+    ["Summary","Ringkasan","摘要"],
+    ["Shared via application","Dikongsi melalui permohonan","通过申请分享"],
+    ["Contact","Hubungan","联系方式"],
+    ["page","halaman","页"],
+    ["Name:","Nama:","姓名："],
+    ["No applications yet.","Belum ada permohonan.","暂无申请。"],
+    ["Private sharing","Perkongsian peribadi","私密分享"],
+    ["No original PDF access","Tiada akses kepada PDF asal","无原始 PDF 访问权限"],
+    ["or","atau","或"],
+    ["Access granted for this application and resource.","Akses diberikan untuk permohonan dan sumber ini.","已授权访问此次申请对应的内容。"],
+    ["Access granted to this account. Copy the link to share it; no email was sent.","Akses diberikan kepada akaun ini. Salin pautan untuk berkongsi; tiada e-mel dihantar.","已向该账号授权。请复制链接进行分享；系统未发送邮件。"],
+    ["Add at least one required skill directly related to the role.","Tambah sekurang-kurangnya satu kemahiran wajib yang berkaitan secara langsung dengan jawatan.","请至少添加一项与岗位直接相关的必需技能。"],
+    ["Application not found or access denied.","Permohonan tidak ditemui atau akses ditolak.","未找到申请，或无权访问。"],
+    ["Application saved with only your selected CV resources shared.","Permohonan disimpan dan hanya sumber CV yang anda pilih dikongsi.","申请已保存，仅分享了你选定的简历内容。"],
+    ["Application withdrawn. Further employer access is revoked; earlier downloaded copies cannot be recalled.","Permohonan ditarik balik. Akses majikan seterusnya dibatalkan; salinan yang telah dimuat turun tidak dapat ditarik balik.","申请已撤回，雇主的后续访问已撤销；之前下载的副本无法收回。"],
+    ["Candidate CV not found.","CV calon tidak ditemui.","未找到候选人简历。"],
+    ["Choose at least one CV resource to share, or withdraw the application to revoke access.","Pilih sekurang-kurangnya satu sumber CV untuk dikongsi, atau tarik balik permohonan untuk membatalkan akses.","请至少选择一项简历内容进行分享，或撤回申请以撤销访问。"],
+    ["Choose whether to include your CV in aggregate statistics.","Pilih sama ada CV anda akan disertakan dalam statistik agregat.","请选择是否将简历纳入汇总统计。"],
+    ["No CV found.","CV tidak ditemui.","未找到简历。"],
+    ["No active application found for this vacancy.","Tiada permohonan aktif untuk kekosongan jawatan ini.","未找到此职位的有效申请。"],
+    ["No verified course is available for this skill.","Tiada kursus yang disahkan tersedia untuk kemahiran ini.","暂无对应此技能的已核实课程。"],
+    ["Only PDF files (.pdf) are accepted. Export your CV as a PDF and try again.","Hanya fail PDF (.pdf) diterima. Eksport CV anda sebagai PDF dan cuba lagi.","仅接受 PDF 文件（.pdf），请将简历导出为 PDF 后重试。"],
+    ["PDF CVs can contain at most 20 pages. Upload a shorter version.","CV PDF boleh mengandungi maksimum 20 halaman. Muat naik versi yang lebih pendek.","PDF 简历最多 20 页，请上传较短版本。"],
+    ["PDF extracted locally. Review and confirm the organised draft before sharing.","PDF diekstrak secara setempat. Semak dan sahkan draf tersusun sebelum berkongsi.","已在本地提取 PDF，请在分享前审核并确认整理后的草稿。"],
+    ["PDF file exceeds the 8 MB maximum size limit.","Saiz fail PDF melebihi had maksimum 8 MB.","PDF 文件超过 8 MB 大小限制。"],
+    ["Please choose a valid minimum education level.","Sila pilih tahap pendidikan minimum yang sah.","请选择有效的最低学历。"],
+    ["Please choose a valid work mode.","Sila pilih mod kerja yang sah.","请选择有效的工作模式。"],
+    ["Please upload your PDF CV first.","Sila muat naik CV PDF anda dahulu.","请先上传 PDF 简历。"],
+    ["Position title must be 2–80 characters.","Tajuk jawatan mestilah 2–80 aksara.","职位名称须为 2–80 个字符。"],
+    ["Profile updated successfully!","Profil berjaya dikemas kini!","资料更新成功！"],
+    ["Review and confirm your CV details before sharing with an employer.","Semak dan sahkan butiran CV anda sebelum berkongsi dengan majikan.","向雇主分享前，请审核并确认简历内容。"],
+    ["Salary budget and years of experience must be numbers.","Bajet gaji dan tahun pengalaman mesti dalam bentuk nombor.","薪资预算和经验年限必须为数字。"],
+    ["Salary expectation must be a non-negative number.","Jangkaan gaji mestilah nombor bukan negatif.","期望薪资必须为非负数。"],
+    ["Salary maximum must be greater than or equal to the minimum.","Gaji maksimum mestilah lebih tinggi atau sama dengan gaji minimum.","最高薪资必须大于或等于最低薪资。"],
+    ["Send a valid application.","Hantar permohonan yang sah.","请提交有效的申请。"],
+    ["Send a valid profile update.","Hantar kemas kini profil yang sah.","请提交有效的资料更新。"],
+    ["Sharing choices must be true or false.","Pilihan perkongsian mesti bernilai benar atau palsu.","分享选项必须选择同意或不同意。"],
+    ["The CV could not be stored. Please try again; your previous record was kept.","CV tidak dapat disimpan. Sila cuba lagi; rekod terdahulu anda dikekalkan.","无法保存简历，请重试；之前的记录已保留。"],
+    ["The PDF document contains no pages.","Dokumen PDF ini tidak mengandungi halaman.","此 PDF 文档没有页面。"],
+    ["The PDF is damaged, malformed, or uses an unsupported format. Open it in a PDF reader and export a fresh text PDF.","PDF rosak, tidak sah atau menggunakan format yang tidak disokong. Buka dengan pembaca PDF dan eksport semula sebagai PDF teks.","PDF 已损坏、格式异常或不受支持。请使用 PDF 阅读器打开，并重新导出文字型 PDF。"],
+    ["The candidate has not shared this CV resource.","Calon belum berkongsi sumber CV ini.","候选人未分享此简历内容。"],
+    ["The candidate must review this CV before it can be shared.","Calon mesti menyemak CV ini sebelum ia boleh dikongsi.","候选人须先审核此简历，才能分享。"],
+    ["The cover note or availability is invalid.","Nota pengiring atau ketersediaan tidak sah.","申请附言或可入职时间无效。"],
+    ["The review confirmation must be true or false.","Pengesahan semakan mesti bernilai benar atau palsu.","审核确认必须选择同意或不同意。"],
+    ["The shared PDF is no longer available.","PDF yang dikongsi tidak lagi tersedia.","此共享 PDF 已不可用。"],
+    ["The statistics preference must be true or false.","Keutamaan statistik mesti bernilai benar atau palsu.","统计偏好必须选择同意或不同意。"],
+    ["The stored file could not be removed. Please try again.","Fail tersimpan tidak dapat dibuang. Sila cuba lagi.","无法删除已保存的文件，请重试。"],
+    ["The stored file could not be safely removed. Contact the application owner.","Fail tersimpan tidak dapat dibuang dengan selamat. Hubungi pemilik aplikasi.","无法安全删除已保存的文件，请联系应用所有者。"],
+    ["The uploaded PDF is empty or incomplete. Export it again and retry.","PDF yang dimuat naik kosong atau tidak lengkap. Eksport semula dan cuba lagi.","上传的 PDF 为空或不完整，请重新导出后重试。"],
+    ["This CV has changed. Reload the vault before saving or confirming your review.","CV ini telah berubah. Muat semula peti sebelum menyimpan atau mengesahkan semakan.","简历已更改，请重新加载简历库后再保存或确认审核。"],
+    ["This PDF contains an unusually large page. Export a simplified text PDF and retry.","PDF ini mengandungi halaman yang luar biasa besar. Eksport PDF teks yang dipermudah dan cuba lagi.","此 PDF 包含过大的页面，请导出简化的文字型 PDF 后重试。"],
+    ["This PDF contains too much text to process safely. Upload a shorter CV (maximum 100,000 characters).","PDF ini mengandungi terlalu banyak teks untuk diproses dengan selamat. Muat naik CV yang lebih pendek (maksimum 100,000 aksara).","此 PDF 的文字过多，无法安全处理。请上传较短的简历（最多 100,000 个字符）。"],
+    ["This PDF has too little selectable text and may be a scan. Use OCR or export a text-based PDF; automatic OCR is not available here.","PDF ini mengandungi terlalu sedikit teks yang boleh dipilih dan mungkin imbasan. Gunakan OCR atau eksport PDF berasaskan teks; OCR automatik tidak tersedia di sini.","此 PDF 可选取的文字过少，可能是扫描件。请先进行文字识别或导出文字型 PDF；此处不提供自动文字识别。"],
+    ["This PDF is password-protected or encrypted. Upload an unencrypted copy that you are authorised to use.","PDF ini dilindungi kata laluan atau disulitkan. Muat naik salinan tanpa penyulitan yang anda dibenarkan gunakan.","此 PDF 受密码保护或已加密，请上传你有权使用的未加密副本。"],
+    ["This discovery listing has no connected employer account. Your CV has not been sent.","Penyenaraian penemuan ini tiada akaun majikan yang disambungkan. CV anda tidak dihantar.","此职位信息未关联雇主账号，你的简历尚未发送。"],
+    ["This file is not a valid PDF. Renaming a file to .pdf does not convert it.","Fail ini bukan PDF yang sah. Menukar nama fail kepada .pdf tidak menukarkannya kepada PDF.","此文件不是有效的 PDF，将扩展名改成 .pdf 并不会转换文件格式。"],
+    ["This vacancy is closed to new applications.","Kekosongan jawatan ini tidak lagi menerima permohonan baharu.","此职位已停止接受新申请。"],
+    ["Training approved.","Latihan diluluskan.","培训已获批准。"],
+    ["Unknown CV resource.","Sumber CV tidak diketahui.","未知的简历内容。"],
+    ["Upload and review your PDF CV before applying.","Muat naik dan semak CV PDF anda sebelum memohon.","申请前请先上传并审核 PDF 简历。"],
+    ["Vacancy created.","Kekosongan jawatan telah dibuat.","职位已创建。"],
+    ["Years of experience must be a number from 0 to 80, or empty.","Tahun pengalaman mesti nombor antara 0 hingga 80, atau dibiarkan kosong.","经验年限须为 0–80 的数字，也可以留空。"],
+    ["Years of relevant experience must be between 0 and 40.","Tahun pengalaman berkaitan mestilah antara 0 hingga 40.","相关经验年限须为 0–40 年。"],
+    ["Your PDF, extracted details, applications and access history were deleted. Earlier downloaded copies cannot be recalled.","PDF, butiran yang diekstrak, permohonan dan sejarah akses anda telah dipadam. Salinan yang dimuat turun sebelum ini tidak dapat ditarik balik.","已删除 PDF、提取资料、申请和访问记录；之前下载的副本无法收回。"],
+    ["Suggestion unavailable.","Cadangan tidak tersedia.","推荐暂不可用。"],
+    ["How Lumi Helps","Cara Lumi Membantu","Lumi 如何帮助你"],
+    ["CV Privacy","Privasi CV","简历隐私"],
+    ["Emerging Skills","Kemahiran Baharu","新兴技能"],
+    ["Top Candidates","Calon Teratas","优秀候选人"],
+    ["Submitted CVs","CV Dihantar","已提交的简历"],
+    ["Team Skill Gaps","Jurang Kemahiran Pasukan","团队技能差距"],
+    ["Retention Insights","Pandangan Pengekalan","人才留任洞察"],
+    ["Nearby Jobs","Pekerjaan Berdekatan","附近职位"],
+    ["CV Summary","Ringkasan CV","简历摘要"],
+    ["View Reskilling Plan","Lihat Pelan Latihan Semula","查看技能提升计划"],
+    ["Search Jobs & Companies","Cari Pekerjaan & Syarikat","搜索职位与企业"],
+    ["Open Reskilling Plan","Buka Pelan Latihan Semula","打开技能提升计划"],
+    ["Open Candidate Screening","Buka Saringan Calon","打开候选人筛选"],
+    ["Create Job Vacancy","Cipta Kekosongan Jawatan","创建招聘职位"],
+    ["Screen Candidates","Saring Calon","筛选候选人"],
+    ["Approve Reskilling","Luluskan Latihan Semula","批准技能提升培训"],
+    ["My PDF CV","CV PDF Saya","我的 PDF 简历"],
+    ["Browse Matching Jobs","Layari Pekerjaan Sepadan","浏览匹配职位"],
+    ["Upskill for Higher Pay","Tingkatkan Kemahiran untuk Gaji Lebih Tinggi","提升技能以争取更高薪资"],
+    ["Upload CV","Muat Naik CV","上传简历"],
+    ["View CV Profile","Lihat Profil CV","查看简历资料"],
+    ["Explore Nearby Jobs","Terokai Pekerjaan Berdekatan","探索附近职位"],
+    ["View Access Audit Log","Lihat Log Audit Akses","查看访问审计日志"],
+    ["Manage Applications","Urus Permohonan","管理申请"],
+    ["Upload PDF CV","Muat Naik CV PDF","上传 PDF 简历"],
+    ["View Role Matches","Lihat Padanan Jawatan","查看岗位匹配"],
+    ["Financial Reporting","Pelaporan Kewangan","财务报告"],
+    ["Professional","Profesional","专业人员"],
+    ["No hiring companies within","Tiada syarikat yang mengambil pekerja dalam lingkungan","此半径内没有招聘企业："],
+    ["No CV-matched hiring companies within","Tiada syarikat yang sepadan dengan CV dalam lingkungan","此半径内没有与简历匹配的招聘企业："],
+    ["No vacancies found within","Tiada kekosongan jawatan ditemui dalam lingkungan","此半径内没有找到职位："],
+    ["No CV-matched vacancies found within","Tiada kekosongan jawatan yang sepadan dengan CV ditemui dalam lingkungan","此半径内没有找到与简历匹配的职位："],
+    ["of","daripada","位于"],
+    ["No original PDF shared","PDF asal tidak dikongsi","未分享原始 PDF"],
+    ["Download sample PDF","Muat Turun PDF Sampel","下载示例 PDF"],
+    ["Consider replacing passive phrasing","Pertimbangkan untuk menggantikan frasa pasif","建议替换被动措辞"],
+    ["Your Location (Drag to reposition)","Lokasi Anda (Seret untuk mengubah kedudukan)","你的位置（拖动以调整）"],
+    ["Quantified Impact & Action Verbs","Impak Terukur & Kata Kerja Tindakan","量化成果与行动动词"],
+    ["Extended Lexicon Signals & Telemetry","Isyarat Leksikon Lanjutan & Telemetri","扩展词库信号与文本指标"],
+    ["Apply & choose access →","Mohon & pilih akses →","申请并选择访问权限 →"],
+    ["Qualification & Arrangement","Kelayakan & Susunan","资历与工作安排"],
+    ["and consented to share their CV below.","dan telah bersetuju untuk berkongsi CV mereka di bawah.","并同意分享以下简历内容。"],
+  );
+  rows.push(
+    ["Career Pathway & Progression Matrix", "Matriks Laluan & Kemajuan Kerjaya", "职业路径与晋升矩阵"],
+    ["Career pathways", "Laluan kerjaya", "职业发展路径"],
+    ["O*NET & MASCO Standard", "Piawaian O*NET & MASCO", "O*NET 与 MASCO 标准"],
+    ["Interactive career ladder mapping vertical advancements and lateral skill-transferable transitions.", "Pemetaan tangga kerjaya interaktif yang menunjukkan kemajuan menegak dan peralihan mendatar melalui pemindahan kemahiran.", "互动式职业阶梯图，展示纵向晋升及可迁移技能带来的横向转型。"],
+    ["Current Role:", "Jawatan Semasa:", "当前职位："],
+    ["Vertical Career Advancements", "Kemajuan Kerjaya Menegak", "纵向职业晋升"],
+    ["Promotion Ladder", "Tangga Kenaikan Pangkat", "晋升阶梯"],
+    ["Lateral Mobility & Transition", "Mobiliti & Peralihan Mendatar", "横向流动与转型"],
+    ["Skill Transfer", "Pemindahan Kemahiran", "技能迁移"],
+    ["Job Zone", "Zon Pekerjaan", "职业区域"],
+    ["Zone", "Zon", "区域"],
+    ["Match", "Padanan", "匹配"],
+    ["Senior specialist roles aligned with your field.", "Jawatan pakar kanan yang sejajar dengan bidang anda.", "与你所在领域相符的高级专业职位。"],
+    ["Adjacent roles sharing strong skill overlap.", "Jawatan bersebelahan yang mempunyai pertindihan kemahiran yang tinggi.", "技能高度重叠的相邻职位。"],
+    ["Junior Financial Auditor", "Juruaudit Kewangan Junior", "初级财务审计师"],
+    ["Logistics Analysts", "Penganalisis Logistik", "物流分析师"],
+    ["Regulatory Affairs Specialists", "Pakar Hal Ehwal Kawal Selia", "法规事务专员"],
+    ["Financial Examiners", "Pemeriksa Kewangan", "金融审查员"],
+    ["Budget Analysts", "Penganalisis Belanjawan", "预算分析师"],
+    ["Insurance Underwriters", "Penilai Risiko Insurans", "保险核保员"],
+    ["Risk Management Specialists", "Pakar Pengurusan Risiko", "风险管理专员"],
+    ["Financial Analysts", "Penganalisis Kewangan", "财务分析师"],
+    ["Compensation and Benefits Managers", "Pengurus Pampasan dan Faedah", "薪酬与福利经理"],
+    ["Market Research Analysts and Marketing Specialists", "Penganalisis Penyelidikan Pasaran dan Pakar Pemasaran", "市场研究分析师和营销专员"],
+    ["Accountants", "Akauntan", "会计师"],
+    ["Auditors", "Juruaudit", "审计员"],
+    ["A topic to explore beyond your current career path.", "Topik untuk diterokai di luar laluan kerjaya semasa anda.", "探索当前职业路径以外的主题。"],
+  );
+  rows.push(
+    ["Admin Backdesk · CareerLens AI", "Panel Pentadbir · CareerLens AI", "管理员后台 · CareerLens AI"],
+    ["Backdesk Admin", "Pentadbir Panel", "后台管理员"],
+    ["SDC Hackathon 2026 · Platform Governance & Data Operations", "SDC Hackathon 2026 · Tadbir Urus Platform & Operasi Data", "SDC 黑客松 2026 · 平台治理与数据运营"],
+    ["RunPod & Cloudflare Tunnel Active", "RunPod & Terowong Cloudflare Aktif", "RunPod 与 Cloudflare 隧道运行中"],
+    ["System Administrator", "Pentadbir Sistem", "系统管理员"],
+    ["Total Talents", "Jumlah Pencari Kerja", "求职者总数"],
+    ["Job Seekers", "Pencari Kerja", "求职者"],
+    ["Employer Accounts", "Akaun Majikan", "雇主账号"],
+    ["HR & Companies", "Sumber Manusia & Syarikat", "人力资源与企业"],
+    ["Total Vacancies", "Jumlah Kekosongan Jawatan", "职位空缺总数"],
+    ["JobStreet + Portals", "JobStreet + Portal Pekerjaan", "JobStreet 与招聘平台"],
+    ["Live AI Nodes", "Nod AI Aktif", "在线 AI 节点"],
+    ["Unsloth QLoRA + CV", "Unsloth QLoRA + Pemprosesan CV", "Unsloth QLoRA + 简历处理"],
+    ["Help Desk Inquiries", "Pertanyaan Meja Bantuan", "帮助台咨询"],
+    ["— Open", "— Terbuka", "— 待处理"],
+    ["Resolved Tickets", "Tiket Diselesaikan", "已解决工单"],
+    ["100% SLA Target", "Sasaran SLA 100%", "100% 服务水平协议目标"],
+    ["Help Desk & Feedback Tickets", "Tiket Meja Bantuan & Maklum Balas", "帮助台与反馈工单"],
+    ["Registered Accounts & Users", "Akaun & Pengguna Berdaftar", "注册账号与用户"],
+    ["AI Model Health & Cloudflare Tunnel", "Kesihatan Model AI & Terowong Cloudflare", "AI 模型健康与 Cloudflare 隧道"],
+    ["Refresh Data", "Muat Semula Data", "刷新数据"],
+    ["Filter Status:", "Tapis Status:", "按状态筛选："],
+    ["Open Only", "Terbuka Sahaja", "仅待处理"],
+    ["Resolved", "Diselesaikan", "已解决"],
+    ["Open", "Terbuka", "待处理"],
+    ["● Open", "● Terbuka", "● 待处理"],
+    ["In Progress", "Sedang Diproses", "处理中"],
+    ["Closed", "Ditutup", "已关闭"],
+    ["Click on any ticket to update its status or add admin notes.", "Klik mana-mana tiket untuk mengemas kini status atau menambah catatan pentadbir.", "点击任意工单以更新状态或添加管理员备注。"],
+    ["Ticket", "Tiket", "工单"],
+    ["Ticket #", "Tiket #", "工单 #"],
+    ["Category", "Kategori", "类别"],
+    ["Subject & Message", "Subjek & Mesej", "主题与消息"],
+    ["Status", "Status Semasa", "状态"],
+    ["Actions", "Tindakan", "操作"],
+    ["Loading help desk feedback inquiries...", "Memuatkan pertanyaan dan maklum balas meja bantuan...", "正在加载帮助台反馈咨询……"],
+    ["No help desk tickets found.", "Tiada tiket meja bantuan ditemui.", "未找到帮助台工单。"],
+    ["Manage →", "Urus →", "管理 →"],
+    ["Showing all accounts", "Memaparkan semua akaun", "显示所有账号"],
+    ["Account UID", "ID Unik Akaun", "账号唯一编号"],
+    ["Professional Headline", "Tajuk Profesional", "职业简介"],
+    ["Organization / Location", "Organisasi / Lokasi", "机构／地点"],
+    ["Registered Date", "Tarikh Pendaftaran", "注册日期"],
+    ["Loading registered accounts...", "Memuatkan akaun berdaftar...", "正在加载注册账号……"],
+    ["Search by name, email, or UID...", "Cari mengikut nama, e-mel atau ID unik...", "按姓名、邮箱或唯一编号搜索……"],
+    ["No matching accounts.", "Tiada akaun yang sepadan.", "没有匹配的账号。"],
+    ["Admin", "Pentadbir", "管理员"],
+    ["Employer", "Majikan", "雇主"],
+    ["Talent", "Pencari Kerja", "求职者"],
+    ["Lumi Chat AI (RunPod Worker)", "AI Sembang Lumi (Pekerja RunPod)", "Lumi 聊天 AI（RunPod 工作节点）"],
+    ["Model Architecture:", "Seni Bina Model:", "模型架构："],
+    ["Target Hardware:", "Perkakasan Sasaran:", "目标硬件："],
+    ["Port:", "Nombor Port:", "端口："],
+    ["Endpoint:", "Titik Akhir:", "接口端点："],
+    ["Training Pipeline:", "Aliran Latihan:", "训练流程："],
+    ["SDC Hackathon Domain 1 Custom Dataset (2,400+ career QA pairs)", "Set Data Tersuai Domain 1 SDC Hackathon (2,400+ pasangan soal jawab kerjaya)", "SDC 黑客松领域 1 自定义数据集（2,400 多组职业问答）"],
+    ["CV Intelligence & Extraction Engine", "Enjin Kecerdasan & Pengekstrakan CV", "简历智能与提取引擎"],
+    ["Engine:", "Enjin:", "引擎："],
+    ["PyMuPDF Local Extractor + Rule-based Confidence Scoring", "Pengekstrak Setempat PyMuPDF + Pemarkahan Keyakinan Berasaskan Peraturan", "PyMuPDF 本地提取器 + 基于规则的置信度评分"],
+    ["Jobstreet Search Index:", "Indeks Carian Jobstreet:", "Jobstreet 搜索索引："],
+    ["69,345 pre-indexed Malaysian postings", "69,345 iklan pekerjaan Malaysia yang telah diindeks", "69,345 条已预索引的马来西亚招聘信息"],
+    ["Geospatial Engine:", "Enjin Geospatial:", "地理空间引擎："],
+    ["Esri ArcGIS World Street Maps (Zero API Block, High Precision)", "Peta Jalan Dunia Esri ArcGIS (Tanpa Sekatan API, Ketepatan Tinggi)", "Esri ArcGIS 世界街道地图（无 API 阻断、高精度）"],
+    ["Public Exposure:", "Akses Awam:", "公网访问："],
+    ["Cloudflare Tunnel via", "Terowong Cloudflare melalui", "Cloudflare 隧道，通过"],
+    ["From:", "Daripada:", "来自："],
+    ["Update Status:", "Kemas Kini Status:", "更新状态："],
+    ["Admin Resolution Notes:", "Catatan Penyelesaian Pentadbir:", "管理员处理备注："],
+    ["Add resolution details or response sent to user...", "Tambah butiran penyelesaian atau respons yang dihantar kepada pengguna...", "添加处理详情或已发送给用户的回复……"],
+    ["Save Update →", "Simpan Kemas Kini →", "保存更新 →"],
+    ["Status updated!", "Status dikemas kini!", "状态已更新！"],
+    ["Update failed", "Kemas kini gagal", "更新失败"],
+    ["Failed to save update.", "Gagal menyimpan kemas kini.", "无法保存更新。"],
+    ["Feedback ticket not found.", "Tiket maklum balas tidak ditemui.", "未找到反馈工单。"],
+    ["Normal", "Biasa", "普通"],
+    ["High", "Tinggi", "高"],
+    ["Low", "Rendah", "低"],
+    ["General Feedback", "Maklum Balas Umum", "一般反馈"],
   );
   const dictionary = new Map(rows.map(row => [row[0],row]));
   // Additional English/Chinese UI copy; original data and API values stay unchanged.
@@ -1516,6 +2259,29 @@ and consented to share their CV below.|并同意分享以下简历内容。
     if (!i) return text;
     const row = dictionary.get(text);
     if (row) return row[i];
+    const openTickets = text.match(/^(\d+) Open$/);
+    if (openTickets) return i === 2 ? `${openTickets[1]} 条待处理` : `${openTickets[1]} Terbuka`;
+    const accountCount = text.match(/^Showing (\d+) accounts$/);
+    if (accountCount) return i === 2 ? `显示 ${accountCount[1]} 个账号` : `Memaparkan ${accountCount[1]} akaun`;
+    const ticketNumber = text.match(/^Ticket #(\d+)$/);
+    if (ticketNumber) return i === 2 ? `工单 #${ticketNumber[1]}` : `Tiket #${ticketNumber[1]}`;
+    const ticketUpdate = text.match(/^Feedback ticket #(\d+) status updated to (.+)\.$/);
+    if (ticketUpdate) return i === 2
+      ? `反馈工单 #${ticketUpdate[1]} 的状态已更新为${translate(ticketUpdate[2],language)}。`
+      : `Status tiket maklum balas #${ticketUpdate[1]} dikemas kini kepada ${translate(ticketUpdate[2],language)}.`;
+    const mapboxStatus = text.match(/^✓ Mapbox token configured \((.+)\.\.\.\)$/);
+    if (mapboxStatus) return i === 2
+      ? `✓ 已配置 Mapbox 令牌（${mapboxStatus[1]}...）`
+      : `✓ Token Mapbox telah dikonfigurasikan (${mapboxStatus[1]}...)`;
+    if (/^Matches your interests and saved learning: .+\.$/.test(text)) return i === 2
+      ? '符合你的兴趣与已保存的学习内容。'
+      : 'Sejajar dengan minat dan pembelajaran yang anda simpan.';
+    const numberedZone = text.match(/^(Job Zone|Zone) (\d+)$/);
+    if (numberedZone) return i === 2
+      ? `${numberedZone[1] === 'Job Zone' ? '职业区域' : '区域'} ${numberedZone[2]}`
+      : `${numberedZone[1] === 'Job Zone' ? 'Zon Pekerjaan' : 'Zon'} ${numberedZone[2]}`;
+    const matchRank = text.match(/^Match #(\d+)$/);
+    if (matchRank) return i === 2 ? `匹配 #${matchRank[1]}` : `Padanan #${matchRank[1]}`;
     const intensity = text.match(/^Scenario intensity: (\d+)%$/);
     if (intensity) return i === 2 ? `情景强度：${intensity[1]}%` : `Keamatan senario: ${intensity[1]}%`;
     if (i === 2 && chineseDictionary.has(text)) return chineseDictionary.get(text);
