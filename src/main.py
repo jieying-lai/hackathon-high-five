@@ -654,6 +654,24 @@ def api_jobs_withdraw(vid):
     return jsonify({"ok": ok, "message": msg}), (200 if ok else 404)
 
 
+
+@app.route("/api/radar/ai-insights", methods=["POST"])
+@api_role("job_seeker")
+def api_radar_ai_insights():
+    payload = json_object()
+    industry = payload.get("industry") or "Finance & Accounting"
+    target_role = payload.get("role") or "Junior Financial Auditor"
+    scenario = payload.get("scenario") or "moderate"
+    user_skills = payload.get("skills") or []
+
+    insights = chatbot_engine.generate_ai_radar_insights(
+        industry=industry,
+        role=target_role,
+        scenario=scenario,
+        skills=user_skills
+    )
+    return jsonify({"ok": True, "insights": insights})
+
 @app.route("/api/trends", methods=["GET"])
 @api_role("job_seeker")
 def api_trends():

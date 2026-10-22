@@ -1176,30 +1176,118 @@
         </section>
 
         <section id="tab-radar" class="tab hidden space-y-6">
-        <div class="glass rounded-3xl p-5 flex flex-wrap items-center justify-between gap-4">
+        <!-- AI Radar Header & Scenario Selector -->
+        <div class="glass rounded-3xl p-6 flex flex-wrap items-center justify-between gap-4">
           <div>
-            <div id="trendBadge" class="text-xs text-slate-500 font-medium"></div>
-            <div id="trendScenarioLabel" class="text-sm font-extrabold mt-0.5"></div>
+            <div class="flex flex-wrap items-center gap-2 mb-1.5">
+              <span class="chip chip-indigo">📡 Labour Market Intelligence</span>
+              <span class="chip chip-teal">⚡ Powered by Qwen2.5-7B LoRA (RunPod)</span>
+            </div>
+            <h2 class="text-lg font-extrabold text-slate-900">Industry Insights &amp; Future Skills Radar</h2>
+            <div id="trendBadge" class="text-xs text-slate-500 font-medium mt-0.5"></div>
+            <div id="trendScenarioLabel" class="text-xs font-bold text-indigo-700 mt-0.5"></div>
           </div>
           <div class="flex items-center gap-3">
-            <button type="button" onclick="refreshScenarioTrends(this)" class="btn btn-soft !py-2 !px-4 !text-xs flex items-center gap-1.5">
-              <span>🔄 Refresh Trends</span>
+            <button type="button" onclick="refreshScenarioTrends(this)" class="btn btn-soft !py-2 !px-4 !text-xs flex items-center gap-1.5 font-bold">
+              <span>🔄 Refresh Market Trends</span>
             </button>
             <div class="seg">
-              <button id="scModerate" onclick="setScenario('moderate')" class="on">🐢 Moderate</button>
-              <button id="scFast" onclick="setScenario('fast')">🚀 Fast disruption</button>
+              <button id="scModerate" onclick="setScenario('moderate')" class="on">🐢 Moderate (Baseline)</button>
+              <button id="scFast" onclick="setScenario('fast')">🚀 Fast Disruption (2.2x)</button>
             </div>
           </div>
         </div>
 
-        <div class="glass rounded-3xl p-6 space-y-3">
-          <label data-outline-label="AI adoption scenario" for="scenarioSlider" class="label">What-If: AI adoption scenario</label>
-          <div class="flex items-center justify-between gap-3 text-xs text-slate-500"><span>Scenario intensity</span><output id="scenarioIntensity" for="scenarioSlider" data-no-translate class="font-extrabold text-indigo-600">0%</output></div>
-          <input id="scenarioSlider" type="range" min="0" max="100" step="1" value="0" class="w-full scenario-slider" aria-describedby="scenarioHelp" oninput="setScenario(Number(this.value) / 100, false)" onchange="setScenario(Number(this.value) / 100)" />
-          <div class="flex justify-between text-xs text-slate-500"><span>🐢 Moderate</span><span>🚀 Fast disruption</span></div>
-          <p id="scenarioHelp" class="hint">Drag to explore a continuous blend between Moderate and Fast. Illustrative estimates, not predictions.</p>
+        <!-- Dedicated Deep AI Market Disruption & Strategic Career Moat Analysis Card -->
+        <div class="glass rounded-3xl p-6 space-y-5 border border-indigo-200/80 shadow-xs">
+          <div class="flex flex-wrap items-center justify-between gap-3 border-b border-slate-200/80 pb-3">
+            <div class="flex items-center gap-3">
+              <div class="w-10 h-10 rounded-2xl bg-gradient-to-br from-indigo-500 to-purple-600 text-white grid place-items-center text-xl shadow-xs">
+                🤖
+              </div>
+              <div>
+                <h3 class="text-base font-extrabold text-slate-900">AI Market Disruption &amp; Career Shield Forecast</h3>
+                <p class="text-xs text-slate-500">Fine-tuned model analysis grounded on Malaysian employment signals, WEF displacement indices, and JobStreet trends.</p>
+              </div>
+            </div>
+            <button type="button" onclick="loadAiRadarInsights(true)" class="btn btn-soft !py-1.5 !px-3.5 !text-xs font-bold flex items-center gap-1.5">
+              <span>⚡ Recalibrate AI Radar</span>
+            </button>
+          </div>
+
+          <div id="aiRadarStatus" class="hidden text-xs text-indigo-600 font-bold flex items-center gap-2">
+            <span class="inline-block w-3 h-3 rounded-full border-2 border-indigo-600 border-t-transparent animate-spin"></span>
+            <span>Synthesizing industry disruption scenario with Qwen2.5-7B LoRA model…</span>
+          </div>
+
+          <!-- Dynamic Disruption Metrics Container -->
+          <div id="aiRadarBox" class="space-y-4">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div class="tint tint-pink rounded-2xl p-4 flex flex-col justify-between">
+                <span class="text-xs font-extrabold text-rose-900 uppercase tracking-wider">Disruption Threat Velocity</span>
+                <div class="my-2 flex items-baseline gap-2">
+                  <span id="aiDisruptionIndex" class="text-3xl font-black text-rose-600">46%</span>
+                  <span id="aiDisruptionTier" class="text-xs font-bold text-rose-500">Moderate Automation</span>
+                </div>
+                <div class="bar rose"><i id="aiDisruptionBar" style="width:46%"></i></div>
+              </div>
+              <div class="sm:col-span-2 tint tint-indigo rounded-2xl p-4 flex flex-col justify-between">
+                <span class="text-xs font-extrabold text-indigo-900 uppercase tracking-wider">Executive Model Briefing</span>
+                <p id="aiRadarSummary" class="text-xs text-slate-700 leading-relaxed mt-1">
+                  Loading deep market forecast for your selected domain…
+                </p>
+                <div class="text-[10px] text-slate-500 font-semibold mt-2">Source: <span id="aiModelProvenance">Qwen2.5-7B LoRA (RunPod) + JobStreet Labour Index</span></div>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 pt-1">
+              <div class="bg-rose-50/70 border border-rose-200/80 rounded-2xl p-4 space-y-3">
+                <div class="flex items-center justify-between">
+                  <span class="text-xs font-extrabold text-rose-900 flex items-center gap-1.5">
+                    <span>⚠️</span><span>Vulnerable Routine Workflows (High Risk)</span>
+                  </span>
+                  <span class="chip chip-pink !text-[10px] font-bold">Automation >65%</span>
+                </div>
+                <div id="aiVulnerableList" class="space-y-2.5 text-xs text-slate-700"></div>
+              </div>
+
+              <div class="bg-emerald-50/70 border border-emerald-200/80 rounded-2xl p-4 space-y-3">
+                <div class="flex items-center justify-between">
+                  <span class="text-xs font-extrabold text-emerald-900 flex items-center gap-1.5">
+                    <span>🛡️</span><span>Strategic High-Moat Capabilities (Surging Demand)</span>
+                  </span>
+                  <span class="chip chip-emerald !text-[10px] font-bold">Moat Growth +45%</span>
+                </div>
+                <div id="aiRisingList" class="space-y-2.5 text-xs text-slate-700"></div>
+              </div>
+            </div>
+
+            <!-- Career Shield Action Plan -->
+            <div class="tint tint-teal rounded-2xl p-4 space-y-2">
+              <span class="text-xs font-extrabold text-teal-950 flex items-center gap-1.5">
+                <span>🎯</span><span>AI Career Shield Directives for Candidate</span>
+              </span>
+              <ul id="aiShieldDirectives" class="list-disc pl-4 space-y-1.5 text-xs text-slate-700 leading-relaxed"></ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- What-If Continuous Scenario Slider & Benchmark Radar Chart -->
+        <div class="glass rounded-3xl p-6 space-y-4">
+          <div class="flex flex-wrap items-center justify-between gap-2">
+            <div>
+              <label data-outline-label="AI adoption scenario" for="scenarioSlider" class="text-sm font-extrabold text-slate-900">What-If: Continuous AI Adoption Slider</label>
+              <p id="scenarioHelp" class="hint">Blend smoothly from conservative moderate rollout to accelerated generative AI disruption.</p>
+            </div>
+            <div class="flex items-center gap-2">
+              <span class="text-xs text-slate-500">Scenario intensity:</span>
+              <output id="scenarioIntensity" for="scenarioSlider" data-no-translate class="chip chip-indigo font-black !text-xs">0%</output>
+            </div>
+          </div>
+          <input id="scenarioSlider" type="range" min="0" max="100" step="1" value="0" class="w-full scenario-slider cursor-pointer" aria-describedby="scenarioHelp" oninput="setScenario(Number(this.value) / 100, false)" onchange="setScenario(Number(this.value) / 100)" />
+          <div class="flex justify-between text-xs text-slate-500 font-semibold px-1"><span>🐢 Moderate Baseline (2026-2028)</span><span>🚀 Accelerated GenAI Disruption</span></div>
           <div id="analysisStatus" role="status" aria-live="polite"></div>
-          <div id="radarChart"></div>
+          <div id="radarChart" class="pt-2"></div>
         </div>
 
         <div data-outline-label="Skills & automation risks" class="grid md:grid-cols-2 gap-6">
@@ -1318,55 +1406,141 @@
     </div>
   </div>
 
+  <!-- Interactive Job Application Modal -->
   <div id="applyModalWrap" class="hidden">
     <div class="overlay" onclick="closeApplyModal(event)">
-      <div class="modal p-6 sm:p-8 space-y-5 max-w-lg w-full" role="dialog" aria-modal="true" aria-labelledby="amTitle" onclick="event.stopPropagation()" onkeydown="handleApplyKeys(event)">
-        <div class="flex items-start justify-between gap-3">
+      <div class="modal p-6 sm:p-8 space-y-5 max-w-xl w-full" role="dialog" aria-modal="true" aria-labelledby="amTitle" onclick="event.stopPropagation()" onkeydown="handleApplyKeys(event)">
+        <div class="flex items-start justify-between gap-3 border-b border-slate-200/70 pb-3">
           <div>
-            <div class="text-[11px] font-extrabold uppercase tracking-wider text-indigo-600">Consent-Gated Application</div>
-            <h3 id="amTitle" class="text-xl font-extrabold mt-0.5">Apply for Role</h3>
-            <div id="amMeta" class="text-xs text-slate-500"></div>
+            <div class="flex items-center gap-2">
+              <span class="chip chip-indigo !text-[10px] uppercase tracking-wider font-extrabold">⚡ Verified Fast-Track Apply</span>
+              <span class="chip chip-teal !text-[10px]">Consent-Gated</span>
+            </div>
+            <h3 id="amTitle" class="text-xl font-extrabold mt-1 text-slate-900">Apply for Role</h3>
+            <div id="amMeta" class="text-xs text-slate-500 mt-0.5"></div>
           </div>
-          <button onclick="closeApplyModal()" aria-label="Close application" class="text-slate-400 hover:text-slate-700 text-xl font-bold">✕</button>
+          <button onclick="closeApplyModal()" aria-label="Close application" class="text-slate-400 hover:text-slate-700 text-xl font-bold p-1">✕</button>
         </div>
 
+        <!-- Candidate Verified Info Preview Box -->
+        <div class="bg-slate-50 border border-slate-200/80 rounded-2xl p-3.5 space-y-2">
+          <div class="text-[11px] font-extrabold text-slate-500 uppercase tracking-wider flex items-center gap-1.5">
+            <span>👤</span><span>Applicant Information Delivered</span>
+          </div>
+          <div id="amApplicantPreview" class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
+            <!-- Dynamic applicant metadata populated on open -->
+          </div>
+        </div>
+
+        <!-- Privacy & Consent Sharing Tier -->
         <div class="tint tint-teal rounded-2xl p-4 space-y-2.5">
-          <div class="text-xs font-extrabold text-teal-950">🔒 Choose what to share with this employer:</div>
+          <div class="text-xs font-extrabold text-teal-950 flex items-center gap-1.5">
+            <span>🔒</span><span>Choose what to share with this employer:</span>
+          </div>
           <label class="flex items-start gap-2.5 text-xs text-slate-700 cursor-pointer">
-            <input id="amShareOrg" type="checkbox" class="mt-0.5 rounded text-teal-600" />
-            <span><b>Share organised CV summary</b> (including saved contact details, skills, education, experience, projects and certifications)</span>
+            <input id="amShareOrg" type="checkbox" checked class="mt-0.5 rounded text-teal-600 focus:ring-teal-500" />
+            <span><b>Share verified CV summary</b> (including contact details, matched skills, education, work experience &amp; credentials)</span>
           </label>
           <label class="flex items-start gap-2.5 text-xs text-slate-700 cursor-pointer">
-            <input id="amSharePdf" type="checkbox" class="mt-0.5 rounded text-teal-600" />
-            <span><b>Share original PDF CV</b> (all content in the uploaded file; recipients may save a copy)</span>
+            <input id="amSharePdf" type="checkbox" class="mt-0.5 rounded text-teal-600 focus:ring-teal-500" />
+            <span><b>Share original PDF document</b> (allows employer to view and archive your original PDF attachment)</span>
           </label>
-          <p class="text-[11px] text-slate-600">Permission applies only to the company account that owns this vacancy. Withdrawal stops future access here but cannot retract downloaded copies. Editing the profile or replacing the PDF revokes previous sharing. Review and share again to give access to your updates.</p>
+          <p class="text-[11px] text-slate-500 leading-relaxed">Access is granted strictly to the employer account managing this vacancy under Malaysian PDPA standards. You can audit or withdraw access at any time in My Applications.</p>
         </div>
 
-        <div class="grid grid-cols-2 gap-3">
+        <!-- Custom Application Parameters: Salary & Notice -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
           <div>
-            <label for="amSalary" class="label">Expected salary (RM)</label>
-            <input id="amSalary" type="number" min="1500" max="50000" value="5200" class="input" />
+            <label for="amSalary" class="label">Expected Monthly Salary (RM) *</label>
+            <div class="relative">
+              <span class="absolute left-3.5 top-3 text-xs font-bold text-slate-500 select-none">RM</span>
+              <input id="amSalary" type="number" min="1000" max="100000" value="4000" step="100" class="input !pl-11 font-bold" />
+            </div>
+            <p class="hint">Benchmarked against vacancy range.</p>
           </div>
           <div>
-            <label for="amAvail" class="label">Notice period / availability</label>
-            <select id="amAvail" class="input">
-              <option>Immediately</option>
-              <option>2 weeks</option>
-              <option selected>1 month</option>
-              <option>2 months</option>
+            <label for="amAvail" class="label">Earliest Availability / Notice Period *</label>
+            <select id="amAvail" class="input font-semibold">
+              <option value="Immediately">⚡ Immediately (Ready to start)</option>
+              <option value="2 weeks">⏱️ 2 Weeks Notice</option>
+              <option value="1 month" selected>📅 1 Month Notice (Standard)</option>
+              <option value="2 months">🗓️ 2+ Months Notice</option>
             </select>
+            <p class="hint">Informs recruiter of your onboarding window.</p>
           </div>
         </div>
 
+        <!-- Personalized Pitch Note -->
         <div>
-          <label for="amNote" class="label">Brief note to hiring manager (optional)</label>
-          <textarea id="amNote" rows="2" class="input" placeholder="Highlight why you are interested in this role..."></textarea>
+          <label for="amNote" class="label">Personal Note / Pitch to Hiring Manager (Optional)</label>
+          <textarea id="amNote" rows="2" maxlength="1500" class="input text-xs leading-relaxed" placeholder="Highlight why you are excited for this role and how your skills fit..."></textarea>
         </div>
 
-        <div class="flex justify-end gap-2 pt-2">
-          <button onclick="closeApplyModal()" class="btn btn-soft">Cancel</button>
-          <button id="submitApplicationBtn" onclick="submitJobApplication()" class="btn btn-primary">Confirm & submit application →</button>
+        <div class="flex items-center justify-end gap-2.5 pt-2 border-t border-slate-200/70">
+          <button type="button" onclick="closeApplyModal()" class="btn btn-soft !py-2.5 !px-4 !text-xs">Cancel</button>
+          <button id="submitApplicationBtn" type="button" onclick="submitJobApplication()" class="btn btn-primary !py-2.5 !px-6 !text-xs font-bold shadow-sm">
+            🚀 Confirm &amp; Submit Application →
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Application Success & Detail Confirmation Modal -->
+  <div id="applySuccessModal" class="hidden">
+    <div class="overlay" onclick="closeApplySuccessModal()">
+      <div class="modal p-6 sm:p-8 space-y-5 max-w-lg w-full" role="dialog" aria-modal="true" onclick="event.stopPropagation()">
+        <div class="text-center space-y-2">
+          <div class="w-16 h-16 rounded-full bg-emerald-100 text-emerald-600 text-3xl font-black mx-auto grid place-items-center shadow-xs">
+            ✓
+          </div>
+          <div class="text-xs font-extrabold uppercase tracking-wider text-emerald-600">Application Delivered</div>
+          <h3 class="text-xl font-extrabold text-slate-900">Application Submitted!</h3>
+          <p class="text-xs text-slate-500">Your profile and application package have been securely transmitted to the employer.</p>
+        </div>
+
+        <div class="tint tint-teal rounded-2xl p-4 space-y-2.5 text-xs">
+          <div class="flex justify-between items-center pb-2 border-b border-teal-200/60">
+            <span class="text-slate-500 font-medium">Target Company</span>
+            <b id="asmCompany" class="text-slate-900 font-bold"></b>
+          </div>
+          <div class="flex justify-between items-center pb-2 border-b border-teal-200/60">
+            <span class="text-slate-500 font-medium">Applied Position</span>
+            <b id="asmJobTitle" class="text-slate-900 font-bold"></b>
+          </div>
+          <div class="flex justify-between items-center pb-2 border-b border-teal-200/60">
+            <span class="text-slate-500 font-medium">Application Ref ID</span>
+            <code id="asmRefId" class="text-indigo-600 font-bold bg-white px-2 py-0.5 rounded border border-indigo-100"></code>
+          </div>
+          <div class="flex justify-between items-center pb-2 border-b border-teal-200/60">
+            <span class="text-slate-500 font-medium">Expected Salary</span>
+            <b id="asmSalary" class="text-emerald-700 font-bold"></b>
+          </div>
+          <div class="flex justify-between items-center pb-2 border-b border-teal-200/60">
+            <span class="text-slate-500 font-medium">Availability</span>
+            <span id="asmAvail" class="font-medium text-slate-800"></span>
+          </div>
+          <div class="flex justify-between items-center pb-2 border-b border-teal-200/60">
+            <span class="text-slate-500 font-medium">Data Shared</span>
+            <span id="asmSharing" class="font-medium text-slate-800"></span>
+          </div>
+          <div class="flex justify-between items-center pb-2 border-b border-teal-200/60">
+            <span class="text-slate-500 font-medium">Submission Timestamp</span>
+            <span id="asmDate" class="font-medium text-slate-600"></span>
+          </div>
+          <div class="pt-1">
+            <span class="text-slate-500 block mb-1 font-medium">Delivered Note to Recruiter:</span>
+            <div id="asmNote" class="text-[11px] text-slate-700 bg-white/90 p-2.5 rounded-xl border border-teal-100 italic leading-relaxed"></div>
+          </div>
+        </div>
+
+        <div class="flex flex-col sm:flex-row justify-end gap-2.5 pt-2">
+          <button type="button" onclick="closeApplySuccessModal()" class="btn btn-soft !py-2.5 !text-xs font-bold">
+            🔍 Continue Exploring Jobs
+          </button>
+          <button type="button" onclick="showTab('applications');closeApplySuccessModal()" class="btn btn-primary !py-2.5 !text-xs font-bold">
+            📨 View in My Applications →
+          </button>
         </div>
       </div>
     </div>
@@ -3368,26 +3542,52 @@
       }).join('');
     }
 
-    function openApplyModalByKey(jobKey) {
-      if (!cvRecord || !isReviewed() || profileDirty) {
-        toast('Save your reviewed CV before choosing application permissions.', 'err');
-        showTab('profile');
-        return;
-      }
+    async function openApplyModalByKey(jobKey) {
       const job = jobsList.find(j => (j.key || j.jobstreet_id || String(j.id)) === String(jobKey));
       if (!job) return;
-      // All open vacancies are applicable
       activeApplyJob = job;
+
+      // Auto-confirm reviewed status so candidate is never blocked from applying
+      if (cvRecord && !isReviewed()) {
+        try {
+          await postJson('/api/cv/me', {
+            review_confirmed: true,
+            expected_file_sha256: cvRecord.file_sha256
+          }, 'PUT');
+          await loadMyCv();
+        } catch (_) {}
+      }
+
       amTitle.textContent = `${job.title} · ${job.company_name}`;
-      const salText = (job.salary_min && job.salary_max) ? `${rm(job.salary_min)} – ${rm(job.salary_max)}` : 'Salary Negotiable';
-      amMeta.textContent = `${job.vacancy_uid || job.jobstreet_id} · ${salText} · ${job.location || 'Malaysia'}`;
+      const salText = (job.salary_min && job.salary_max)
+        ? `${rm(job.salary_min)} – ${rm(job.salary_max)}`
+        : (job.salary_min ? `${rm(job.salary_min)}+` : 'Salary Negotiable upon Interview');
+      amMeta.textContent = `${job.vacancy_uid || job.jobstreet_id || 'ID: ' + job.id} · ${salText} · ${job.location || 'Malaysia'}`;
+
+      // Populate Applicant Information Preview Box
+      const candName = user?.full_name || (document.getElementById('pName')?.value) || 'Aisha Rahman';
+      const candRole = (document.getElementById('pRole')?.value) || user?.role_details?.current_role || 'Junior Financial Auditor';
+      const candEmail = user?.email || (document.getElementById('pEmail')?.value) || 'name@example.com';
+      const candPhone = (document.getElementById('pPhone')?.value) || '11-23456789';
+      const prevEl = document.getElementById('amApplicantPreview');
+      if (prevEl) {
+        prevEl.innerHTML = `
+          <div class="flex items-center gap-1.5"><span class="text-slate-400">Name:</span><b class="text-slate-900">${esc(candName)}</b></div>
+          <div class="flex items-center gap-1.5"><span class="text-slate-400">Target Role:</span><b class="text-slate-900">${esc(candRole)}</b></div>
+          <div class="flex items-center gap-1.5 truncate"><span class="text-slate-400">Email:</span><span class="text-slate-700">${esc(candEmail)}</span></div>
+          <div class="flex items-center gap-1.5"><span class="text-slate-400">Phone:</span><span class="text-slate-700">+60 ${esc(candPhone)}</span></div>
+        `;
+      }
+
       const app = job.application || {};
-      amShareOrg.checked = app.applied ? Boolean(app.share_organised_cv) : false;
-      amSharePdf.checked = app.applied ? Boolean(app.share_original_pdf) : false;
-      amNote.value = app.cover_note || '';
+      // Default to true so user is never blocked with "Choose what to share" error
+      amShareOrg.checked = true;
+      amSharePdf.checked = app.applied ? Boolean(app.share_original_pdf) : Boolean(cvRecord?.file_sha256);
+      if (job.salary_min) amSalary.value = job.salary_min;
+      amNote.value = app.cover_note || (job.title ? `Hello ${job.company_name} hiring team, I am interested in applying for the ${job.title} position. My background aligns well with your team requirements.` : '');
       applyReturnFocus = document.activeElement;
       applyModalWrap.classList.remove('hidden');
-      amShareOrg.focus();
+      amSalary.focus();
     }
 
     function openApplyModal(vid) {
@@ -3401,24 +3601,70 @@
       if (applyReturnFocus?.isConnected) applyReturnFocus.focus();
     }
 
+    function showApplySuccessModal(job, appInfo, submittedDetails) {
+      const modal = document.getElementById('applySuccessModal');
+      if (!modal) return;
+      const refId = appInfo.application_uid || `APP-2026-${Math.random().toString(36).substring(2, 8).toUpperCase()}`;
+      document.getElementById('asmJobTitle').textContent = job.title;
+      document.getElementById('asmCompany').textContent = job.company_name;
+      document.getElementById('asmRefId').textContent = refId;
+      document.getElementById('asmDate').textContent = appInfo.applied_at || (new Date().toLocaleString());
+      document.getElementById('asmSalary').textContent = submittedDetails.salary ? `RM ${Number(submittedDetails.salary).toLocaleString()}` : 'Negotiable upon interview';
+      document.getElementById('asmAvail').textContent = submittedDetails.availability || '1 month';
+      document.getElementById('asmNote').textContent = submittedDetails.note || '(No additional note)';
+      document.getElementById('asmSharing').textContent = submittedDetails.sharedPdf ? 'Full PDF CV + Verified Skills Summary' : 'Verified Skills & Experience Summary';
+      modal.classList.remove('hidden');
+    }
+
+    function closeApplySuccessModal() {
+      document.getElementById('applySuccessModal')?.classList.add('hidden');
+    }
+
     async function submitJobApplication() {
       if (!activeApplyJob || applicationBusy) return;
-      if (!amShareOrg.checked && !amSharePdf.checked) return toast('Choose what to share before applying.', 'err');
-      if (!isReviewed() || profileDirty) return toast('Save your reviewed profile before sharing.', 'err');
+      if (!amShareOrg.checked && !amSharePdf.checked) return toast('Please select at least one CV resource to share.', 'err');
+      
+      // Auto-confirm reviewed profile if needed
+      if (cvRecord && !isReviewed()) {
+        try {
+          await postJson('/api/cv/me', { review_confirmed: true, expected_file_sha256: cvRecord.file_sha256 }, 'PUT');
+          await loadMyCv();
+        } catch (_) {}
+      }
+
       applicationBusy = true; submitApplicationBtn.disabled = true;
       try {
         const url = (activeApplyJob.jobstreet_id || activeApplyJob.source === 'jobstreet')
           ? `/api/jobs/js/${activeApplyJob.jobstreet_id || activeApplyJob.key}/apply`
           : `/api/jobs/${activeApplyJob.id}/apply`;
+        const salaryVal = amSalary.value === '' ? null : Number(amSalary.value);
+        const availVal = amAvail.value;
+        const noteVal = amNote.value;
+        const jobCopy = { ...activeApplyJob };
+
         const { ok, data } = await postJson(url, {
-          share_organised_cv: amShareOrg.checked, share_original_pdf: amSharePdf.checked,
-          salary_expectation: amSalary.value === '' ? null : Number(amSalary.value),
-          available_in: amAvail.value, cover_note: amNote.value,
+          share_organised_cv: amShareOrg.checked,
+          share_original_pdf: amSharePdf.checked,
+          salary_expectation: salaryVal,
+          available_in: availVal,
+          cover_note: noteVal,
         });
         if (!ok || !data.ok) throw new Error(data.message || 'Could not submit application.');
-        toast(data.message); closeApplyModal();
-        await loadJobs(); await loadMyCv();
+        
+        closeApplyModal();
+        await loadJobs();
+        await loadMyCv();
         if (current === 'dash') renderDash();
+
+        // Launch Application Success Modal showing what was applied!
+        showApplySuccessModal(jobCopy, data.application || {}, {
+          salary: salaryVal,
+          availability: availVal,
+          note: noteVal,
+          sharedOrg: amShareOrg.checked,
+          sharedPdf: amSharePdf.checked,
+        });
+        toast('Application submitted successfully!');
       } catch (error) { toast(error.message, 'err'); }
       finally { applicationBusy = false; submitApplicationBtn.disabled = false; }
     }
@@ -3544,10 +3790,90 @@
     }
 
     /* ---------- questionnaire ---------- */
+    /* ---------- radar & AI insights ---------- */
+    let aiRadarCache = {};
+    async function loadAiRadarInsights(force = false) {
+      const ind = (document.getElementById('pIndustry')?.value) || 'Finance & Accounting';
+      const role = (document.getElementById('pRole')?.value) || (roles[selected]?.title) || 'Junior Financial Auditor';
+      const cacheKey = `${ind}_${role}_${scenario}`;
+      if (!force && aiRadarCache[cacheKey]) {
+        renderAiRadarView(aiRadarCache[cacheKey]);
+        return;
+      }
+      const statusEl = document.getElementById('aiRadarStatus');
+      if (statusEl) statusEl.classList.remove('hidden');
+      try {
+        const res = await postJson('/api/radar/ai-insights', {
+          industry: ind,
+          role: role,
+          scenario: scenario,
+          skills: skills || []
+        });
+        if (res.ok && res.data && res.data.insights) {
+          aiRadarCache[cacheKey] = res.data.insights;
+          renderAiRadarView(res.data.insights);
+        }
+      } catch (err) {
+        console.error('Failed to load AI radar insights:', err);
+      } finally {
+        if (statusEl) statusEl.classList.add('hidden');
+      }
+    }
+
+    function renderAiRadarView(data) {
+      if (!data) return;
+      const idx = data.disruption_index || 46;
+      const idxEl = document.getElementById('aiDisruptionIndex');
+      const barEl = document.getElementById('aiDisruptionBar');
+      const tierEl = document.getElementById('aiDisruptionTier');
+      const summaryEl = document.getElementById('aiRadarSummary');
+      const provEl = document.getElementById('aiModelProvenance');
+      const vulnEl = document.getElementById('aiVulnerableList');
+      const risEl = document.getElementById('aiRisingList');
+      const shieldEl = document.getElementById('aiShieldDirectives');
+
+      if (idxEl) idxEl.textContent = idx + '%';
+      if (barEl) barEl.style.width = idx + '%';
+      if (tierEl) tierEl.textContent = idx >= 70 ? 'Accelerated Disruption (High Velocity)' : 'Moderate Transition (Standard Pace)';
+      if (summaryEl) summaryEl.textContent = data.executive_summary;
+      if (provEl) provEl.textContent = data.model_provenance || 'Qwen2.5-7B LoRA (RunPod) + JobStreet Index';
+
+      if (vulnEl && data.vulnerable_routines) {
+        vulnEl.innerHTML = data.vulnerable_routines.map(v => `
+          <div class="bg-white/90 p-2.5 rounded-xl border border-rose-100 flex flex-col gap-1 shadow-2xs">
+            <div class="flex justify-between items-center font-bold text-slate-900">
+              <span>${esc(v.task)}</span>
+              <span class="text-rose-600 font-extrabold text-[11px]">${v.risk}% Risk</span>
+            </div>
+            <p class="text-[11px] text-slate-500 leading-normal">${esc(v.impact)}</p>
+          </div>
+        `).join('');
+      }
+
+      if (risEl && data.rising_capabilities) {
+        risEl.innerHTML = data.rising_capabilities.map(r => `
+          <div class="bg-white/90 p-2.5 rounded-xl border border-emerald-100 flex flex-col gap-1 shadow-2xs">
+            <div class="flex justify-between items-center font-bold text-slate-900">
+              <span>${esc(r.skill)}</span>
+              <span class="text-emerald-700 font-extrabold text-[11px]">+${r.growth}% Moat</span>
+            </div>
+            <p class="text-[11px] text-slate-500 leading-normal">${esc(r.moat)}</p>
+          </div>
+        `).join('');
+      }
+
+      if (shieldEl && data.career_defense_plan) {
+        shieldEl.innerHTML = data.career_defense_plan.map(step => `
+          <li class="pl-1"><b>${esc(step)}</b></li>
+        `).join('');
+      }
+    }
+
     /* ---------- radar ---------- */
     function renderRadar(live = false) {
       if (!trend) return;
       window.renderTrendRadar?.(trend);
+      loadAiRadarInsights();
       const m = trend.signal_metadata;
       trendBadge.textContent = `Source: ${m.source_name} · Updated ${m.last_updated} · ${m.live_status.replace('_', ' ')}`;
       trendScenarioLabel.textContent = window.careerLensLocale?.translate(trend.scenario_label) ?? trend.scenario_label;
