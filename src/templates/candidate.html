@@ -3642,8 +3642,16 @@
 
       applicationBusy = true; submitApplicationBtn.disabled = true;
       try {
-        const url = (activeApplyJob.jobstreet_id || activeApplyJob.source === 'jobstreet')
-          ? `/api/jobs/js/${activeApplyJob.jobstreet_id || activeApplyJob.key}/apply`
+        const isJs = Boolean(
+          activeApplyJob.jobstreet_id || 
+          activeApplyJob.source === 'jobstreet' || 
+          String(activeApplyJob.key || '').startsWith('JS-') || 
+          String(activeApplyJob.vacancy_uid || '').startsWith('JS-') ||
+          !activeApplyJob.id
+        );
+        const jsKey = activeApplyJob.jobstreet_id || activeApplyJob.key || activeApplyJob.vacancy_uid || String(activeApplyJob.id);
+        const url = isJs
+          ? `/api/jobs/js/${encodeURIComponent(jsKey)}/apply`
           : `/api/jobs/${activeApplyJob.id}/apply`;
         const salaryVal = amSalary.value === '' ? null : Number(amSalary.value);
         const availVal = amAvail.value;
