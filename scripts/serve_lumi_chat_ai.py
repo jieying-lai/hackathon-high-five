@@ -19,30 +19,40 @@ tokenizer = None
 def load_lumi_model():
     global model, tokenizer
     try:
-        from unsloth import FastLanguageModel
+        from transformers import AutoModelForCausalLM, AutoTokenizer, BitsAndBytesConfig
+        from peft import PeftModel
         lora_dir = "models/careerlens_lumi_lora"
         base_model = "Qwen/Qwen2.5-7B-Instruct"
 
+        print("[*] Loading tokenizer...")
+        tokenizer = AutoTokenizer.from_pretrained(lora_dir if os.path.exists(os.path.join(lora_dir, "tokenizer.json")) else base_model)
+        if tokenizer.pad_token is None:
+            tokenizer.pad_token = tokenizer.eos_token
+
+        bnb_config = BitsAndBytesConfig(
+            load_in_4bit=True,
+            bnb_4bit_quant_type="nf4",
+            bnb_4bit_use_double_quant=True,
+            bnb_4bit_compute_dtype=torch.float16 if not torch.cuda.is_bf16_supported() else torch.bfloat16
+        )
+
+        print(f"[*] Loading base model {base_model}...")
+        base = AutoModelForCausalLM.from_pretrained(
+            base_model,
+            device_map="auto",
+            quantization_config=bnb_config
+        )
+
         if os.path.exists(lora_dir):
             print(f"[*] Loading fine-tuned Lumi LoRA from {lora_dir}...")
-            model, tokenizer = FastLanguageModel.from_pretrained(
-                model_name=lora_dir,
-                max_seq_length=2048,
-                dtype=None,
-                load_in_4bit=True,
-            )
+            model = PeftModel.from_pretrained(base, lora_dir)
         else:
-            print(f"[*] Loading base model {base_model}...")
-            model, tokenizer = FastLanguageModel.from_pretrained(
-                model_name=base_model,
-                max_seq_length=2048,
-                dtype=None,
-                load_in_4bit=True,
-            )
-        FastLanguageModel.for_inference(model)
+            model = base
+
+        model.eval()
         print("[✓] Lumi AI Chatbot loaded and ready for inference!")
     except Exception as e:
-        print(f"[!] Warning: Could not load Unsloth/GPU model: {e}")
+        print(f"[!] Warning: Could not load GPU model: {e}")
 
 @app.route("/health", methods=["GET"])
 def health():
@@ -63,7 +73,6 @@ def chat():
         return jsonify({"ok": False, "error": "No prompt provided"}), 400
 
     if model is None or tokenizer is None:
-        # Fallback response if model is loading
         return jsonify({
             "ok": True,
             "response": "Lumi AI is initializing on the GPU. Please try again in a few moments!",
@@ -75,24 +84,21 @@ def chat():
         {"role": "user", "content": user_prompt}
     ]
 
-    inputs = tokenizer.apply_chat_template(
-        messages,
-        tokenize=True,
-        add_generation_prompt=True,
-        return_tensors="pt"
-    ).to("cuda")
+    prompt_text = tokenizer.apply_chat_template(messages, tokenize=False, add_generation_prompt=True)
+    inputs = tokenizer([prompt_text], return_tensors="pt").to(model.device)
 
     with torch.no_grad():
         outputs = model.generate(
-            input_ids=inputs,
+            **inputs,
             max_new_tokens=512,
             temperature=0.7,
             top_p=0.9,
             use_cache=True,
-            pad_token_id=tokenizer.eos_token_id
+            pad_token_id=tokenizer.eos_token_id,
+            do_sample=True
         )
 
-    response_text = tokenizer.decode(outputs[0][inputs.shape[1]:], skip_special_tokens=True).strip()
+    response_text = tokenizer.decode(outputs[0][inputs["input_ids"].shape[1]:], skip_special_tokens=True).strip()
     return jsonify({"ok": True, "response": response_text, "engine": "qwen-7b-lumi-gpu"})
 
 if __name__ == "__main__":
