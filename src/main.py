@@ -434,6 +434,19 @@ def questionnaire_generate(action):
         return jsonify(ok=False, message=str(exc)), exc.status
 
 
+@app.route('/api/discovery/recommend', methods=['POST'])
+@api_role('job_seeker')
+def api_discovery_recommend():
+    payload = request.get_json(silent=True)
+    if not isinstance(payload, dict):
+        return jsonify(ok=False, message='Invalid course recommendation request.'), 400
+    try:
+        return jsonify(**course_recommender.recommend(payload, _owner()))
+    except Exception:
+        app.logger.exception('Course discovery recommendations failed.')
+        return jsonify(ok=False, message='Course recommendations are temporarily unavailable. Please retry.'), 503
+
+
 
 @app.route("/api/career-pathways", methods=["GET"])
 @api_role("job_seeker")

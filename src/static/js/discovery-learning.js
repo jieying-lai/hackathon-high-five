@@ -13,6 +13,17 @@ window.DiscoveryLearning = (() => {
     {id:'circular-resources',topic:'sustainability',target_skill:'Waste and resource awareness',course_title:'Waste management and environmentalism in China',provider:'OpenLearn · The Open University',sdg:'SDG 12',hours:8,url:'https://www.open.edu/openlearn/nature-environment/environmental-studies/waste-management-and-environmentalism-china/content-section-0',outcome:'Review a week of household waste and propose one change to reduce, reuse or recycle resources.'}
   ].map(c=>{const goal=Number(/SDG\s*(\d+)/i.exec(c.sdg)?.[1]||4),learningSupport=goal===4;return {...c,sdgs:[{goal,code:`SDG ${goal}`,name:sdgNames[goal],alignment_type:learningSupport?'learning_support':'course_topic',confidence:learningSupport?'fallback':'curated',label_source:learningSupport?'platform_rule':'curated',human_validated:false,reason:learningSupport?'This course supports learning and lifelong education. This is a general learning contribution, not a topic-specific impact claim.':'The course subject directly addresses this Sustainable Development Goal.'}],source:'discovery',cost_type:'Free learning',malaysia_badge:'Explore your interests'};});
   const views=new WeakMap();
+  async function recommendationData(response){
+    let data;
+    try{data=await response.json();}
+    catch{
+      throw new Error(response.status===404
+        ?'The recommendation service is not available on this server. Please contact the site maintainer.'
+        :'The recommendation service returned an unexpected response. Please retry.');
+    }
+    if(!response.ok||!data.ok)throw new Error(data.message||'Recommendations are unavailable. Please retry.');
+    return data;
+  }
   function favourite(saved,attribute,tr){
     const label=tr(saved?'Remove from wishlist':'Save course');
     return `<button type="button" class="course-favourite" ${attribute} aria-pressed="${!!saved}" aria-label="${esc(label)}" title="${esc(label)}"><span aria-hidden="true">${saved?'❤':'♡'}</span></button>`;
@@ -210,7 +221,7 @@ window.DiscoveryLearning = (() => {
       try{
         const response=await fetch('/api/discovery/recommend',{method:'POST',headers:{'Content-Type':'application/json'},signal:controller.signal,
           body:JSON.stringify({...payload,limit:1,disliked:updated.disliked,exclude:[...new Set([...updated.seen,...completed,...cards.filter(c=>!c._empty).map(c=>c.id)])].slice(-2000)})});
-        const data=await response.json();if(!response.ok||!data.ok)throw new Error(data.message||'Recommendations are unavailable. Please retry.');
+        const data=await recommendationData(response);
         if(!current())return;
         const replacement=data.courses.find(c=>!cards.some(existing=>existing.id===c.id)&&!updated.disliked.includes(c.id));
         const target=findCard();
@@ -258,7 +269,7 @@ window.DiscoveryLearning = (() => {
       const requestId=++view.request,controller=new AbortController();
       const timeout=setTimeout(()=>controller.abort(),20000);
       fetch('/api/discovery/recommend',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload),signal:controller.signal})
-        .then(async response=>{const data=await response.json();if(!response.ok||!data.ok)throw new Error(data.message||'Recommendations are unavailable. Please retry.');return data;})
+        .then(recommendationData)
         .then(data=>{if(views.get(container)!==view||requestId!==view.request||view.goal)return;view.results=data.courses;view.total=data.catalogue_size;view.loading=false;view.error=null;
           redraw();})
         .catch(error=>{if(views.get(container)!==view||requestId!==view.request||view.goal)return;view.loading=false;view.results=[];view.error=error.name==='AbortError'?'Recommendations took too long. Please retry.':error.message;redraw();})
