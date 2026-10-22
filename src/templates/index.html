@@ -10,6 +10,7 @@
   <link rel="stylesheet" href="/static/css/theme.css?v=20261020-questionnaire-1" />
   <link rel="stylesheet" href="/static/css/responsive.css?v=20261020-minimal-2" />
 <link rel="stylesheet" href="/static/css/home-features.css?v=3" />
+  <link rel="stylesheet" href="/static/css/career-spirit-totem.css?v=20261022-1" />
 </head>
 <body class="responsive-ui responsive-home min-h-screen">
   <div class="aurora"></div><div class="blob b1"></div><div class="blob b2"></div>
@@ -23,7 +24,7 @@
           <div class="text-[11px] text-slate-500 font-medium">Future-Ready Workforce & Reskilling</div>
         </div>
       </a>
-      <nav class="homepage-navigation" aria-label="Main navigation"><a class="nav-item" href="#home-intro">Overview</a><a class="nav-item" href="#home-portals">Our Portals</a></nav>
+      <nav class="homepage-navigation" aria-label="Main navigation"><a class="nav-item" href="#home-intro">Overview</a><a class="nav-item" href="#career-totem-experience">✨ Career Totem</a><a class="nav-item" href="#home-portals">Our Portals</a></nav>
       <div class="landing-actions flex items-center gap-2.5">
         <div data-language-slot></div>
         <button onclick="openAuth('login')" class="btn btn-soft">Sign In</button>
@@ -32,7 +33,7 @@
     </div>
     <div class="homepage-mobile-controls">
       <button id="homeNavToggle" type="button" class="nav-toggle" aria-controls="homeNav" aria-expanded="false" aria-label="Toggle navigation"><span class="hamburger" aria-hidden="true"><i></i><i></i><i></i></span>Menu</button>
-      <nav id="homeNav" class="mobile-nav" aria-label="Main navigation" hidden><a class="nav-item" href="#home-intro">Overview</a><a class="nav-item" href="#home-portals">Our Portals</a><button class="nav-item" onclick="openAuth('login')">Sign In</button><button class="nav-item" onclick="openAuth('register')">Create Account</button></nav>
+      <nav id="homeNav" class="mobile-nav" aria-label="Main navigation" hidden><a class="nav-item" href="#home-intro">Overview</a><a class="nav-item" href="#career-totem-experience">✨ Career Totem</a><a class="nav-item" href="#home-portals">Our Portals</a><button class="nav-item" onclick="openAuth('login')">Sign In</button><button class="nav-item" onclick="openAuth('register')">Create Account</button></nav>
     </div>
   </header>
 
@@ -60,11 +61,18 @@
           </p>
 
           <div class="flex flex-wrap items-center gap-3.5 pt-1">
-            <button onclick="openAuth('register')" class="btn btn-primary !text-sm !font-bold !px-7 !py-3.5 shadow-md shadow-indigo-600/20 hover:shadow-indigo-600/30 transition">
-              Get Started →
+            <button onclick="startTotemQuiz()" class="btn btn-primary !text-sm !font-bold !px-7 !py-3.5 shadow-md shadow-indigo-600/20 hover:shadow-indigo-600/30 transition flex items-center gap-2">
+              <span>✨</span>
+              <span>Awaken Career Totem (2-Min Quiz)</span>
             </button>
             <button onclick="openAuth('login')" class="btn btn-soft !text-sm !font-bold !px-7 !py-3.5 border border-slate-300 hover:bg-slate-100 transition">
-              Sign In
+              Sign In Directly
+            </button>
+          </div>
+          <div class="flex items-center gap-2 text-xs pt-0.5">
+            <span class="text-slate-500">Prefer regular setup?</span>
+            <button onclick="openAuth('register')" class="text-indigo-600 font-bold hover:underline">
+              Create an account directly →
             </button>
           </div>
 
@@ -145,6 +153,84 @@
           </div>
         </div>
 
+      </div>
+    </section>
+
+    <!-- =======================================================================
+         Gen-Z MBTI Career Spirit Totem & Global Work-Life Discovery Engine
+         ======================================================================= -->
+    <section id="career-totem-experience" class="totem-section p-6 sm:p-10 lg:p-12 my-8 relative scroll-mt-20">
+      <div class="totem-glow-1"></div>
+      <div class="totem-glow-2"></div>
+
+      <!-- Welcome Card (shown before quiz starts) -->
+      <div id="totemWelcomeCard" class="relative z-10 text-center max-w-3xl mx-auto space-y-6">
+        <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-indigo-500/20 border border-indigo-400/30 text-teal-300 text-xs font-bold shadow-xs">
+          <span>✨</span>
+          <span>Gen-Z Interactive Career Spirit Discovery</span>
+          <span class="bg-teal-500/20 text-teal-300 px-2 py-0.5 rounded-full text-[10px]">Zero Signup Required</span>
+        </div>
+
+        <h2 class="text-3xl sm:text-5xl font-black text-white tracking-tight leading-tight">
+          What is Your <span class="bg-gradient-to-r from-teal-300 via-indigo-300 to-pink-300 bg-clip-text text-transparent">Career Spirit Totem?</span>
+        </h2>
+
+        <p class="text-slate-300 text-sm sm:text-base leading-relaxed max-w-2xl mx-auto">
+          No dry resumes. No corporate jargon. Take a 2-minute non-judgmental quiz to unlock your workplace archetype, connect with legendary role models, and explore elevated future-ready roles tailored to your exact DNA.
+        </p>
+
+        <!-- CTAs -->
+        <div class="flex flex-wrap items-center justify-center gap-3.5 pt-2">
+          <button type="button" onclick="startTotemQuiz()" class="btn btn-primary !text-sm !font-black !px-8 !py-3.5 shadow-xl shadow-indigo-600/30 hover:scale-105 transition flex items-center gap-2">
+            <span>✨</span>
+            <span>Awaken My Spirit Totem (Start Quiz)</span>
+          </button>
+          <button type="button" onclick="skipTotemQuiz()" class="btn btn-soft !text-sm !font-bold !px-6 !py-3.5 border border-white/20 text-slate-300 hover:text-white transition">
+            ⏩ Skip to Portals
+          </button>
+        </div>
+
+        <!-- 6 Totem Previews (Teaser Badges) -->
+        <div class="grid grid-cols-3 sm:grid-cols-6 gap-2.5 pt-6 border-t border-white/10 max-w-2xl mx-auto text-center">
+          <div class="p-2.5 rounded-2xl bg-white/5 border border-white/5">
+            <div class="text-2xl">🦉</div>
+            <div class="text-[10px] font-bold text-slate-300 mt-1">Night Owl</div>
+            <div class="text-[9px] text-teal-400 font-mono">Systems</div>
+          </div>
+          <div class="p-2.5 rounded-2xl bg-white/5 border border-white/5">
+            <div class="text-2xl">🦮</div>
+            <div class="text-[10px] font-bold text-slate-300 mt-1">Retriever</div>
+            <div class="text-[9px] text-indigo-300 font-mono">Empathy</div>
+          </div>
+          <div class="p-2.5 rounded-2xl bg-white/5 border border-white/5">
+            <div class="text-2xl">🐆</div>
+            <div class="text-[10px] font-bold text-slate-300 mt-1">Leopard</div>
+            <div class="text-[9px] text-purple-300 font-mono">Autonomy</div>
+          </div>
+          <div class="p-2.5 rounded-2xl bg-white/5 border border-white/5">
+            <div class="text-2xl">🐋</div>
+            <div class="text-[10px] font-bold text-slate-300 mt-1">Titan Whale</div>
+            <div class="text-[9px] text-teal-300 font-mono">Purpose</div>
+          </div>
+          <div class="p-2.5 rounded-2xl bg-white/5 border border-white/5">
+            <div class="text-2xl">🦊</div>
+            <div class="text-[10px] font-bold text-slate-300 mt-1">Arctic Fox</div>
+            <div class="text-[9px] text-pink-300 font-mono">Aesthetics</div>
+          </div>
+          <div class="p-2.5 rounded-2xl bg-white/5 border border-white/5">
+            <div class="text-2xl">🦅</div>
+            <div class="text-[10px] font-bold text-slate-300 mt-1">Hawk</div>
+            <div class="text-[9px] text-amber-300 font-mono">Command</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Quiz Card Container (Rendered dynamically by career-spirit-totem.js) -->
+      <div id="totemQuizCard" class="relative z-10 max-w-2xl mx-auto bg-slate-900/80 backdrop-blur-xl border border-white/15 rounded-3xl p-6 sm:p-8 shadow-2xl mt-6 hidden">
+      </div>
+
+      <!-- Result Card Container (Rendered dynamically by career-spirit-totem.js) -->
+      <div id="totemResultCard" class="relative z-10 max-w-5xl mx-auto mt-6 hidden">
       </div>
     </section>
 
@@ -849,5 +935,6 @@
     </div>
   </div>
 
+  <script src="/static/js/career-spirit-totem.js?v=20261022-1"></script>
 </body>
 </html>

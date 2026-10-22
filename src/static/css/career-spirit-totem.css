@@ -1,0 +1,246 @@
+/* ==========================================================================
+   CareerLens AI — Career Spirit Totem (MBTI-Style Interactive Discovery)
+   ========================================================================== */
+
+.totem-section {
+  position: relative;
+  overflow: hidden;
+  border-radius: 2.25rem;
+  background: radial-gradient(120% 120% at 50% 0%, #1e1b4b 0%, #0f172a 60%, #020617 100%);
+  color: #f8fafc;
+  box-shadow: 0 25px 60px -15px rgba(15, 23, 42, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.08);
+}
+
+.totem-glow-1 {
+  position: absolute;
+  top: -10rem;
+  left: -10rem;
+  width: 28rem;
+  height: 28rem;
+  border-radius: 9999px;
+  background: radial-gradient(circle, rgba(139, 92, 246, 0.28) 0%, transparent 70%);
+  filter: blur(50px);
+  pointer-events: none;
+}
+
+.totem-glow-2 {
+  position: absolute;
+  bottom: -10rem;
+  right: -10rem;
+  width: 28rem;
+  height: 28rem;
+  border-radius: 9999px;
+  background: radial-gradient(circle, rgba(20, 184, 166, 0.25) 0%, transparent 70%);
+  filter: blur(50px);
+  pointer-events: none;
+}
+
+/* 5-point Likert Scale UI */
+.likert-scale-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 1.5rem 1rem;
+  max-width: 520px;
+  margin: 0 auto;
+}
+
+.likert-btn {
+  position: relative;
+  border-radius: 9999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+  outline: none;
+  border: 2px solid transparent;
+}
+
+.likert-btn:hover {
+  transform: scale(1.18);
+}
+
+.likert-btn.active {
+  transform: scale(1.22);
+  box-shadow: 0 0 20px currentColor;
+}
+
+/* 5 sizes from -2 to +2 */
+.likert-btn[data-val="-2"] {
+  width: 3.5rem;
+  height: 3.5rem;
+  border-color: #f43f5e;
+  color: #f43f5e;
+  background: rgba(244, 63, 94, 0.12);
+}
+.likert-btn[data-val="-2"]:hover, .likert-btn[data-val="-2"].active {
+  background: #f43f5e;
+  color: #ffffff;
+}
+
+.likert-btn[data-val="-1"] {
+  width: 2.85rem;
+  height: 2.85rem;
+  border-color: #fb7185;
+  color: #fb7185;
+  background: rgba(251, 113, 133, 0.1);
+}
+.likert-btn[data-val="-1"]:hover, .likert-btn[data-val="-1"].active {
+  background: #fb7185;
+  color: #ffffff;
+}
+
+.likert-btn[data-val="0"] {
+  width: 2.3rem;
+  height: 2.3rem;
+  border-color: #94a3b8;
+  color: #94a3b8;
+  background: rgba(148, 163, 184, 0.1);
+}
+.likert-btn[data-val="0"]:hover, .likert-btn[data-val="0"].active {
+  background: #94a3b8;
+  color: #ffffff;
+}
+
+.likert-btn[data-val="1"] {
+  width: 2.85rem;
+  height: 2.85rem;
+  border-color: #2dd4bf;
+  color: #2dd4bf;
+  background: rgba(45, 212, 191, 0.1);
+}
+.likert-btn[data-val="1"]:hover, .likert-btn[data-val="1"].active {
+  background: #2dd4bf;
+  color: #0f172a;
+}
+
+.likert-btn[data-val="2"] {
+  width: 3.5rem;
+  height: 3.5rem;
+  border-color: #10b981;
+  color: #10b981;
+  background: rgba(16, 185, 129, 0.15);
+}
+.likert-btn[data-val="2"]:hover, .likert-btn[data-val="2"].active {
+  background: #10b981;
+  color: #ffffff;
+}
+
+/* Totem Result Cards */
+.totem-badge-card {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.02) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(16px);
+  border-radius: 1.75rem;
+  transition: all 0.3s ease;
+}
+
+.totem-badge-card:hover {
+  border-color: rgba(255, 255, 255, 0.25);
+  box-shadow: 0 16px 40px -10px rgba(99, 102, 241, 0.25);
+}
+
+/* Role Model Cards */
+.role-model-card {
+  background: rgba(15, 23, 42, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 1.25rem;
+  padding: 1.25rem;
+  transition: transform 0.25s ease, border-color 0.25s ease;
+}
+
+.role-model-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(167, 139, 250, 0.5);
+  box-shadow: 0 12px 30px -10px rgba(139, 92, 246, 0.25);
+}
+
+/* Composition Progress Bars */
+.composition-bar-track {
+  height: 0.65rem;
+  border-radius: 9999px;
+  background: rgba(255, 255, 255, 0.1);
+  overflow: hidden;
+  position: relative;
+}
+
+.composition-bar-fill {
+  height: 100%;
+  border-radius: 9999px;
+  transition: width 1.2s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* Domain Category Pills */
+.domain-pill {
+  padding: 0.65rem 1.2rem;
+  border-radius: 9999px;
+  font-size: 0.825rem;
+  font-weight: 700;
+  cursor: pointer;
+  background: rgba(255, 255, 255, 0.07);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: #e2e8f0;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.domain-pill:hover {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.3);
+  transform: translateY(-1px);
+}
+
+.domain-pill.active {
+  background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
+  border-color: #c084fc;
+  color: #ffffff;
+  box-shadow: 0 0 20px rgba(168, 85, 247, 0.4);
+}
+
+/* Job Recommendation Cards */
+.elevated-job-card {
+  background: linear-gradient(135deg, rgba(30, 41, 59, 0.8) 0%, rgba(15, 23, 42, 0.9) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 1.5rem;
+  padding: 1.5rem;
+  transition: all 0.3s ease;
+}
+
+.elevated-job-card:hover {
+  border-color: rgba(45, 212, 191, 0.5);
+  transform: translateY(-3px);
+  box-shadow: 0 16px 36px -12px rgba(20, 184, 166, 0.2);
+}
+
+/* 3D Globe Container */
+#totemGlobeContainer {
+  width: 100%;
+  height: 380px;
+  border-radius: 1.75rem;
+  background: radial-gradient(circle at 50% 50%, #090d16 0%, #030712 100%);
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.city-day-card {
+  background: rgba(15, 23, 42, 0.92);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  backdrop-filter: blur(18px);
+  border-radius: 1.5rem;
+  box-shadow: 0 20px 45px -10px rgba(0, 0, 0, 0.7);
+}
+
+/* Subtle Shimmer for AI calculations */
+@keyframes totemShimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+.totem-shimmer {
+  background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.15) 50%, rgba(255,255,255,0) 100%);
+  background-size: 200% 100%;
+  animation: totemShimmer 2.5s infinite;
+}
