@@ -24,7 +24,7 @@
           <div class="text-[11px] text-slate-500 font-medium">Future-Ready Workforce & Reskilling</div>
         </div>
       </a>
-      <nav class="homepage-navigation" aria-label="Main navigation"><a class="nav-item" href="#home-intro">Overview</a><a class="nav-item" href="#career-totem-experience">✨ Career Totem</a><a class="nav-item" href="#home-portals">Our Portals</a></nav>
+      <nav class="homepage-navigation" aria-label="Main navigation"><a class="nav-item" href="#home-intro">Overview</a><a class="nav-item" href="#home-intro">✨ Career Totem</a><a class="nav-item" href="#home-portals">Our Portals</a></nav>
       <div class="landing-actions flex items-center gap-2.5">
         <div data-language-slot></div>
         <button onclick="openAuth('login')" class="btn btn-soft">Sign In</button>
@@ -33,196 +33,92 @@
     </div>
     <div class="homepage-mobile-controls">
       <button id="homeNavToggle" type="button" class="nav-toggle" aria-controls="homeNav" aria-expanded="false" aria-label="Toggle navigation"><span class="hamburger" aria-hidden="true"><i></i><i></i><i></i></span>Menu</button>
-      <nav id="homeNav" class="mobile-nav" aria-label="Main navigation" hidden><a class="nav-item" href="#home-intro">Overview</a><a class="nav-item" href="#career-totem-experience">✨ Career Totem</a><a class="nav-item" href="#home-portals">Our Portals</a><button class="nav-item" onclick="openAuth('login')">Sign In</button><button class="nav-item" onclick="openAuth('register')">Create Account</button></nav>
+      <nav id="homeNav" class="mobile-nav" aria-label="Main navigation" hidden><a class="nav-item" href="#home-intro">Overview</a><a class="nav-item" href="#home-intro">✨ Career Totem</a><a class="nav-item" href="#home-portals">Our Portals</a><button class="nav-item" onclick="openAuth('login')">Sign In</button><button class="nav-item" onclick="openAuth('register')">Create Account</button></nav>
     </div>
   </header>
 
   <main id="landing" class="max-w-6xl mx-auto px-4 sm:px-6 py-10 space-y-12">
-        <section id="home-intro" class="glass rounded-[2rem] p-8 sm:p-12 lg:p-14 fade-in border border-slate-200/80 shadow-xl overflow-hidden relative">
-      <!-- Subtle ambient blur -->
-      <div class="absolute -top-32 -left-32 w-80 h-80 bg-indigo-500/10 rounded-full blur-3xl pointer-events-none"></div>
-      <div class="absolute -bottom-32 -right-32 w-80 h-80 bg-teal-500/10 rounded-full blur-3xl pointer-events-none"></div>
-
-      <div class="grid lg:grid-cols-12 gap-10 lg:gap-14 items-center relative z-10">
-        
-        <!-- Left: Hero Headline, CTAs, and Clean Minimalist Metrics -->
-        <div class="lg:col-span-7 space-y-6">
-          <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-indigo-50/90 border border-indigo-200/70 text-indigo-700 text-xs font-bold tracking-wide shadow-xs">
-            <span>✨</span>
-            <span>AI Workforce Navigation &amp; Reskilling Platform</span>
-          </div>
-
-          <h1 class="text-3xl sm:text-5xl lg:text-[3.25rem] font-extrabold tracking-tight leading-[1.15] text-slate-900">
-            Find your place in the <span class="bg-gradient-to-r from-indigo-600 to-teal-600 bg-clip-text text-transparent">AI era</span>
-          </h1>
-
-          <p class="text-slate-600 text-sm sm:text-base leading-relaxed max-w-xl">
-            Match today's skills to tomorrow's roles, with transparent scores, verified courses and a clear path.
-          </p>
-
-          <div class="flex flex-wrap items-center gap-3.5 pt-1">
-            <button onclick="startTotemQuiz()" class="btn btn-primary !text-sm !font-bold !px-7 !py-3.5 shadow-md shadow-indigo-600/20 hover:shadow-indigo-600/30 transition flex items-center gap-2">
-              <span>✨</span>
-              <span>Awaken Career Totem (2-Min Quiz)</span>
-            </button>
-            <button onclick="openAuth('login')" class="btn btn-soft !text-sm !font-bold !px-7 !py-3.5 border border-slate-300 hover:bg-slate-100 transition">
-              Sign In Directly
-            </button>
-          </div>
-          <div class="flex items-center gap-2 text-xs pt-0.5">
-            <span class="text-slate-500">Prefer regular setup?</span>
-            <button onclick="openAuth('register')" class="text-indigo-600 font-bold hover:underline">
-              Create an account directly →
-            </button>
-          </div>
-
-          <!-- Clean Professional Metrics (Minimalist, No Clutter) -->
-          <div class="grid grid-cols-3 gap-4 pt-6 border-t border-slate-200/80">
-            <div>
-              <div class="text-2xl sm:text-3xl font-black text-indigo-700 tracking-tight">56% <span class="text-xs sm:text-sm font-medium text-slate-400">/ 26%</span></div>
-              <div class="text-xs text-slate-500 font-medium mt-1">use AI vs trained (MY)</div>
-            </div>
-            <div>
-              <div class="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">600k+</div>
-              <div class="text-xs text-slate-500 font-medium mt-1">workers to reskill</div>
-            </div>
-            <div>
-              <div class="text-2xl sm:text-3xl font-black text-teal-700 tracking-tight">SDG 4 · 8</div>
-              <div class="text-xs text-slate-500 font-medium mt-1">impact alignment</div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Right: Clean, Professional Product Preview Card (Neutral Platform Overview, No Mock User Profile) -->
-        <div class="lg:col-span-5 flex justify-center">
-          <div class="w-full max-w-md bg-white rounded-3xl p-6 border border-slate-200/90 shadow-xl space-y-4">
-            
-            <!-- Card Header -->
-            <div class="flex items-center justify-between pb-3 border-b border-slate-100">
-              <div class="flex items-center gap-2.5">
-                <img src="/static/brand/careerlens_logo_icon.svg" alt="CareerLens" class="w-8 h-8 rounded-xl shadow-xs" />
-                <div>
-                  <h3 class="text-xs font-extrabold text-slate-900">CareerLens AI Radar</h3>
-                  <p class="text-[10px] text-slate-400 font-medium">Workforce Mobility &amp; Matching Engine</p>
-                </div>
-              </div>
-              <span class="chip chip-emerald !text-[10px] font-bold">● Active Engine</span>
-            </div>
-
-            <!-- 3 Clean Feature Capability Rows -->
-            <div class="space-y-2.5 text-xs">
-              <div class="p-3 rounded-2xl bg-slate-50/80 border border-slate-200/70 flex items-start gap-3 hover:bg-indigo-50/50 transition">
-                <div class="h-8 w-8 rounded-xl bg-indigo-100 text-indigo-700 grid place-items-center font-bold text-sm shrink-0">
-                  📄
-                </div>
-                <div class="min-w-0">
-                  <div class="font-extrabold text-slate-900">Skill Extraction &amp; Verification</div>
-                  <div class="text-[11px] text-slate-500 mt-0.5">Instant CV parsing across 400+ national taxonomy skills</div>
-                </div>
-              </div>
-
-              <div class="p-3 rounded-2xl bg-slate-50/80 border border-slate-200/70 flex items-start gap-3 hover:bg-teal-50/50 transition">
-                <div class="h-8 w-8 rounded-xl bg-teal-100 text-teal-700 grid place-items-center font-bold text-sm shrink-0">
-                  🎯
-                </div>
-                <div class="min-w-0">
-                  <div class="font-extrabold text-slate-900">Future-Role Fit Scoring</div>
-                  <div class="text-[11px] text-slate-500 mt-0.5">Transparent fit breakdown powered by O*NET 29.0 &amp; MASCO</div>
-                </div>
-              </div>
-
-              <div class="p-3 rounded-2xl bg-slate-50/80 border border-slate-200/70 flex items-start gap-3 hover:bg-purple-50/50 transition">
-                <div class="h-8 w-8 rounded-xl bg-purple-100 text-purple-700 grid place-items-center font-bold text-sm shrink-0">
-                  🧭
-                </div>
-                <div class="min-w-0">
-                  <div class="font-extrabold text-slate-900">Personalised Reskilling Plan</div>
-                  <div class="text-[11px] text-slate-500 mt-0.5">Structured courses, Pomodoro buddy, and SDG passport</div>
-                </div>
-              </div>
-            </div>
-
-            <!-- Bottom Live Data Signal -->
-            <div class="pt-3 border-t border-slate-100 flex items-center justify-between text-xs">
-              <span class="text-[11px] text-slate-500 font-medium">📍 <b>69,000+</b> live postings indexed</span>
-              <button onclick="openAuth('register')" class="text-indigo-600 font-bold hover:underline text-[11px]">
-                Explore Roles →
-              </button>
-            </div>
-
-          </div>
-        </div>
-
-      </div>
-    </section>
-
-    <!-- =======================================================================
-         Gen-Z MBTI Career Spirit Totem & Global Work-Life Discovery Engine
-         ======================================================================= -->
-    <section id="career-totem-experience" class="totem-section p-6 sm:p-10 lg:p-12 my-8 relative scroll-mt-20">
+            <section id="home-intro" class="totem-section p-8 sm:p-12 lg:p-14 my-4 relative overflow-hidden scroll-mt-20">
       <div class="totem-glow-1"></div>
       <div class="totem-glow-2"></div>
 
-      <!-- Welcome Card (shown before quiz starts) -->
+      <!-- Welcome View (Combines Title & Totem Discovery) -->
       <div id="totemWelcomeCard" class="relative z-10 text-center max-w-3xl mx-auto space-y-6">
-        <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-indigo-500/20 border border-indigo-400/30 text-teal-300 text-xs font-bold shadow-xs">
-          <span>✨</span>
-          <span>Gen-Z Interactive Career Spirit Discovery</span>
-          <span class="bg-teal-500/20 text-teal-300 px-2 py-0.5 rounded-full text-[10px]">Zero Signup Required</span>
-        </div>
+        
+        <!-- Main Headline (From Section 1, Elevated & Magnetic) -->
+        <h1 class="text-3xl sm:text-5xl lg:text-[3.5rem] font-black text-white tracking-tight leading-[1.12]">
+          Find your place in the <span class="bg-gradient-to-r from-teal-300 via-indigo-300 to-pink-300 bg-clip-text text-transparent">AI era</span>
+        </h1>
 
-        <h2 class="text-3xl sm:text-5xl font-black text-white tracking-tight leading-tight">
-          What is Your <span class="bg-gradient-to-r from-teal-300 via-indigo-300 to-pink-300 bg-clip-text text-transparent">Career Spirit Totem?</span>
-        </h2>
-
+        <!-- Engaging Subtitle -->
         <p class="text-slate-300 text-sm sm:text-base leading-relaxed max-w-2xl mx-auto">
           No dry resumes. No corporate jargon. Take a 2-minute non-judgmental quiz to unlock your workplace archetype, connect with legendary role models, and explore elevated future-ready roles tailored to your exact DNA.
         </p>
 
-        <!-- CTAs -->
+        <!-- Main Actions -->
         <div class="flex flex-wrap items-center justify-center gap-3.5 pt-2">
           <button type="button" onclick="startTotemQuiz()" class="btn btn-primary !text-sm !font-black !px-8 !py-3.5 shadow-xl shadow-indigo-600/30 hover:scale-105 transition flex items-center gap-2">
             <span>✨</span>
-            <span>Awaken My Spirit Totem (Start Quiz)</span>
+            <span>Awaken Career Totem (Start 2-Min Quiz)</span>
           </button>
-          <button type="button" onclick="skipTotemQuiz()" class="btn btn-soft !text-sm !font-bold !px-6 !py-3.5 border border-white/20 text-slate-300 hover:text-white transition">
-            ⏩ Skip to Portals
+          <button type="button" onclick="openAuth('login')" class="btn btn-soft !text-sm !font-bold !px-7 !py-3.5 border border-white/20 text-white hover:bg-white/10 transition">
+            Sign In Directly
+          </button>
+          <button type="button" onclick="skipTotemQuiz()" class="text-xs text-slate-400 hover:text-teal-300 font-bold transition px-2 py-1">
+            Explore Portals ↓
           </button>
         </div>
 
-        <!-- 6 Totem Previews (Teaser Badges) -->
+        <!-- 6 Totem Archetype Badges Teaser -->
         <div class="grid grid-cols-3 sm:grid-cols-6 gap-2.5 pt-6 border-t border-white/10 max-w-2xl mx-auto text-center">
-          <div class="p-2.5 rounded-2xl bg-white/5 border border-white/5">
+          <div class="p-2.5 rounded-2xl bg-white/5 border border-white/5 hover:border-teal-400/30 transition">
             <div class="text-2xl">🦉</div>
-            <div class="text-[10px] font-bold text-slate-300 mt-1">Night Owl</div>
+            <div class="text-[10px] font-bold text-slate-200 mt-1">Night Owl</div>
             <div class="text-[9px] text-teal-400 font-mono">Systems</div>
           </div>
-          <div class="p-2.5 rounded-2xl bg-white/5 border border-white/5">
+          <div class="p-2.5 rounded-2xl bg-white/5 border border-white/5 hover:border-indigo-400/30 transition">
             <div class="text-2xl">🦮</div>
-            <div class="text-[10px] font-bold text-slate-300 mt-1">Retriever</div>
+            <div class="text-[10px] font-bold text-slate-200 mt-1">Retriever</div>
             <div class="text-[9px] text-indigo-300 font-mono">Empathy</div>
           </div>
-          <div class="p-2.5 rounded-2xl bg-white/5 border border-white/5">
+          <div class="p-2.5 rounded-2xl bg-white/5 border border-white/5 hover:border-purple-400/30 transition">
             <div class="text-2xl">🐆</div>
-            <div class="text-[10px] font-bold text-slate-300 mt-1">Leopard</div>
+            <div class="text-[10px] font-bold text-slate-200 mt-1">Leopard</div>
             <div class="text-[9px] text-purple-300 font-mono">Autonomy</div>
           </div>
-          <div class="p-2.5 rounded-2xl bg-white/5 border border-white/5">
+          <div class="p-2.5 rounded-2xl bg-white/5 border border-white/5 hover:border-teal-400/30 transition">
             <div class="text-2xl">🐋</div>
-            <div class="text-[10px] font-bold text-slate-300 mt-1">Titan Whale</div>
+            <div class="text-[10px] font-bold text-slate-200 mt-1">Titan Whale</div>
             <div class="text-[9px] text-teal-300 font-mono">Purpose</div>
           </div>
-          <div class="p-2.5 rounded-2xl bg-white/5 border border-white/5">
+          <div class="p-2.5 rounded-2xl bg-white/5 border border-white/5 hover:border-pink-400/30 transition">
             <div class="text-2xl">🦊</div>
-            <div class="text-[10px] font-bold text-slate-300 mt-1">Arctic Fox</div>
+            <div class="text-[10px] font-bold text-slate-200 mt-1">Arctic Fox</div>
             <div class="text-[9px] text-pink-300 font-mono">Aesthetics</div>
           </div>
-          <div class="p-2.5 rounded-2xl bg-white/5 border border-white/5">
+          <div class="p-2.5 rounded-2xl bg-white/5 border border-white/5 hover:border-amber-400/30 transition">
             <div class="text-2xl">🦅</div>
-            <div class="text-[10px] font-bold text-slate-300 mt-1">Hawk</div>
+            <div class="text-[10px] font-bold text-slate-200 mt-1">Hawk</div>
             <div class="text-[9px] text-amber-300 font-mono">Command</div>
           </div>
         </div>
+
+        <!-- Focused Impact Metrics at Bottom -->
+        <div class="grid grid-cols-3 gap-4 pt-6 border-t border-white/10 max-w-xl mx-auto text-center">
+          <div>
+            <div class="text-xl sm:text-2xl font-black text-teal-300 tracking-tight">56% <span class="text-xs font-normal text-slate-400">/ 26%</span></div>
+            <div class="text-[11px] text-slate-400 mt-0.5 font-medium">use AI vs trained</div>
+          </div>
+          <div>
+            <div class="text-xl sm:text-2xl font-black text-indigo-300 tracking-tight">600k+</div>
+            <div class="text-[11px] text-slate-400 mt-0.5 font-medium">workers to reskill</div>
+          </div>
+          <div>
+            <div class="text-xl sm:text-2xl font-black text-pink-300 tracking-tight">SDG 4 · 8</div>
+            <div class="text-[11px] text-slate-400 mt-0.5 font-medium">impact alignment</div>
+          </div>
+        </div>
+
       </div>
 
       <!-- Quiz Card Container (Rendered dynamically by career-spirit-totem.js) -->

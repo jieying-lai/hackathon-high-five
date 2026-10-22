@@ -565,18 +565,22 @@
   let selectedDomain = "tech";
 
   // Elements
-  const section = document.getElementById("career-totem-experience");
+  const section = document.getElementById("home-intro") || document.getElementById("career-totem-experience");
   if (!section) return;
 
+  const welcomeCard = document.getElementById("totemWelcomeCard");
   const quizCard = document.getElementById("totemQuizCard");
   const resultCard = document.getElementById("totemResultCard");
 
   // Init Event Listeners
   window.startTotemQuiz = function () {
+    if (welcomeCard) welcomeCard.classList.add("hidden");
+    if (quizCard) quizCard.classList.remove("hidden");
+    if (resultCard) resultCard.classList.add("hidden");
     currentStep = 1;
     answers = {};
     renderQuestion(1);
-    const container = document.getElementById("career-totem-experience");
+    const container = document.getElementById("home-intro") || document.getElementById("career-totem-experience");
     if (container) {
       container.scrollIntoView({ behavior: "smooth", block: "start" });
     }
@@ -590,12 +594,13 @@
   };
 
   window.retakeTotemQuiz = function () {
-    currentStep = 1;
-    answers = {};
+    if (welcomeCard) welcomeCard.classList.add("hidden");
     if (quizCard) quizCard.classList.remove("hidden");
     if (resultCard) resultCard.classList.add("hidden");
+    currentStep = 1;
+    answers = {};
     renderQuestion(1);
-    const container = document.getElementById("career-totem-experience");
+    const container = document.getElementById("home-intro") || document.getElementById("career-totem-experience");
     if (container) {
       container.scrollIntoView({ behavior: "smooth", block: "start" });
     }
@@ -765,6 +770,7 @@
   }
 
   function renderResult() {
+    if (welcomeCard) welcomeCard.classList.add("hidden");
     quizCard.classList.add("hidden");
     resultCard.classList.remove("hidden");
 
