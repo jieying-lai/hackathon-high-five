@@ -2306,6 +2306,22 @@ and consented to share their CV below.|并同意分享以下简历内容。
     if (coverage) return `${translate('skill coverage', language)}: ${coverage[1]}/${coverage[2]}`;
     const coveragePercent = text.match(/^(\d+)% skill coverage$/);
     if (coveragePercent) return `${coveragePercent[1]}% ${translate('skill coverage', language)}`;
+    let portalCount = text.match(/^(\d+) mapped courses$/);
+    if (portalCount) return i === 2 ? `${portalCount[1]} 门课程已匹配` : `${portalCount[1]} kursus dipetakan`;
+    portalCount = text.match(/^(\d+) matched \/ ([\d,]+) roles in (\d+) km$/);
+    if (portalCount) return i === 2
+      ? `匹配 ${portalCount[1]} 个岗位 / ${portalCount[2]} 个岗位（${portalCount[3]} 公里内）`
+      : `${portalCount[1]} dipadankan / ${portalCount[2]} jawatan dalam lingkungan ${portalCount[3]} km`;
+    portalCount = text.match(/^([\d,]+) CV-matched companies? \((\d+) km\)$/);
+    if (portalCount) return i === 2
+      ? `${portalCount[1]} 家与简历匹配的企业（${portalCount[2]} 公里）`
+      : `${portalCount[1]} syarikat sepadan dengan CV (${portalCount[2]} km)`;
+    portalCount = text.match(/^(\d+) CV-matched roles? \((\d+)% fit\)$/);
+    if (portalCount) return i === 2
+      ? `${portalCount[1]} 个与简历匹配的岗位（匹配度 ${portalCount[2]}%）`
+      : `${portalCount[1]} jawatan sepadan dengan CV (padanan ${portalCount[2]}%)`;
+    if (text === 'Open to all applicants') return i === 2 ? '向所有求职者开放' : 'Terbuka kepada semua pemohon';
+    if (text === 'answered') return i === 2 ? '已回答' : 'dijawab';
     if (i === 2) {
       const patterns = [
         [/^(\d+) open roles?$/, m => `${m[1]} 个开放职位`],

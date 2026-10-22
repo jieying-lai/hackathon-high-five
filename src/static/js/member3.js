@@ -127,6 +127,15 @@
     ['Follow an ordered, verified learning path.','Ikuti laluan pembelajaran tersusun daripada katalog.','按照目录中的有序学习路径提升技能。'],
     ['See the impact of your chosen path.','Lihat impak laluan pilihan anda.','查看所选学习路径的影响。'],
     ['No skills yet — add some below.','Belum ada kemahiran — tambah di bawah.','尚无技能，请在下方添加。'],
+    ['My profile','Profil saya','我的个人资料'],['Update your professional story','Kemas kini latar belakang profesional anda','更新你的职业经历'],
+    ['Review my CV','Semak CV saya','检查我的简历'],['Check and refine your extracted details','Semak dan perkemas maklumat yang diekstrak','检查并完善提取出的资料'],
+    ['Find opportunities','Cari peluang','寻找机会'],['Explore vacancies for your next move','Terokai kekosongan untuk langkah kerjaya seterusnya','寻找下一步职业发展的职位'],
+    ['My applications','Permohonan saya','我的申请'],['Manage applications and CV access','Urus permohonan dan akses CV','管理申请和简历访问权限'],
+    ['My professional profile','Profil profesional saya','我的职业档案'],
+    ['View contact information and work preferences','Lihat maklumat hubungan dan pilihan kerja','查看联系信息和工作偏好'],
+    ['Future Skills Radar','Radar Kemahiran Masa Depan','未来技能趋势雷达'],
+    ['Future-Role Matches','Padanan Jawatan Masa Depan','未来岗位匹配'],
+    ['answered','dijawab','已回答'],
   ];
   const byEnglish = new Map(vocabulary.map(row => [row[0], row]));
   const reverse = new Map(vocabulary.flatMap(row => row.map(text => [text, row[0]])));
