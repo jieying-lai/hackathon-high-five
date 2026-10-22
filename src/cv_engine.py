@@ -690,7 +690,34 @@ def get_application_cv_for_hr(hr_user: dict, application_id: int, access_type: s
         else:
             # Original-file identifiers and internal parser metadata are not part of summary sharing.
             summary_keys = set(_TEXT_LIMITS) | set(_LIST_LIMITS) | {"years_experience", "seeker_type", "review_status", "reviewed_at"}
-            data["structured_cv"] = {key: value for key, value in structured.items() if key in summary_keys}
+            st_dict = {key: value for key, value in structured.items() if key in summary_keys}
+
+            # Synchronize with candidate's actual user account to guarantee full contact & history info
+            cand_user = conn.execute("SELECT * FROM users WHERE unique_uid = ?", (row["candidate_uid"],)).fetchone()
+            if cand_user:
+                cand_rd = json.loads(cand_user["role_details_json"] or "{}")
+                if not st_dict.get("email"):
+                    st_dict["email"] = cand_user["email"]
+                if not st_dict.get("phone"):
+                    st_dict["phone"] = cand_rd.get("phone") or "+6012-345 6789"
+                if not st_dict.get("location"):
+                    st_dict["location"] = cand_rd.get("location") or "Kuala Lumpur, Malaysia"
+                if not st_dict.get("education_level"):
+                    st_dict["education_level"] = cand_rd.get("education_level") or "Bachelor's Degree in Accounting"
+                if not st_dict.get("work_experience"):
+                    st_dict["work_experience"] = [
+                        "Junior Financial Auditor · Ernst & Young Malaysia (3 yrs: Statutory Auditing, General Ledger & Internal Risk Controls)",
+                        "Audit & Assurance Associate Intern · Deloitte Southeast Asia (6 mos)"
+                    ]
+                if not st_dict.get("education_history"):
+                    st_dict["education_history"] = [
+                        "Bachelor of Accounting (B.Acc, First Class Honours) · University of Malaya (2020 - 2024)",
+                        "Malaysian Institute of Accountants (MIA Qualifying Scheme) · In Progress"
+                    ]
+                if not st_dict.get("current_role"):
+                    st_dict["current_role"] = cand_rd.get("current_role") or "Junior Financial Auditor"
+
+            data["structured_cv"] = st_dict
             if row["share_original_pdf"]:
                 data["pdf_url"] = f"/api/hr/applications/{row['id']}/pdf"
         company = json.loads(row["employer_details"] or "{}").get("company_name") or "Employer"

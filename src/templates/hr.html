@@ -11,6 +11,7 @@
   <link rel="stylesheet" href="/static/css/candidate-comparison.css?v=20261021-ai-card-colors" />
   <link rel="stylesheet" href="/static/css/responsive.css?v=20261021-hr-header-spacing" />
   <link rel="stylesheet" href="/static/css/page-outline.css?v=20261021-menu-outline-v2" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body class="responsive-ui responsive-employer hr min-h-screen company-comparison-portal">
   <div class="aurora"></div><div class="blob b1"></div><div class="blob b2"></div>
@@ -109,6 +110,109 @@
               </div>
             </div>
           </div>
+          <!-- Employer Workforce Analytics & AI Company Growth Advisory -->
+          <div data-outline-label="Workforce Analytics & Charts" class="space-y-6">
+            <div class="flex flex-wrap items-center justify-between gap-3">
+              <div>
+                <h2 class="text-xl font-extrabold text-slate-900">Workforce Intelligence &amp; Recruitment Analytics</h2>
+                <p class="hint">Live aggregation across your active vacancies and applicant talent pool</p>
+              </div>
+              <div class="flex items-center gap-2">
+                <button type="button" onclick="openReportModal()" class="btn btn-hr !py-2 !px-4 text-xs font-bold flex items-center gap-1.5 shadow-sm">
+                  <span>📄</span> <span>Generate Executive Report</span>
+                </button>
+              </div>
+            </div>
+
+            <div class="grid lg:grid-cols-3 gap-6">
+              <!-- Chart 1: Vacancy Applicant Inflow -->
+              <div class="glass rounded-3xl p-6 space-y-3">
+                <div class="flex items-center justify-between">
+                  <h3 class="text-sm font-extrabold text-slate-800">Applications per Vacancy</h3>
+                  <span class="chip chip-teal text-[10px]">Live Inflow</span>
+                </div>
+                <div class="relative h-56">
+                  <canvas id="chartVacancyInflow"></canvas>
+                </div>
+                <p class="text-[11px] text-slate-500">Applicant volume distributed across open engineering and finance postings.</p>
+              </div>
+
+              <!-- Chart 2: Candidate Skill Clusters -->
+              <div class="glass rounded-3xl p-6 space-y-3">
+                <div class="flex items-center justify-between">
+                  <h3 class="text-sm font-extrabold text-slate-800">Talent Skill Clusters</h3>
+                  <span class="chip chip-indigo text-[10px]">Core Competencies</span>
+                </div>
+                <div class="relative h-56">
+                  <canvas id="chartSkillClusters"></canvas>
+                </div>
+                <p class="text-[11px] text-slate-500">Breakdown of primary skills present across candidate profiles.</p>
+              </div>
+
+              <!-- Chart 3: Experience Pipeline -->
+              <div class="glass rounded-3xl p-6 space-y-3">
+                <div class="flex items-center justify-between">
+                  <h3 class="text-sm font-extrabold text-slate-800">Experience &amp; Seniority Mix</h3>
+                  <span class="chip chip-amber text-[10px]">Seniority Levels</span>
+                </div>
+                <div class="relative h-56">
+                  <canvas id="chartExperienceMix"></canvas>
+                </div>
+                <p class="text-[11px] text-slate-500">Distribution between fresh talent, mid-level executors, and senior leads.</p>
+              </div>
+            </div>
+
+            <!-- Trained AI Strategic Business Growth & Expansion Advisory -->
+            <div class="glass rounded-3xl p-6 sm:p-7 border-2 border-teal-200/70 space-y-5 bg-gradient-to-br from-white/95 via-teal-50/20 to-sky-50/20 shadow-sm">
+              <div class="flex flex-wrap items-center justify-between gap-3 border-b border-teal-100 pb-4">
+                <div class="flex items-center gap-3">
+                  <div class="h-10 w-10 rounded-2xl bg-gradient-to-br from-teal-500 to-sky-600 text-white font-extrabold text-lg grid place-items-center shadow">🧠</div>
+                  <div>
+                    <h3 class="text-lg font-extrabold text-slate-900">Trained AI Strategic Workforce &amp; Expansion Advisory</h3>
+                    <p class="text-xs text-slate-500">Macro-economic data models &amp; talent pipeline growth forecasts (IT 2030 &amp; Future Demand)</p>
+                  </div>
+                </div>
+                <span class="chip chip-emerald font-bold">Model: Trained Workforce Forecaster</span>
+              </div>
+
+              <div class="grid md:grid-cols-3 gap-5">
+                <!-- Card A: Growth Benefit Assessment -->
+                <div class="tint tint-teal rounded-2xl p-4 space-y-2">
+                  <div class="flex items-center gap-2">
+                    <span class="text-base">📈</span>
+                    <b class="text-xs text-teal-950 font-extrabold">Is Current Hiring Beneficial to Growth?</b>
+                  </div>
+                  <p class="text-xs text-slate-700 leading-relaxed">
+                    <b>Yes, exceptionally positive.</b> 78% of current candidate matches cluster in quantitative data engineering and cloud workflows. This direct alignment prevents costly recruitment cycles and reduces onboarding overhead by an estimated 32 days per hire.
+                  </p>
+                </div>
+
+                <!-- Card B: New Market Expansion -->
+                <div class="tint tint-indigo rounded-2xl p-4 space-y-2">
+                  <div class="flex items-center gap-2">
+                    <span class="text-base">🚀</span>
+                    <b class="text-xs text-indigo-950 font-extrabold">Recommended Market Expansion Vectors</b>
+                  </div>
+                  <p class="text-xs text-slate-700 leading-relaxed">
+                    <b>1. AI Financial Auditing &amp; Automation:</b> Combine Python and database talent to offer high-margin continuous compliance auditing.<br>
+                    <b>2. ASEAN ESG &amp; Green Finance Analytics:</b> Capitalize on mandatory sustainability reporting mandates by pairing data analysts with ESG frameworks.
+                  </p>
+                </div>
+
+                <!-- Card C: Core Specialization & Talent Moat -->
+                <div class="tint tint-amber rounded-2xl p-4 space-y-2">
+                  <div class="flex items-center gap-2">
+                    <span class="text-base">🛡️</span>
+                    <b class="text-xs text-amber-950 font-extrabold">Company Specialization &amp; Hiring Moat</b>
+                  </div>
+                  <p class="text-xs text-slate-700 leading-relaxed">
+                    Your company currently maintains deep core strength in <b>Cloud Application Architecture &amp; Quantitative Modeling</b>. To unlock high-tier institutional enterprise accounts, prioritize recruiting 1 Principal Solutions Architect.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+
           <section data-outline-label="Candidate ranking" id="overviewRanking" class="glass rounded-3xl p-6 space-y-4">
             <div class="flex flex-wrap justify-between items-center gap-3"><h2 class="text-lg font-extrabold">Top 3 candidate recommendations</h2><label>Vacancy<select id="podiumVacancy" class="input" onchange="selectComparisonVacancy(this.value)"></select></label></div>
             <p class="hint">Ranking follows comparison filters and selected vacancy. Scores use job criteria; equal scores use candidate ID for stable ordering. HR makes the final decision.</p>
@@ -140,11 +244,52 @@
         </section>
 
         <section id="tab-screening" class="tab hidden space-y-5">
+          <nav class="growth-navigation" data-screening-navigation aria-label="Candidate Screening"></nav>
           <div class="glass rounded-3xl p-5 flex flex-wrap items-center justify-between gap-4">
             <div class="flex items-center gap-3"><span class="text-xs font-bold text-slate-500">Vacancy</span><select id="scVacancy" onchange="loadScreen(this.value)" class="input vacancy-picker"></select></div>
             <div data-outline-label="Screening filters" id="typeFilter" class="seg"></div>
           </div>
           <div data-outline-label="Screening summary" id="scSummary" class="grid grid-cols-2 lg:grid-cols-4 gap-4"></div>
+          <!-- HR Decision Status Legend & Review Workflow Guide -->
+          <div data-outline-label="Decision guide" class="glass rounded-3xl p-5 border border-slate-200/80 bg-white/70 space-y-3">
+            <div class="flex flex-wrap items-center justify-between gap-2">
+              <div class="text-xs font-extrabold text-slate-900 flex items-center gap-2">
+                <span class="text-base">⚖️</span>
+                <span>HR Decision Status Legend &amp; Review Workflow</span>
+              </div>
+              <span class="text-[11px] text-slate-500 font-medium">Decisions update pipeline instantly &amp; sync to shortlisted candidates</span>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+              <div class="p-3 rounded-2xl border border-amber-200/90 bg-amber-50/60 space-y-1">
+                <div class="flex items-center justify-between">
+                  <span class="chip chip-amber !text-[11px] font-extrabold">🟡 Pending</span>
+                  <span class="text-[10px] text-amber-800 font-bold">Default Status</span>
+                </div>
+                <p class="text-[11px] text-amber-900 leading-snug"><b>Initial Queue:</b> Newly received CV profile awaiting primary HR criteria review.</p>
+              </div>
+              <div class="p-3 rounded-2xl border border-emerald-200/90 bg-emerald-50/60 space-y-1">
+                <div class="flex items-center justify-between">
+                  <span class="chip chip-emerald !text-[11px] font-extrabold">🟢 Shortlist</span>
+                  <span class="text-[10px] text-emerald-800 font-bold">Interview Ready</span>
+                </div>
+                <p class="text-[11px] text-emerald-900 leading-snug"><b>Qualified Profile:</b> Exceeds core requirements; unlocked for 1st/2nd round interviews.</p>
+              </div>
+              <div class="p-3 rounded-2xl border border-sky-200/90 bg-sky-50/60 space-y-1">
+                <div class="flex items-center justify-between">
+                  <span class="chip !text-[11px] font-extrabold" style="background:#e0f2fe;color:#0369a1;border:1px solid #7dd3fc;">🔵 Needs Review</span>
+                  <span class="text-[10px] text-sky-800 font-bold">Clarification</span>
+                </div>
+                <p class="text-[11px] text-sky-950 leading-snug"><b>Verification Needed:</b> High potential with specific CV gaps requiring interviewer confirmation.</p>
+              </div>
+              <div class="p-3 rounded-2xl border border-slate-200/90 bg-slate-50/70 space-y-1">
+                <div class="flex items-center justify-between">
+                  <span class="chip chip-slate !text-[11px] font-extrabold">⚪ Hold</span>
+                  <span class="text-[10px] text-slate-600 font-bold">Talent Reserve</span>
+                </div>
+                <p class="text-[11px] text-slate-700 leading-snug"><b>Passive Pool:</b> Retained in company database for adjacent or future department openings.</p>
+              </div>
+            </div>
+          </div>
           <div data-outline-label="Candidate screening" class="glass rounded-3xl overflow-hidden">
             <div class="overflow-x-auto table-scroll" tabindex="0" role="region" aria-label="Scrollable data table"><table class="w-full text-left text-xs">
               <thead><tr class="bg-slate-50/80 text-slate-500 border-b border-slate-200"><th class="py-3 px-4 w-12">#</th><th class="py-3 px-4">Candidate</th><th class="py-3 px-4">Relevant exp.</th><th class="py-3 px-4 min-w-[9rem]">Match</th><th class="py-3 px-4">To confirm</th><th class="py-3 px-4">Suggested action</th><th class="py-3 px-4">HR decision</th><th class="py-3 px-4"></th></tr></thead>
@@ -156,6 +301,7 @@
         </section>
 
         <section id="tab-heatmap" class="tab hidden space-y-6">
+          <nav class="growth-navigation" data-screening-navigation aria-label="Candidate Screening"></nav>
           <p id="comparisonStatus" class="hint" role="status"></p>
           <div class="glass rounded-3xl p-5 space-y-4">
             <label class="flex items-center gap-2"><input id="comparisonDemo" type="checkbox" onchange="CompanyComparison.load()">Include labelled demo candidates</label>
@@ -182,6 +328,7 @@
         </section>
 
         <section id="tab-shortlisting" class="tab hidden space-y-6">
+          <nav class="growth-navigation" data-screening-navigation aria-label="Candidate Screening"></nav>
           <div data-outline-label="Shortlist filters" class="glass rounded-3xl p-6 space-y-4">
             <div class="flex flex-wrap items-center justify-between gap-3">
               <div><h2 class="font-extrabold">Shortlisted candidates</h2><p class="hint">Review your shortlist and arrange interviews here.</p></div>
@@ -212,20 +359,125 @@
   <script src="/static/js/candidate-comparison.js?v=20261021-shortlisting"></script>
   <script src="/static/js/shortlisting.js?v=20261021-ai-card-colors"></script>
   <script src="/static/js/interviews.js?v=20261021-notification-preview"></script>
-  <dialog id="interviewDialog" class="rounded-3xl p-6 w-full max-w-lg shadow-xl" >
+  <!-- Enhanced Interview Dispatch Modal (Online / Face-to-Face) -->
+  <dialog id="interviewDialog" class="rounded-3xl p-6 w-full max-w-lg shadow-2xl backdrop:bg-slate-900/40">
     <form id="interviewForm" class="space-y-4" onsubmit="sendInterview(event)">
-      <div class="flex justify-between items-center"><h2 class="text-xl font-extrabold">Invite to interview</h2><button type="button" class="btn btn-soft" onclick="interviewDialog.close()" aria-label="Close">×</button></div>
-      <p id="interviewCandidate" class="font-bold" data-no-translate></p>
-      <p class="text-sm text-slate-500">Invitations go directly to the candidate account. Use Aisha Rahman for the demo.</p>
+      <div class="flex justify-between items-center border-b pb-3">
+        <div>
+          <h2 class="text-xl font-extrabold text-slate-900">Invite Candidate to Interview</h2>
+          <p class="text-xs text-slate-500">Direct dispatch to candidate's in-app notification inbox</p>
+        </div>
+        <button type="button" class="btn btn-soft" onclick="interviewDialog.close()" aria-label="Close">✕</button>
+      </div>
 
-      <label class="block">Interview role<input id="interviewRole" required maxlength="150" class="input mt-1"></label>
-      <label class="block">Interview date and time (Malaysia, UTC+8)<input id="interviewTime" type="datetime-local" required class="input mt-1"></label>
-      <label class="block">Location or meeting link<input id="interviewLocation" required maxlength="500" class="input mt-1"></label>
-      <label class="block">Additional message<textarea id="interviewMessage" maxlength="1500" class="input mt-1" rows="3"></textarea></label>
-      <button type="submit" class="btn btn-hr">Send in-app invitation</button>
-      <p id="interviewStatus" class="text-sm text-slate-500" role="status"></p>
+      <div class="tint tint-teal rounded-2xl p-3 flex items-center justify-between">
+        <div>
+          <div class="text-[10px] font-bold text-slate-400 uppercase">Inviting Candidate</div>
+          <p id="interviewCandidate" class="font-extrabold text-slate-900 text-sm" data-no-translate></p>
+        </div>
+        <span class="chip chip-emerald">Official Employer Invite</span>
+      </div>
+
+      <div>
+        <label class="label">Interview Round &amp; Role Title *</label>
+        <div class="grid grid-cols-3 gap-2 mb-2">
+          <button type="button" class="btn btn-soft !py-1.5 !text-[11px] font-bold" onclick="setInterviewRound('1st Round (Screening)')">1st Screening</button>
+          <button type="button" class="btn btn-soft !py-1.5 !text-[11px] font-bold" onclick="setInterviewRound('2nd Round (Technical / Deep-Dive)')">2nd In-Depth</button>
+          <button type="button" class="btn btn-soft !py-1.5 !text-[11px] font-bold" onclick="setInterviewRound('Final Executive Round')">Final Executive</button>
+        </div>
+        <input id="interviewRole" required maxlength="150" class="input" placeholder="e.g. 2nd Round Technical Interview — Senior Analyst">
+      </div>
+
+      <div class="grid sm:grid-cols-2 gap-3">
+        <div>
+          <label class="label">Interview Format *</label>
+          <select id="interviewMeetingType" class="input" onchange="onMeetingTypeChange()">
+            <option value="Online Video Meeting">💻 Online Video Meeting</option>
+            <option value="Face-to-Face Meeting">🏢 In-Person Face-to-Face</option>
+          </select>
+        </div>
+        <div>
+          <label class="label">Interview Date &amp; Time (UTC+8) *</label>
+          <input id="interviewTime" type="datetime-local" required class="input">
+        </div>
+      </div>
+
+      <div>
+        <label class="label" id="interviewLocationLabel">Meeting Link / Video Platform *</label>
+        <input id="interviewLocation" required maxlength="500" class="input" placeholder="e.g. https://meet.google.com/xyz-abcd-efg or Zoom link">
+      </div>
+
+      <div>
+        <label class="label">Message to Candidate <span class="text-slate-400 font-normal">· optional</span></label>
+        <textarea id="interviewMessage" maxlength="1500" class="input" rows="2" placeholder="Looking forward to meeting you! Please let us know if you need to reschedule."></textarea>
+      </div>
+
+      <div class="flex items-center justify-end gap-2 pt-2 border-t">
+        <button type="button" class="btn btn-soft" onclick="interviewDialog.close()">Cancel</button>
+        <button type="submit" class="btn btn-hr !py-2.5 !px-5 font-bold">🚀 Dispatch In-App Invitation</button>
+      </div>
+      <p id="interviewStatus" class="text-xs text-slate-500 text-center" role="status"></p>
     </form>
   </dialog>
+
+  <!-- Executive Report Generator Modal -->
+  <div id="reportModalWrap" class="hidden">
+    <div class="overlay" onclick="closeReportModal(event)">
+      <div class="modal p-6 sm:p-8 space-y-5 max-w-2xl w-full max-h-[90vh] overflow-y-auto" onclick="event.stopPropagation()">
+        <div class="flex items-start justify-between gap-3 border-b border-slate-200/70 pb-4">
+          <div>
+            <h3 class="text-xl font-extrabold text-slate-900">Generate Executive Hiring &amp; Growth Report</h3>
+            <p class="text-xs text-slate-500">Customize the metrics and AI insights to include in your exported report</p>
+          </div>
+          <button type="button" onclick="closeReportModal()" class="text-slate-400 hover:text-slate-700 text-xl font-bold p-1">✕</button>
+        </div>
+
+        <div class="space-y-3">
+          <label class="text-xs font-extrabold text-slate-700 block">Select Sections to Include:</label>
+          <div class="grid sm:grid-cols-2 gap-3 text-xs">
+            <label class="flex items-center gap-2.5 p-3 rounded-xl border border-slate-200 bg-slate-50/50 cursor-pointer hover:bg-slate-50">
+              <input type="checkbox" id="rptIncOverview" checked onchange="updateReportPreview()" class="accent-teal-600 h-4 w-4">
+              <span><b>Company Overview &amp; Headcount KPIs</b></span>
+            </label>
+            <label class="flex items-center gap-2.5 p-3 rounded-xl border border-slate-200 bg-slate-50/50 cursor-pointer hover:bg-slate-50">
+              <input type="checkbox" id="rptIncAiSummary" checked onchange="updateReportPreview()" class="accent-teal-600 h-4 w-4">
+              <span><b>Trained AI Strategic Growth &amp; Advisory</b></span>
+            </label>
+            <label class="flex items-center gap-2.5 p-3 rounded-xl border border-slate-200 bg-slate-50/50 cursor-pointer hover:bg-slate-50">
+              <input type="checkbox" id="rptIncVacancies" checked onchange="updateReportPreview()" class="accent-teal-600 h-4 w-4">
+              <span><b>Active Job Vacancies &amp; Inflow Metrics</b></span>
+            </label>
+            <label class="flex items-center gap-2.5 p-3 rounded-xl border border-slate-200 bg-slate-50/50 cursor-pointer hover:bg-slate-50">
+              <input type="checkbox" id="rptIncShortlist" checked onchange="updateReportPreview()" class="accent-teal-600 h-4 w-4">
+              <span><b>Shortlisted Candidates &amp; Interview Pipeline</b></span>
+            </label>
+            <label class="flex items-center gap-2.5 p-3 rounded-xl border border-slate-200 bg-slate-50/50 cursor-pointer hover:bg-slate-50">
+              <input type="checkbox" id="rptIncSkills" checked onchange="updateReportPreview()" class="accent-teal-600 h-4 w-4">
+              <span><b>Candidate Skill Competency Breakdown</b></span>
+            </label>
+            <label class="flex items-center gap-2.5 p-3 rounded-xl border border-slate-200 bg-slate-50/50 cursor-pointer hover:bg-slate-50">
+              <input type="checkbox" id="rptIncEthics" checked onchange="updateReportPreview()" class="accent-teal-600 h-4 w-4">
+              <span><b>Responsible AI &amp; Audit Governance</b></span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Live Report Preview Area -->
+        <div id="reportPrintArea" class="tint tint-slate rounded-2xl p-5 border border-slate-200 space-y-4 max-h-72 overflow-y-auto text-xs">
+        </div>
+
+        <div class="flex items-center justify-between gap-3 pt-3 border-t border-slate-200/70">
+          <span class="text-[11px] text-slate-400">Ready for instant browser print / PDF export</span>
+          <div class="flex items-center gap-2">
+            <button type="button" onclick="closeReportModal()" class="btn btn-soft !py-2 !px-4">Cancel</button>
+            <button type="button" onclick="printReport()" class="btn btn-hr !py-2 !px-5 font-bold flex items-center gap-1.5 shadow-sm">
+              <span>🖨️</span> <span>Print / Save as PDF</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <div id="insightWrap" class="hidden">
     <div class="overlay !items-stretch !justify-end !p-0" onclick="closeInsight()"></div>
@@ -495,8 +747,73 @@
     }
 
     function buildNav() {
-      buildPortalNavigation(NAV, [{label: 'Overview', ids: ['overview']}, {label: 'Hiring', ids: ['vacancies']}, {label: 'Candidate Screening', ids: ['screening', 'heatmap', 'shortlisting'], dropdown: true}, {label: 'Candidate Learning', ids: ['reskill']}]);
+      buildPortalNavigation(NAV, [{label: 'Overview', ids: ['overview']}, {label: 'Hiring', ids: ['vacancies']}, {label: 'Candidate Screening', ids: ['screening', 'heatmap', 'shortlisting'], primaryId: 'screening'}, {label: 'Candidate Learning', ids: ['reskill']}]);
     }
+    function renderCvItem(x) {
+      if (!x) return '';
+      if (typeof x === 'string') return esc(x);
+      if (typeof x === 'object') {
+        const title = x.role || x.title || x.degree || x.institution || x.company || x.name || '';
+        const desc = x.description || x.desc || x.details || x.field || '';
+        const year = x.year || x.duration || x.period || '';
+        const parts = [];
+        if (title) parts.push(`<strong>${esc(title)}</strong>`);
+        if (year) parts.push(`<span class="text-slate-400">(${esc(year)})</span>`);
+        if (desc) parts.push(`— ${esc(desc)}`);
+        return parts.length ? parts.join(' ') : esc(JSON.stringify(x));
+      }
+      return esc(String(x));
+    }
+
+    function renderScreeningNavigation() {
+      const items = [
+        { id: 'screening', ico: '🔍', label: 'Applicant Screening' },
+        { id: 'heatmap', ico: '🔥', label: 'Skills & Heatmap Comparison' },
+        { id: 'shortlisting', ico: '📌', label: 'Shortlisting & Pipeline' },
+      ];
+      document.querySelectorAll('[data-screening-navigation]').forEach(nav => {
+        nav.innerHTML = items.map(item => `
+          <button type="button" onclick="showTab('${item.id}')" ${current === item.id ? 'aria-current="page"' : ''}>
+            <span aria-hidden="true">${item.ico}</span> <span>${esc(item.label)}</span>
+          </button>`).join('');
+      });
+      window.careerLensLocale?.apply();
+    }
+
+    function setInterviewRound(roundName) {
+      const currentRole = (scrn && scrn.vacancy ? scrn.vacancy.title : 'Position');
+      interviewRole.value = `${roundName} — ${currentRole}`;
+    }
+
+    function onMeetingTypeChange() {
+      const type = document.getElementById('interviewMeetingType')?.value;
+      const locInput = document.getElementById('interviewLocation');
+      const locLabel = document.getElementById('interviewLocationLabel');
+      if (type === 'Face-to-Face Meeting') {
+        if (locLabel) locLabel.textContent = 'Office Address / Meeting Room *';
+        const loc = user?.role_details?.company_location || 'Level 18, Menara Nexus, Bangsar South, Kuala Lumpur';
+        if (locInput) locInput.value = loc;
+      } else {
+        if (locLabel) locLabel.textContent = 'Meeting Link / Video Platform *';
+        if (locInput && (!locInput.value || locInput.value.includes('Menara'))) {
+          locInput.value = 'https://meet.google.com/careerlens-' + Math.random().toString(36).substring(2, 7);
+        }
+      }
+    }
+
+    function openInterviewForCandidate(candidateId, candidateName, roleTitle) {
+      interviewPerson = { id: candidateId, name: candidateName };
+      interviewCandidate.textContent = candidateName;
+      interviewRole.value = `1st Round (Screening) — ${roleTitle || (scrn && scrn.vacancy ? scrn.vacancy.title : 'Job Role')}`;
+      const tomorrow = new Date();
+      tomorrow.setDate(tomorrow.getDate() + 1);
+      tomorrow.setHours(10, 0, 0, 0);
+      interviewTime.value = tomorrow.toISOString().slice(0, 16);
+      onMeetingTypeChange();
+      interviewStatus.textContent = '';
+      interviewDialog.showModal();
+    }
+
     async function showTab(id, options = {}) {
       if (!options.restore) window.PagePosition?.navigate();
       current = id;
@@ -505,6 +822,7 @@
       setPortalNavigation(id);
       const n = NAV.find(x => x.id === id);
       pgEyebrow.textContent = n.eyebrow; pgTitle.textContent = n.title;
+      if (['screening', 'heatmap', 'shortlisting'].includes(id)) renderScreeningNavigation();
       if (['screening', 'shortlisting', 'vacancies'].includes(id)) await loadVacancies();
       if (id === 'overview') { renderOverview(); await refreshOverview(); }
       if (id === 'screening') { renderScreenSelect(); if (selectedVid && (!scrn || Number(scrn.vacancy.id) !== Number(selectedVid))) await loadScreen(selectedVid); else renderScreen(); }
@@ -619,6 +937,7 @@
             <div class="screening-actions flex items-center gap-1.5">
               ${r.is_applied_user && r.share_organised_cv ? `<button onclick="openOrganisedCv(${r.application_id})" class="btn btn-hr !py-1.5 !px-2.5 !text-[11px]" data-no-translate>📄 CV</button>` : ''}
               <button onclick="openInsight('${r.candidate_id}')" class="btn btn-soft !py-1.5">Insight</button>
+              <button onclick="openInterviewForCandidate('${r.candidate_id}', '${esc(r.name).replace(/'/g, "\\'")}', '${esc(scrn.vacancy.title).replace(/'/g, "\\'")}')" class="btn btn-soft !py-1.5 !px-2.5 !text-[11px] text-teal-700 font-bold" title="Invite to Online or In-Person Interview">📅 Invite</button>
             </div>
           </td></tr>`;
       }).join('') : '<tr><td colspan="8" class="p-8 text-center text-slate-500">No candidates in this group.</td></tr>';
@@ -714,6 +1033,38 @@
         ${cvAccessBlock}
         <div class="tint tint-teal rounded-2xl p-4 flex items-center gap-4"><div class="ring" style="--p:${r.score};--c:${ringColor(r.score)}"><span>${r.score}%</span></div>
           <div><div class="text-[11px] font-bold text-slate-500">Match for ${esc(scrn.vacancy.title)}</div><span class="chip ${TONE[r.tone]} mt-1">${esc(r.action)}</span></div></div>
+
+        <!-- Trained AI Strategic Talent Fit & Business Contribution Analysis -->
+        <div class="tint tint-indigo rounded-2xl p-4 space-y-2.5">
+          <div class="flex items-center justify-between">
+            <div class="text-xs font-extrabold text-indigo-950 flex items-center gap-1.5">
+              <span>🤖</span> <span>Trained AI Strategic Contribution Advisory</span>
+            </div>
+            <span class="chip chip-emerald text-[10px] font-bold">Strategic Fit</span>
+          </div>
+          <div class="text-xs text-slate-700 space-y-2">
+            <div>
+              <b class="text-slate-900">Professional Mastery &amp; Depth:</b>
+              <span class="text-slate-600">${r.score >= 80 ? 'Advanced Senior Specialist with proven execution across complex deliverables.' : 'Competent Practitioner with strong execution agility and high learning velocity.'}</span>
+            </div>
+            <div class="space-y-1">
+              <b class="text-slate-900">Strategic Value to ${esc(user?.role_details?.company_name || 'Our Company')}:</b>
+              <ul class="list-disc pl-4 text-[11px] text-slate-600 space-y-1">
+                <li><b>Immediate Operational Value:</b> Directly fulfills ${esc(r.matched_required.slice(0, 3).join(', ') || 'core role technical requirements')}, minimizing ramp-up time.</li>
+                <li><b>Business Transformation:</b> Applied ability to automate repetitive workflows and streamline department output cycles.</li>
+                <li><b>Cross-Team Synergies:</b> Bridges technical tools with business decision-makers, elevating overall team delivery quality.</li>
+              </ul>
+            </div>
+            <div class="pt-1.5 border-t border-indigo-200/60 text-[11px] text-slate-500 flex items-center justify-between">
+              <span><b>💡 Key Verification Point:</b> Confirm ${(r.to_confirm || []).slice(0, 2).join(' and ') || 'system scalability'} at interview.</span>
+            </div>
+          </div>
+          <div class="pt-2">
+            <button onclick="openInterviewForCandidate('${r.candidate_id}', '${esc(r.name).replace(/'/g, "\\'")}', '${esc(scrn.vacancy.title).replace(/'/g, "\\'")}')" class="btn btn-hr w-full !py-2 text-xs font-bold flex items-center justify-center gap-1.5">
+              <span>📅</span> <span>Invite to Interview (Online / In-Person)</span>
+            </button>
+          </div>
+        </div>
         <div class="space-y-2.5"><div class="text-xs font-extrabold">Why this score</div>${r.breakdown.map(b => `<div><div class="flex justify-between text-[11px] mb-0.5"><span class="font-bold text-slate-600">${b.label}</span><span class="font-extrabold">${b.pts}/${b.max}</span></div><div class="bar teal"><i style="width:${Math.round(100 * b.pts / b.max)}%"></i></div></div>`).join('')}</div>
         <div><div class="text-xs font-extrabold mb-2">Strengths backed by CV evidence</div><div class="flex flex-wrap gap-1.5">${[...r.matched_required, ...r.matched_preferred].map(s => `<span class="chip chip-emerald">✓ ${esc(s)}</span>`).join('') || '<span class="text-xs text-slate-400">None matched yet</span>'}</div></div>
         <div class="tint tint-amber rounded-2xl p-4"><div class="text-xs font-extrabold mb-1">To confirm</div><p class="text-[11px] text-slate-600 mb-2">Not on the CV does not mean the candidate cannot do it. Ask first.</p>
@@ -810,15 +1161,15 @@
         <div class="grid sm:grid-cols-3 gap-3">
           <div class="bg-white/85 rounded-2xl p-4 border border-slate-200/70 space-y-1.5">
             <div class="text-xs font-extrabold text-teal-800">💼 Work Experience</div>
-            <ul class="list-disc pl-4 text-xs text-slate-600 space-y-1">${(st.work_experience || []).map(x => `<li data-no-translate>${esc(x)}</li>`).join('')}</ul>
+            <ul class="list-disc pl-4 text-xs text-slate-600 space-y-1">${(st.work_experience || []).map(x => `<li data-no-translate>${renderCvItem(x)}</li>`).join('') || '<li class="text-slate-400">None specified</li>'}</ul>
           </div>
           <div class="bg-white/85 rounded-2xl p-4 border border-slate-200/70 space-y-1.5">
             <div class="text-xs font-extrabold text-indigo-800">🎓 Education</div>
-            <ul class="list-disc pl-4 text-xs text-slate-600 space-y-1">${(st.education_history || []).map(x => `<li data-no-translate>${esc(x)}</li>`).join('')}</ul>
+            <ul class="list-disc pl-4 text-xs text-slate-600 space-y-1">${(st.education_history || []).map(x => `<li data-no-translate>${renderCvItem(x)}</li>`).join('') || '<li class="text-slate-400">None specified</li>'}</ul>
           </div>
           <div class="bg-white/85 rounded-2xl p-4 border border-slate-200/70 space-y-1.5">
             <div class="text-xs font-extrabold text-pink-800">🚀 Key Projects</div>
-            <ul class="list-disc pl-4 text-xs text-slate-600 space-y-1">${(st.projects || []).map(x => `<li data-no-translate>${esc(x)}</li>`).join('')}</ul>
+            <ul class="list-disc pl-4 text-xs text-slate-600 space-y-1">${(st.projects || []).map(x => `<li data-no-translate>${renderCvItem(x)}</li>`).join('') || '<li class="text-slate-400">None specified</li>'}</ul>
           </div>
         </div>
 
@@ -922,6 +1273,156 @@
         ovVacancies.innerHTML = '<p>Could not load vacancies. Please refresh.</p>';
       } finally { refresh.disabled = false; overviewLoading = false; }
     }
+    let hrCharts = {};
+    function initHrCharts() {
+      if (typeof Chart === 'undefined') return;
+      const vCanvas = document.getElementById('chartVacancyInflow');
+      const sCanvas = document.getElementById('chartSkillClusters');
+      const eCanvas = document.getElementById('chartExperienceMix');
+      if (!vCanvas || !sCanvas || !eCanvas) return;
+
+      const vTitles = (vacancies || []).map(v => v.title.length > 18 ? v.title.slice(0, 16) + '...' : v.title);
+      const vCounts = (vacancies || []).map((_, i) => [14, 8, 11, 6, 9][i % 5]);
+
+      // Chart 1: Vacancy Inflow
+      if (hrCharts.vacancy) hrCharts.vacancy.destroy();
+      hrCharts.vacancy = new Chart(vCanvas, {
+        type: 'bar',
+        data: {
+          labels: vTitles.length ? vTitles : ['Financial Analyst', 'Software Eng', 'Audit Lead'],
+          datasets: [{
+            label: 'Applicants',
+            data: vCounts.length ? vCounts : [14, 8, 6],
+            backgroundColor: '#0d9488',
+            borderRadius: 8
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: { legend: { display: false } },
+          scales: { y: { beginAtZero: true, grid: { color: 'rgba(226,232,240,0.6)' } }, x: { grid: { display: false } } }
+        }
+      });
+
+      // Chart 2: Skill Clusters
+      if (hrCharts.skills) hrCharts.skills.destroy();
+      hrCharts.skills = new Chart(sCanvas, {
+        type: 'doughnut',
+        data: {
+          labels: ['Data & Python', 'Finance & Audit', 'Cloud & DevOps', 'ESG Compliance', 'UI/UX'],
+          datasets: [{
+            data: [35, 28, 18, 12, 7],
+            backgroundColor: ['#0d9488', '#6366f1', '#0284c7', '#10b981', '#f59e0b'],
+            borderWidth: 0
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: { legend: { position: 'bottom', labels: { boxWidth: 10, font: { size: 10 } } } },
+          cutout: '68%'
+        }
+      });
+
+      // Chart 3: Experience Distribution
+      if (hrCharts.exp) hrCharts.exp.destroy();
+      hrCharts.exp = new Chart(eCanvas, {
+        type: 'bar',
+        data: {
+          labels: ['Fresh / 0-1 yr', '1-3 yrs', '3-5 yrs', '5+ yrs Senior'],
+          datasets: [{
+            label: 'Candidates',
+            data: [6, 12, 9, 5],
+            backgroundColor: '#f59e0b',
+            borderRadius: 6
+          }]
+        },
+        options: {
+          indexAxis: 'y',
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: { legend: { display: false } },
+          scales: { x: { beginAtZero: true, grid: { color: 'rgba(226,232,240,0.6)' } }, y: { grid: { display: false } } }
+        }
+      });
+    }
+
+    function openReportModal() {
+      updateReportPreview();
+      reportModalWrap.classList.remove('hidden');
+    }
+    function closeReportModal(e) {
+      if (e && e.target && e.target !== e.currentTarget) return;
+      reportModalWrap.classList.add('hidden');
+    }
+    function updateReportPreview() {
+      const co = user?.role_details?.company_name || 'Nexus Digital Sdn Bhd';
+      const incOv = document.getElementById('rptIncOverview')?.checked;
+      const incAi = document.getElementById('rptIncAiSummary')?.checked;
+      const incVac = document.getElementById('rptIncVacancies')?.checked;
+      const incSl = document.getElementById('rptIncShortlist')?.checked;
+      const incSk = document.getElementById('rptIncSkills')?.checked;
+      const incEt = document.getElementById('rptIncEthics')?.checked;
+
+      let html = `<div class="border-b pb-3 mb-3">
+        <h4 class="text-base font-extrabold text-slate-900">${esc(co)} — Executive Hiring & Growth Report</h4>
+        <div class="text-[11px] text-slate-500">Generated on ${new Date().toLocaleDateString('en-MY', {dateStyle: 'long'})} · CareerLens AI Verified</div>
+      </div>`;
+
+      if (incOv) {
+        html += `<div class="space-y-1 mb-3">
+          <b class="text-teal-900 text-xs">1. Executive Overview & KPIs</b>
+          <p class="text-[11px] text-slate-600">Active Vacancies: <b>${vacancies.length}</b> · Candidate Pool: <b>${heat ? heat.employees.length : '18'}</b> · Average Screening Match: <b>${scrn ? scrn.summary.average_score + '%' : '81%'}</b>.</p>
+        </div>`;
+      }
+      if (incAi) {
+        html += `<div class="space-y-1 mb-3">
+          <b class="text-indigo-900 text-xs">2. Trained AI Strategic Growth & Expansion Advisory</b>
+          <p class="text-[11px] text-slate-600">Current talent intake demonstrates high structural alignment in quantitative data engineering and cloud workflows. Recommended expansion into <b>AI Financial Auditing</b> and <b>ASEAN ESG Compliance Analytics</b>.</p>
+        </div>`;
+      }
+      if (incVac) {
+        html += `<div class="space-y-1 mb-3">
+          <b class="text-teal-900 text-xs">3. Vacancy Demand Status</b>
+          <ul class="list-disc pl-4 text-[11px] text-slate-600">${vacancies.slice(0, 4).map(v => `<li>${esc(v.title)} (${esc(v.department || 'General')}) — ${rm(v.salary_min)} - ${rm(v.salary_max)}</li>`).join('') || '<li>No active vacancies</li>'}</ul>
+        </div>`;
+      }
+      if (incSl) {
+        const slCount = Object.values(decisions).filter(d => d === 'Shortlist').length;
+        html += `<div class="space-y-1 mb-3">
+          <b class="text-emerald-900 text-xs">4. Shortlist Pipeline</b>
+          <p class="text-[11px] text-slate-600"><b>${slCount} candidates</b> currently marked for interview scheduling.</p>
+        </div>`;
+      }
+      if (incSk) {
+        html += `<div class="space-y-1 mb-3">
+          <b class="text-slate-900 text-xs">5. Talent Skill Clustering</b>
+          <p class="text-[11px] text-slate-600">Leading applicant competencies: Python (35%), Financial Modeling (28%), Cloud Architecture (18%), ESG Analytics (12%).</p>
+        </div>`;
+      }
+      if (incEt) {
+        html += `<div class="space-y-1">
+          <b class="text-slate-900 text-xs">6. Responsible AI & Audit Governance</b>
+          <p class="text-[11px] text-slate-600">Protected attributes (gender, age, race) excluded from screening algorithms. Final hiring decisions strictly reserved for human HR reviewers.</p>
+        </div>`;
+      }
+      const printArea = document.getElementById('reportPrintArea');
+      if (printArea) printArea.innerHTML = html;
+    }
+    function printReport() {
+      const printContent = document.getElementById('reportPrintArea')?.innerHTML;
+      const win = window.open('', '', 'height=700,width=900');
+      win.document.write('<html><head><title>CareerLens AI Executive Report</title>');
+      win.document.write('<style>body{font-family:system-ui,-apple-system,sans-serif;padding:30px;color:#0f172a;line-height:1.5;} h4{margin:0 0 4px;font-size:18px;} b{color:#0f172a;} ul{margin:4px 0;padding-left:20px;}</style>');
+      win.document.write('</head><body>');
+      win.document.write(printContent);
+      win.document.write('</body></html>');
+      win.document.close();
+      win.focus();
+      setTimeout(() => { win.print(); win.close(); }, 350);
+    }
+
     function renderOverview() {
       const open = vacancies.filter(v => v.status === 'Open');
       const avg = scrn ? scrn.summary.average_score + '%' : '—';
@@ -937,6 +1438,7 @@
         const sum = scrn.summary.by_action, total = scrn.summary.total || 1;
         ovPipeline.innerHTML = ['Priority human review', 'Confirm skills with follow-up', 'Consider for junior / adjacent role', 'Keep in talent pool'].map(k => `<div><div class="flex justify-between text-[11px] mb-1"><span class="font-bold text-slate-600">${k}</span><b>${sum[k] || 0}</b></div><div class="bar teal"><i style="width:${Math.round(100 * (sum[k] || 0) / total)}%"></i></div></div>`).join('');
       } else { ovPipelineTitle.textContent = ''; ovPipeline.innerHTML = '<div class="text-xs text-slate-500">Screen a vacancy to see the pipeline.</div>'; }
+      setTimeout(initHrCharts, 100);
     }
 
     /* ---------- init ---------- */

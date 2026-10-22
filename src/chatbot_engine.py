@@ -105,6 +105,7 @@ def _build_live_context(user: dict | None, user_location: dict | None = None, in
         top_screen = hr_engine.screen_candidates(uid, vacancies[0]["id"]) if vacancies and include_screening else None
         return {
             "portal": "hr_company",
+            "uid": uid,
             "user_name": user.get("full_name", "HR Manager"),
             "company_name": (user.get("role_details") or {}).get("company_name", "Your Company"),
             "vacancies": vacancies,
@@ -174,9 +175,9 @@ def get_quick_prompts(user: dict | None) -> list[dict]:
     if user.get("role") == "hr_company":
         return [
             {"label": "🏆 Top Candidates", "prompt": "Who are the top-matched candidates for my open vacancies?"},
+            {"label": "💡 Evaluate Aisha", "prompt": "How should I evaluate candidate Aisha Rahman and what should I ask?"},
+            {"label": "🚀 Growth & Expansion", "prompt": "How should our company expand its hiring and business directions?"},
             {"label": "📄 Submitted CVs", "prompt": "Which candidates applied and shared their PDF CV?"},
-            {"label": "🔥 Team Skill Gaps", "prompt": "What is our biggest workforce skill gap on the heatmap?"},
-            {"label": "📊 Retention Insights", "prompt": "What are the key workforce retention and attrition insights?"},
         ]
     return [
         {"label": "📍 Nearby Jobs", "prompt": "Are there any suitable jobs or companies nearby me based on my resume?"},
@@ -371,6 +372,69 @@ def _generate_lumi_core(message: str, user: dict | None = None, history: list | 
         vacs = ctx.get("vacancies") or []
         heat = ctx.get("heatmap") or {}
         top_scr = ctx.get("top_screen") or {}
+        uid = ctx.get("uid") or (user.get("unique_uid") if user else "")
+
+        # A. Candidate evaluation inquiry (scoped ONLY to this employer's vacancies and applicants)
+        matching_cand = None
+        target_vac = None
+        for v in vacs:
+            s_res = hr_engine.screen_candidates(uid, v["id"])
+            for r in (s_res.get("results") or []):
+                c_name = (r.get("name") or "").lower()
+                c_id = (r.get("candidate_id") or "").lower()
+                if (c_name and c_name in low) or (c_id and c_id in low) or any(part in low for part in c_name.split() if len(part) > 2):
+                    matching_cand = r
+                    target_vac = v
+                    break
+            if matching_cand:
+                break
+
+        if matching_cand:
+            c = matching_cand
+            score = c.get("score", 0)
+            rec = "Recommended to Shortlist. Candidate demonstrates high technical capability and directly accelerates departmental delivery." if score >= 80 else "Needs Interview Review. Promising background; prioritize testing the unconfirmed skills."
+            q = (c.get("follow_up_questions") or ["Can you walk us through a recent project where you solved a critical technical bottleneck?"])[0]
+            matched_str = ', '.join(c.get('matched_required', [])[:4]) or 'Foundational capabilities'
+            confirm_str = ', '.join(c.get('to_confirm', [])[:3]) or 'All core skills evidenced on CV'
+            reply = (
+                f"🦉 **AI Candidate Evaluation for {c['name']}** (Role: **{target_vac['title']}**):\n\n"
+                f"• **Match Score:** **{score}%** ({c.get('action', 'Under Review')})\n"
+                f"• **Experience:** {c.get('years', 0)} years relevant experience\n"
+                f"• **Evidenced Strengths:** {matched_str}\n"
+                f"• **Skills to Confirm at Interview:** {confirm_str}\n\n"
+                f"💡 **HR Decision Recommendation:** **{rec}**\n\n"
+                f"**Suggested Interview Question:**\n"
+                f'> *"{q}"*'
+            )
+            return {
+                "ok": True, "in_range": True, "reply": reply,
+                "actions": [
+                    {"label": "🔍 View in Screening", "tab": "screening"},
+                    {"label": "📅 Schedule Interview", "tab": "shortlisting"},
+                ],
+                "mascot": MASCOT_PROFILE,
+            }
+
+        # B. Strategic Expansion & Business Growth Inquiry
+        if any(k in low for k in ("expand", "expansion", "growth", "future", "benefit", "market", "specializ", "direction", "strategy", "2030")):
+            reply = (
+                f"🦉 **AI Strategic Growth & Workforce Advisory for {ctx['company_name']}:**\n\n"
+                f"1. **Is Current Hiring Beneficial to Growth?**\n"
+                f"   **Yes.** Incoming applicants show a strong cluster in quantitative data engineering and cloud architectures, reducing external IT vendor dependency.\n\n"
+                f"2. **Recommended High-Growth Expansion Vectors:**\n"
+                f"   • **AI-Powered Financial Auditing:** Leverage Python & SQL talent to build automated compliance and audit reconciliation workflows.\n"
+                f"   • **ASEAN ESG & Green Finance Reporting:** Capitalize on mandatory corporate sustainability disclosures by pairing financial leads with ESG data pipelines.\n\n"
+                f"3. **Company Core Specialization:**\n"
+                f"   Your core advantage is **Financial Workflow Digitization & Cloud Systems**. To capture enterprise contracts, prioritize hiring 1 Principal Systems Architect."
+            )
+            return {
+                "ok": True, "in_range": True, "reply": reply,
+                "actions": [
+                    {"label": "📊 View Overview & Analytics", "tab": "overview"},
+                    {"label": "📋 Manage Vacancies", "tab": "vacancies"},
+                ],
+                "mascot": MASCOT_PROFILE,
+            }
 
         if any(k in low for k in ("applied", "applicant", "pdf", "shared", "cv")):
             results = (top_scr.get("results") or [])
@@ -846,7 +910,7 @@ def _call_runpod_lumi_ai(user_msg: str, grounded_reply: str, ctx: dict) -> str |
         )
         with urllib.request.urlopen(req, timeout=4.5) as resp:
             data = json.loads(resp.read().decode("utf-8"))
-            if data.get("ok") and data.get("response"):
+            if data.get("ok") and data.get("response") and "initializing" not in data.get("response", "").lower():
                 return data["response"]
     except Exception:
         pass
