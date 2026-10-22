@@ -949,18 +949,22 @@ def generate_lumi_response(message: str, user: dict | None = None, history: list
         res["in_range"] = True
         return res
 
-    # Priority 2: Query Gemini LLM if configured
-    gemini_key, _ = _get_gemini_key()
-    if gemini_key:
-        try:
-            enhanced = _enhance_with_gemini(message, grounded_reply, ctx)
-            if enhanced and enhanced != grounded_reply:
-                res["reply"] = enhanced
-                res["engine"] = "gemini-cloud-lumi"
-                res["in_range"] = True
-                return res
-        except Exception:
-            pass
+    # Priority 2: Query Gemini LLM if configured (for Job Seekers & general career exploration; never leak HR candidate screening vault data)
+    user_role = (user or {}).get("role", "job_seeker")
+    is_hr_private = user_role == "hr_company" or any(k in message.lower() for k in ("applicant", "candidate", "screen", "vault", "evaluat"))
+    is_cv_private = not external_ai_consent and any(k in message.lower() for k in ("my cv", "my resume", "pdf cv", "applicant"))
+    if not is_hr_private and not is_cv_private:
+        gemini_key, _ = _get_gemini_key()
+        if gemini_key:
+            try:
+                enhanced = _enhance_with_gemini(message, grounded_reply, ctx)
+                if enhanced and enhanced != grounded_reply:
+                    res["reply"] = enhanced
+                    res["engine"] = "gemini-cloud-lumi"
+                    res["in_range"] = True
+                    return res
+            except Exception:
+                pass
 
     return res
 
