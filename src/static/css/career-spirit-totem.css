@@ -1,42 +1,44 @@
 /* ==========================================================================
    CareerLens AI — Career Spirit Totem (MBTI-Style Interactive Discovery)
+   Light, High-Contrast Premium Theme (Clean Glassmorphism)
    ========================================================================== */
 
 .totem-section {
   position: relative;
   overflow: hidden;
   border-radius: 2.25rem;
-  background: radial-gradient(120% 120% at 50% 0%, #1e1b4b 0%, #0f172a 60%, #020617 100%);
-  color: #f8fafc;
-  box-shadow: 0 25px 60px -15px rgba(15, 23, 42, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.08);
+  background: linear-gradient(150deg, #ffffff 0%, #f8fafc 45%, #eff6ff 100%);
+  color: #0f172a;
+  border: 1.5px solid #e2e8f0;
+  box-shadow: 0 20px 50px -12px rgba(15, 23, 42, 0.08), 0 0 0 1px rgba(226, 232, 240, 0.8);
 }
 
 .totem-glow-1 {
   position: absolute;
-  top: -10rem;
-  left: -10rem;
-  width: 28rem;
-  height: 28rem;
+  top: -8rem;
+  left: -8rem;
+  width: 26rem;
+  height: 26rem;
   border-radius: 9999px;
-  background: radial-gradient(circle, rgba(139, 92, 246, 0.28) 0%, transparent 70%);
-  filter: blur(50px);
+  background: radial-gradient(circle, rgba(99, 102, 241, 0.12) 0%, transparent 70%);
+  filter: blur(40px);
   pointer-events: none;
 }
 
 .totem-glow-2 {
   position: absolute;
-  bottom: -10rem;
-  right: -10rem;
-  width: 28rem;
-  height: 28rem;
+  bottom: -8rem;
+  right: -8rem;
+  width: 26rem;
+  height: 26rem;
   border-radius: 9999px;
-  background: radial-gradient(circle, rgba(20, 184, 166, 0.25) 0%, transparent 70%);
-  filter: blur(50px);
+  background: radial-gradient(circle, rgba(13, 148, 136, 0.12) 0%, transparent 70%);
+  filter: blur(40px);
   pointer-events: none;
 }
 
 /* ==========================================================================
-   Hero CTA Buttons (High contrast, crystal clear on dark backgrounds)
+   Hero CTA Buttons (High contrast, crystal clear)
    ========================================================================== */
 .totem-btn-primary {
   display: inline-flex;
@@ -47,17 +49,17 @@
   font-size: 0.875rem;
   font-weight: 800;
   color: #ffffff !important;
-  background: linear-gradient(135deg, #4f46e5 0%, #6366f1 55%, #06b6d4 100%) !important;
-  border: 1px solid rgba(255, 255, 255, 0.25) !important;
+  background: linear-gradient(135deg, #4f46e5 0%, #6366f1 55%, #0d9488 100%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.3) !important;
   border-radius: 1rem;
-  box-shadow: 0 10px 25px -5px rgba(79, 70, 229, 0.45);
+  box-shadow: 0 10px 25px -5px rgba(79, 70, 229, 0.35);
   transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
   cursor: pointer;
 }
 .totem-btn-primary:hover {
   transform: translateY(-2px) scale(1.02);
-  box-shadow: 0 14px 32px -4px rgba(79, 70, 229, 0.6);
-  background: linear-gradient(135deg, #4338ca 0%, #4f46e5 55%, #0891b2 100%) !important;
+  box-shadow: 0 14px 30px -4px rgba(79, 70, 229, 0.45);
+  background: linear-gradient(135deg, #4338ca 0%, #4f46e5 55%, #0f766e 100%) !important;
 }
 
 .totem-btn-secondary {
@@ -67,19 +69,20 @@
   padding: 0.85rem 1.75rem;
   font-size: 0.875rem;
   font-weight: 700;
-  color: #ffffff !important;
-  background: rgba(255, 255, 255, 0.08) !important;
-  border: 1.5px solid rgba(255, 255, 255, 0.22) !important;
+  color: #1e293b !important;
+  background: #ffffff !important;
+  border: 1.5px solid #cbd5e1 !important;
   border-radius: 1rem;
-  backdrop-filter: blur(12px);
+  box-shadow: 0 2px 6px rgba(15, 23, 42, 0.04);
   transition: all 0.2s ease;
   cursor: pointer;
 }
 .totem-btn-secondary:hover {
-  background: rgba(255, 255, 255, 0.18) !important;
-  border-color: rgba(255, 255, 255, 0.45) !important;
-  color: #ffffff !important;
+  background: #f8fafc !important;
+  border-color: #6366f1 !important;
+  color: #4f46e5 !important;
   transform: translateY(-1px);
+  box-shadow: 0 6px 16px -2px rgba(99, 102, 241, 0.15);
 }
 
 .totem-link-skip {
@@ -88,18 +91,20 @@
   gap: 0.35rem;
   font-size: 0.8rem;
   font-weight: 700;
-  color: #94a3b8 !important;
+  color: #64748b !important;
   padding: 0.5rem 0.85rem;
   border-radius: 0.75rem;
   transition: all 0.2s ease;
   cursor: pointer;
 }
 .totem-link-skip:hover {
-  color: #2dd4bf !important;
-  background: rgba(255, 255, 255, 0.06);
+  color: #0f172a !important;
+  background: rgba(15, 23, 42, 0.05);
 }
 
-/* 5-point Likert Scale UI */
+/* ==========================================================================
+   5-point Likert Scale UI (High-Contrast Light Theme)
+   ========================================================================== */
 .likert-scale-container {
   display: flex;
   align-items: center;
@@ -119,7 +124,9 @@
   cursor: pointer;
   transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
   outline: none;
+  background: #ffffff;
   border: 2px solid transparent;
+  box-shadow: 0 4px 10px rgba(15, 23, 42, 0.04);
 }
 
 .likert-btn:hover {
@@ -127,8 +134,8 @@
 }
 
 .likert-btn.active {
-  transform: scale(1.22);
-  box-shadow: 0 0 20px currentColor;
+  transform: scale(1.24);
+  box-shadow: 0 0 18px currentColor;
 }
 
 /* 5 sizes from -2 to +2 */
@@ -136,104 +143,92 @@
   width: 3.5rem;
   height: 3.5rem;
   border-color: #f43f5e;
-  color: #f43f5e;
-  background: rgba(244, 63, 94, 0.12);
+  color: #e11d48;
+  background: #fff1f2;
 }
 .likert-btn[data-val="-2"]:hover, .likert-btn[data-val="-2"].active {
-  background: #f43f5e;
+  background: #e11d48;
   color: #ffffff;
 }
 
 .likert-btn[data-val="-1"] {
   width: 2.85rem;
   height: 2.85rem;
-  border-color: #fb7185;
-  color: #fb7185;
-  background: rgba(251, 113, 133, 0.1);
+  border-color: #fda4af;
+  color: #e11d48;
+  background: #fff1f2;
 }
 .likert-btn[data-val="-1"]:hover, .likert-btn[data-val="-1"].active {
-  background: #fb7185;
+  background: #f43f5e;
   color: #ffffff;
 }
 
 .likert-btn[data-val="0"] {
   width: 2.3rem;
   height: 2.3rem;
-  border-color: #94a3b8;
-  color: #94a3b8;
-  background: rgba(148, 163, 184, 0.1);
+  border-color: #cbd5e1;
+  color: #475569;
+  background: #f8fafc;
 }
 .likert-btn[data-val="0"]:hover, .likert-btn[data-val="0"].active {
-  background: #94a3b8;
+  background: #64748b;
   color: #ffffff;
 }
 
 .likert-btn[data-val="1"] {
   width: 2.85rem;
   height: 2.85rem;
-  border-color: #2dd4bf;
-  color: #2dd4bf;
-  background: rgba(45, 212, 191, 0.1);
+  border-color: #99f6e4;
+  color: #0f766e;
+  background: #f0fdfa;
 }
 .likert-btn[data-val="1"]:hover, .likert-btn[data-val="1"].active {
-  background: #2dd4bf;
-  color: #0f172a;
+  background: #14b8a6;
+  color: #ffffff;
 }
 
 .likert-btn[data-val="2"] {
   width: 3.5rem;
   height: 3.5rem;
-  border-color: #10b981;
-  color: #10b981;
-  background: rgba(16, 185, 129, 0.15);
+  border-color: #6ee7b7;
+  color: #047857;
+  background: #ecfdf5;
 }
 .likert-btn[data-val="2"]:hover, .likert-btn[data-val="2"].active {
-  background: #10b981;
+  background: #059669;
   color: #ffffff;
 }
 
-/* Totem Result Cards */
+/* ==========================================================================
+   Totem Result Cards (Light, Clean Modern)
+   ========================================================================== */
 .totem-badge-card {
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.02) 100%);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  backdrop-filter: blur(16px);
+  background: #ffffff;
+  border: 1.5px solid #e2e8f0;
   border-radius: 1.75rem;
+  box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.05);
   transition: all 0.3s ease;
 }
 
 .totem-badge-card:hover {
-  border-color: rgba(255, 255, 255, 0.25);
-  box-shadow: 0 16px 40px -10px rgba(99, 102, 241, 0.25);
+  border-color: #cbd5e1;
+  box-shadow: 0 16px 35px -8px rgba(99, 102, 241, 0.12);
 }
 
 /* Role Model Cards */
 .role-model-card {
-  background: rgba(15, 23, 42, 0.7);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: #ffffff;
+  border: 1.5px solid #e2e8f0;
   border-radius: 1.25rem;
   padding: 1.25rem;
+  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.03);
   transition: transform 0.25s ease, border-color 0.25s ease;
 }
 
 .role-model-card:hover {
   transform: translateY(-4px);
-  border-color: rgba(167, 139, 250, 0.5);
-  box-shadow: 0 12px 30px -10px rgba(139, 92, 246, 0.25);
-}
-
-/* Composition Progress Bars */
-.composition-bar-track {
-  height: 0.65rem;
-  border-radius: 9999px;
-  background: rgba(255, 255, 255, 0.1);
-  overflow: hidden;
-  position: relative;
-}
-
-.composition-bar-fill {
-  height: 100%;
-  border-radius: 9999px;
-  transition: width 1.2s cubic-bezier(0.22, 1, 0.36, 1);
+  border-color: #818cf8;
+  box-shadow: 0 12px 28px -8px rgba(99, 102, 241, 0.15);
 }
 
 /* Domain Category Pills */
@@ -243,58 +238,93 @@
   font-size: 0.825rem;
   font-weight: 700;
   cursor: pointer;
-  background: rgba(255, 255, 255, 0.07);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  color: #e2e8f0;
+  background: #f1f5f9;
+  border: 1px solid #cbd5e1;
+  color: #334155;
   transition: all 0.2s ease;
   white-space: nowrap;
 }
 
 .domain-pill:hover {
-  background: rgba(255, 255, 255, 0.15);
-  border-color: rgba(255, 255, 255, 0.3);
+  background: #e2e8f0;
+  color: #0f172a;
   transform: translateY(-1px);
 }
 
 .domain-pill.active {
-  background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
-  border-color: #c084fc;
+  background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+  border-color: #6366f1;
   color: #ffffff;
-  box-shadow: 0 0 20px rgba(168, 85, 247, 0.4);
+  box-shadow: 0 4px 14px rgba(79, 70, 229, 0.3);
 }
 
 /* Job Recommendation Cards */
 .elevated-job-card {
-  background: linear-gradient(135deg, rgba(30, 41, 59, 0.8) 0%, rgba(15, 23, 42, 0.9) 100%);
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: #ffffff;
+  border: 1.5px solid #e2e8f0;
   border-radius: 1.5rem;
   padding: 1.5rem;
+  box-shadow: 0 6px 18px rgba(15, 23, 42, 0.04);
   transition: all 0.3s ease;
 }
 
 .elevated-job-card:hover {
-  border-color: rgba(45, 212, 191, 0.5);
+  border-color: #0d9488;
   transform: translateY(-3px);
-  box-shadow: 0 16px 36px -12px rgba(20, 184, 166, 0.2);
+  box-shadow: 0 14px 30px -10px rgba(13, 148, 136, 0.2);
 }
 
-/* 3D Globe Container */
-#totemGlobeContainer {
-  width: 100%;
-  height: 380px;
-  border-radius: 1.75rem;
-  background: radial-gradient(circle at 50% 50%, #090d16 0%, #030712 100%);
-  position: relative;
+/* MBTI Dual-Pole Spectrum Meters */
+.mbti-spectrum-row {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+  padding: 1.15rem 1.35rem;
+  border-radius: 1.25rem;
+  background: #f8fafc;
+  border: 1.5px solid #e2e8f0;
+  transition: all 0.2s ease;
+}
+.mbti-spectrum-row:hover {
+  background: #ffffff;
+  border-color: #cbd5e1;
+  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.04);
+}
+.mbti-pole-labels {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.8rem;
+  font-weight: 800;
+  color: #1e293b;
+}
+.mbti-spectrum-track {
+  height: 0.65rem;
+  border-radius: 9999px;
+  background: #e2e8f0;
+  display: flex;
   overflow: hidden;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  position: relative;
 }
-
-.city-day-card {
-  background: rgba(15, 23, 42, 0.92);
-  border: 1px solid rgba(255, 255, 255, 0.18);
-  backdrop-filter: blur(18px);
-  border-radius: 1.5rem;
-  box-shadow: 0 20px 45px -10px rgba(0, 0, 0, 0.7);
+.mbti-pole-left-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #4f46e5, #6366f1);
+  border-radius: 9999px 0 0 9999px;
+  transition: width 1s ease;
+}
+.mbti-pole-right-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #14b8a6, #0d9488);
+  border-radius: 0 9999px 9999px 0;
+  transition: width 1s ease;
+}
+.role-model-avatar {
+  width: 3.5rem;
+  height: 3.5rem;
+  border-radius: 9999px;
+  object-fit: cover;
+  border: 2.5px solid #6366f1;
+  box-shadow: 0 4px 10px rgba(99, 102, 241, 0.2);
 }
 
 /* Subtle Shimmer for AI calculations */
@@ -304,60 +334,64 @@
 }
 
 .totem-shimmer {
-  background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.15) 50%, rgba(255,255,255,0) 100%);
+  background: linear-gradient(90deg, rgba(79, 70, 229, 0) 0%, rgba(79, 70, 229, 0.25) 50%, rgba(79, 70, 229, 0) 100%);
   background-size: 200% 100%;
   animation: totemShimmer 2.5s infinite;
 }
 
 /* ==========================================================================
-   MBTI Dual-Pole Spectrum Meters & Role Model Avatars
+   Global Work-Life Atlas (Dark Immersive Theme with High-Contrast Buttons)
    ========================================================================== */
-.mbti-spectrum-row {
-  display: flex;
-  flex-direction: column;
-  gap: 0.65rem;
-  padding: 1.15rem 1.35rem;
-  border-radius: 1.25rem;
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  transition: all 0.2s ease;
+.global-atlas-container {
+  background: radial-gradient(120% 120% at 50% 0%, #111827 0%, #090d16 65%, #030712 100%) !important;
+  color: #f8fafc !important;
+  border: 1.5px solid rgba(255, 255, 255, 0.18) !important;
+  box-shadow: 0 30px 80px -15px rgba(0, 0, 0, 0.8) !important;
 }
-.mbti-spectrum-row:hover {
-  background: rgba(255, 255, 255, 0.07);
-  border-color: rgba(255, 255, 255, 0.16);
-}
-.mbti-pole-labels {
-  display: flex;
-  justify-content: space-between;
+
+/* City Switcher High-Contrast Buttons */
+.atlas-city-pill {
+  display: inline-flex;
   align-items: center;
+  gap: 0.4rem;
+  padding: 0.55rem 1.15rem;
   font-size: 0.8rem;
-  font-weight: 700;
+  font-weight: 800;
+  color: #ffffff !important;
+  background: rgba(255, 255, 255, 0.12) !important;
+  border: 1.5px solid rgba(255, 255, 255, 0.3) !important;
+  border-radius: 0.85rem;
+  backdrop-filter: blur(8px);
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  cursor: pointer;
 }
-.mbti-spectrum-track {
-  height: 0.65rem;
-  border-radius: 9999px;
-  background: rgba(255, 255, 255, 0.1);
-  display: flex;
-  overflow: hidden;
+.atlas-city-pill:hover {
+  background: rgba(255, 255, 255, 0.25) !important;
+  border-color: #2dd4bf !important;
+  color: #ffffff !important;
+  transform: translateY(-1px);
+}
+.atlas-city-pill.active {
+  background: linear-gradient(135deg, #0d9488 0%, #4f46e5 100%) !important;
+  border-color: #2dd4bf !important;
+  box-shadow: 0 0 18px rgba(45, 212, 191, 0.5) !important;
+  color: #ffffff !important;
+}
+
+#totemGlobeContainer {
+  width: 100%;
+  height: 380px;
+  border-radius: 1.75rem;
+  background: radial-gradient(circle at 50% 50%, #0d1527 0%, #020617 100%);
   position: relative;
+  overflow: hidden;
+  border: 1.5px solid rgba(255, 255, 255, 0.15);
 }
-.mbti-pole-left-fill {
-  height: 100%;
-  background: linear-gradient(90deg, #6366f1, #818cf8);
-  border-radius: 9999px 0 0 9999px;
-  transition: width 1s ease;
-}
-.mbti-pole-right-fill {
-  height: 100%;
-  background: linear-gradient(90deg, #2dd4bf, #14b8a6);
-  border-radius: 0 9999px 9999px 0;
-  transition: width 1s ease;
-}
-.role-model-avatar {
-  width: 3.5rem;
-  height: 3.5rem;
-  border-radius: 9999px;
-  object-fit: cover;
-  border: 2px solid rgba(139, 92, 246, 0.5);
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4);
+
+.city-day-card {
+  background: rgba(17, 24, 39, 0.95);
+  border: 1.5px solid rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(20px);
+  border-radius: 1.5rem;
+  box-shadow: 0 20px 45px -10px rgba(0, 0, 0, 0.7);
 }

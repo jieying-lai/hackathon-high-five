@@ -642,27 +642,27 @@
     const currentVal = answers[q.id] !== undefined ? answers[q.id] : null;
 
     quizCard.innerHTML = `
-      <div class="space-y-6 fade-in">
+      <div class="space-y-6 fade-in text-slate-900">
         <!-- Top Progress -->
-        <div class="flex items-center justify-between text-xs font-bold text-slate-400 border-b border-white/10 pb-4">
+        <div class="flex items-center justify-between text-xs font-bold text-slate-500 border-b border-slate-200 pb-4">
           <div class="flex items-center gap-2">
-            <span class="h-2 w-2 rounded-full bg-teal-400 animate-ping"></span>
-            <span>Question ${qIndex} of ${QUESTIONS.length}</span>
+            <span class="h-2 w-2 rounded-full bg-teal-500 animate-ping"></span>
+            <span class="font-black text-slate-800">Question ${qIndex} of ${QUESTIONS.length}</span>
           </div>
-          <div class="text-teal-300 font-mono">${progressPct}% Calculated</div>
+          <div class="text-indigo-600 font-mono font-bold">${progressPct}% Calculated</div>
         </div>
 
         <!-- Progress bar -->
-        <div class="w-full bg-white/10 h-1.5 rounded-full overflow-hidden">
-          <div class="bg-gradient-to-r from-teal-400 to-indigo-500 h-full rounded-full transition-all duration-300" style="width: ${progressPct}%"></div>
+        <div class="w-full bg-slate-200 h-2 rounded-full overflow-hidden">
+          <div class="bg-gradient-to-r from-teal-500 to-indigo-600 h-full rounded-full transition-all duration-300" style="width: ${progressPct}%"></div>
         </div>
 
         <!-- Question Prompt -->
         <div class="py-4 text-center max-w-xl mx-auto space-y-3">
-          <span class="text-xs font-bold uppercase tracking-widest text-indigo-300 bg-indigo-900/40 px-3 py-1 rounded-full border border-indigo-500/30">
+          <span class="text-xs font-black uppercase tracking-widest text-indigo-700 bg-indigo-50 px-3 py-1 rounded-full border border-indigo-200">
             Workplace Preference
           </span>
-          <h3 class="text-xl sm:text-2xl font-extrabold text-white leading-snug">
+          <h3 class="text-xl sm:text-2xl font-black text-slate-900 leading-snug">
             "${q.text}"
           </h3>
         </div>
@@ -686,22 +686,22 @@
               <span class="text-xs font-black">++</span>
             </button>
           </div>
-          <div class="flex justify-between max-w-[520px] mx-auto text-[11px] font-bold text-slate-400 px-2">
-            <span class="text-rose-400">Strongly Disagree</span>
-            <span class="text-slate-400">Neutral</span>
-            <span class="text-emerald-400">Strongly Agree</span>
+          <div class="flex justify-between max-w-[520px] mx-auto text-[11px] font-extrabold text-slate-500 px-2">
+            <span class="text-rose-600">Strongly Disagree</span>
+            <span class="text-slate-500">Neutral</span>
+            <span class="text-emerald-600">Strongly Agree</span>
           </div>
         </div>
 
         <!-- Bottom Navigation -->
-        <div class="flex items-center justify-between pt-6 border-t border-white/10 text-xs">
+        <div class="flex items-center justify-between pt-6 border-t border-slate-200 text-xs">
           ${qIndex > 1 ? `
-            <button type="button" onclick="prevQuestion()" class="text-slate-400 hover:text-white flex items-center gap-1 font-bold transition">
+            <button type="button" onclick="prevQuestion()" class="text-slate-600 hover:text-slate-900 flex items-center gap-1 font-bold transition">
               ← Previous Question
             </button>
           ` : `<div></div>`}
           
-          <button type="button" onclick="exitTotemImmersion()" class="text-slate-400 hover:text-indigo-300 font-bold transition">
+          <button type="button" onclick="exitTotemImmersion()" class="text-slate-500 hover:text-indigo-600 font-bold transition">
             Exit to Overview →
           </button>
         </div>
@@ -713,17 +713,17 @@
     quizCard.innerHTML = `
       <div class="py-14 text-center space-y-6 fade-in">
         <div class="relative w-20 h-20 mx-auto">
-          <div class="absolute inset-0 rounded-full bg-gradient-to-tr from-teal-400 to-indigo-500 animate-spin blur-md opacity-75"></div>
-          <div class="relative w-20 h-20 rounded-full bg-slate-900 border border-white/20 grid place-items-center text-3xl">
+          <div class="absolute inset-0 rounded-full bg-gradient-to-tr from-teal-400 to-indigo-500 animate-spin blur-md opacity-50"></div>
+          <div class="relative w-20 h-20 rounded-full bg-white border border-slate-200 grid place-items-center text-3xl shadow-sm">
             🔮
           </div>
         </div>
         <div class="space-y-2">
-          <h3 class="text-xl font-extrabold text-white">Synthesizing Your Authentic Totem DNA...</h3>
-          <p class="text-xs text-slate-400">Calibrating psychological vector coordinates across global career models</p>
+          <h3 class="text-xl font-black text-slate-900">Synthesizing Your Authentic Totem DNA...</h3>
+          <p class="text-xs text-slate-500">Calibrating psychological vector coordinates across O*NET 30.3 global career models</p>
         </div>
-        <div class="w-48 mx-auto bg-white/10 h-1.5 rounded-full overflow-hidden">
-          <div class="totem-shimmer h-full bg-teal-400 rounded-full w-full"></div>
+        <div class="w-48 mx-auto bg-slate-200 h-2 rounded-full overflow-hidden">
+          <div class="totem-shimmer h-full bg-gradient-to-r from-teal-500 to-indigo-600 rounded-full w-full"></div>
         </div>
       </div>
     `;
@@ -764,6 +764,14 @@
     }
 
     calculatedTotem = TOTEMS[chosenTotem] || TOTEMS.hawk;
+    try {
+      localStorage.setItem('careerlens_totem_data', JSON.stringify(calculatedTotem));
+      fetch('/api/totem/user', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ totem: calculatedTotem })
+      }).catch(() => {});
+    } catch (e) {}
     renderTotemOverview();
   }
 
@@ -781,7 +789,7 @@
       <div class="space-y-8 fade-in">
         
         <!-- Breadcrumb & Top Bar -->
-        <div class="flex items-center justify-between text-xs text-slate-400 border-b border-white/10 pb-3">
+        <div class="flex items-center justify-between text-xs text-slate-500 border-b border-slate-200 pb-3">
           <div class="flex items-center gap-2">
             <span class="text-teal-400 font-bold">Personalized Discovery</span>
             <span>•</span>
@@ -805,8 +813,8 @@
                 </span>
               </div>
               <div>
-                <h2 class="text-2xl lg:text-3xl font-black text-white whitespace-nowrap tracking-tight">${t.badge}</h2>
-                <div class="text-xs text-indigo-300 font-bold mt-1">${t.tagline}</div>
+                <h2 class="text-2xl lg:text-3xl font-black text-slate-900 whitespace-nowrap tracking-tight">${t.badge}</h2>
+                <div class="text-xs text-indigo-700 font-extrabold mt-1">${t.tagline}</div>
               </div>
             </div>
 
@@ -860,38 +868,27 @@
         </div>
 
         <!-- Gateways to Separated Sections (Progressive Disclosure) -->
-        <div class="grid sm:grid-cols-3 gap-4 pt-2">
+        <div class="grid sm:grid-cols-2 gap-4 pt-2">
           
-          <button type="button" onclick="showDeepProfileView()" class="totem-badge-card p-5 text-left hover:border-indigo-400/50 hover:bg-white/10 transition group space-y-2">
+          <button type="button" onclick="showDeepProfileView()" class="totem-badge-card p-5 text-left hover:border-indigo-400/50 hover:bg-indigo-50/50 transition group space-y-2">
             <div class="flex items-center justify-between">
               <span class="text-2xl">🧬</span>
-              <span class="text-xs text-indigo-400 group-hover:translate-x-1 transition font-bold">Step In →</span>
+              <span class="text-xs text-indigo-600 group-hover:translate-x-1 transition font-extrabold">Step In →</span>
             </div>
             <div>
-              <h4 class="font-bold text-white text-sm">Deep Profile & Role Models</h4>
-              <p class="text-[11px] text-slate-400 mt-0.5">Explore your MBTI dual-pole spectrum & iconic figures</p>
+              <h4 class="font-extrabold text-slate-900 text-sm">Deep Profile &amp; Role Models</h4>
+              <p class="text-[11px] text-slate-500 mt-0.5">Explore your MBTI dual-pole spectrum &amp; iconic figures</p>
             </div>
           </button>
 
-          <button type="button" onclick="showElevatedCareersView()" class="totem-badge-card p-5 text-left hover:border-teal-400/50 hover:bg-white/10 transition group space-y-2">
+          <button type="button" onclick="showElevatedCareersView()" class="totem-badge-card p-5 text-left hover:border-teal-400/50 hover:bg-teal-50/50 transition group space-y-2">
             <div class="flex items-center justify-between">
               <span class="text-2xl">🎯</span>
-              <span class="text-xs text-teal-400 group-hover:translate-x-1 transition font-bold">Step In →</span>
+              <span class="text-xs text-teal-600 group-hover:translate-x-1 transition font-extrabold">Step In →</span>
             </div>
             <div>
-              <h4 class="font-bold text-white text-sm">Elevated Careers Portal</h4>
-              <p class="text-[11px] text-slate-400 mt-0.5">Custom job titles aligned with your temperament</p>
-            </div>
-          </button>
-
-          <button type="button" onclick="openGlobalAtlas()" class="totem-badge-card p-5 text-left hover:border-sky-400/50 hover:bg-white/10 transition group space-y-2">
-            <div class="flex items-center justify-between">
-              <span class="text-2xl">🌍</span>
-              <span class="text-xs text-sky-400 group-hover:translate-x-1 transition font-bold">Open Atlas →</span>
-            </div>
-            <div>
-              <h4 class="font-bold text-white text-sm">Global Work-Life Atlas</h4>
-              <p class="text-[11px] text-slate-400 mt-0.5">Spin the 3D globe to see real daily routines in KL, Tokyo, Amsterdam</p>
+              <h4 class="font-extrabold text-slate-900 text-sm">Elevated Careers Portal</h4>
+              <p class="text-[11px] text-slate-500 mt-0.5">Custom job titles aligned with your temperament</p>
             </div>
           </button>
 
@@ -912,7 +909,7 @@
       <div class="space-y-8 fade-in">
         
         <!-- Breadcrumb Navigation -->
-        <div class="flex items-center justify-between text-xs text-slate-400 border-b border-white/10 pb-3">
+        <div class="flex items-center justify-between text-xs text-slate-500 border-b border-slate-200 pb-3">
           <button type="button" onclick="renderTotemOverview()" class="text-indigo-400 hover:text-white font-bold flex items-center gap-1 transition">
             ← Back to Totem Summary
           </button>
@@ -924,10 +921,10 @@
         <!-- Role Models Section (Heading: Who Walks Your Path?, No "(Iconic Role Models)", No "DNA Match") -->
         <div class="space-y-4">
           <div>
-            <h3 class="text-xl sm:text-2xl font-black text-white flex items-center gap-2">
+            <h3 class="text-xl sm:text-2xl font-black text-slate-900 flex items-center gap-2">
               <span>⭐</span> Who Walks Your Path?
             </h3>
-            <p class="text-xs text-slate-400 mt-0.5">Legends who carried your exact temperament, conquered self-doubt, and changed the world</p>
+            <p class="text-xs text-slate-500 mt-0.5">Legends who carried your exact temperament, conquered self-doubt, and changed the world</p>
           </div>
 
           <div class="grid md:grid-cols-3 gap-4">
@@ -968,7 +965,7 @@
             <h3 class="text-lg font-extrabold text-white flex items-center gap-2">
               <span>🧪</span> Your Personality Spectrum Breakdown
             </h3>
-            <p class="text-xs text-slate-400 mt-0.5">Classic dual-pole continuum calibrated from your questionnaire vectors</p>
+            <p class="text-xs text-slate-500 mt-0.5">Classic dual-pole continuum calibrated from your questionnaire vectors</p>
           </div>
 
           <div class="space-y-3.5">
@@ -1049,7 +1046,7 @@
       <div class="space-y-8 fade-in">
         
         <!-- Breadcrumb Navigation -->
-        <div class="flex items-center justify-between text-xs text-slate-400 border-b border-white/10 pb-3">
+        <div class="flex items-center justify-between text-xs text-slate-500 border-b border-slate-200 pb-3">
           <button type="button" onclick="showDeepProfileView()" class="text-indigo-400 hover:text-white font-bold flex items-center gap-1 transition">
             ← Back to Deep Profile
           </button>
@@ -1062,10 +1059,10 @@
         <div class="space-y-5">
           <div class="flex flex-wrap items-center justify-between gap-3">
             <div>
-              <h3 class="text-xl sm:text-2xl font-black text-white flex items-center gap-2">
+              <h3 class="text-xl sm:text-2xl font-black text-slate-900 flex items-center gap-2">
                 <span>🎯</span> Elevated Careers Tailored to ${t.badge}
               </h3>
-              <p class="text-xs text-slate-400 mt-0.5">Select an industry to generate distinctive, high-resonance roles:</p>
+              <p class="text-xs text-slate-500 mt-0.5">Select an industry to generate distinctive, high-resonance roles:</p>
             </div>
 
             <!-- Domain Pills -->
@@ -1085,7 +1082,7 @@
         </div>
 
         <!-- "Have a Dream Job in Mind?" Custom Input -->
-        <div class="totem-badge-card p-6 sm:p-7 space-y-4 border border-teal-500/30">
+        <div class="totem-badge-card p-6 sm:p-7 space-y-4 border border-teal-200 bg-slate-50/60">
           <div class="flex items-center gap-3">
             <span class="text-2xl">💡</span>
             <div>
@@ -1095,7 +1092,7 @@
           </div>
 
           <div class="flex flex-wrap sm:flex-nowrap gap-2.5">
-            <input type="text" id="customJobInput" class="input !bg-slate-900/80 !border-white/20 !text-white !text-xs !py-3 flex-1" placeholder="e.g. Game Concept Artist, Renewable Energy Trader, Neuroscientist..." onkeydown="if(event.key==='Enter')analyzeCustomJob()" />
+            <input type="text" id="customJobInput" class="input !bg-white !border-slate-300 !text-slate-900 !text-xs !py-3 flex-1" placeholder="e.g. Game Concept Artist, Renewable Energy Trader, Neuroscientist..." onkeydown="if(event.key==='Enter')analyzeCustomJob()" />
             <button type="button" onclick="analyzeCustomJob()" class="totem-btn-primary !py-2.5 !px-5 !text-xs font-bold shrink-0">
               ⚡ Check Fit
             </button>
@@ -1107,17 +1104,14 @@
         </div>
 
         <!-- Direct Launch into Talent Portal -->
-        <div class="p-8 rounded-3xl bg-gradient-to-r from-indigo-950/80 via-purple-950/70 to-slate-900 border border-white/20 text-center space-y-4">
-          <h3 class="text-xl sm:text-2xl font-extrabold text-white">Ready to Step into Real Opportunities?</h3>
-          <p class="text-xs sm:text-sm text-slate-300 max-w-xl mx-auto">
+        <div class="p-8 rounded-3xl bg-gradient-to-r from-indigo-50 via-purple-50 to-teal-50 border border-indigo-200 text-center space-y-4">
+          <h3 class="text-xl sm:text-2xl font-black text-slate-900">Ready to Step into Real Opportunities?</h3>
+          <p class="text-xs sm:text-sm text-slate-600 max-w-xl mx-auto font-medium">
             Your preferences have been pre-calibrated. Enter the Talent Portal to search nearby jobs with transparent match scores and SDG micro-courses.
           </p>
           <div class="flex flex-wrap items-center justify-center gap-3 pt-2">
-            <button type="button" onclick="openAuth('register', 'job_seeker')" class="totem-btn-primary !py-3.5 !px-8 text-sm">
-              Launch Talent Portal →
-            </button>
-            <button type="button" onclick="openGlobalAtlas()" class="totem-btn-secondary !py-3.5 !px-6 text-sm">
-              🌍 Open 3D Global Atlas
+            <button type="button" onclick="openAuth('register', 'job_seeker')" class="totem-btn-primary !py-3.5 !px-10 text-sm font-extrabold shadow-lg">
+              🚀 Claim Totem &amp; Launch Talent Portal →
             </button>
           </div>
         </div>
@@ -1205,7 +1199,7 @@
 
     setTimeout(() => {
       feedback.innerHTML = `
-        <div class="flex items-start justify-between gap-3 border-b border-white/10 pb-3">
+        <div class="flex items-start justify-between gap-3 border-b border-slate-200 pb-3">
           <div>
             <h5 class="text-sm font-extrabold text-white">${val}</h5>
             <div class="text-[10px] text-slate-400">Evaluated against your authentic traits</div>
@@ -1251,44 +1245,56 @@
     const container = document.getElementById("cityDetailsContainer");
     if (!container) return;
 
+    // Toggle active pill highlight
+    document.querySelectorAll(".atlas-city-pill").forEach(el => el.classList.remove("active"));
+    const activeBtn = document.getElementById("atlasBtn_" + cityKey);
+    if (activeBtn) activeBtn.classList.add("active");
+
+    const isInsidePortal = Boolean(document.getElementById("profileTotemCard") || window.location.pathname.includes("workspace"));
+    const actionBtnHtml = isInsidePortal
+      ? `<button type="button" onclick="closeGlobalAtlas(); if(typeof showTab==='function') showTab('jobs');" class="totem-btn-primary !py-2 !px-4 !text-xs font-bold shadow-md">
+           💼 Explore Careers in Portal →
+         </button>`
+      : `<button type="button" onclick="closeGlobalAtlas(); if(typeof openAuth==='function') openAuth('register', 'job_seeker'); else window.location.href='/#auth';" class="totem-btn-primary !py-2 !px-4 !text-xs font-bold shadow-md">
+           Sign Up &amp; Find Roles →
+         </button>`;
+
     container.innerHTML = `
       <div class="city-day-card p-6 space-y-4 h-full flex flex-col justify-between fade-in">
         <div class="space-y-3">
-          <div class="flex items-center justify-between border-b border-white/10 pb-3">
+          <div class="flex items-center justify-between border-b border-white/15 pb-3">
             <div>
-              <div class="text-[11px] font-bold text-teal-400 uppercase tracking-wider">${c.country}</div>
-              <h4 class="text-lg font-black text-white">${c.name}</h4>
+              <div class="text-[11px] font-extrabold text-teal-300 uppercase tracking-wider">${c.country}</div>
+              <h4 class="text-xl font-black text-white">${c.name}</h4>
             </div>
-            <span class="chip chip-indigo !text-[10px] font-bold">${c.salary}</span>
+            <span class="px-3 py-1 rounded-full bg-indigo-500/30 border border-indigo-400/40 text-indigo-200 text-xs font-extrabold shadow-sm">${c.salary}</span>
           </div>
 
-          <div class="text-xs text-indigo-300 font-bold">
+          <div class="text-xs text-indigo-300 font-extrabold">
             Target Role: <span class="text-white">${c.role}</span>
           </div>
 
-          <div class="p-3 rounded-xl bg-white/5 border border-white/5 text-xs text-slate-300">
-            <b class="text-slate-200">Work-Life Vibe:</b> ${c.vibe}
+          <div class="p-3.5 rounded-xl bg-white/10 border border-white/10 text-xs text-slate-200 leading-relaxed">
+            <b class="text-teal-300">Work-Life Vibe:</b> ${c.vibe}
           </div>
 
           <!-- Schedule Timeline -->
           <div class="space-y-2 text-xs pt-1">
-            <div class="text-[11px] font-bold text-slate-400 uppercase tracking-wider">Day in the Life Routine:</div>
+            <div class="text-[11px] font-extrabold text-slate-300 uppercase tracking-wider">Day in the Life Routine:</div>
             ${c.timeline.map(item => `
               <div class="flex items-start gap-2.5">
-                <span class="font-mono text-teal-400 font-bold text-[11px] shrink-0">${item.time}</span>
-                <span class="text-slate-300 text-[11px]">${item.text}</span>
+                <span class="font-mono text-teal-300 font-extrabold text-xs shrink-0 bg-white/5 px-1.5 py-0.5 rounded border border-white/10">${item.time}</span>
+                <span class="text-slate-200 text-xs leading-relaxed">${item.text}</span>
               </div>
             `).join('')}
           </div>
         </div>
 
-        <div class="pt-3 border-t border-white/10 flex flex-wrap items-center justify-between gap-2">
-          <div class="flex gap-1.5 text-[10px] text-slate-400">
-            ${c.tags.map(t => `<span class="bg-white/5 px-2 py-0.5 rounded-md border border-white/5">${t}</span>`).join('')}
+        <div class="pt-4 border-t border-white/15 flex flex-wrap items-center justify-between gap-3">
+          <div class="flex flex-wrap gap-1.5 text-[11px] text-slate-300 font-bold">
+            ${c.tags.map(t => `<span class="bg-white/10 px-2 py-0.5 rounded-md border border-white/10 text-slate-200">${t}</span>`).join('')}
           </div>
-          <button type="button" onclick="closeGlobalAtlas(); openAuth('register', 'job_seeker');" class="totem-btn-primary !py-1.5 !px-3 !text-[11px] font-bold">
-            Find Similar Roles →
-          </button>
+          ${actionBtnHtml}
         </div>
       </div>
     `;
@@ -1428,3 +1434,283 @@
   }
 
 })();
+
+  // =========================================================================
+  // Candidate Profile Totem Card & In-Portal Retake Quiz (Zero Redirect/Logout)
+  // =========================================================================
+  let profileQuizStep = 1;
+  let profileQuizAnswers = {};
+
+  window.initCandidateTotemProfile = async function () {
+    const cardBody = document.getElementById("profileTotemBody");
+    if (!cardBody) return;
+
+    let totem = null;
+    try {
+      const res = await fetch("/api/totem/user");
+      const data = await res.json();
+      if (data && data.ok && data.totem) {
+        totem = data.totem;
+        localStorage.setItem("careerlens_totem_data", JSON.stringify(totem));
+      }
+    } catch (e) {}
+
+    if (!totem) {
+      const local = localStorage.getItem("careerlens_totem_data");
+      if (local) {
+        try { totem = JSON.parse(local); } catch (e) {}
+      }
+    }
+
+    if (!totem) {
+      totem = TOTEMS.hawk; // default starter
+    }
+
+    renderProfileTotemCard(totem);
+  };
+
+  function renderProfileTotemCard(t) {
+    const cardBody = document.getElementById("profileTotemBody");
+    if (!cardBody) return;
+
+    cardBody.innerHTML = `
+      <div class="grid md:grid-cols-12 gap-6 items-center">
+        <!-- Left: Totem Avatar & Title -->
+        <div class="md:col-span-4 text-center space-y-3 bg-slate-50/80 p-5 rounded-2xl border border-slate-200/90 shadow-xs">
+          <div class="relative w-24 h-24 mx-auto grid place-items-center rounded-2xl bg-gradient-to-br from-indigo-500/10 to-teal-500/10 border border-indigo-200/80 shadow-sm">
+            <span class="text-5xl filter drop-shadow">${t.icon || "🦅"}</span>
+          </div>
+          <div>
+            <h4 class="text-xl font-black text-slate-900 tracking-tight" data-no-translate>${t.badge || "The Stratosphere Hawk"}</h4>
+            <div class="text-xs text-indigo-700 font-extrabold mt-0.5">${t.tagline || "Decisive Visionary"}</div>
+            <p class="text-[11px] text-slate-500 mt-2 leading-relaxed italic max-w-xs mx-auto">"${t.archetype || ""}"</p>
+          </div>
+        </div>
+
+        <!-- Right: Spectrum Breakdown & Matched O*NET Roles -->
+        <div class="md:col-span-8 space-y-4">
+          <div class="space-y-2">
+            <div class="flex items-center justify-between text-xs font-black text-slate-800">
+              <span class="flex items-center gap-1.5"><span>📊</span><span>Work-Style Vector Coordinates</span></span>
+              <span class="text-[11px] text-teal-700 font-bold bg-teal-50 px-2 py-0.5 rounded-md border border-teal-200">O*NET 30.3 Calibrated</span>
+            </div>
+            
+            <div class="grid sm:grid-cols-2 gap-2 text-xs">
+              <div class="p-2.5 rounded-xl bg-slate-50 border border-slate-200">
+                <div class="flex justify-between text-[11px] font-bold text-slate-600 mb-1">
+                  <span>Deep Focus</span><span>Social Synergy</span>
+                </div>
+                <div class="h-2 rounded-full bg-slate-200 overflow-hidden">
+                  <div class="h-full bg-gradient-to-r from-indigo-500 to-indigo-600 rounded-full" style="width: ${(t.mbti && t.mbti.focus_energy) ? t.mbti.focus_energy.left_pct : 68}%"></div>
+                </div>
+              </div>
+
+              <div class="p-2.5 rounded-xl bg-slate-50 border border-slate-200">
+                <div class="flex justify-between text-[11px] font-bold text-slate-600 mb-1">
+                  <span>Cold Logic</span><span>Human Empathy</span>
+                </div>
+                <div class="h-2 rounded-full bg-slate-200 overflow-hidden">
+                  <div class="h-full bg-gradient-to-r from-teal-500 to-teal-600 rounded-full" style="width: ${(t.mbti && t.mbti.mind_logic) ? t.mbti.mind_logic.left_pct : 75}%"></div>
+                </div>
+              </div>
+
+              <div class="p-2.5 rounded-xl bg-slate-50 border border-slate-200">
+                <div class="flex justify-between text-[11px] font-bold text-slate-600 mb-1">
+                  <span>High Velocity</span><span>Methodical</span>
+                </div>
+                <div class="h-2 rounded-full bg-slate-200 overflow-hidden">
+                  <div class="h-full bg-gradient-to-r from-purple-500 to-purple-600 rounded-full" style="width: ${(t.mbti && t.mbti.execution_tempo) ? t.mbti.execution_tempo.left_pct : 82}%"></div>
+                </div>
+              </div>
+
+              <div class="p-2.5 rounded-xl bg-slate-50 border border-slate-200">
+                <div class="flex justify-between text-[11px] font-bold text-slate-600 mb-1">
+                  <span>Frontier Autonomy</span><span>Collaborative</span>
+                </div>
+                <div class="h-2 rounded-full bg-slate-200 overflow-hidden">
+                  <div class="h-full bg-gradient-to-r from-sky-500 to-sky-600 rounded-full" style="width: ${(t.mbti && t.mbti.mission_drive) ? t.mbti.mission_drive.left_pct : 70}%"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Bottom: Matched Elevated Roles Quick Badges -->
+          <div class="pt-3 border-t border-slate-200 flex flex-wrap items-center justify-between gap-2">
+            <div class="flex flex-wrap items-center gap-1.5 text-xs">
+              <span class="text-slate-500 font-bold text-[11px]">Primary Resonance:</span>
+              <span class="chip chip-teal !text-[11px] font-bold">Tech Project Manager</span>
+              <span class="chip chip-indigo !text-[11px] font-bold">Systems Architect</span>
+            </div>
+            <button type="button" onclick="if(typeof showTab==='function') showTab('jobs');" class="text-xs text-indigo-700 hover:text-indigo-900 font-extrabold flex items-center gap-1">
+              Find Matching Vacancies →
+            </button>
+          </div>
+        </div>
+      </div>
+    `;
+  }
+
+  window.openProfileTotemQuizModal = function () {
+    const modal = document.getElementById("profileQuizModal");
+    if (!modal) return;
+    modal.classList.remove("hidden");
+    profileQuizStep = 1;
+    profileQuizAnswers = {};
+    renderProfileQuestion(1);
+  };
+
+  window.closeProfileTotemQuizModal = function () {
+    const modal = document.getElementById("profileQuizModal");
+    if (modal) modal.classList.add("hidden");
+  };
+
+  window.renderProfileQuestion = function (qIndex) {
+    profileQuizStep = qIndex;
+    const body = document.getElementById("profileQuizCardBody");
+    if (!body) return;
+
+    const q = QUESTIONS[qIndex - 1];
+    if (!q) return;
+
+    const progressPct = Math.round((qIndex / QUESTIONS.length) * 100);
+    const currentVal = profileQuizAnswers[q.id] !== undefined ? profileQuizAnswers[q.id] : null;
+
+    body.innerHTML = `
+      <div class="space-y-6 fade-in text-slate-900">
+        <!-- Progress -->
+        <div class="flex items-center justify-between text-xs font-bold text-slate-500 border-b border-slate-200 pb-3">
+          <div class="flex items-center gap-2">
+            <span class="h-2.5 w-2.5 rounded-full bg-indigo-600 animate-ping"></span>
+            <span class="font-black text-slate-800">Question ${qIndex} of ${QUESTIONS.length}</span>
+          </div>
+          <span class="text-indigo-600 font-mono font-bold">${progressPct}% Complete</span>
+        </div>
+
+        <div class="w-full bg-slate-100 h-2 rounded-full overflow-hidden">
+          <div class="bg-gradient-to-r from-teal-500 to-indigo-600 h-full rounded-full transition-all duration-300" style="width: ${progressPct}%"></div>
+        </div>
+
+        <!-- Question Prompt -->
+        <div class="py-4 text-center max-w-xl mx-auto space-y-2">
+          <span class="text-[11px] font-black uppercase tracking-wider text-indigo-700 bg-indigo-50 px-3 py-1 rounded-full border border-indigo-200">
+            Workplace Preference
+          </span>
+          <h3 class="text-xl sm:text-2xl font-black text-slate-900 leading-snug">
+            "${q.text}"
+          </h3>
+        </div>
+
+        <!-- 5-Point Likert Scale -->
+        <div class="space-y-3">
+          <div class="likert-scale-container">
+            <button type="button" class="likert-btn ${currentVal === -2 ? 'active' : ''}" data-val="-2" onclick="recordProfileAnswer(${q.id}, -2)" title="Strongly Disagree">
+              <span class="text-xs font-black">--</span>
+            </button>
+            <button type="button" class="likert-btn ${currentVal === -1 ? 'active' : ''}" data-val="-1" onclick="recordProfileAnswer(${q.id}, -1)" title="Disagree">
+              <span class="text-xs font-bold">-</span>
+            </button>
+            <button type="button" class="likert-btn ${currentVal === 0 ? 'active' : ''}" data-val="0" onclick="recordProfileAnswer(${q.id}, 0)" title="Neutral">
+              <span class="text-xs font-bold">0</span>
+            </button>
+            <button type="button" class="likert-btn ${currentVal === 1 ? 'active' : ''}" data-val="1" onclick="recordProfileAnswer(${q.id}, 1)" title="Agree">
+              <span class="text-xs font-bold">+</span>
+            </button>
+            <button type="button" class="likert-btn ${currentVal === 2 ? 'active' : ''}" data-val="2" onclick="recordProfileAnswer(${q.id}, 2)" title="Strongly Agree">
+              <span class="text-xs font-black">++</span>
+            </button>
+          </div>
+          <div class="flex justify-between max-w-[520px] mx-auto text-[11px] font-extrabold text-slate-500 px-2">
+            <span class="text-rose-600">Strongly Disagree</span>
+            <span class="text-slate-500">Neutral</span>
+            <span class="text-emerald-600">Strongly Agree</span>
+          </div>
+        </div>
+
+        <!-- Navigation -->
+        <div class="flex items-center justify-between pt-4 border-t border-slate-200 text-xs">
+          ${qIndex > 1 ? `
+            <button type="button" onclick="renderProfileQuestion(${qIndex - 1})" class="text-slate-600 hover:text-slate-900 font-bold flex items-center gap-1 transition">
+              ← Previous
+            </button>
+          ` : `<div></div>`}
+          
+          <button type="button" onclick="closeProfileTotemQuizModal()" class="text-slate-500 hover:text-slate-800 font-bold transition">
+            Cancel
+          </button>
+        </div>
+      </div>
+    `;
+  };
+
+  window.recordProfileAnswer = function (qId, val) {
+    profileQuizAnswers[qId] = parseInt(val, 10);
+    setTimeout(() => {
+      if (profileQuizStep < QUESTIONS.length) {
+        renderProfileQuestion(profileQuizStep + 1);
+      } else {
+        finishProfileQuiz();
+      }
+    }, 280);
+  };
+
+  window.finishProfileQuiz = function () {
+    const body = document.getElementById("profileQuizCardBody");
+    if (!body) return;
+
+    body.innerHTML = `
+      <div class="py-12 text-center space-y-4 fade-in">
+        <div class="relative w-16 h-16 mx-auto">
+          <div class="absolute inset-0 rounded-full bg-gradient-to-tr from-teal-400 to-indigo-500 animate-spin blur-md opacity-60"></div>
+          <div class="relative w-16 h-16 rounded-full bg-white border border-slate-200 grid place-items-center text-3xl shadow-sm">
+            🔮
+          </div>
+        </div>
+        <h4 class="text-lg font-black text-slate-900">Updating Your Career DNA Profile...</h4>
+        <p class="text-xs text-slate-500">Recalibrating O*NET 30.3 occupational fit scores</p>
+      </div>
+    `;
+
+    setTimeout(async () => {
+      let focusScore = 0, logicScore = 0, tempoScore = 0, driveScore = 0;
+      QUESTIONS.forEach(q => {
+        const val = profileQuizAnswers[q.id] || 0;
+        if (q.dimension === "focus_energy") focusScore += val * q.weight;
+        if (q.dimension === "mind_logic") logicScore += val * q.weight;
+        if (q.dimension === "execution_tempo") tempoScore += val * q.weight;
+        if (q.dimension === "mission_drive") driveScore += val * q.weight;
+      });
+
+      let chosenTotem = "owl";
+      if (logicScore < -1 && focusScore < 0) chosenTotem = "retriever";
+      else if (tempoScore > 2 && focusScore > 1) chosenTotem = "leopard";
+      else if (driveScore > 2.5 && logicScore < 1) chosenTotem = "whale";
+      else if (logicScore > 2 && focusScore > 1) chosenTotem = "owl";
+      else if (logicScore < 0 && tempoScore > 0) chosenTotem = "fox";
+      else chosenTotem = "hawk";
+
+      const t = TOTEMS[chosenTotem] || TOTEMS.hawk;
+      localStorage.setItem("careerlens_totem_data", JSON.stringify(t));
+
+      try {
+        await fetch("/api/totem/user", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ totem: t })
+        });
+      } catch (e) {}
+
+      renderProfileTotemCard(t);
+      closeProfileTotemQuizModal();
+
+      if (typeof toast === "function") {
+        toast(`✨ Career Totem updated to ${t.badge}!`);
+      }
+    }, 1000);
+  };
+
+  // Auto-init profile totem if on candidate portal
+  document.addEventListener("DOMContentLoaded", () => {
+    if (document.getElementById("profileTotemCard")) {
+      window.initCandidateTotemProfile();
+    }
+  });
