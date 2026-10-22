@@ -45,6 +45,7 @@ from ai_matcher import load_json, match_user_to_roles
 import auth_db
 import cv_dataset_manager
 import predictions_engine
+import totem_ai_engine
 from auth_db import (authenticate_user, get_user_by_uid, init_db, register_user, update_user_password, update_user_profile)
 from trend_signals import get_trend_radar
 from utils import format_greeting
@@ -167,6 +168,14 @@ def admin_portal():
 
 
 # ------------------------------------------------------------------ auth
+
+@app.route("/api/totem/match", methods=["GET"])
+def api_totem_match():
+    totem = request.args.get("totem", "hawk")
+    domain = request.args.get("domain", "tech")
+    matches = totem_ai_engine.get_top_onet_matches(totem, domain, limit=4)
+    return jsonify({"ok": True, "totem": totem, "domain": domain, "matches": matches})
+
 @app.route("/api/auth/register", methods=["POST"])
 def api_register():
     ok, msg, user_info = register_user(json_object())

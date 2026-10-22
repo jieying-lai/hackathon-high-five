@@ -90,7 +90,7 @@
         {
           name: "Alan Turing",
           field: "Father of Modern Computing & AI",
-          photo: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a1/Alan_Turing_Aged_16.jpg/320px-Alan_Turing_Aged_16.jpg",
+          photo: "/static/illustrations/role_models/alan_turing.jpg",
           struggle: "Battled social ostracization and unconventional communication quirks in academia.",
           milestone: "Cracked the Enigma naval code and designed the Turing Machine, shaping modern humanity.",
           wisdom: "Sometimes it is the people no one imagines anything of who do the things no one can imagine."
@@ -98,7 +98,7 @@
         {
           name: "Marie Curie",
           field: "Pioneering Physicist & Chemist",
-          photo: "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c8/Marie_Curie_c._1920s.jpg/320px-Marie_Curie_c._1920s.jpg",
+          photo: "/static/illustrations/role_models/marie_curie.jpg",
           struggle: "Worked in a dilapidated shed without heating, refusing commercial patent exploitation.",
           milestone: "Only person in history to win two Nobel Prizes in two distinct scientific fields.",
           wisdom: "Nothing in life is to be feared, it is only to be understood. Now is the time to understand more."
@@ -106,7 +106,7 @@
         {
           name: "Jensen Huang",
           field: "Founder & CEO, NVIDIA",
-          photo: "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c4/Jensen_Huang_%2853763782531%29_%28cropped%29.jpg/320px-Jensen_Huang_%2853763782531%29_%28cropped%29.jpg",
+          photo: "/static/illustrations/role_models/jensen_huang.jpg",
           struggle: "Started from a Denny’s diner booth, faced near-bankruptcy multiple times betting on parallel compute.",
           milestone: "Architected the computational silicon foundation fueling the global Generative AI era.",
           wisdom: "Run, don't walk. Either you are running for food, or you are running from being food."
@@ -131,7 +131,7 @@
         {
           name: "Jane Goodall",
           field: "Primatologist & UN Messenger of Peace",
-          photo: "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7b/Jane_Goodall_2015.jpg/320px-Jane_Goodall_2015.jpg",
+          photo: "/static/illustrations/role_models/jane_goodall.jpg",
           struggle: "Rejected formal academic dogmas that denied animals had feelings and unique personalities.",
           milestone: "Redefined primatology through patient empathy and founded the global Roots & Shoots movement.",
           wisdom: "What you do makes a difference, and you have to decide what kind of difference you want to make."
@@ -139,7 +139,7 @@
         {
           name: "Satya Nadella",
           field: "Chairman & CEO, Microsoft",
-          photo: "https://upload.wikimedia.org/wikipedia/commons/thumb/7/78/MS-CEO-Satya-Nadella_%28cropped%29.jpg/320px-MS-CEO-Satya-Nadella_%28cropped%29.jpg",
+          photo: "/static/illustrations/role_models/satya_nadella.jpg",
           struggle: "Inherited a fractured corporate empire known for vicious internal dog-eat-dog politics.",
           milestone: "Revitalized the company with 'Empathy & Growth Mindset', orchestrating a $3 Trillion transformation.",
           wisdom: "Empathy makes you a better innovator. You have to listen deeply to what is unsaid."
@@ -147,7 +147,7 @@
         {
           name: "Fred Rogers",
           field: "Iconic Public Broadcaster & Child Educator",
-          photo: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/Fred_Rogers_1973.jpg/320px-Fred_Rogers_1973.jpg",
+          photo: "/static/illustrations/role_models/fred_rogers.jpg",
           struggle: "Fought commercially aggressive TV networks that exploited young people's attention spans.",
           milestone: "Pioneered transformative compassionate media, awarded the Presidential Medal of Freedom.",
           wisdom: "There are three ways to ultimate success: The first way is to be kind. The second is to be kind. The third is to be kind."
@@ -172,7 +172,7 @@
         {
           name: "Linus Torvalds",
           field: "Creator of Linux & Git",
-          photo: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/01/LinuxCon_Europe_Linus_Torvalds_03_%28cropped%29.jpg/320px-LinuxCon_Europe_Linus_Torvalds_03_%28cropped%29.jpg",
+          photo: "/static/illustrations/role_models/linus_torvalds.jpg",
           struggle: "Refused corporate buyouts and stayed true to decentralized open-source autonomy.",
           milestone: "Built the operating system kernel that runs 96% of the world's top servers and all Android devices.",
           wisdom: "Talk is cheap. Show me the code."
@@ -180,7 +180,7 @@
         {
           name: "Grace Hopper",
           field: "Computer Science Pioneer & Naval Rear Admiral",
-          photo: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ad/Commodore_Grace_M._Hopper%2C_USN_%28covered%29.jpg/320px-Commodore_Grace_M._Hopper%2C_USN_%28covered%29.jpg",
+          photo: "/static/illustrations/role_models/grace_hopper.jpg",
           struggle: "Told repeatedly that computers could only do arithmetic, not understand written words.",
           milestone: "Invented the first computer compiler, paving the way for modern software programming.",
           wisdom: "A ship in port is safe, but that is not what ships are built for."
@@ -188,7 +188,7 @@
         {
           name: "Steve Wozniak",
           field: "Co-Founder, Apple & Computing Visionary",
-          photo: "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f6/Steve_Wozniak.jpg/320px-Steve_Wozniak.jpg",
+          photo: "/static/illustrations/role_models/steve_wozniak.jpg",
           struggle: "Avoided corporate politics and management titles, insisting on staying an individual builder.",
           milestone: "Single-handedly designed and hand-soldered the circuit boards of Apple I and Apple II.",
           wisdom: "Never trust a computer you can't throw out a window."
@@ -213,7 +213,7 @@
         {
           name: "David Attenborough",
           field: "Naturalist & Global Environmental Advocate",
-          photo: "https://upload.wikimedia.org/wikipedia/commons/thumb/6/62/David_Attenborough_at_wildscreen_cropped.jpg/320px-David_Attenborough_at_wildscreen_cropped.jpg",
+          photo: "/static/illustrations/role_models/david_attenborough.jpg",
           struggle: "Spent 70 years documenting nature while witnessing rapid industrial biodiversity loss.",
           milestone: "Educated three generations across the globe on planetary harmony and climate stewardship.",
           wisdom: "Real success is not measured in financial gain, but in how much you helped heal what was broken."
@@ -221,7 +221,7 @@
         {
           name: "Rachel Carson",
           field: "Marine Biologist & Author of 'Silent Spring'",
-          photo: "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f4/Rachel-Carson.jpg/320px-Rachel-Carson.jpg",
+          photo: "/static/illustrations/role_models/rachel_carson.jpg",
           struggle: "Faced massive smear campaigns from chemical conglomerate lobbies trying to silence her science.",
           milestone: "Sparked the modern global environmental movement and the founding of the EPA.",
           wisdom: "In nature, nothing exists alone. One who contemplates its beauty finds reserves of strength."
@@ -229,7 +229,7 @@
         {
           name: "Jimmy Wales",
           field: "Founder of Wikipedia",
-          photo: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/42/Jimmy_Wales_September_2014.jpg/320px-Jimmy_Wales_September_2014.jpg",
+          photo: "/static/illustrations/role_models/jimmy_wales.jpg",
           struggle: "Resisted billions of dollars in commercial advertising pressure to keep information neutral and free.",
           milestone: "Created the largest collaborative repository of human knowledge in history, 100% ad-free.",
           wisdom: "Imagine a world in which every single person on the planet is given free access to the sum of all human knowledge."
@@ -254,7 +254,7 @@
         {
           name: "Hayao Miyazaki",
           field: "Legendary Animator & Director, Studio Ghibli",
-          photo: "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e2/Hayao_Miyazaki_cropped_1_Hayao_Miyazaki_201211.jpg/320px-Hayao_Miyazaki_cropped_1_Hayao_Miyazaki_201211.jpg",
+          photo: "/static/illustrations/role_models/hayao_miyazaki.jpg",
           struggle: "Constantly redrawing thousands of hand-drawn frames, refusing soulless automated shortcuts.",
           milestone: "Created cinematic worlds that earned global Academy Awards and generational emotional resonance.",
           wisdom: "Do everything by hand, even when using the computer. The soul lives in the details."
@@ -262,7 +262,7 @@
         {
           name: "Steve Jobs",
           field: "Visionary Innovator & Co-Founder, Apple",
-          photo: "https://upload.wikimedia.org/wikipedia/commons/thumb/d/dc/Steve_Jobs_Headshot_2010-CROP_%28cropped_2%29.jpg/320px-Steve_Jobs_Headshot_2010-CROP_%28cropped_2%29.jpg",
+          photo: "/static/illustrations/role_models/steve_jobs.jpg",
           struggle: "Ousted from his own company; criticized for obsessive perfectionism over invisible circuit boards.",
           milestone: "Fused liberal arts with technology, creating products that redefined personal communication.",
           wisdom: "Design is not just what it looks like and feels like. Design is how it works."
@@ -270,7 +270,7 @@
         {
           name: "Frida Kahlo",
           field: "Surrealist Painter & Cultural Icon",
-          photo: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/06/Frida_Kahlo%2C_by_Guillermo_Kahlo.jpg/320px-Frida_Kahlo%2C_by_Guillermo_Kahlo.jpg",
+          photo: "/static/illustrations/role_models/frida_kahlo.jpg",
           struggle: "Survived lifelong physical trauma and chronic pain following a catastrophic bus accident.",
           milestone: "Turned acute suffering into vibrant, timeless visual art celebrating identity and authenticity.",
           wisdom: "I paint my own reality. The only thing I know is that I paint because I need to."
@@ -295,7 +295,7 @@
         {
           name: "Katherine Johnson",
           field: "NASA Orbital Trajectory Mathematician",
-          photo: "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6d/Katherine_Johnson_1983.jpg/320px-Katherine_Johnson_1983.jpg",
+          photo: "/static/illustrations/role_models/katherine_johnson.jpg",
           struggle: "Overcame racial and gender segregation in the 1960s space race to become NASA’s secret weapon.",
           milestone: "Calculated flight trajectories for Project Mercury and Apollo 11 moon landing with zero room for error.",
           wisdom: "Like what you do, and then you will do your best."
@@ -303,7 +303,7 @@
         {
           name: "Winston Churchill",
           field: "Statesman & Wartime Strategist",
-          photo: "https://upload.wikimedia.org/wikipedia/commons/thumb/b/bc/Sir_Winston_Churchill_-_1941__Statesman_1941.jpg/320px-Sir_Winston_Churchill_-_1941__Statesman_1941.jpg",
+          photo: "/static/illustrations/role_models/winston_churchill.jpg",
           struggle: "Suffered political isolation and military defeats early on, diagnosed with 'black dog' depressive bouts.",
           milestone: "Mobilized the free world against fascism with relentless determination and stirring rhetoric.",
           wisdom: "Success is not final, failure is not fatal: it is the courage to continue that counts."
@@ -311,7 +311,7 @@
         {
           name: "Sheryl Sandberg",
           field: "Tech Executive & Author",
-          photo: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Sheryl_Sandberg_at_World_Economic_Forum_2013_%28cropped%29.jpg/320px-Sheryl_Sandberg_at_World_Economic_Forum_2013_%28cropped%29.jpg",
+          photo: "/static/illustrations/role_models/sheryl_sandberg.jpg",
           struggle: "Navigated intense male-dominated tech boardrooms and tragic personal family bereavement.",
           milestone: "Scaled global monetization at Google and Facebook, championing women's executive agency.",
           wisdom: "Option A is not available. So let's just kick the shit out of Option B."
@@ -769,6 +769,7 @@
 
   // View 1: Totem Overview & Grand Reveal
   function renderTotemOverview() {
+    window.renderTotemOverview = renderTotemOverview;
     enterImmersionMode();
     if (welcomeCard) welcomeCard.classList.add("hidden");
     if (quizCard) quizCard.classList.add("hidden");
@@ -846,6 +847,16 @@
 
             </div>
           </div>
+        </div>
+
+        <!-- Navigation & Gateway Footer -->
+        <div class="flex items-center justify-between pt-2 border-t border-white/10 text-xs">
+          <button type="button" onclick="exitTotemImmersion()" class="text-indigo-400 hover:text-white font-bold flex items-center gap-1.5 transition">
+            <span>← Back to Overview</span>
+          </button>
+          <button type="button" onclick="retakeTotemQuiz()" class="text-slate-400 hover:text-white font-semibold flex items-center gap-1 transition">
+            <span>🔄 Retake Assessment</span>
+          </button>
         </div>
 
         <!-- Gateways to Separated Sections (Progressive Disclosure) -->
