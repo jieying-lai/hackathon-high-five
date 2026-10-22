@@ -37,12 +37,12 @@ def train():
     model = prepare_model_for_kbit_training(model)
     model.config.use_cache = False
 
-    print("[*] Attaching LoRA adapter...")
+    print("[*] Attaching LoRA adapter (q_proj & v_proj, lightweight ~18MB for direct GitHub sync)...")
     peft_config = LoraConfig(
-        r=16,
+        r=8,
         lora_alpha=16,
         lora_dropout=0.05,
-        target_modules=["q_proj", "k_proj", "v_proj", "o_proj", "gate_proj", "up_proj", "down_proj"],
+        target_modules=["q_proj", "v_proj"],
         bias="none",
         task_type="CAUSAL_LM"
     )
