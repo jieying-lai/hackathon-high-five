@@ -59,7 +59,7 @@
         <div class="flex flex-wrap items-center justify-center gap-4 pt-2">
           <button type="button" onclick="startTotemQuiz()" class="totem-btn-primary">
             <span>✨</span>
-            <span>Awaken Career Totem (Start 2-Min Quiz)</span>
+            <span>Awaken Career Totem</span>
           </button>
           <button type="button" onclick="openAuth('login')" class="totem-btn-secondary">
             Sign In Directly
@@ -131,6 +131,7 @@
       </div>
     </section>
 
+    <div id="landingHomeContent">
     <section id="home-features" class="home-features" data-no-translate aria-labelledby="features-heading">
       <div id="feature-heading"></div>
       <div class="feature-explorer"><div id="feature-steps"></div><aside id="feature-preview" class="glass feature-preview" aria-live="polite"></aside></div>
@@ -241,6 +242,7 @@
         </div>
       </div>
     </section>
+    </div>
   </main>
 
   <main id="auth" class="hidden max-w-3xl mx-auto px-4 sm:px-6 py-8">
@@ -479,7 +481,27 @@
   <script src="/static/js/page-position.js?v=20261021-reload-only"></script>
   <script src="/static/js/common.js?v=20261021-restore"></script>
   <script>
+        function updateHeaderNav(isAuth) {
+      const desktopNav = document.querySelector('.homepage-navigation');
+      const mobileNav = document.getElementById('homeNav');
+      if (isAuth) {
+        if (desktopNav) desktopNav.innerHTML = '<button type="button" onclick="closeAuth()" class="nav-item !w-auto !inline-flex items-center gap-1.5 font-bold text-indigo-600 hover:text-indigo-800">← Back to Overview</button>';
+        if (mobileNav) mobileNav.innerHTML = '<button type="button" onclick="closeAuth()" class="nav-item font-bold text-indigo-600">← Back to Overview</button>';
+      } else {
+        if (desktopNav) desktopNav.innerHTML = '<a class="nav-item" href="#home-intro">Overview</a><a class="nav-item" href="#home-portals">Our Portals</a>';
+        if (mobileNav) mobileNav.innerHTML = '<a class="nav-item" href="#home-intro">Overview</a><a class="nav-item" href="#home-portals">Our Portals</a><button class="nav-item" onclick="openAuth(\'login\')">Sign In</button><button class="nav-item" onclick="openAuth(\'register\')">Create Account</button>';
+      }
+    }
+
+    function closeAuth() {
+      document.getElementById('landing').classList.remove('hidden');
+      document.getElementById('auth').classList.add('hidden');
+      updateHeaderNav(false);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
     function openAuth(mode, role, options = {}) {
+      updateHeaderNav(true);
       if (!options.restore) window.PagePosition?.navigate();
       document.getElementById('landing').classList.add('hidden');
       document.getElementById('auth').classList.remove('hidden');
@@ -833,5 +855,45 @@
   </div>
 
   <script src="/static/js/career-spirit-totem.js?v=20261022-1"></script>
+  <!-- Global 3D Work-Life Atlas Modal -->
+  <div id="globalAtlasModal" class="fixed inset-0 z-50 bg-slate-950/85 backdrop-blur-md flex items-center justify-center p-3 sm:p-6 hidden">
+    <div class="totem-section max-w-5xl w-full p-6 sm:p-8 space-y-6 max-h-[92vh] overflow-y-auto border border-white/20 shadow-2xl relative">
+      <div class="flex items-center justify-between border-b border-white/10 pb-4">
+        <div>
+          <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-teal-500/20 text-teal-300 text-xs font-bold mb-1.5">
+            <span>🌍</span><span>Global Work-Life Atlas</span>
+          </div>
+          <h3 class="text-xl sm:text-2xl font-black text-white">How Do People in Your Field Live Around the World?</h3>
+          <p class="text-xs text-slate-400 mt-0.5">Explore real work-life balance, salaries, and daily routines across major tech & creative hubs</p>
+        </div>
+        <button type="button" onclick="closeGlobalAtlas()" class="text-slate-400 hover:text-white text-2xl font-bold p-2 transition">✕</button>
+      </div>
+
+      <!-- City Switcher -->
+      <div class="flex flex-wrap gap-2">
+        <button type="button" onclick="showCityCard('kl')" class="btn btn-soft !py-1.5 !px-3.5 !text-xs font-bold border border-white/20 text-slate-200 hover:text-white">🇲🇾 Kuala Lumpur</button>
+        <button type="button" onclick="showCityCard('amsterdam')" class="btn btn-soft !py-1.5 !px-3.5 !text-xs font-bold border border-white/20 text-slate-200 hover:text-white">🇳🇱 Amsterdam</button>
+        <button type="button" onclick="showCityCard('tokyo')" class="btn btn-soft !py-1.5 !px-3.5 !text-xs font-bold border border-white/20 text-slate-200 hover:text-white">🇯🇵 Tokyo</button>
+        <button type="button" onclick="showCityCard('london')" class="btn btn-soft !py-1.5 !px-3.5 !text-xs font-bold border border-white/20 text-slate-200 hover:text-white">🇬🇧 London</button>
+      </div>
+
+      <!-- Globe & Details Grid -->
+      <div class="grid lg:grid-cols-12 gap-6 items-stretch">
+        <div class="lg:col-span-7 relative">
+          <div id="totemGlobeContainer" class="flex items-center justify-center">
+            <canvas id="globeCanvas" class="w-full h-full cursor-grab"></canvas>
+            <div class="absolute bottom-3 left-4 text-[10px] text-slate-400 font-mono">
+              ✦ Interactive 3D Sphere · Drag to rotate
+            </div>
+          </div>
+        </div>
+
+        <div class="lg:col-span-5" id="cityDetailsContainer">
+          <!-- Injected city card -->
+        </div>
+      </div>
+    </div>
+  </div>
+
 </body>
 </html>

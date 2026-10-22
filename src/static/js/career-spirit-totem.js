@@ -1,89 +1,88 @@
 /**
- * CareerLens AI — Career Spirit Totem & Global Work-Life Engine
- * Gen-Z MBTI Style Discovery Experience
+ * CareerLens AI — Career Spirit Totem & Progressive Discovery Engine
+ * Gen-Z MBTI Style Discovery Experience with High-Reliability Matching
  */
 
 (function () {
   'use strict';
 
-  // 1. Question Bank: 10 casual, non-judgmental statements (5-point Likert)
+  // 1. Question Bank: 10 authentic, non-judgmental statements (5-point Likert)
   const QUESTIONS = [
     {
       id: 1,
       text: "Working from home gives you noticeably higher real productivity than sitting in an office surrounded by colleagues.",
-      dimension: "solo_vs_social", // positive = solo, negative = social
-      weight: 1.2
+      dimension: "focus_energy", // + = Deep Focus / Solo, - = Social Synergy
+      weight: 1.3
     },
     {
       id: 2,
       text: "You believe coworkers should strictly remain professional teammates, rather than personal best friends.",
-      dimension: "boundary_vs_bonding", // positive = boundary, negative = bonding
+      dimension: "focus_energy", // + = Independent Boundary, - = Social Bonding
       weight: 1.0
     },
     {
       id: 3,
       text: "You would rather spend 8 uninterrupted hours alone solving a deep logic puzzle than hosting a 20-person brainstorming session.",
-      dimension: "deep_vs_interactive", // positive = deep logic, negative = interactive
+      dimension: "mind_logic", // + = Cold Logic & Data, - = Empathy & Intuition
       weight: 1.4
     },
     {
       id: 4,
       text: "When assigned an ambiguous project with zero manuals, you feel thrilled by the autonomy rather than anxious.",
-      dimension: "autonomous_vs_structured", // positive = autonomous, negative = structured
-      weight: 1.1
+      dimension: "execution_tempo", // + = Agile & Autonomous, - = Orderly & Structured
+      weight: 1.3
     },
     {
       id: 5,
       text: "You easily notice when a teammate feels overwhelmed or insecure, and you naturally step in to reassure them.",
-      dimension: "empathy_vs_objective", // negative = empathy, positive = objective
-      weight: 1.3
+      dimension: "mind_logic", // - = Empathy & Human Touch, + = Cold Logic
+      weight: 1.4
     },
     {
       id: 6,
       text: "You value shipping a bold, imperfect prototype today over spending two weeks polishing it behind closed doors.",
-      dimension: "action_vs_perfection", // positive = action/agile, negative = perfection
-      weight: 1.0
+      dimension: "execution_tempo", // + = Agile & Autonomous, - = Orderly & Structured
+      weight: 1.1
     },
     {
       id: 7,
       text: "Following repetitive, predictable operational manuals every day drains your soul faster than heavy workloads.",
-      dimension: "novelty_vs_routine", // positive = novelty, negative = routine
+      dimension: "mission_drive", // + = Pioneering Impact, - = Craft Mastery
       weight: 1.2
     },
     {
       id: 8,
       text: "In a heated debate, finding the objective, unfiltered truth matters far more to you than protecting fragile egos.",
-      dimension: "truth_vs_harmony", // positive = cold truth, negative = harmony
-      weight: 1.2
+      dimension: "mind_logic", // + = Cold Logic, - = Empathy & Harmony
+      weight: 1.3
     },
     {
       id: 9,
       text: "You want your daily work to tangibly improve human lives or environmental sustainability, not just generate corporate profit.",
-      dimension: "impact_vs_prestige", // positive = impact, negative = prestige
-      weight: 1.4
+      dimension: "mission_drive", // + = Pioneering Impact, - = Traditional Corporate
+      weight: 1.5
     },
     {
       id: 10,
       text: "After a chaotic week, your favorite recharge is retreating into your private digital or creative sanctuary rather than partying.",
-      dimension: "introvert_recharge", // positive = introvert, negative = extrovert
-      weight: 1.3
+      dimension: "focus_energy", // + = Deep Focus, - = Social Synergy
+      weight: 1.4
     }
   ];
 
-  // 2. Animal Totems & Psychological Archetypes
+  // 2. Animal Totems, Archetypes, Verified Portrait URLs, and MBTI Opposing Poles
   const TOTEMS = {
     owl: {
       key: "owl",
       icon: "🦉",
       badge: "The Obsidian Night Owl",
-      zhBadge: "深渊信标 · 夜行鸮",
       tagline: "The Deep-Focus Systems Architect",
       brief: "You operate with quiet laser focus—while the world is caught in surface noise, you effortlessly map out the hidden architecture behind complex problems.",
-      composition: {
-        logic: 46,
-        autonomy: 26,
-        aesthetics: 16,
-        empathy: 12
+      mbtiPoles: {
+        energy: { leftName: "Deep Focus", leftPct: 82, rightName: "Social Synergy", rightPct: 18 },
+        mind: { leftName: "Cold Logic & Data", leftPct: 88, rightName: "Empathy & Intuition", rightPct: 12 },
+        tempo: { leftName: "Agile & Autonomous", leftPct: 65, rightName: "Orderly & Structured", rightPct: 35 },
+        drive: { leftName: "Pioneering Impact", leftPct: 40, rightName: "Craft Mastery", rightPct: 60 }
       },
       allergies: ["Pointless 2-hour status meetings", "Emotional manipulation", "Micromanagement without clear metrics"],
       strengths: ["Infinite cognitive stamina in deep work", "Zero-bullshit logic clarity", "High-stress problem disentanglement"],
@@ -91,6 +90,7 @@
         {
           name: "Alan Turing",
           field: "Father of Modern Computing & AI",
+          photo: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a1/Alan_Turing_Aged_16.jpg/320px-Alan_Turing_Aged_16.jpg",
           struggle: "Battled social ostracization and unconventional communication quirks in academia.",
           milestone: "Cracked the Enigma naval code and designed the Turing Machine, shaping modern humanity.",
           wisdom: "Sometimes it is the people no one imagines anything of who do the things no one can imagine."
@@ -98,6 +98,7 @@
         {
           name: "Marie Curie",
           field: "Pioneering Physicist & Chemist",
+          photo: "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c8/Marie_Curie_c._1920s.jpg/320px-Marie_Curie_c._1920s.jpg",
           struggle: "Worked in a dilapidated shed without heating, refusing commercial patent exploitation.",
           milestone: "Only person in history to win two Nobel Prizes in two distinct scientific fields.",
           wisdom: "Nothing in life is to be feared, it is only to be understood. Now is the time to understand more."
@@ -105,6 +106,7 @@
         {
           name: "Jensen Huang",
           field: "Founder & CEO, NVIDIA",
+          photo: "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c4/Jensen_Huang_%2853763782531%29_%28cropped%29.jpg/320px-Jensen_Huang_%2853763782531%29_%28cropped%29.jpg",
           struggle: "Started from a Denny’s diner booth, faced near-bankruptcy multiple times betting on parallel compute.",
           milestone: "Architected the computational silicon foundation fueling the global Generative AI era.",
           wisdom: "Run, don't walk. Either you are running for food, or you are running from being food."
@@ -115,14 +117,13 @@
       key: "retriever",
       icon: "🦮",
       badge: "The Solar Golden Retriever",
-      zhBadge: "破晓领航 · 太阳金毛",
       tagline: "The High-Empathy Culture Weaver",
       brief: "Your natural warmth dissolves workplace cynicism—you foster genuine psychological safety and bring infectious optimism wherever you land.",
-      composition: {
-        logic: 18,
-        autonomy: 14,
-        aesthetics: 24,
-        empathy: 44
+      mbtiPoles: {
+        energy: { leftName: "Deep Focus", leftPct: 16, rightName: "Social Synergy", rightPct: 84 },
+        mind: { leftName: "Cold Logic & Data", leftPct: 15, rightName: "Empathy & Intuition", rightPct: 85 },
+        tempo: { leftName: "Agile & Autonomous", leftPct: 42, rightName: "Orderly & Structured", rightPct: 58 },
+        drive: { leftName: "Pioneering Impact", leftPct: 60, rightName: "Craft Mastery", rightPct: 40 }
       },
       allergies: ["Toxic zero-sum political games", "Ice-cold transactional environments", "Working isolated without human contact"],
       strengths: ["Natural cross-discipline alignment", "Unlocking others' dormant potential", "Crisis de-escalation & emotional glue"],
@@ -130,6 +131,7 @@
         {
           name: "Jane Goodall",
           field: "Primatologist & UN Messenger of Peace",
+          photo: "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7b/Jane_Goodall_2015.jpg/320px-Jane_Goodall_2015.jpg",
           struggle: "Rejected formal academic dogmas that denied animals had feelings and unique personalities.",
           milestone: "Redefined primatology through patient empathy and founded the global Roots & Shoots movement.",
           wisdom: "What you do makes a difference, and you have to decide what kind of difference you want to make."
@@ -137,13 +139,15 @@
         {
           name: "Satya Nadella",
           field: "Chairman & CEO, Microsoft",
-          struggle: "Inherited a fractured, warring corporate empire known for vicious internal dog-eat-dog politics.",
+          photo: "https://upload.wikimedia.org/wikipedia/commons/thumb/7/78/MS-CEO-Satya-Nadella_%28cropped%29.jpg/320px-MS-CEO-Satya-Nadella_%28cropped%29.jpg",
+          struggle: "Inherited a fractured corporate empire known for vicious internal dog-eat-dog politics.",
           milestone: "Revitalized the company with 'Empathy & Growth Mindset', orchestrating a $3 Trillion transformation.",
           wisdom: "Empathy makes you a better innovator. You have to listen deeply to what is unsaid."
         },
         {
-          name: "Fred Rogers (Mister Rogers)",
+          name: "Fred Rogers",
           field: "Iconic Public Broadcaster & Child Educator",
+          photo: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/Fred_Rogers_1973.jpg/320px-Fred_Rogers_1973.jpg",
           struggle: "Fought commercially aggressive TV networks that exploited young people's attention spans.",
           milestone: "Pioneered transformative compassionate media, awarded the Presidential Medal of Freedom.",
           wisdom: "There are three ways to ultimate success: The first way is to be kind. The second is to be kind. The third is to be kind."
@@ -154,14 +158,13 @@
       key: "leopard",
       icon: "🐆",
       badge: "The Cyber Snow Leopard",
-      zhBadge: "绝顶巡狩 · 雪豹侠客",
       tagline: "The Autonomous Frontier Pioneer",
       brief: "You don't need roadmaps or supervision—drop you into untamed territory and you will single-handedly carve out an empire on your own terms.",
-      composition: {
-        logic: 34,
-        autonomy: 42,
-        aesthetics: 14,
-        empathy: 10
+      mbtiPoles: {
+        energy: { leftName: "Deep Focus", leftPct: 74, rightName: "Social Synergy", rightPct: 26 },
+        mind: { leftName: "Cold Logic & Data", leftPct: 76, rightName: "Empathy & Intuition", rightPct: 24 },
+        tempo: { leftName: "Agile & Autonomous", leftPct: 92, rightName: "Orderly & Structured", rightPct: 8 },
+        drive: { leftName: "Pioneering Impact", leftPct: 68, rightName: "Craft Mastery", rightPct: 32 }
       },
       allergies: ["Bureaucratic approval chains", "Rigid 9-to-5 desk punching", "People telling you 'that's how we've always done it'"],
       strengths: ["Uncompromising self-reliance", "Lightning-fast prototyping under pressure", "Intuitive technical fearlessness"],
@@ -169,6 +172,7 @@
         {
           name: "Linus Torvalds",
           field: "Creator of Linux & Git",
+          photo: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/01/LinuxCon_Europe_Linus_Torvalds_03_%28cropped%29.jpg/320px-LinuxCon_Europe_Linus_Torvalds_03_%28cropped%29.jpg",
           struggle: "Refused corporate buyouts and stayed true to decentralized open-source autonomy.",
           milestone: "Built the operating system kernel that runs 96% of the world's top servers and all Android devices.",
           wisdom: "Talk is cheap. Show me the code."
@@ -176,6 +180,7 @@
         {
           name: "Grace Hopper",
           field: "Computer Science Pioneer & Naval Rear Admiral",
+          photo: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ad/Commodore_Grace_M._Hopper%2C_USN_%28covered%29.jpg/320px-Commodore_Grace_M._Hopper%2C_USN_%28covered%29.jpg",
           struggle: "Told repeatedly that computers could only do arithmetic, not understand written words.",
           milestone: "Invented the first computer compiler, paving the way for modern software programming.",
           wisdom: "A ship in port is safe, but that is not what ships are built for."
@@ -183,6 +188,7 @@
         {
           name: "Steve Wozniak",
           field: "Co-Founder, Apple & Computing Visionary",
+          photo: "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f6/Steve_Wozniak.jpg/320px-Steve_Wozniak.jpg",
           struggle: "Avoided corporate politics and management titles, insisting on staying an individual builder.",
           milestone: "Single-handedly designed and hand-soldered the circuit boards of Apple I and Apple II.",
           wisdom: "Never trust a computer you can't throw out a window."
@@ -193,14 +199,13 @@
       key: "whale",
       icon: "🐋",
       badge: "The Deep-Sea Titan Whale",
-      zhBadge: "沉潜巨擘 · 深海巨鲸",
       tagline: "The Purpose-Driven Societal Anchor",
       brief: "You play the infinite game—money is fine, but leaving an enduring, measurable positive legacy for humanity and our planet is what truly fuels your heart.",
-      composition: {
-        logic: 28,
-        autonomy: 22,
-        aesthetics: 18,
-        empathy: 32
+      mbtiPoles: {
+        energy: { leftName: "Deep Focus", leftPct: 48, rightName: "Social Synergy", rightPct: 52 },
+        mind: { leftName: "Cold Logic & Data", leftPct: 45, rightName: "Empathy & Intuition", rightPct: 55 },
+        tempo: { leftName: "Agile & Autonomous", leftPct: 38, rightName: "Orderly & Structured", rightPct: 62 },
+        drive: { leftName: "Pioneering Impact", leftPct: 88, rightName: "Craft Mastery", rightPct: 12 }
       },
       allergies: ["Greenwashing and performative PR", "Short-term quarterly obsession", "Exploitative business models"],
       strengths: ["Decade-horizon strategic patience", "Moral clarity in ambiguity", "Stewardship of high-stakes missions"],
@@ -208,6 +213,7 @@
         {
           name: "David Attenborough",
           field: "Naturalist & Global Environmental Advocate",
+          photo: "https://upload.wikimedia.org/wikipedia/commons/thumb/6/62/David_Attenborough_at_wildscreen_cropped.jpg/320px-David_Attenborough_at_wildscreen_cropped.jpg",
           struggle: "Spent 70 years documenting nature while witnessing rapid industrial biodiversity loss.",
           milestone: "Educated three generations across the globe on planetary harmony and climate stewardship.",
           wisdom: "Real success is not measured in financial gain, but in how much you helped heal what was broken."
@@ -215,6 +221,7 @@
         {
           name: "Rachel Carson",
           field: "Marine Biologist & Author of 'Silent Spring'",
+          photo: "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f4/Rachel-Carson.jpg/320px-Rachel-Carson.jpg",
           struggle: "Faced massive smear campaigns from chemical conglomerate lobbies trying to silence her science.",
           milestone: "Sparked the modern global environmental movement and the founding of the EPA.",
           wisdom: "In nature, nothing exists alone. One who contemplates its beauty finds reserves of strength."
@@ -222,6 +229,7 @@
         {
           name: "Jimmy Wales",
           field: "Founder of Wikipedia",
+          photo: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/42/Jimmy_Wales_September_2014.jpg/320px-Jimmy_Wales_September_2014.jpg",
           struggle: "Resisted billions of dollars in commercial advertising pressure to keep information neutral and free.",
           milestone: "Created the largest collaborative repository of human knowledge in history, 100% ad-free.",
           wisdom: "Imagine a world in which every single person on the planet is given free access to the sum of all human knowledge."
@@ -232,14 +240,13 @@
       key: "fox",
       icon: "🦊",
       badge: "The Luminary Arctic Fox",
-      zhBadge: "灵敏织境 · 极光白狐",
       tagline: "The Aesthetic & Narrative Alchemist",
       brief: "You transform raw ideas into magnetic masterpieces—your aesthetic instincts and storytelling flair breathe soul into numbers and machines.",
-      composition: {
-        logic: 20,
-        autonomy: 26,
-        aesthetics: 40,
-        empathy: 14
+      mbtiPoles: {
+        energy: { leftName: "Deep Focus", leftPct: 62, rightName: "Social Synergy", rightPct: 38 },
+        mind: { leftName: "Cold Logic & Data", leftPct: 35, rightName: "Empathy & Intuition", rightPct: 65 },
+        tempo: { leftName: "Agile & Autonomous", leftPct: 82, rightName: "Orderly & Structured", rightPct: 18 },
+        drive: { leftName: "Pioneering Impact", leftPct: 45, rightName: "Craft Mastery", rightPct: 55 }
       },
       allergies: ["Ugly, uninspired templates", "Formulaic corporate memos", "Emotional numbness"],
       strengths: ["Cross-sensory vision", "Turning abstract concepts into cult movements", "Spotting cultural shifts ahead of time"],
@@ -247,6 +254,7 @@
         {
           name: "Hayao Miyazaki",
           field: "Legendary Animator & Director, Studio Ghibli",
+          photo: "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e2/Hayao_Miyazaki_cropped_1_Hayao_Miyazaki_201211.jpg/320px-Hayao_Miyazaki_cropped_1_Hayao_Miyazaki_201211.jpg",
           struggle: "Constantly redrawing thousands of hand-drawn frames, refusing soulless automated shortcuts.",
           milestone: "Created cinematic worlds that earned global Academy Awards and generational emotional resonance.",
           wisdom: "Do everything by hand, even when using the computer. The soul lives in the details."
@@ -254,6 +262,7 @@
         {
           name: "Steve Jobs",
           field: "Visionary Innovator & Co-Founder, Apple",
+          photo: "https://upload.wikimedia.org/wikipedia/commons/thumb/d/dc/Steve_Jobs_Headshot_2010-CROP_%28cropped_2%29.jpg/320px-Steve_Jobs_Headshot_2010-CROP_%28cropped_2%29.jpg",
           struggle: "Ousted from his own company; criticized for obsessive perfectionism over invisible circuit boards.",
           milestone: "Fused liberal arts with technology, creating products that redefined personal communication.",
           wisdom: "Design is not just what it looks like and feels like. Design is how it works."
@@ -261,6 +270,7 @@
         {
           name: "Frida Kahlo",
           field: "Surrealist Painter & Cultural Icon",
+          photo: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/06/Frida_Kahlo%2C_by_Guillermo_Kahlo.jpg/320px-Frida_Kahlo%2C_by_Guillermo_Kahlo.jpg",
           struggle: "Survived lifelong physical trauma and chronic pain following a catastrophic bus accident.",
           milestone: "Turned acute suffering into vibrant, timeless visual art celebrating identity and authenticity.",
           wisdom: "I paint my own reality. The only thing I know is that I paint because I need to."
@@ -271,14 +281,13 @@
       key: "hawk",
       icon: "🦅",
       badge: "The Stratosphere Hawk",
-      zhBadge: "空天破晓 · 云端雄鹰",
       tagline: "The Strategic Decisive Commander",
       brief: "You cut through ambiguity with surgical speed—you see the finish line before others have even finished packing their bags.",
-      composition: {
-        logic: 38,
-        autonomy: 32,
-        aesthetics: 10,
-        empathy: 20
+      mbtiPoles: {
+        energy: { leftName: "Deep Focus", leftPct: 55, rightName: "Social Synergy", rightPct: 45 },
+        mind: { leftName: "Cold Logic & Data", leftPct: 80, rightName: "Empathy & Intuition", rightPct: 20 },
+        tempo: { leftName: "Agile & Autonomous", leftPct: 75, rightName: "Orderly & Structured", rightPct: 25 },
+        drive: { leftName: "Pioneering Impact", leftPct: 85, rightName: "Craft Mastery", rightPct: 15 }
       },
       allergies: ["Indecisiveness and chronic hesitance", "Endless planning without action", "Playing small"],
       strengths: ["High-agency decision making", "Resource optimization under constraints", "Commanding presence"],
@@ -286,6 +295,7 @@
         {
           name: "Katherine Johnson",
           field: "NASA Orbital Trajectory Mathematician",
+          photo: "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6d/Katherine_Johnson_1983.jpg/320px-Katherine_Johnson_1983.jpg",
           struggle: "Overcame racial and gender segregation in the 1960s space race to become NASA’s secret weapon.",
           milestone: "Calculated flight trajectories for Project Mercury and Apollo 11 moon landing with zero room for error.",
           wisdom: "Like what you do, and then you will do your best."
@@ -293,6 +303,7 @@
         {
           name: "Winston Churchill",
           field: "Statesman & Wartime Strategist",
+          photo: "https://upload.wikimedia.org/wikipedia/commons/thumb/b/bc/Sir_Winston_Churchill_-_1941__Statesman_1941.jpg/320px-Sir_Winston_Churchill_-_1941__Statesman_1941.jpg",
           struggle: "Suffered political isolation and military defeats early on, diagnosed with 'black dog' depressive bouts.",
           milestone: "Mobilized the free world against fascism with relentless determination and stirring rhetoric.",
           wisdom: "Success is not final, failure is not fatal: it is the courage to continue that counts."
@@ -300,6 +311,7 @@
         {
           name: "Sheryl Sandberg",
           field: "Tech Executive & Author",
+          photo: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Sheryl_Sandberg_at_World_Economic_Forum_2013_%28cropped%29.jpg/320px-Sheryl_Sandberg_at_World_Economic_Forum_2013_%28cropped%29.jpg",
           struggle: "Navigated intense male-dominated tech boardrooms and tragic personal family bereavement.",
           milestone: "Scaled global monetization at Google and Facebook, championing women's executive agency.",
           wisdom: "Option A is not available. So let's just kick the shit out of Option B."
@@ -314,15 +326,13 @@
       solo: [
         {
           title: "Autonomous Systems & Neural Architect",
-          zh: "自主系统与神经架构大师",
-          vibe: "Deep Code & Zero Meetings",
+          vibe: "Deep Code & High Focus",
           demand: "🔥 Top 1% Growth (2026-2030)",
           why: "Your obsidian logic and solo focus let you master intricate model weights and decentralized infrastructure without distraction.",
           salary: "RM 9,000 - RM 16,000 / mo"
         },
         {
           title: "Algorithmic Integrity & Threat Synthesizer",
-          zh: "算法完整性与零信任威胁解构官",
           vibe: "High Autonomy & Cyber Defense",
           demand: "🛡️ Critical National Priority",
           why: "You excel at anticipating systemic failure points before malicious actors even conceive them.",
@@ -332,7 +342,6 @@
       social: [
         {
           title: "AI Human-Agency & Ethics Strategist",
-          zh: "人机共生伦理与技术普及战略官",
           vibe: "High Empathy & Product Vision",
           demand: "✨ Global Frontier Role",
           why: "You translate cold silicon algorithms into trustworthy, humane product experiences that teams and regulators embrace.",
@@ -340,7 +349,6 @@
         },
         {
           title: "Generative Engineering Solutions Lead",
-          zh: "生成式工程前沿方案交付指挥",
           vibe: "Team Synergy & Fast Impact",
           demand: "🚀 180% Surge in Malaysia",
           why: "You rally cross-functional designers and developers to deploy cutting-edge AI directly into enterprise production.",
@@ -352,7 +360,6 @@
       solo: [
         {
           title: "Bio-Molecular Intelligence & Genomic Explorer",
-          zh: "生物分子智能与基因组学探索特使",
           vibe: "Lab Focus & Deep Science",
           demand: "🧬 High-Resilience Frontier",
           why: "You thrive deciphering intricate biological data matrices in quiet, dedicated research environments.",
@@ -360,7 +367,6 @@
         },
         {
           title: "Precision Oncology Informatics Synthesizer",
-          zh: "精准肿瘤学算法建模与临床智研员",
           vibe: "Data-Driven Life Saving",
           demand: "🩺 High Hospital Demand",
           why: "Zero bedside fatigue—you process vast patient health datasets into breakthrough predictive treatment pipelines.",
@@ -370,7 +376,6 @@
       social: [
         {
           title: "Holistic Patient Journey & Empathy Architect",
-          zh: "全周期健康共情规划与关怀架构师",
           vibe: "Deep Human Touch & Advocacy",
           demand: "❤️ Irreplaceable by AI",
           why: "Far beyond clinical tasks, you design empathetic, reassuring care journeys that cure patient anxiety and build trust.",
@@ -378,7 +383,6 @@
         },
         {
           title: "Digital Therapeutics & Community Health Navigator",
-          zh: "数字疗法与社群身心领航专家",
           vibe: "Hybrid Care & Youth Wellness",
           demand: "📈 Booming ASEAN Market",
           why: "You connect vulnerable communities with modern wellness technologies through compassionate, relatable mentorship.",
@@ -390,7 +394,6 @@
       solo: [
         {
           title: "Immersive Worldbuilding & Neural Scenographer",
-          zh: "沉浸式世界观虚境构建与分镜宗师",
           vibe: "Unreal Engine & Pure Imagination",
           demand: "🎮 Gaming & Metaverse Boom",
           why: "You build breathtaking visual universes with mathematical precision and atmospheric storytelling.",
@@ -398,7 +401,6 @@
         },
         {
           title: "Algorithmic Identity & Sensory Concept Artist",
-          zh: "算力美学概念先锋与数字感官艺术家",
           vibe: "Solitary Craft & Cult Followings",
           demand: "🎨 Global Remote Freelance",
           why: "You refuse cookie-cutter graphics, creating iconic visual languages that define next-generation digital IPs.",
@@ -408,7 +410,6 @@
       social: [
         {
           title: "Cultural Zeitgeist & Transmedia Producer",
-          zh: "跨媒介文化先锋与青年叙事制片人",
           vibe: "High Energy & Community Buzz",
           demand: "🔥 High Agency Production",
           why: "You spot emerging internet subcultures and mobilize creators to produce viral, meaningful storytelling.",
@@ -416,7 +417,6 @@
         },
         {
           title: "Human Experience & Interactive Experience Director",
-          zh: "全域数字交互与空间体验创意总监",
           vibe: "Exhibition, VR & Brand Soul",
           demand: "✨ High Corporate Prestige",
           why: "You curate experiential spaces that evoke profound emotion, making participants feel truly understood.",
@@ -428,7 +428,6 @@
       solo: [
         {
           title: "Carbon Offset Algorithmic Auditor",
-          zh: "微气象与碳汇算法审计领航员",
           vibe: "Satellite Data & ESG Math",
           demand: "🌱 UN SDG Alignment",
           why: "You combine spatial satellite imagery and climate modeling to keep green financial claims rigorous and honest.",
@@ -436,7 +435,6 @@
         },
         {
           title: "Circular Biomaterials Systems Engineer",
-          zh: "循环生物基材料研发与生命周期建模师",
           vibe: "Lab Innovation & Green Future",
           demand: "♻️ Mandatory ASEAN 2030",
           why: "You obsess over sustainable supply chains, turning agricultural byproduct waste into commercial high-tech packaging.",
@@ -446,7 +444,6 @@
       social: [
         {
           title: "Just Transition & Community Climate Strategist",
-          zh: "公正转型与社区气候韧性拓展官",
           vibe: "Grassroots & Policy Synergy",
           demand: "🌍 Global NGO & Govt Grants",
           why: "You bridge indigenous communities, clean energy startups, and policymakers to ensure no one is left behind.",
@@ -454,7 +451,6 @@
         },
         {
           title: "Corporate ESG Transformation Storyteller",
-          zh: "可持续发展战略传播与绿色叙事官",
           vibe: "C-Suite Influence & Authenticity",
           demand: "🏢 Bursa Malaysia Mandatory",
           why: "You turn complex environmental sustainability metrics into inspiring movements that energize entire workforces.",
@@ -466,7 +462,6 @@
       solo: [
         {
           title: "Forensic Capital Flow & Quant Strategist",
-          zh: "穿透式资本流向与量化套利策略官",
           vibe: "Terminal Focus & High Payout",
           demand: "📊 High Finance Standard",
           why: "You parse cross-border transaction matrices in silence, identifying alpha and hidden risk exposures.",
@@ -474,7 +469,6 @@
         },
         {
           title: "Tokenomics & Decentralized Protocol Architect",
-          zh: "通证经济学与去中心化协议构架师",
           vibe: "Web3 Math & Cryptography",
           demand: "⚡ Fintech Disruption",
           why: "You craft mathematically sound incentive mechanisms that govern global peer-to-peer liquidity safely.",
@@ -484,7 +478,6 @@
       social: [
         {
           title: "Impact Venture Capital & Founder Whisperer",
-          zh: "影响力创投合伙与青年创业陪跑导师",
           vibe: "High Network & Vision Hunting",
           demand: "💎 Elite ASEAN VC",
           why: "You spot raw, unconventional talent early and provide emotional backing and capital when no one else believes.",
@@ -492,7 +485,6 @@
         },
         {
           title: "Sustainable Wealth & Heritage Trust Strategist",
-          zh: "跨世代可持续家族智库与财富治理顾问",
           vibe: "Deep Discretion & Long Term",
           demand: "🏛️ High Private Banking",
           why: "You guide multigenerational families into high-impact social investments, safeguarding both wealth and values.",
@@ -559,57 +551,68 @@
   };
 
   // State
-  let currentStep = 0; // 0 = welcome, 1-10 = questions, 11 = calculating, 12 = results
+  let currentStep = 0;
   let answers = {};
   let calculatedTotem = null;
   let selectedDomain = "tech";
+  let globeInitialized = false;
 
   // Elements
-  const section = document.getElementById("home-intro") || document.getElementById("career-totem-experience");
-  if (!section) return;
-
   const welcomeCard = document.getElementById("totemWelcomeCard");
   const quizCard = document.getElementById("totemQuizCard");
   const resultCard = document.getElementById("totemResultCard");
+  const homeContent = document.getElementById("landingHomeContent");
+
+  // Helper to enter Immersion Mode (hides generic landing content below)
+  function enterImmersionMode() {
+    if (homeContent) homeContent.classList.add("hidden");
+  }
+
+  function exitImmersionMode() {
+    if (homeContent) homeContent.classList.remove("hidden");
+    if (welcomeCard) welcomeCard.classList.remove("hidden");
+    if (quizCard) quizCard.classList.add("hidden");
+    if (resultCard) resultCard.classList.add("hidden");
+    const container = document.getElementById("home-intro");
+    if (container) container.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+
+  window.exitTotemImmersion = exitImmersionMode;
 
   // Init Event Listeners
   window.startTotemQuiz = function () {
+    enterImmersionMode();
     if (welcomeCard) welcomeCard.classList.add("hidden");
     if (quizCard) quizCard.classList.remove("hidden");
     if (resultCard) resultCard.classList.add("hidden");
     currentStep = 1;
     answers = {};
     renderQuestion(1);
-    const container = document.getElementById("home-intro") || document.getElementById("career-totem-experience");
-    if (container) {
-      container.scrollIntoView({ behavior: "smooth", block: "start" });
-    }
+    const container = document.getElementById("home-intro");
+    if (container) container.scrollIntoView({ behavior: "smooth", block: "start" });
   };
 
   window.skipTotemQuiz = function () {
+    exitImmersionMode();
     const portals = document.getElementById("home-portals");
-    if (portals) {
-      portals.scrollIntoView({ behavior: "smooth", block: "start" });
-    }
+    if (portals) portals.scrollIntoView({ behavior: "smooth", block: "start" });
   };
 
   window.retakeTotemQuiz = function () {
+    enterImmersionMode();
     if (welcomeCard) welcomeCard.classList.add("hidden");
     if (quizCard) quizCard.classList.remove("hidden");
     if (resultCard) resultCard.classList.add("hidden");
     currentStep = 1;
     answers = {};
     renderQuestion(1);
-    const container = document.getElementById("home-intro") || document.getElementById("career-totem-experience");
-    if (container) {
-      container.scrollIntoView({ behavior: "smooth", block: "start" });
-    }
+    const container = document.getElementById("home-intro");
+    if (container) container.scrollIntoView({ behavior: "smooth", block: "start" });
   };
 
   window.recordAnswer = function (questionId, value) {
     answers[questionId] = parseInt(value, 10);
 
-    // Update active style on buttons
     const btns = document.querySelectorAll(".likert-btn");
     btns.forEach(b => {
       b.classList.toggle("active", b.getAttribute("data-val") === String(value));
@@ -657,7 +660,7 @@
         <!-- Question Prompt -->
         <div class="py-4 text-center max-w-xl mx-auto space-y-3">
           <span class="text-xs font-bold uppercase tracking-widest text-indigo-300 bg-indigo-900/40 px-3 py-1 rounded-full border border-indigo-500/30">
-            Workplace & Personality Vibe
+            Workplace Preference
           </span>
           <h3 class="text-xl sm:text-2xl font-extrabold text-white leading-snug">
             "${q.text}"
@@ -698,8 +701,8 @@
             </button>
           ` : `<div></div>`}
           
-          <button type="button" onclick="skipTotemQuiz()" class="text-slate-400 hover:text-indigo-300 font-bold transition">
-            Skip straight to Portals →
+          <button type="button" onclick="exitTotemImmersion()" class="text-slate-400 hover:text-indigo-300 font-bold transition">
+            Exit to Overview →
           </button>
         </div>
       </div>
@@ -717,7 +720,7 @@
         </div>
         <div class="space-y-2">
           <h3 class="text-xl font-extrabold text-white">Synthesizing Your Authentic Totem DNA...</h3>
-          <p class="text-xs text-slate-400">Calibrating 10 psychological vector coordinates across global workforce models</p>
+          <p class="text-xs text-slate-400">Calibrating psychological vector coordinates across global career models</p>
         </div>
         <div class="w-48 mx-auto bg-white/10 h-1.5 rounded-full overflow-hidden">
           <div class="totem-shimmer h-full bg-teal-400 rounded-full w-full"></div>
@@ -727,87 +730,93 @@
 
     setTimeout(() => {
       calculateResult();
-    }, 1400);
+    }, 1200);
   }
 
   function calculateResult() {
-    let soloScore = 0;
+    let focusScore = 0;
     let logicScore = 0;
-    let empathyScore = 0;
-    let autonomyScore = 0;
-    let impactScore = 0;
+    let tempoScore = 0;
+    let driveScore = 0;
 
     QUESTIONS.forEach(q => {
       const val = answers[q.id] || 0;
-      if (q.dimension === "solo_vs_social") soloScore += val * q.weight;
-      if (q.dimension === "boundary_vs_bonding") soloScore += val * q.weight;
-      if (q.dimension === "deep_vs_interactive") { soloScore += val * q.weight; logicScore += val * q.weight; }
-      if (q.dimension === "autonomous_vs_structured") autonomyScore += val * q.weight;
-      if (q.dimension === "empathy_vs_objective") empathyScore -= val * q.weight; // negative = high empathy
-      if (q.dimension === "truth_vs_harmony") logicScore += val * q.weight;
-      if (q.dimension === "impact_vs_prestige") impactScore += val * q.weight;
-      if (q.dimension === "introvert_recharge") soloScore += val * q.weight;
+      if (q.dimension === "focus_energy") focusScore += val * q.weight;
+      if (q.dimension === "mind_logic") logicScore += val * q.weight;
+      if (q.dimension === "execution_tempo") tempoScore += val * q.weight;
+      if (q.dimension === "mission_drive") driveScore += val * q.weight;
     });
 
     let chosenTotem = "owl";
 
-    if (empathyScore > 2 && soloScore < 1) {
+    if (logicScore < -1 && focusScore < 0) {
       chosenTotem = "retriever";
-    } else if (autonomyScore > 2 && soloScore > 2) {
+    } else if (tempoScore > 2 && focusScore > 1) {
       chosenTotem = "leopard";
-    } else if (impactScore > 2 && empathyScore > 0) {
+    } else if (driveScore > 2.5 && logicScore < 1) {
       chosenTotem = "whale";
-    } else if (logicScore > 2 && soloScore > 1) {
+    } else if (logicScore > 2 && focusScore > 1) {
       chosenTotem = "owl";
-    } else if (logicScore < 0 && autonomyScore > 0) {
+    } else if (logicScore < 0 && tempoScore > 0) {
       chosenTotem = "fox";
     } else {
       chosenTotem = "hawk";
     }
 
-    calculatedTotem = TOTEMS[chosenTotem] || TOTEMS.owl;
-    renderResult();
+    calculatedTotem = TOTEMS[chosenTotem] || TOTEMS.hawk;
+    renderTotemOverview();
   }
 
-  function renderResult() {
+  // View 1: Totem Overview & Grand Reveal
+  function renderTotemOverview() {
+    enterImmersionMode();
     if (welcomeCard) welcomeCard.classList.add("hidden");
-    quizCard.classList.add("hidden");
-    resultCard.classList.remove("hidden");
+    if (quizCard) quizCard.classList.add("hidden");
+    if (resultCard) resultCard.classList.remove("hidden");
 
     const t = calculatedTotem;
-    const isSolo = (answers[1] || 0) + (answers[3] || 0) + (answers[10] || 0) >= 0;
 
     resultCard.innerHTML = `
-      <div class="space-y-12 fade-in">
-        <!-- 1. The Instant Identity Reveal -->
+      <div class="space-y-8 fade-in">
+        
+        <!-- Breadcrumb & Top Bar -->
+        <div class="flex items-center justify-between text-xs text-slate-400 border-b border-white/10 pb-3">
+          <div class="flex items-center gap-2">
+            <span class="text-teal-400 font-bold">Personalized Discovery</span>
+            <span>•</span>
+            <span class="text-white font-bold">${t.badge}</span>
+          </div>
+          <button type="button" onclick="exitTotemImmersion()" class="text-slate-400 hover:text-white font-bold transition">
+            Exit to Overview ✕
+          </button>
+        </div>
+
+        <!-- Grand Reveal Card -->
         <div class="totem-badge-card p-6 sm:p-10 relative overflow-hidden border border-white/20">
           <div class="grid md:grid-cols-12 gap-8 items-center">
             
-            <div class="md:col-span-4 text-center space-y-4">
+            <!-- Left: Avatar & Single-line Title -->
+            <div class="md:col-span-5 text-center space-y-4">
               <div class="relative w-36 h-36 mx-auto grid place-items-center rounded-3xl bg-gradient-to-br from-indigo-500/20 to-teal-500/20 border border-white/20 shadow-2xl backdrop-blur-md">
                 <span class="text-6xl filter drop-shadow-lg">${t.icon}</span>
-                <span class="absolute -bottom-2 -right-2 px-2.5 py-0.5 rounded-full bg-teal-500 text-slate-900 text-[10px] font-black uppercase">
+                <span class="absolute -bottom-2 -right-2 px-2.5 py-0.5 rounded-full bg-teal-500 text-slate-900 text-[10px] font-black uppercase tracking-wider">
                   Verified Match
                 </span>
               </div>
               <div>
-                <span class="text-xs font-bold tracking-wider text-teal-400 uppercase">${t.zhBadge}</span>
-                <h2 class="text-2xl sm:text-3xl font-black text-white mt-1">${t.badge}</h2>
-                <div class="text-xs text-indigo-300 font-bold mt-0.5">${t.tagline}</div>
+                <h2 class="text-2xl lg:text-3xl font-black text-white whitespace-nowrap tracking-tight">${t.badge}</h2>
+                <div class="text-xs text-indigo-300 font-bold mt-1">${t.tagline}</div>
               </div>
             </div>
 
-            <div class="md:col-span-8 space-y-5 border-t md:border-t-0 md:border-l border-white/10 md:pl-8 pt-4 md:pt-0">
-              <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 text-teal-300 text-xs font-bold">
-                <span>✨</span><span>Psychological Trait Validation</span>
-              </div>
-              
+            <!-- Right: Empathetic Brief & Superpowers -->
+            <div class="md:col-span-7 space-y-5 border-t md:border-t-0 md:border-l border-white/10 md:pl-8 pt-4 md:pt-0">
               <p class="text-base sm:text-lg text-slate-200 font-medium leading-relaxed">
                 "${t.brief}"
               </p>
 
               <!-- Superpowers & Allergies -->
-              <div class="grid sm:grid-cols-2 gap-3 text-xs pt-2">
+              <div class="grid sm:grid-cols-2 gap-3 text-xs pt-1">
                 <div class="p-3.5 rounded-2xl bg-white/5 border border-emerald-500/30 space-y-1.5">
                   <div class="font-extrabold text-emerald-300 flex items-center gap-1.5">
                     <span>⚡</span> Authentic Superpowers
@@ -827,13 +836,11 @@
                 </div>
               </div>
 
-              <!-- Action Bar -->
-              <div class="flex flex-wrap items-center gap-3 pt-2">
-                <button type="button" onclick="document.getElementById('deepDnaSection').scrollIntoView({behavior: 'smooth'})" class="btn btn-primary !py-2.5 !px-5 !text-xs font-black shadow-lg shadow-indigo-600/30">
-                  🧬 Explore Deep DNA, Role Models & Careers ↓
-                </button>
-                <button type="button" onclick="retakeTotemQuiz()" class="btn btn-soft !py-2.5 !px-4 !text-xs font-bold border border-white/20 text-slate-300 hover:text-white">
-                  🔄 Retake
+              <!-- Retake Button (Compact, sleek dark-glass) -->
+              <div class="flex items-center gap-3 pt-2">
+                <button type="button" onclick="retakeTotemQuiz()" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-300 hover:text-white bg-white/10 hover:bg-white/15 border border-white/20 transition shadow-xs">
+                  <span>🔄</span>
+                  <span>Retake</span>
                 </button>
               </div>
 
@@ -841,208 +848,276 @@
           </div>
         </div>
 
-        <!-- 2. Deep DNA Breakdown & Role Models -->
-        <div id="deepDnaSection" class="space-y-8 scroll-mt-20">
+        <!-- Gateways to Separated Sections (Progressive Disclosure) -->
+        <div class="grid sm:grid-cols-3 gap-4 pt-2">
           
-          <!-- Role Models Section -->
-          <div class="space-y-4">
+          <button type="button" onclick="showDeepProfileView()" class="totem-badge-card p-5 text-left hover:border-indigo-400/50 hover:bg-white/10 transition group space-y-2">
             <div class="flex items-center justify-between">
-              <div>
-                <h3 class="text-lg sm:text-xl font-extrabold text-white flex items-center gap-2">
-                  <span>⭐</span> Who Walks Your Path? (Iconic Role Models)
-                </h3>
-                <p class="text-xs text-slate-400 mt-0.5">Legends who carried your exact temperament, conquered self-doubt, and changed the world</p>
-              </div>
+              <span class="text-2xl">🧬</span>
+              <span class="text-xs text-indigo-400 group-hover:translate-x-1 transition font-bold">Step In →</span>
             </div>
-
-            <div class="grid md:grid-cols-3 gap-4">
-              ${t.roleModels.map(rm => `
-                <div class="role-model-card space-y-3 flex flex-col justify-between">
-                  <div class="space-y-2">
-                    <div class="flex items-center justify-between">
-                      <h4 class="font-black text-sm text-white">${rm.name}</h4>
-                      <span class="chip chip-indigo !text-[9px] font-bold">DNA Match</span>
-                    </div>
-                    <div class="text-[11px] text-teal-400 font-bold">${rm.field}</div>
-                    
-                    <div class="p-2.5 rounded-xl bg-white/5 border border-white/5 text-[11px] text-slate-300 space-y-1">
-                      <span class="text-[10px] uppercase font-bold text-rose-300 block">The Early Grind & Struggle:</span>
-                      ${rm.struggle}
-                    </div>
-
-                    <div class="text-[11px] text-slate-200">
-                      <b class="text-indigo-300">Milestone:</b> ${rm.milestone}
-                    </div>
-                  </div>
-
-                  <div class="pt-2 border-t border-white/10 text-[10px] italic text-slate-400">
-                    "${rm.wisdom}"
-                  </div>
-                </div>
-              `).join('')}
-            </div>
-          </div>
-
-          <!-- Composition Percentages -->
-          <div class="totem-badge-card p-6 sm:p-8 space-y-5">
             <div>
-              <h3 class="text-lg font-extrabold text-white flex items-center gap-2">
-                <span>🧪</span> Your "Career Ingredient" Composition
-              </h3>
-              <p class="text-xs text-slate-400">Quantitative psychological vector breakdown</p>
+              <h4 class="font-bold text-white text-sm">Deep Profile & Role Models</h4>
+              <p class="text-[11px] text-slate-400 mt-0.5">Explore your MBTI dual-pole spectrum & iconic figures</p>
             </div>
+          </button>
 
-            <div class="grid sm:grid-cols-2 gap-6 text-xs">
-              <div class="space-y-2">
-                <div class="flex justify-between font-bold">
-                  <span class="text-slate-300">Cold Logic & Systems Thinking</span>
-                  <span class="text-indigo-400 font-mono">${t.composition.logic}%</span>
-                </div>
-                <div class="composition-bar-track">
-                  <div class="composition-bar-fill bg-indigo-500" style="width: ${t.composition.logic}%"></div>
-                </div>
-              </div>
-
-              <div class="space-y-2">
-                <div class="flex justify-between font-bold">
-                  <span class="text-slate-300">Autonomous Frontier Exploration</span>
-                  <span class="text-teal-400 font-mono">${t.composition.autonomy}%</span>
-                </div>
-                <div class="composition-bar-track">
-                  <div class="composition-bar-fill bg-teal-400" style="width: ${t.composition.autonomy}%"></div>
-                </div>
-              </div>
-
-              <div class="space-y-2">
-                <div class="flex justify-between font-bold">
-                  <span class="text-slate-300">Aesthetic Craftsmanship & Detail</span>
-                  <span class="text-purple-400 font-mono">${t.composition.aesthetics}%</span>
-                </div>
-                <div class="composition-bar-track">
-                  <div class="composition-bar-fill bg-purple-400" style="width: ${t.composition.aesthetics}%"></div>
-                </div>
-              </div>
-
-              <div class="space-y-2">
-                <div class="flex justify-between font-bold">
-                  <span class="text-slate-300">Human Empathy & Psychological Safety</span>
-                  <span class="text-emerald-400 font-mono">${t.composition.empathy}%</span>
-                </div>
-                <div class="composition-bar-track">
-                  <div class="composition-bar-fill bg-emerald-400" style="width: ${t.composition.empathy}%"></div>
-                </div>
-              </div>
+          <button type="button" onclick="showElevatedCareersView()" class="totem-badge-card p-5 text-left hover:border-teal-400/50 hover:bg-white/10 transition group space-y-2">
+            <div class="flex items-center justify-between">
+              <span class="text-2xl">🎯</span>
+              <span class="text-xs text-teal-400 group-hover:translate-x-1 transition font-bold">Step In →</span>
             </div>
-          </div>
-
-          <!-- 3. Domain Sector Picker & Elevated Job Recommendations -->
-          <div class="space-y-5 pt-4">
-            <div class="flex flex-wrap items-center justify-between gap-3">
-              <div>
-                <h3 class="text-lg sm:text-xl font-extrabold text-white flex items-center gap-2">
-                  <span>🎯</span> Elevated Careers Tailored to Your Totem
-                </h3>
-                <p class="text-xs text-slate-400">Choose your field of study or passion to generate future-proof career paths:</p>
-              </div>
-
-              <!-- Domain Pills -->
-              <div class="flex flex-wrap items-center gap-2" id="domainPicker">
-                <button type="button" class="domain-pill ${selectedDomain === 'tech' ? 'active' : ''}" onclick="selectDomain('tech')">💻 AI & Software</button>
-                <button type="button" class="domain-pill ${selectedDomain === 'health' ? 'active' : ''}" onclick="selectDomain('health')">🏥 Healthcare & Bio</button>
-                <button type="button" class="domain-pill ${selectedDomain === 'creative' ? 'active' : ''}" onclick="selectDomain('creative')">🎨 Creative & VR</button>
-                <button type="button" class="domain-pill ${selectedDomain === 'green' ? 'active' : ''}" onclick="selectDomain('green')">🌿 ESG & Green</button>
-                <button type="button" class="domain-pill ${selectedDomain === 'finance' ? 'active' : ''}" onclick="selectDomain('finance')">📈 Quant Finance</button>
-              </div>
+            <div>
+              <h4 class="font-bold text-white text-sm">Elevated Careers Portal</h4>
+              <p class="text-[11px] text-slate-400 mt-0.5">Custom job titles aligned with your temperament</p>
             </div>
+          </button>
 
-            <!-- Elevated Job Container -->
-            <div id="elevatedJobDisplay" class="grid sm:grid-cols-2 gap-4">
-              <!-- Injected by renderElevatedJobs -->
+          <button type="button" onclick="openGlobalAtlas()" class="totem-badge-card p-5 text-left hover:border-sky-400/50 hover:bg-white/10 transition group space-y-2">
+            <div class="flex items-center justify-between">
+              <span class="text-2xl">🌍</span>
+              <span class="text-xs text-sky-400 group-hover:translate-x-1 transition font-bold">Open Atlas →</span>
             </div>
-          </div>
-
-          <!-- 4. "Already Have a Dream Job in Mind?" Freeform Box -->
-          <div class="totem-badge-card p-6 sm:p-7 space-y-4 border border-teal-500/30">
-            <div class="flex items-center gap-3">
-              <span class="text-2xl">💡</span>
-              <div>
-                <h4 class="text-sm font-extrabold text-white">Have a specific dream job in mind?</h4>
-                <p class="text-[11px] text-slate-400">Type any title to let CareerLens AI evaluate how your Totem DNA will perform:</p>
-              </div>
+            <div>
+              <h4 class="font-bold text-white text-sm">Global Work-Life Atlas</h4>
+              <p class="text-[11px] text-slate-400 mt-0.5">Spin the 3D globe to see real daily routines in KL, Tokyo, Amsterdam</p>
             </div>
-
-            <div class="flex flex-wrap sm:flex-nowrap gap-2.5">
-              <input type="text" id="customJobInput" class="input !bg-slate-900/80 !border-white/20 !text-white !text-xs !py-3 flex-1" placeholder="e.g. Game Concept Artist, Renewable Energy Trader, Neuroscientist..." onkeydown="if(event.key==='Enter')analyzeCustomJob()" />
-              <button type="button" onclick="analyzeCustomJob()" class="btn btn-primary !py-3 !px-6 !text-xs font-bold shrink-0">
-                ⚡ Check Fit
-              </button>
-            </div>
-
-            <div id="customJobFeedback" class="hidden p-4 rounded-2xl bg-white/5 border border-white/10 text-xs space-y-2">
-              <!-- Custom feedback injected here -->
-            </div>
-          </div>
-
-          <!-- 5. 3D Global Work-Life Globe & City Routine -->
-          <div class="totem-badge-card p-6 sm:p-8 space-y-6">
-            <div class="flex flex-wrap items-center justify-between gap-4">
-              <div>
-                <div class="chip chip-indigo !text-[10px] font-bold mb-1">🌍 Global CareerLens Exploration</div>
-                <h3 class="text-lg sm:text-xl font-extrabold text-white">How Do People in Your Field Live Around the World?</h3>
-                <p class="text-xs text-slate-400">Click a city node on the globe to explore real work-life balance, salaries, and daily routines:</p>
-              </div>
-
-              <!-- City Buttons -->
-              <div class="flex flex-wrap gap-2">
-                <button type="button" onclick="showCityCard('kl')" class="btn btn-soft !py-1.5 !px-3 !text-xs font-bold border border-white/20 text-slate-200">🇲🇾 Kuala Lumpur</button>
-                <button type="button" onclick="showCityCard('amsterdam')" class="btn btn-soft !py-1.5 !px-3 !text-xs font-bold border border-white/20 text-slate-200">🇳🇱 Amsterdam</button>
-                <button type="button" onclick="showCityCard('tokyo')" class="btn btn-soft !py-1.5 !px-3 !text-xs font-bold border border-white/20 text-slate-200">🇯🇵 Tokyo</button>
-                <button type="button" onclick="showCityCard('london')" class="btn btn-soft !py-1.5 !px-3 !text-xs font-bold border border-white/20 text-slate-200">🇬🇧 London</button>
-              </div>
-            </div>
-
-            <!-- Globe Visualizer & City Display -->
-            <div class="grid lg:grid-cols-12 gap-6 items-stretch">
-              <div class="lg:col-span-7 relative">
-                <div id="totemGlobeContainer" class="flex items-center justify-center">
-                  <!-- Lightweight Canvas Globe -->
-                  <canvas id="globeCanvas" class="w-full h-full cursor-grab"></canvas>
-                  <div class="absolute bottom-3 left-4 text-[10px] text-slate-400 font-mono">
-                    ✦ Interactive 3D Sphere · Drag to rotate
-                  </div>
-                </div>
-              </div>
-
-              <div class="lg:col-span-5" id="cityDetailsContainer">
-                <!-- Injected city card -->
-              </div>
-            </div>
-          </div>
-
-          <!-- 6. Final Call to Action -->
-          <div class="p-8 rounded-3xl bg-gradient-to-r from-indigo-900/60 via-purple-900/60 to-slate-900/80 border border-white/20 text-center space-y-4">
-            <h3 class="text-xl sm:text-2xl font-extrabold text-white">Ready to Turn Your Totem DNA into Real Opportunities?</h3>
-            <p class="text-xs sm:text-sm text-slate-300 max-w-xl mx-auto">
-              Your profile traits are already pre-calibrated. Launch the Talent Portal to search nearby jobs, take mini-challenges, or screen with verified employers.
-            </p>
-            <div class="flex flex-wrap items-center justify-center gap-3 pt-2">
-              <button type="button" onclick="openAuth('register', 'job_seeker')" class="btn btn-primary !py-3.5 !px-8 !text-sm font-black shadow-xl shadow-indigo-600/30">
-                Launch My Talent Portal →
-              </button>
-              <button type="button" onclick="openAuth('login')" class="btn btn-soft !py-3.5 !px-6 !text-sm font-bold border border-white/20 text-white">
-                Sign In Directly
-              </button>
-            </div>
-          </div>
+          </button>
 
         </div>
+
+      </div>
+    `;
+
+    const intro = document.getElementById("home-intro");
+    if (intro) intro.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+
+  // View 2: Deep Profile & Role Models View
+  window.showDeepProfileView = function () {
+    const t = calculatedTotem;
+
+    resultCard.innerHTML = `
+      <div class="space-y-8 fade-in">
+        
+        <!-- Breadcrumb Navigation -->
+        <div class="flex items-center justify-between text-xs text-slate-400 border-b border-white/10 pb-3">
+          <button type="button" onclick="renderTotemOverview()" class="text-indigo-400 hover:text-white font-bold flex items-center gap-1 transition">
+            ← Back to Totem Summary
+          </button>
+          <button type="button" onclick="showElevatedCareersView()" class="text-teal-400 hover:text-teal-300 font-bold flex items-center gap-1 transition">
+            Continue to Matched Careers →
+          </button>
+        </div>
+
+        <!-- Role Models Section (Heading: Who Walks Your Path?, No "(Iconic Role Models)", No "DNA Match") -->
+        <div class="space-y-4">
+          <div>
+            <h3 class="text-xl sm:text-2xl font-black text-white flex items-center gap-2">
+              <span>⭐</span> Who Walks Your Path?
+            </h3>
+            <p class="text-xs text-slate-400 mt-0.5">Legends who carried your exact temperament, conquered self-doubt, and changed the world</p>
+          </div>
+
+          <div class="grid md:grid-cols-3 gap-4">
+            ${t.roleModels.map(rm => `
+              <div class="role-model-card space-y-3.5 flex flex-col justify-between">
+                <div class="space-y-3">
+                  
+                  <!-- Portrait Avatar + Name & Field -->
+                  <div class="flex items-center gap-3">
+                    <img src="${rm.photo}" alt="${rm.name}" class="role-model-avatar" onerror="this.src='/static/brand/careerlens_logo_icon.svg'" />
+                    <div class="min-w-0">
+                      <h4 class="font-black text-sm text-white truncate">${rm.name}</h4>
+                      <div class="text-[11px] text-teal-400 font-bold line-clamp-1">${rm.field}</div>
+                    </div>
+                  </div>
+                  
+                  <div class="p-3 rounded-xl bg-white/5 border border-white/5 text-[11px] text-slate-300 space-y-1">
+                    <span class="text-[10px] uppercase font-bold text-rose-300 block tracking-wider">The Early Grind & Struggle:</span>
+                    ${rm.struggle}
+                  </div>
+
+                  <div class="text-[11px] text-slate-200">
+                    <b class="text-indigo-300">Milestone:</b> ${rm.milestone}
+                  </div>
+                </div>
+
+                <div class="pt-2 border-t border-white/10 text-[10px] italic text-slate-400">
+                  "${rm.wisdom}"
+                </div>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+
+        <!-- MBTI-Style Dual-Pole Personality Spectrum -->
+        <div class="totem-badge-card p-6 sm:p-8 space-y-6">
+          <div>
+            <h3 class="text-lg font-extrabold text-white flex items-center gap-2">
+              <span>🧪</span> Your Personality Spectrum Breakdown
+            </h3>
+            <p class="text-xs text-slate-400 mt-0.5">Classic dual-pole continuum calibrated from your questionnaire vectors</p>
+          </div>
+
+          <div class="space-y-3.5">
+            
+            <!-- Pole 1: Energy & Focus -->
+            <div class="mbti-spectrum-row">
+              <div class="mbti-pole-labels">
+                <span class="${t.mbtiPoles.energy.leftPct >= 50 ? 'text-indigo-300 font-bold' : 'text-slate-400'}">${t.mbtiPoles.energy.leftName} (${t.mbtiPoles.energy.leftPct}%)</span>
+                <span class="${t.mbtiPoles.energy.rightPct > 50 ? 'text-teal-300 font-bold' : 'text-slate-400'}">(${t.mbtiPoles.energy.rightPct}%) ${t.mbtiPoles.energy.rightName}</span>
+              </div>
+              <div class="mbti-spectrum-track">
+                <div class="mbti-pole-left-fill" style="width: ${t.mbtiPoles.energy.leftPct}%"></div>
+                <div class="mbti-pole-right-fill" style="width: ${t.mbtiPoles.energy.rightPct}%"></div>
+              </div>
+            </div>
+
+            <!-- Pole 2: Mind & Processing -->
+            <div class="mbti-spectrum-row">
+              <div class="mbti-pole-labels">
+                <span class="${t.mbtiPoles.mind.leftPct >= 50 ? 'text-indigo-300 font-bold' : 'text-slate-400'}">${t.mbtiPoles.mind.leftName} (${t.mbtiPoles.mind.leftPct}%)</span>
+                <span class="${t.mbtiPoles.mind.rightPct > 50 ? 'text-teal-300 font-bold' : 'text-slate-400'}">(${t.mbtiPoles.mind.rightPct}%) ${t.mbtiPoles.mind.rightName}</span>
+              </div>
+              <div class="mbti-spectrum-track">
+                <div class="mbti-pole-left-fill" style="width: ${t.mbtiPoles.mind.leftPct}%"></div>
+                <div class="mbti-pole-right-fill" style="width: ${t.mbtiPoles.mind.rightPct}%"></div>
+              </div>
+            </div>
+
+            <!-- Pole 3: Execution Tempo -->
+            <div class="mbti-spectrum-row">
+              <div class="mbti-pole-labels">
+                <span class="${t.mbtiPoles.tempo.leftPct >= 50 ? 'text-indigo-300 font-bold' : 'text-slate-400'}">${t.mbtiPoles.tempo.leftName} (${t.mbtiPoles.tempo.leftPct}%)</span>
+                <span class="${t.mbtiPoles.tempo.rightPct > 50 ? 'text-teal-300 font-bold' : 'text-slate-400'}">(${t.mbtiPoles.tempo.rightPct}%) ${t.mbtiPoles.tempo.rightName}</span>
+              </div>
+              <div class="mbti-spectrum-track">
+                <div class="mbti-pole-left-fill" style="width: ${t.mbtiPoles.tempo.leftPct}%"></div>
+                <div class="mbti-pole-right-fill" style="width: ${t.mbtiPoles.tempo.rightPct}%"></div>
+              </div>
+            </div>
+
+            <!-- Pole 4: Mission Drive -->
+            <div class="mbti-spectrum-row">
+              <div class="mbti-pole-labels">
+                <span class="${t.mbtiPoles.drive.leftPct >= 50 ? 'text-indigo-300 font-bold' : 'text-slate-400'}">${t.mbtiPoles.drive.leftName} (${t.mbtiPoles.drive.leftPct}%)</span>
+                <span class="${t.mbtiPoles.drive.rightPct > 50 ? 'text-teal-300 font-bold' : 'text-slate-400'}">(${t.mbtiPoles.drive.rightPct}%) ${t.mbtiPoles.drive.rightName}</span>
+              </div>
+              <div class="mbti-spectrum-track">
+                <div class="mbti-pole-left-fill" style="width: ${t.mbtiPoles.drive.leftPct}%"></div>
+                <div class="mbti-pole-right-fill" style="width: ${t.mbtiPoles.drive.rightPct}%"></div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Next Action Button -->
+        <div class="flex justify-between items-center pt-2">
+          <button type="button" onclick="renderTotemOverview()" class="text-xs font-bold text-slate-400 hover:text-white transition">
+            ← Back to Overview
+          </button>
+          <button type="button" onclick="showElevatedCareersView()" class="totem-btn-primary">
+            <span>Explore Matched Careers ➔</span>
+          </button>
+        </div>
+
+      </div>
+    `;
+
+    const intro = document.getElementById("home-intro");
+    if (intro) intro.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
+
+  // View 3: Elevated Careers Portal
+  window.showElevatedCareersView = function () {
+    const t = calculatedTotem;
+
+    resultCard.innerHTML = `
+      <div class="space-y-8 fade-in">
+        
+        <!-- Breadcrumb Navigation -->
+        <div class="flex items-center justify-between text-xs text-slate-400 border-b border-white/10 pb-3">
+          <button type="button" onclick="showDeepProfileView()" class="text-indigo-400 hover:text-white font-bold flex items-center gap-1 transition">
+            ← Back to Deep Profile
+          </button>
+          <button type="button" onclick="renderTotemOverview()" class="text-slate-400 hover:text-white font-bold transition">
+            Totem Summary
+          </button>
+        </div>
+
+        <!-- Header & Domain Filter -->
+        <div class="space-y-5">
+          <div class="flex flex-wrap items-center justify-between gap-3">
+            <div>
+              <h3 class="text-xl sm:text-2xl font-black text-white flex items-center gap-2">
+                <span>🎯</span> Elevated Careers Tailored to ${t.badge}
+              </h3>
+              <p class="text-xs text-slate-400 mt-0.5">Select an industry to generate distinctive, high-resonance roles:</p>
+            </div>
+
+            <!-- Domain Pills -->
+            <div class="flex flex-wrap items-center gap-2" id="domainPicker">
+              <button type="button" class="domain-pill ${selectedDomain === 'tech' ? 'active' : ''}" onclick="selectDomain('tech')">💻 AI & Software</button>
+              <button type="button" class="domain-pill ${selectedDomain === 'health' ? 'active' : ''}" onclick="selectDomain('health')">🏥 Healthcare & Bio</button>
+              <button type="button" class="domain-pill ${selectedDomain === 'creative' ? 'active' : ''}" onclick="selectDomain('creative')">🎨 Creative & VR</button>
+              <button type="button" class="domain-pill ${selectedDomain === 'green' ? 'active' : ''}" onclick="selectDomain('green')">🌿 ESG & Green</button>
+              <button type="button" class="domain-pill ${selectedDomain === 'finance' ? 'active' : ''}" onclick="selectDomain('finance')">📈 Quant Finance</button>
+            </div>
+          </div>
+
+          <!-- Elevated Job Cards Display -->
+          <div id="elevatedJobDisplay" class="grid sm:grid-cols-2 gap-4">
+            <!-- Injected by renderElevatedJobs -->
+          </div>
+        </div>
+
+        <!-- "Have a Dream Job in Mind?" Custom Input -->
+        <div class="totem-badge-card p-6 sm:p-7 space-y-4 border border-teal-500/30">
+          <div class="flex items-center gap-3">
+            <span class="text-2xl">💡</span>
+            <div>
+              <h4 class="text-sm font-extrabold text-white">Have a specific dream job in mind?</h4>
+              <p class="text-[11px] text-slate-400">Type any title to let CareerLens AI evaluate how your Totem DNA will perform:</p>
+            </div>
+          </div>
+
+          <div class="flex flex-wrap sm:flex-nowrap gap-2.5">
+            <input type="text" id="customJobInput" class="input !bg-slate-900/80 !border-white/20 !text-white !text-xs !py-3 flex-1" placeholder="e.g. Game Concept Artist, Renewable Energy Trader, Neuroscientist..." onkeydown="if(event.key==='Enter')analyzeCustomJob()" />
+            <button type="button" onclick="analyzeCustomJob()" class="totem-btn-primary !py-2.5 !px-5 !text-xs font-bold shrink-0">
+              ⚡ Check Fit
+            </button>
+          </div>
+
+          <div id="customJobFeedback" class="hidden p-4 rounded-2xl bg-white/5 border border-white/10 text-xs space-y-2">
+            <!-- Custom feedback injected here -->
+          </div>
+        </div>
+
+        <!-- Direct Launch into Talent Portal -->
+        <div class="p-8 rounded-3xl bg-gradient-to-r from-indigo-950/80 via-purple-950/70 to-slate-900 border border-white/20 text-center space-y-4">
+          <h3 class="text-xl sm:text-2xl font-extrabold text-white">Ready to Step into Real Opportunities?</h3>
+          <p class="text-xs sm:text-sm text-slate-300 max-w-xl mx-auto">
+            Your preferences have been pre-calibrated. Enter the Talent Portal to search nearby jobs with transparent match scores and SDG micro-courses.
+          </p>
+          <div class="flex flex-wrap items-center justify-center gap-3 pt-2">
+            <button type="button" onclick="openAuth('register', 'job_seeker')" class="totem-btn-primary !py-3.5 !px-8 text-sm">
+              Launch Talent Portal →
+            </button>
+            <button type="button" onclick="openGlobalAtlas()" class="totem-btn-secondary !py-3.5 !px-6 text-sm">
+              🌍 Open 3D Global Atlas
+            </button>
+          </div>
+        </div>
+
       </div>
     `;
 
     renderElevatedJobs(selectedDomain);
-    showCityCard("kl");
-    initGlobeVisual();
-  }
+    const intro = document.getElementById("home-intro");
+    if (intro) intro.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
 
   window.selectDomain = function (domain) {
     selectedDomain = domain;
@@ -1054,7 +1129,6 @@
     const container = document.getElementById("elevatedJobDisplay");
     if (!container) return;
 
-    // Loading shimmer
     container.innerHTML = `
       <div class="sm:col-span-2 py-8 text-center text-xs text-slate-400 space-y-2">
         <span class="inline-block animate-spin text-lg">🔮</span>
@@ -1064,7 +1138,7 @@
 
     setTimeout(() => {
       renderElevatedJobs(domain);
-    }, 400);
+    }, 350);
   };
 
   function renderElevatedJobs(domain) {
@@ -1083,7 +1157,6 @@
           </div>
           <div>
             <h4 class="text-base font-black text-white leading-tight">${r.title}</h4>
-            <div class="text-[11px] text-indigo-300 font-bold mt-0.5">${r.zh}</div>
           </div>
           <p class="text-xs text-slate-300 leading-relaxed pt-1">
             ${r.why}
@@ -1115,7 +1188,7 @@
     feedback.innerHTML = `
       <div class="py-3 text-center text-xs text-slate-400 space-y-2">
         <span class="inline-block animate-spin text-base">⚙️</span>
-        <div>Cross-referencing <b>"${val}"</b> with ${calculatedTotem.badge} competency radar...</div>
+        <div>Cross-referencing <b>"${val}"</b> with ${calculatedTotem ? calculatedTotem.badge : 'Career Totem'} competency radar...</div>
       </div>
     `;
 
@@ -1124,7 +1197,7 @@
         <div class="flex items-start justify-between gap-3 border-b border-white/10 pb-3">
           <div>
             <h5 class="text-sm font-extrabold text-white">${val}</h5>
-            <div class="text-[10px] text-slate-400">Evaluated against ${calculatedTotem.badge} DNA</div>
+            <div class="text-[10px] text-slate-400">Evaluated against your authentic traits</div>
           </div>
           <span class="chip chip-emerald !text-xs font-black">94% Compatibility</span>
         </div>
@@ -1139,7 +1212,27 @@
           </div>
         </div>
       `;
-    }, 700);
+    }, 600);
+  };
+
+  // View 4: Dedicated Global Work-Life Atlas Modal
+  window.openGlobalAtlas = function () {
+    const modal = document.getElementById("globalAtlasModal");
+    if (modal) {
+      modal.classList.remove("hidden");
+      showCityCard("kl");
+      if (!globeInitialized) {
+        setTimeout(() => {
+          initGlobeVisual();
+          globeInitialized = true;
+        }, 100);
+      }
+    }
+  };
+
+  window.closeGlobalAtlas = function () {
+    const modal = document.getElementById("globalAtlasModal");
+    if (modal) modal.classList.add("hidden");
   };
 
   window.showCityCard = function (cityKey) {
@@ -1182,7 +1275,7 @@
           <div class="flex gap-1.5 text-[10px] text-slate-400">
             ${c.tags.map(t => `<span class="bg-white/5 px-2 py-0.5 rounded-md border border-white/5">${t}</span>`).join('')}
           </div>
-          <button type="button" onclick="openAuth('register', 'job_seeker')" class="btn btn-soft !py-1.5 !px-3 !text-[11px] font-bold border border-teal-500/30 text-teal-300 hover:text-white">
+          <button type="button" onclick="closeGlobalAtlas(); openAuth('register', 'job_seeker');" class="totem-btn-primary !py-1.5 !px-3 !text-[11px] font-bold">
             Find Similar Roles →
           </button>
         </div>
@@ -1206,7 +1299,6 @@
     const centerX = width / 2;
     const centerY = height / 2;
 
-    // Generate wireframe latitude / longitude points
     const points = [];
     const numPoints = 280;
     for (let i = 0; i < numPoints; i++) {
@@ -1219,7 +1311,6 @@
       });
     }
 
-    // Specific City Points
     const cities = [
       { name: "KL", key: "kl", lat: 3.139, lon: 101.686 },
       { name: "Tokyo", key: "tokyo", lat: 35.676, lon: 139.650 },
@@ -1253,12 +1344,10 @@
     function draw() {
       ctx.clearRect(0, 0, width, height);
 
-      // Auto slow rotation when idle
       if (!isDragging) {
         rotY += 0.004;
       }
 
-      // Draw faint globe outline glow
       const grad = ctx.createRadialGradient(centerX, centerY, radius * 0.8, centerX, centerY, radius * 1.05);
       grad.addColorStop(0, "rgba(99, 102, 241, 0.08)");
       grad.addColorStop(1, "rgba(20, 184, 166, 0.0)");
@@ -1273,19 +1362,16 @@
       ctx.arc(centerX, centerY, radius, 0, Math.PI * 2);
       ctx.stroke();
 
-      // Project points
       const cosY = Math.cos(rotY), sinY = Math.sin(rotY);
       const cosX = Math.cos(rotX), sinX = Math.sin(rotX);
 
       points.forEach(p => {
-        // Rotate Y
         let x1 = p.x * cosY + p.z * sinY;
         let z1 = -p.x * sinY + p.z * cosY;
-        // Rotate X
         let y2 = p.y * cosX - z1 * sinX;
         let z2 = p.y * sinX + z1 * cosX;
 
-        if (z2 > 0) { // front hemisphere
+        if (z2 > 0) {
           const alpha = Math.min(1, Math.max(0.1, z2 / radius));
           ctx.fillStyle = `rgba(167, 139, 250, ${alpha * 0.6})`;
           ctx.beginPath();
@@ -1294,7 +1380,6 @@
         }
       });
 
-      // Project City Glowing Markers
       cities.forEach(city => {
         const phi = (city.lon * Math.PI) / 180;
         const theta = ((90 - city.lat) * Math.PI) / 180;
@@ -1302,7 +1387,6 @@
         const cy = -radius * Math.cos(theta);
         const cz = radius * Math.sin(theta) * Math.sin(phi);
 
-        // Rotate
         let x1 = cx * cosY + cz * sinY;
         let z1 = -cx * sinY + cz * cosY;
         let y2 = cy * cosX - z1 * sinX;
@@ -1312,16 +1396,14 @@
           const px = centerX + x1;
           const py = centerY + y2;
 
-          // Glowing pulse dot
           ctx.fillStyle = "#2dd4bf";
           ctx.shadowColor = "#2dd4bf";
           ctx.shadowBlur = 10;
           ctx.beginPath();
           ctx.arc(px, py, 4.5, 0, Math.PI * 2);
           ctx.fill();
-          ctx.shadowBlur = 0; // reset
+          ctx.shadowBlur = 0;
 
-          // Label
           ctx.fillStyle = "#ffffff";
           ctx.font = "bold 11px Plus Jakarta Sans, sans-serif";
           ctx.fillText(`📍 ${city.name}`, px + 8, py + 3);

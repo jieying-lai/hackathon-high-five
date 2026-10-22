@@ -308,3 +308,56 @@
   background-size: 200% 100%;
   animation: totemShimmer 2.5s infinite;
 }
+
+/* ==========================================================================
+   MBTI Dual-Pole Spectrum Meters & Role Model Avatars
+   ========================================================================== */
+.mbti-spectrum-row {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+  padding: 1.15rem 1.35rem;
+  border-radius: 1.25rem;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  transition: all 0.2s ease;
+}
+.mbti-spectrum-row:hover {
+  background: rgba(255, 255, 255, 0.07);
+  border-color: rgba(255, 255, 255, 0.16);
+}
+.mbti-pole-labels {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+.mbti-spectrum-track {
+  height: 0.65rem;
+  border-radius: 9999px;
+  background: rgba(255, 255, 255, 0.1);
+  display: flex;
+  overflow: hidden;
+  position: relative;
+}
+.mbti-pole-left-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #6366f1, #818cf8);
+  border-radius: 9999px 0 0 9999px;
+  transition: width 1s ease;
+}
+.mbti-pole-right-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #2dd4bf, #14b8a6);
+  border-radius: 0 9999px 9999px 0;
+  transition: width 1s ease;
+}
+.role-model-avatar {
+  width: 3.5rem;
+  height: 3.5rem;
+  border-radius: 9999px;
+  object-fit: cover;
+  border: 2px solid rgba(139, 92, 246, 0.5);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4);
+}
