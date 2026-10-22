@@ -2308,6 +2308,8 @@ and consented to share their CV below.|并同意分享以下简历内容。
     if (coveragePercent) return `${coveragePercent[1]}% ${translate('skill coverage', language)}`;
     let portalCount = text.match(/^(\d+) mapped courses$/);
     if (portalCount) return i === 2 ? `${portalCount[1]} 门课程已匹配` : `${portalCount[1]} kursus dipetakan`;
+    portalCount = text.match(/^(\d+) saved items?$/);
+    if (portalCount) return i === 2 ? `已保存 ${portalCount[1]} 项` : `${portalCount[1]} item disimpan`;
     portalCount = text.match(/^(\d+) matched \/ ([\d,]+) roles in (\d+) km$/);
     if (portalCount) return i === 2
       ? `匹配 ${portalCount[1]} 个岗位 / ${portalCount[2]} 个岗位（${portalCount[3]} 公里内）`
