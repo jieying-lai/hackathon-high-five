@@ -202,6 +202,7 @@ async function signOut() {
 
   async function mountWidget() {
     if (!document.body || document.getElementById('lumiFab')) return;
+    if (window.location.pathname.startsWith('/admin') || document.body.dataset.noChatbot) return;
 
     try {
       const res = await fetch('/api/chat/context');
