@@ -8,11 +8,11 @@ import torch
 from pathlib import Path
 
 def train():
-    from transformers import AutoTokenizer, AutoModelForCausalLM, BitsAndBytesConfig, set_seed
+    import random
+    random.seed(42)
+    torch.manual_seed(42)
+    from transformers import AutoTokenizer, AutoModelForCausalLM, BitsAndBytesConfig
     from peft import LoraConfig, get_peft_model, prepare_model_for_kbit_training
-    from datasets import load_dataset
-
-    set_seed(42)
     model_name = "Qwen/Qwen2.5-7B-Instruct"
     output_dir = Path("models/careerlens_lumi_lora")
     output_dir.mkdir(parents=True, exist_ok=True)
