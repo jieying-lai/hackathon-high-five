@@ -309,15 +309,20 @@ def _enhance_with_gemini(user_msg: str, grounded_reply: str, ctx: dict) -> str:
         "You are Lumi 🦉, the proactive and encouraging AI Career Advisor for CareerLens AI in Malaysia.\n"
         "Rules:\n"
         "1. Reply in the EXACT SAME language as the user (English, Chinese, or Bahasa/Manglish).\n"
-        "2. Keep it concise, structured, and practical (max 3-4 bullet points, start with 🦉).\n"
-        "3. Ground numbers and advice in Malaysian realities (salaries in RM, HRD Corp courses).\n\n"
+        "2. Provide a complete, beautifully structured, and friendly answer (max 3-4 bullet points, start with 🦉).\n"
+        "3. Never leave sentences unfinished or cut off.\n"
+        "4. Ground numbers and advice in Malaysian realities (salaries in RM, HRD Corp courses).\n\n"
         f"User Profile: {role_str} in {ind_str}, Skills: {skills_str}\n"
         f"User Message: {user_msg}\n"
         f"GROUNDED DATASET FACTS:\n{grounded_reply}"
     )
     payload = json.dumps({
         "contents": [{"parts": [{"text": prompt}]}],
-        "generationConfig": {"temperature": 0.25, "maxOutputTokens": 350},
+        "generationConfig": {
+            "temperature": 0.4,
+            "maxOutputTokens": 1024,
+            "thinkingConfig": {"thinkingBudget": 0}
+        },
     }).encode("utf-8")
 
     models_to_try = [model, "gemini-3.5-flash", "gemini-3-flash-preview"]
