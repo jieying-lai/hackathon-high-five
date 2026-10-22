@@ -1,5 +1,5 @@
 """Fine-tunes Qwen2.5-7B-Instruct with QLoRA on RunPod GPU for Lumi AI Chatbox.
-Immune to TRL/AutoProcessor version conflicts by using standard Transformers Trainer.
+Features dual-engine: standard Transformers Trainer OR native zero-dependency PyTorch loop.
 """
 
 import os
@@ -8,15 +8,7 @@ import torch
 from pathlib import Path
 
 def train():
-    from transformers import (
-        AutoTokenizer,
-        AutoModelForCausalLM,
-        BitsAndBytesConfig,
-        Trainer,
-        TrainingArguments,
-        DataCollatorForSeq2Seq,
-        set_seed
-    )
+    from transformers import AutoTokenizer, AutoModelForCausalLM, BitsAndBytesConfig, set_seed
     from peft import LoraConfig, get_peft_model, prepare_model_for_kbit_training
     from datasets import load_dataset
 
@@ -57,25 +49,24 @@ def train():
     model = get_peft_model(model, peft_config)
 
     train_data_path = Path("data/lumi_chat_train.jsonl")
-    val_data_path = Path("data/lumi_chat_val.jsonl")
     if not train_data_path.exists():
         os.system("python scripts/generate_lumi_instruct_data.py")
 
-    dataset = load_dataset(
-        "json",
-        data_files={
-            "train": str(train_data_path),
-            "validation": str(val_data_path if val_data_path.exists() else train_data_path)
-        }
-    )
+    rows = []
+    with open(train_data_path, "r", encoding="utf8") as f:
+        for line in f:
+            if line.strip():
+                rows.append(json.loads(line))
 
-    def tokenize_fn(row):
+    print(f"[*] Formatting {len(rows)} training conversation samples...")
+    training_samples = []
+    for r in rows:
         messages = [
-            {"role": "system", "content": row["system"]},
-            {"role": "user", "content": row["user"]},
+            {"role": "system", "content": r["system"]},
+            {"role": "user", "content": r["user"]},
         ]
         prefix = tokenizer.apply_chat_template(messages, tokenize=False, add_generation_prompt=True)
-        full = prefix + row["assistant"] + tokenizer.eos_token
+        full = prefix + r["assistant"] + tokenizer.eos_token
         
         prefix_ids = tokenizer(prefix, add_special_tokens=False)["input_ids"]
         ids = tokenizer(full, add_special_tokens=False)["input_ids"]
@@ -86,47 +77,77 @@ def train():
         if len(labels) > len(ids):
             labels = labels[:len(ids)]
             
-        return {
+        training_samples.append({
             "input_ids": ids,
-            "attention_mask": [1] * len(ids),
             "labels": labels
-        }
+        })
 
-    tokenized = dataset.map(tokenize_fn, remove_columns=dataset["train"].column_names)
-    print(f"[*] Prepared {len(tokenized['train'])} tokenized training samples.")
+    # Try Transformers Trainer first; if broken in environment, use pure native PyTorch loop!
+    trainer_available = False
+    try:
+        from transformers import Trainer, TrainingArguments, DataCollatorForSeq2Seq
+        from datasets import Dataset
+        trainer_available = True
+    except Exception:
+        trainer_available = False
 
-    training_args = TrainingArguments(
-        output_dir="outputs_lumi",
-        num_train_epochs=3,
-        per_device_train_batch_size=1,
-        gradient_accumulation_steps=4,
-        warmup_steps=2,
-        learning_rate=2e-4,
-        fp16=not torch.cuda.is_bf16_supported(),
-        bf16=torch.cuda.is_bf16_supported(),
-        logging_steps=1,
-        save_strategy="no",
-        optim="adamw_torch",
-        report_to="none",
-        seed=42
-    )
-
-    trainer = Trainer(
-        model=model,
-        args=training_args,
-        train_dataset=tokenized["train"],
-        eval_dataset=tokenized["validation"],
-        processing_class=tokenizer,
-        data_collator=DataCollatorForSeq2Seq(tokenizer=tokenizer, padding=True, label_pad_token_id=-100)
-    )
-
-    print("[*] Starting Lumi Chatbot fine-tuning...")
-    trainer.train()
+    if trainer_available:
+        print("[*] Running fine-tuning with Transformers Trainer...")
+        dataset = Dataset.from_list(training_samples)
+        training_args = TrainingArguments(
+            output_dir="outputs_lumi",
+            num_train_epochs=3,
+            per_device_train_batch_size=1,
+            gradient_accumulation_steps=4,
+            warmup_steps=2,
+            learning_rate=2e-4,
+            fp16=not torch.cuda.is_bf16_supported(),
+            bf16=torch.cuda.is_bf16_supported(),
+            logging_steps=2,
+            save_strategy="no",
+            optim="adamw_torch",
+            report_to="none",
+            seed=42
+        )
+        trainer = Trainer(
+            model=model,
+            args=training_args,
+            train_dataset=dataset,
+            processing_class=tokenizer,
+            data_collator=DataCollatorForSeq2Seq(tokenizer=tokenizer, padding=True, label_pad_token_id=-100)
+        )
+        trainer.train()
+    else:
+        print("[*] Running fine-tuning with Native PyTorch Autograd Engine (Bypassing Trainer)...")
+        trainable_params = [p for p in model.parameters() if p.requires_grad]
+        optimizer = torch.optim.AdamW(trainable_params, lr=2e-4, weight_decay=0.01)
+        epochs = 3
+        device = next(model.parameters()).device
+        
+        model.train()
+        for epoch in range(1, epochs + 1):
+            epoch_loss = 0.0
+            for step, sample in enumerate(training_samples, 1):
+                input_ids = torch.tensor([sample["input_ids"]], dtype=torch.long, device=device)
+                labels = torch.tensor([sample["labels"]], dtype=torch.long, device=device)
+                
+                outputs = model(input_ids=input_ids, labels=labels)
+                loss = outputs.loss
+                loss.backward()
+                
+                if step % 4 == 0 or step == len(training_samples):
+                    optimizer.step()
+                    optimizer.zero_grad()
+                    
+                epoch_loss += loss.item()
+                if step % 4 == 0 or step == len(training_samples):
+                    print(f"  [Epoch {epoch}/{epochs} | Step {step}/{len(training_samples)}] Current Loss: {loss.item():.4f}")
+            print(f"[*] Epoch {epoch} Completed! Avg Loss: {epoch_loss / len(training_samples):.4f}")
 
     print(f"[*] Saving Lumi LoRA adapter to {output_dir}...")
-    trainer.save_model(str(output_dir))
+    model.save_pretrained(str(output_dir))
     tokenizer.save_pretrained(str(output_dir))
-    print(f"✓ Training Complete! Adapter saved to {output_dir}")
+    print(f"✓ Training Complete! LoRA weights successfully saved to {output_dir}")
 
 if __name__ == "__main__":
     train()
