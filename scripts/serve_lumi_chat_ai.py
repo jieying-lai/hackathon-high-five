@@ -62,7 +62,7 @@ def health():
 def chat():
     global model, tokenizer
     data = request.get_json(silent=True) or {}
-    user_prompt = data.get("prompt", "").strip()
+    user_prompt = (data.get("prompt") or data.get("message") or "").strip()
     system_prompt = data.get("system", (
         "You are Lumi, the proactive, encouraging AI Career Advisor for CareerLens AI in Malaysia. "
         "You provide structured, concise, and highly practical career advice tailored to the Malaysian job market. "
