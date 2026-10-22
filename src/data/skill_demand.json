@@ -1,0 +1,3475 @@
+{
+ "metadata": {
+  "source": "Kaggle JobStreet Malaysia All Job Dataset (azraimohamad/jobstreet-all-job-dataset)",
+  "method": "Share of postings mentioning a skill (per 1,000 postings) in a baseline window vs a recent window.",
+  "baseline_window": {
+   "start": "2024-02-01",
+   "end": "2024-06-30",
+   "postings": 56561
+  },
+  "recent_window": {
+   "start": "2025-03-01",
+   "end": "2025-05-31",
+   "postings": 9640
+  },
+  "data_through": "2025-05-08",
+  "generated_at": "2026-10-22",
+  "min_count_for_measured": 30,
+  "caveats": [
+   "Two windows from one public snapshot, not a continuous time series.",
+   "Skills are extracted keywords; a posting can mention several.",
+   "Skills with fewer than the minimum postings in either window are labelled low_sample and are not used for scoring.",
+   "Changes describe past postings and are estimates, not forecasts."
+  ]
+ },
+ "skills": {
+  ".Net": {
+   "baseline_count": 280,
+   "recent_count": 34,
+   "baseline_per_1k": 4.95,
+   "recent_per_1k": 3.53,
+   "change_pct": -29,
+   "confidence": "measured"
+  },
+  "AI Workflow Automation (Make/Zapier)": {
+   "baseline_count": 113,
+   "recent_count": 23,
+   "baseline_per_1k": 2.0,
+   "recent_per_1k": 2.39,
+   "change_pct": 19,
+   "confidence": "low_sample"
+  },
+  "AWS": {
+   "baseline_count": 209,
+   "recent_count": 43,
+   "baseline_per_1k": 3.7,
+   "recent_per_1k": 4.46,
+   "change_pct": 21,
+   "confidence": "measured"
+  },
+  "Access": {
+   "baseline_count": 1338,
+   "recent_count": 248,
+   "baseline_per_1k": 23.66,
+   "recent_per_1k": 25.73,
+   "change_pct": 9,
+   "confidence": "measured"
+  },
+  "Accounting": {
+   "baseline_count": 7368,
+   "recent_count": 973,
+   "baseline_per_1k": 130.27,
+   "recent_per_1k": 100.93,
+   "change_pct": -23,
+   "confidence": "measured"
+  },
+  "Acquisition": {
+   "baseline_count": 929,
+   "recent_count": 164,
+   "baseline_per_1k": 16.42,
+   "recent_per_1k": 17.01,
+   "change_pct": 4,
+   "confidence": "measured"
+  },
+  "Acquisitions": {
+   "baseline_count": 102,
+   "recent_count": 23,
+   "baseline_per_1k": 1.8,
+   "recent_per_1k": 2.39,
+   "change_pct": 32,
+   "confidence": "low_sample"
+  },
+  "Administration": {
+   "baseline_count": 5177,
+   "recent_count": 679,
+   "baseline_per_1k": 91.53,
+   "recent_per_1k": 70.44,
+   "change_pct": -23,
+   "confidence": "measured"
+  },
+  "Admissions": {
+   "baseline_count": 65,
+   "recent_count": 6,
+   "baseline_per_1k": 1.15,
+   "recent_per_1k": 0.62,
+   "change_pct": -46,
+   "confidence": "low_sample"
+  },
+  "Adobe": {
+   "baseline_count": 367,
+   "recent_count": 87,
+   "baseline_per_1k": 6.49,
+   "recent_per_1k": 9.02,
+   "change_pct": 39,
+   "confidence": "measured"
+  },
+  "Advertising": {
+   "baseline_count": 871,
+   "recent_count": 157,
+   "baseline_per_1k": 15.4,
+   "recent_per_1k": 16.29,
+   "change_pct": 6,
+   "confidence": "measured"
+  },
+  "Affiliate": {
+   "baseline_count": 60,
+   "recent_count": 8,
+   "baseline_per_1k": 1.06,
+   "recent_per_1k": 0.83,
+   "change_pct": -22,
+   "confidence": "low_sample"
+  },
+  "Alipay": {
+   "baseline_count": 1,
+   "recent_count": 0,
+   "baseline_per_1k": 0.02,
+   "recent_per_1k": 0.0,
+   "change_pct": -100,
+   "confidence": "low_sample"
+  },
+  "Alliances": {
+   "baseline_count": 37,
+   "recent_count": 6,
+   "baseline_per_1k": 0.65,
+   "recent_per_1k": 0.62,
+   "change_pct": -5,
+   "confidence": "low_sample"
+  },
+  "Analysis": {
+   "baseline_count": 6516,
+   "recent_count": 997,
+   "baseline_per_1k": 115.2,
+   "recent_per_1k": 103.42,
+   "change_pct": -10,
+   "confidence": "measured"
+  },
+  "Analytical": {
+   "baseline_count": 2324,
+   "recent_count": 295,
+   "baseline_per_1k": 41.09,
+   "recent_per_1k": 30.6,
+   "change_pct": -26,
+   "confidence": "measured"
+  },
+  "Analytics": {
+   "baseline_count": 939,
+   "recent_count": 150,
+   "baseline_per_1k": 16.6,
+   "recent_per_1k": 15.56,
+   "change_pct": -6,
+   "confidence": "measured"
+  },
+  "Analyze": {
+   "baseline_count": 2293,
+   "recent_count": 352,
+   "baseline_per_1k": 40.54,
+   "recent_per_1k": 36.51,
+   "change_pct": -10,
+   "confidence": "measured"
+  },
+  "Android": {
+   "baseline_count": 164,
+   "recent_count": 18,
+   "baseline_per_1k": 2.9,
+   "recent_per_1k": 1.87,
+   "change_pct": -36,
+   "confidence": "low_sample"
+  },
+  "Ansible": {
+   "baseline_count": 26,
+   "recent_count": 5,
+   "baseline_per_1k": 0.46,
+   "recent_per_1k": 0.52,
+   "change_pct": 13,
+   "confidence": "low_sample"
+  },
+  "Apex": {
+   "baseline_count": 20,
+   "recent_count": 6,
+   "baseline_per_1k": 0.35,
+   "recent_per_1k": 0.62,
+   "change_pct": 76,
+   "confidence": "low_sample"
+  },
+  "Apis": {
+   "baseline_count": 197,
+   "recent_count": 31,
+   "baseline_per_1k": 3.48,
+   "recent_per_1k": 3.22,
+   "change_pct": -8,
+   "confidence": "measured"
+  },
+  "Architecture": {
+   "baseline_count": 903,
+   "recent_count": 131,
+   "baseline_per_1k": 15.97,
+   "recent_per_1k": 13.59,
+   "change_pct": -15,
+   "confidence": "measured"
+  },
+  "Architectures": {
+   "baseline_count": 68,
+   "recent_count": 10,
+   "baseline_per_1k": 1.2,
+   "recent_per_1k": 1.04,
+   "change_pct": -14,
+   "confidence": "low_sample"
+  },
+  "Arrow": {
+   "baseline_count": 6,
+   "recent_count": 5,
+   "baseline_per_1k": 0.11,
+   "recent_per_1k": 0.52,
+   "change_pct": 389,
+   "confidence": "low_sample"
+  },
+  "Assembly": {
+   "baseline_count": 595,
+   "recent_count": 109,
+   "baseline_per_1k": 10.52,
+   "recent_per_1k": 11.31,
+   "change_pct": 7,
+   "confidence": "measured"
+  },
+  "Audio": {
+   "baseline_count": 148,
+   "recent_count": 28,
+   "baseline_per_1k": 2.62,
+   "recent_per_1k": 2.9,
+   "change_pct": 11,
+   "confidence": "low_sample"
+  },
+  "AutoCAD": {
+   "baseline_count": 896,
+   "recent_count": 149,
+   "baseline_per_1k": 15.84,
+   "recent_per_1k": 15.46,
+   "change_pct": -2,
+   "confidence": "measured"
+  },
+  "Autocad": {
+   "baseline_count": 556,
+   "recent_count": 86,
+   "baseline_per_1k": 9.83,
+   "recent_per_1k": 8.92,
+   "change_pct": -9,
+   "confidence": "measured"
+  },
+  "Automation": {
+   "baseline_count": 1184,
+   "recent_count": 230,
+   "baseline_per_1k": 20.93,
+   "recent_per_1k": 23.86,
+   "change_pct": 14,
+   "confidence": "measured"
+  },
+  "Aviation": {
+   "baseline_count": 76,
+   "recent_count": 18,
+   "baseline_per_1k": 1.34,
+   "recent_per_1k": 1.87,
+   "change_pct": 39,
+   "confidence": "low_sample"
+  },
+  "Azure": {
+   "baseline_count": 197,
+   "recent_count": 34,
+   "baseline_per_1k": 3.48,
+   "recent_per_1k": 3.53,
+   "change_pct": 1,
+   "confidence": "measured"
+  },
+  "Babel": {
+   "baseline_count": 2,
+   "recent_count": 0,
+   "baseline_per_1k": 0.04,
+   "recent_per_1k": 0.0,
+   "change_pct": -100,
+   "confidence": "low_sample"
+  },
+  "Banking": {
+   "baseline_count": 1605,
+   "recent_count": 238,
+   "baseline_per_1k": 28.38,
+   "recent_per_1k": 24.69,
+   "change_pct": -13,
+   "confidence": "measured"
+  },
+  "Beautifulsoup": {
+   "baseline_count": 1,
+   "recent_count": 1,
+   "baseline_per_1k": 0.02,
+   "recent_per_1k": 0.1,
+   "change_pct": 487,
+   "confidence": "low_sample"
+  },
+  "Benchmark": {
+   "baseline_count": 98,
+   "recent_count": 18,
+   "baseline_per_1k": 1.73,
+   "recent_per_1k": 1.87,
+   "change_pct": 8,
+   "confidence": "low_sample"
+  },
+  "Benchmarking": {
+   "baseline_count": 139,
+   "recent_count": 24,
+   "baseline_per_1k": 2.46,
+   "recent_per_1k": 2.49,
+   "change_pct": 1,
+   "confidence": "low_sample"
+  },
+  "Beverage": {
+   "baseline_count": 307,
+   "recent_count": 95,
+   "baseline_per_1k": 5.43,
+   "recent_per_1k": 9.85,
+   "change_pct": 82,
+   "confidence": "measured"
+  },
+  "Bilingual Communication": {
+   "baseline_count": 7989,
+   "recent_count": 1250,
+   "baseline_per_1k": 141.25,
+   "recent_per_1k": 129.67,
+   "change_pct": -8,
+   "confidence": "measured"
+  },
+  "Billing": {
+   "baseline_count": 918,
+   "recent_count": 113,
+   "baseline_per_1k": 16.23,
+   "recent_per_1k": 11.72,
+   "change_pct": -28,
+   "confidence": "measured"
+  },
+  "Biology": {
+   "baseline_count": 58,
+   "recent_count": 18,
+   "baseline_per_1k": 1.03,
+   "recent_per_1k": 1.87,
+   "change_pct": 82,
+   "confidence": "low_sample"
+  },
+  "Blaze": {
+   "baseline_count": 2,
+   "recent_count": 0,
+   "baseline_per_1k": 0.04,
+   "recent_per_1k": 0.0,
+   "change_pct": -100,
+   "confidence": "low_sample"
+  },
+  "Bleach": {
+   "baseline_count": 1,
+   "recent_count": 0,
+   "baseline_per_1k": 0.02,
+   "recent_per_1k": 0.0,
+   "change_pct": -100,
+   "confidence": "low_sample"
+  },
+  "Bottle": {
+   "baseline_count": 10,
+   "recent_count": 2,
+   "baseline_per_1k": 0.18,
+   "recent_per_1k": 0.21,
+   "change_pct": 17,
+   "confidence": "low_sample"
+  },
+  "Brand": {
+   "baseline_count": 2618,
+   "recent_count": 644,
+   "baseline_per_1k": 46.29,
+   "recent_per_1k": 66.8,
+   "change_pct": 44,
+   "confidence": "measured"
+  },
+  "Branding": {
+   "baseline_count": 471,
+   "recent_count": 117,
+   "baseline_per_1k": 8.33,
+   "recent_per_1k": 12.14,
+   "change_pct": 46,
+   "confidence": "measured"
+  },
+  "Broadcast": {
+   "baseline_count": 52,
+   "recent_count": 8,
+   "baseline_per_1k": 0.92,
+   "recent_per_1k": 0.83,
+   "change_pct": -10,
+   "confidence": "low_sample"
+  },
+  "Budget": {
+   "baseline_count": 2863,
+   "recent_count": 419,
+   "baseline_per_1k": 50.62,
+   "recent_per_1k": 43.46,
+   "change_pct": -14,
+   "confidence": "measured"
+  },
+  "Budgeting": {
+   "baseline_count": 648,
+   "recent_count": 117,
+   "baseline_per_1k": 11.46,
+   "recent_per_1k": 12.14,
+   "change_pct": 6,
+   "confidence": "measured"
+  },
+  "C++": {
+   "baseline_count": 124,
+   "recent_count": 10,
+   "baseline_per_1k": 2.19,
+   "recent_per_1k": 1.04,
+   "change_pct": -53,
+   "confidence": "low_sample"
+  },
+  "Cactus": {
+   "baseline_count": 4,
+   "recent_count": 1,
+   "baseline_per_1k": 0.07,
+   "recent_per_1k": 0.1,
+   "change_pct": 47,
+   "confidence": "low_sample"
+  },
+  "Calculus": {
+   "baseline_count": 2,
+   "recent_count": 0,
+   "baseline_per_1k": 0.04,
+   "recent_per_1k": 0.0,
+   "change_pct": -100,
+   "confidence": "low_sample"
+  },
+  "Canva & Basic Design": {
+   "baseline_count": 423,
+   "recent_count": 106,
+   "baseline_per_1k": 7.48,
+   "recent_per_1k": 11.0,
+   "change_pct": 47,
+   "confidence": "measured"
+  },
+  "Cartridge": {
+   "baseline_count": 8,
+   "recent_count": 0,
+   "baseline_per_1k": 0.14,
+   "recent_per_1k": 0.0,
+   "change_pct": -100,
+   "confidence": "low_sample"
+  },
+  "Cement": {
+   "baseline_count": 38,
+   "recent_count": 3,
+   "baseline_per_1k": 0.67,
+   "recent_per_1k": 0.31,
+   "change_pct": -54,
+   "confidence": "low_sample"
+  },
+  "Certification": {
+   "baseline_count": 831,
+   "recent_count": 145,
+   "baseline_per_1k": 14.69,
+   "recent_per_1k": 15.04,
+   "change_pct": 2,
+   "confidence": "measured"
+  },
+  "Change Management": {
+   "baseline_count": 246,
+   "recent_count": 36,
+   "baseline_per_1k": 4.35,
+   "recent_per_1k": 3.73,
+   "change_pct": -14,
+   "confidence": "measured"
+  },
+  "Chemicals": {
+   "baseline_count": 198,
+   "recent_count": 30,
+   "baseline_per_1k": 3.5,
+   "recent_per_1k": 3.11,
+   "change_pct": -11,
+   "confidence": "measured"
+  },
+  "Chemistry": {
+   "baseline_count": 201,
+   "recent_count": 35,
+   "baseline_per_1k": 3.55,
+   "recent_per_1k": 3.63,
+   "change_pct": 2,
+   "confidence": "measured"
+  },
+  "Circuits": {
+   "baseline_count": 99,
+   "recent_count": 14,
+   "baseline_per_1k": 1.75,
+   "recent_per_1k": 1.45,
+   "change_pct": -17,
+   "confidence": "low_sample"
+  },
+  "Cisco": {
+   "baseline_count": 80,
+   "recent_count": 10,
+   "baseline_per_1k": 1.41,
+   "recent_per_1k": 1.04,
+   "change_pct": -27,
+   "confidence": "low_sample"
+  },
+  "Click": {
+   "baseline_count": 328,
+   "recent_count": 81,
+   "baseline_per_1k": 5.8,
+   "recent_per_1k": 8.4,
+   "change_pct": 45,
+   "confidence": "measured"
+  },
+  "Cloud": {
+   "baseline_count": 893,
+   "recent_count": 126,
+   "baseline_per_1k": 15.79,
+   "recent_per_1k": 13.07,
+   "change_pct": -17,
+   "confidence": "measured"
+  },
+  "Co-Op": {
+   "baseline_count": 4,
+   "recent_count": 0,
+   "baseline_per_1k": 0.07,
+   "recent_per_1k": 0.0,
+   "change_pct": -100,
+   "confidence": "low_sample"
+  },
+  "Coaching": {
+   "baseline_count": 676,
+   "recent_count": 117,
+   "baseline_per_1k": 11.95,
+   "recent_per_1k": 12.14,
+   "change_pct": 2,
+   "confidence": "measured"
+  },
+  "Coding": {
+   "baseline_count": 383,
+   "recent_count": 55,
+   "baseline_per_1k": 6.77,
+   "recent_per_1k": 5.71,
+   "change_pct": -16,
+   "confidence": "measured"
+  },
+  "Cola": {
+   "baseline_count": 7,
+   "recent_count": 1,
+   "baseline_per_1k": 0.12,
+   "recent_per_1k": 0.1,
+   "change_pct": -16,
+   "confidence": "low_sample"
+  },
+  "Commissioning": {
+   "baseline_count": 622,
+   "recent_count": 88,
+   "baseline_per_1k": 11.0,
+   "recent_per_1k": 9.13,
+   "change_pct": -17,
+   "confidence": "measured"
+  },
+  "Communication": {
+   "baseline_count": 11480,
+   "recent_count": 2084,
+   "baseline_per_1k": 202.97,
+   "recent_per_1k": 216.18,
+   "change_pct": 7,
+   "confidence": "measured"
+  },
+  "Compliance": {
+   "baseline_count": 8112,
+   "recent_count": 1747,
+   "baseline_per_1k": 143.42,
+   "recent_per_1k": 181.22,
+   "change_pct": 26,
+   "confidence": "measured"
+  },
+  "Config": {
+   "baseline_count": 4,
+   "recent_count": 1,
+   "baseline_per_1k": 0.07,
+   "recent_per_1k": 0.1,
+   "change_pct": 47,
+   "confidence": "low_sample"
+  },
+  "Construction": {
+   "baseline_count": 2847,
+   "recent_count": 515,
+   "baseline_per_1k": 50.34,
+   "recent_per_1k": 53.42,
+   "change_pct": 6,
+   "confidence": "measured"
+  },
+  "Consulting": {
+   "baseline_count": 730,
+   "recent_count": 140,
+   "baseline_per_1k": 12.91,
+   "recent_per_1k": 14.52,
+   "change_pct": 13,
+   "confidence": "measured"
+  },
+  "Content": {
+   "baseline_count": 1967,
+   "recent_count": 459,
+   "baseline_per_1k": 34.78,
+   "recent_per_1k": 47.61,
+   "change_pct": 37,
+   "confidence": "measured"
+  },
+  "Contracts": {
+   "baseline_count": 1403,
+   "recent_count": 287,
+   "baseline_per_1k": 24.81,
+   "recent_per_1k": 29.77,
+   "change_pct": 20,
+   "confidence": "measured"
+  },
+  "Controls": {
+   "baseline_count": 1334,
+   "recent_count": 195,
+   "baseline_per_1k": 23.59,
+   "recent_per_1k": 20.23,
+   "change_pct": -14,
+   "confidence": "measured"
+  },
+  "Conversion": {
+   "baseline_count": 365,
+   "recent_count": 78,
+   "baseline_per_1k": 6.45,
+   "recent_per_1k": 8.09,
+   "change_pct": 25,
+   "confidence": "measured"
+  },
+  "Copywriting": {
+   "baseline_count": 204,
+   "recent_count": 33,
+   "baseline_per_1k": 3.61,
+   "recent_per_1k": 3.42,
+   "change_pct": -5,
+   "confidence": "measured"
+  },
+  "Correspondence": {
+   "baseline_count": 1023,
+   "recent_count": 152,
+   "baseline_per_1k": 18.09,
+   "recent_per_1k": 15.77,
+   "change_pct": -13,
+   "confidence": "measured"
+  },
+  "Counsel": {
+   "baseline_count": 148,
+   "recent_count": 11,
+   "baseline_per_1k": 2.62,
+   "recent_per_1k": 1.14,
+   "change_pct": -56,
+   "confidence": "low_sample"
+  },
+  "Cryptography": {
+   "baseline_count": 5,
+   "recent_count": 1,
+   "baseline_per_1k": 0.09,
+   "recent_per_1k": 0.1,
+   "change_pct": 17,
+   "confidence": "low_sample"
+  },
+  "Cuisine": {
+   "baseline_count": 32,
+   "recent_count": 18,
+   "baseline_per_1k": 0.57,
+   "recent_per_1k": 1.87,
+   "change_pct": 230,
+   "confidence": "low_sample"
+  },
+  "Customer Service": {
+   "baseline_count": 4129,
+   "recent_count": 937,
+   "baseline_per_1k": 73.0,
+   "recent_per_1k": 97.2,
+   "change_pct": 33,
+   "confidence": "measured"
+  },
+  "Customer-Facing": {
+   "baseline_count": 28,
+   "recent_count": 22,
+   "baseline_per_1k": 0.5,
+   "recent_per_1k": 2.28,
+   "change_pct": 361,
+   "confidence": "low_sample"
+  },
+  "Data Privacy (PDPA)": {
+   "baseline_count": 29,
+   "recent_count": 11,
+   "baseline_per_1k": 0.51,
+   "recent_per_1k": 1.14,
+   "change_pct": 123,
+   "confidence": "low_sample"
+  },
+  "Data Structures": {
+   "baseline_count": 148,
+   "recent_count": 23,
+   "baseline_per_1k": 2.62,
+   "recent_per_1k": 2.39,
+   "change_pct": -9,
+   "confidence": "low_sample"
+  },
+  "Database": {
+   "baseline_count": 1309,
+   "recent_count": 146,
+   "baseline_per_1k": 23.14,
+   "recent_per_1k": 15.15,
+   "change_pct": -35,
+   "confidence": "measured"
+  },
+  "Datasets": {
+   "baseline_count": 48,
+   "recent_count": 11,
+   "baseline_per_1k": 0.85,
+   "recent_per_1k": 1.14,
+   "change_pct": 34,
+   "confidence": "low_sample"
+  },
+  "Debugging": {
+   "baseline_count": 358,
+   "recent_count": 31,
+   "baseline_per_1k": 6.33,
+   "recent_per_1k": 3.22,
+   "change_pct": -49,
+   "confidence": "measured"
+  },
+  "Deposits": {
+   "baseline_count": 169,
+   "recent_count": 29,
+   "baseline_per_1k": 2.99,
+   "recent_per_1k": 3.01,
+   "change_pct": 1,
+   "confidence": "low_sample"
+  },
+  "Design": {
+   "baseline_count": 7501,
+   "recent_count": 1239,
+   "baseline_per_1k": 132.62,
+   "recent_per_1k": 128.53,
+   "change_pct": -3,
+   "confidence": "measured"
+  },
+  "Dhcp": {
+   "baseline_count": 11,
+   "recent_count": 1,
+   "baseline_per_1k": 0.19,
+   "recent_per_1k": 0.1,
+   "change_pct": -47,
+   "confidence": "low_sample"
+  },
+  "Diesel": {
+   "baseline_count": 46,
+   "recent_count": 13,
+   "baseline_per_1k": 0.81,
+   "recent_per_1k": 1.35,
+   "change_pct": 66,
+   "confidence": "low_sample"
+  },
+  "Distribution": {
+   "baseline_count": 1249,
+   "recent_count": 245,
+   "baseline_per_1k": 22.08,
+   "recent_per_1k": 25.41,
+   "change_pct": 15,
+   "confidence": "measured"
+  },
+  "Django": {
+   "baseline_count": 14,
+   "recent_count": 1,
+   "baseline_per_1k": 0.25,
+   "recent_per_1k": 0.1,
+   "change_pct": -58,
+   "confidence": "low_sample"
+  },
+  "Docker": {
+   "baseline_count": 71,
+   "recent_count": 7,
+   "baseline_per_1k": 1.26,
+   "recent_per_1k": 0.73,
+   "change_pct": -42,
+   "confidence": "low_sample"
+  },
+  "Documentation": {
+   "baseline_count": 5511,
+   "recent_count": 995,
+   "baseline_per_1k": 97.43,
+   "recent_per_1k": 103.22,
+   "change_pct": 6,
+   "confidence": "measured"
+  },
+  "Drafting": {
+   "baseline_count": 498,
+   "recent_count": 62,
+   "baseline_per_1k": 8.8,
+   "recent_per_1k": 6.43,
+   "change_pct": -27,
+   "confidence": "measured"
+  },
+  "E-Commerce": {
+   "baseline_count": 758,
+   "recent_count": 115,
+   "baseline_per_1k": 13.4,
+   "recent_per_1k": 11.93,
+   "change_pct": -11,
+   "confidence": "measured"
+  },
+  "ESG & Carbon Reporting Standards": {
+   "baseline_count": 90,
+   "recent_count": 21,
+   "baseline_per_1k": 1.59,
+   "recent_per_1k": 2.18,
+   "change_pct": 37,
+   "confidence": "low_sample"
+  },
+  "Ecommerce": {
+   "baseline_count": 193,
+   "recent_count": 19,
+   "baseline_per_1k": 3.41,
+   "recent_per_1k": 1.97,
+   "change_pct": -42,
+   "confidence": "low_sample"
+  },
+  "Economics": {
+   "baseline_count": 232,
+   "recent_count": 36,
+   "baseline_per_1k": 4.1,
+   "recent_per_1k": 3.73,
+   "change_pct": -9,
+   "confidence": "measured"
+  },
+  "Editing": {
+   "baseline_count": 368,
+   "recent_count": 80,
+   "baseline_per_1k": 6.51,
+   "recent_per_1k": 8.3,
+   "change_pct": 28,
+   "confidence": "measured"
+  },
+  "Editorial": {
+   "baseline_count": 26,
+   "recent_count": 12,
+   "baseline_per_1k": 0.46,
+   "recent_per_1k": 1.24,
+   "change_pct": 171,
+   "confidence": "low_sample"
+  },
+  "Electrical": {
+   "baseline_count": 2394,
+   "recent_count": 399,
+   "baseline_per_1k": 42.33,
+   "recent_per_1k": 41.39,
+   "change_pct": -2,
+   "confidence": "measured"
+  },
+  "Electronics": {
+   "baseline_count": 617,
+   "recent_count": 134,
+   "baseline_per_1k": 10.91,
+   "recent_per_1k": 13.9,
+   "change_pct": 27,
+   "confidence": "measured"
+  },
+  "Email": {
+   "baseline_count": 2316,
+   "recent_count": 766,
+   "baseline_per_1k": 40.95,
+   "recent_per_1k": 79.46,
+   "change_pct": 94,
+   "confidence": "measured"
+  },
+  "Emea": {
+   "baseline_count": 27,
+   "recent_count": 5,
+   "baseline_per_1k": 0.48,
+   "recent_per_1k": 0.52,
+   "change_pct": 9,
+   "confidence": "low_sample"
+  },
+  "Engagement": {
+   "baseline_count": 1733,
+   "recent_count": 375,
+   "baseline_per_1k": 30.64,
+   "recent_per_1k": 38.9,
+   "change_pct": 27,
+   "confidence": "measured"
+  },
+  "Engineering": {
+   "baseline_count": 5776,
+   "recent_count": 897,
+   "baseline_per_1k": 102.12,
+   "recent_per_1k": 93.05,
+   "change_pct": -9,
+   "confidence": "measured"
+  },
+  "English": {
+   "baseline_count": 8551,
+   "recent_count": 1182,
+   "baseline_per_1k": 151.18,
+   "recent_per_1k": 122.61,
+   "change_pct": -19,
+   "confidence": "measured"
+  },
+  "Envelopes": {
+   "baseline_count": 12,
+   "recent_count": 4,
+   "baseline_per_1k": 0.21,
+   "recent_per_1k": 0.41,
+   "change_pct": 96,
+   "confidence": "low_sample"
+  },
+  "Excel Pivot & Macros": {
+   "baseline_count": 4152,
+   "recent_count": 582,
+   "baseline_per_1k": 73.41,
+   "recent_per_1k": 60.37,
+   "change_pct": -18,
+   "confidence": "measured"
+  },
+  "Expenses": {
+   "baseline_count": 1214,
+   "recent_count": 158,
+   "baseline_per_1k": 21.46,
+   "recent_per_1k": 16.39,
+   "change_pct": -24,
+   "confidence": "measured"
+  },
+  "Experimental": {
+   "baseline_count": 30,
+   "recent_count": 6,
+   "baseline_per_1k": 0.53,
+   "recent_per_1k": 0.62,
+   "change_pct": 17,
+   "confidence": "low_sample"
+  },
+  "Experiments": {
+   "baseline_count": 96,
+   "recent_count": 9,
+   "baseline_per_1k": 1.7,
+   "recent_per_1k": 0.93,
+   "change_pct": -45,
+   "confidence": "low_sample"
+  },
+  "Fabric": {
+   "baseline_count": 74,
+   "recent_count": 7,
+   "baseline_per_1k": 1.31,
+   "recent_per_1k": 0.73,
+   "change_pct": -44,
+   "confidence": "low_sample"
+  },
+  "Fabrication": {
+   "baseline_count": 355,
+   "recent_count": 50,
+   "baseline_per_1k": 6.28,
+   "recent_per_1k": 5.19,
+   "change_pct": -17,
+   "confidence": "measured"
+  },
+  "Facebook": {
+   "baseline_count": 360,
+   "recent_count": 77,
+   "baseline_per_1k": 6.36,
+   "recent_per_1k": 7.99,
+   "change_pct": 25,
+   "confidence": "measured"
+  },
+  "Falcon": {
+   "baseline_count": 6,
+   "recent_count": 0,
+   "baseline_per_1k": 0.11,
+   "recent_per_1k": 0.0,
+   "change_pct": -100,
+   "confidence": "low_sample"
+  },
+  "FastAPI": {
+   "baseline_count": 0,
+   "recent_count": 2,
+   "baseline_per_1k": 0.0,
+   "recent_per_1k": 0.21,
+   "change_pct": null,
+   "confidence": "low_sample"
+  },
+  "Filing": {
+   "baseline_count": 3308,
+   "recent_count": 442,
+   "baseline_per_1k": 58.49,
+   "recent_per_1k": 45.85,
+   "change_pct": -22,
+   "confidence": "measured"
+  },
+  "Finance": {
+   "baseline_count": 5112,
+   "recent_count": 755,
+   "baseline_per_1k": 90.38,
+   "recent_per_1k": 78.32,
+   "change_pct": -13,
+   "confidence": "measured"
+  },
+  "Financial Auditing": {
+   "baseline_count": 4691,
+   "recent_count": 639,
+   "baseline_per_1k": 82.94,
+   "recent_per_1k": 66.29,
+   "change_pct": -20,
+   "confidence": "measured"
+  },
+  "Financial Reporting": {
+   "baseline_count": 4885,
+   "recent_count": 746,
+   "baseline_per_1k": 86.37,
+   "recent_per_1k": 77.39,
+   "change_pct": -10,
+   "confidence": "measured"
+  },
+  "Financing": {
+   "baseline_count": 385,
+   "recent_count": 90,
+   "baseline_per_1k": 6.81,
+   "recent_per_1k": 9.34,
+   "change_pct": 37,
+   "confidence": "measured"
+  },
+  "Fitness": {
+   "baseline_count": 106,
+   "recent_count": 27,
+   "baseline_per_1k": 1.87,
+   "recent_per_1k": 2.8,
+   "change_pct": 49,
+   "confidence": "low_sample"
+  },
+  "Flask": {
+   "baseline_count": 7,
+   "recent_count": 0,
+   "baseline_per_1k": 0.12,
+   "recent_per_1k": 0.0,
+   "change_pct": -100,
+   "confidence": "low_sample"
+  },
+  "Flex": {
+   "baseline_count": 48,
+   "recent_count": 21,
+   "baseline_per_1k": 0.85,
+   "recent_per_1k": 2.18,
+   "change_pct": 157,
+   "confidence": "low_sample"
+  },
+  "Flower": {
+   "baseline_count": 2,
+   "recent_count": 2,
+   "baseline_per_1k": 0.04,
+   "recent_per_1k": 0.21,
+   "change_pct": 487,
+   "confidence": "low_sample"
+  },
+  "Forecasting": {
+   "baseline_count": 915,
+   "recent_count": 155,
+   "baseline_per_1k": 16.18,
+   "recent_per_1k": 16.08,
+   "change_pct": -1,
+   "confidence": "measured"
+  },
+  "Forecasts": {
+   "baseline_count": 580,
+   "recent_count": 177,
+   "baseline_per_1k": 10.25,
+   "recent_per_1k": 18.36,
+   "change_pct": 79,
+   "confidence": "measured"
+  },
+  "French": {
+   "baseline_count": 16,
+   "recent_count": 6,
+   "baseline_per_1k": 0.28,
+   "recent_per_1k": 0.62,
+   "change_pct": 120,
+   "confidence": "low_sample"
+  },
+  "Front-End": {
+   "baseline_count": 295,
+   "recent_count": 24,
+   "baseline_per_1k": 5.22,
+   "recent_per_1k": 2.49,
+   "change_pct": -52,
+   "confidence": "low_sample"
+  },
+  "Fulfillment": {
+   "baseline_count": 313,
+   "recent_count": 39,
+   "baseline_per_1k": 5.53,
+   "recent_per_1k": 4.05,
+   "change_pct": -27,
+   "confidence": "measured"
+  },
+  "Fundraising": {
+   "baseline_count": 59,
+   "recent_count": 15,
+   "baseline_per_1k": 1.04,
+   "recent_per_1k": 1.56,
+   "change_pct": 49,
+   "confidence": "low_sample"
+  },
+  "GAAP": {
+   "baseline_count": 93,
+   "recent_count": 12,
+   "baseline_per_1k": 1.64,
+   "recent_per_1k": 1.24,
+   "change_pct": -24,
+   "confidence": "low_sample"
+  },
+  "Geoip": {
+   "baseline_count": 2,
+   "recent_count": 0,
+   "baseline_per_1k": 0.04,
+   "recent_per_1k": 0.0,
+   "change_pct": -100,
+   "confidence": "low_sample"
+  },
+  "German": {
+   "baseline_count": 42,
+   "recent_count": 11,
+   "baseline_per_1k": 0.74,
+   "recent_per_1k": 1.14,
+   "change_pct": 54,
+   "confidence": "low_sample"
+  },
+  "Git": {
+   "baseline_count": 189,
+   "recent_count": 9,
+   "baseline_per_1k": 3.34,
+   "recent_per_1k": 0.93,
+   "change_pct": -72,
+   "confidence": "low_sample"
+  },
+  "Gmail": {
+   "baseline_count": 6,
+   "recent_count": 0,
+   "baseline_per_1k": 0.11,
+   "recent_per_1k": 0.0,
+   "change_pct": -100,
+   "confidence": "low_sample"
+  },
+  "Google Analytics": {
+   "baseline_count": 68,
+   "recent_count": 22,
+   "baseline_per_1k": 1.2,
+   "recent_per_1k": 2.28,
+   "change_pct": 90,
+   "confidence": "low_sample"
+  },
+  "Google Cloud": {
+   "baseline_count": 72,
+   "recent_count": 19,
+   "baseline_per_1k": 1.27,
+   "recent_per_1k": 1.97,
+   "change_pct": 55,
+   "confidence": "low_sample"
+  },
+  "Governance": {
+   "baseline_count": 684,
+   "recent_count": 107,
+   "baseline_per_1k": 12.09,
+   "recent_per_1k": 11.1,
+   "change_pct": -8,
+   "confidence": "measured"
+  },
+  "Grab": {
+   "baseline_count": 36,
+   "recent_count": 24,
+   "baseline_per_1k": 0.64,
+   "recent_per_1k": 2.49,
+   "change_pct": 291,
+   "confidence": "low_sample"
+  },
+  "Green": {
+   "baseline_count": 245,
+   "recent_count": 35,
+   "baseline_per_1k": 4.33,
+   "recent_per_1k": 3.63,
+   "change_pct": -16,
+   "confidence": "measured"
+  },
+  "HTML/CSS/JS": {
+   "baseline_count": 653,
+   "recent_count": 80,
+   "baseline_per_1k": 11.55,
+   "recent_per_1k": 8.3,
+   "change_pct": -28,
+   "confidence": "measured"
+  },
+  "Hadoop": {
+   "baseline_count": 9,
+   "recent_count": 1,
+   "baseline_per_1k": 0.16,
+   "recent_per_1k": 0.1,
+   "change_pct": -35,
+   "confidence": "low_sample"
+  },
+  "Hardware": {
+   "baseline_count": 1032,
+   "recent_count": 94,
+   "baseline_per_1k": 18.25,
+   "recent_per_1k": 9.75,
+   "change_pct": -47,
+   "confidence": "measured"
+  },
+  "Haul": {
+   "baseline_count": 4,
+   "recent_count": 0,
+   "baseline_per_1k": 0.07,
+   "recent_per_1k": 0.0,
+   "change_pct": -100,
+   "confidence": "low_sample"
+  },
+  "Hbase": {
+   "baseline_count": 1,
+   "recent_count": 1,
+   "baseline_per_1k": 0.02,
+   "recent_per_1k": 0.1,
+   "change_pct": 487,
+   "confidence": "low_sample"
+  },
+  "Health": {
+   "baseline_count": 2465,
+   "recent_count": 564,
+   "baseline_per_1k": 43.58,
+   "recent_per_1k": 58.51,
+   "change_pct": 34,
+   "confidence": "measured"
+  },
+  "Healthcare": {
+   "baseline_count": 729,
+   "recent_count": 192,
+   "baseline_per_1k": 12.89,
+   "recent_per_1k": 19.92,
+   "change_pct": 55,
+   "confidence": "measured"
+  },
+  "Hive": {
+   "baseline_count": 13,
+   "recent_count": 0,
+   "baseline_per_1k": 0.23,
+   "recent_per_1k": 0.0,
+   "change_pct": -100,
+   "confidence": "low_sample"
+  },
+  "Hmap": {
+   "baseline_count": 1,
+   "recent_count": 0,
+   "baseline_per_1k": 0.02,
+   "recent_per_1k": 0.0,
+   "change_pct": -100,
+   "confidence": "low_sample"
+  },
+  "Hospital": {
+   "baseline_count": 285,
+   "recent_count": 65,
+   "baseline_per_1k": 5.04,
+   "recent_per_1k": 6.74,
+   "change_pct": 34,
+   "confidence": "measured"
+  },
+  "Hospitality": {
+   "baseline_count": 349,
+   "recent_count": 156,
+   "baseline_per_1k": 6.17,
+   "recent_per_1k": 16.18,
+   "change_pct": 162,
+   "confidence": "measured"
+  },
+  "Hotel": {
+   "baseline_count": 500,
+   "recent_count": 137,
+   "baseline_per_1k": 8.84,
+   "recent_per_1k": 14.21,
+   "change_pct": 61,
+   "confidence": "measured"
+  },
+  "Hotels": {
+   "baseline_count": 168,
+   "recent_count": 31,
+   "baseline_per_1k": 2.97,
+   "recent_per_1k": 3.22,
+   "change_pct": 8,
+   "confidence": "measured"
+  },
+  "Hris": {
+   "baseline_count": 99,
+   "recent_count": 9,
+   "baseline_per_1k": 1.75,
+   "recent_per_1k": 0.93,
+   "change_pct": -47,
+   "confidence": "low_sample"
+  },
+  "Hypothesis": {
+   "baseline_count": 7,
+   "recent_count": 2,
+   "baseline_per_1k": 0.12,
+   "recent_per_1k": 0.21,
+   "change_pct": 68,
+   "confidence": "low_sample"
+  },
+  "Immigration": {
+   "baseline_count": 178,
+   "recent_count": 19,
+   "baseline_per_1k": 3.15,
+   "recent_per_1k": 1.97,
+   "change_pct": -37,
+   "confidence": "low_sample"
+  },
+  "Implicit": {
+   "baseline_count": 1,
+   "recent_count": 0,
+   "baseline_per_1k": 0.02,
+   "recent_per_1k": 0.0,
+   "change_pct": -100,
+   "confidence": "low_sample"
+  },
+  "Improvement": {
+   "baseline_count": 4184,
+   "recent_count": 706,
+   "baseline_per_1k": 73.97,
+   "recent_per_1k": 73.24,
+   "change_pct": -1,
+   "confidence": "measured"
+  },
+  "In-Store": {
+   "baseline_count": 169,
+   "recent_count": 53,
+   "baseline_per_1k": 2.99,
+   "recent_per_1k": 5.5,
+   "change_pct": 84,
+   "confidence": "measured"
+  },
+  "Indesign": {
+   "baseline_count": 32,
+   "recent_count": 8,
+   "baseline_per_1k": 0.57,
+   "recent_per_1k": 0.83,
+   "change_pct": 47,
+   "confidence": "low_sample"
+  },
+  "Installation": {
+   "baseline_count": 1554,
+   "recent_count": 253,
+   "baseline_per_1k": 27.47,
+   "recent_per_1k": 26.24,
+   "change_pct": -4,
+   "confidence": "measured"
+  },
+  "Instrumentation": {
+   "baseline_count": 242,
+   "recent_count": 34,
+   "baseline_per_1k": 4.28,
+   "recent_per_1k": 3.53,
+   "change_pct": -18,
+   "confidence": "measured"
+  },
+  "Interactive": {
+   "baseline_count": 187,
+   "recent_count": 47,
+   "baseline_per_1k": 3.31,
+   "recent_per_1k": 4.88,
+   "change_pct": 47,
+   "confidence": "measured"
+  },
+  "International": {
+   "baseline_count": 2050,
+   "recent_count": 388,
+   "baseline_per_1k": 36.24,
+   "recent_per_1k": 40.25,
+   "change_pct": 11,
+   "confidence": "measured"
+  },
+  "Intranet": {
+   "baseline_count": 26,
+   "recent_count": 5,
+   "baseline_per_1k": 0.46,
+   "recent_per_1k": 0.52,
+   "change_pct": 13,
+   "confidence": "low_sample"
+  },
+  "Inventory": {
+   "baseline_count": 3285,
+   "recent_count": 700,
+   "baseline_per_1k": 58.08,
+   "recent_per_1k": 72.61,
+   "change_pct": 25,
+   "confidence": "measured"
+  },
+  "Investigate": {
+   "baseline_count": 740,
+   "recent_count": 129,
+   "baseline_per_1k": 13.08,
+   "recent_per_1k": 13.38,
+   "change_pct": 2,
+   "confidence": "measured"
+  },
+  "Investigation": {
+   "baseline_count": 428,
+   "recent_count": 381,
+   "baseline_per_1k": 7.57,
+   "recent_per_1k": 39.52,
+   "change_pct": 422,
+   "confidence": "measured"
+  },
+  "Investigations": {
+   "baseline_count": 330,
+   "recent_count": 52,
+   "baseline_per_1k": 5.83,
+   "recent_per_1k": 5.39,
+   "change_pct": -8,
+   "confidence": "measured"
+  },
+  "Invoices": {
+   "baseline_count": 2594,
+   "recent_count": 367,
+   "baseline_per_1k": 45.86,
+   "recent_per_1k": 38.07,
+   "change_pct": -17,
+   "confidence": "measured"
+  },
+  "Invoicing": {
+   "baseline_count": 649,
+   "recent_count": 146,
+   "baseline_per_1k": 11.47,
+   "recent_per_1k": 15.15,
+   "change_pct": 32,
+   "confidence": "measured"
+  },
+  "Iphone": {
+   "baseline_count": 19,
+   "recent_count": 6,
+   "baseline_per_1k": 0.34,
+   "recent_per_1k": 0.62,
+   "change_pct": 85,
+   "confidence": "low_sample"
+  },
+  "Itil": {
+   "baseline_count": 65,
+   "recent_count": 5,
+   "baseline_per_1k": 1.15,
+   "recent_per_1k": 0.52,
+   "change_pct": -55,
+   "confidence": "low_sample"
+  },
+  "Java": {
+   "baseline_count": 538,
+   "recent_count": 40,
+   "baseline_per_1k": 9.51,
+   "recent_per_1k": 4.15,
+   "change_pct": -56,
+   "confidence": "measured"
+  },
+  "Jose": {
+   "baseline_count": 12,
+   "recent_count": 1,
+   "baseline_per_1k": 0.21,
+   "recent_per_1k": 0.1,
+   "change_pct": -51,
+   "confidence": "low_sample"
+  },
+  "Journalism": {
+   "baseline_count": 25,
+   "recent_count": 7,
+   "baseline_per_1k": 0.44,
+   "recent_per_1k": 0.73,
+   "change_pct": 64,
+   "confidence": "low_sample"
+  },
+  "Json": {
+   "baseline_count": 85,
+   "recent_count": 5,
+   "baseline_per_1k": 1.5,
+   "recent_per_1k": 0.52,
+   "change_pct": -65,
+   "confidence": "low_sample"
+  },
+  "Keras": {
+   "baseline_count": 3,
+   "recent_count": 1,
+   "baseline_per_1k": 0.05,
+   "recent_per_1k": 0.1,
+   "change_pct": 96,
+   "confidence": "low_sample"
+  },
+  "Keyboard": {
+   "baseline_count": 15,
+   "recent_count": 1,
+   "baseline_per_1k": 0.27,
+   "recent_per_1k": 0.1,
+   "change_pct": -61,
+   "confidence": "low_sample"
+  },
+  "Kivy": {
+   "baseline_count": 1,
+   "recent_count": 0,
+   "baseline_per_1k": 0.02,
+   "recent_per_1k": 0.0,
+   "change_pct": -100,
+   "confidence": "low_sample"
+  },
+  "Kpis": {
+   "baseline_count": 752,
+   "recent_count": 151,
+   "baseline_per_1k": 13.3,
+   "recent_per_1k": 15.66,
+   "change_pct": 18,
+   "confidence": "measured"
+  },
+  "LLM Orchestration (LangChain/LlamaIndex)": {
+   "baseline_count": 14,
+   "recent_count": 6,
+   "baseline_per_1k": 0.25,
+   "recent_per_1k": 0.62,
+   "change_pct": 151,
+   "confidence": "low_sample"
+  },
+  "Leadership": {
+   "baseline_count": 2521,
+   "recent_count": 508,
+   "baseline_per_1k": 44.57,
+   "recent_per_1k": 52.7,
+   "change_pct": 18,
+   "confidence": "measured"
+  },
+  "Lean": {
+   "baseline_count": 157,
+   "recent_count": 15,
+   "baseline_per_1k": 2.78,
+   "recent_per_1k": 1.56,
+   "change_pct": -44,
+   "confidence": "low_sample"
+  },
+  "Legal": {
+   "baseline_count": 1269,
+   "recent_count": 206,
+   "baseline_per_1k": 22.44,
+   "recent_per_1k": 21.37,
+   "change_pct": -5,
+   "confidence": "measured"
+  },
+  "Licensing": {
+   "baseline_count": 192,
+   "recent_count": 27,
+   "baseline_per_1k": 3.39,
+   "recent_per_1k": 2.8,
+   "change_pct": -17,
+   "confidence": "low_sample"
+  },
+  "Lifecycle": {
+   "baseline_count": 466,
+   "recent_count": 94,
+   "baseline_per_1k": 8.24,
+   "recent_per_1k": 9.75,
+   "change_pct": 18,
+   "confidence": "measured"
+  },
+  "Lighting": {
+   "baseline_count": 222,
+   "recent_count": 55,
+   "baseline_per_1k": 3.92,
+   "recent_per_1k": 5.71,
+   "change_pct": 45,
+   "confidence": "measured"
+  },
+  "Linux": {
+   "baseline_count": 379,
+   "recent_count": 36,
+   "baseline_per_1k": 6.7,
+   "recent_per_1k": 3.73,
+   "change_pct": -44,
+   "confidence": "measured"
+  },
+  "Litigation": {
+   "baseline_count": 97,
+   "recent_count": 15,
+   "baseline_per_1k": 1.71,
+   "recent_per_1k": 1.56,
+   "change_pct": -9,
+   "confidence": "low_sample"
+  },
+  "Logbook": {
+   "baseline_count": 32,
+   "recent_count": 4,
+   "baseline_per_1k": 0.57,
+   "recent_per_1k": 0.41,
+   "change_pct": -27,
+   "confidence": "low_sample"
+  },
+  "Logging": {
+   "baseline_count": 95,
+   "recent_count": 16,
+   "baseline_per_1k": 1.68,
+   "recent_per_1k": 1.66,
+   "change_pct": -1,
+   "confidence": "low_sample"
+  },
+  "Logistics": {
+   "baseline_count": 1370,
+   "recent_count": 354,
+   "baseline_per_1k": 24.22,
+   "recent_per_1k": 36.72,
+   "change_pct": 52,
+   "confidence": "measured"
+  },
+  "Machine Learning": {
+   "baseline_count": 212,
+   "recent_count": 34,
+   "baseline_per_1k": 3.75,
+   "recent_per_1k": 3.53,
+   "change_pct": -6,
+   "confidence": "measured"
+  },
+  "Magic": {
+   "baseline_count": 17,
+   "recent_count": 7,
+   "baseline_per_1k": 0.3,
+   "recent_per_1k": 0.73,
+   "change_pct": 142,
+   "confidence": "low_sample"
+  },
+  "Mako": {
+   "baseline_count": 1,
+   "recent_count": 0,
+   "baseline_per_1k": 0.02,
+   "recent_per_1k": 0.0,
+   "change_pct": -100,
+   "confidence": "low_sample"
+  },
+  "Markdown": {
+   "baseline_count": 4,
+   "recent_count": 2,
+   "baseline_per_1k": 0.07,
+   "recent_per_1k": 0.21,
+   "change_pct": 193,
+   "confidence": "low_sample"
+  },
+  "Marketing": {
+   "baseline_count": 6718,
+   "recent_count": 1372,
+   "baseline_per_1k": 118.77,
+   "recent_per_1k": 142.32,
+   "change_pct": 20,
+   "confidence": "measured"
+  },
+  "Math": {
+   "baseline_count": 60,
+   "recent_count": 13,
+   "baseline_per_1k": 1.06,
+   "recent_per_1k": 1.35,
+   "change_pct": 27,
+   "confidence": "low_sample"
+  },
+  "Mathematics": {
+   "baseline_count": 232,
+   "recent_count": 34,
+   "baseline_per_1k": 4.1,
+   "recent_per_1k": 3.53,
+   "change_pct": -14,
+   "confidence": "measured"
+  },
+  "Matlab": {
+   "baseline_count": 5,
+   "recent_count": 1,
+   "baseline_per_1k": 0.09,
+   "recent_per_1k": 0.1,
+   "change_pct": 17,
+   "confidence": "low_sample"
+  },
+  "Matplotlib": {
+   "baseline_count": 1,
+   "recent_count": 0,
+   "baseline_per_1k": 0.02,
+   "recent_per_1k": 0.0,
+   "change_pct": -100,
+   "confidence": "low_sample"
+  },
+  "Matrix": {
+   "baseline_count": 84,
+   "recent_count": 17,
+   "baseline_per_1k": 1.49,
+   "recent_per_1k": 1.76,
+   "change_pct": 19,
+   "confidence": "low_sample"
+  },
+  "Merchandising": {
+   "baseline_count": 414,
+   "recent_count": 111,
+   "baseline_per_1k": 7.32,
+   "recent_per_1k": 11.51,
+   "change_pct": 57,
+   "confidence": "measured"
+  },
+  "Merchant": {
+   "baseline_count": 99,
+   "recent_count": 18,
+   "baseline_per_1k": 1.75,
+   "recent_per_1k": 1.87,
+   "change_pct": 7,
+   "confidence": "low_sample"
+  },
+  "Metrics": {
+   "baseline_count": 857,
+   "recent_count": 164,
+   "baseline_per_1k": 15.15,
+   "recent_per_1k": 17.01,
+   "change_pct": 12,
+   "confidence": "measured"
+  },
+  "Mezzanine": {
+   "baseline_count": 1,
+   "recent_count": 1,
+   "baseline_per_1k": 0.02,
+   "recent_per_1k": 0.1,
+   "change_pct": 487,
+   "confidence": "low_sample"
+  },
+  "Micropython": {
+   "baseline_count": 1,
+   "recent_count": 0,
+   "baseline_per_1k": 0.02,
+   "recent_per_1k": 0.0,
+   "change_pct": -100,
+   "confidence": "low_sample"
+  },
+  "Migration": {
+   "baseline_count": 239,
+   "recent_count": 30,
+   "baseline_per_1k": 4.23,
+   "recent_per_1k": 3.11,
+   "change_pct": -26,
+   "confidence": "measured"
+  },
+  "Mining": {
+   "baseline_count": 140,
+   "recent_count": 15,
+   "baseline_per_1k": 2.48,
+   "recent_per_1k": 1.56,
+   "change_pct": -37,
+   "confidence": "low_sample"
+  },
+  "Mixer": {
+   "baseline_count": 7,
+   "recent_count": 0,
+   "baseline_per_1k": 0.12,
+   "recent_per_1k": 0.0,
+   "change_pct": -100,
+   "confidence": "low_sample"
+  },
+  "Mobile": {
+   "baseline_count": 910,
+   "recent_count": 128,
+   "baseline_per_1k": 16.09,
+   "recent_per_1k": 13.28,
+   "change_pct": -17,
+   "confidence": "measured"
+  },
+  "Mock": {
+   "baseline_count": 24,
+   "recent_count": 1,
+   "baseline_per_1k": 0.42,
+   "recent_per_1k": 0.1,
+   "change_pct": -76,
+   "confidence": "low_sample"
+  },
+  "Modeling": {
+   "baseline_count": 186,
+   "recent_count": 24,
+   "baseline_per_1k": 3.29,
+   "recent_per_1k": 2.49,
+   "change_pct": -24,
+   "confidence": "low_sample"
+  },
+  "Moment": {
+   "baseline_count": 54,
+   "recent_count": 10,
+   "baseline_per_1k": 0.95,
+   "recent_per_1k": 1.04,
+   "change_pct": 9,
+   "confidence": "low_sample"
+  },
+  "Money": {
+   "baseline_count": 327,
+   "recent_count": 39,
+   "baseline_per_1k": 5.78,
+   "recent_per_1k": 4.05,
+   "change_pct": -30,
+   "confidence": "measured"
+  },
+  "Mortgage": {
+   "baseline_count": 139,
+   "recent_count": 21,
+   "baseline_per_1k": 2.46,
+   "recent_per_1k": 2.18,
+   "change_pct": -11,
+   "confidence": "low_sample"
+  },
+  "Mouse": {
+   "baseline_count": 5,
+   "recent_count": 1,
+   "baseline_per_1k": 0.09,
+   "recent_per_1k": 0.1,
+   "change_pct": 17,
+   "confidence": "low_sample"
+  },
+  "Negotiation": {
+   "baseline_count": 1453,
+   "recent_count": 272,
+   "baseline_per_1k": 25.69,
+   "recent_per_1k": 28.22,
+   "change_pct": 10,
+   "confidence": "measured"
+  },
+  "Networking": {
+   "baseline_count": 890,
+   "recent_count": 171,
+   "baseline_per_1k": 15.74,
+   "recent_per_1k": 17.74,
+   "change_pct": 13,
+   "confidence": "measured"
+  },
+  "Networkx": {
+   "baseline_count": 1,
+   "recent_count": 0,
+   "baseline_per_1k": 0.02,
+   "recent_per_1k": 0.0,
+   "change_pct": -100,
+   "confidence": "low_sample"
+  },
+  "Newspaper": {
+   "baseline_count": 17,
+   "recent_count": 0,
+   "baseline_per_1k": 0.3,
+   "recent_per_1k": 0.0,
+   "change_pct": -100,
+   "confidence": "low_sample"
+  },
+  "Nltk": {
+   "baseline_count": 1,
+   "recent_count": 0,
+   "baseline_per_1k": 0.02,
+   "recent_per_1k": 0.0,
+   "change_pct": -100,
+   "confidence": "low_sample"
+  },
+  "Node.js": {
+   "baseline_count": 145,
+   "recent_count": 8,
+   "baseline_per_1k": 2.56,
+   "recent_per_1k": 0.83,
+   "change_pct": -68,
+   "confidence": "low_sample"
+  },
+  "Non-Profit": {
+   "baseline_count": 40,
+   "recent_count": 3,
+   "baseline_per_1k": 0.71,
+   "recent_per_1k": 0.31,
+   "change_pct": -56,
+   "confidence": "low_sample"
+  },
+  "Nose": {
+   "baseline_count": 0,
+   "recent_count": 3,
+   "baseline_per_1k": 0.0,
+   "recent_per_1k": 0.31,
+   "change_pct": null,
+   "confidence": "low_sample"
+  },
+  "Nosql": {
+   "baseline_count": 31,
+   "recent_count": 0,
+   "baseline_per_1k": 0.55,
+   "recent_per_1k": 0.0,
+   "change_pct": -100,
+   "confidence": "low_sample"
+  },
+  "NumPy": {
+   "baseline_count": 2,
+   "recent_count": 1,
+   "baseline_per_1k": 0.04,
+   "recent_per_1k": 0.1,
+   "change_pct": 193,
+   "confidence": "low_sample"
+  },
+  "Objective-C": {
+   "baseline_count": 14,
+   "recent_count": 2,
+   "baseline_per_1k": 0.25,
+   "recent_per_1k": 0.21,
+   "change_pct": -16,
+   "confidence": "low_sample"
+  },
+  "On-Boarding": {
+   "baseline_count": 180,
+   "recent_count": 13,
+   "baseline_per_1k": 3.18,
+   "recent_per_1k": 1.35,
+   "change_pct": -58,
+   "confidence": "low_sample"
+  },
+  "On-Call": {
+   "baseline_count": 75,
+   "recent_count": 11,
+   "baseline_per_1k": 1.33,
+   "recent_per_1k": 1.14,
+   "change_pct": -14,
+   "confidence": "low_sample"
+  },
+  "Opencv": {
+   "baseline_count": 3,
+   "recent_count": 0,
+   "baseline_per_1k": 0.05,
+   "recent_per_1k": 0.0,
+   "change_pct": -100,
+   "confidence": "low_sample"
+  },
+  "Openstack": {
+   "baseline_count": 2,
+   "recent_count": 0,
+   "baseline_per_1k": 0.04,
+   "recent_per_1k": 0.0,
+   "change_pct": -100,
+   "confidence": "low_sample"
+  },
+  "Operations": {
+   "baseline_count": 6695,
+   "recent_count": 1390,
+   "baseline_per_1k": 118.37,
+   "recent_per_1k": 144.19,
+   "change_pct": 22,
+   "confidence": "measured"
+  },
+  "Oracle": {
+   "baseline_count": 262,
+   "recent_count": 31,
+   "baseline_per_1k": 4.63,
+   "recent_per_1k": 3.22,
+   "change_pct": -31,
+   "confidence": "measured"
+  },
+  "Orange": {
+   "baseline_count": 7,
+   "recent_count": 1,
+   "baseline_per_1k": 0.12,
+   "recent_per_1k": 0.1,
+   "change_pct": -16,
+   "confidence": "low_sample"
+  },
+  "Orator": {
+   "baseline_count": 1,
+   "recent_count": 0,
+   "baseline_per_1k": 0.02,
+   "recent_per_1k": 0.0,
+   "change_pct": -100,
+   "confidence": "low_sample"
+  },
+  "Ordering": {
+   "baseline_count": 465,
+   "recent_count": 72,
+   "baseline_per_1k": 8.22,
+   "recent_per_1k": 7.47,
+   "change_pct": -9,
+   "confidence": "measured"
+  },
+  "Outreach": {
+   "baseline_count": 124,
+   "recent_count": 55,
+   "baseline_per_1k": 2.19,
+   "recent_per_1k": 5.71,
+   "change_pct": 160,
+   "confidence": "measured"
+  },
+  "Outsourcing": {
+   "baseline_count": 222,
+   "recent_count": 34,
+   "baseline_per_1k": 3.92,
+   "recent_per_1k": 3.53,
+   "change_pct": -10,
+   "confidence": "measured"
+  },
+  "PHP": {
+   "baseline_count": 293,
+   "recent_count": 21,
+   "baseline_per_1k": 5.18,
+   "recent_per_1k": 2.18,
+   "change_pct": -58,
+   "confidence": "low_sample"
+  },
+  "PLC Programming": {
+   "baseline_count": 297,
+   "recent_count": 51,
+   "baseline_per_1k": 5.25,
+   "recent_per_1k": 5.29,
+   "change_pct": 1,
+   "confidence": "measured"
+  },
+  "Pandas": {
+   "baseline_count": 4,
+   "recent_count": 2,
+   "baseline_per_1k": 0.07,
+   "recent_per_1k": 0.21,
+   "change_pct": 193,
+   "confidence": "low_sample"
+  },
+  "Partnership": {
+   "baseline_count": 493,
+   "recent_count": 97,
+   "baseline_per_1k": 8.72,
+   "recent_per_1k": 10.06,
+   "change_pct": 15,
+   "confidence": "measured"
+  },
+  "Partnerships": {
+   "baseline_count": 470,
+   "recent_count": 118,
+   "baseline_per_1k": 8.31,
+   "recent_per_1k": 12.24,
+   "change_pct": 47,
+   "confidence": "measured"
+  },
+  "Paste": {
+   "baseline_count": 17,
+   "recent_count": 1,
+   "baseline_per_1k": 0.3,
+   "recent_per_1k": 0.1,
+   "change_pct": -65,
+   "confidence": "low_sample"
+  },
+  "Pattern": {
+   "baseline_count": 89,
+   "recent_count": 5,
+   "baseline_per_1k": 1.57,
+   "recent_per_1k": 0.52,
+   "change_pct": -67,
+   "confidence": "low_sample"
+  },
+  "Payments": {
+   "baseline_count": 2101,
+   "recent_count": 387,
+   "baseline_per_1k": 37.15,
+   "recent_per_1k": 40.15,
+   "change_pct": 8,
+   "confidence": "measured"
+  },
+  "Payroll": {
+   "baseline_count": 2349,
+   "recent_count": 286,
+   "baseline_per_1k": 41.53,
+   "recent_per_1k": 29.67,
+   "change_pct": -29,
+   "confidence": "measured"
+  },
+  "Pelican": {
+   "baseline_count": 1,
+   "recent_count": 0,
+   "baseline_per_1k": 0.02,
+   "recent_per_1k": 0.0,
+   "change_pct": -100,
+   "confidence": "low_sample"
+  },
+  "People Data Analytics": {
+   "baseline_count": 155,
+   "recent_count": 15,
+   "baseline_per_1k": 2.74,
+   "recent_per_1k": 1.56,
+   "change_pct": -43,
+   "confidence": "low_sample"
+  },
+  "Perl": {
+   "baseline_count": 20,
+   "recent_count": 0,
+   "baseline_per_1k": 0.35,
+   "recent_per_1k": 0.0,
+   "change_pct": -100,
+   "confidence": "low_sample"
+  },
+  "Pharmaceutical": {
+   "baseline_count": 183,
+   "recent_count": 45,
+   "baseline_per_1k": 3.24,
+   "recent_per_1k": 4.67,
+   "change_pct": 44,
+   "confidence": "measured"
+  },
+  "Pharmacy": {
+   "baseline_count": 149,
+   "recent_count": 58,
+   "baseline_per_1k": 2.63,
+   "recent_per_1k": 6.02,
+   "change_pct": 128,
+   "confidence": "measured"
+  },
+  "Photography": {
+   "baseline_count": 127,
+   "recent_count": 23,
+   "baseline_per_1k": 2.25,
+   "recent_per_1k": 2.39,
+   "change_pct": 6,
+   "confidence": "low_sample"
+  },
+  "Physics": {
+   "baseline_count": 93,
+   "recent_count": 17,
+   "baseline_per_1k": 1.64,
+   "recent_per_1k": 1.76,
+   "change_pct": 7,
+   "confidence": "low_sample"
+  },
+  "Pillow": {
+   "baseline_count": 5,
+   "recent_count": 1,
+   "baseline_per_1k": 0.09,
+   "recent_per_1k": 0.1,
+   "change_pct": 17,
+   "confidence": "low_sample"
+  },
+  "Pingo": {
+   "baseline_count": 1,
+   "recent_count": 0,
+   "baseline_per_1k": 0.02,
+   "recent_per_1k": 0.0,
+   "change_pct": -100,
+   "confidence": "low_sample"
+  },
+  "Pivot": {
+   "baseline_count": 77,
+   "recent_count": 13,
+   "baseline_per_1k": 1.36,
+   "recent_per_1k": 1.35,
+   "change_pct": -1,
+   "confidence": "low_sample"
+  },
+  "Plan": {
+   "baseline_count": 6508,
+   "recent_count": 986,
+   "baseline_per_1k": 115.06,
+   "recent_per_1k": 102.28,
+   "change_pct": -11,
+   "confidence": "measured"
+  },
+  "Policies": {
+   "baseline_count": 5254,
+   "recent_count": 923,
+   "baseline_per_1k": 92.89,
+   "recent_per_1k": 95.75,
+   "change_pct": 3,
+   "confidence": "measured"
+  },
+  "Positioning": {
+   "baseline_count": 248,
+   "recent_count": 57,
+   "baseline_per_1k": 4.38,
+   "recent_per_1k": 5.91,
+   "change_pct": 35,
+   "confidence": "measured"
+  },
+  "Power BI": {
+   "baseline_count": 243,
+   "recent_count": 35,
+   "baseline_per_1k": 4.3,
+   "recent_per_1k": 3.63,
+   "change_pct": -15,
+   "confidence": "measured"
+  },
+  "Powerpoint": {
+   "baseline_count": 618,
+   "recent_count": 91,
+   "baseline_per_1k": 10.93,
+   "recent_per_1k": 9.44,
+   "change_pct": -14,
+   "confidence": "measured"
+  },
+  "Presentation": {
+   "baseline_count": 1621,
+   "recent_count": 261,
+   "baseline_per_1k": 28.66,
+   "recent_per_1k": 27.07,
+   "change_pct": -6,
+   "confidence": "measured"
+  },
+  "Presentations": {
+   "baseline_count": 1322,
+   "recent_count": 314,
+   "baseline_per_1k": 23.37,
+   "recent_per_1k": 32.57,
+   "change_pct": 39,
+   "confidence": "measured"
+  },
+  "Process": {
+   "baseline_count": 10345,
+   "recent_count": 1705,
+   "baseline_per_1k": 182.9,
+   "recent_per_1k": 176.87,
+   "change_pct": -3,
+   "confidence": "measured"
+  },
+  "Procurement": {
+   "baseline_count": 1984,
+   "recent_count": 418,
+   "baseline_per_1k": 35.08,
+   "recent_per_1k": 43.36,
+   "change_pct": 24,
+   "confidence": "measured"
+  },
+  "Profiling": {
+   "baseline_count": 44,
+   "recent_count": 10,
+   "baseline_per_1k": 0.78,
+   "recent_per_1k": 1.04,
+   "change_pct": 33,
+   "confidence": "low_sample"
+  },
+  "Programming": {
+   "baseline_count": 858,
+   "recent_count": 116,
+   "baseline_per_1k": 15.17,
+   "recent_per_1k": 12.03,
+   "change_pct": -21,
+   "confidence": "measured"
+  },
+  "Project Management": {
+   "baseline_count": 2402,
+   "recent_count": 319,
+   "baseline_per_1k": 42.47,
+   "recent_per_1k": 33.09,
+   "change_pct": -22,
+   "confidence": "measured"
+  },
+  "Prompt Engineering": {
+   "baseline_count": 3,
+   "recent_count": 4,
+   "baseline_per_1k": 0.05,
+   "recent_per_1k": 0.41,
+   "change_pct": 682,
+   "confidence": "low_sample"
+  },
+  "Proposal": {
+   "baseline_count": 703,
+   "recent_count": 88,
+   "baseline_per_1k": 12.43,
+   "recent_per_1k": 9.13,
+   "change_pct": -27,
+   "confidence": "measured"
+  },
+  "Prospecting": {
+   "baseline_count": 328,
+   "recent_count": 91,
+   "baseline_per_1k": 5.8,
+   "recent_per_1k": 9.44,
+   "change_pct": 63,
+   "confidence": "measured"
+  },
+  "Protocols": {
+   "baseline_count": 318,
+   "recent_count": 95,
+   "baseline_per_1k": 5.62,
+   "recent_per_1k": 9.85,
+   "change_pct": 75,
+   "confidence": "measured"
+  },
+  "Prototype": {
+   "baseline_count": 107,
+   "recent_count": 19,
+   "baseline_per_1k": 1.89,
+   "recent_per_1k": 1.97,
+   "change_pct": 4,
+   "confidence": "low_sample"
+  },
+  "Prototyping": {
+   "baseline_count": 92,
+   "recent_count": 14,
+   "baseline_per_1k": 1.63,
+   "recent_per_1k": 1.45,
+   "change_pct": -11,
+   "confidence": "low_sample"
+  },
+  "Psychology": {
+   "baseline_count": 132,
+   "recent_count": 20,
+   "baseline_per_1k": 2.33,
+   "recent_per_1k": 2.07,
+   "change_pct": -11,
+   "confidence": "low_sample"
+  },
+  "Publishing": {
+   "baseline_count": 102,
+   "recent_count": 24,
+   "baseline_per_1k": 1.8,
+   "recent_per_1k": 2.49,
+   "change_pct": 38,
+   "confidence": "low_sample"
+  },
+  "Purchasing": {
+   "baseline_count": 1589,
+   "recent_count": 251,
+   "baseline_per_1k": 28.09,
+   "recent_per_1k": 26.04,
+   "change_pct": -7,
+   "confidence": "measured"
+  },
+  "Pyqt": {
+   "baseline_count": 1,
+   "recent_count": 0,
+   "baseline_per_1k": 0.02,
+   "recent_per_1k": 0.0,
+   "change_pct": -100,
+   "confidence": "low_sample"
+  },
+  "Pyramid": {
+   "baseline_count": 37,
+   "recent_count": 6,
+   "baseline_per_1k": 0.65,
+   "recent_per_1k": 0.62,
+   "change_pct": -5,
+   "confidence": "low_sample"
+  },
+  "Pyro": {
+   "baseline_count": 1,
+   "recent_count": 0,
+   "baseline_per_1k": 0.02,
+   "recent_per_1k": 0.0,
+   "change_pct": -100,
+   "confidence": "low_sample"
+  },
+  "Pyspark": {
+   "baseline_count": 4,
+   "recent_count": 1,
+   "baseline_per_1k": 0.07,
+   "recent_per_1k": 0.1,
+   "change_pct": 47,
+   "confidence": "low_sample"
+  },
+  "Pytest": {
+   "baseline_count": 0,
+   "recent_count": 1,
+   "baseline_per_1k": 0.0,
+   "recent_per_1k": 0.1,
+   "change_pct": null,
+   "confidence": "low_sample"
+  },
+  "Python": {
+   "baseline_count": 388,
+   "recent_count": 59,
+   "baseline_per_1k": 6.86,
+   "recent_per_1k": 6.12,
+   "change_pct": -11,
+   "confidence": "measured"
+  },
+  "Python Data Analysis": {
+   "baseline_count": 979,
+   "recent_count": 169,
+   "baseline_per_1k": 17.31,
+   "recent_per_1k": 17.53,
+   "change_pct": 1,
+   "confidence": "measured"
+  },
+  "Pytorch": {
+   "baseline_count": 4,
+   "recent_count": 0,
+   "baseline_per_1k": 0.07,
+   "recent_per_1k": 0.0,
+   "change_pct": -100,
+   "confidence": "low_sample"
+  },
+  "Quads": {
+   "baseline_count": 1,
+   "recent_count": 0,
+   "baseline_per_1k": 0.02,
+   "recent_per_1k": 0.0,
+   "change_pct": -100,
+   "confidence": "low_sample"
+  },
+  "Quality Assurance": {
+   "baseline_count": 889,
+   "recent_count": 191,
+   "baseline_per_1k": 15.72,
+   "recent_per_1k": 19.81,
+   "change_pct": 26,
+   "confidence": "measured"
+  },
+  "Quality Control": {
+   "baseline_count": 976,
+   "recent_count": 210,
+   "baseline_per_1k": 17.26,
+   "recent_per_1k": 21.78,
+   "change_pct": 26,
+   "confidence": "measured"
+  },
+  "Queries": {
+   "baseline_count": 1432,
+   "recent_count": 229,
+   "baseline_per_1k": 25.32,
+   "recent_per_1k": 23.76,
+   "change_pct": -6,
+   "confidence": "measured"
+  },
+  "Quickbooks": {
+   "baseline_count": 37,
+   "recent_count": 10,
+   "baseline_per_1k": 0.65,
+   "recent_per_1k": 1.04,
+   "change_pct": 59,
+   "confidence": "low_sample"
+  },
+  "REST APIs": {
+   "baseline_count": 465,
+   "recent_count": 57,
+   "baseline_per_1k": 8.22,
+   "recent_per_1k": 5.91,
+   "change_pct": -28,
+   "confidence": "measured"
+  },
+  "Radar": {
+   "baseline_count": 9,
+   "recent_count": 1,
+   "baseline_per_1k": 0.16,
+   "recent_per_1k": 0.1,
+   "change_pct": -35,
+   "confidence": "low_sample"
+  },
+  "React": {
+   "baseline_count": 280,
+   "recent_count": 33,
+   "baseline_per_1k": 4.95,
+   "recent_per_1k": 3.42,
+   "change_pct": -31,
+   "confidence": "measured"
+  },
+  "Real-Time": {
+   "baseline_count": 150,
+   "recent_count": 31,
+   "baseline_per_1k": 2.65,
+   "recent_per_1k": 3.22,
+   "change_pct": 21,
+   "confidence": "measured"
+  },
+  "Receivables": {
+   "baseline_count": 332,
+   "recent_count": 27,
+   "baseline_per_1k": 5.87,
+   "recent_per_1k": 2.8,
+   "change_pct": -52,
+   "confidence": "low_sample"
+  },
+  "Reconcile": {
+   "baseline_count": 832,
+   "recent_count": 147,
+   "baseline_per_1k": 14.71,
+   "recent_per_1k": 15.25,
+   "change_pct": 4,
+   "confidence": "measured"
+  },
+  "Reconciliation": {
+   "baseline_count": 2080,
+   "recent_count": 260,
+   "baseline_per_1k": 36.77,
+   "recent_per_1k": 26.97,
+   "change_pct": -27,
+   "confidence": "measured"
+  },
+  "Recruit": {
+   "baseline_count": 357,
+   "recent_count": 56,
+   "baseline_per_1k": 6.31,
+   "recent_per_1k": 5.81,
+   "change_pct": -8,
+   "confidence": "measured"
+  },
+  "Recruitment": {
+   "baseline_count": 3025,
+   "recent_count": 431,
+   "baseline_per_1k": 53.48,
+   "recent_per_1k": 44.71,
+   "change_pct": -16,
+   "confidence": "measured"
+  },
+  "Redhat": {
+   "baseline_count": 6,
+   "recent_count": 0,
+   "baseline_per_1k": 0.11,
+   "recent_per_1k": 0.0,
+   "change_pct": -100,
+   "confidence": "low_sample"
+  },
+  "Regulations": {
+   "baseline_count": 1834,
+   "recent_count": 431,
+   "baseline_per_1k": 32.43,
+   "recent_per_1k": 44.71,
+   "change_pct": 38,
+   "confidence": "measured"
+  },
+  "Regulatory": {
+   "baseline_count": 2342,
+   "recent_count": 523,
+   "baseline_per_1k": 41.41,
+   "recent_per_1k": 54.25,
+   "change_pct": 31,
+   "confidence": "measured"
+  },
+  "Repairs": {
+   "baseline_count": 435,
+   "recent_count": 92,
+   "baseline_per_1k": 7.69,
+   "recent_per_1k": 9.54,
+   "change_pct": 24,
+   "confidence": "measured"
+  },
+  "Reporting": {
+   "baseline_count": 5542,
+   "recent_count": 1464,
+   "baseline_per_1k": 97.98,
+   "recent_per_1k": 151.87,
+   "change_pct": 55,
+   "confidence": "measured"
+  },
+  "Reports": {
+   "baseline_count": 7352,
+   "recent_count": 1274,
+   "baseline_per_1k": 129.98,
+   "recent_per_1k": 132.16,
+   "change_pct": 2,
+   "confidence": "measured"
+  },
+  "Requests": {
+   "baseline_count": 1324,
+   "recent_count": 225,
+   "baseline_per_1k": 23.41,
+   "recent_per_1k": 23.34,
+   "change_pct": 0,
+   "confidence": "measured"
+  },
+  "Research": {
+   "baseline_count": 2770,
+   "recent_count": 448,
+   "baseline_per_1k": 48.97,
+   "recent_per_1k": 46.47,
+   "change_pct": -5,
+   "confidence": "measured"
+  },
+  "Researching": {
+   "baseline_count": 400,
+   "recent_count": 86,
+   "baseline_per_1k": 7.07,
+   "recent_per_1k": 8.92,
+   "change_pct": 26,
+   "confidence": "measured"
+  },
+  "Responses": {
+   "baseline_count": 201,
+   "recent_count": 46,
+   "baseline_per_1k": 3.55,
+   "recent_per_1k": 4.77,
+   "change_pct": 34,
+   "confidence": "measured"
+  },
+  "Rest": {
+   "baseline_count": 205,
+   "recent_count": 33,
+   "baseline_per_1k": 3.62,
+   "recent_per_1k": 3.42,
+   "change_pct": -6,
+   "confidence": "measured"
+  },
+  "Restless": {
+   "baseline_count": 1,
+   "recent_count": 0,
+   "baseline_per_1k": 0.02,
+   "recent_per_1k": 0.0,
+   "change_pct": -100,
+   "confidence": "low_sample"
+  },
+  "Retail": {
+   "baseline_count": 1837,
+   "recent_count": 455,
+   "baseline_per_1k": 32.48,
+   "recent_per_1k": 47.2,
+   "change_pct": 45,
+   "confidence": "measured"
+  },
+  "Retention": {
+   "baseline_count": 445,
+   "recent_count": 69,
+   "baseline_per_1k": 7.87,
+   "recent_per_1k": 7.16,
+   "change_pct": -9,
+   "confidence": "measured"
+  },
+  "Rfps": {
+   "baseline_count": 26,
+   "recent_count": 7,
+   "baseline_per_1k": 0.46,
+   "recent_per_1k": 0.73,
+   "change_pct": 58,
+   "confidence": "low_sample"
+  },
+  "Risk Assessment": {
+   "baseline_count": 1389,
+   "recent_count": 243,
+   "baseline_per_1k": 24.56,
+   "recent_per_1k": 25.21,
+   "change_pct": 3,
+   "confidence": "measured"
+  },
+  "Robot": {
+   "baseline_count": 39,
+   "recent_count": 4,
+   "baseline_per_1k": 0.69,
+   "recent_per_1k": 0.41,
+   "change_pct": -40,
+   "confidence": "low_sample"
+  },
+  "Rocket": {
+   "baseline_count": 3,
+   "recent_count": 1,
+   "baseline_per_1k": 0.05,
+   "recent_per_1k": 0.1,
+   "change_pct": 96,
+   "confidence": "low_sample"
+  },
+  "Routing": {
+   "baseline_count": 188,
+   "recent_count": 28,
+   "baseline_per_1k": 3.32,
+   "recent_per_1k": 2.9,
+   "change_pct": -13,
+   "confidence": "low_sample"
+  },
+  "Ruby": {
+   "baseline_count": 20,
+   "recent_count": 2,
+   "baseline_per_1k": 0.35,
+   "recent_per_1k": 0.21,
+   "change_pct": -41,
+   "confidence": "low_sample"
+  },
+  "SAP": {
+   "baseline_count": 1518,
+   "recent_count": 224,
+   "baseline_per_1k": 26.84,
+   "recent_per_1k": 23.24,
+   "change_pct": -13,
+   "confidence": "measured"
+  },
+  "SEO Content Strategy": {
+   "baseline_count": 246,
+   "recent_count": 62,
+   "baseline_per_1k": 4.35,
+   "recent_per_1k": 6.43,
+   "change_pct": 48,
+   "confidence": "measured"
+  },
+  "SQL": {
+   "baseline_count": 1558,
+   "recent_count": 218,
+   "baseline_per_1k": 27.55,
+   "recent_per_1k": 22.61,
+   "change_pct": -18,
+   "confidence": "measured"
+  },
+  "Saas": {
+   "baseline_count": 92,
+   "recent_count": 21,
+   "baseline_per_1k": 1.63,
+   "recent_per_1k": 2.18,
+   "change_pct": 34,
+   "confidence": "low_sample"
+  },
+  "Safety": {
+   "baseline_count": 4042,
+   "recent_count": 1008,
+   "baseline_per_1k": 71.46,
+   "recent_per_1k": 104.56,
+   "change_pct": 46,
+   "confidence": "measured"
+  },
+  "Sales": {
+   "baseline_count": 10513,
+   "recent_count": 1956,
+   "baseline_per_1k": 185.87,
+   "recent_per_1k": 202.9,
+   "change_pct": 9,
+   "confidence": "measured"
+  },
+  "Salesforce": {
+   "baseline_count": 73,
+   "recent_count": 10,
+   "baseline_per_1k": 1.29,
+   "recent_per_1k": 1.04,
+   "change_pct": -20,
+   "confidence": "low_sample"
+  },
+  "Saltstack": {
+   "baseline_count": 1,
+   "recent_count": 0,
+   "baseline_per_1k": 0.02,
+   "recent_per_1k": 0.0,
+   "change_pct": -100,
+   "confidence": "low_sample"
+  },
+  "Sanction": {
+   "baseline_count": 13,
+   "recent_count": 2,
+   "baseline_per_1k": 0.23,
+   "recent_per_1k": 0.21,
+   "change_pct": -10,
+   "confidence": "low_sample"
+  },
+  "Sanic": {
+   "baseline_count": 1,
+   "recent_count": 0,
+   "baseline_per_1k": 0.02,
+   "recent_per_1k": 0.0,
+   "change_pct": -100,
+   "confidence": "low_sample"
+  },
+  "Sanitize": {
+   "baseline_count": 6,
+   "recent_count": 5,
+   "baseline_per_1k": 0.11,
+   "recent_per_1k": 0.52,
+   "change_pct": 389,
+   "confidence": "low_sample"
+  },
+  "Saws": {
+   "baseline_count": 1,
+   "recent_count": 1,
+   "baseline_per_1k": 0.02,
+   "recent_per_1k": 0.1,
+   "change_pct": 487,
+   "confidence": "low_sample"
+  },
+  "Scala": {
+   "baseline_count": 4,
+   "recent_count": 0,
+   "baseline_per_1k": 0.07,
+   "recent_per_1k": 0.0,
+   "change_pct": -100,
+   "confidence": "low_sample"
+  },
+  "Schedule": {
+   "baseline_count": 3552,
+   "recent_count": 518,
+   "baseline_per_1k": 62.8,
+   "recent_per_1k": 53.73,
+   "change_pct": -14,
+   "confidence": "measured"
+  },
+  "Schedules": {
+   "baseline_count": 1348,
+   "recent_count": 229,
+   "baseline_per_1k": 23.83,
+   "recent_per_1k": 23.76,
+   "change_pct": 0,
+   "confidence": "measured"
+  },
+  "Scheduling": {
+   "baseline_count": 1239,
+   "recent_count": 236,
+   "baseline_per_1k": 21.91,
+   "recent_per_1k": 24.48,
+   "change_pct": 12,
+   "confidence": "measured"
+  },
+  "Schematics": {
+   "baseline_count": 87,
+   "recent_count": 15,
+   "baseline_per_1k": 1.54,
+   "recent_per_1k": 1.56,
+   "change_pct": 1,
+   "confidence": "low_sample"
+  },
+  "Scikit-Learn": {
+   "baseline_count": 1,
+   "recent_count": 0,
+   "baseline_per_1k": 0.02,
+   "recent_per_1k": 0.0,
+   "change_pct": -100,
+   "confidence": "low_sample"
+  },
+  "Scrapy": {
+   "baseline_count": 0,
+   "recent_count": 1,
+   "baseline_per_1k": 0.0,
+   "recent_per_1k": 0.1,
+   "change_pct": null,
+   "confidence": "low_sample"
+  },
+  "Scripting": {
+   "baseline_count": 157,
+   "recent_count": 33,
+   "baseline_per_1k": 2.78,
+   "recent_per_1k": 3.42,
+   "change_pct": 23,
+   "confidence": "measured"
+  },
+  "Seaborn": {
+   "baseline_count": 1,
+   "recent_count": 0,
+   "baseline_per_1k": 0.02,
+   "recent_per_1k": 0.0,
+   "change_pct": -100,
+   "confidence": "low_sample"
+  },
+  "Security": {
+   "baseline_count": 2030,
+   "recent_count": 298,
+   "baseline_per_1k": 35.89,
+   "recent_per_1k": 30.91,
+   "change_pct": -14,
+   "confidence": "measured"
+  },
+  "Segmentation": {
+   "baseline_count": 93,
+   "recent_count": 17,
+   "baseline_per_1k": 1.64,
+   "recent_per_1k": 1.76,
+   "change_pct": 7,
+   "confidence": "low_sample"
+  },
+  "Selenium": {
+   "baseline_count": 31,
+   "recent_count": 7,
+   "baseline_per_1k": 0.55,
+   "recent_per_1k": 0.73,
+   "change_pct": 32,
+   "confidence": "low_sample"
+  },
+  "Sentry": {
+   "baseline_count": 1,
+   "recent_count": 0,
+   "baseline_per_1k": 0.02,
+   "recent_per_1k": 0.0,
+   "change_pct": -100,
+   "confidence": "low_sample"
+  },
+  "Servers": {
+   "baseline_count": 413,
+   "recent_count": 40,
+   "baseline_per_1k": 7.3,
+   "recent_per_1k": 4.15,
+   "change_pct": -43,
+   "confidence": "measured"
+  },
+  "Sharepoint": {
+   "baseline_count": 82,
+   "recent_count": 8,
+   "baseline_per_1k": 1.45,
+   "recent_per_1k": 0.83,
+   "change_pct": -43,
+   "confidence": "low_sample"
+  },
+  "Shell": {
+   "baseline_count": 108,
+   "recent_count": 9,
+   "baseline_per_1k": 1.91,
+   "recent_per_1k": 0.93,
+   "change_pct": -51,
+   "confidence": "low_sample"
+  },
+  "Sketch": {
+   "baseline_count": 71,
+   "recent_count": 3,
+   "baseline_per_1k": 1.26,
+   "recent_per_1k": 0.31,
+   "change_pct": -75,
+   "confidence": "low_sample"
+  },
+  "Soap": {
+   "baseline_count": 45,
+   "recent_count": 6,
+   "baseline_per_1k": 0.8,
+   "recent_per_1k": 0.62,
+   "change_pct": -22,
+   "confidence": "low_sample"
+  },
+  "Social Media Campaigns": {
+   "baseline_count": 2227,
+   "recent_count": 474,
+   "baseline_per_1k": 39.37,
+   "recent_per_1k": 49.17,
+   "change_pct": 25,
+   "confidence": "measured"
+  },
+  "Solaris": {
+   "baseline_count": 22,
+   "recent_count": 4,
+   "baseline_per_1k": 0.39,
+   "recent_per_1k": 0.41,
+   "change_pct": 7,
+   "confidence": "low_sample"
+  },
+  "Solicitation": {
+   "baseline_count": 21,
+   "recent_count": 2,
+   "baseline_per_1k": 0.37,
+   "recent_per_1k": 0.21,
+   "change_pct": -44,
+   "confidence": "low_sample"
+  },
+  "SolidWorks": {
+   "baseline_count": 144,
+   "recent_count": 24,
+   "baseline_per_1k": 2.55,
+   "recent_per_1k": 2.49,
+   "change_pct": -2,
+   "confidence": "low_sample"
+  },
+  "Solidworks": {
+   "baseline_count": 116,
+   "recent_count": 18,
+   "baseline_per_1k": 2.05,
+   "recent_per_1k": 1.87,
+   "change_pct": -9,
+   "confidence": "low_sample"
+  },
+  "Sops": {
+   "baseline_count": 334,
+   "recent_count": 97,
+   "baseline_per_1k": 5.91,
+   "recent_per_1k": 10.06,
+   "change_pct": 70,
+   "confidence": "measured"
+  },
+  "Sourcing": {
+   "baseline_count": 1610,
+   "recent_count": 234,
+   "baseline_per_1k": 28.46,
+   "recent_per_1k": 24.27,
+   "change_pct": -15,
+   "confidence": "measured"
+  },
+  "Spanish": {
+   "baseline_count": 13,
+   "recent_count": 3,
+   "baseline_per_1k": 0.23,
+   "recent_per_1k": 0.31,
+   "change_pct": 35,
+   "confidence": "low_sample"
+  },
+  "Spark": {
+   "baseline_count": 70,
+   "recent_count": 15,
+   "baseline_per_1k": 1.24,
+   "recent_per_1k": 1.56,
+   "change_pct": 26,
+   "confidence": "low_sample"
+  },
+  "Specifications": {
+   "baseline_count": 2194,
+   "recent_count": 396,
+   "baseline_per_1k": 38.79,
+   "recent_per_1k": 41.08,
+   "change_pct": 6,
+   "confidence": "measured"
+  },
+  "Spelling": {
+   "baseline_count": 13,
+   "recent_count": 1,
+   "baseline_per_1k": 0.23,
+   "recent_per_1k": 0.1,
+   "change_pct": -55,
+   "confidence": "low_sample"
+  },
+  "Sports": {
+   "baseline_count": 278,
+   "recent_count": 53,
+   "baseline_per_1k": 4.92,
+   "recent_per_1k": 5.5,
+   "change_pct": 12,
+   "confidence": "measured"
+  },
+  "Spreadsheets": {
+   "baseline_count": 234,
+   "recent_count": 26,
+   "baseline_per_1k": 4.14,
+   "recent_per_1k": 2.7,
+   "change_pct": -35,
+   "confidence": "low_sample"
+  },
+  "Staffing": {
+   "baseline_count": 350,
+   "recent_count": 42,
+   "baseline_per_1k": 6.19,
+   "recent_per_1k": 4.36,
+   "change_pct": -30,
+   "confidence": "measured"
+  },
+  "Standardization": {
+   "baseline_count": 171,
+   "recent_count": 18,
+   "baseline_per_1k": 3.02,
+   "recent_per_1k": 1.87,
+   "change_pct": -38,
+   "confidence": "low_sample"
+  },
+  "Start-Up": {
+   "baseline_count": 190,
+   "recent_count": 18,
+   "baseline_per_1k": 3.36,
+   "recent_per_1k": 1.87,
+   "change_pct": -44,
+   "confidence": "low_sample"
+  },
+  "Startup": {
+   "baseline_count": 122,
+   "recent_count": 23,
+   "baseline_per_1k": 2.16,
+   "recent_per_1k": 2.39,
+   "change_pct": 11,
+   "confidence": "low_sample"
+  },
+  "Statistics": {
+   "baseline_count": 308,
+   "recent_count": 40,
+   "baseline_per_1k": 5.45,
+   "recent_per_1k": 4.15,
+   "change_pct": -24,
+   "confidence": "measured"
+  },
+  "Strategy": {
+   "baseline_count": 2074,
+   "recent_count": 367,
+   "baseline_per_1k": 36.67,
+   "recent_per_1k": 38.07,
+   "change_pct": 4,
+   "confidence": "measured"
+  },
+  "Sublime": {
+   "baseline_count": 1,
+   "recent_count": 0,
+   "baseline_per_1k": 0.02,
+   "recent_per_1k": 0.0,
+   "change_pct": -100,
+   "confidence": "low_sample"
+  },
+  "Supervising": {
+   "baseline_count": 578,
+   "recent_count": 115,
+   "baseline_per_1k": 10.22,
+   "recent_per_1k": 11.93,
+   "change_pct": 17,
+   "confidence": "measured"
+  },
+  "Supervisor": {
+   "baseline_count": 1219,
+   "recent_count": 293,
+   "baseline_per_1k": 21.55,
+   "recent_per_1k": 30.39,
+   "change_pct": 41,
+   "confidence": "measured"
+  },
+  "Supply Chain Management": {
+   "baseline_count": 1424,
+   "recent_count": 298,
+   "baseline_per_1k": 25.18,
+   "recent_per_1k": 30.91,
+   "change_pct": 23,
+   "confidence": "measured"
+  },
+  "Surprise": {
+   "baseline_count": 15,
+   "recent_count": 1,
+   "baseline_per_1k": 0.27,
+   "recent_per_1k": 0.1,
+   "change_pct": -61,
+   "confidence": "low_sample"
+  },
+  "Swift": {
+   "baseline_count": 81,
+   "recent_count": 12,
+   "baseline_per_1k": 1.43,
+   "recent_per_1k": 1.24,
+   "change_pct": -13,
+   "confidence": "low_sample"
+  },
+  "System": {
+   "baseline_count": 8284,
+   "recent_count": 1063,
+   "baseline_per_1k": 146.46,
+   "recent_per_1k": 110.27,
+   "change_pct": -25,
+   "confidence": "measured"
+  },
+  "Tableau": {
+   "baseline_count": 51,
+   "recent_count": 11,
+   "baseline_per_1k": 0.9,
+   "recent_per_1k": 1.14,
+   "change_pct": 27,
+   "confidence": "low_sample"
+  },
+  "Tablets": {
+   "baseline_count": 29,
+   "recent_count": 3,
+   "baseline_per_1k": 0.51,
+   "recent_per_1k": 0.31,
+   "change_pct": -39,
+   "confidence": "low_sample"
+  },
+  "Tax Compliance": {
+   "baseline_count": 4344,
+   "recent_count": 606,
+   "baseline_per_1k": 76.8,
+   "recent_per_1k": 62.86,
+   "change_pct": -18,
+   "confidence": "measured"
+  },
+  "Teaching": {
+   "baseline_count": 418,
+   "recent_count": 126,
+   "baseline_per_1k": 7.39,
+   "recent_per_1k": 13.07,
+   "change_pct": 77,
+   "confidence": "measured"
+  },
+  "Technical": {
+   "baseline_count": 8077,
+   "recent_count": 1293,
+   "baseline_per_1k": 142.8,
+   "recent_per_1k": 134.13,
+   "change_pct": -6,
+   "confidence": "measured"
+  },
+  "Telecom": {
+   "baseline_count": 45,
+   "recent_count": 7,
+   "baseline_per_1k": 0.8,
+   "recent_per_1k": 0.73,
+   "change_pct": -9,
+   "confidence": "low_sample"
+  },
+  "Tensorflow": {
+   "baseline_count": 4,
+   "recent_count": 0,
+   "baseline_per_1k": 0.07,
+   "recent_per_1k": 0.0,
+   "change_pct": -100,
+   "confidence": "low_sample"
+  },
+  "Testing": {
+   "baseline_count": 3069,
+   "recent_count": 483,
+   "baseline_per_1k": 54.26,
+   "recent_per_1k": 50.1,
+   "change_pct": -8,
+   "confidence": "measured"
+  },
+  "Therapeutic": {
+   "baseline_count": 35,
+   "recent_count": 15,
+   "baseline_per_1k": 0.62,
+   "recent_per_1k": 1.56,
+   "change_pct": 151,
+   "confidence": "low_sample"
+  },
+  "Threading": {
+   "baseline_count": 2,
+   "recent_count": 0,
+   "baseline_per_1k": 0.04,
+   "recent_per_1k": 0.0,
+   "change_pct": -100,
+   "confidence": "low_sample"
+  },
+  "Tomorrow": {
+   "baseline_count": 109,
+   "recent_count": 19,
+   "baseline_per_1k": 1.93,
+   "recent_per_1k": 1.97,
+   "change_pct": 2,
+   "confidence": "low_sample"
+  },
+  "Training": {
+   "baseline_count": 8030,
+   "recent_count": 1378,
+   "baseline_per_1k": 141.97,
+   "recent_per_1k": 142.95,
+   "change_pct": 1,
+   "confidence": "measured"
+  },
+  "Transactions": {
+   "baseline_count": 1417,
+   "recent_count": 238,
+   "baseline_per_1k": 25.05,
+   "recent_per_1k": 24.69,
+   "change_pct": -1,
+   "confidence": "measured"
+  },
+  "Transport": {
+   "baseline_count": 1742,
+   "recent_count": 366,
+   "baseline_per_1k": 30.8,
+   "recent_per_1k": 37.97,
+   "change_pct": 23,
+   "confidence": "measured"
+  },
+  "Transportation": {
+   "baseline_count": 1001,
+   "recent_count": 229,
+   "baseline_per_1k": 17.7,
+   "recent_per_1k": 23.76,
+   "change_pct": 34,
+   "confidence": "measured"
+  },
+  "Travel": {
+   "baseline_count": 3196,
+   "recent_count": 551,
+   "baseline_per_1k": 56.51,
+   "recent_per_1k": 57.16,
+   "change_pct": 1,
+   "confidence": "measured"
+  },
+  "Troubleshooting": {
+   "baseline_count": 1920,
+   "recent_count": 325,
+   "baseline_per_1k": 33.95,
+   "recent_per_1k": 33.71,
+   "change_pct": -1,
+   "confidence": "measured"
+  },
+  "Twitter": {
+   "baseline_count": 78,
+   "recent_count": 18,
+   "baseline_per_1k": 1.38,
+   "recent_per_1k": 1.87,
+   "change_pct": 35,
+   "confidence": "low_sample"
+  },
+  "Ubuntu": {
+   "baseline_count": 12,
+   "recent_count": 0,
+   "baseline_per_1k": 0.21,
+   "recent_per_1k": 0.0,
+   "change_pct": -100,
+   "confidence": "low_sample"
+  },
+  "Underwriting": {
+   "baseline_count": 100,
+   "recent_count": 15,
+   "baseline_per_1k": 1.77,
+   "recent_per_1k": 1.56,
+   "change_pct": -12,
+   "confidence": "low_sample"
+  },
+  "Updates": {
+   "baseline_count": 1155,
+   "recent_count": 215,
+   "baseline_per_1k": 20.42,
+   "recent_per_1k": 22.3,
+   "change_pct": 9,
+   "confidence": "measured"
+  },
+  "Usability": {
+   "baseline_count": 111,
+   "recent_count": 14,
+   "baseline_per_1k": 1.96,
+   "recent_per_1k": 1.45,
+   "change_pct": -26,
+   "confidence": "low_sample"
+  },
+  "Variances": {
+   "baseline_count": 261,
+   "recent_count": 58,
+   "baseline_per_1k": 4.61,
+   "recent_per_1k": 6.02,
+   "change_pct": 30,
+   "confidence": "measured"
+  },
+  "Vector Databases & RAG": {
+   "baseline_count": 9,
+   "recent_count": 1,
+   "baseline_per_1k": 0.16,
+   "recent_per_1k": 0.1,
+   "change_pct": -35,
+   "confidence": "low_sample"
+  },
+  "Vendors": {
+   "baseline_count": 1909,
+   "recent_count": 307,
+   "baseline_per_1k": 33.75,
+   "recent_per_1k": 31.85,
+   "change_pct": -6,
+   "confidence": "measured"
+  },
+  "Video": {
+   "baseline_count": 707,
+   "recent_count": 172,
+   "baseline_per_1k": 12.5,
+   "recent_per_1k": 17.84,
+   "change_pct": 43,
+   "confidence": "measured"
+  },
+  "Visio": {
+   "baseline_count": 20,
+   "recent_count": 2,
+   "baseline_per_1k": 0.35,
+   "recent_per_1k": 0.21,
+   "change_pct": -41,
+   "confidence": "low_sample"
+  },
+  "Visual": {
+   "baseline_count": 675,
+   "recent_count": 206,
+   "baseline_per_1k": 11.93,
+   "recent_per_1k": 21.37,
+   "change_pct": 79,
+   "confidence": "measured"
+  },
+  "Vlookups": {
+   "baseline_count": 3,
+   "recent_count": 0,
+   "baseline_per_1k": 0.05,
+   "recent_per_1k": 0.0,
+   "change_pct": -100,
+   "confidence": "low_sample"
+  },
+  "Vmware": {
+   "baseline_count": 79,
+   "recent_count": 5,
+   "baseline_per_1k": 1.4,
+   "recent_per_1k": 0.52,
+   "change_pct": -63,
+   "confidence": "low_sample"
+  },
+  "Vue.Js": {
+   "baseline_count": 44,
+   "recent_count": 9,
+   "baseline_per_1k": 0.78,
+   "recent_per_1k": 0.93,
+   "change_pct": 20,
+   "confidence": "low_sample"
+  },
+  "Waitress": {
+   "baseline_count": 4,
+   "recent_count": 5,
+   "baseline_per_1k": 0.07,
+   "recent_per_1k": 0.52,
+   "change_pct": 633,
+   "confidence": "low_sample"
+  },
+  "Wan/Lan": {
+   "baseline_count": 4,
+   "recent_count": 0,
+   "baseline_per_1k": 0.07,
+   "recent_per_1k": 0.0,
+   "change_pct": -100,
+   "confidence": "low_sample"
+  },
+  "Wand": {
+   "baseline_count": 1,
+   "recent_count": 1,
+   "baseline_per_1k": 0.02,
+   "recent_per_1k": 0.1,
+   "change_pct": 487,
+   "confidence": "low_sample"
+  },
+  "Warehouse": {
+   "baseline_count": 1435,
+   "recent_count": 265,
+   "baseline_per_1k": 25.37,
+   "recent_per_1k": 27.49,
+   "change_pct": 8,
+   "confidence": "measured"
+  },
+  "Website": {
+   "baseline_count": 1038,
+   "recent_count": 177,
+   "baseline_per_1k": 18.35,
+   "recent_per_1k": 18.36,
+   "change_pct": 0,
+   "confidence": "measured"
+  },
+  "Wheel": {
+   "baseline_count": 14,
+   "recent_count": 1,
+   "baseline_per_1k": 0.25,
+   "recent_per_1k": 0.1,
+   "change_pct": -58,
+   "confidence": "low_sample"
+  },
+  "Wifi": {
+   "baseline_count": 43,
+   "recent_count": 5,
+   "baseline_per_1k": 0.76,
+   "recent_per_1k": 0.52,
+   "change_pct": -32,
+   "confidence": "low_sample"
+  },
+  "Windows": {
+   "baseline_count": 408,
+   "recent_count": 42,
+   "baseline_per_1k": 7.21,
+   "recent_per_1k": 4.36,
+   "change_pct": -40,
+   "confidence": "measured"
+  },
+  "Wireframing": {
+   "baseline_count": 2,
+   "recent_count": 1,
+   "baseline_per_1k": 0.04,
+   "recent_per_1k": 0.1,
+   "change_pct": 193,
+   "confidence": "low_sample"
+  },
+  "Word": {
+   "baseline_count": 2070,
+   "recent_count": 278,
+   "baseline_per_1k": 36.6,
+   "recent_per_1k": 28.84,
+   "change_pct": -21,
+   "confidence": "measured"
+  },
+  "Wordpress": {
+   "baseline_count": 50,
+   "recent_count": 8,
+   "baseline_per_1k": 0.88,
+   "recent_per_1k": 0.83,
+   "change_pct": -6,
+   "confidence": "low_sample"
+  },
+  "Workflow": {
+   "baseline_count": 591,
+   "recent_count": 97,
+   "baseline_per_1k": 10.45,
+   "recent_per_1k": 10.06,
+   "change_pct": -4,
+   "confidence": "measured"
+  },
+  "Workflows": {
+   "baseline_count": 314,
+   "recent_count": 89,
+   "baseline_per_1k": 5.55,
+   "recent_per_1k": 9.23,
+   "change_pct": 66,
+   "confidence": "measured"
+  },
+  "Writing": {
+   "baseline_count": 1050,
+   "recent_count": 118,
+   "baseline_per_1k": 18.56,
+   "recent_per_1k": 12.24,
+   "change_pct": -34,
+   "confidence": "measured"
+  },
+  "Xgboost": {
+   "baseline_count": 1,
+   "recent_count": 0,
+   "baseline_per_1k": 0.02,
+   "recent_per_1k": 0.0,
+   "change_pct": -100,
+   "confidence": "low_sample"
+  },
+  "Yaml": {
+   "baseline_count": 3,
+   "recent_count": 0,
+   "baseline_per_1k": 0.05,
+   "recent_per_1k": 0.0,
+   "change_pct": -100,
+   "confidence": "low_sample"
+  }
+ }
+}

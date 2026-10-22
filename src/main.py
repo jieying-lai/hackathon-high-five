@@ -665,25 +665,6 @@ def api_trends():
         data["scenario_endpoints"] = {"moderate": moderate, "fast": fast}
     return jsonify(data)
 
-@app.route('/api/refresh-trends', methods=['POST'])
-@api_role('job_seeker')
-def api_refresh_trends():
-    try:
-        # Simulated response for real-time trend data fetching
-        updated_trends = {
-            "ok": True,
-            "message": "Trend data successfully updated!",
-            "timestamp": "2026-10-20",
-            "trends": [
-                {"skill": "AI Prompt Engineering", "growth": "+45%"},
-                {"skill": "Flask Optimization", "growth": "+28%"},
-                {"skill": "Data Ethics & Compliance", "growth": "+34%"}
-            ]
-        }
-        return jsonify(updated_trends), 200
-    except Exception as e:
-        return jsonify({"ok": False, "message": str(e)}), 500
-
 @app.route("/api/analyze", methods=["POST"])
 @api_role("job_seeker")
 def api_analyze():
@@ -916,64 +897,6 @@ def api_submit_3_verification_answers():
     except Exception as e:
         return jsonify({"ok": False, "message": str(e)}), 500
 
-# ------------------------------------------------------------------ Course Mapping for Reskilling Pathway
-@app.route('/api/learning-impact', methods=['GET', 'POST'])
-@api_role('job_seeker')
-def api_learning_impact():
-    try:
-        uid = session['user']['unique_uid']
-        if request.method == 'POST':
-            return jsonify(learning_impact.sync(uid, json_object().get('completed_urls', [])))
-        return jsonify(learning_impact.get_summary(uid))
-    except ValueError as exc:
-        return jsonify(ok=False, message=str(exc)), 400
-    except (OSError, learning_impact.sqlite3.Error):
-        app.logger.exception('Learning milestone ledger unavailable')
-        return jsonify(ok=False, message='Learning milestones are unavailable. Please retry.'), 503
-
-
-@app.route('/api/discovery/recommend', methods=['POST'])
-@api_role('job_seeker')
-def api_discovery_recommend():
-    try:
-        return jsonify(course_recommender.recommend(json_object(), session['user']['unique_uid']))
-    except (OSError, ValueError, KeyError):
-        app.logger.exception('Course recommendation model unavailable')
-        return jsonify(ok=False, message='Course recommendations are unavailable. Please retry later.'), 503
-
-
-@app.route('/api/reskilling/course-mapping', methods=['GET', 'POST'])
-@api_role('job_seeker')
-def api_course_mapping():
-    try:
-        data = request.get_json(silent=True) or {}
-        missing_skills = data.get("missing_skills", ["Data Analytics", "AI Prompt Engineering"])
-        
-        # Mapping taxonomy connecting missing skills to verified courses & credentials
-        mapped_courses = []
-        for idx, skill in enumerate(missing_skills, start=1):
-            mapped_courses.append({
-                "step": idx,
-                "phase": f"Phase {idx}: Foundation",
-                "target_skill": skill,
-                "course_title": f"Professional Certification in {skill}",
-                "provider": "HRD Corp / MY AI Academy",
-                "difficulty": "Intermediate",
-                "hours": 12 + (idx * 4),
-                "cost_type": "HRD Corp Claimable / Free",
-                "malaysia_badge": "MY Skills Framework Aligned",
-                "sdg": "SDG 8: Decent Work",
-                "url": f"https://www.coursera.org/search?query={skill.replace(' ', '%20')}"
-            })
-            
-        return jsonify({
-            "ok": True,
-            "total_mapped_courses": len(mapped_courses),
-            "estimated_total_hours": sum(c["hours"] for c in mapped_courses),
-            "mapped_pathway": mapped_courses
-        }), 200
-    except Exception as e:
-        return jsonify({"ok": False, "message": str(e)}), 500
 
 if __name__ == "__main__":
     main()

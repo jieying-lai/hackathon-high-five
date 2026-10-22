@@ -19,7 +19,7 @@ class DashboardContracts(unittest.TestCase):
                     b = role['explainable_breakdown']
                     self.assertEqual(role['match_score'], sum(b[k] for k in (
                         'core_skills_match_pct', 'transferable_skills_pct',
-                        'industry_alignment_pct', 'work_mode_fit_pct', 'scenario_adjustment_pct')))
+                        'industry_alignment_pct', 'work_mode_fit_pct', 'market_demand_pct', 'scenario_adjustment_pct')))
 
     def test_protected_attributes_do_not_change_scores(self):
         profile = load_json('sample_cvs.json')[0]

@@ -3,6 +3,8 @@
 import json
 import os
 
+from trend_signals import get_role_market_signal, load_skill_demand
+
 DATA_DIR = os.path.join(os.path.dirname(__file__), "data")
 
 
@@ -36,6 +38,7 @@ def match_user_to_roles(profile: dict, scenario: str = "moderate") -> dict:
     user_skills = set(s.strip() for s in profile.get("skills", []))
     user_industry = profile.get("industry", "")
     user_work_mode = profile.get("work_mode_preference", "Hybrid")
+    demand = load_skill_demand()  # measured posting-share changes; see scripts/build_skill_demand.py
 
     ranked_roles = []
     for role in roles:
@@ -52,8 +55,10 @@ def match_user_to_roles(profile: dict, scenario: str = "moderate") -> dict:
         industry_pts = 15 if role["industry"] == user_industry else 8
         mode_pts = 10 if user_work_mode in role["work_modes"] else 5
 
-        scenario_delta = role["fast_ai_boost"] if scenario == "fast" else 0
-        total_score = min(98, core_pts + trans_pts + industry_pts + mode_pts + (scenario_delta // 2))
+        market = get_role_market_signal(role, demand)
+        market_pts = market["market_adjustment_pts"]  # bounded +/-3, from measured postings only
+        scenario_delta = role["fast_ai_boost"] if scenario == "fast" else 0  # stated What-If assumption
+        total_score = max(0, min(98, core_pts + trans_pts + industry_pts + mode_pts + market_pts + (scenario_delta // 2)))
 
         # Build ordered reskilling pathway strictly from verified courses (Never invent courses!)
         pathway = []
@@ -81,15 +86,24 @@ def match_user_to_roles(profile: dict, scenario: str = "moderate") -> dict:
             "title": role["title"],
             "industry": role["industry"],
             "match_score": total_score,
-            "demand_outlook": min(99, role["rising_demand_base"] + scenario_delta),
+            "demand_outlook": max(0, min(99, role["rising_demand_base"] + 2 * market_pts + scenario_delta)),
+            "demand_signal": {
+                "prior_outlook": role["rising_demand_base"],
+                "prior_is": "expert starting point, not measured",
+                "market_adjustment_pts": market_pts,
+                "scenario_delta": scenario_delta,
+                **{k: market[k] for k in ("mean_change_pct", "coverage", "measured_skills", "low_sample_skills",
+                                          "baseline_window", "recent_window", "data_through", "source", "note")},
+            },
             "work_modes": role["work_modes"],
             "explainable_breakdown": {
                 "core_skills_match_pct": core_pts,
                 "transferable_skills_pct": trans_pts,
                 "industry_alignment_pct": industry_pts,
                 "work_mode_fit_pct": mode_pts,
+                "market_demand_pct": market_pts,
                 "gap_to_close_pct": max(0, 100 - total_score),
-                "scenario_adjustment_pct": total_score - (core_pts + trans_pts + industry_pts + mode_pts),
+                "scenario_adjustment_pct": total_score - (core_pts + trans_pts + industry_pts + mode_pts + market_pts),
             },
             "matched_core_skills": matched_core,
             "matched_transferable_skills": matched_trans,
