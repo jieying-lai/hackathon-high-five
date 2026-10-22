@@ -8,6 +8,25 @@
   box-shadow: 0 6px 22px #5d3b8712;
 }
 .portal-menu-open .growth-navigation { visibility: hidden; }
+/* Keep the five learning destinations readable at tablet widths. */
+@media (min-width: 641px) and (max-width: 1023px) {
+  .growth-navigation {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 6px;
+  }
+  .growth-navigation button {
+    min-width: 0;
+    min-height: 58px;
+    flex: initial;
+    justify-content: center;
+    padding: 10px 8px;
+    white-space: normal;
+    overflow-wrap: normal;
+    word-break: normal;
+    line-height: 1.35;
+  }
+}
 :is(#tab-plan, #tab-discover, #tab-saved, #tab-completed, #tab-passport) [data-outline-label] {
   scroll-margin-top: calc(var(--growth-header-height, 90px) + 110px);
 }

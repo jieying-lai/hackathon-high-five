@@ -4057,7 +4057,26 @@
     }
 
     /* ---------- matches (SaaS Card Layout - No Math Diagram Clutter) ---------- */
+        /* ---------- character career matches ---------- */
+    const careerCharacterAssignments = new Map();
+    const careerCharacterOptions = [
+      {name:'otter',src:'/static/brand/career-otter.png',width:1278,height:1230},
+      {name:'sloth',src:'/static/brand/career-sloth.png',width:1254,height:1254}
+    ];
+    let careerCharacterPool = [];
+    function careerCharacterFor(role) {
+      const key = role.role_id || role.title;
+      if (!careerCharacterAssignments.has(key)) {
+        if (!careerCharacterPool.length) {
+          careerCharacterPool = [...careerCharacterOptions];
+          if (Math.random() < .5) careerCharacterPool.reverse();
+        }
+        careerCharacterAssignments.set(key, careerCharacterPool.pop());
+      }
+      return careerCharacterAssignments.get(key);
+    }
     function renderRoles() {
+      const character = r => careerCharacterFor(r);
       roleCards.innerHTML = roles.map((r, i) => {
         const score = r.match_score || 0;
         const fitBadge = score >= 85
@@ -4374,6 +4393,11 @@
       const me = await api('/api/auth/me'); user = me.data?.user;
       if (!me.ok || !user) { window.location.href = '/'; return; }
       if (user.role === 'hr_company') { window.location.href = '/workspace'; return; }
+      window.LearningImpact?.initialize?.({identity:user.unique_uid});
+      renderDiscoveryLearning();
+      window.PomodoroTimer?.mount?.({identity:user.unique_uid, container:document.getElementById('learningPomodoro'),floating:true});
+      if (typeof syncGrowthHeaderOffset === 'function') syncGrowthHeaderOffset();
+      window.PagePosition?.initialize?.({identity:user.unique_uid,portal:'talent',getView:()=>current,isValid:id=>typeof id==='string'&&!!document.getElementById('tab-'+id)});
       renderAccountProfileCard();
       try { answers = JSON.parse(localStorage.getItem(ansKey()) || '{}'); } catch (e) { answers = {}; }
       const optional = async (label, work) => {

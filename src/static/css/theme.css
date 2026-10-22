@@ -117,6 +117,11 @@ select optgroup, .cl-select optgroup {
 .chip-indigo { background: #eef2ff; color: #4338ca; border-color: #c7d2fe; }
 .chip-amber { background: #fffbeb; color: #b45309; border-color: #fde68a; }
 .chip-teal { background: #f0fdfa; color: #0f766e; border-color: #99f6e4; }
+.sdg-explain-chip { position: relative; cursor: help; outline-offset: 3px; }
+.sdg-explain-tooltip { position: absolute; z-index: 50; left: 50%; bottom: calc(100% + 9px); width: min(290px, 78vw); padding: .75rem .85rem; border: 1px solid rgba(203,213,225,.9); border-radius: .85rem; background: #fff; color: #334155; box-shadow: 0 12px 30px rgba(30,41,59,.2); font-size: .75rem; line-height: 1.45; text-align: left; white-space: normal; opacity: 0; visibility: hidden; pointer-events: none; transform: translate(-50%, 4px); transition: opacity .14s ease, transform .14s ease, visibility .14s ease; }
+.sdg-explain-tooltip strong, .sdg-explain-tooltip span { display: block; }
+.sdg-explain-tooltip strong { margin-bottom: .25rem; color: #0f766e; font-size: .78rem; }
+.sdg-explain-chip:hover .sdg-explain-tooltip, .sdg-explain-chip:focus .sdg-explain-tooltip { opacity: 1; visibility: visible; transform: translate(-50%, 0); }
 .chip-slate { background: #f1f5f9; color: #475569; border-color: #cbd5e1; }
 .chip-pink { background: #fdf2f8; color: #be185d; border-color: #fbcfe8; }
 .chip button { line-height: 1; font-weight: 800; opacity: .6; } .chip button:hover { opacity: 1; }

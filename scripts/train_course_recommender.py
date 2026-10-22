@@ -47,10 +47,16 @@ def fit(args):
             'target_skill': row['title'], 'provider': row['provider'], 'category': row['category'],
             'description': row['description'][:1200], 'source': 'discovery',
             'vector': {k: round(v, 6) for k, v in vectorise(text, idf, cap=160).items()}})
-    model = {'version': 1, 'kind': 'fitted-tfidf-content-v1', 'idf': idf, 'courses': courses,
+    model = {'version': 1, 'kind': 'fitted-tfidf-content-v1', 'course_count': len(courses), 'idf': idf,
         'platform_prior': {p: round((sum(v) + 5)/(len(v) + 10), 5) for p, v in prior_rows.items()}}
     args.output.mkdir(parents=True, exist_ok=True)
-    (args.output / 'model.json').write_text(json.dumps(model, ensure_ascii=False, separators=(',', ':')), encoding='utf-8')
+    (args.output / 'model-meta.json').write_text(json.dumps(model, ensure_ascii=False, separators=(',', ':')), encoding='utf-8')
+    with (args.output / 'courses.jsonl').open('w', encoding='utf-8', newline='\n') as output:
+        for course in courses:
+            output.write(json.dumps(course, ensure_ascii=False, separators=(',', ':')) + '\n')
+    legacy_model = args.output / 'model.json'
+    if legacy_model.exists():
+        legacy_model.unlink()
     manifest = {'kind': model['kind'], 'trained_at_utc': datetime.now(timezone.utc).isoformat(),
         'course_count': len(courses), 'vocabulary_size': len(idf), 'usage_rows': usage_count,
         'catalogue_sha256': hashlib.sha256(args.courses.read_bytes()).hexdigest(),
