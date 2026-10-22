@@ -2306,6 +2306,16 @@ and consented to share their CV below.|并同意分享以下简历内容。
     if (coverage) return `${translate('skill coverage', language)}: ${coverage[1]}/${coverage[2]}`;
     const coveragePercent = text.match(/^(\d+)% skill coverage$/);
     if (coveragePercent) return `${coveragePercent[1]}% ${translate('skill coverage', language)}`;
+    let scoreCount = text.match(/^(\d+)\/(\d+) points$/);
+    if (scoreCount) return i === 2 ? `${scoreCount[1]}/${scoreCount[2]} 分` : `${scoreCount[1]}/${scoreCount[2]} mata`;
+    scoreCount = text.match(/^(\d+)\/(\d+) matched$/);
+    if (scoreCount) return i === 2 ? `匹配 ${scoreCount[1]}/${scoreCount[2]} 项` : `${scoreCount[1]}/${scoreCount[2]} dipadankan`;
+    scoreCount = text.match(/^Outlook: (\d+)\/100$/);
+    if (scoreCount) return i === 2 ? `市场前景：${scoreCount[1]}/100` : `Unjuran: ${scoreCount[1]}/100`;
+    scoreCount = text.match(/^(\d+)% Risk$/);
+    if (scoreCount) return i === 2 ? `风险 ${scoreCount[1]}%` : `Risiko ${scoreCount[1]}%`;
+    scoreCount = text.match(/^\+(\d+)% Moat$/);
+    if (scoreCount) return i === 2 ? `人类优势 +${scoreCount[1]}%` : `Kelebihan manusia +${scoreCount[1]}%`;
     let portalCount = text.match(/^(\d+) mapped courses$/);
     if (portalCount) return i === 2 ? `${portalCount[1]} 门课程已匹配` : `${portalCount[1]} kursus dipetakan`;
     portalCount = text.match(/^(\d+) saved items?$/);

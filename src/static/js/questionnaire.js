@@ -190,6 +190,7 @@ function renderQuestionnaire() {
   const recommendationPanel = document.getElementById('roleRecommendationPanel');
   recommendationPanel.remove();
   document.getElementById('commonQ').innerHTML = questionnaireFieldDefinitions().map((q, i) => {
+    const questionText = String(q.text ?? COMMON_Q.find(item => item.id === q.id)?.text ?? '').replace(/\bundefined\b/gi, '').trim();
     const value = answers[q.id] || '';
     const disabled = (q.id === 'c2' && !answers.cField) || (q.id === 'c4' && !answers.cState);
     const isAnswered = q.type === 'text'
@@ -208,7 +209,7 @@ function renderQuestionnaire() {
       </div>
       <label class="q-card-title" for="question-${q.id}">
         <span class="q-icon">${meta.icon}</span>
-        <span>${i + 1}. ${esc(q.text)} <span class="text-rose-500">*</span></span>
+        <span>${i + 1}. ${esc(questionText)} <span class="text-rose-500">*</span></span>
       </label>
       <p class="q-card-hint">${esc(meta.hint)}</p>
       ${disabled ? `<div class="q-card-lock-banner"><span>🔒</span><span>${q.id === 'c2' ? 'Please select your Preferred Field first to unlock matching roles' : 'Please select your Preferred State first to choose districts'}</span></div>` : ''}
