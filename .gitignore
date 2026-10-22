@@ -39,3 +39,4 @@ unsloth_compiled_cache/
 outputs/
 outputs_lumi/
 *.zip
+models/runpod_totem_lora/careerlens_totem_lora_weights/adapter_model.safetensors
