@@ -374,17 +374,26 @@
 
     <div class="portal-content flex-1 min-w-0">
 
-      <header class="portal-mobile-header sticky top-0 glass">
-        <div class="flex items-center justify-between px-4 py-2.5">
-          <div class="flex items-center gap-2"><img src="/static/brand/careerlens_logo_icon.svg" class="h-9 w-9 rounded-xl" alt="" /><b class="text-sm">Talent Portal</b></div>
-          <div class="portal-mobile-actions"><button type="button" onclick="openAccountModal()" class="btn btn-soft !py-1.5 !px-2.5 text-xs flex items-center gap-1 font-bold text-indigo-700 bg-indigo-50 border border-indigo-200" title="Edit Profile"><span>⚙️</span><span>Profile</span></button><button type="button" class="notification-button" data-notification-button onclick="showTab('notifications')" aria-label="Interview notifications" title="Interview notifications"><span aria-hidden="true">🔔</span></button><div data-language-slot="mobile"></div><button onclick="signOut()" class="btn btn-soft !py-1.5">Sign out</button></div>
-        </div>
-        <div class="mobile-nav-bar">
-          <button id="navToggle" type="button" class="nav-toggle" aria-label="Toggle navigation" aria-expanded="false" aria-controls="topNav">
-            <span class="hamburger" aria-hidden="true"><i></i><i></i><i></i></span>
-            <span>Menu</span>
-          </button>
-          <span id="mobileCurrentSection" class="mobile-current-section" aria-live="polite"></span>
+      <header class="portal-mobile-header sticky top-0 z-40 glass border-b border-slate-200/80 shadow-xs">
+        <div class="flex items-center justify-between px-3.5 py-2 gap-2">
+          <div class="flex items-center gap-2 min-w-0">
+            <button id="navToggle" type="button" class="nav-toggle !p-1.5 !min-h-0 !h-8 !w-8 grid place-items-center rounded-xl bg-slate-100 hover:bg-slate-200 border border-slate-200 text-slate-700" aria-label="Toggle navigation" aria-expanded="false" aria-controls="topNav">
+              <span class="hamburger" aria-hidden="true"><i></i><i></i><i></i></span>
+            </button>
+            <a href="/" class="flex items-center gap-1.5 shrink-0">
+              <img src="/static/brand/careerlens_logo_icon.svg" class="h-7 w-7 rounded-lg" alt="" />
+              <b class="text-xs font-black bg-gradient-to-r from-indigo-700 to-pink-600 bg-clip-text text-transparent">CareerLens</b>
+            </a>
+            <span id="mobileCurrentSection" class="mobile-current-section text-[11px] font-bold text-slate-600 truncate max-w-[110px]" aria-live="polite"></span>
+          </div>
+          <div class="portal-mobile-actions flex items-center gap-1.5 shrink-0">
+            <button type="button" class="notification-button !w-8 !h-8 !min-w-0 !min-h-0 !p-0 rounded-xl" data-notification-button onclick="showTab('notifications')" aria-label="Interview notifications" title="Interview notifications"><span aria-hidden="true" class="text-xs">🔔</span></button>
+            <div data-language-slot="mobile"></div>
+            <button type="button" onclick="openAccountModal()" class="btn btn-soft !py-1 !px-2 !min-h-0 !h-8 text-[11px] flex items-center gap-1 font-bold text-indigo-700 bg-indigo-50 border border-indigo-200 rounded-xl" title="Edit Profile">
+              <span>👤</span>
+            </button>
+            <button onclick="signOut()" class="btn btn-soft !py-1 !px-2 !min-h-0 !h-8 text-[11px] font-bold text-slate-600 rounded-xl">🚪</button>
+          </div>
         </div>
         <nav id="topNav" class="mobile-nav" aria-label="Section navigation" hidden></nav>
       </header>
@@ -413,10 +422,30 @@
             <div data-outline-label="Your career journey" id="journey" class="journey-grid relative mt-6"></div>
           </div>
           <nav class="career-quick-actions" aria-label="Career shortcuts">
-<button onclick="showTab('profile')"><span class="quick-icon">01</span><strong>My profile</strong><small>Update your professional story</small><span aria-hidden="true">→</span></button>
-<button onclick="showTab('cv-review')"><span class="quick-icon">02</span><strong>Review my CV</strong><small>Check and refine your extracted details</small><span aria-hidden="true">→</span></button>
-<button onclick="showTab('jobs')"><span class="quick-icon">03</span><strong>Find opportunities</strong><small>Explore vacancies for your next move</small><span aria-hidden="true">→</span></button>
-<button onclick="showTab('applications')"><span class="quick-icon">04</span><strong>My applications</strong><small>Manage applications and CV access</small><span aria-hidden="true">→</span></button>
+<button onclick="showTab('profile')" class="group relative overflow-hidden border border-indigo-100 hover:border-indigo-300">
+  <span class="quick-icon inline-flex items-center justify-center px-2 py-0.5 rounded-lg text-xs font-black bg-gradient-to-r from-indigo-500 to-indigo-700 text-white shadow-xs">01</span>
+  <strong class="text-slate-900 group-hover:text-indigo-600 transition">My profile</strong>
+  <small class="text-slate-500">Update your professional story</small>
+  <span aria-hidden="true" class="text-indigo-500 font-bold group-hover:translate-x-1 transition">→</span>
+</button>
+<button onclick="showTab('cv-review')" class="group relative overflow-hidden border border-pink-100 hover:border-pink-300">
+  <span class="quick-icon inline-flex items-center justify-center px-2 py-0.5 rounded-lg text-xs font-black bg-gradient-to-r from-pink-500 to-rose-600 text-white shadow-xs">02</span>
+  <strong class="text-slate-900 group-hover:text-pink-600 transition">Review my CV</strong>
+  <small class="text-slate-500">Check and refine your extracted details</small>
+  <span aria-hidden="true" class="text-pink-500 font-bold group-hover:translate-x-1 transition">→</span>
+</button>
+<button onclick="showTab('jobs')" class="group relative overflow-hidden border border-amber-100 hover:border-amber-300">
+  <span class="quick-icon inline-flex items-center justify-center px-2 py-0.5 rounded-lg text-xs font-black bg-gradient-to-r from-amber-500 to-orange-500 text-white shadow-xs">03</span>
+  <strong class="text-slate-900 group-hover:text-amber-600 transition">Find opportunities</strong>
+  <small class="text-slate-500">Explore vacancies for your next move</small>
+  <span aria-hidden="true" class="text-amber-500 font-bold group-hover:translate-x-1 transition">→</span>
+</button>
+<button onclick="showTab('applications')" class="group relative overflow-hidden border border-teal-100 hover:border-teal-300">
+  <span class="quick-icon inline-flex items-center justify-center px-2 py-0.5 rounded-lg text-xs font-black bg-gradient-to-r from-teal-500 to-emerald-600 text-white shadow-xs">04</span>
+  <strong class="text-slate-900 group-hover:text-teal-600 transition">My applications</strong>
+  <small class="text-slate-500">Manage applications and CV access</small>
+  <span aria-hidden="true" class="text-teal-500 font-bold group-hover:translate-x-1 transition">→</span>
+</button>
 </nav>
           <div data-outline-label="Career snapshot" id="kpis" class="grid grid-cols-2 lg:grid-cols-4 gap-4"></div>
           <div class="grid lg:grid-cols-5 gap-6">
@@ -429,6 +458,7 @@
         </section>
 
         <section id="tab-profile" class="tab hidden space-y-6">
+          <nav class="growth-navigation" data-profile-navigation aria-label="My Profile"></nav>
 
           <!-- Account Profile & Personal Details Card -->
           <div data-outline-label="Account profile" class="profile-account-card glass rounded-3xl p-6 sm:p-7 space-y-4 border-2 border-indigo-100 shadow-sm">
@@ -509,7 +539,8 @@
             </div>
           </div>
         </section>
-        <section id="tab-cv-upload" class="tab hidden space-y-6">
+        <section id="tab-cv-upload" class="tab hidden space-y-6">
+          <nav class="growth-navigation" data-profile-navigation aria-label="My Profile"></nav>
           <p class="text-sm text-slate-600">Upload a PDF, then continue to the separate review page to check and edit the extracted details.</p>
           <div class="rounded-2xl border border-amber-300 bg-amber-50 p-4 text-sm text-amber-950" role="note">
             <b>Hackathon demo — use fictional CVs only.</b> Uploads are extracted locally. Optional AI organisation uses the configured pretrained model when connected and authorised on the review page; it does not verify qualifications. Do not upload real personal or confidential information. Text-based PDFs work best; image-only scans need OCR before upload.
@@ -553,7 +584,8 @@
               </div>
           <button class="btn btn-soft" onclick="showTab('cv-review')">Review my existing CV →</button>
         </section>
-        <section id="tab-cv-review" class="tab hidden space-y-6">
+        <section id="tab-cv-review" class="tab hidden space-y-6">
+          <nav class="growth-navigation" data-profile-navigation aria-label="My Profile"></nav>
           <div class="flex flex-wrap items-center justify-between gap-3">
             <div>
               <h2 class="text-xl font-black text-slate-900 tracking-tight flex items-center gap-2">
@@ -858,7 +890,8 @@
             </div>
           </div>
         </section>
-        <section id="tab-applications" class="tab hidden space-y-6">
+        <section id="tab-applications" class="tab hidden space-y-6">
+          <nav class="growth-navigation" data-profile-navigation aria-label="My Profile"></nav>
           <div class="flex flex-wrap items-center justify-between gap-3">
             <p class="text-sm text-slate-600">Track your applications and control who can view your CV.</p>
             <button class="btn btn-primary" onclick="showTab('jobs')">Find jobs →</button>
@@ -919,7 +952,8 @@
               </div>
         </section>
 
-        <section id="tab-jobs" class="tab hidden space-y-6">
+        <section id="tab-jobs" class="tab hidden space-y-6">
+          <nav class="growth-navigation" data-careers-navigation aria-label="Explore Careers"></nav>
           <!-- Card 1: Location & Search Radius -->
           <div data-outline-label="Location & search" class="glass rounded-3xl p-6 space-y-5">
             <!-- Row 1: Current Location + Formal Location Controls -->
@@ -1103,7 +1137,8 @@
           </div>
         </section>
 
-       <section id="tab-quest" class="tab hidden space-y-6">
+       <section id="tab-quest" class="tab hidden space-y-6">
+          <nav class="growth-navigation" data-profile-navigation aria-label="My Profile"></nav>
           <!-- Progress Ring Header -->
           <div class="glass rounded-3xl p-6 flex items-center gap-5">
             <div id="qRing" class="ring"><span>0%</span></div>
@@ -1175,7 +1210,8 @@
 
         </section>
 
-        <section id="tab-radar" class="tab hidden space-y-6">
+        <section id="tab-radar" class="tab hidden space-y-6">
+          <nav class="growth-navigation" data-careers-navigation aria-label="Explore Careers"></nav>
         <!-- 1. Top Hero Header: Clean & Punchy -->
         <div class="glass rounded-3xl p-6 flex flex-wrap items-center justify-between gap-4">
           <div>
@@ -1326,6 +1362,7 @@
         </section>
 
         <section id="tab-match" class="tab hidden space-y-5">
+          <nav class="growth-navigation" data-careers-navigation aria-label="Explore Careers"></nav>
           <div class="flex flex-wrap gap-2">
             <details class="chip chip-slate"><summary>⚖️ Fairness checks</summary><p id="fairnessDetails" class="mt-2 max-w-lg">Protected attributes excluded from scoring. Statistical parity has not been audited.</p></details>
             <span class="chip chip-slate">Scores are estimates</span>
@@ -2249,7 +2286,17 @@
         EXTRA_TABS.jobs,
         ...NAV.slice(3),
       ];
-      buildPortalNavigation(renderItems, [{label: 'Overview', ids: ['dash']}, {label: 'My Profile', ids: ['profile', 'quest']}, {label: 'Explore Careers', ids: ['jobs', 'radar', 'match']}, {label: 'My Growth', ids: ['plan', 'discover', 'saved', 'completed', 'passport']}]);
+      buildPortalNavigation(renderItems, [
+
+        { label: 'Overview', ids: ['dash'] },
+
+        { label: 'My Profile', ids: ['profile', 'cv-review', 'quest', 'applications'] },
+
+        { label: 'Explore Careers', ids: ['jobs', 'radar', 'match'] },
+
+        { label: 'My Growth', ids: ['plan', 'discover', 'saved', 'completed', 'passport'] }
+
+      ]);
     }
 
     async function showTab(id, options = {}) {
@@ -2265,7 +2312,11 @@
       document.getElementById('pgEyebrow').textContent = n.eyebrow;
       document.getElementById('pgTitle').textContent = n.title;
       if (id === 'dash') renderDash();
-      try { renderGrowthNavigation(); } catch (_) { /* Optional learning navigation must not block the account. */ }
+      try {
+        renderProfileNavigation();
+        renderCareersNavigation();
+        renderGrowthNavigation();
+      } catch (_) { /* Navigation helpers */ }
       if (id === 'plan') renderPlan();
       if (id === 'discover') renderDiscoveryLearning();
       if (id === 'saved') renderSavedCourses();
@@ -3770,6 +3821,14 @@
       dashHello.textContent = user ? user.full_name : '';
       dashSub.textContent = analysed ? 'Here is your latest career snapshot.' : 'Complete the steps below to unlock your full plan.';
       const answered = answeredCount();
+      const stepColors = [
+        'from-indigo-500 to-indigo-700',
+        'from-pink-500 to-rose-600',
+        'from-purple-500 to-indigo-600',
+        'from-amber-500 to-orange-500',
+        'from-emerald-500 to-teal-600',
+        'from-sky-500 to-blue-600'
+      ];
       const steps = [
         { label: 'CV profile', tab: cvRecord ? 'cv-review' : 'cv-upload', done: isReviewed() },
         { label: 'Questionnaire', tab: 'quest', done: answered >= questionnaireFieldDefinitions().length },
@@ -3779,16 +3838,66 @@
         { label: 'Passport', tab: 'passport', done: visited.has('passport') },
       ];
       journey.innerHTML = steps.map((s, i) => `
-        <button onclick="showTab('${s.tab}')" class="text-left tint ${s.done ? 'tint-teal' : 'tint-indigo'} rounded-2xl p-3 lift">
-          <div class="flex items-center gap-2"><span class="step-dot ${s.done ? 'bg-emerald-500 text-white' : 'bg-white text-slate-500 border'}">${s.done ? '✓' : i + 1}</span>
-          <div class="text-xs font-extrabold">${s.label}</div></div></button>`).join('');
-      kpis.innerHTML = [
-        ['Best match', top ? top.match_score + '%' : '—', top ? esc(top.title) : 'Run analysis', 'indigo'],
-        ['Skills to build', role ? role.skills_gap.length : '—', 'for selected role', 'pink'],
-        ['Learning hours', role ? role.estimated_total_hours : '—', 'verified courses', 'amber'],
-        ['Questionnaire', `${answered}/${questionnaireFieldDefinitions().length}`, 'answered', 'teal'],
-      ].map(k => `<div class="tint tint-${k[3]} rounded-2xl p-4"><div class="text-[11px] font-bold text-slate-500">${k[0]}</div>
-        <div class="text-3xl font-extrabold mt-1">${k[1]}</div><div class="text-[11px] text-slate-500 truncate">${k[2]}</div></div>`).join('');
+        <button onclick="showTab('${s.tab}')" class="text-left tint ${s.done ? 'tint-teal' : 'tint-indigo'} rounded-2xl p-3 lift group">
+          <div class="flex items-center gap-2.5">
+            <span class="inline-flex items-center justify-center h-6 w-6 rounded-lg text-xs font-black shadow-xs ${s.done ? 'bg-emerald-500 text-white' : 'bg-gradient-to-r ' + stepColors[i] + ' text-white'}">${s.done ? '✓' : '0' + (i + 1)}</span>
+            <div class="text-xs font-extrabold text-slate-900 group-hover:text-indigo-600 transition">${s.label}</div>
+          </div>
+        </button>`).join('');
+      
+      const kpiItems = [
+        {
+          title: 'Best match',
+          val: top ? top.match_score + '%' : '—',
+          sub: top ? esc(top.title) : 'Run analysis',
+          icon: '🎯',
+          theme: 'indigo',
+          tab: 'match',
+          hint: 'View role match breakdown →',
+        },
+        {
+          title: 'Skills to build',
+          val: role ? role.skills_gap.length : '—',
+          sub: 'for selected role',
+          icon: '🧩',
+          theme: 'pink',
+          tab: 'plan',
+          hint: 'Open reskilling plan →',
+        },
+        {
+          title: 'Learning hours',
+          val: role ? role.estimated_total_hours : '—',
+          sub: 'verified courses',
+          icon: '⏱️',
+          theme: 'amber',
+          tab: 'discover',
+          hint: 'Explore verified catalog →',
+        },
+        {
+          title: 'Questionnaire',
+          val: `${answered}/${questionnaireFieldDefinitions().length}`,
+          sub: 'answered',
+          icon: '📝',
+          theme: 'teal',
+          tab: 'quest',
+          hint: 'Complete questionnaire →',
+        },
+      ];
+      kpis.innerHTML = kpiItems.map(k => `
+        <div onclick="showTab('${k.tab}')" class="tint tint-${k.theme} rounded-2xl p-4 lift cursor-pointer transition hover:shadow-md border hover:border-indigo-400 group relative overflow-hidden flex flex-col justify-between">
+          <div class="flex items-center justify-between">
+            <span class="text-[11px] font-bold text-slate-500 uppercase tracking-wider">${k.title}</span>
+            <span class="text-base p-1.5 rounded-xl bg-white/80 shadow-2xs">${k.icon}</span>
+          </div>
+          <div class="my-2">
+            <div class="text-3xl font-extrabold tracking-tight text-slate-900 group-hover:text-indigo-600 transition">${k.val}</div>
+            <div class="text-[11px] font-medium text-slate-500 truncate mt-0.5">${k.sub}</div>
+          </div>
+          <div class="pt-2 border-t border-slate-200/60 flex items-center justify-between text-[10px] font-bold text-indigo-600 opacity-80 group-hover:opacity-100">
+            <span>${k.hint}</span>
+            <span class="group-hover:translate-x-0.5 transition">→</span>
+          </div>
+        </div>`).join('');
       dashTop.innerHTML = top ? `
         <div class="flex items-center justify-between mb-4"><div class="text-sm font-extrabold">Top future-role matches</div><button onclick="showTab('match')" class="text-xs font-bold text-indigo-600">See all →</button></div>
         <div class="space-y-3">${roles.slice(0, 3).map((r, i) => `
@@ -4038,6 +4147,37 @@
       const heights=[...document.querySelectorAll('.portal-desktop-header,.portal-mobile-header')].map(header=>header.getBoundingClientRect().height);
       document.documentElement.style.setProperty('--growth-header-height',Math.ceil(Math.max(0,...heights))+'px');
     }
+    function renderProfileNavigation() {
+      const items = [
+        { id: 'profile', ico: '👤', label: 'Profile Details' },
+        { id: 'cv-review', ico: '✏️', label: 'Review CV' },
+        { id: 'quest', ico: '📝', label: 'Questionnaire' },
+        { id: 'applications', ico: '📨', label: 'My Applications' },
+      ];
+      document.querySelectorAll('[data-profile-navigation]').forEach(nav => {
+        nav.innerHTML = items.map(item => `
+          <button type="button" onclick="showTab('${item.id}')" ${current === item.id ? 'aria-current="page"' : ''}>
+            <span aria-hidden="true">${item.ico}</span> <span>${esc(item.label)}</span>
+          </button>`).join('');
+      });
+      window.careerLensLocale?.apply();
+    }
+
+    function renderCareersNavigation() {
+      const items = [
+        { id: 'jobs', ico: '📍', label: 'Nearby Jobs & Map' },
+        { id: 'radar', ico: '📡', label: 'Future Skills Radar' },
+        { id: 'match', ico: '🎯', label: 'Future-Role Matches' },
+      ];
+      document.querySelectorAll('[data-careers-navigation]').forEach(nav => {
+        nav.innerHTML = items.map(item => `
+          <button type="button" onclick="showTab('${item.id}')" ${current === item.id ? 'aria-current="page"' : ''}>
+            <span aria-hidden="true">${item.ico}</span> <span>${esc(item.label)}</span>
+          </button>`).join('');
+      });
+      window.careerLensLocale?.apply();
+    }
+
     function renderGrowthNavigation() {
       const items=NAV.filter(item=>['plan','discover','saved','completed','passport'].includes(item.id));
       document.querySelectorAll('[data-growth-navigation]').forEach(nav=>{

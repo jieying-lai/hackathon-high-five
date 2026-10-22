@@ -26,7 +26,7 @@ async function api(url, options) {
   const res = await fetch(url, options);
   let data = {};
   try { data = await res.json(); } catch (e) {  }
-  if (res.status === 401) { window.location.href = '/'; }
+  if (res.status === 401 && !url.includes('/api/auth/login') && !url.includes('/api/auth/register')) { window.location.href = '/'; }
   return { ok: res.ok, status: res.status, data };
 }
 
@@ -111,12 +111,16 @@ async function signOut() {
       if (typeof openAuth === 'function') openAuth('register');
       else window.location.href = '/#auth';
       return;
+    } else if (act.action === 'quick_seeker') {
+      if (typeof quickLogin === 'function') quickLogin('job_seeker');
+      else window.location.href = '/#auth';
+      return;
     } else if (act.action === 'hr_demo') {
       if (typeof quickLogin === 'function') quickLogin('hr_company');
       else window.location.href = '/#auth';
       return;
     } else if (act.action === 'support') {
-      window.location.href = 'mailto:support@careerlens.my?subject=CareerLens%20AI%20Support%20Inquiry';
+      window.location.href = 'mailto:admin@careerlens.my?subject=CareerLens%20AI%20Account%20Helpdesk%20Inquiry';
       return;
     }
     if (act.tab && typeof window.showTab === 'function') {

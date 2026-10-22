@@ -153,7 +153,13 @@
       <div class="feature-explorer"><div id="feature-steps"></div><aside id="feature-preview" class="glass feature-preview" aria-live="polite"></aside></div>
     </section>
 
-    <section id="home-portals" class="grid md:grid-cols-2 gap-6">
+    <section id="home-portals" class="scroll-mt-24 pt-6 pb-12 space-y-6">
+      <div class="text-center max-w-xl mx-auto space-y-2">
+        <span class="chip chip-indigo !text-xs font-bold">✨ Two Dedicated Portals</span>
+        <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900">Choose your gateway</h2>
+        <p class="text-xs sm:text-sm text-slate-500">Whether you are developing your career or building your workforce, CareerLens has a purpose-built workspace for you.</p>
+      </div>
+      <div class="grid md:grid-cols-2 gap-6">
       <div class="tint tint-indigo rounded-3xl p-7 lift space-y-4">
         <div class="flex items-center gap-3"><div class="h-12 w-12 rounded-2xl bg-gradient-to-br from-indigo-500 to-pink-500 grid place-items-center text-xl text-white">👤</div>
           <div><div class="text-[11px] font-extrabold uppercase tracking-wider text-indigo-600">For individuals</div><h3 class="text-lg font-extrabold">Talent Portal</h3></div></div>
@@ -188,18 +194,17 @@
             <input id="loginPassword" type="password" class="input" placeholder="Your password" onkeydown="if(event.key==='Enter')submitLogin()" />
           </div>
           <button onclick="submitLogin()" class="btn btn-primary w-full py-3">Sign In</button>
-          <div class="flex items-center gap-3 text-[11px] text-slate-400"><div class="flex-1 border-t"></div>OR<div class="flex-1 border-t"></div></div>
-          <div class="grid grid-cols-2 gap-2.5">
-            <button onclick="openSso('Google')" class="btn btn-soft">🌐 Google</button>
-            <button onclick="openSso('Microsoft')" class="btn btn-soft">🏢 Microsoft</button>
-          </div>
         </div>
         <div class="md:col-span-5 tint tint-indigo rounded-2xl p-5 space-y-3">
           <div class="text-xs font-extrabold text-indigo-900">Quick demo access</div>
-          <button onclick="quickLogin('job_seeker')" class="w-full text-left bg-white/90 hover:bg-white border border-indigo-200 rounded-xl p-3 transition">
-            <div class="font-bold text-xs text-indigo-700">👤 Talent Portal</div><div class="text-[11px] text-slate-500">Aisha Rahman · Financial Auditor</div></button>
-          <button onclick="quickLogin('hr_company')" class="w-full text-left bg-white/90 hover:bg-white border border-teal-200 rounded-xl p-3 transition">
-            <div class="font-bold text-xs text-teal-700">🏢 Employer Portal</div><div class="text-[11px] text-slate-500">Daniel Tan · Nexus Digital Sdn Bhd</div></button>
+          <button onclick="quickLogin('job_seeker')" class="w-full text-left bg-white/90 hover:bg-white border border-indigo-200 rounded-xl p-3 transition shadow-xs">
+            <div class="font-bold text-xs text-indigo-700">👤 Talent Portal</div>
+            <div class="text-[11px] text-slate-500">Aisha Rahman · Financial Auditor</div>
+          </button>
+          <button onclick="quickLogin('hr_company')" class="w-full text-left bg-white/90 hover:bg-white border border-teal-200 rounded-xl p-3 transition shadow-xs">
+            <div class="font-bold text-xs text-teal-700">🏢 Employer Portal</div>
+            <div class="text-[11px] text-slate-500">Daniel Tan · Nexus Digital Sdn Bhd</div>
+          </button>
           <button onclick="quickLogin('admin')" class="w-full text-left bg-slate-900 hover:bg-slate-800 border border-slate-700 text-white rounded-xl p-3 transition shadow-xs">
             <div class="font-bold text-xs text-amber-300 flex items-center justify-between">
               <span>🔐 Admin Backdesk</span>
@@ -215,10 +220,10 @@
           <label class="label uppercase tracking-wider">1 · Account type *</label>
           <div class="grid sm:grid-cols-2 gap-3">
             <div id="cardSeeker" onclick="pickRole('job_seeker')" class="cursor-pointer tint tint-indigo border-2 !border-indigo-500 rounded-2xl p-4 transition">
-              <div class="flex justify-between"><span class="font-extrabold text-sm">👤 Talent</span><span class="chip chip-indigo font-mono">CL-JS-2026</span></div>
+              <div class="flex justify-between items-center"><span class="font-extrabold text-sm">👤 Talent</span><span class="text-[10px] font-bold text-indigo-600 bg-indigo-50 px-2.5 py-0.5 rounded-full border border-indigo-200">Job Seeker</span></div>
               <p class="text-[11px] text-slate-600 mt-1">Career matching and reskilling.</p></div>
             <div id="cardHr" onclick="pickRole('hr_company')" class="cursor-pointer bg-white/60 border border-slate-200 rounded-2xl p-4 transition">
-              <div class="flex justify-between"><span class="font-extrabold text-sm">🏢 HR / Company</span><span class="chip chip-teal font-mono">CL-HR-2026</span></div>
+              <div class="flex justify-between items-center"><span class="font-extrabold text-sm">🏢 HR / Company</span><span class="text-[10px] font-bold text-teal-700 bg-teal-50 px-2.5 py-0.5 rounded-full border border-teal-200">Employer</span></div>
               <p class="text-[11px] text-slate-600 mt-1">Vacancies, screening and workforce heatmap.</p></div>
           </div>
           <input id="regRole" type="hidden" value="job_seeker" />
@@ -233,16 +238,78 @@
         </div>
 
         <div id="seekerFields" class="tint tint-indigo rounded-2xl p-4 space-y-3">
-          <div class="text-xs font-extrabold text-indigo-900">Talent details</div>
+          <div class="flex items-center justify-between">
+            <div class="text-xs font-extrabold text-indigo-900">Talent details</div>
+            <span class="text-[10px] text-slate-500 font-medium">(Optional during registration)</span>
+          </div>
           <div class="grid sm:grid-cols-3 gap-3">
-            <div><label class="label">Career status</label><select id="sType" class="input"><option>Fresh Graduate</option><option>Working Professional</option><option>Career Switcher</option></select></div>
-            <div><label for="sIndustry" class="label">Industry</label><select id="sIndustry" class="input" required><option value="">Select…</option>{% for industry in registration_industries %}<option value="{{ industry }}">{{ industry }}</option>{% endfor %}</select></div>
-            <div><label class="label">Current / target role</label><input id="sRole" class="input" value="Junior Financial Analyst" /></div>
-            <div><label for="sEdu" class="label">Education</label><select id="sEdu" class="input"><option value="SPM / UEC">SPM / UEC</option><option selected>Bachelor's Degree</option><option>Diploma / TVET</option><option>Master's / Postgraduate</option></select></div>
-            <div><label class="label">Work mode</label><select id="sMode" class="input"><option>Hybrid</option><option>Remote</option><option>On-site</option></select></div>
-            <div><label for="sLocState" class="label">State / federal territory</label><select id="sLocState" class="input" required data-regions='{{ registration_regions|tojson }}' onchange="updateRegistrationDistricts()"><option value="">Select…</option>{% for state in registration_regions %}<option value="{{ state }}">{{ state }}</option>{% endfor %}</select></div>
-            <div><label for="sLoc" class="label">District / area</label><select id="sLoc" class="input" required onchange="updateRegistrationOtherArea()"><option value="">Select a district / area</option>{% for state, areas in registration_regions.items() %}<optgroup label="{{ state }}">{% for area in areas %}<option value="{{ area }}" data-state="{{ state }}">{{ area }}</option>{% endfor %}</optgroup>{% endfor %}</select></div>
-            <div id="sLocOtherField" class="hidden"><label for="sLocOther" class="label">Enter your preferred area</label><input id="sLocOther" class="input" minlength="2" maxlength="100" disabled /></div>
+            <div>
+              <label class="label">Career status</label>
+              <select id="sType" class="input cl-select">
+                <option value="">Select status (optional)…</option>
+                <option value="Fresh Graduate">Fresh Graduate</option>
+                <option value="Working Professional">Working Professional</option>
+                <option value="Career Switcher">Career Switcher</option>
+              </select>
+            </div>
+            <div>
+              <label for="sIndustry" class="label">Industry</label>
+              <select id="sIndustry" class="input cl-select">
+                <option value="">Select industry (optional)…</option>
+                {% for industry in registration_industries %}
+                <option value="{{ industry }}">{{ industry }}</option>
+                {% endfor %}
+              </select>
+            </div>
+            <div>
+              <label class="label">Current / target role</label>
+              <input id="sRole" class="input" placeholder="e.g. Junior Financial Analyst (optional)" value="" />
+            </div>
+            <div>
+              <label for="sEdu" class="label">Education</label>
+              <select id="sEdu" class="input cl-select">
+                <option value="">Select education (optional)…</option>
+                <option value="SPM / UEC">SPM / UEC</option>
+                <option value="Bachelor's Degree">Bachelor's Degree</option>
+                <option value="Diploma / TVET">Diploma / TVET</option>
+                <option value="Master's / Postgraduate">Master's / Postgraduate</option>
+              </select>
+            </div>
+            <div>
+              <label class="label">Work mode</label>
+              <select id="sMode" class="input cl-select">
+                <option value="">Select work mode (optional)…</option>
+                <option value="Hybrid">Hybrid</option>
+                <option value="Remote">Remote</option>
+                <option value="On-site">On-site</option>
+              </select>
+            </div>
+            <div>
+              <label for="sLocState" class="label">State / federal territory</label>
+              <select id="sLocState" class="input cl-select" data-regions='{{ registration_regions|tojson }}' onchange="updateRegistrationDistricts()">
+                <option value="">Select state (optional)…</option>
+                {% for state in registration_regions %}
+                <option value="{{ state }}">{{ state }}</option>
+                {% endfor %}
+              </select>
+            </div>
+            <div>
+              <label for="sLoc" class="label">District / area</label>
+              <select id="sLoc" class="input cl-select" onchange="updateRegistrationOtherArea()">
+                <option value="">Select district (optional)…</option>
+                {% for state, areas in registration_regions.items() %}
+                <optgroup label="{{ state }}">
+                  {% for area in areas %}
+                  <option value="{{ area }}" data-state="{{ state }}">{{ area }}</option>
+                  {% endfor %}
+                </optgroup>
+                {% endfor %}
+              </select>
+            </div>
+            <div id="sLocOtherField" class="hidden">
+              <label for="sLocOther" class="label">Enter your preferred area</label>
+              <input id="sLocOther" class="input" minlength="2" maxlength="100" disabled />
+            </div>
           </div>
         </div>
 
@@ -267,16 +334,70 @@
     </div>
   </main>
 
-  <div id="termsModal" class="hidden overlay"><div class="glass bg-white/95 rounded-3xl max-w-lg w-full p-7 space-y-4">
-    <div class="flex justify-between items-center border-b pb-3"><h3 class="font-extrabold">🛡️ Privacy, PDPA & Fair-AI</h3><button onclick="toggleTerms(false)" class="text-slate-400 font-bold">✕</button></div>
-    <ul class="space-y-2.5 text-xs text-slate-600 leading-relaxed list-disc pl-4">
-      <li><b>Unique ID & use:</b> each account gets a unique ID. Data is used only for career matching, screening and learning plans.</li>
-      <li><b>Security:</b> passwords are salted and hashed; demo data is synthetic.</li>
-      <li><b>Fair & human-centred:</b> age, gender, ethnicity and similar attributes are never scored. People make the final decisions.</li>
-      <li><b>Control:</b> you can request access to, or deletion of, your data.</li>
-    </ul>
-    <div class="flex justify-end"><button onclick="document.getElementById('regConsent').checked=true;toggleTerms(false)" class="btn btn-primary">Accept</button></div>
-  </div></div>
+  <div id="termsModal" class="hidden overlay">
+    <div class="glass bg-white/95 rounded-3xl max-w-xl w-full p-7 space-y-4 max-h-[90vh] overflow-y-auto">
+      <div class="flex justify-between items-center border-b pb-3">
+        <div class="flex items-center gap-2.5">
+          <span class="text-xl">🛡️</span>
+          <div>
+            <h3 class="font-extrabold text-base text-slate-900">Privacy, PDPA &amp; Fair-AI Commitment</h3>
+            <p class="text-[11px] text-slate-500">Malaysian PDPA 2010 Compliance &amp; Ethical AI Governance</p>
+          </div>
+        </div>
+        <button onclick="toggleTerms(false)" class="text-slate-400 hover:text-slate-600 font-bold text-lg">✕</button>
+      </div>
+
+      <div class="space-y-3.5 text-xs text-slate-700 leading-relaxed">
+        <div class="p-3.5 rounded-2xl bg-indigo-50/80 border border-indigo-200/70 space-y-1">
+          <div class="font-extrabold text-indigo-900 flex items-center gap-1.5">
+            <span>⚖️</span><span>Malaysian PDPA 2010 Legal Compliance</span>
+          </div>
+          <p class="text-slate-600 text-[11px]">
+            In strict adherence to the <b>Personal Data Protection Act 2010 (Act 709) of Malaysia</b>, CareerLens AI collects and processes candidate data solely with explicit consent under the Notice and Choice Principle.
+          </p>
+        </div>
+
+        <div class="space-y-3">
+          <div class="flex items-start gap-2.5">
+            <span class="text-indigo-600 font-bold">1.</span>
+            <div>
+              <b class="text-slate-900">Pseudonymised Unique ID &amp; Purpose Limitation:</b>
+              <p class="text-slate-600 mt-0.5">Every account is assigned a secure cryptographic identifier. Your data is strictly utilised for skill taxonomy extraction, role matching, candidate screening, and personalised course pathways. Data is never rented, sold, or shared with third-party advertisers.</p>
+            </div>
+          </div>
+
+          <div class="flex items-start gap-2.5">
+            <span class="text-indigo-600 font-bold">2.</span>
+            <div>
+              <b class="text-slate-900">Industry-Standard Cryptographic Protection:</b>
+              <p class="text-slate-600 mt-0.5">Passwords are protected using per-user cryptographically random salts and PBKDF2 / SHA-256 key stretching algorithms. Sensitive personal resumes remain in your private vault until you explicitly apply for a vacancy.</p>
+            </div>
+          </div>
+
+          <div class="flex items-start gap-2.5">
+            <span class="text-indigo-600 font-bold">3.</span>
+            <div>
+              <b class="text-slate-900">Fair-AI &amp; Non-Discrimination Guardrail:</b>
+              <p class="text-slate-600 mt-0.5">Protected demographic attributes including age, gender, ethnicity, religion, marital status, and disability are strictly stripped from all AI scoring engines and semantic embeddings. Human recruiters retain 100% final decision authority; AI acts strictly as an explainable recommendation assistant.</p>
+            </div>
+          </div>
+
+          <div class="flex items-start gap-2.5">
+            <span class="text-indigo-600 font-bold">4.</span>
+            <div>
+              <b class="text-slate-900">Data Sovereignty, Inspection &amp; Revocation (Section 30 &amp; 38):</b>
+              <p class="text-slate-600 mt-0.5">You retain complete ownership of your career records. You may request access to, correction of, or permanent deletion of your profile and submitted applications at any time by contacting the Admin Helpdesk at <span class="font-mono text-indigo-700 font-bold">admin@careerlens.my</span> with guaranteed processing within 48 business hours.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="flex justify-end pt-3 border-t border-slate-100 gap-2">
+        <button onclick="toggleTerms(false)" class="btn btn-soft !py-2 !text-xs font-bold">Close</button>
+        <button onclick="document.getElementById('regConsent').checked=true;toggleTerms(false)" class="btn btn-primary !py-2 !text-xs font-bold">I Agree &amp; Accept Terms</button>
+      </div>
+    </div>
+  </div>
 
   <div id="ssoModal" class="hidden overlay"><div class="glass bg-white/95 rounded-3xl max-w-md w-full p-6 space-y-4">
     <div class="flex justify-between items-center border-b pb-3"><h3 id="ssoTitle" class="font-extrabold">Continue with SSO</h3><button onclick="document.getElementById('ssoModal').classList.add('hidden')" class="text-slate-400 font-bold">✕</button></div>
@@ -396,22 +517,38 @@
     async function submitRegistration() {
       const role = regRole.value;
       if (role === 'hr_company' && !validateCompanyName()) { hCompany.reportValidity(); return; }
-      if (role === 'job_seeker' && ![sIndustry, sLocState, sLoc, sLocOther].every(field => field.disabled || field.reportValidity())) return;
+      const locArea = sLoc.value === 'Other area' ? sLocOther.value.trim() : sLoc.value;
+      const locParts = [locArea, sLocState.value].filter(Boolean);
       const role_details = role === 'job_seeker'
-        ? { seeker_type: sType.value, industry: sIndustry.value, current_role: sRole.value, education_level: sEdu.value, preferred_work_mode: sMode.value,
-            location: [sLoc.value === 'Other area' ? sLocOther.value.trim() : sLoc.value, sLocState.value].join(', '),
-            location_state: sLocState.value, location_district: sLoc.value, location_area_other: sLoc.value === 'Other area' ? sLocOther.value.trim() : '' }
+        ? { 
+            seeker_type: sType.value || 'Fresh Graduate', 
+            industry: sIndustry.value || '', 
+            current_role: sRole.value || '', 
+            education_level: sEdu.value || '', 
+            preferred_work_mode: sMode.value || '',
+            location: locParts.join(', '),
+            location_state: sLocState.value || '', 
+            location_district: sLoc.value || '', 
+            location_area_other: sLoc.value === 'Other area' ? sLocOther.value.trim() : '' 
+          }
         : { company_name: hCompany.value.trim(), hr_job_title: hTitle.value, company_size: hSize.value, company_industry: hIndustry.value, reskilling_focus: hFocus.value };
-      const { data } = await postJson('/api/auth/register', {
+      const { ok, data } = await postJson('/api/auth/register', {
         full_name: regName.value, email: regEmail.value, password: regPw.value, confirm_password: regPw2.value,
         role, role_details, pdpa_consent: regConsent.checked });
-      if (!data.ok) return showAlert(data.message);
+      if (!ok || !data.ok) return showAlert(data?.message || 'Registration failed. Please check your information and try again.');
       window.PagePosition?.clear();
       window.location.href = '/workspace';
     }
     async function submitLogin() {
-      const { data } = await postJson('/api/auth/login', { email: loginEmail.value, password: loginPassword.value });
-      if (!data.ok) return showAlert(data.message);
+      const email = loginEmail.value.trim();
+      const password = loginPassword.value;
+      if (!email || !password) return showAlert('Please enter both your email address and password.');
+      const { ok, data } = await postJson('/api/auth/login', { email, password });
+      if (!ok || !data.ok) {
+        showAlert(data?.message || 'Account not found or password incorrect. Please check your credentials and try again.');
+        document.getElementById('loginPassword').focus();
+        return;
+      }
       window.PagePosition?.clear();
       window.location.href = data.redirect || '/workspace';
     }

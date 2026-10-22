@@ -799,6 +799,25 @@ def _generate_lumi_core(message: str, user: dict | None = None, history: list | 
             "mascot": MASCOT_PROFILE,
         }
 
+    if portal == "guest":
+        return {
+            "ok": True, "in_range": True,
+            "reply": (
+                "🦉 **Welcome to CareerLens AI!**\n\n"
+                "To access our **AI CV Skill Parsing**, **Future-Role Matching**, and **Personalised Reskilling**, please **Sign In** or **Register**.\n\n"
+                "• **Demo Access:** Try Aisha (Talent) or Daniel (Employer) below.\n"
+                "• **Account Help?** Contact our Admin Helpdesk anytime at `admin@careerlens.my`."
+            ),
+            "actions": [
+                {"label": "🔑 Sign In", "action": "login"},
+                {"label": "✨ Create Account", "action": "register"},
+                {"label": "👤 Aisha Demo (Talent)", "action": "quick_seeker"},
+                {"label": "🏢 Daniel Demo (HR)", "action": "hr_demo"},
+                {"label": "💬 Admin Helpdesk", "action": "support"},
+            ],
+            "mascot": MASCOT_PROFILE,
+        }
+
     return {
         "ok": True, "in_range": True,
         "reply": "🦉 **Hi! I'm Lumi.** I help Job Seekers with **private PDF CVs, nearby job matching & reskilling**, and Employers with **fair screening & skill heatmaps**.",
