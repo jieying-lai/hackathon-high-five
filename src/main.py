@@ -37,6 +37,7 @@ import questionnaire_engine
 import verification_ai
 from ai_matcher import load_json, match_user_to_roles
 import auth_db
+import cv_dataset_manager
 from auth_db import (authenticate_user, get_user_by_uid, init_db, register_user, update_user_password, update_user_profile)
 from trend_signals import get_trend_radar
 from utils import format_greeting
@@ -269,8 +270,60 @@ def api_admin_update_feedback(fid):
 @app.route("/api/admin/users", methods=["GET"])
 @api_role("admin")
 def api_admin_users():
-    users = auth_db.list_all_users()
-    return jsonify({"ok": True, "users": users})
+    page = request.args.get("page", type=int)
+    per_page = request.args.get("per_page", default=15, type=int)
+    search = request.args.get("search", type=str)
+    sort_by = request.args.get("sort_by", default="id", type=str)
+    sort_order = request.args.get("sort_order", default="asc", type=str)
+    reveal = request.args.get("reveal", default="0") in ("1", "true")
+
+    if page is None:
+        users = auth_db.list_all_users(mask_pii=not reveal)
+        return jsonify({"ok": True, "users": users, "total": len(users), "page": 1, "per_page": len(users), "total_pages": 1})
+
+    data = auth_db.list_users_paginated(page=page, per_page=per_page, search=search, sort_by=sort_by, sort_order=sort_order, mask_pii=not reveal)
+    return jsonify({"ok": True, "users": data["users"], "pagination": data})
+
+
+@app.route("/api/admin/applications", methods=["GET"])
+@api_role("admin")
+def api_admin_applications():
+    page = request.args.get("page", default=1, type=int)
+    per_page = request.args.get("per_page", default=15, type=int)
+    search = request.args.get("search", type=str)
+    sort_by = request.args.get("sort_by", default="id", type=str)
+    sort_order = request.args.get("sort_order", default="desc", type=str)
+    reveal = request.args.get("reveal", default="0") in ("1", "true")
+
+    data = auth_db.list_all_applications(page=page, per_page=per_page, search=search, sort_by=sort_by, sort_order=sort_order, mask_pii=not reveal)
+    return jsonify({"ok": True, "applications": data["applications"], "pagination": data})
+
+
+@app.route("/api/admin/curated-cvs", methods=["GET"])
+@api_role("admin")
+def api_admin_curated_cvs():
+    page = request.args.get("page", default=1, type=int)
+    per_page = request.args.get("per_page", default=15, type=int)
+    search = request.args.get("search", type=str)
+    sort_by = request.args.get("sort_by", default="id", type=str)
+    sort_order = request.args.get("sort_order", default="asc", type=str)
+    reveal = request.args.get("reveal", default="0") in ("1", "true")
+
+    data = cv_dataset_manager.list_curated_benchmarks(page=page, per_page=per_page, search=search, sort_by=sort_by, sort_order=sort_order, mask_pii=not reveal)
+    return jsonify({"ok": True, "curated_cvs": data["items"], "pagination": data})
+
+
+@app.route("/api/admin/audit/reveal", methods=["POST"])
+@api_role("admin")
+def api_admin_audit_reveal():
+    data = json_object()
+    target_uid = data.get("target_uid")
+    reason = data.get("reason", "Administrative verification under PDPA compliance")
+    admin_uid = session.get("user", {}).get("unique_uid", "CL-ADM-2026-0001")
+    ip_addr = request.remote_addr or "127.0.0.1"
+
+    auth_db.log_admin_audit(admin_uid, "REVEAL_SENSITIVE_PII", target_uid=target_uid, details=reason, ip_address=ip_addr)
+    return jsonify({"ok": True, "message": "Sensitive data reveal audit logged.", "audit_logged": True})
 
 
 @app.route("/api/auth/me", methods=["GET"])
