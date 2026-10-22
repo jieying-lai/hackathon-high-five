@@ -277,7 +277,7 @@ def _handle_career_aspiration(low: str, ctx: dict) -> dict | None:
 def _get_gemini_key() -> tuple[str, str]:
     """Read GEMINI_API_KEY or GOOGLE_API_KEY from environment or .env file."""
     key = (os.getenv("GEMINI_API_KEY") or os.getenv("GOOGLE_API_KEY") or "").strip()
-    model = (os.getenv("LUMI_GEMINI_MODEL") or "gemini-2.5-flash").strip()
+    model = (os.getenv("LUMI_GEMINI_MODEL") or "gemini-3.5-flash").strip()
     if not key:
         env_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), ".env")
         if os.path.exists(env_path):
@@ -297,37 +297,50 @@ def _get_gemini_key() -> tuple[str, str]:
 
 
 def _enhance_with_gemini(user_msg: str, grounded_reply: str, ctx: dict) -> str:
-    """If GEMINI_API_KEY is configured, use Gemini 2.5 Flash to polish/answer naturally using the 13-dataset facts."""
+    """If GEMINI_API_KEY is configured, use Gemini to polish/answer naturally using grounded facts."""
     api_key, model = _get_gemini_key()
     if not api_key:
         return grounded_reply
-    url = f"https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent?key={api_key}"
     prof = ctx.get("profile") or {}
+    skills_str = ", ".join((prof.get("skills") or [])[:6])
+    role_str = prof.get("current_role", "")
+    ind_str = prof.get("industry", "")
     prompt = (
-        "You are Lumi 🦉, the cute, smart AI Owl Copilot for CareerLens AI Malaysia.\n"
+        "You are Lumi 🦉, the proactive and encouraging AI Career Advisor for CareerLens AI in Malaysia.\n"
         "Rules:\n"
-        "1. Reply in the SAME language as the user (English, Chinese, or Bahasa/Manglish).\n"
-        "2. Keep it concise (max 3-4 short bullet points, start with 🦉).\n"
-        "3. Strictly preserve the exact numbers, company names, salaries, and facts from the GROUNDED DATASET FACTS below.\n\n"
-        f"User Profile: {prof.get('current_role', '')} in {prof.get('industry', '')}, Skills: {', '.join((prof.get('skills') or [])[:6])}\n"
+        "1. Reply in the EXACT SAME language as the user (English, Chinese, or Bahasa/Manglish).\n"
+        "2. Keep it concise, structured, and practical (max 3-4 bullet points, start with 🦉).\n"
+        "3. Ground numbers and advice in Malaysian realities (salaries in RM, HRD Corp courses).\n\n"
+        f"User Profile: {role_str} in {ind_str}, Skills: {skills_str}\n"
         f"User Message: {user_msg}\n"
         f"GROUNDED DATASET FACTS:\n{grounded_reply}"
     )
     payload = json.dumps({
         "contents": [{"parts": [{"text": prompt}]}],
-        "generationConfig": {"temperature": 0.25, "maxOutputTokens": 280},
+        "generationConfig": {"temperature": 0.25, "maxOutputTokens": 350},
     }).encode("utf-8")
-    try:
-        req = urllib.request.Request(url, data=payload, headers={"Content-Type": "application/json"})
-        with urllib.request.urlopen(req, timeout=4.5) as resp:
-            data = json.loads(resp.read().decode("utf-8"))
-            cand_text = data["candidates"][0]["content"]["parts"][0]["text"].strip()
-            if cand_text:
-                return cand_text
-    except Exception:
-        pass
-    return grounded_reply
 
+    models_to_try = [model, "gemini-3.5-flash", "gemini-3-flash-preview"]
+    seen = set()
+    for m in models_to_try:
+        if m in seen:
+            continue
+        seen.add(m)
+        url = f"https://generativelanguage.googleapis.com/v1beta/models/{m}:generateContent?key={api_key}"
+        try:
+            req = urllib.request.Request(
+                url,
+                data=payload,
+                headers={"Content-Type": "application/json", "X-goog-api-key": api_key}
+            )
+            with urllib.request.urlopen(req, timeout=12.0) as resp:
+                data = json.loads(resp.read().decode("utf-8"))
+                cand_text = data["candidates"][0]["content"]["parts"][0]["text"].strip()
+                if cand_text:
+                    return cand_text
+        except Exception:
+            continue
+    return grounded_reply
 
 def _generate_lumi_core(message: str, user: dict | None = None, history: list | None = None,
                            user_location: dict | None = None) -> dict:
