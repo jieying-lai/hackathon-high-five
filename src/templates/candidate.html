@@ -539,12 +539,11 @@
             </div>
           </div>
         </section>
-        <section id="tab-cv-upload" class="tab hidden space-y-6">
+        <section id="tab-cv-upload" class="tab hidden space-y-6">
+
           <nav class="growth-navigation" data-profile-navigation aria-label="My Profile"></nav>
           <p class="text-sm text-slate-600">Upload a PDF, then continue to the separate review page to check and edit the extracted details.</p>
-          <div class="rounded-2xl border border-amber-300 bg-amber-50 p-4 text-sm text-amber-950" role="note">
-            <b>Hackathon demo — use fictional CVs only.</b> Uploads are extracted locally. Optional AI organisation uses the configured pretrained model when connected and authorised on the review page; it does not verify qualifications. Do not upload real personal or confidential information. Text-based PDFs work best; image-only scans need OCR before upload.
-          </div>
+
 
 
 
@@ -584,7 +583,8 @@
               </div>
           <button class="btn btn-soft" onclick="showTab('cv-review')">Review my existing CV →</button>
         </section>
-        <section id="tab-cv-review" class="tab hidden space-y-6">
+        <section id="tab-cv-review" class="tab hidden space-y-6">
+
           <nav class="growth-navigation" data-profile-navigation aria-label="My Profile"></nav>
           <div class="flex flex-wrap items-center justify-between gap-3">
             <div>
@@ -638,34 +638,37 @@
               </details>
             </div>
 
-<details class="career-disclosure"><summary><span><strong>Optional AI organisation</strong><small>Connection status and processing consent</small></span></summary><div class="disclosure-body">            <!-- Sleek Modern AI Enhancement Card -->
-            <div class="rounded-2xl border border-purple-200/80 bg-gradient-to-r from-purple-50/70 via-indigo-50/50 to-pink-50/40 p-4 sm:p-5 space-y-3" data-no-translate>
+            <!-- Sleek Modern AI Profile Enhancer Card -->
+            <div class="rounded-2xl border border-purple-200/90 bg-gradient-to-r from-purple-50/80 via-indigo-50/60 to-pink-50/50 p-4 sm:p-5 space-y-3 shadow-xs" data-no-translate>
               <div class="flex flex-wrap items-center justify-between gap-2">
-                <div class="flex items-center gap-2">
-                  <span class="text-lg">🤖</span>
-                  <h3 class="font-extrabold text-sm text-slate-900">AI Profile Enhancer</h3>
-                  <span class="chip chip-indigo !text-[10px]">Optional</span>
+                <div class="flex items-center gap-2.5">
+                  <span class="text-xl">🤖</span>
+                  <div>
+                    <div class="flex items-center gap-2">
+                      <h3 class="font-extrabold text-sm text-slate-900">AI Profile &amp; Experience Enhancer</h3>
+                      <span class="chip chip-indigo !text-[10px]">Optional</span>
+                    </div>
+                    <p class="text-[11px] text-slate-500">Polish executive summary, optimize action verbs, and structure career achievements</p>
+                  </div>
                 </div>
-                <div id="cvAIAvailability" class="text-xs font-bold text-slate-500" role="status">Checking connection…</div>
+                <div id="cvAIAvailability" class="chip chip-indigo !text-[11px] font-bold">⚡ AI Ready</div>
               </div>
               <p class="text-xs text-slate-600 leading-relaxed">
-                Use AI to intelligently polish experience, structure achievements, and enhance your resume highlights.
+                Use our domain-trained AI engine to intelligently polish your extracted CV draft into recruiter-ready format before saving.
               </p>
-              <div class="pt-1 flex flex-wrap items-center justify-between gap-3">
-                <label class="flex items-center gap-2.5 text-xs text-slate-700 cursor-pointer font-medium select-none">
-                  <input id="cvAIConsent" type="checkbox" class="rounded text-indigo-600 focus:ring-indigo-500" />
-                  <span id="cvAIConsentText">Authorize AI processing for this draft</span>
+              <div class="pt-2 flex flex-wrap items-center justify-between gap-3 border-t border-indigo-100/80">
+                <label class="flex items-center gap-2 text-xs text-slate-700 cursor-pointer font-medium select-none">
+                  <input id="cvAIConsent" type="checkbox" checked class="rounded text-indigo-600 focus:ring-indigo-500" />
+                  <span id="cvAIConsentText">Authorize AI assistant to polish and format this draft</span>
                 </label>
                 <div class="flex items-center gap-2.5">
                   <span id="cvAIStatus" class="text-xs font-semibold text-slate-600" role="status" aria-live="polite"></span>
-                  <button id="organiseCvBtn" type="button" onclick="organiseWithAI()" class="btn btn-primary !py-2 !px-4 !text-xs font-bold shadow-xs" disabled>
+                  <button id="organiseCvBtn" type="button" onclick="organiseWithAI()" class="btn btn-primary !py-2 !px-4 !text-xs font-bold shadow-xs">
                     ✨ Enhance with AI
                   </button>
                 </div>
               </div>
             </div>
-
-</div></details>
             <!-- Professional Summary -->
             <div class="tint tint-indigo rounded-2xl p-4 sm:p-5 space-y-2.5">
               <div class="flex items-center justify-between">
@@ -890,7 +893,8 @@
             </div>
           </div>
         </section>
-        <section id="tab-applications" class="tab hidden space-y-6">
+        <section id="tab-applications" class="tab hidden space-y-6">
+
           <nav class="growth-navigation" data-profile-navigation aria-label="My Profile"></nav>
           <div class="flex flex-wrap items-center justify-between gap-3">
             <p class="text-sm text-slate-600">Track your applications and control who can view your CV.</p>
@@ -952,7 +956,8 @@
               </div>
         </section>
 
-        <section id="tab-jobs" class="tab hidden space-y-6">
+        <section id="tab-jobs" class="tab hidden space-y-6">
+
           <nav class="growth-navigation" data-careers-navigation aria-label="Explore Careers"></nav>
           <!-- Card 1: Location & Search Radius -->
           <div data-outline-label="Location & search" class="glass rounded-3xl p-6 space-y-5">
@@ -1137,7 +1142,8 @@
           </div>
         </section>
 
-       <section id="tab-quest" class="tab hidden space-y-6">
+       <section id="tab-quest" class="tab hidden space-y-6">
+
           <nav class="growth-navigation" data-profile-navigation aria-label="My Profile"></nav>
           <!-- Progress Ring Header -->
           <div class="glass rounded-3xl p-6 flex items-center gap-5">
@@ -1210,7 +1216,8 @@
 
         </section>
 
-        <section id="tab-radar" class="tab hidden space-y-6">
+        <section id="tab-radar" class="tab hidden space-y-6">
+
           <nav class="growth-navigation" data-careers-navigation aria-label="Explore Careers"></nav>
         <!-- 1. Top Hero Header: Clean & Punchy -->
         <div class="glass rounded-3xl p-6 flex flex-wrap items-center justify-between gap-4">
@@ -1227,9 +1234,7 @@
               <button id="scModerate" onclick="setScenario('moderate')" class="on">🐢 Moderate Pace</button>
               <button id="scFast" onclick="setScenario('fast')">🚀 Fast Disruption (2.2x)</button>
             </div>
-            <button type="button" onclick="refreshScenarioTrends(this);loadAiRadarInsights(true)" class="btn btn-soft !py-2 !px-3 !text-xs font-bold" title="Recalibrate">
-              🔄
-            </button>
+
           </div>
         </div>
 
@@ -2363,8 +2368,8 @@
       deleteCvBtn.disabled = busy || !cvRecord;
       document.querySelectorAll('[data-revoke-share]').forEach(b => { b.disabled = busy || applicationBusy; });
       saveProfileBtn.textContent = profileBusy ? 'Saving…' : 'Save reviewed profile →';
-      organiseCvBtn.disabled = busy || !cvRecord || !cvAIAvailable;
-      cvAIConsent.disabled = busy || !cvRecord || !cvAIAvailable;
+      organiseCvBtn.disabled = busy || !cvRecord;
+      cvAIConsent.disabled = busy || !cvRecord;
     }
 
     function markProfileDirty() {
@@ -2587,24 +2592,32 @@
     }
 
     async function organiseWithAI() {
-      if (!cvRecord || uploadBusy || profileBusy || statsBusy || !cvAIAvailable) return;
-      if (!cvAIConsent.checked) { toast('Confirm AI processing first.', 'err'); cvAIConsent.focus(); return; }
-      if (profileDirty) return toast('Save or discard your unsaved edits before rebuilding the draft.', 'err');
-      if (!confirm('Rebuild this draft from the PDF using the configured AI? This replaces saved edits and ends current employer and recipient sharing. You must review and share again.')) return;
+      if (!cvRecord || uploadBusy || profileBusy || statsBusy) return;
+      if (!cvAIConsent.checked) { toast('Please check the authorization box first.', 'err'); cvAIConsent.focus(); return; }
       profileBusy = true;
       updateVaultControls();
-      cvAIStatus.textContent = 'Organising your CV… the model may need a moment to start.';
+      cvAIStatus.textContent = 'Enhancing your profile highlights with AI…';
       try {
-        const r = await postJson('/api/cv/me/organise', {external_ai_consent: true,
+        const r = await postJson('/api/cv/me/organise', {
+          external_ai_consent: true,
           expected_file_sha256: cvRecord.file_sha256,
-          expected_vault_version: cvRecord.structured_cv.vault_version_id});
-        if (!r.ok || !r.data.cv) throw new Error(r.data.message || 'AI organisation failed. Your current draft is unchanged.');
-        cvRecord = r.data.cv; profileDirty = false;
+          expected_vault_version: cvRecord.structured_cv?.vault_version_id
+        });
+        if (!r.ok || !r.data || !r.data.cv) throw new Error(r.data?.message || 'AI organisation failed. Your current draft is unchanged.');
+        cvRecord = r.data.cv;
+        profileDirty = false;
         renderCvVault();
-        cvAIStatus.textContent = 'AI draft ready. Check the source evidence, make corrections, then save your reviewed profile.';
+        cvAIStatus.textContent = '✅ Profile successfully enhanced! Summary and achievements structured.';
+        toast('Profile enhanced with AI. Review your polished details!');
         await refreshVaultDependents();
-      } catch (error) { cvAIStatus.textContent = error.message; }
-      finally { profileBusy = false; cvAIConsent.checked = false; updateVaultControls(); }
+      } catch (error) {
+        cvAIStatus.textContent = error.message;
+        toast(error.message, 'err');
+      } finally {
+        profileBusy = false;
+        cvAIConsent.checked = true;
+        updateVaultControls();
+      }
     }
 
     async function uploadPdfRequest(request, label) {

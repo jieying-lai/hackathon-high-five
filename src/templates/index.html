@@ -329,7 +329,8 @@
           <input id="regConsent" type="checkbox" class="mt-0.5 h-4 w-4" />
           <span>I agree to the <button type="button" onclick="event.preventDefault();toggleTerms(true)" class="font-bold text-indigo-600 underline">Privacy, PDPA & Fair-AI terms</button>.</span>
         </label>
-        <button onclick="submitRegistration()" class="btn btn-primary w-full py-3 text-sm">Create Account</button>
+        <button onclick="submitRegistration()" class="btn btn-primary w-full py-3 text-sm">Create Account</button>
+        <div id="regAlertBox" class="hidden mt-3 rounded-2xl p-3.5 text-xs font-bold border bg-rose-50 text-rose-700 border-rose-200 text-center"></div>
       </div>
     </div>
   </main>
@@ -413,7 +414,7 @@
       if (!options.restore) window.PagePosition?.navigate();
       document.getElementById('landing').classList.add('hidden');
       document.getElementById('auth').classList.remove('hidden');
-      document.getElementById('alertBox').classList.add('hidden');
+      hideAlerts();
       const login = mode === 'login';
       document.getElementById('loginPane').classList.toggle('hidden', !login);
       document.getElementById('registerPane').classList.toggle('hidden', login);
@@ -425,7 +426,20 @@
         window.PagePosition?.complete();
       }
     }
-    function showAlert(msg) { const b = document.getElementById('alertBox'); b.textContent = msg; b.classList.remove('hidden'); }
+    function showAlert(msg) {
+      const isReg = !document.getElementById('registerPane').classList.contains('hidden');
+      const targetId = isReg ? 'regAlertBox' : 'alertBox';
+      const b = document.getElementById(targetId) || document.getElementById('alertBox');
+      b.textContent = msg;
+      b.classList.remove('hidden');
+      if (isReg) b.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+    function hideAlerts() {
+      const b1 = document.getElementById('alertBox');
+      const b2 = document.getElementById('regAlertBox');
+      if (b1) { b1.classList.add('hidden'); b1.textContent = ''; }
+      if (b2) { b2.classList.add('hidden'); b2.textContent = ''; }
+    }
     function toggleTerms(show) { document.getElementById('termsModal').classList.toggle('hidden', !show); }
     function openSso(p) { document.getElementById('ssoTitle').textContent = `Continue with ${p}`; document.getElementById('ssoModal').classList.remove('hidden'); }
 
@@ -647,6 +661,13 @@
         alert('Failed to reset password.');
       }
     }
+    ['registerPane', 'loginPane'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) {
+        el.addEventListener('input', hideAlerts);
+        el.addEventListener('focusin', hideAlerts);
+      }
+    });
     if (window.PagePosition) {
       window.PagePosition.initialize({identity:'guest',portal:'landing',
         getView:()=>document.getElementById('auth').classList.contains('hidden')?'landing':document.getElementById('loginPane').classList.contains('hidden')?'register':'login',

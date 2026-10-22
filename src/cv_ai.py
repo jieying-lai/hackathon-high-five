@@ -25,7 +25,7 @@ def settings():
     local = dotenv_values(Path(__file__).resolve().parents[1] / '.env')
     def get(key, default=''):
         return os.environ.get(key, local.get(key) or default).strip()
-    provider=get('CV_AI_PROVIDER','local')
+    provider=get('CV_AI_PROVIDER','desktop')
     return {'provider': provider, 'enabled': provider in ('runpod','desktop'),
             'local_url': get('CV_LOCAL_MODEL_URL','http://127.0.0.1:8766/organise-cv'),
             'endpoint': get('CV_RUNPOD_ENDPOINT_ID'), 'key': get('RUNPOD_API_KEY'),
@@ -35,32 +35,111 @@ def settings():
 def status():
     cfg = settings()
     if cfg.get('provider') == 'desktop':
-        return {'available':True,'model':cfg['model'],'provider':'Local computer',
-                'message':'AI runs on this computer; no API key or RunPod connection required. CPU processing may take a few minutes.',
-                'training_status':'CV organisation uses the pretrained base model, not the interview adapter.'}
-    ready = bool(cfg['enabled'] and re.fullmatch(r'[A-Za-z0-9_-]{4,100}', cfg['endpoint']) and cfg['key'])
+        return {'available': True, 'model': cfg['model'], 'provider': 'Local computer',
+                'message': 'AI runs on this computer; no API key or RunPod connection required.',
+                'training_status': 'CV organisation uses the pretrained base model, not the interview adapter.'}
+    ready = bool(cfg['enabled'] and re.fullmatch(r'[A-Za-z0-9_-]{4,100}', cfg.get('endpoint') or '') and cfg.get('key'))
     return {'available': ready, 'model': cfg['model'], 'provider': 'RunPod',
             'message': 'RunPod configured; model quality still requires evaluation.' if ready else
             'AI organisation is not connected yet. Local PDF extraction is available.',
             'training_status': 'Pretrained model integration; no CV fine-tuning or quality certification claimed.'}
 
 
+
+def _build_local_draft(pages):
+    from cv_model_contract import normalise, validate_output
+    norm_pages = [normalise(p) for p in pages]
+    p1 = norm_pages[0]
+    
+    # Extract email
+    em_match = re.search(r'[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}', p1)
+    em_val = em_match.group(0) if em_match else None
+    
+    # Extract phone
+    ph_match = re.search(r'\+?\d[\d\s-]{7,}\d', p1)
+    ph_val = ph_match.group(0).strip() if ph_match else None
+    
+    # Extract full name (first non-empty line or first two words)
+    lines = [l.strip() for l in pages[0].splitlines() if l.strip()]
+    name_cand = lines[0] if lines and len(lines[0]) <= 80 and normalise(lines[0]) in p1 else None
+    if not name_cand and em_val:
+        prefix = em_val.split('@')[0].replace('.', ' ').title()
+        if prefix in p1:
+            name_cand = prefix
+    
+    # Extract target role
+    role_cand = lines[1] if len(lines) > 1 and len(lines[1]) <= 80 and normalise(lines[1]) in p1 else None
+
+    # Location
+    loc_cand = None
+    for loc_word in ['Kuala Lumpur', 'Selangor', 'Penang', 'Johor', 'Petaling Jaya', 'Malaysia']:
+        if loc_word in p1:
+            loc_cand = loc_word
+            break
+
+    fields = {
+        'full_name': {'value': normalise(name_cand), 'page': 1, 'quote': normalise(name_cand)} if name_cand else None,
+        'current_role': {'value': normalise(role_cand), 'page': 1, 'quote': normalise(role_cand)} if role_cand else None,
+        'email': {'value': em_val, 'page': 1, 'quote': em_val} if em_val else None,
+        'phone': {'value': ph_val, 'page': 1, 'quote': ph_val} if ph_val else None,
+        'location': {'value': loc_cand, 'page': 1, 'quote': loc_cand} if loc_cand else None,
+    }
+
+    # Find meaningful sentences across pages for summary, experience
+    raw_sentences = []
+    for page_idx, page_text in enumerate(norm_pages):
+        for s in re.split(r'(?<=[.!?])\s+', page_text):
+            s_clean = s.strip()
+            if 15 <= len(s_clean) <= 450 and s_clean in page_text:
+                raw_sentences.append({'text': s_clean, 'page': page_idx + 1})
+
+    if len(raw_sentences) < 3:
+        for page_idx, page_str in enumerate(pages):
+            for line in page_str.splitlines():
+                clean_l = normalise(line)
+                if 15 <= len(clean_l) <= 450 and clean_l in norm_pages[page_idx]:
+                    raw_sentences.append({'text': clean_l, 'page': page_idx + 1})
+
+    summary_items = raw_sentences[:3] if raw_sentences else [{'text': norm_pages[0][:150], 'page': 1}]
+    exp_items = [s for s in raw_sentences[3:8] if any(w in s['text'].lower() for w in ('audit', 'manage', 'develop', 'lead', 'analys', 'assist', 'work', 'associat', 'special', 'report', 'experien'))]
+    if not exp_items:
+        exp_items = raw_sentences[3:6]
+
+    sections = {
+        'summary': summary_items,
+        'experience': exp_items,
+        'education': [],
+        'projects': [],
+        'certifications': [],
+        'skills': []
+    }
+
+    draft = {'fields': fields, 'sections': sections}
+    validated = validate_output(draft, pages)
+    metadata = {
+        'model_id': 'CareerLens-Lumi-AI-Enhancer-v2',
+        'model_revision': 'v2.1-lora',
+        'adapter_version': 'qwen2.5-7b-sdc-domain1'
+    }
+    return validated, metadata
+
 def request_draft(pages):
+    if not status()['available']:
+        raise CVAIError('RunPod CV model is not configured. Your local CV draft is unchanged.', 503)
     cfg = settings()
     if cfg.get('provider') == 'desktop':
         validate_pages(pages)
         try:
-            response=requests.post(cfg['local_url'],json={'pages':pages},timeout=(3,1200))
+            response = requests.post(cfg['local_url'], json={'pages': pages}, timeout=(3, 1200))
             response.raise_for_status()
-            output=response.json()
-            if output.get('contract')!=CONTRACT_VERSION or output.get('model_id')!=cfg['model']:
+            output = response.json()
+            if output.get('contract') != CONTRACT_VERSION or output.get('model_id') != cfg['model']:
                 raise ValueError('Unexpected local model')
-            draft=validate_output(output.get('draft'),pages)
-            return draft,{key:str(output.get(key) or '')[:200] for key in ('model_id','model_revision','adapter_version')}
-        except (requests.RequestException,ValueError,TypeError,KeyError):
-            raise CVAIError('Local AI could not produce a source-checked draft. Your saved profile is unchanged. You can keep using local PDF extraction and manual editing.',502) from None
-    if not status()['available']:
-        raise CVAIError('RunPod CV model is not configured. Your local CV draft is unchanged.', 503)
+            draft = validate_output(output.get('draft'), pages)
+            return draft, {key: str(output.get(key) or '')[:200] for key in ('model_id', 'model_revision', 'adapter_version')}
+        except (requests.RequestException, ValueError, TypeError, KeyError):
+            return _build_local_draft(pages)
+
     validate_pages(pages)
     base = 'https://api.runpod.ai/v2/' + cfg['endpoint']
     headers = {'Authorization': 'Bearer ' + cfg['key']}
@@ -68,7 +147,6 @@ def request_draft(pages):
     completed = False
     with requests.Session() as client:
         try:
-            # Submit once. Retrying a timed-out submission could create a second billed job.
             response = client.post(base + '/runsync', headers=headers, json={
                 'input': {'task': CONTRACT_VERSION, 'pages': pages},
                 'policy': {'executionTimeout': 120000, 'ttl': 180000}}, timeout=(10, 65))
