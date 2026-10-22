@@ -10,7 +10,7 @@
   <link rel="stylesheet" href="/static/css/theme.css?v=20261020-questionnaire-1" />
   <link rel="stylesheet" href="/static/css/responsive.css?v=20261020-minimal-2" />
 <link rel="stylesheet" href="/static/css/home-features.css?v=3" />
-  <link rel="stylesheet" href="/static/css/career-spirit-totem.css?v=20261022-1" />
+  <link rel="stylesheet" href="/static/css/career-spirit-totem.css?v=20261023-2" />
 </head>
 <body class="responsive-ui responsive-home min-h-screen">
   <div class="aurora"></div><div class="blob b1"></div><div class="blob b2"></div>
@@ -123,7 +123,7 @@
       </div>
 
       <!-- Quiz Card Container (Rendered dynamically by career-spirit-totem.js) -->
-      <div id="totemQuizCard" class="relative z-10 max-w-2xl mx-auto bg-slate-900/80 backdrop-blur-xl border border-white/15 rounded-3xl p-6 sm:p-8 shadow-2xl mt-6 hidden">
+      <div id="totemQuizCard" class="relative z-10 max-w-2xl mx-auto bg-white/95 backdrop-blur-xl border-2 border-indigo-100 rounded-3xl p-6 sm:p-10 shadow-2xl mt-6 hidden totem-quiz-card-box">
       </div>
 
       <!-- Result Card Container (Rendered dynamically by career-spirit-totem.js) -->
@@ -854,42 +854,57 @@
     </div>
   </div>
 
-  <script src="/static/js/career-spirit-totem.js?v=20261022-1"></script>
+  <script src="/static/js/career-spirit-totem.js?v=20261023-2"></script>
   <!-- Global 3D Work-Life Atlas Modal -->
   <div id="globalAtlasModal" class="fixed inset-0 z-50 bg-slate-950/85 backdrop-blur-md flex items-center justify-center p-3 sm:p-6 hidden">
-    <div class="totem-section max-w-5xl w-full p-6 sm:p-8 space-y-6 max-h-[92vh] overflow-y-auto border border-white/20 shadow-2xl relative">
+    <div class="global-atlas-container max-w-6xl w-full p-6 sm:p-8 space-y-6 max-h-[92vh] overflow-y-auto border border-white/20 shadow-2xl relative rounded-[2.25rem]">
       <div class="flex items-center justify-between border-b border-white/10 pb-4">
         <div>
           <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-teal-500/20 text-teal-300 text-xs font-bold mb-1.5">
             <span>🌍</span><span>Global Work-Life Atlas</span>
           </div>
           <h3 class="text-xl sm:text-2xl font-black text-white">How Do People in Your Field Live Around the World?</h3>
-          <p class="text-xs text-slate-400 mt-0.5">Explore real work-life balance, salaries, and daily routines across major tech & creative hubs</p>
+          <p class="text-xs text-slate-400 mt-0.5">Explore authentic career lifestyles, day-in-the-life plogs &amp; vlogs, and positive daily routines across global hubs</p>
         </div>
         <button type="button" onclick="closeGlobalAtlas()" class="text-slate-400 hover:text-white text-2xl font-bold p-2 transition">✕</button>
       </div>
 
       <!-- City Switcher -->
       <div class="flex flex-wrap gap-2">
-        <button type="button" onclick="showCityCard('kl')" class="btn btn-soft !py-1.5 !px-3.5 !text-xs font-bold border border-white/20 text-slate-200 hover:text-white">🇲🇾 Kuala Lumpur</button>
-        <button type="button" onclick="showCityCard('amsterdam')" class="btn btn-soft !py-1.5 !px-3.5 !text-xs font-bold border border-white/20 text-slate-200 hover:text-white">🇳🇱 Amsterdam</button>
-        <button type="button" onclick="showCityCard('tokyo')" class="btn btn-soft !py-1.5 !px-3.5 !text-xs font-bold border border-white/20 text-slate-200 hover:text-white">🇯🇵 Tokyo</button>
-        <button type="button" onclick="showCityCard('london')" class="btn btn-soft !py-1.5 !px-3.5 !text-xs font-bold border border-white/20 text-slate-200 hover:text-white">🇬🇧 London</button>
+        <button type="button" id="atlasBtn_kl" onclick="showCityCard('kl')" class="atlas-city-pill active">🇲🇾 Kuala Lumpur</button>
+        <button type="button" id="atlasBtn_singapore" onclick="showCityCard('singapore')" class="atlas-city-pill">🇸🇬 Singapore</button>
+        <button type="button" id="atlasBtn_tokyo" onclick="showCityCard('tokyo')" class="atlas-city-pill">🇯🇵 Tokyo</button>
+        <button type="button" id="atlasBtn_amsterdam" onclick="showCityCard('amsterdam')" class="atlas-city-pill">🇳🇱 Amsterdam</button>
+        <button type="button" id="atlasBtn_london" onclick="showCityCard('london')" class="atlas-city-pill">🇬🇧 London</button>
+        <button type="button" id="atlasBtn_sf" onclick="showCityCard('sf')" class="atlas-city-pill">🇺🇸 San Francisco</button>
+        <button type="button" id="atlasBtn_berlin" onclick="showCityCard('berlin')" class="atlas-city-pill">🇩🇪 Berlin</button>
+        <button type="button" id="atlasBtn_zurich" onclick="showCityCard('zurich')" class="atlas-city-pill">🇨🇭 Zurich</button>
+        <button type="button" id="atlasBtn_sydney" onclick="showCityCard('sydney')" class="atlas-city-pill">🇦🇺 Sydney</button>
+        <button type="button" id="atlasBtn_toronto" onclick="showCityCard('toronto')" class="atlas-city-pill">🇨🇦 Toronto</button>
+
+
+
       </div>
 
       <!-- Globe & Details Grid -->
-      <div class="grid lg:grid-cols-12 gap-6 items-stretch">
-        <div class="lg:col-span-7 relative">
-          <div id="totemGlobeContainer" class="flex items-center justify-center">
+      <div class="grid lg:grid-cols-12 gap-6 items-start">
+        <!-- Main Column: Active Role Plog/Vlog, Job Desc & Positive Routine -->
+        <div class="lg:col-span-7" id="cityDetailsContainer">
+          <!-- Injected active role Plog/Vlog card -->
+        </div>
+
+        <!-- Side Column: 3D Interactive Sphere & Other Roles in Hub -->
+        <div class="lg:col-span-5 space-y-4">
+          <div id="totemGlobeContainer" class="flex items-center justify-center !h-52 rounded-2xl relative overflow-hidden border border-white/20">
             <canvas id="globeCanvas" class="w-full h-full cursor-grab"></canvas>
-            <div class="absolute bottom-3 left-4 text-[10px] text-slate-400 font-mono">
+            <div class="absolute bottom-2 left-3 text-[10px] text-teal-300 font-mono bg-slate-900/80 px-2.5 py-1 rounded-md border border-white/10">
               ✦ Interactive 3D Sphere · Drag to rotate
             </div>
           </div>
-        </div>
 
-        <div class="lg:col-span-5" id="cityDetailsContainer">
-          <!-- Injected city card -->
+          <div id="cityRelatedRolesContainer" class="space-y-3">
+            <!-- Injected related roles for this country -->
+          </div>
         </div>
       </div>
     </div>

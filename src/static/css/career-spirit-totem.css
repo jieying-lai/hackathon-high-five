@@ -395,3 +395,88 @@
   border-radius: 1.5rem;
   box-shadow: 0 20px 45px -10px rgba(0, 0, 0, 0.7);
 }
+
+/* ==========================================================================
+   Quiz Card & Result Box (Light Modern Aesthetic)
+   ========================================================================== */
+.totem-quiz-card-box, .totem-quiz-modal-box {
+  background: #ffffff !important;
+  border: 2px solid #e0e7ff !important;
+  border-radius: 2rem !important;
+  box-shadow: 0 25px 60px -15px rgba(15, 23, 42, 0.12), 0 0 0 1px rgba(224, 231, 255, 0.7) !important;
+  color: #0f172a !important;
+}
+
+.totem-result-card-box {
+  background: #ffffff !important;
+  border-radius: 2.25rem !important;
+  border: 1.5px solid #e2e8f0 !important;
+  box-shadow: 0 25px 60px -15px rgba(15, 23, 42, 0.08) !important;
+  color: #0f172a !important;
+}
+
+/* ==========================================================================
+   Global Atlas Multi-Role & Plog/Vlog UI
+   ========================================================================== */
+.atlas-role-card {
+  display: block;
+  width: 100%;
+  text-align: left;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1.5px solid rgba(255, 255, 255, 0.14);
+  border-radius: 1.15rem;
+  padding: 0.9rem 1.1rem;
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  color: #f1f5f9;
+}
+
+.atlas-role-card:hover {
+  background: rgba(255, 255, 255, 0.14);
+  border-color: #2dd4bf;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px -4px rgba(45, 212, 191, 0.25);
+}
+
+.atlas-role-card.active {
+  background: linear-gradient(135deg, rgba(13, 148, 136, 0.25) 0%, rgba(79, 70, 229, 0.25) 100%);
+  border-color: #2dd4bf;
+  box-shadow: 0 0 16px rgba(45, 212, 191, 0.35);
+}
+
+.atlas-shuffle-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  background: rgba(45, 212, 191, 0.12);
+  border: 1.5px solid rgba(45, 212, 191, 0.35);
+  color: #5eead4 !important;
+  padding: 0.35rem 0.85rem;
+  border-radius: 0.75rem;
+  font-size: 0.75rem;
+  font-weight: 800;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.atlas-shuffle-btn:hover {
+  background: rgba(45, 212, 191, 0.25);
+  border-color: #2dd4bf;
+  color: #ffffff !important;
+  transform: translateY(-1px);
+}
+
+.plog-vlog-feed-card {
+  background: rgba(15, 23, 42, 0.85);
+  border: 1.5px solid rgba(255, 255, 255, 0.16);
+  border-radius: 1.5rem;
+  padding: 1.5rem;
+  box-shadow: 0 15px 35px -8px rgba(0, 0, 0, 0.6);
+}
+
+.atlas-job-box {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 1.15rem;
+  padding: 1.15rem;
+}
