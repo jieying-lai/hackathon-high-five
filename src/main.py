@@ -447,6 +447,21 @@ def api_discovery_recommend():
         return jsonify(ok=False, message='Course recommendations are temporarily unavailable. Please retry.'), 503
 
 
+@app.route('/api/learning-impact', methods=['POST'])
+@api_role('job_seeker')
+def api_learning_impact():
+    payload = request.get_json(silent=True)
+    if not isinstance(payload, dict):
+        return jsonify(ok=False, message='Invalid learning milestone request.'), 400
+    try:
+        return jsonify(learning_impact.sync(_owner(), payload.get('completed_urls')))
+    except ValueError as exc:
+        return jsonify(ok=False, message=str(exc)), 400
+    except Exception:
+        app.logger.exception('Learning milestones failed to sync.')
+        return jsonify(ok=False, message='Learning milestones are temporarily unavailable. Please retry.'), 503
+
+
 
 @app.route("/api/career-pathways", methods=["GET"])
 @api_role("job_seeker")
