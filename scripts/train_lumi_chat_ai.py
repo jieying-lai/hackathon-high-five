@@ -1,5 +1,5 @@
-"""Fine-tunes Qwen2.5-7B-Instruct with Unsloth QLoRA on RunPod GPU for Lumi AI Chatbox.
-Designed for RTX 4000 Ada / A40 / RTX 3090 / A100.
+"""Fine-tunes Qwen2.5-7B-Instruct with QLoRA on RunPod GPU for Lumi AI Chatbox.
+Designed for RTX 4000 Ada / A40 / RTX 3090 / RTX 4090 / A100.
 Run in RunPod terminal:
   python scripts/train_lumi_chat_ai.py
 """
@@ -7,45 +7,80 @@ Run in RunPod terminal:
 import os
 import json
 import torch
+from pathlib import Path
 
 def train():
-    try:
-        from unsloth import FastLanguageModel
-        from trl import SFTTrainer
-        from transformers import TrainingArguments
-        from datasets import Dataset
-    except ImportError:
-        print("[!] Installing unsloth & training dependencies...")
-        os.system("pip install --no-deps \"unsloth[colab-new] @ git+https://github.com/unslothai/unsloth.git\"")
-        os.system("pip install trl peft accelerate bitsandbytes")
-        from unsloth import FastLanguageModel
-        from trl import SFTTrainer
-        from transformers import TrainingArguments
-        from datasets import Dataset
-
     model_name = "Qwen/Qwen2.5-7B-Instruct"
     max_seq_length = 2048
     output_dir = "models/careerlens_lumi_lora"
+    os.makedirs(output_dir, exist_ok=True)
 
-    print(f"[*] Loading {model_name} in 4-bit...")
-    model, tokenizer = FastLanguageModel.from_pretrained(
-        model_name=model_name,
-        max_seq_length=max_seq_length,
-        dtype=None,
-        load_in_4bit=True,
-    )
+    use_unsloth = False
+    try:
+        import unsloth
+        try:
+            from unsloth import FastLanguageModel
+            use_unsloth = True
+        except (ImportError, Exception):
+            os.system("pip install unsloth_zoo")
+            from unsloth import FastLanguageModel
+            use_unsloth = True
+    except Exception:
+        use_unsloth = False
 
-    print("[*] Adding LoRA adapters...")
-    model = FastLanguageModel.get_peft_model(
-        model,
-        r=16,
-        target_modules=["q_proj", "k_proj", "v_proj", "o_proj", "gate_proj", "up_proj", "down_proj"],
-        lora_alpha=16,
-        lora_dropout=0,
-        bias="none",
-        use_gradient_checkpointing="unsloth",
-        random_state=42,
-    )
+    print(f"[*] Training framework: {'Unsloth FastLanguageModel' if use_unsloth else 'HuggingFace Transformers + PEFT'}")
+
+    from trl import SFTTrainer
+    from transformers import TrainingArguments, AutoTokenizer, AutoModelForCausalLM, BitsAndBytesConfig
+    from datasets import Dataset
+    from peft import LoraConfig, get_peft_model, prepare_model_for_kbit_training
+
+    if use_unsloth:
+        print(f"[*] Loading {model_name} with Unsloth in 4-bit...")
+        model, tokenizer = FastLanguageModel.from_pretrained(
+            model_name=model_name,
+            max_seq_length=max_seq_length,
+            dtype=None,
+            load_in_4bit=True,
+        )
+        print("[*] Adding LoRA adapters...")
+        model = FastLanguageModel.get_peft_model(
+            model,
+            r=16,
+            target_modules=["q_proj", "k_proj", "v_proj", "o_proj", "gate_proj", "up_proj", "down_proj"],
+            lora_alpha=16,
+            lora_dropout=0,
+            bias="none",
+            use_gradient_checkpointing="unsloth",
+            random_state=42,
+        )
+    else:
+        print(f"[*] Loading {model_name} with Transformers 4-bit QLoRA...")
+        tokenizer = AutoTokenizer.from_pretrained(model_name)
+        if tokenizer.pad_token is None:
+            tokenizer.pad_token = tokenizer.eos_token
+
+        bnb_config = BitsAndBytesConfig(
+            load_in_4bit=True,
+            bnb_4bit_quant_type="nf4",
+            bnb_4bit_use_double_quant=True,
+            bnb_4bit_compute_dtype=torch.float16 if not torch.cuda.is_bf16_supported() else torch.bfloat16
+        )
+        model = AutoModelForCausalLM.from_pretrained(
+            model_name,
+            device_map="auto",
+            quantization_config=bnb_config
+        )
+        model = prepare_model_for_kbit_training(model)
+        peft_config = LoraConfig(
+            r=16,
+            lora_alpha=16,
+            lora_dropout=0.05,
+            target_modules=["q_proj", "k_proj", "v_proj", "o_proj", "gate_proj", "up_proj", "down_proj"],
+            bias="none",
+            task_type="CAUSAL_LM"
+        )
+        model = get_peft_model(model, peft_config)
 
     # Load and format dataset
     train_data_path = "data/lumi_chat_train.jsonl"
@@ -73,22 +108,21 @@ def train():
 
     trainer = SFTTrainer(
         model=model,
-        tokenizer=tokenizer,
         train_dataset=dataset,
         dataset_text_field="text",
         max_seq_length=max_seq_length,
-        dataset_num_proc=2,
+        dataset_num_proc=1,
         packing=False,
         args=TrainingArguments(
-            per_device_train_batch_size=2,
+            per_device_train_batch_size=1,
             gradient_accumulation_steps=4,
-            warmup_steps=3,
-            max_steps=30,
+            warmup_steps=2,
+            max_steps=25,
             learning_rate=2e-4,
             fp16=not torch.cuda.is_bf16_supported(),
             bf16=torch.cuda.is_bf16_supported(),
             logging_steps=1,
-            optim="adamw_8bit",
+            optim="adamw_torch",
             weight_decay=0.01,
             lr_scheduler_type="linear",
             seed=42,
