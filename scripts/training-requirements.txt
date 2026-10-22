@@ -8,3 +8,5 @@ trl>=0.11.0
 scipy
 sentencepiece
 protobuf
+flask
+flask-cors
