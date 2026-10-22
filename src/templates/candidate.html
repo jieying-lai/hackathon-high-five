@@ -9,7 +9,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-  <link rel="stylesheet" href="/static/css/theme.css?v=20261021-menu-outline-v2" />
+  <link rel="stylesheet" href="/static/css/theme.css?v=20261022-sdg-hover-explanation" />
   <link rel="stylesheet" href="/static/css/scenario-slider.css?v=20261021-continuous" />
   <style>
     .cl-map-wrap {
@@ -272,12 +272,12 @@
  </style>
 <link rel="stylesheet" href="/static/css/profile.css?v=20261021-separate-pages-2" />
 <link rel="stylesheet" href="/static/css/responsive.css?v=20261021-header-original-size" />
-<link rel="stylesheet" href="/static/css/page-outline.css?v=20261022-learning-outline" />
+<link rel="stylesheet" href="/static/css/page-outline.css?v=20261022-learning-outline-responsive" />
 <link rel="stylesheet" href="/static/css/pomodoro.css?v=20261021-buddy-tooltip" />
 <link rel="stylesheet" href="/static/css/sdg-passport.css?v=20261021-passport-close-once" />
 <link rel="stylesheet" href="/static/css/discovery-learning.css?v=20261022-sdg-alignment" />
 <link rel="stylesheet" href="/static/css/reskilling-plan.css?v=20261021-green-completion" />
-<link rel="stylesheet" href="/static/css/learning-controls.css?v=20261021-single-replacement" />
+<link rel="stylesheet" href="/static/css/learning-controls.css?v=20261022-tablet-tabs" />
 <link rel="stylesheet" href="/static/css/learning-impact.css?v=20261021-community-pledges" />
 </head>
 <body class="responsive-ui responsive-talent min-h-screen">
@@ -3602,7 +3602,10 @@
             <!-- Card Action Footer -->
             <div class="flex flex-wrap items-center justify-between gap-3 pt-3 border-t border-slate-200/70">
               <div class="flex items-center gap-1.5 flex-wrap">
-                ${r.sdg_tags.map(s => `<span class="chip chip-teal !text-[10px]" title="${esc(s.reason)}">🌱 ${esc(s.code)}</span>`).join('')}
+                ${r.sdg_tags.map((s, sdgIndex) => {
+                  const tooltipId = `role-sdg-${r.role_id}-${sdgIndex}`;
+                  return `<span class="chip chip-teal !text-[10px] sdg-explain-chip" tabindex="0" aria-describedby="${esc(tooltipId)}" aria-label="${esc(`${s.code} ${s.name}. Why this role fits: ${s.reason}`)}">🌱 ${esc(s.code)}<span id="${esc(tooltipId)}" class="sdg-explain-tooltip" role="tooltip"><strong>${esc(s.code)} · ${esc(s.name)}</strong><span>Why this role fits: ${esc(s.reason)}</span></span></span>`;
+                }).join('')}
               </div>
               <div class="flex items-center gap-2">
                 <button type="button" onclick="showTab('jobs');setCompanyCategory('${esc(r.industry)}');" class="btn btn-soft !py-2 !px-3 !text-xs font-bold" title="Browse jobs in this field">
