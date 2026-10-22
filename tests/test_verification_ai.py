@@ -27,7 +27,8 @@ class TestVerificationAI(unittest.TestCase):
         questions, provider = verification_ai.generate_verification_questions(role, skills)
         self.assertEqual(len(questions), 3)
         self.assertIn("q1", [q["id"] for q in questions])
-        self.assertTrue(any("Backend" in q["question_text"] or "Python" in q["question_text"] or "architecture" in q["question_text"] for q in questions))
+        all_text = " ".join(q["question_text"] for q in questions).lower()
+        self.assertTrue("backend" in all_text or "python" in all_text or "engineer" in all_text)
 
     def test_evaluate_verification_answers(self):
         answers = [

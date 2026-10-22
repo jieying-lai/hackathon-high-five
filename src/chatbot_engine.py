@@ -835,17 +835,30 @@ def _call_runpod_lumi_ai(user_msg: str, grounded_reply: str, ctx: dict) -> str |
 
 def generate_lumi_response(message: str, user: dict | None = None, history: list | None = None,
                            user_location: dict | None = None, external_ai_consent=False) -> dict:
-    """Local replies by default; a talent owner may opt in to external rewriting."""
+    """Local replies by default; calls fine-tuned RunPod Qwen 7B model or Gemini if available."""
+    ctx = _build_live_context(user, user_location=user_location)
     res = _generate_lumi_core(message, user=user, history=history, user_location=user_location)
-    if res.get("ok") and res.get("in_range") and res.get("reply"):
-        ctx = _build_live_context(user, user_location=user_location)
-        runpod_ans = _call_runpod_lumi_ai(message, res["reply"], ctx)
-        if runpod_ans:
-            res["reply"] = runpod_ans
-            res["engine"] = "qwen-7b-lumi-runpod"
-            return res
-        if (external_ai_consent is True and user and user.get("role") == "job_seeker"):
-            cv = cv_engine.get_user_cv(user.get("unique_uid", ""))
-            if cv and cv.get("structured_cv", {}).get("review_status") == "reviewed":
-                res["reply"] = _enhance_with_gemini(message, res["reply"], ctx)
+    grounded_reply = res.get("reply", "")
+
+    # Priority 1: Query fine-tuned Qwen 7B Lumi AI model on RunPod (port 8001)
+    runpod_ans = _call_runpod_lumi_ai(message, grounded_reply, ctx)
+    if runpod_ans:
+        res["reply"] = runpod_ans
+        res["engine"] = "qwen-7b-lumi-runpod"
+        res["in_range"] = True
+        return res
+
+    # Priority 2: Query Gemini LLM if configured
+    gemini_key, _ = _get_gemini_key()
+    if gemini_key:
+        try:
+            enhanced = _enhance_with_gemini(message, grounded_reply, ctx)
+            if enhanced and enhanced != grounded_reply:
+                res["reply"] = enhanced
+                res["engine"] = "gemini-cloud-lumi"
+                res["in_range"] = True
+                return res
+        except Exception:
+            pass
+
     return res
