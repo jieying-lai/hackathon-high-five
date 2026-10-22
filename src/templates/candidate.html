@@ -2288,19 +2288,17 @@
         NAV[0],
         NAV[1],
         NAV[2],
+        EXTRA_TABS['cv-upload'],
+        EXTRA_TABS['cv-review'],
+        EXTRA_TABS['applications'],
         EXTRA_TABS.jobs,
         ...NAV.slice(3),
       ];
       buildPortalNavigation(renderItems, [
-
-        { label: 'Overview', ids: ['dash'] },
-
-        { label: 'My Profile', ids: ['profile', 'cv-review', 'quest', 'applications'] },
-
-        { label: 'Explore Careers', ids: ['jobs', 'radar', 'match'] },
-
-        { label: 'My Growth', ids: ['plan', 'discover', 'saved', 'completed', 'passport'] }
-
+        { label: 'Dashboard', ids: ['dash'], ico: '🏠', primaryId: 'dash' },
+        { label: 'My Profile', ids: ['profile', 'cv-review', 'quest', 'applications'], ico: '👤', primaryId: 'profile' },
+        { label: 'Explore Careers', ids: ['jobs', 'radar', 'match'], ico: '🧭', primaryId: 'jobs' },
+        { label: 'My Growth', ids: ['plan', 'discover', 'saved', 'completed', 'passport'], ico: '🌱', primaryId: 'plan' }
       ]);
     }
 

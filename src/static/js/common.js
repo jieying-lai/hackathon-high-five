@@ -319,10 +319,29 @@ function buildPortalNavigation(items, groups) {
   const available = group => group.ids.map(id => items.find(item => item.id === id)).filter(Boolean);
   document.getElementById('sideNav').innerHTML = groups.map(group => {
     const children = available(group);
-    if (children.length === 1 && !group.dropdown) return itemButton(children[0]);
-    return `<details class="nav-group"><summary>${esc(group.label)}<span class="nav-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-panel">${children.map(itemButton).join('')}</div></details>`;
+    if (!children.length) return '';
+    if (group.dropdown) {
+      return `<details class="nav-group"><summary>${esc(group.label)}<span class="nav-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-panel">${children.map(itemButton).join('')}</div></details>`;
+    }
+    const primaryId = group.primaryId || children[0].id;
+    const primaryItem = children.find(c => c.id === primaryId) || children[0];
+    const ico = group.ico || primaryItem.ico || '';
+    const icoSpan = ico ? `<span aria-hidden="true">${ico}</span>` : '';
+    return `<button type="button" data-tab="${primaryId}" data-group-ids="${group.ids.join(',')}" onclick="showTab('${primaryId}')" class="nav-item">${icoSpan}<span>${esc(group.label)}</span></button>`;
   }).join('');
-  document.getElementById('topNav').innerHTML = groups.map(group => `<div class="mobile-nav-group"><div class="nav-group-label">${esc(group.label)}</div>${available(group).map(itemButton).join('')}</div>`).join('');
+
+  document.getElementById('topNav').innerHTML = groups.map(group => {
+    const children = available(group);
+    if (!children.length) return '';
+    if (group.dropdown) {
+      return `<div class="mobile-nav-group"><div class="nav-group-label">${esc(group.label)}</div>${children.map(itemButton).join('')}</div>`;
+    }
+    const primaryId = group.primaryId || children[0].id;
+    const primaryItem = children.find(c => c.id === primaryId) || children[0];
+    const ico = group.ico || primaryItem.ico || '';
+    const icoSpan = ico ? `<span aria-hidden="true">${ico}</span>` : '';
+    return `<button type="button" data-tab="${primaryId}" data-group-ids="${group.ids.join(',')}" onclick="showTab('${primaryId}')" class="nav-item">${icoSpan}<span>${esc(group.label)}</span></button>`;
+  }).join('');
 }
 
 function closePortalMenu(restoreFocus = false) {
@@ -339,7 +358,8 @@ function setPortalNavigation(id) {
   const nav = document.getElementById('topNav');
   const restoreFocus = nav && nav.contains(document.activeElement);
   document.querySelectorAll('#sideNav [data-tab], #topNav [data-tab]').forEach(button => {
-    const selected = button.dataset.tab === id;
+    const groupIds = button.dataset.groupIds ? button.dataset.groupIds.split(',') : [button.dataset.tab];
+    const selected = groupIds.includes(id);
     button.classList.toggle('active', selected);
     if (selected) button.setAttribute('aria-current', 'page');
     else button.removeAttribute('aria-current');
