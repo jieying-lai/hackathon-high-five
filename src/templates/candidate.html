@@ -647,93 +647,121 @@
               <ul id="aiHighlights" class="space-y-1 text-[11px] text-slate-600 pt-1"></ul>
             </div>
 
-<details class="career-disclosure"><summary><span><strong>Contact & career preferences</strong><small>Your contact details, occupation and work preferences</small></span></summary><div class="disclosure-body">            <!-- Personal & Career Details -->
-            <div class="border-t border-slate-200/70 pt-5">
-              <div class="profile-section-heading mb-4">
-                <h3 class="text-base font-extrabold text-slate-900 flex items-center gap-2">
-                  <span>👤</span><span>Personal &amp; Career Details</span>
-                </h3>
-                <p class="text-xs text-slate-500">Keep your contact information and work preferences up to date.</p>
+<details class="career-disclosure" open><summary><span><strong>Contact & career preferences</strong><small>Your contact details, target occupation, and work preferences</small></span><span class="chip chip-indigo !text-[11px] !py-0.5 !px-2.5 ml-auto mr-2 select-none">9 Active Fields</span></summary><div class="disclosure-body space-y-4 pt-2">
+            <!-- Card 1: Contact & Identity Details -->
+            <div class="pref-section-card">
+              <div class="pref-card-header">
+                <div class="flex items-center gap-2.5">
+                  <span class="text-xl">🪪</span>
+                  <div>
+                    <h4 class="text-sm font-extrabold text-slate-900">Identity &amp; Contact Details</h4>
+                    <p class="text-xs text-slate-500">Primary contact information used by prospective employers for verification and outreach.</p>
+                  </div>
+                </div>
+                <span class="pref-card-badge">👤 Contact Info</span>
               </div>
-              <div class="profile-fields grid sm:grid-cols-2 gap-3.5">
-                <div>
-                  <label for="pName" class="label">Full Name *</label>
-                  <input id="pName" maxlength="200" required class="input" placeholder="e.g. Aisha Rahman" oninput="validatePersonalField('pName')" />
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div class="pref-field-wrapper">
+                  <label for="pName" class="label"><span>👤</span><span>Full Legal Name</span><span class="text-rose-500">*</span></label>
+                  <input id="pName" maxlength="200" required class="input" placeholder="e.g. Aisha binti Rahman" oninput="validatePersonalField('pName')" />
+                  <p class="pref-field-hint">As displayed on official identification and credentials.</p>
                   <div id="err_pName" class="text-[11px] text-rose-500 font-semibold hidden mt-1">Please enter your full name.</div>
                 </div>
-                <div>
-                  <label for="pRole" class="label">Occupation *</label>
+                <div class="pref-field-wrapper">
+                  <label for="pRole" class="label"><span>💼</span><span>Target / Current Occupation</span><span class="text-rose-500">*</span></label>
                   <input id="pRole" maxlength="300" required class="input" placeholder="e.g. Junior Financial Auditor" oninput="validatePersonalField('pRole')" />
+                  <p class="pref-field-hint">Primary profession benchmarked for AI scoring and job radar.</p>
                   <div id="err_pRole" class="text-[11px] text-rose-500 font-semibold hidden mt-1">Please enter your occupation.</div>
                 </div>
-                <div>
-                  <label for="pEmail" class="label">Primary Email *</label>
+                <div class="pref-field-wrapper">
+                  <label for="pEmail" class="label"><span>✉️</span><span>Primary Email Address</span><span class="text-rose-500">*</span></label>
                   <input id="pEmail" type="email" maxlength="254" required class="input" autocomplete="off" placeholder="name@example.com" oninput="validatePersonalField('pEmail')" />
+                  <p class="pref-field-hint">For system interview notifications and application tracking.</p>
                   <div id="err_pEmail" class="text-[11px] text-rose-500 font-semibold hidden mt-1">Please enter a valid email address.</div>
                 </div>
-                <div>
-                  <label for="pPhone" class="label">Contact Phone *</label>
+                <div class="pref-field-wrapper">
+                  <label for="pPhone" class="label"><span>📱</span><span>Contact Phone (+60)</span><span class="text-rose-500">*</span></label>
                   <div class="relative">
-                    <span class="absolute left-3 top-2.5 text-xs font-bold text-slate-500 select-none">+60</span>
-                    <input id="pPhone" type="tel" maxlength="12" required class="input !pl-11" autocomplete="off" placeholder="11-23456789" oninput="formatMalaysianPhone(this);validatePersonalField('pPhone')" />
+                    <span class="absolute left-3.5 top-3 text-xs font-bold text-slate-500 select-none">+60</span>
+                    <input id="pPhone" type="tel" maxlength="12" required class="input !pl-12" autocomplete="off" placeholder="11-23456789" oninput="formatMalaysianPhone(this);validatePersonalField('pPhone')" />
                   </div>
+                  <p class="pref-field-hint">Malaysian mobile format (e.g. 11-23456789 or 12-3456789).</p>
                   <div id="err_pPhone" class="text-[11px] text-rose-500 font-semibold hidden mt-1">Enter a valid Malaysian phone (e.g. 11-23456789).</div>
                 </div>
-                <div class="sm:col-span-2">
-                  <label for="pLocation" class="label">Location / State *</label>
-                  <input id="pLocation" maxlength="300" required class="input" placeholder="e.g. W.P. Kuala Lumpur" oninput="validatePersonalField('pLocation')" />
+                <div class="pref-field-wrapper sm:col-span-2">
+                  <label for="pLocation" class="label"><span>📍</span><span>Current Location / State of Residence</span><span class="text-rose-500">*</span></label>
+                  <input id="pLocation" maxlength="300" required class="input" placeholder="e.g. W.P. Kuala Lumpur, Bangsar" oninput="validatePersonalField('pLocation')" />
+                  <p class="pref-field-hint">Used for geographic commute calculations and nearby employer matching.</p>
                   <div id="err_pLocation" class="text-[11px] text-rose-500 font-semibold hidden mt-1">Please enter your location or state.</div>
-                </div>
-                <div>
-                  <label for="pIndustry" class="label">Industry Sector *</label>
-                  <select id="pIndustry" required class="input" onchange="validatePersonalField('pIndustry')">
-                    <option value="">Select industry sector...</option>
-                    <option value="Finance & Accounting">Finance &amp; Accounting</option>
-                    <option value="IT & Software">IT &amp; Software</option>
-                    <option value="Marketing & PR">Marketing &amp; PR</option>
-                    <option value="HR & Administration">HR &amp; Administration</option>
-                    <option value="Engineering & Manufacturing">Engineering &amp; Manufacturing</option>
-                    <option value="Healthcare & Life Sciences">Healthcare &amp; Life Sciences</option>
-                    <option value="Education & EdTech">Education &amp; EdTech</option>
-                    <option value="Supply Chain & Logistics">Supply Chain &amp; Logistics</option>
-                    <option value="ESG & Sustainability">ESG &amp; Sustainability</option>
-                    <option value="General">General / Management</option>
-                    <option value="Others">Others</option>
-                  </select>
-                  <div id="err_pIndustry" class="text-[11px] text-rose-500 font-semibold hidden mt-1">Please select an industry sector.</div>
-                </div>
-                <div>
-                  <label for="pMode" class="label">Preferred Work Mode *</label>
-                  <select id="pMode" required class="input" onchange="validatePersonalField('pMode')">
-                    <option value="">Select work mode...</option>
-                    <option value="Hybrid">Hybrid (Remote + Office)</option>
-                    <option value="Remote">Remote-First</option>
-                    <option value="On-site">On-site Only</option>
-                  </select>
-                  <div id="err_pMode" class="text-[11px] text-rose-500 font-semibold hidden mt-1">Please select a preferred work mode.</div>
-                </div>
-                <div>
-                  <label for="pEdu" class="label">Qualification Level *</label>
-                  <select id="pEdu" required class="input" onchange="validatePersonalField('pEdu')">
-                    <option value="">Select qualification level...</option>
-                    <option value="Bachelor's Degree">Bachelor's Degree (Hons)</option>
-                    <option value="Diploma / TVET">Diploma / TVET</option>
-                    <option value="SPM / UEC">SPM / UEC</option>
-                    <option value="Master's / Postgraduate">Master's / Postgraduate</option>
-                    <option value="Doctor">Doctor / PhD</option>
-                    <option value="Professional Qualification">Professional Cert (ACCA/CFA)</option>
-                  </select>
-                  <div id="err_pEdu" class="text-[11px] text-rose-500 font-semibold hidden mt-1">Please select your qualification level.</div>
-                </div>
-                <div>
-                  <label for="pYears" class="label">Years of Experience *</label>
-                  <input id="pYears" type="number" min="0" max="60" step="0.5" required placeholder="0" class="input" oninput="validatePersonalField('pYears')" />
-                  <p class="text-[10px] text-slate-500 mt-1">0 for fresh graduates / entry-level.</p>
-                  <div id="err_pYears" class="text-[11px] text-rose-500 font-semibold hidden mt-1">Please enter years of experience (0 or more).</div>
                 </div>
               </div>
             </div>
 
+            <!-- Card 2: Career Preferences & Background -->
+            <div class="pref-section-card">
+              <div class="pref-card-header">
+                <div class="flex items-center gap-2.5">
+                  <span class="text-xl">🎯</span>
+                  <div>
+                    <h4 class="text-sm font-extrabold text-slate-900">Career Preferences &amp; Workplace Style</h4>
+                    <p class="text-xs text-slate-500">Define your target industry domain, workplace flexibility, and qualification credentials.</p>
+                  </div>
+                </div>
+                <span class="pref-card-badge !bg-emerald-50 !text-emerald-700">💼 Preferences</span>
+              </div>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div class="pref-field-wrapper">
+                  <label for="pIndustry" class="label"><span>🏢</span><span>Target Industry Sector</span><span class="text-rose-500">*</span></label>
+                  <select id="pIndustry" required class="input" onchange="validatePersonalField('pIndustry')">
+                    <option value="">Select your industry sector…</option>
+                    <option value="Finance & Accounting">📊 Finance &amp; Accounting</option>
+                    <option value="IT & Software">💻 IT, Cloud &amp; Software Engineering</option>
+                    <option value="Marketing & PR">📢 Marketing, PR &amp; Digital Media</option>
+                    <option value="HR & Administration">👥 HR, People &amp; Office Administration</option>
+                    <option value="Engineering & Manufacturing">⚙️ Engineering, Manufacturing &amp; Operations</option>
+                    <option value="Healthcare & Life Sciences">🏥 Healthcare, Medicine &amp; Life Sciences</option>
+                    <option value="Education & EdTech">📚 Education, Training &amp; EdTech</option>
+                    <option value="Supply Chain & Logistics">🚚 Supply Chain, Procurement &amp; Logistics</option>
+                    <option value="ESG & Sustainability">🌱 ESG, Sustainability &amp; Renewable Energy</option>
+                    <option value="General">🎯 General Management &amp; Operations</option>
+                    <option value="Others">✨ Others / Specialized Disciplines</option>
+                  </select>
+                  <p class="pref-field-hint">Anchors your industry benchmark cohort and trend demand.</p>
+                  <div id="err_pIndustry" class="text-[11px] text-rose-500 font-semibold hidden mt-1">Please select an industry sector.</div>
+                </div>
+                <div class="pref-field-wrapper">
+                  <label for="pMode" class="label"><span>🌐</span><span>Preferred Work Mode</span><span class="text-rose-500">*</span></label>
+                  <select id="pMode" required class="input" onchange="validatePersonalField('pMode')">
+                    <option value="">Select work arrangement…</option>
+                    <option value="Hybrid">🏢 / 🏠 Hybrid (Office + Remote Flexibility)</option>
+                    <option value="Remote">🏠 100% Remote-First / Work From Anywhere</option>
+                    <option value="On-site">🏢 On-site / Office-Based Workplace</option>
+                  </select>
+                  <p class="pref-field-hint">Filters opportunities matching your daily lifestyle.</p>
+                  <div id="err_pMode" class="text-[11px] text-rose-500 font-semibold hidden mt-1">Please select a preferred work mode.</div>
+                </div>
+                <div class="pref-field-wrapper">
+                  <label for="pEdu" class="label"><span>🎓</span><span>Highest Qualification Level</span><span class="text-rose-500">*</span></label>
+                  <select id="pEdu" required class="input" onchange="validatePersonalField('pEdu')">
+                    <option value="">Select qualification level…</option>
+                    <option value="Bachelor's Degree">🎓 Bachelor's Degree / Honours</option>
+                    <option value="Diploma / TVET">📜 Diploma / Advanced Vocational (TVET)</option>
+                    <option value="SPM / UEC">📝 High School / SPM / UEC / STPM / O-Levels</option>
+                    <option value="Master's / Postgraduate">🏛️ Master's Degree / Postgraduate Diploma</option>
+                    <option value="Doctor">🔬 Doctorate / PhD / Postdoctoral</option>
+                    <option value="Professional Qualification">⭐ Professional Cert (ACCA / CFA / CPA / PMP)</option>
+                  </select>
+                  <p class="pref-field-hint">Used to evaluate qualification parity for verified postings.</p>
+                  <div id="err_pEdu" class="text-[11px] text-rose-500 font-semibold hidden mt-1">Please select your qualification level.</div>
+                </div>
+                <div class="pref-field-wrapper">
+                  <label for="pYears" class="label"><span>⏳</span><span>Total Years of Experience</span><span class="text-rose-500">*</span></label>
+                  <input id="pYears" type="number" min="0" max="60" step="0.5" required placeholder="0" class="input" oninput="validatePersonalField('pYears')" />
+                  <p class="pref-field-hint">Enter 0 for fresh graduates or entry-level starters.</p>
+                  <div id="err_pYears" class="text-[11px] text-rose-500 font-semibold hidden mt-1">Please enter years of experience (0 or more).</div>
+                </div>
+              </div>
+            </div>
 </div></details>
 <details class="career-disclosure"><summary><span><strong>Experience, education & projects</strong><small>Open to review your professional history</small></span></summary><div class="disclosure-body">            <!-- Extracted Experience, Education, Projects -->
             <div class="border-t border-slate-200/70 pt-5">
@@ -1118,17 +1146,31 @@
           </div>
 
           <!-- Basic Common Questions -->
-          <form data-outline-label="Common questions" id="questionnaireBasics" class="glass rounded-3xl p-6 space-y-5" onsubmit="event.preventDefault();continueQuestionnaire()">
-            <div>
-              <h2 class="font-extrabold">Common questions</h2>
-              <p class="text-xs text-slate-500 mt-1">All basic fields are required. Choose your field before selecting a role.</p>
+          <form data-outline-label="Common questions" id="questionnaireBasics" class="glass rounded-3xl p-6 space-y-6" onsubmit="event.preventDefault();continueQuestionnaire()">
+            <div class="flex flex-wrap items-center justify-between gap-3 border-b border-slate-200/70 pb-4">
+              <div>
+                <div class="flex items-center gap-2 mb-1">
+                  <span class="chip chip-indigo">📋 Foundation Survey</span>
+                  <span class="chip chip-teal">11 Guided Questions</span>
+                </div>
+                <h3 class="text-base font-extrabold text-slate-900">CareerLens Core Questionnaire</h3>
+                <p class="text-xs text-slate-500">All fields are required. Select your preferred field first to unlock tailored role suggestions and district options.</p>
+              </div>
+              <div class="flex items-center gap-2">
+                <span class="text-xs text-slate-400 font-medium hidden sm:inline">⚡ Auto-saved locally</span>
+              </div>
             </div>
             <div id="commonQ" class="questionnaire-fields"></div>
             <div id="roleRecommendationPanel" class="role-suggestion-panel">
               <div id="roleRecommendationStatus" role="status" aria-live="polite"></div>
               <div id="roleRecommendations"></div>
             </div>
-            <button type="submit" class="btn btn-primary">Save basic information</button>
+            <div class="flex flex-wrap items-center justify-between gap-3 pt-4 border-t border-slate-200/70">
+              <span class="text-xs text-slate-500 font-medium">✓ Answers are instantly benchmarked for role matching</span>
+              <button type="submit" class="btn btn-primary !py-2.5 !px-6 !text-xs font-bold">
+                💾 Save &amp; Confirm Basic Information →
+              </button>
+            </div>
           </form>
 
         </section>

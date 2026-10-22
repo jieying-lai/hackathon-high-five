@@ -38,20 +38,20 @@ DOMAIN_SCENARIO_POOLS = {
     "tech": {
         "problem_solving": [
             "In a real-world system for a {role}, your production service experiences an unexpected spike in p99 latency during peak traffic, triggering cascade timeouts. Walk us through your triage, mitigation, and post-mortem process.",
-            "You are tasked with migrating a mission-critical database with zero downtime, but a schema migration script locks several high-volume tables. How do you resolve the immediate incident and redesign the deployment?",
-            "A third-party API that your core checkout or user verification service relies on suddenly starts returning intermittent 502 errors. How do you design resilience and graceful degradation into your architecture?",
+            "As a {role}, you are tasked with migrating a mission-critical database with zero downtime, but a schema migration script locks several high-volume tables. How do you resolve the immediate incident and redesign the deployment?",
+            "As a {role}, a third-party API that your core checkout or user verification service relies on suddenly starts returning intermittent 502 errors. How do you design resilience and graceful degradation into your architecture?",
             "When dealing with conflicting requirements between strict data consistency and low-latency response times for a {role} feature, how do you evaluate and implement the appropriate architectural trade-offs?"
         ],
         "technical_competency": [
             "Drawing on your experience with {skills}, how do you structure high-throughput, maintainable code while ensuring comprehensive unit, integration, and contract test coverage?",
             "Describe a scenario where you diagnosed a memory leak, race condition, or CPU bottleneck in a distributed environment utilizing {skills}.",
-            "How do you implement secure authentication, API rate limiting, and defensive input validation when exposing public microservices?",
+            "Drawing on your background with {skills}, how do you implement secure authentication, API rate limiting, and defensive input validation when exposing public microservices?",
             "Walk us through how you leverage {skills} to architect asynchronous job queues and ensure idempotent message processing across worker nodes."
         ],
         "domain_ethics": [
-            "A product manager asks you to log unmasked user passwords or payment tokens temporarily in debug logs to troubleshoot a user issue. How do you respond and propose a compliant alternative?",
-            "How do you protect candidate or customer Personally Identifiable Information (PII) against unauthorized exposure or model extraction in AI-driven pipelines?",
-            "You uncover a severe, unpatched security vulnerability in a legacy microservice that could take 2 weeks to fix properly. Management wants to proceed with the public release. How do you escalate and resolve this?"
+            "In your capacity as a {role}, a product manager asks you to log unmasked user passwords or payment tokens temporarily in debug logs to troubleshoot an urgent user issue. How do you respond and propose a compliant alternative?",
+            "As a {role}, how do you protect candidate or customer Personally Identifiable Information (PII) against unauthorized exposure or model extraction in AI-driven pipelines under PDPA?",
+            "As a {role}, you uncover a severe, unpatched security vulnerability in a legacy microservice that could take 2 weeks to fix properly. Management wants to proceed with the public release. How do you escalate and resolve this?"
         ]
     },
     "data": {
@@ -122,9 +122,9 @@ def _generate_dynamic_fallback(role: str, skills: list) -> list:
 
     skills_str = _format_skills(skills)
 
-    q1_templates = pool.get("problem_solving", []) + general_pool.get("problem_solving", [])
-    q2_templates = pool.get("technical_competency", []) + general_pool.get("technical_competency", [])
-    q3_templates = pool.get("domain_ethics", []) + general_pool.get("domain_ethics", [])
+    q1_templates = pool.get("problem_solving", []) or general_pool.get("problem_solving", [])
+    q2_templates = pool.get("technical_competency", []) or general_pool.get("technical_competency", [])
+    q3_templates = pool.get("domain_ethics", []) or general_pool.get("domain_ethics", [])
 
     q1_raw = random.choice(q1_templates)
     q2_raw = random.choice(q2_templates)
