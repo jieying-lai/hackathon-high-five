@@ -4069,6 +4069,23 @@
         const demandBadge = r.demand_outlook >= 75
           ? '🔥 High Market Demand'
           : '📈 Steady Demand';
+        const localize = value => window.careerLensLocale?.translate(value) ?? value;
+        const scoreDetails = (r.score_components || []).map(component => {
+          const labels = {core_skills:'Direct role skills',transferable_skills:'Transferable skills',industry_alignment:'Industry alignment',work_mode_fit:'Work mode fit'};
+          const label = localize(labels[component.key] || component.key);
+          let detail;
+          if (Array.isArray(component.required)) {
+            const matchedRequirements = new Set(component.matched.map(item => item.required_skill));
+            const missing = component.required.filter(skill => !matchedRequirements.has(skill));
+            detail = `${component.matched.length}/${component.required.length} ${localize('matched')}${component.matched.length
+              ? ` · ${component.matched.map(item => `${localize(item.profile_skill)} → ${localize(item.required_skill)}`).join(', ')}` : ''}${missing.length
+              ? ` · ${localize('Still needed')}: ${missing.map(localize).join(', ')}` : ''}`;
+          } else {
+            detail = `${localize(component.profile_value || 'Not specified')} → ${Array.isArray(component.role_value)
+              ? component.role_value.map(localize).join(', ') : localize(component.role_value || '')}`;
+          }
+          return `<div class="text-xs text-slate-600 py-1"><strong class="text-slate-800">${esc(label)}:</strong> ${component.points}/${component.max_points} ${esc(localize('points'))} · ${esc(detail)}</div>`;
+        }).join('');
 
         return `
           <article class="glass rounded-3xl p-6 flex flex-col justify-between gap-5 lift border border-indigo-100/90 shadow-sm ${i === 0 ? 'ring-2 ring-indigo-400/80 shadow-md' : ''}">
@@ -4132,6 +4149,15 @@
                     : '<span class="chip chip-emerald !text-[11px] font-bold">✓ All core competencies matched!</span>'}
                 </div>
               </div>
+
+              <details class="text-xs">
+                <summary class="cursor-pointer font-extrabold text-indigo-700">${esc(localize('Why this score?'))}</summary>
+                <div class="mt-2 space-y-1">
+                  <p class="text-slate-500">${esc(localize('Fit score uses profile-listed skills and stated preferences. CV mentions are not proof of proficiency. Market demand is shown separately.'))}</p>
+                  ${scoreDetails}
+                  <p class="text-slate-600"><strong class="text-slate-800">${esc(localize('Core skills still to build'))}:</strong> ${r.skills_gap.length ? r.skills_gap.map(s => esc(localize(s))).join(', ') : esc(localize('None'))}</p>
+                </div>
+              </details>
             </div>
 
             <!-- Card Action Footer -->

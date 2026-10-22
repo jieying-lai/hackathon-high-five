@@ -931,6 +931,18 @@ Describe a problem you solved that was blocking your team's delivery.|Terangkan 
     ['Selected', 'Dipilih', '已选'],
     ['Limited evidence', 'Bukti terhad', '依据不足'],
     ['Why this role?', 'Mengapa jawatan ini?', '推荐依据'],
+    ['Why this score?', 'Mengapa skor ini?', '分数依据'],
+    ['Fit score uses profile-listed skills and stated preferences. CV mentions are not proof of proficiency. Market demand is shown separately.', 'Skor kesesuaian menggunakan kemahiran dalam profil dan pilihan yang dinyatakan. Sebutan dalam CV bukan bukti kemahiran. Permintaan pasaran dipaparkan secara berasingan.', '匹配分根据个人资料中的技能和填写的偏好计算。简历提及不等于能力证明。市场需求会单独展示。'],
+    ['Direct role skills', 'Kemahiran teras jawatan', '岗位核心技能'],
+    ['Transferable skills', 'Kemahiran boleh pindah', '可迁移技能'],
+    ['Industry alignment', 'Padanan industri', '行业匹配'],
+    ['Work mode fit', 'Padanan cara kerja', '工作方式匹配'],
+    ['Core skills still to build', 'Kemahiran teras untuk dibina', '仍需提升的核心技能'],
+    ['Still needed', 'Masih diperlukan', '仍需具备'],
+    ['Not specified', 'Tidak dinyatakan', '未填写'],
+    ['matched', 'sepadan', '项匹配'],
+    ['points', 'mata', '分'],
+    ['None', 'Tiada', '无'],
   );
   const dictionary = new Map(rows.map(row => [row[0],row]));
   // Additional English/Chinese UI copy; original data and API values stay unchanged.
