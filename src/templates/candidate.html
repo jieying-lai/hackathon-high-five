@@ -295,6 +295,8 @@
 <script src="/static/js/company-insights.js?v=20261023-27"></script>
 <link rel="stylesheet" href="/static/css/career-practice.css?v=20261023-1">
 <script defer src="/static/js/career-practice.js?v=20261023-1"></script>
+<link rel="stylesheet" href="/static/css/interview-buddy.css?v=20261023-6">
+<script defer src="/static/js/interview-buddy.js?v=20261023-6"></script>
 </head>
 <body class="responsive-ui responsive-talent min-h-screen">
   <div class="aurora"></div><div class="blob b1"></div><div class="blob b2"></div>
@@ -2537,6 +2539,8 @@
       if (!document.getElementById('tab-' + id)) id = 'dash';
       if (!options.restore) window.PagePosition?.navigate();
       current = id; visited.add(id);
+      window.careerLensActiveTab = id;
+      window.InterviewBuddy?.setView(id);
       document.getElementById('dashboardLearningReminder').hidden = id !== 'dash';
       document.querySelectorAll('.tab').forEach(t => t.classList.add('hidden'));
       const el = document.getElementById('tab-' + id);
