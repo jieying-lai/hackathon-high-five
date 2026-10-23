@@ -598,6 +598,31 @@ def api_cv_upload():
     return jsonify({"ok": True, "message": msg, "cv": cv_data})
 
 
+@app.route("/api/cv/guided-build", methods=["POST"])
+@api_role("job_seeker")
+def api_cv_guided_build():
+    from guided_cv import build_guided_spec
+    body = json_object()
+    user = session["user"]
+    try:
+        spec = build_guided_spec(body, user)
+    except ValueError as exc:
+        return jsonify({"ok": False, "message": str(exc)}), 400
+    if cv_engine.get_user_cv(_owner()) and body.get("replace_existing") is not True:
+        return jsonify({"ok": False, "message": "You already have a CV. Confirm replacement before saving this draft."}), 409
+    pdf_bytes = cv_engine.build_interactive_profile_pdf(spec)
+    ok, message, cv_data = cv_engine.save_user_pdf_cv(
+        owner_uid=_owner(),
+        filename="CareerLens_My_Story.pdf",
+        pdf_bytes=pdf_bytes,
+        user_context=user,
+        allow_anon_stats=False,
+    )
+    if not ok:
+        return jsonify({"ok": False, "message": message}), 400
+    return jsonify({"ok": True, "cv": cv_data, "download_url": "/api/cv/me/pdf"})
+
+
 @app.route("/api/cv/interactive-build", methods=["POST"])
 def api_cv_interactive_build():
     user = session.get("user")

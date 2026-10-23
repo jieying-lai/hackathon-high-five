@@ -282,6 +282,7 @@
 <link rel="stylesheet" href="/static/css/career-spirit-totem.css?v=20261023-9" />
   <link rel="stylesheet" href="/static/css/career-earth.css?v=20261023-11" />
   <link rel="stylesheet" href="/static/css/aurora-experience.css?v=20261023-11" />
+  <link rel="stylesheet" href="/static/css/guided-experience.css?v=20261024-2" />
 <script defer src="/static/js/aurora-experience.js?v=20261023-5"></script>
 <link rel="stylesheet" href="/static/css/company-insights.css?v=20261023-1" />
 <script src="/static/js/company-insights.js?v=20261023-1"></script>
@@ -2658,6 +2659,10 @@
       renderCvVault();
       await loadNamedShares();
     }
+
+    window.addEventListener('careerlens:cv-saved', () => {
+      loadMyCv().catch(error => toast('Your CV was saved, but the vault could not refresh: ' + error.message, 'err'));
+    });
 
     async function reloadVault() {
       if (uploadBusy || profileBusy || statsBusy) return;
@@ -5237,7 +5242,8 @@ async function submit3AiVerificationAnswers() {
   </div>
 
   <script src="/static/js/career-earth.js?v=20261023-5"></script>
-<script src="/static/js/career-spirit-totem.js?v=20261023-11"></script>
+<script src="/static/js/career-spirit-totem.js?v=20261024-1"></script>
+<script src="/static/js/guided-career-flow.js?v=20261024-2"></script>
 <script src="/static/js/experience-builder.js?v=20261023-fresh-grad"></script>
 <div id="applicationFollowupModal" class="fixed inset-0 z-[70] hidden items-center justify-center bg-slate-950/60 p-4" role="dialog" aria-modal="true" aria-labelledby="applicationFollowupTitle">
   <div class="modal p-6 sm:p-8 space-y-4 max-w-2xl w-full" onclick="event.stopPropagation()">

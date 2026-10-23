@@ -13,6 +13,7 @@
   <link rel="stylesheet" href="/static/css/career-spirit-totem.css?v=20261023-9" />
 <link rel="stylesheet" href="/static/css/career-earth.css?v=20261023-11" />
 <link rel="stylesheet" href="/static/css/aurora-experience.css?v=20261023-11" />
+  <link rel="stylesheet" href="/static/css/guided-experience.css?v=20261024-2" />
 <script defer src="/static/js/aurora-experience.js?v=20261023-9"></script>
 </head>
 <body class="responsive-ui responsive-home min-h-screen">
@@ -27,16 +28,11 @@
           <div class="text-[11px] text-slate-500 font-medium">Future-Ready Workforce & Reskilling</div>
         </div>
       </a>
-      <nav class="homepage-navigation" aria-label="Main navigation"><a class="nav-item" href="#home-intro">Overview</a><a class="nav-item" href="#home-portals">Our Portals</a></nav>
       <div class="landing-actions flex items-center gap-2.5">
         <div data-language-slot></div>
         <button onclick="openAuth('login')" class="btn btn-soft">Sign In</button>
         <button onclick="openAuth('register')" class="btn btn-primary">Create Account</button>
       </div>
-    </div>
-    <div class="homepage-mobile-controls">
-      <button id="homeNavToggle" type="button" class="nav-toggle" aria-controls="homeNav" aria-expanded="false" aria-label="Toggle navigation"><span class="hamburger" aria-hidden="true"><i></i><i></i><i></i></span>Menu</button>
-      <nav id="homeNav" class="mobile-nav" aria-label="Main navigation" hidden><a class="nav-item" href="#home-intro">Overview</a><a class="nav-item" href="#home-portals">Our Portals</a><button class="nav-item" onclick="openAuth('login')">Sign In</button><button class="nav-item" onclick="openAuth('register')">Create Account</button></nav>
     </div>
   </header>
 
@@ -50,41 +46,9 @@
         
         <div class="hero-eyebrow">YOUR FUTURE IS MORE THAN A JOB TITLE</div>
         <h1 class="first-impression-title">Find work that<br><em>feels like you.</em></h1>
-        <p class="first-impression-copy">You don’t need your whole life figured out. Discover your work style, step into someone else’s working day, and find a next move worth getting excited about.</p>
-        <div class="hero-actions"><button onclick="startTotemQuiz()" class="impression-primary">Find my work style <span>↗</span></button><button onclick="openGlobalAtlas()" class="impression-secondary">Explore a working day →</button></div>
+        <p class="first-impression-copy">You don’t need your whole life figured out. Discover your work style and find a next move worth getting excited about.</p>
+        <div class="hero-actions"><button onclick="startTotemQuiz()" class="impression-primary">Find my work style <span>↗</span></button></div>
         <p class="hero-reassurance">No account needed to explore · No right or wrong answers</p>
-                <!-- Diagrammatic Journey Map (Cathryn Lavery / Diagram Design) -->
-        <ol class="diagram-journey-flow max-w-5xl mx-auto my-6 p-3 sm:p-4 rounded-2xl bg-white/75 backdrop-blur-md border border-indigo-100/80 shadow-xs flex items-center justify-between text-left gap-2 sm:gap-4 overflow-x-auto" aria-label="Five-stage CareerLens journey">
-          <li class="flex items-center gap-2.5 flex-1 min-w-[138px]">
-            <span class="journey-node h-8 w-8 rounded-xl bg-indigo-600 text-white font-black text-xs grid place-items-center shadow-xs shrink-0">01</span>
-            <div><div class="text-[10px] font-mono text-indigo-600 uppercase font-bold tracking-wider">Discover</div><div class="text-xs font-black text-slate-900 leading-tight">Spirit Totem</div></div>
-          </li>
-          <li class="flex items-center gap-2.5 flex-1 min-w-[138px]">
-            <span class="journey-node h-8 w-8 rounded-xl bg-teal-600 text-white font-black text-xs grid place-items-center shadow-xs shrink-0">02</span>
-            <div><div class="text-[10px] font-mono text-teal-600 uppercase font-bold tracking-wider">Explore</div><div class="text-xs font-black text-slate-900 leading-tight">Global Atlas</div></div>
-          </li>
-          <li class="flex items-center gap-2.5 flex-1 min-w-[138px]">
-            <span class="journey-node h-8 w-8 rounded-xl bg-purple-600 text-white font-black text-xs grid place-items-center shadow-xs shrink-0">03</span>
-            <div><div class="text-[10px] font-mono text-purple-600 uppercase font-bold tracking-wider">Shape</div><div class="text-xs font-black text-slate-900 leading-tight">Companion CV</div></div>
-          </li>
-          <li class="flex items-center gap-2.5 flex-1 min-w-[138px]">
-            <span class="journey-node h-8 w-8 rounded-xl bg-rose-500 text-white font-black text-xs grid place-items-center shadow-xs shrink-0">04</span>
-            <div><div class="text-[10px] font-mono text-rose-600 uppercase font-bold tracking-wider">Map</div><div class="text-xs font-black text-slate-900 leading-tight">Opportunities</div></div>
-          </li>
-          <li class="flex items-center gap-2.5 flex-1 min-w-[138px]">
-            <span class="journey-node h-8 w-8 rounded-xl bg-amber-500 text-white font-black text-xs grid place-items-center shadow-xs shrink-0">05</span>
-            <div><div class="text-[10px] font-mono text-amber-700 uppercase font-bold tracking-wider">Grow</div><div class="text-xs font-black text-slate-900 leading-tight">Verified Pathways</div></div>
-          </li>
-        </ol>
-        <nav class="discovery-bento" aria-label="Explore CareerLens features">
-          <button class="bento-card bento-quiz" onclick="startTotemQuiz()"><span class="bento-kicker">01 / MEET YOURSELF</span><strong>Your work style.<br>Your kind of future.</strong><p>A playful quiz to explore what gives you energy.</p><div class="totem-orbit" aria-hidden="true"><span><img src="/static/illustrations/totem_characters/owl.svg" alt=""></span><span><img src="/static/illustrations/totem_characters/fox.svg" alt=""></span><span><img src="/static/illustrations/totem_characters/whale.svg" alt=""></span></div><b>Discover my totem ↗</b></button>
-          <button class="bento-card bento-earth" onclick="openGlobalAtlas()"><span class="bento-kicker">02 / OPEN YOUR WORLD</span><strong>Different places.<br>Different possibilities.</strong><p>Explore the globe through people, careers and everyday rituals.</p><div class="bento-planet" aria-hidden="true">◎<i></i></div><b>Take me somewhere ↗</b></button>
-          <button class="bento-card" onclick="openAuth('login')"><span class="bento-symbol" aria-hidden="true">↗</span><span class="bento-kicker">03 / CAREER OPPORTUNITIES</span><strong>Find your next move.</strong><p>Explore vacancies and follow your applications.</p><b>Explore my workspace →</b></button>
-          <button class="bento-card" onclick="openAuth('login')"><span class="bento-symbol" aria-hidden="true">▤</span><span class="bento-kicker">04 / PRIVATE CV VAULT</span><strong>Make your story clear.</strong><p>Upload, organise and review your CV. You control sharing.</p><b>Open my CV workspace →</b></button>
-          <button class="bento-card bento-growth" onclick="openAuth('login')"><span class="bento-kicker">05 / MY GROWTH</span><strong>Small steps. Real momentum.</strong><p>Build skills with learning pathways, focus sessions and a record of your progress.</p><b>Build my next chapter →</b></button>
-        </nav>
-        <div class="identity-marquee" aria-label="CareerLens work styles"><div class="identity-track"><span>✦ CAREERLENS</span><span><img src="/static/illustrations/totem_characters/owl.svg" alt="">SYSTEMS THINKER</span><span><img src="/static/illustrations/totem_characters/retriever.svg" alt="">PEOPLE CONNECTOR</span><span><img src="/static/illustrations/totem_characters/leopard.svg" alt="">INDEPENDENT EXPLORER</span><span><img src="/static/illustrations/totem_characters/whale.svg" alt="">PURPOSE SEEKER</span><span><img src="/static/illustrations/totem_characters/fox.svg" alt="">CREATIVE MIND</span><span><img src="/static/illustrations/totem_characters/hawk.svg" alt="">DIRECTION SETTER</span><span aria-hidden="true">✦ CAREERLENS</span><span aria-hidden="true"><img src="/static/illustrations/totem_characters/owl.svg" alt="">SYSTEMS THINKER</span><span aria-hidden="true"><img src="/static/illustrations/totem_characters/retriever.svg" alt="">PEOPLE CONNECTOR</span><span aria-hidden="true"><img src="/static/illustrations/totem_characters/leopard.svg" alt="">INDEPENDENT EXPLORER</span><span aria-hidden="true"><img src="/static/illustrations/totem_characters/whale.svg" alt="">PURPOSE SEEKER</span><span aria-hidden="true"><img src="/static/illustrations/totem_characters/fox.svg" alt="">CREATIVE MIND</span><span aria-hidden="true"><img src="/static/illustrations/totem_characters/hawk.svg" alt="">DIRECTION SETTER</span></div></div>
-        <button class="motion-toggle" type="button" aria-pressed="false">Pause ambient motion</button>
       </div>
 
       <!-- Quiz Card Container (Rendered dynamically by career-spirit-totem.js) -->
@@ -102,111 +66,6 @@
       <div class="feature-explorer"><div id="feature-steps"></div><aside id="feature-preview" class="glass feature-preview" aria-live="polite"></aside></div>
     </section>
 
-    <section id="home-portals" class="scroll-mt-24 pt-8 pb-16 space-y-8">
-      <div class="text-center max-w-2xl mx-auto space-y-2.5">
-        <span class="chip chip-indigo !text-xs font-bold">✨ Two Dedicated Portals</span>
-        <h2 class="text-2xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">Choose your gateway</h2>
-        <p class="text-xs sm:text-base text-slate-600">Whether you are developing your career or building your workforce, CareerLens has a purpose-built workspace engineered for you.</p>
-      </div>
-
-      <div class="grid md:grid-cols-2 gap-8 max-w-6xl mx-auto">
-        <!-- Talent Portal Card (Enriched) -->
-        <div class="tint tint-indigo rounded-[2rem] p-7 sm:p-9 lift space-y-6 flex flex-col justify-between border border-indigo-100 shadow-md">
-          <div class="space-y-5">
-            <div class="flex items-center justify-between">
-              <div class="flex items-center gap-3.5">
-                <div class="h-14 w-14 rounded-2xl bg-gradient-to-br from-indigo-500 to-pink-500 grid place-items-center text-2xl text-white shadow-sm">👤</div>
-                <div>
-                  <div class="text-xs font-black uppercase tracking-wider text-indigo-600">For Individuals &amp; Job Seekers</div>
-                  <h3 class="text-xl sm:text-2xl font-black text-slate-900">Talent Portal</h3>
-                </div>
-              </div>
-              <span class="chip chip-emerald !text-[11px] font-bold">✓ Free for Talent</span>
-            </div>
-
-            <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
-              Empower your career transition with ethical AI. Bridge skills gaps, understand automation risk, and build your certified green &amp; digital workforce passport.
-            </p>
-
-            <div class="grid sm:grid-cols-2 gap-3 text-xs">
-              <div class="bg-white/90 rounded-2xl p-3 border border-indigo-50 shadow-2xs space-y-1">
-                <div class="font-extrabold text-indigo-950 flex items-center gap-1.5"><span>📄</span> Private CV Vault</div>
-                <div class="text-[11px] text-slate-500">Fast local PDF extraction; zero PII leakage with owner-controlled consent.</div>
-              </div>
-              <div class="bg-white/90 rounded-2xl p-3 border border-indigo-50 shadow-2xs space-y-1">
-                <div class="font-extrabold text-indigo-950 flex items-center gap-1.5"><span>📡</span> AI Disruption Radar</div>
-                <div class="text-[11px] text-slate-500">Real-time analysis of what AI automates vs your human advantage in Malaysia.</div>
-              </div>
-              <div class="bg-white/90 rounded-2xl p-3 border border-indigo-50 shadow-2xs space-y-1">
-                <div class="font-extrabold text-indigo-950 flex items-center gap-1.5"><span>🎯</span> 69k+ Role Matches</div>
-                <div class="text-[11px] text-slate-500">Live Malaysian job indexing with proximity search and map exploration.</div>
-              </div>
-              <div class="bg-white/90 rounded-2xl p-3 border border-indigo-50 shadow-2xs space-y-1">
-                <div class="font-extrabold text-indigo-950 flex items-center gap-1.5"><span>🌱</span> SDG 8 Passport</div>
-                <div class="text-[11px] text-slate-500">Verifiable micro-courses aligned with UN Sustainable Development Goals.</div>
-              </div>
-            </div>
-          </div>
-
-          <div class="pt-4 border-t border-indigo-100 flex flex-wrap items-center justify-between gap-3">
-            <button onclick="openAuth('register','job_seeker')" class="btn btn-primary !py-3 !px-6 !text-xs font-black shadow-md">
-              Launch Talent Portal →
-            </button>
-            <button onclick="quickLogin('job_seeker')" class="text-xs font-bold text-indigo-600 hover:text-indigo-800 transition">
-              ⚡ Try Demo: Aisha Rahman
-            </button>
-          </div>
-        </div>
-
-        <!-- Employer Portal Card (Enriched) -->
-        <div class="tint tint-teal rounded-[2rem] p-7 sm:p-9 lift space-y-6 flex flex-col justify-between border border-teal-100 shadow-md">
-          <div class="space-y-5">
-            <div class="flex items-center justify-between">
-              <div class="flex items-center gap-3.5">
-                <div class="h-14 w-14 rounded-2xl bg-gradient-to-br from-teal-500 to-sky-500 grid place-items-center text-2xl text-white shadow-sm">🏢</div>
-                <div>
-                  <div class="text-xs font-black uppercase tracking-wider text-teal-700">For HR, Leaders &amp; Companies</div>
-                  <h3 class="text-xl sm:text-2xl font-black text-slate-900">Employer Portal</h3>
-                </div>
-              </div>
-              <span class="chip chip-teal !text-[11px] font-bold">🛡️ Zero Bias AI</span>
-            </div>
-
-            <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
-              Screen candidates with complete fairness, plan team reskilling, and schedule interviews seamlessly while staying 100% compliant with Malaysia PDPA 2010.
-            </p>
-
-            <div class="grid sm:grid-cols-2 gap-3 text-xs">
-              <div class="bg-white/90 rounded-2xl p-3 border border-teal-50 shadow-2xs space-y-1">
-                <div class="font-extrabold text-teal-950 flex items-center gap-1.5"><span>⚖️</span> Fair Screening Pipeline</div>
-                <div class="text-[11px] text-slate-500">Strictly evaluates verifiable competency without scoring age or ethnicity.</div>
-              </div>
-              <div class="bg-white/90 rounded-2xl p-3 border border-teal-50 shadow-2xs space-y-1">
-                <div class="font-extrabold text-teal-950 flex items-center gap-1.5"><span>🔥</span> Live Skills Heatmap</div>
-                <div class="text-[11px] text-slate-500">Benchmark applicant capabilities against team requirements and roles.</div>
-              </div>
-              <div class="bg-white/90 rounded-2xl p-3 border border-teal-50 shadow-2xs space-y-1">
-                <div class="font-extrabold text-teal-950 flex items-center gap-1.5"><span>📅</span> Direct Interview Dispatch</div>
-                <div class="text-[11px] text-slate-500">Send online video or in-person invitations directly into candidate dashboards.</div>
-              </div>
-              <div class="bg-white/90 rounded-2xl p-3 border border-teal-50 shadow-2xs space-y-1">
-                <div class="font-extrabold text-teal-950 flex items-center gap-1.5"><span>📈</span> AI Strategic Analytics</div>
-                <div class="text-[11px] text-slate-500">Data-driven expansion recommendations and custom printable reports.</div>
-              </div>
-            </div>
-          </div>
-
-          <div class="pt-4 border-t border-teal-100 flex flex-wrap items-center justify-between gap-3">
-            <button onclick="openAuth('register','hr_company')" class="btn btn-hr !py-3 !px-6 !text-xs font-black shadow-md">
-              Launch Employer Workspace →
-            </button>
-            <button onclick="quickLogin('hr_company')" class="text-xs font-bold text-teal-700 hover:text-teal-900 transition">
-              ⚡ Try Demo: Nexus Digital Sdn Bhd
-            </button>
-          </div>
-        </div>
-      </div>
-    </section>
     </div>
   </main>
 
@@ -446,27 +305,13 @@
   <script src="/static/js/page-position.js?v=20261021-reload-only"></script>
   <script src="/static/js/common.js?v=20261021-restore"></script>
   <script>
-        function updateHeaderNav(isAuth) {
-      const desktopNav = document.querySelector('.homepage-navigation');
-      const mobileNav = document.getElementById('homeNav');
-      if (isAuth) {
-        if (desktopNav) desktopNav.innerHTML = '<button type="button" onclick="closeAuth()" class="nav-item !w-auto !inline-flex items-center gap-1.5 font-bold text-indigo-600 hover:text-indigo-800">← Back to Overview</button>';
-        if (mobileNav) mobileNav.innerHTML = '<button type="button" onclick="closeAuth()" class="nav-item font-bold text-indigo-600">← Back to Overview</button>';
-      } else {
-        if (desktopNav) desktopNav.innerHTML = '<a class="nav-item" href="#home-intro">Overview</a><a class="nav-item" href="#home-portals">Our Portals</a>';
-        if (mobileNav) mobileNav.innerHTML = '<a class="nav-item" href="#home-intro">Overview</a><a class="nav-item" href="#home-portals">Our Portals</a><button class="nav-item" onclick="openAuth(\'login\')">Sign In</button><button class="nav-item" onclick="openAuth(\'register\')">Create Account</button>';
-      }
-    }
-
     function closeAuth() {
       document.getElementById('landing').classList.remove('hidden');
       document.getElementById('auth').classList.add('hidden');
-      updateHeaderNav(false);
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
     function openAuth(mode, role, options = {}) {
-      updateHeaderNav(true);
       if (!options.restore) window.PagePosition?.navigate();
       document.getElementById('landing').classList.add('hidden');
       document.getElementById('auth').classList.remove('hidden');
@@ -820,7 +665,8 @@
   </div>
 
   <script src="/static/js/career-earth.js?v=20261023-5"></script>
-<script src="/static/js/career-spirit-totem.js?v=20261023-11"></script>
+<script src="/static/js/career-spirit-totem.js?v=20261024-1"></script>
+<script src="/static/js/guided-career-flow.js?v=20261024-2"></script>
   <!-- Global 3D Work-Life Atlas Modal -->
   <div id="globalAtlasModal" role="dialog" aria-modal="true" aria-label="Global work-life atlas" class="fixed inset-0 z-50 bg-slate-950/85 backdrop-blur-md flex items-center justify-center p-3 sm:p-6 hidden">
     <div class="global-atlas-container max-w-6xl w-full p-6 sm:p-8 space-y-6 max-h-[92vh] overflow-y-auto border border-white/20 shadow-2xl relative rounded-[2.25rem]">

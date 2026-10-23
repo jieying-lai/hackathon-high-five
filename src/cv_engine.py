@@ -218,17 +218,23 @@ def _build_pdf_bytes(spec: dict) -> bytes:
 
     pdf.set_font("Helvetica", "B", 11)
     pdf.set_text_color(60, 70, 140)
-    pdf.cell(
+    pdf.multi_cell(
         0, 6,
-        f"{spec['role']}  |  {spec['industry']}  |  {spec['years']} Experience",
+        (f"Target role: {spec['role']}  |  {spec['years']}" if spec.get("source_grounded")
+         else f"{spec['role']}  |  {spec['industry']}  |  {spec['years']} Experience"),
         new_x="LMARGIN", new_y="NEXT",
     )
 
     pdf.set_font("Helvetica", "", 9.5)
     pdf.set_text_color(70, 70, 70)
-    pdf.cell(
+    contact = f"Email: {spec['email']}   |   Phone: {spec['phone']}   |   Location: {spec['location']} ({spec['work_mode']})"
+    if spec.get("source_grounded"):
+        contact = "  |  ".join(part for part in [
+            spec.get("email"), f"Preferred setting: {spec['work_mode']}" if spec.get("work_mode") else ""
+        ] if part)
+    pdf.multi_cell(
         0, 6,
-        f"Email: {spec['email']}   |   Phone: {spec['phone']}   |   Location: {spec['location']} ({spec['work_mode']})",
+        contact,
         new_x="LMARGIN", new_y="NEXT",
     )
     pdf.ln(2)
@@ -244,17 +250,20 @@ def _build_pdf_bytes(spec: dict) -> bytes:
     pdf.multi_cell(0, 5.2, spec["summary"], new_x="LMARGIN", new_y="NEXT")
     pdf.ln(2)
 
-    section("Work Experience")
+    if spec["experience"]:
+        section("Work Experience")
     for item in spec["experience"]:
         pdf.multi_cell(0, 5.2, f"- {item}", new_x="LMARGIN", new_y="NEXT")
     pdf.ln(2)
 
-    section("Education")
+    if spec["education"]:
+        section("Education")
     for item in spec["education"]:
         pdf.multi_cell(0, 5.2, f"- {item}", new_x="LMARGIN", new_y="NEXT")
     pdf.ln(2)
 
-    section("Key Projects")
+    if spec["projects"]:
+        section("Projects & Achievements" if spec.get("source_grounded") else "Key Projects")
     for item in spec["projects"]:
         pdf.multi_cell(0, 5.2, f"- {item}", new_x="LMARGIN", new_y="NEXT")
     pdf.ln(2)
@@ -267,7 +276,8 @@ def _build_pdf_bytes(spec: dict) -> bytes:
     pdf.set_text_color(120, 120, 120)
     pdf.cell(
         0, 5,
-        "Synthetic CV generated for CareerLens AI (SDC Hackathon 2026). Contains no real personal data.",
+        ("Draft based on self-reported answers. Review all details before sharing." if spec.get("source_grounded")
+         else "Synthetic CV generated for CareerLens AI (SDC Hackathon 2026). Contains no real personal data."),
         new_x="LMARGIN", new_y="NEXT",
     )
     return bytes(pdf.output())
@@ -281,7 +291,7 @@ def _clean_str(s: str) -> str:
 
 
 def build_interactive_profile_pdf(spec: dict) -> bytes:
-    """Build a valid synthetic PDF resume bytes from interactive companion Q&A."""
+    """Build a PDF from a conversation, or a synthetic legacy demonstration."""
     cleaned = {
         "name": _clean_str(spec.get("name", "Candidate")),
         "role": _clean_str(spec.get("role", "Professional")),
@@ -298,6 +308,12 @@ def build_interactive_profile_pdf(spec: dict) -> bytes:
         "projects": [_clean_str(x) for x in spec.get("projects", []) if _clean_str(x)] or ["CareerLens AI Portfolio: Domain project delivering measurable operational improvements."],
         "skills": [_clean_str(x) for x in spec.get("skills", []) if _clean_str(x)] or ["Communication", "Problem Solving", "Adaptability"],
     }
+    if spec.get("source_grounded"):
+        cleaned["source_grounded"] = True
+        for key in ("experience", "education", "projects", "certifications", "skills"):
+            cleaned[key] = [_clean_str(x) for x in spec.get(key, []) if _clean_str(x)]
+        for key in ("phone", "location"):
+            cleaned[key] = _clean_str(spec.get(key, ""))
     return _build_pdf_bytes(cleaned)
 
 

@@ -1796,7 +1796,10 @@
         body: JSON.stringify({ totem: calculatedTotem })
       }).catch(() => {});
     } catch (e) {}
-    renderTotemOverview();
+    window.GuidedCareerFlow.start(calculatedTotem, {
+      roles: ELEVATED_ROLES,
+      solo: (answers[1] || 0) + (answers[3] || 0) + (answers[10] || 0) >= 0
+    });
   }
 
   // View 1: Totem Overview & Grand Reveal
