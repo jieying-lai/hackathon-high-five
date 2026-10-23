@@ -1,0 +1,58 @@
+/* Shared translucent surfaces, with opaque-enough reading areas for contrast. */
+:root{--ink:#182743;--muted:#50617a;--accent:#4d38b8;--glass:rgba(255,255,255,.83);--radius:24px;--gap:20px}
+body{background:#eef2fc;color:var(--ink)}
+body:before{content:'';position:fixed;inset:-15%;z-index:-1;pointer-events:none;background:radial-gradient(ellipse at 18% 22%,rgba(167,243,208,.32) 0,transparent 48%),radial-gradient(ellipse at 78% 25%,rgba(199,210,254,.4) 0,transparent 46%),radial-gradient(ellipse at 52% 82%,rgba(253,230,138,.22) 0,transparent 52%),#f4f7fc;animation:aurora-drift 28s ease-in-out infinite alternate;transform:translate3d(0,var(--parallax-y,0px),0)}
+.aurora{opacity:.5;animation:aurora-drift 30s ease-in-out infinite alternate}
+.glass{background:var(--glass);backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,.9);box-shadow:0 10px 36px #3b42680a}
+@keyframes aurora-drift{from{background-position:0% 0%;transform:translate3d(-1%,-1%,0) scale(1)}to{background-position:100% 70%;transform:translate3d(2%,2%,0) scale(1.04)}}
+#home-intro{background:transparent!important;border:0!important;box-shadow:none!important;padding:52px 24px!important;overflow:visible}
+#totemWelcomeCard{max-width:1180px!important}.totem-glow-1,.totem-glow-2{display:none}
+.hero-eyebrow{color:#504585;font-size:11px;letter-spacing:.17em;font-weight:800;margin-bottom:20px}
+.first-impression-title{font-size:clamp(42px,6.8vw,86px)!important;line-height:1.03!important;letter-spacing:-.06em!important;color:#16223e!important;max-width:900px;margin:0 auto!important;font-weight:850}.first-impression-title em{font-style:normal;color:#5540b6}
+.first-impression-copy{max-width:660px;margin:24px auto!important;color:#475873!important;font-size:clamp(15px,1.5vw,18px);line-height:1.75}
+.hero-actions{display:flex;justify-content:center;gap:12px;flex-wrap:wrap;margin-top:26px}.impression-primary,.impression-secondary{min-height:52px;padding:15px 24px;border-radius:14px;font-size:14px;font-weight:800;transition:transform .2s,box-shadow .2s}.impression-primary{background:#5034b5;color:#fff;box-shadow:0 8px 24px #5034b527}.impression-primary span{margin-left:18px}.impression-secondary{color:#30365c;background:#ffffffb8;border:1px solid #c6c8de}.hero-reassurance{color:#56657a;font-size:12px;margin:14px 0 34px!important}
+.discovery-bento{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:var(--gap);text-align:left;margin-top:36px!important}
+.bento-card{position:relative;overflow:hidden;grid-column:span 2;display:flex;flex-direction:column;align-items:flex-start;text-align:left;gap:12px;padding:26px;border:1px solid #ffffff;border-radius:var(--radius);background:#ffffffb8;backdrop-filter:blur(20px);color:#1c2e49;min-height:240px;transition:transform .25s,box-shadow .25s}
+.bento-card:hover{transform:translateY(-5px);box-shadow:0 18px 40px #3c416b16}.bento-card strong{font-size:23px;line-height:1.2;letter-spacing:-.035em;max-width:90%}.bento-card p{font-size:13px;color:#475873;line-height:1.65;max-width:270px}.bento-card b{margin-top:auto;font-size:13px;color:#4f36aa}.bento-kicker{font-size:10px;letter-spacing:.12em;font-weight:800;color:#5b5478}.bento-quiz,.bento-earth{grid-column:span 3;min-height:330px}.bento-quiz{background:linear-gradient(130deg,#ffffffdb,#e6deffd9)}.bento-earth{background:linear-gradient(140deg,#12364c,#152445);color:#fff}.bento-earth :is(strong,p,b,.bento-kicker){color:#e5f5fa}.bento-earth p{max-width:60%}.bento-quiz strong,.bento-earth strong{font-size:32px;position:relative;z-index:1}.bento-growth{background:linear-gradient(130deg,#ffffffca,#d9f2e7c9)}.bento-symbol{font-size:28px;color:#705bba}.totem-orbit{display:flex;gap:14px;padding:10px 0}.totem-orbit span{display:grid;place-items:center;font-size:32px;width:66px;height:66px;border:1px solid white;border-radius:20px;background:#ffffffb5;transform:rotate(-8deg)}.totem-orbit span:nth-child(2){transform:translateY(-8px) rotate(6deg)}.bento-planet{position:absolute;right:-8px;bottom:22px;font-size:210px;line-height:1;color:#80e5ce75;pointer-events:none}.bento-planet i{position:absolute;width:12px;height:12px;border-radius:50%;background:#ffbe70;top:66px;left:80px;box-shadow:0 0 0 8px #ffbe7020}
+.identity-marquee{overflow:hidden;mask-image:linear-gradient(90deg,transparent,black 10%,black 90%,transparent);margin-top:32px!important}.identity-track{display:flex;width:max-content;gap:0;animation:identity-scroll 38s linear infinite}.identity-track span{flex-shrink:0;padding:18px 28px;font-size:11px;font-weight:800;letter-spacing:.1em;color:#566381}.identity-marquee:hover .identity-track{animation-play-state:paused}@keyframes identity-scroll{to{transform:translateX(-50%)}}.motion-toggle{font-size:11px;color:#4f5070;text-decoration:underline;margin-top:6px!important}
+/* Quiz and result cards use a single readable light palette. */
+:is(#totemQuizCard,#profileQuizModal,#totemResultCard){color:#192945}
+:is(#totemQuizCard,#profileQuizModal) :is(h3,h4,p){color:#1c2e49!important}
+:is(#totemQuizCard,#profileQuizModal) .likert-btn{color:#334663!important;background:#fff!important;border:2px solid #a4afc5!important;box-shadow:none!important}
+:is(#totemQuizCard,#profileQuizModal) .likert-btn.active{background:#5135b6!important;color:#fff!important;border-color:#5135b6!important}
+:is(#totemQuizCard,#profileQuizModal) .likert-btn:hover{border-color:#5135b6!important;transform:scale(1.08)}
+#totemResultCard :is(.text-white,.text-slate-100,.text-slate-200,.text-slate-300){color:#24334f!important}#totemResultCard :is(.text-teal-300,.text-indigo-300,.text-purple-300){color:#5140a5!important}
+#totemResultCard [class*="bg-slate-9"],#totemResultCard [class*="bg-white/"]{background:#ffffffd9!important}
+.totem-btn-primary{background:#5034b5!important;color:#fff!important;border-color:#5034b5!important;text-shadow:none!important}.totem-btn-secondary{background:#fff!important;color:#35405e!important;border-color:#b9c1d5!important}
+/* Globe + masonry reading space: cohesive deep-space cyber glass */
+#globalAtlasModal{background:rgba(8,14,28,.85)!important;backdrop-filter:blur(24px)!important}
+#globalAtlasModal .global-atlas-container{background:radial-gradient(130% 120% at 50% 0%,#151f38 0%,#0d1527 50%,#070c18 100%)!important;color:#f8fafc!important;border:1.5px solid rgba(255,255,255,.16)!important;backdrop-filter:blur(28px)!important}
+#globalAtlasModal h3{color:#ffffff!important}
+#globalAtlasModal .global-atlas-container>div:first-child p{color:#94a3b8!important}
+.atlas-warp-btn{display:inline-flex;align-items:center;gap:.6rem;padding:.7rem 1.4rem;font-size:.825rem;font-weight:800;color:#fff!important;background:linear-gradient(135deg,rgba(45,212,191,.25) 0%,rgba(99,102,241,.3) 100%)!important;border:1.5px solid rgba(45,212,191,.55)!important;border-radius:9999px!important;box-shadow:0 4px 20px rgba(45,212,191,.35)!important;cursor:pointer;transition:all .25s cubic-bezier(.16,1,.3,1)}
+.atlas-warp-btn:hover{transform:translateY(-2px) scale(1.03);border-color:#2dd4bf!important;box-shadow:0 0 30px rgba(45,212,191,.65)!important}
+.atlas-explorer-grid{grid-template-columns:minmax(0,5fr) minmax(0,6.5fr);gap:24px}
+.earth-stage{border:1.5px solid rgba(255,255,255,.14);background:radial-gradient(circle at 50% 45%,#182b46 0%,#0c1628 85%)!important;border-radius:2rem}
+.earth-controls button{background:rgba(255,255,255,.08);color:#f1f5f9;border:1.5px solid rgba(255,255,255,.18);border-radius:9999px}
+.earth-controls button:hover{background:rgba(45,212,191,.2);border-color:#2dd4bf;color:#fff}
+.masonry-heading{padding:4px 0 16px}.masonry-heading>span{font-size:10px;letter-spacing:.14em;color:#2dd4bf;font-weight:800;font-family:monospace}.masonry-heading h4{font-size:22px;letter-spacing:-.03em;font-weight:900;color:#fff;margin:6px 0}.masonry-heading p{font-size:12px;color:#94a3b8}
+.person-story{display:block;width:100%;border-radius:1.5rem;overflow:hidden;border:1.5px solid rgba(255,255,255,.14);background:rgba(255,255,255,.06);backdrop-filter:blur(16px);color:#f1f5f9;transition:all .25s cubic-bezier(.16,1,.3,1)}
+.person-story:hover{transform:translateY(-3px);border-color:#2dd4bf;box-shadow:0 12px 30px -5px rgba(45,212,191,.25)}
+.person-story.selected{border-color:#2dd4bf!important;background:linear-gradient(135deg,rgba(45,212,191,.15) 0%,rgba(99,102,241,.18) 100%)!important;box-shadow:0 0 25px rgba(45,212,191,.4)!important}
+.atlas-story-detail>summary{cursor:pointer;padding:16px 20px;border:1.5px solid rgba(255,255,255,.14);border-radius:1.25rem;background:rgba(255,255,255,.08);color:#f1f5f9;font-size:13px;font-weight:800;margin:14px 0}
+#globalAtlasModal .city-day-card{background:rgba(255,255,255,.05)!important;backdrop-filter:blur(24px)!important;border:1.5px solid rgba(255,255,255,.14)!important;border-radius:2rem!important;padding:28px!important;color:#f8fafc!important}
+.skeleton-surface{position:relative}.skeleton-surface:after{content:'';position:absolute;inset:0;border-radius:inherit;background:linear-gradient(100deg,#dce6f3 25%,#f6f8fd 45%,#dce6f3 65%);background-size:220% 100%;animation:skeleton-shimmer 1.6s linear infinite;z-index:2;pointer-events:none}@keyframes skeleton-shimmer{to{background-position:-220% 0}}
+body.motion-paused *,body.motion-paused:before{animation-play-state:paused!important}
+:where(button,a,summary,canvas):focus-visible{outline:3px solid #8061cf;outline-offset:4px}
+@media(max-width:800px){#home-intro{padding:32px 0!important}.discovery-bento{grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.bento-card{grid-column:span 1;padding:20px;min-height:240px}.bento-quiz,.bento-earth,.bento-growth{grid-column:span 2}.bento-quiz,.bento-earth{min-height:290px}.bento-card strong{font-size:21px}.bento-quiz strong,.bento-earth strong{font-size:30px}.atlas-explorer-grid{grid-template-columns:minmax(0,1fr)}.atlas-masonry{column-gap:12px}.person-story-copy{padding:14px}.person-story h5{font-size:16px}.first-impression-title{font-size:52px!important}}
+@media(max-width:430px){.atlas-masonry{columns:1}.person-scene{height:120px!important}.hero-actions{flex-direction:column}.hero-actions button{width:100%}.first-impression-title{font-size:44px!important}.bento-card{padding:18px}.bento-card p{font-size:12px}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;scroll-behavior:auto!important;transition:none!important}.identity-track{flex-wrap:wrap;width:100%}.identity-track [aria-hidden]{display:none}}
+#totemResultCard :is(.text-teal-400,.text-emerald-300,.text-emerald-400){color:#176b60!important}
+#totemResultCard :is(.text-rose-300,.text-rose-400,.text-pink-300,.text-pink-400){color:#a23562!important}
+#totemResultCard :is(.text-slate-400,.text-slate-500){color:#52617a!important}
+#totemResultCard :is(.text-indigo-400,.text-purple-400){color:#5942a0!important}
+.quiz-loading{display:grid;gap:18px;justify-items:center;padding:24px;color:#35405e;font-size:13px}.skeleton-avatar{height:84px;width:84px;border-radius:22px}.skeleton-line{height:20px;width:75%;border-radius:8px}.skeleton-line.short{width:45%}.skeleton-panel{height:120px;width:100%;border-radius:18px}
+@keyframes gentle-page-entry{from{opacity:.2;transform:translateY(10px)}to{opacity:1;transform:none}}
+.tab.fade-in{animation:gentle-page-entry .32s ease-out}
+#totemResultCard .totem-btn-primary,#totemResultCard .totem-btn-primary *{color:#fff!important}
+@media(prefers-reduced-motion:reduce){.tab.fade-in{animation:none!important}}

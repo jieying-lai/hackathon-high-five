@@ -279,6 +279,10 @@
 <link rel="stylesheet" href="/static/css/reskilling-plan.css?v=20261021-green-completion" />
 <link rel="stylesheet" href="/static/css/learning-controls.css?v=20261021-single-replacement" />
 <link rel="stylesheet" href="/static/css/learning-impact.css?v=20261021-community-pledges" />
+  <link rel="stylesheet" href="/static/css/career-spirit-totem.css?v=20261023-3" />
+<link rel="stylesheet" href="/static/css/career-earth.css?v=20261023-3" />
+<link rel="stylesheet" href="/static/css/aurora-experience.css?v=20261023-3" />
+<script defer src="/static/js/aurora-experience.js?v=20261023-3"></script>
 </head>
 <body class="responsive-ui responsive-talent min-h-screen">
   <div class="aurora"></div><div class="blob b1"></div><div class="blob b2"></div>
@@ -289,6 +293,9 @@
       <a href="/" class="portal-brand"><img src="/static/brand/careerlens_logo_icon.svg" alt="" /><span>CareerLens AI<small>Talent Portal</small></span></a>
       <nav id="sideNav" class="desktop-navigation" aria-label="Section navigation"></nav>
       <div class="portal-account flex items-center gap-2.5">
+        <button type="button" onclick="openGlobalAtlas()" class="h-9 px-3.5 rounded-2xl bg-gradient-to-r from-teal-500/10 to-indigo-500/10 hover:from-teal-500/20 hover:to-indigo-500/20 border border-teal-200/90 text-teal-900 text-xs font-black flex items-center gap-1.5 transition cursor-pointer shadow-xs" title="Explore 3D Global Work-Life Atlas">
+          <span class="text-base">🌍</span><span class="hidden sm:inline">Global Atlas</span>
+        </button>
         <button type="button" class="notification-button" data-notification-button onclick="showTab('notifications')" aria-label="Interview notifications" title="Interview notifications"><span aria-hidden="true">🔔</span><span class="notification-label">Interview notifications</span></button>
         <div data-language-slot="desktop"></div>
 
@@ -447,6 +454,24 @@
   <span aria-hidden="true" class="text-teal-500 font-bold group-hover:translate-x-1 transition">→</span>
 </button>
 </nav>
+
+          <!-- Featured: 3D Global Work-Life Atlas Exploration Card -->
+          <div class="glass p-5 sm:p-6 rounded-3xl border border-teal-200/80 bg-gradient-to-r from-slate-900 via-indigo-950 to-slate-900 text-white shadow-lg flex flex-wrap items-center justify-between gap-4">
+            <div class="space-y-1.5 max-w-xl">
+              <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-teal-500/20 text-teal-300 text-xs font-black">
+                <span>🌍</span><span>Global Work-Life Atlas</span>
+                <span class="text-[10px] text-teal-200 bg-teal-400/20 px-2 py-0.5 rounded-full">Interactive 3D</span>
+              </div>
+              <h3 class="text-lg sm:text-xl font-black text-white">How Do Professionals in Your Field Live Worldwide?</h3>
+              <p class="text-xs text-slate-300 leading-relaxed">
+                Spin the interactive 3D globe to discover real work-life balance, salaries, living costs, and daily routines across Kuala Lumpur, Tokyo, Amsterdam, and London.
+              </p>
+            </div>
+            <button type="button" onclick="openGlobalAtlas()" class="totem-btn-primary !py-3 !px-6 text-xs font-black tracking-wide shrink-0 shadow-md">
+              <span>🌍</span><span>Explore 3D Atlas →</span>
+            </button>
+          </div>
+
           <div data-outline-label="Career snapshot" id="kpis" class="grid grid-cols-2 lg:grid-cols-4 gap-4"></div>
           <div class="grid lg:grid-cols-5 gap-6">
             <div data-outline-label="Top role matches" id="dashTop" class="lg:col-span-3 glass rounded-3xl p-6"></div>
@@ -525,6 +550,37 @@
               <div>
                 <div class="text-[10px] font-extrabold uppercase tracking-wider text-indigo-700">Professional Bio &amp; Aspirations</div>
                 <p id="accCardBio" class="text-xs text-slate-700 mt-0.5 leading-relaxed font-medium">Add a short introduction and your career goals.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Career Spirit Totem & MBTI Identity Card (Read-Only DNA with in-portal Retake) -->
+          <div id="profileTotemCard" class="profile-account-card glass rounded-3xl p-6 sm:p-7 space-y-5 border-2 border-indigo-100 shadow-sm relative overflow-hidden" data-outline-label="Career Spirit Totem">
+            <div class="flex flex-wrap items-center justify-between gap-4 border-b border-slate-200/70 pb-4">
+              <div class="flex items-center gap-3.5">
+                <div class="h-12 w-12 rounded-2xl bg-gradient-to-br from-indigo-500/10 to-teal-500/10 border border-indigo-200 text-2xl grid place-items-center shadow-xs">
+                  ✨
+                </div>
+                <div>
+                  <div class="flex flex-wrap items-center gap-2">
+                    <h3 class="text-base sm:text-lg font-black text-slate-900">Career Spirit Totem &amp; MBTI Archetype</h3>
+                    <span class="chip chip-indigo">Verified DNA</span>
+                    <span class="chip chip-emerald text-[10px]">Read-Only Identity</span>
+                  </div>
+                  <p class="text-xs text-slate-500 mt-0.5">Psychological work-style vector &amp; O*NET 30.3 occupational compatibility</p>
+                </div>
+              </div>
+              <div class="flex items-center gap-2">
+                <button type="button" onclick="openProfileTotemQuizModal()" class="btn btn-primary !py-2 !px-4 flex items-center gap-1.5 text-xs font-bold shadow-sm hover:scale-[1.02] transition" title="Retake Career Spirit Totem Assessment">
+                  <span>🔄</span><span>Retake Quiz</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Injected by window.initCandidateTotemProfile() -->
+            <div id="profileTotemBody" class="space-y-4">
+              <div class="p-8 text-center text-slate-400 text-xs">
+                Loading authentic Totem DNA...
               </div>
             </div>
           </div>
@@ -4900,5 +4956,66 @@ async function submit3AiVerificationAnswers() {
     }
   </script>
 
+
+  <!-- In-Portal Retake Quiz Modal (Zero Redirect / Zero Logout) -->
+  <div id="profileQuizModal" class="fixed inset-0 z-50 bg-slate-950/70 backdrop-blur-sm flex items-center justify-center p-3 sm:p-6 hidden">
+    <div class="totem-quiz-modal-box max-w-2xl w-full p-6 sm:p-8 space-y-6 max-h-[92vh] overflow-y-auto border border-slate-200 shadow-2xl relative">
+      <div class="flex items-center justify-between border-b border-slate-200 pb-3">
+        <div class="flex items-center gap-2">
+          <span class="text-lg">🔮</span>
+          <span class="text-xs font-black uppercase tracking-wider text-indigo-700">Career Spirit Assessment</span>
+        </div>
+        <button type="button" onclick="closeProfileTotemQuizModal()" class="text-slate-400 hover:text-slate-700 text-2xl font-bold p-1 transition leading-none">✕</button>
+      </div>
+      <div id="profileQuizCardBody">
+        <!-- Rendered by window.renderProfileQuestion(qIndex) -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Global 3D Work-Life Atlas Modal inside Candidate Portal -->
+  <div id="globalAtlasModal" role="dialog" aria-modal="true" aria-label="Global work-life atlas" class="fixed inset-0 z-50 bg-slate-950/85 backdrop-blur-md flex items-center justify-center p-3 sm:p-6 hidden">
+    <div class="global-atlas-container max-w-5xl w-full p-6 sm:p-8 space-y-6 max-h-[92vh] overflow-y-auto border border-white/20 shadow-2xl relative rounded-[2.25rem]">
+      <div class="flex flex-wrap items-center justify-between gap-4 border-b border-white/10 pb-4">
+        <div>
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-teal-500/15 border border-teal-400/30 text-teal-300 text-xs font-bold mb-1.5">
+            <span class="animate-pulse">🌍</span><span>Global Work-Life Atlas · 16 Frontier Tech Hubs</span>
+          </div>
+          <h3 class="text-xl sm:text-2xl font-black text-white">How Do Professionals in Your Field Live Worldwide?</h3>
+          <p class="text-xs text-slate-300 mt-0.5">Explore authentic career lifestyles, day-in-the-life plogs &amp; vlogs, and positive daily routines across global hubs</p>
+        </div>
+        <div class="flex items-center gap-3">
+          <button type="button" onclick="surpriseAtlasCity()" class="atlas-warp-btn" title="Randomly teleport to another city on the 3D globe">
+            <span class="text-base">🎲</span>
+            <span class="font-bold">随机漫游城市 · Warp to Random Hub</span>
+          </button>
+          <button type="button" data-atlas-close aria-label="Close atlas" onclick="closeGlobalAtlas()" class="h-10 w-10 rounded-full bg-white/10 hover:bg-white/20 text-white font-bold grid place-items-center transition text-lg border border-white/15" title="Close Atlas">✕</button>
+        </div>
+      </div>
+
+      <!-- Globe & Details Grid -->
+      <div class="atlas-explorer-grid">
+        <!-- Main Column: Active Role Plog/Vlog, Job Desc & Positive Routine -->
+        <div class="atlas-explorer-story"><div id="cityRelatedRolesContainer" aria-live="polite"></div><details class="atlas-story-detail" open><summary>Inside the selected working day</summary><div id="cityDetailsContainer">
+          <!-- Injected active role Plog/Vlog card -->
+        </div></details></div>
+
+        <!-- Side Column: 3D Interactive Sphere & Other Roles in Hub -->
+        <div class="atlas-explorer-map space-y-4">
+          <div class="earth-stage">
+            <div class="earth-heading"><span>THE WORK-LIFE ATLAS</span><span id="earthClock" aria-live="polite"></span></div>
+            <div id="totemGlobeContainer"><canvas id="globeCanvas"></canvas></div>
+            <p id="earthStatus" role="status">Loading coastlines…</p>
+            <div class="earth-controls" aria-label="Globe controls"><button id="earthZoomIn" aria-label="Zoom in">+</button><button id="earthZoomOut" aria-label="Zoom out">−</button><button id="earthReset">Recenter</button><button id="earthRotate">Rotate</button></div>
+          </div>
+
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="/static/js/career-earth.js?v=20261023-3"></script>
+<script src="/static/js/career-spirit-totem.js?v=20261023-3"></script>
 </body>
 </html>

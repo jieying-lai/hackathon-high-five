@@ -10,6 +10,10 @@
   <link rel="stylesheet" href="/static/css/theme.css?v=20261020-questionnaire-1" />
   <link rel="stylesheet" href="/static/css/responsive.css?v=20261020-minimal-2" />
 <link rel="stylesheet" href="/static/css/home-features.css?v=3" />
+  <link rel="stylesheet" href="/static/css/career-spirit-totem.css?v=20261023-3" />
+<link rel="stylesheet" href="/static/css/career-earth.css?v=20261023-3" />
+<link rel="stylesheet" href="/static/css/aurora-experience.css?v=20261023-3" />
+<script defer src="/static/js/aurora-experience.js?v=20261023-3"></script>
 </head>
 <body class="responsive-ui responsive-home min-h-screen">
   <div class="aurora"></div><div class="blob b1"></div><div class="blob b2"></div>
@@ -37,117 +41,39 @@
   </header>
 
   <main id="landing" class="max-w-6xl mx-auto px-4 sm:px-6 py-10 space-y-12">
-        <section id="home-intro" class="glass rounded-[2rem] p-8 sm:p-12 lg:p-14 fade-in border border-slate-200/80 shadow-xl overflow-hidden relative">
-      <!-- Subtle ambient blur -->
-      <div class="absolute -top-32 -left-32 w-80 h-80 bg-indigo-500/10 rounded-full blur-3xl pointer-events-none"></div>
-      <div class="absolute -bottom-32 -right-32 w-80 h-80 bg-teal-500/10 rounded-full blur-3xl pointer-events-none"></div>
+            <section id="home-intro" class="totem-section p-8 sm:p-12 lg:p-14 my-4 relative overflow-hidden scroll-mt-20">
+      <div class="totem-glow-1"></div>
+      <div class="totem-glow-2"></div>
 
-      <div class="grid lg:grid-cols-12 gap-10 lg:gap-14 items-center relative z-10">
+      <!-- Welcome View (Combines Title & Totem Discovery) -->
+      <div id="totemWelcomeCard" class="relative z-10 text-center max-w-3xl mx-auto space-y-6">
         
-        <!-- Left: Hero Headline, CTAs, and Clean Minimalist Metrics -->
-        <div class="lg:col-span-7 space-y-6">
-          <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-indigo-50/90 border border-indigo-200/70 text-indigo-700 text-xs font-bold tracking-wide shadow-xs">
-            <span>✨</span>
-            <span>AI Workforce Navigation &amp; Reskilling Platform</span>
-          </div>
+        <div class="hero-eyebrow">YOUR FUTURE IS MORE THAN A JOB TITLE</div>
+        <h1 class="first-impression-title">Find work that<br><em>feels like you.</em></h1>
+        <p class="first-impression-copy">You don’t need your whole life figured out. Discover your work style, step into someone else’s working day, and find a next move worth getting excited about.</p>
+        <div class="hero-actions"><button onclick="startTotemQuiz()" class="impression-primary">Find my work style <span>↗</span></button><button onclick="openGlobalAtlas()" class="impression-secondary">Explore a working day →</button></div>
+        <p class="hero-reassurance">No account needed to explore · No right or wrong answers</p>
+        <nav class="discovery-bento" aria-label="Explore CareerLens features">
+          <button class="bento-card bento-quiz" onclick="startTotemQuiz()"><span class="bento-kicker">01 / MEET YOURSELF</span><strong>Your work style.<br>Your kind of future.</strong><p>A playful quiz to explore what gives you energy.</p><div class="totem-orbit" aria-hidden="true"><span>🦉</span><span>🦊</span><span>🐋</span></div><b>Discover my totem ↗</b></button>
+          <button class="bento-card bento-earth" onclick="openGlobalAtlas()"><span class="bento-kicker">02 / OPEN YOUR WORLD</span><strong>Different places.<br>Different possibilities.</strong><p>Explore the globe through people, careers and everyday rituals.</p><div class="bento-planet" aria-hidden="true">◎<i></i></div><b>Take me somewhere ↗</b></button>
+          <button class="bento-card" onclick="openAuth('login')"><span class="bento-symbol" aria-hidden="true">↗</span><span class="bento-kicker">03 / CAREER OPPORTUNITIES</span><strong>Find your next move.</strong><p>Explore vacancies and follow your applications.</p><b>Explore my workspace →</b></button>
+          <button class="bento-card" onclick="openAuth('login')"><span class="bento-symbol" aria-hidden="true">▤</span><span class="bento-kicker">04 / PRIVATE CV VAULT</span><strong>Make your story clear.</strong><p>Upload, organise and review your CV. You control sharing.</p><b>Open my CV workspace →</b></button>
+          <button class="bento-card bento-growth" onclick="openAuth('login')"><span class="bento-kicker">05 / MY GROWTH</span><strong>Small steps. Real momentum.</strong><p>Build skills with learning pathways, focus sessions and a record of your progress.</p><b>Build my next chapter →</b></button>
+        </nav>
+        <div class="identity-marquee" aria-label="CareerLens work styles"><div class="identity-track"><span>✦ CAREERLENS</span><span>🦉 SYSTEMS THINKER</span><span>🦮 PEOPLE CONNECTOR</span><span>🐆 INDEPENDENT EXPLORER</span><span>🐋 PURPOSE SEEKER</span><span>🦊 CREATIVE MIND</span><span>🦅 DIRECTION SETTER</span><span aria-hidden="true">✦ CAREERLENS</span><span aria-hidden="true">🦉 SYSTEMS THINKER</span><span aria-hidden="true">🦮 PEOPLE CONNECTOR</span><span aria-hidden="true">🐆 INDEPENDENT EXPLORER</span><span aria-hidden="true">🐋 PURPOSE SEEKER</span><span aria-hidden="true">🦊 CREATIVE MIND</span><span aria-hidden="true">🦅 DIRECTION SETTER</span></div></div>
+        <button class="motion-toggle" type="button" aria-pressed="false">Pause ambient motion</button>
+      </div>
 
-          <h1 class="text-3xl sm:text-5xl lg:text-[3.25rem] font-extrabold tracking-tight leading-[1.15] text-slate-900">
-            Find your place in the <span class="bg-gradient-to-r from-indigo-600 to-teal-600 bg-clip-text text-transparent">AI era</span>
-          </h1>
+      <!-- Quiz Card Container (Rendered dynamically by career-spirit-totem.js) -->
+      <div id="totemQuizCard" class="relative z-10 max-w-2xl mx-auto bg-white/95 backdrop-blur-xl border-2 border-indigo-100 rounded-3xl p-6 sm:p-10 shadow-2xl mt-6 hidden totem-quiz-card-box">
+      </div>
 
-          <p class="text-slate-600 text-sm sm:text-base leading-relaxed max-w-xl">
-            Match today's skills to tomorrow's roles, with transparent scores, verified courses and a clear path.
-          </p>
-
-          <div class="flex flex-wrap items-center gap-3.5 pt-1">
-            <button onclick="openAuth('register')" class="btn btn-primary !text-sm !font-bold !px-7 !py-3.5 shadow-md shadow-indigo-600/20 hover:shadow-indigo-600/30 transition">
-              Get Started →
-            </button>
-            <button onclick="openAuth('login')" class="btn btn-soft !text-sm !font-bold !px-7 !py-3.5 border border-slate-300 hover:bg-slate-100 transition">
-              Sign In
-            </button>
-          </div>
-
-          <!-- Clean Professional Metrics (Minimalist, No Clutter) -->
-          <div class="grid grid-cols-3 gap-4 pt-6 border-t border-slate-200/80">
-            <div>
-              <div class="text-2xl sm:text-3xl font-black text-indigo-700 tracking-tight">56% <span class="text-xs sm:text-sm font-medium text-slate-400">/ 26%</span></div>
-              <div class="text-xs text-slate-500 font-medium mt-1">use AI vs trained (MY)</div>
-            </div>
-            <div>
-              <div class="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">600k+</div>
-              <div class="text-xs text-slate-500 font-medium mt-1">workers to reskill</div>
-            </div>
-            <div>
-              <div class="text-2xl sm:text-3xl font-black text-teal-700 tracking-tight">SDG 4 · 8</div>
-              <div class="text-xs text-slate-500 font-medium mt-1">impact alignment</div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Right: Clean, Professional Product Preview Card (Neutral Platform Overview, No Mock User Profile) -->
-        <div class="lg:col-span-5 flex justify-center">
-          <div class="w-full max-w-md bg-white rounded-3xl p-6 border border-slate-200/90 shadow-xl space-y-4">
-            
-            <!-- Card Header -->
-            <div class="flex items-center justify-between pb-3 border-b border-slate-100">
-              <div class="flex items-center gap-2.5">
-                <img src="/static/brand/careerlens_logo_icon.svg" alt="CareerLens" class="w-8 h-8 rounded-xl shadow-xs" />
-                <div>
-                  <h3 class="text-xs font-extrabold text-slate-900">CareerLens AI Radar</h3>
-                  <p class="text-[10px] text-slate-400 font-medium">Workforce Mobility &amp; Matching Engine</p>
-                </div>
-              </div>
-              <span class="chip chip-emerald !text-[10px] font-bold">● Active Engine</span>
-            </div>
-
-            <!-- 3 Clean Feature Capability Rows -->
-            <div class="space-y-2.5 text-xs">
-              <div class="p-3 rounded-2xl bg-slate-50/80 border border-slate-200/70 flex items-start gap-3 hover:bg-indigo-50/50 transition">
-                <div class="h-8 w-8 rounded-xl bg-indigo-100 text-indigo-700 grid place-items-center font-bold text-sm shrink-0">
-                  📄
-                </div>
-                <div class="min-w-0">
-                  <div class="font-extrabold text-slate-900">Skill Extraction &amp; Verification</div>
-                  <div class="text-[11px] text-slate-500 mt-0.5">Instant CV parsing across 400+ national taxonomy skills</div>
-                </div>
-              </div>
-
-              <div class="p-3 rounded-2xl bg-slate-50/80 border border-slate-200/70 flex items-start gap-3 hover:bg-teal-50/50 transition">
-                <div class="h-8 w-8 rounded-xl bg-teal-100 text-teal-700 grid place-items-center font-bold text-sm shrink-0">
-                  🎯
-                </div>
-                <div class="min-w-0">
-                  <div class="font-extrabold text-slate-900">Future-Role Fit Scoring</div>
-                  <div class="text-[11px] text-slate-500 mt-0.5">Transparent fit breakdown powered by O*NET 29.0 &amp; MASCO</div>
-                </div>
-              </div>
-
-              <div class="p-3 rounded-2xl bg-slate-50/80 border border-slate-200/70 flex items-start gap-3 hover:bg-purple-50/50 transition">
-                <div class="h-8 w-8 rounded-xl bg-purple-100 text-purple-700 grid place-items-center font-bold text-sm shrink-0">
-                  🧭
-                </div>
-                <div class="min-w-0">
-                  <div class="font-extrabold text-slate-900">Personalised Reskilling Plan</div>
-                  <div class="text-[11px] text-slate-500 mt-0.5">Structured courses, Pomodoro buddy, and SDG passport</div>
-                </div>
-              </div>
-            </div>
-
-            <!-- Bottom Live Data Signal -->
-            <div class="pt-3 border-t border-slate-100 flex items-center justify-between text-xs">
-              <span class="text-[11px] text-slate-500 font-medium">📍 <b>69,000+</b> live postings indexed</span>
-              <button onclick="openAuth('register')" class="text-indigo-600 font-bold hover:underline text-[11px]">
-                Explore Roles →
-              </button>
-            </div>
-
-          </div>
-        </div>
-
+      <!-- Result Card Container (Rendered dynamically by career-spirit-totem.js) -->
+      <div id="totemResultCard" class="relative z-10 max-w-5xl mx-auto mt-6 hidden">
       </div>
     </section>
 
+    <div id="landingHomeContent">
     <section id="home-features" class="home-features" data-no-translate aria-labelledby="features-heading">
       <div id="feature-heading"></div>
       <div class="feature-explorer"><div id="feature-steps"></div><aside id="feature-preview" class="glass feature-preview" aria-live="polite"></aside></div>
@@ -258,6 +184,7 @@
         </div>
       </div>
     </section>
+    </div>
   </main>
 
   <main id="auth" class="hidden max-w-3xl mx-auto px-4 sm:px-6 py-8">
@@ -496,7 +423,27 @@
   <script src="/static/js/page-position.js?v=20261021-reload-only"></script>
   <script src="/static/js/common.js?v=20261021-restore"></script>
   <script>
+        function updateHeaderNav(isAuth) {
+      const desktopNav = document.querySelector('.homepage-navigation');
+      const mobileNav = document.getElementById('homeNav');
+      if (isAuth) {
+        if (desktopNav) desktopNav.innerHTML = '<button type="button" onclick="closeAuth()" class="nav-item !w-auto !inline-flex items-center gap-1.5 font-bold text-indigo-600 hover:text-indigo-800">← Back to Overview</button>';
+        if (mobileNav) mobileNav.innerHTML = '<button type="button" onclick="closeAuth()" class="nav-item font-bold text-indigo-600">← Back to Overview</button>';
+      } else {
+        if (desktopNav) desktopNav.innerHTML = '<a class="nav-item" href="#home-intro">Overview</a><a class="nav-item" href="#home-portals">Our Portals</a>';
+        if (mobileNav) mobileNav.innerHTML = '<a class="nav-item" href="#home-intro">Overview</a><a class="nav-item" href="#home-portals">Our Portals</a><button class="nav-item" onclick="openAuth(\'login\')">Sign In</button><button class="nav-item" onclick="openAuth(\'register\')">Create Account</button>';
+      }
+    }
+
+    function closeAuth() {
+      document.getElementById('landing').classList.remove('hidden');
+      document.getElementById('auth').classList.add('hidden');
+      updateHeaderNav(false);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
     function openAuth(mode, role, options = {}) {
+      updateHeaderNav(true);
       if (!options.restore) window.PagePosition?.navigate();
       document.getElementById('landing').classList.add('hidden');
       document.getElementById('auth').classList.remove('hidden');
@@ -845,6 +792,50 @@
         <button type="button" id="fpBtnReset" onclick="submitResetPassword()" class="btn btn-primary w-full !py-2.5 !text-xs font-bold">
           Confirm Password Reset →
         </button>
+      </div>
+    </div>
+  </div>
+
+  <script src="/static/js/career-earth.js?v=20261023-3"></script>
+<script src="/static/js/career-spirit-totem.js?v=20261023-3"></script>
+  <!-- Global 3D Work-Life Atlas Modal -->
+  <div id="globalAtlasModal" role="dialog" aria-modal="true" aria-label="Global work-life atlas" class="fixed inset-0 z-50 bg-slate-950/85 backdrop-blur-md flex items-center justify-center p-3 sm:p-6 hidden">
+    <div class="global-atlas-container max-w-6xl w-full p-6 sm:p-8 space-y-6 max-h-[92vh] overflow-y-auto border border-white/20 shadow-2xl relative rounded-[2.25rem]">
+      <div class="flex flex-wrap items-center justify-between gap-4 border-b border-white/10 pb-4">
+        <div>
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-teal-500/15 border border-teal-400/30 text-teal-300 text-xs font-bold mb-1.5">
+            <span class="animate-pulse">🌍</span><span>Global Work-Life Atlas · 16 Frontier Tech Hubs</span>
+          </div>
+          <h3 class="text-xl sm:text-2xl font-black text-white">How Do Professionals in Your Field Live Worldwide?</h3>
+          <p class="text-xs text-slate-300 mt-0.5">Explore authentic career lifestyles, day-in-the-life plogs &amp; vlogs, and positive daily routines across global hubs</p>
+        </div>
+        <div class="flex items-center gap-3">
+          <button type="button" onclick="surpriseAtlasCity()" class="atlas-warp-btn" title="Randomly teleport to another city on the 3D globe">
+            <span class="text-base">🎲</span>
+            <span class="font-bold">随机漫游城市 · Warp to Random Hub</span>
+          </button>
+          <button type="button" data-atlas-close aria-label="Close atlas" onclick="closeGlobalAtlas()" class="h-10 w-10 rounded-full bg-white/10 hover:bg-white/20 text-white font-bold grid place-items-center transition text-lg border border-white/15" title="Close Atlas">✕</button>
+        </div>
+      </div>
+
+      <!-- Globe & Details Grid -->
+      <div class="atlas-explorer-grid">
+        <!-- Main Column: Active Role Plog/Vlog, Job Desc & Positive Routine -->
+        <div class="atlas-explorer-story"><div id="cityRelatedRolesContainer" aria-live="polite"></div><details class="atlas-story-detail" open><summary>Inside the selected working day</summary><div id="cityDetailsContainer">
+          <!-- Injected active role Plog/Vlog card -->
+        </div></details></div>
+
+        <!-- Side Column: 3D Interactive Sphere & Other Roles in Hub -->
+        <div class="atlas-explorer-map space-y-4">
+          <div class="earth-stage">
+            <div class="earth-heading"><span>THE WORK-LIFE ATLAS</span><span id="earthClock" aria-live="polite"></span></div>
+            <div id="totemGlobeContainer"><canvas id="globeCanvas"></canvas></div>
+            <p id="earthStatus" role="status">Loading coastlines…</p>
+            <div class="earth-controls" aria-label="Globe controls"><button id="earthZoomIn" aria-label="Zoom in">+</button><button id="earthZoomOut" aria-label="Zoom out">−</button><button id="earthReset">Recenter</button><button id="earthRotate">Rotate</button></div>
+          </div>
+
+
+        </div>
       </div>
     </div>
   </div>

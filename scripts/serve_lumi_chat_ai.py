@@ -18,14 +18,41 @@ tokenizer = None
 
 def load_lumi_model():
     global model, tokenizer
+    lora_candidates = [
+        "models/runpod_totem_lora/careerlens_totem_lora_weights",
+        "models/careerlens_lumi_lora"
+    ]
+    lora_dir = None
+    for cand in lora_candidates:
+        if os.path.exists(cand) and os.path.exists(os.path.join(cand, "adapter_config.json")):
+            lora_dir = cand
+            break
+
+    # Priority 1: Unsloth FastLanguageModel (3-second instant load from local cached 4-bit weights)
+    try:
+        from unsloth import FastLanguageModel
+        target_name = lora_dir if lora_dir else "unsloth/Qwen2.5-7B-Instruct-bnb-4bit"
+        print(f"[*] Loading model via Unsloth FastLanguageModel ({target_name})...")
+        model, tokenizer = FastLanguageModel.from_pretrained(
+            model_name=target_name,
+            max_seq_length=2048,
+            dtype=None,
+            load_in_4bit=True,
+        )
+        FastLanguageModel.for_inference(model)
+        print(f"[✓] Unsloth GPU inference engine loaded successfully with {target_name}!")
+        return
+    except Exception as unsloth_err:
+        print(f"[*] Unsloth engine skipped ({unsloth_err}), falling back to HuggingFace PEFT...")
+
+    # Priority 2: Standard HuggingFace Transformers / BitsAndBytes fallback
     try:
         from transformers import AutoModelForCausalLM, AutoTokenizer, BitsAndBytesConfig
         from peft import PeftModel
-        lora_dir = "models/careerlens_lumi_lora"
         base_model = "Qwen/Qwen2.5-7B-Instruct"
 
         print("[*] Loading tokenizer...")
-        tokenizer = AutoTokenizer.from_pretrained(lora_dir if os.path.exists(os.path.join(lora_dir, "tokenizer.json")) else base_model)
+        tokenizer = AutoTokenizer.from_pretrained(lora_dir if (lora_dir and os.path.exists(os.path.join(lora_dir, "tokenizer.json"))) else base_model)
         if tokenizer.pad_token is None:
             tokenizer.pad_token = tokenizer.eos_token
 
@@ -43,8 +70,8 @@ def load_lumi_model():
             quantization_config=bnb_config
         )
 
-        if os.path.exists(lora_dir):
-            print(f"[*] Loading fine-tuned Lumi LoRA from {lora_dir}...")
+        if lora_dir and os.path.exists(lora_dir):
+            print(f"[*] Loading fine-tuned LoRA from {lora_dir}...")
             model = PeftModel.from_pretrained(base, lora_dir)
         else:
             model = base
