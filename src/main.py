@@ -599,9 +599,18 @@ def api_cv_upload():
 
 
 @app.route("/api/cv/interactive-build", methods=["POST"])
-@api_role("job_seeker")
 def api_cv_interactive_build():
-    user = session["user"]
+    user = session.get("user")
+    is_guest = False
+    if not user:
+        is_guest = True
+        user = {
+            "display_name": "Talent Explorer",
+            "username": "Explorer",
+            "email": "candidate@careerlens.ai",
+            "unique_uid": f"GUEST-{secrets.token_hex(4)}",
+            "role": "job_seeker"
+        }
     body = json_object()
     role = (body.get("role") or "Aspiring Professional").strip()
     skills_raw = body.get("skills") or []
@@ -646,7 +655,15 @@ def api_cv_interactive_build():
     )
     if not ok:
         return jsonify({"ok": False, "message": msg}), 400
-    return jsonify({"ok": True, "message": "Profile created by your Career Companion!", "cv": cv_data})
+    import base64
+    pdf_b64 = base64.b64encode(pdf_bytes).decode('ascii')
+    return jsonify({
+        "ok": True,
+        "message": "Profile created by your Career Companion!",
+        "cv": cv_data,
+        "pdf_base64": pdf_b64,
+        "is_guest": is_guest
+    })
 
 
 

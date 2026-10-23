@@ -1800,7 +1800,40 @@
   }
 
   // View 1: Totem Overview & Grand Reveal
-  function renderTotemOverview() {
+  
+  function buildTotemResultNav(activeKey) {
+    const t = calculatedTotem || {};
+    return `
+      <!-- Universal Totem Result Navigation Bar (HuaShu Glass & MDL Elevation) -->
+      <div class="flex flex-wrap items-center justify-between gap-3 border-b border-slate-200 pb-3 text-xs">
+        <div class="flex flex-wrap items-center gap-1.5 font-bold">
+          <button type="button" onclick="renderTotemOverview()" class="px-3 py-1.5 rounded-xl transition ${activeKey === 'overview' ? 'bg-indigo-600 text-white shadow-sm' : 'text-slate-600 hover:text-indigo-600 hover:bg-slate-100'}">
+            ✨ 1. Totem Summary
+          </button>
+          <button type="button" onclick="showDeepProfileView()" class="px-3 py-1.5 rounded-xl transition ${activeKey === 'deep' ? 'bg-indigo-600 text-white shadow-sm' : 'text-slate-600 hover:text-indigo-600 hover:bg-slate-100'}">
+            ⚡ 2. Personality Spectrum
+          </button>
+          <button type="button" onclick="showElevatedCareersView()" class="px-3 py-1.5 rounded-xl transition ${activeKey === 'careers' ? 'bg-indigo-600 text-white shadow-sm' : 'text-slate-600 hover:text-indigo-600 hover:bg-slate-100'}">
+            🎯 3. Elevated Careers
+          </button>
+          <button type="button" onclick="showCompanionCvStudio()" class="px-3.5 py-1.5 rounded-xl transition ${activeKey === 'companion' ? 'bg-indigo-600 text-white shadow-sm animate-pulse' : 'text-indigo-700 bg-indigo-50 hover:bg-indigo-100 border border-indigo-200'}">
+            🐾 4. Animal CV Companion
+          </button>
+        </div>
+        <div class="flex items-center gap-2">
+          <button type="button" onclick="retakeTotemQuiz()" class="text-slate-400 hover:text-slate-700 font-semibold transition text-xs flex items-center gap-1">
+            <span>🔄 Retake</span>
+          </button>
+          <span class="text-slate-300">•</span>
+          <button type="button" onclick="exitTotemImmersion()" class="text-slate-400 hover:text-slate-700 font-bold transition text-xs">
+            Exit ✕
+          </button>
+        </div>
+      </div>
+    `;
+  }
+
+    function renderTotemOverview() {
     window.renderTotemOverview = renderTotemOverview;
     enterImmersionMode();
     if (welcomeCard) welcomeCard.classList.add("hidden");
@@ -1810,96 +1843,94 @@
     const t = calculatedTotem;
 
     resultCard.innerHTML = `
-      <div class="space-y-8 fade-in">
+      <div class="space-y-6 fade-in">
         
-        <!-- Breadcrumb & Top Bar -->
-        <div class="flex items-center justify-between text-xs text-slate-500 border-b border-slate-200 pb-3">
-          <div class="flex items-center gap-2">
-            <span class="text-teal-400 font-bold">Personalized Discovery</span>
-            <span>•</span>
-            <span class="text-white font-bold">${t.badge}</span>
-          </div>
-          <button type="button" onclick="exitTotemImmersion()" class="text-slate-400 hover:text-white font-bold transition">
-            Exit to Overview ✕
-          </button>
-        </div>
+        ${buildTotemResultNav('overview')}
 
-        <!-- Grand Reveal Card -->
-        <div class="totem-badge-card p-6 sm:p-10 relative overflow-hidden border border-white/20">
+        <!-- Grand Reveal Card (Light Modern Luxury) -->
+        <div class="totem-badge-card p-6 sm:p-10 relative overflow-hidden bg-white border border-slate-200 shadow-xl">
           <div class="grid md:grid-cols-12 gap-8 items-center">
             
-            <!-- Left: Avatar & Single-line Title -->
+            <!-- Left: Cute Kawaii Avatar & Title -->
             <div class="md:col-span-5 text-center space-y-4">
-              <div class="relative w-36 h-36 mx-auto grid place-items-center rounded-3xl bg-gradient-to-br from-indigo-500/20 to-teal-500/20 border border-white/20 shadow-2xl backdrop-blur-md">
-                <img src="${t.characterImage || ('/static/illustrations/totem_characters/' + (t.key || 'retriever') + '.svg')}" alt="${t.badge}" class="w-28 h-28 object-contain filter drop-shadow-md hover:scale-105 transition-transform duration-300" />
-                <span class="absolute -bottom-2 -right-2 px-2.5 py-0.5 rounded-full bg-teal-500 text-slate-900 text-[10px] font-black uppercase tracking-wider">
-                  Work-style reflection
+              <div class="relative w-40 h-40 mx-auto grid place-items-center rounded-3xl bg-gradient-to-br from-indigo-50 via-sky-50 to-teal-50 border-2 border-indigo-200/80 shadow-lg p-3 group">
+                <img src="${t.characterImage || ('/static/illustrations/totem_characters/' + (t.key || 'retriever') + '.svg')}" alt="${t.badge}" class="w-32 h-32 object-contain filter drop-shadow group-hover:scale-105 transition-transform duration-300" />
+                <span class="absolute -bottom-2.5 px-3 py-1 rounded-full bg-indigo-600 text-white text-[10px] font-black uppercase tracking-wider shadow-sm">
+                  Your Spirit Totem
                 </span>
               </div>
-              <div>
-                <h2 class="text-2xl lg:text-3xl font-black text-slate-900 whitespace-nowrap tracking-tight">${t.badge}</h2>
-                <div class="text-xs text-indigo-700 font-extrabold mt-1">${t.tagline}</div>
+              <div class="pt-2">
+                <h2 class="text-2xl lg:text-3xl font-black text-slate-900 tracking-tight">${t.badge}</h2>
+                <div class="text-xs text-indigo-700 font-extrabold mt-1 uppercase tracking-wider">${t.tagline}</div>
               </div>
             </div>
 
             <!-- Right: Empathetic Brief & Superpowers -->
-            <div class="md:col-span-7 space-y-5 border-t md:border-t-0 md:border-l border-white/10 md:pl-8 pt-4 md:pt-0">
-              <p class="text-base sm:text-lg text-slate-200 font-medium leading-relaxed">
+            <div class="md:col-span-7 space-y-5 border-t md:border-t-0 md:border-l border-slate-100 md:pl-8 pt-4 md:pt-0">
+              <p class="text-base sm:text-lg text-slate-700 font-medium leading-relaxed italic">
                 "${t.brief}"
               </p>
 
               <!-- Superpowers & Allergies -->
               <div class="grid sm:grid-cols-2 gap-3 text-xs pt-1">
-                <div class="p-3.5 rounded-2xl bg-white/5 border border-emerald-500/30 space-y-1.5">
-                  <div class="font-extrabold text-emerald-300 flex items-center gap-1.5">
+                <div class="p-4 rounded-2xl bg-emerald-50/70 border border-emerald-200 space-y-2">
+                  <div class="font-extrabold text-emerald-800 flex items-center gap-1.5 text-xs">
                     <span>⚡</span> Authentic Superpowers
                   </div>
-                  <ul class="text-[11px] text-slate-300 space-y-1 list-disc list-inside">
+                  <ul class="text-[11px] text-emerald-950 space-y-1.5 list-disc list-inside font-medium">
                     ${t.strengths.map(s => `<li>${s}</li>`).join('')}
                   </ul>
                 </div>
 
-                <div class="p-3.5 rounded-2xl bg-white/5 border border-rose-500/30 space-y-1.5">
-                  <div class="font-extrabold text-rose-300 flex items-center gap-1.5">
+                <div class="p-4 rounded-2xl bg-rose-50/70 border border-rose-200 space-y-2">
+                  <div class="font-extrabold text-rose-800 flex items-center gap-1.5 text-xs">
                     <span>🚫</span> Workplace Allergies
                   </div>
-                  <ul class="text-[11px] text-slate-300 space-y-1 list-disc list-inside">
+                  <ul class="text-[11px] text-rose-950 space-y-1.5 list-disc list-inside font-medium">
                     ${t.allergies.map(a => `<li>${a}</li>`).join('')}
                   </ul>
                 </div>
               </div>
 
-
-
             </div>
           </div>
         </div>
 
-        <!-- Navigation & Gateway Footer -->
-        <div class="flex items-center justify-between pt-2 border-t border-white/10 text-xs">
-          <button type="button" onclick="exitTotemImmersion()" class="text-indigo-400 hover:text-white font-bold flex items-center gap-1.5 transition">
-            <span>← Back to Overview</span>
-          </button>
-          <button type="button" onclick="retakeTotemQuiz()" class="text-slate-400 hover:text-white font-semibold flex items-center gap-1 transition">
-            <span>🔄 Retake Assessment</span>
-          </button>
-        </div>
-
-        <!-- Primary Action to Full Career DNA & Role Models -->
-        <div class="pt-3">
-          <button type="button" onclick="showDeepProfileView()" class="w-full totem-badge-card p-5 sm:p-6 text-left hover:border-indigo-400/50 hover:bg-indigo-50/70 transition group flex flex-col sm:flex-row sm:items-center justify-between gap-4 shadow-sm rounded-2xl">
-            <div class="flex items-center gap-4">
-              <span class="text-3xl p-3 rounded-2xl bg-indigo-500/10 text-indigo-600">🧬</span>
-              <div>
-                <h4 class="font-black text-slate-900 text-base group-hover:text-indigo-600 transition">Explore Your Full Career DNA &amp; Role Models</h4>
-                <p class="text-xs text-slate-500 mt-1">Discover your detailed work-style spectrum, hidden strengths, and iconic leaders who share your temperament</p>
+        <!-- Two Primary Action Gates: 1. Deep DNA & 2. Animal CV Companion -->
+        <div class="grid sm:grid-cols-2 gap-4 pt-2">
+          
+          <!-- Gate 1: Deep Personality Spectrum & Role Models -->
+          <button type="button" onclick="showDeepProfileView()" class="totem-badge-card p-6 text-left hover:border-indigo-400 hover:shadow-lg transition group flex flex-col justify-between space-y-4 bg-white border border-slate-200 rounded-3xl">
+            <div class="space-y-2">
+              <div class="flex items-center justify-between">
+                <span class="text-3xl p-3 rounded-2xl bg-indigo-50 text-indigo-600">⚡</span>
+                <span class="chip chip-indigo !text-[10px] font-bold">Vector Calibrated</span>
               </div>
+              <h4 class="font-black text-slate-900 text-lg group-hover:text-indigo-600 transition">Explore Spectrum &amp; Role Models</h4>
+              <p class="text-xs text-slate-600 leading-relaxed">Discover your 4 dual-pole behavioral continuums and iconic trailblazers who share your temperament.</p>
             </div>
-            <span class="inline-flex items-center gap-2 text-xs font-black text-indigo-600 bg-indigo-50 px-4 py-2.5 rounded-xl border border-indigo-200 group-hover:bg-indigo-600 group-hover:text-white transition shrink-0">
-              <span>View Full Report</span>
-              <span class="group-hover:translate-x-1 transition">→</span>
-            </span>
+            <div class="inline-flex items-center gap-2 text-xs font-black text-indigo-600 pt-1 group-hover:translate-x-1 transition">
+              <span>View Personality Vectors</span>
+              <span>→</span>
+            </div>
           </button>
+
+          <!-- Gate 2: Interactive Animal Companion CV Studio -->
+          <button type="button" onclick="showCompanionCvStudio()" class="totem-badge-card p-6 text-left hover:border-teal-400 hover:shadow-lg transition group flex flex-col justify-between space-y-4 bg-gradient-to-br from-indigo-50/40 via-white to-teal-50/40 border border-teal-200/80 rounded-3xl">
+            <div class="space-y-2">
+              <div class="flex items-center justify-between">
+                <span class="text-3xl p-3 rounded-2xl bg-teal-50 text-teal-600">🐾</span>
+                <span class="chip chip-emerald !text-[10px] font-bold">Interactive Studio</span>
+              </div>
+              <h4 class="font-black text-slate-900 text-lg group-hover:text-teal-700 transition">Craft CV with Your Companion</h4>
+              <p class="text-xs text-slate-600 leading-relaxed">Let ${t.badge} interview you in 3 quick questions or scan your PDF resume to synthesize a verified profile.</p>
+            </div>
+            <div class="inline-flex items-center gap-2 text-xs font-black text-teal-700 pt-1 group-hover:translate-x-1 transition">
+              <span>Start Companion Chat &amp; CV Build</span>
+              <span>→</span>
+            </div>
+          </button>
+
         </div>
 
       </div>
@@ -1910,56 +1941,53 @@
   }
 
   // View 2: Deep Profile & Role Models View
+    // View 2: Deep Profile & Role Models View
   window.showDeepProfileView = function () {
     const t = calculatedTotem;
 
     resultCard.innerHTML = `
       <div class="space-y-8 fade-in">
         
-        <!-- Breadcrumb Navigation -->
-        <div class="flex items-center justify-between text-xs text-slate-500 border-b border-slate-200 pb-3">
-          <button type="button" onclick="renderTotemOverview()" class="text-indigo-400 hover:text-white font-bold flex items-center gap-1 transition">
-            ← Back to Totem Summary
-          </button>
-          <button type="button" onclick="showElevatedCareersView()" class="text-teal-400 hover:text-teal-300 font-bold flex items-center gap-1 transition">
-            Continue to Matched Careers →
-          </button>
-        </div>
+        ${buildTotemResultNav('deep')}
 
-        <!-- Role Models Section (Heading: Who Walks Your Path?, No "(Iconic Role Models)", No "DNA Match") -->
+        <!-- Role Models Section -->
         <div class="space-y-4">
-          <div>
-            <h3 class="text-xl sm:text-2xl font-black text-slate-900 flex items-center gap-2">
-              <span>⭐</span> Who Walks Your Path?
-            </h3>
-            <p class="text-xs text-slate-500 mt-0.5">Legends who carried your exact temperament, conquered self-doubt, and changed the world</p>
+          <div class="flex flex-wrap items-center justify-between gap-3 border-b border-slate-200 pb-3">
+            <div>
+              <h3 class="text-xl sm:text-2xl font-black text-slate-900 flex items-center gap-2">
+                <span>⭐</span> Who Walks Your Path?
+              </h3>
+              <p class="text-xs text-slate-500 mt-0.5">Iconic trailblazers and historic pioneers who share your ${t.badge} temperament:</p>
+            </div>
+            <span class="px-3 py-1 rounded-full text-[11px] font-bold bg-indigo-50 text-indigo-700 border border-indigo-200">
+              Temperament Synchronized
+            </span>
           </div>
 
-          <div class="grid md:grid-cols-3 gap-4">
+          <div class="grid sm:grid-cols-2 gap-4">
             ${t.roleModels.map(rm => `
-              <div class="role-model-card space-y-3.5 flex flex-col justify-between">
+              <div class="totem-badge-card p-5 sm:p-6 space-y-4 flex flex-col justify-between bg-white border border-slate-200 rounded-3xl shadow-sm hover:shadow-md transition">
                 <div class="space-y-3">
-                  
-                  <!-- Portrait Avatar + Name & Field -->
-                  <div class="flex items-center gap-3">
-                    <img src="${rm.photo}" alt="${rm.name}" class="role-model-avatar" onerror="this.src='/static/brand/careerlens_logo_icon.svg'" />
-                    <div class="min-w-0">
-                      <h4 class="font-black text-sm text-white truncate">${rm.name}</h4>
-                      <div class="text-[11px] text-teal-400 font-bold line-clamp-1">${rm.field}</div>
+                  <div class="flex items-center gap-3.5">
+                    <img src="${rm.avatar}" alt="${rm.name}" class="role-model-avatar w-14 h-14 rounded-2xl object-cover border-2 border-indigo-100 shadow-xs" onerror="this.src='/static/illustrations/totem_characters/owl.svg'" />
+                    <div>
+                      <h4 class="text-base font-black text-slate-900 leading-tight">${rm.name}</h4>
+                      <div class="text-xs font-bold text-indigo-600 mt-0.5">${rm.role}</div>
+                      <div class="text-[10px] text-slate-400 font-mono">${rm.era}</div>
                     </div>
                   </div>
                   
-                  <div class="p-3 rounded-xl bg-white/5 border border-white/5 text-[11px] text-slate-300 space-y-1">
-                    <span class="text-[10px] uppercase font-bold text-rose-300 block tracking-wider">The Early Grind & Struggle:</span>
-                    ${rm.struggle}
+                  <div class="p-3.5 rounded-2xl bg-rose-50/60 border border-rose-200/80 text-[11px] text-rose-950 space-y-1">
+                    <span class="text-[10px] uppercase font-black text-rose-700 block tracking-wider">The Early Grind &amp; Struggle:</span>
+                    <p class="leading-relaxed font-medium">${rm.struggle}</p>
                   </div>
 
-                  <div class="text-[11px] text-slate-200">
-                    <b class="text-indigo-300">Milestone:</b> ${rm.milestone}
+                  <div class="text-xs text-slate-700 leading-relaxed">
+                    <b class="text-indigo-700 font-bold">Key Turning Point:</b> ${rm.milestone}
                   </div>
                 </div>
 
-                <div class="pt-2 border-t border-white/10 text-[10px] italic text-slate-400">
+                <div class="pt-3 border-t border-slate-100 text-xs italic text-slate-600 font-serif">
                   "${rm.wisdom}"
                 </div>
               </div>
@@ -1967,16 +1995,16 @@
           </div>
         </div>
 
-        <!-- MBTI-Style Dual-Pole Personality Spectrum (Material & HuaShu Precision) -->
-        <div class="totem-badge-card p-6 sm:p-8 space-y-6 rounded-3xl border border-white/20 shadow-xl bg-slate-900/80 backdrop-blur-xl">
-          <div class="flex flex-wrap items-center justify-between gap-3 border-b border-white/10 pb-3">
+        <!-- MBTI-Style Dual-Pole Personality Spectrum (Crisp High-Contrast Light Mode) -->
+        <div class="totem-badge-card p-6 sm:p-8 space-y-6 rounded-3xl border border-slate-200 shadow-lg bg-white">
+          <div class="flex flex-wrap items-center justify-between gap-3 border-b border-slate-100 pb-3">
             <div>
-              <h3 class="text-lg font-black text-white flex items-center gap-2">
+              <h3 class="text-lg font-black text-slate-900 flex items-center gap-2">
                 <span>⚡</span> Your Personality Spectrum Breakdown
               </h3>
-              <p class="text-xs text-slate-300 mt-0.5">High-precision dual-pole vectors calibrated from your behavioral choices</p>
+              <p class="text-xs text-slate-500 mt-0.5">High-precision dual-pole vectors calibrated from your behavioral choices</p>
             </div>
-            <span class="px-3 py-1 rounded-full text-[10px] font-mono font-bold bg-indigo-500/20 text-indigo-300 border border-indigo-400/30">O*NET Dimension Calibrated</span>
+            <span class="px-3 py-1 rounded-full text-[10px] font-mono font-bold bg-indigo-50 text-indigo-700 border border-indigo-200">O*NET Dimension Calibrated</span>
           </div>
 
           <div class="space-y-4 pt-1">
@@ -1984,89 +2012,91 @@
             <!-- Pole 1: Energy & Focus -->
             <div class="mbti-spectrum-row space-y-2">
               <div class="mbti-pole-labels flex items-center justify-between text-xs font-black">
-                <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg ${t.mbtiPoles.energy.leftPct >= 50 ? 'bg-indigo-500/25 text-indigo-200 border border-indigo-400/40 shadow-xs' : 'text-slate-400 bg-white/5'}">
+                <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl ${t.mbtiPoles.energy.leftPct >= 50 ? 'bg-indigo-50 text-indigo-950 border border-indigo-300 shadow-xs' : 'text-slate-500 bg-slate-50 border border-slate-200/60'}">
                   <span>${t.mbtiPoles.energy.leftName}</span>
-                  <span class="font-mono text-cyan-300 font-extrabold">${t.mbtiPoles.energy.leftPct}%</span>
+                  <span class="font-mono ${t.mbtiPoles.energy.leftPct >= 50 ? 'text-indigo-600 font-black' : 'text-slate-500 font-bold'}">${t.mbtiPoles.energy.leftPct}%</span>
                 </span>
-                <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg ${t.mbtiPoles.energy.rightPct > 50 ? 'bg-rose-500/25 text-rose-200 border border-rose-400/40 shadow-xs' : 'text-slate-400 bg-white/5'}">
-                  <span class="font-mono text-amber-300 font-extrabold">${t.mbtiPoles.energy.rightPct}%</span>
+                <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl ${t.mbtiPoles.energy.rightPct > 50 ? 'bg-rose-50 text-rose-950 border border-rose-300 shadow-xs' : 'text-slate-500 bg-slate-50 border border-slate-200/60'}">
+                  <span class="font-mono ${t.mbtiPoles.energy.rightPct > 50 ? 'text-rose-600 font-black' : 'text-slate-500 font-bold'}">${t.mbtiPoles.energy.rightPct}%</span>
                   <span>${t.mbtiPoles.energy.rightName}</span>
                 </span>
               </div>
-              <div class="mbti-spectrum-track relative h-3.5 rounded-full bg-slate-950/70 border border-white/15 p-0.5 overflow-hidden flex shadow-inner">
+              <div class="mbti-spectrum-track relative h-3.5 rounded-full bg-slate-100 border border-slate-300/80 p-0.5 overflow-hidden flex shadow-inner">
                 <div class="mbti-pole-left-fill h-full rounded-l-full" style="width: ${t.mbtiPoles.energy.leftPct}%"></div>
                 <div class="mbti-pole-right-fill h-full rounded-r-full" style="width: ${t.mbtiPoles.energy.rightPct}%"></div>
-                <div class="absolute inset-y-0 left-1/2 w-0.5 bg-white/30 z-10 -translate-x-1/2 pointer-events-none"></div>
+                <div class="absolute inset-y-0 left-1/2 w-0.5 bg-slate-400/60 z-10 -translate-x-1/2 pointer-events-none"></div>
               </div>
             </div>
 
             <!-- Pole 2: Mind & Processing -->
             <div class="mbti-spectrum-row space-y-2">
               <div class="mbti-pole-labels flex items-center justify-between text-xs font-black">
-                <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg ${t.mbtiPoles.mind.leftPct >= 50 ? 'bg-indigo-500/25 text-indigo-200 border border-indigo-400/40 shadow-xs' : 'text-slate-400 bg-white/5'}">
+                <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl ${t.mbtiPoles.mind.leftPct >= 50 ? 'bg-indigo-50 text-indigo-950 border border-indigo-300 shadow-xs' : 'text-slate-500 bg-slate-50 border border-slate-200/60'}">
                   <span>${t.mbtiPoles.mind.leftName}</span>
-                  <span class="font-mono text-cyan-300 font-extrabold">${t.mbtiPoles.mind.leftPct}%</span>
+                  <span class="font-mono ${t.mbtiPoles.mind.leftPct >= 50 ? 'text-indigo-600 font-black' : 'text-slate-500 font-bold'}">${t.mbtiPoles.mind.leftPct}%</span>
                 </span>
-                <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg ${t.mbtiPoles.mind.rightPct > 50 ? 'bg-rose-500/25 text-rose-200 border border-rose-400/40 shadow-xs' : 'text-slate-400 bg-white/5'}">
-                  <span class="font-mono text-amber-300 font-extrabold">${t.mbtiPoles.mind.rightPct}%</span>
+                <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl ${t.mbtiPoles.mind.rightPct > 50 ? 'bg-rose-50 text-rose-950 border border-rose-300 shadow-xs' : 'text-slate-500 bg-slate-50 border border-slate-200/60'}">
+                  <span class="font-mono ${t.mbtiPoles.mind.rightPct > 50 ? 'text-rose-600 font-black' : 'text-slate-500 font-bold'}">${t.mbtiPoles.mind.rightPct}%</span>
                   <span>${t.mbtiPoles.mind.rightName}</span>
                 </span>
               </div>
-              <div class="mbti-spectrum-track relative h-3.5 rounded-full bg-slate-950/70 border border-white/15 p-0.5 overflow-hidden flex shadow-inner">
+              <div class="mbti-spectrum-track relative h-3.5 rounded-full bg-slate-100 border border-slate-300/80 p-0.5 overflow-hidden flex shadow-inner">
                 <div class="mbti-pole-left-fill h-full rounded-l-full" style="width: ${t.mbtiPoles.mind.leftPct}%"></div>
                 <div class="mbti-pole-right-fill h-full rounded-r-full" style="width: ${t.mbtiPoles.mind.rightPct}%"></div>
-                <div class="absolute inset-y-0 left-1/2 w-0.5 bg-white/30 z-10 -translate-x-1/2 pointer-events-none"></div>
+                <div class="absolute inset-y-0 left-1/2 w-0.5 bg-slate-400/60 z-10 -translate-x-1/2 pointer-events-none"></div>
               </div>
             </div>
 
             <!-- Pole 3: Execution Tempo -->
             <div class="mbti-spectrum-row space-y-2">
               <div class="mbti-pole-labels flex items-center justify-between text-xs font-black">
-                <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg ${t.mbtiPoles.tempo.leftPct >= 50 ? 'bg-indigo-500/25 text-indigo-200 border border-indigo-400/40 shadow-xs' : 'text-slate-400 bg-white/5'}">
+                <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl ${t.mbtiPoles.tempo.leftPct >= 50 ? 'bg-indigo-50 text-indigo-950 border border-indigo-300 shadow-xs' : 'text-slate-500 bg-slate-50 border border-slate-200/60'}">
                   <span>${t.mbtiPoles.tempo.leftName}</span>
-                  <span class="font-mono text-cyan-300 font-extrabold">${t.mbtiPoles.tempo.leftPct}%</span>
+                  <span class="font-mono ${t.mbtiPoles.tempo.leftPct >= 50 ? 'text-indigo-600 font-black' : 'text-slate-500 font-bold'}">${t.mbtiPoles.tempo.leftPct}%</span>
                 </span>
-                <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg ${t.mbtiPoles.tempo.rightPct > 50 ? 'bg-rose-500/25 text-rose-200 border border-rose-400/40 shadow-xs' : 'text-slate-400 bg-white/5'}">
-                  <span class="font-mono text-amber-300 font-extrabold">${t.mbtiPoles.tempo.rightPct}%</span>
+                <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl ${t.mbtiPoles.tempo.rightPct > 50 ? 'bg-rose-50 text-rose-950 border border-rose-300 shadow-xs' : 'text-slate-500 bg-slate-50 border border-slate-200/60'}">
+                  <span class="font-mono ${t.mbtiPoles.tempo.rightPct > 50 ? 'text-rose-600 font-black' : 'text-slate-500 font-bold'}">${t.mbtiPoles.tempo.rightPct}%</span>
                   <span>${t.mbtiPoles.tempo.rightName}</span>
                 </span>
               </div>
-              <div class="mbti-spectrum-track relative h-3.5 rounded-full bg-slate-950/70 border border-white/15 p-0.5 overflow-hidden flex shadow-inner">
+              <div class="mbti-spectrum-track relative h-3.5 rounded-full bg-slate-100 border border-slate-300/80 p-0.5 overflow-hidden flex shadow-inner">
                 <div class="mbti-pole-left-fill h-full rounded-l-full" style="width: ${t.mbtiPoles.tempo.leftPct}%"></div>
                 <div class="mbti-pole-right-fill h-full rounded-r-full" style="width: ${t.mbtiPoles.tempo.rightPct}%"></div>
-                <div class="absolute inset-y-0 left-1/2 w-0.5 bg-white/30 z-10 -translate-x-1/2 pointer-events-none"></div>
+                <div class="absolute inset-y-0 left-1/2 w-0.5 bg-slate-400/60 z-10 -translate-x-1/2 pointer-events-none"></div>
               </div>
             </div>
 
             <!-- Pole 4: Mission Drive -->
             <div class="mbti-spectrum-row space-y-2">
               <div class="mbti-pole-labels flex items-center justify-between text-xs font-black">
-                <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg ${t.mbtiPoles.drive.leftPct >= 50 ? 'bg-indigo-500/25 text-indigo-200 border border-indigo-400/40 shadow-xs' : 'text-slate-400 bg-white/5'}">
+                <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl ${t.mbtiPoles.drive.leftPct >= 50 ? 'bg-indigo-50 text-indigo-950 border border-indigo-300 shadow-xs' : 'text-slate-500 bg-slate-50 border border-slate-200/60'}">
                   <span>${t.mbtiPoles.drive.leftName}</span>
-                  <span class="font-mono text-cyan-300 font-extrabold">${t.mbtiPoles.drive.leftPct}%</span>
+                  <span class="font-mono ${t.mbtiPoles.drive.leftPct >= 50 ? 'text-indigo-600 font-black' : 'text-slate-500 font-bold'}">${t.mbtiPoles.drive.leftPct}%</span>
                 </span>
-                <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg ${t.mbtiPoles.drive.rightPct > 50 ? 'bg-rose-500/25 text-rose-200 border border-rose-400/40 shadow-xs' : 'text-slate-400 bg-white/5'}">
-                  <span class="font-mono text-amber-300 font-extrabold">${t.mbtiPoles.drive.rightPct}%</span>
+                <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl ${t.mbtiPoles.drive.rightPct > 50 ? 'bg-rose-50 text-rose-950 border border-rose-300 shadow-xs' : 'text-slate-500 bg-slate-50 border border-slate-200/60'}">
+                  <span class="font-mono ${t.mbtiPoles.drive.rightPct > 50 ? 'text-rose-600 font-black' : 'text-slate-500 font-bold'}">${t.mbtiPoles.drive.rightPct}%</span>
                   <span>${t.mbtiPoles.drive.rightName}</span>
                 </span>
               </div>
-              <div class="mbti-spectrum-track relative h-3.5 rounded-full bg-slate-950/70 border border-white/15 p-0.5 overflow-hidden flex shadow-inner">
+              <div class="mbti-spectrum-track relative h-3.5 rounded-full bg-slate-100 border border-slate-300/80 p-0.5 overflow-hidden flex shadow-inner">
                 <div class="mbti-pole-left-fill h-full rounded-l-full" style="width: ${t.mbtiPoles.drive.leftPct}%"></div>
                 <div class="mbti-pole-right-fill h-full rounded-r-full" style="width: ${t.mbtiPoles.drive.rightPct}%"></div>
-                <div class="absolute inset-y-0 left-1/2 w-0.5 bg-white/30 z-10 -translate-x-1/2 pointer-events-none"></div>
+                <div class="absolute inset-y-0 left-1/2 w-0.5 bg-slate-400/60 z-10 -translate-x-1/2 pointer-events-none"></div>
               </div>
             </div>
 
           </div>
         </div>
 
-        <!-- Next Action Button -->
-        <div class="flex justify-between items-center pt-2">
-          <button type="button" onclick="renderTotemOverview()" class="text-xs font-bold text-slate-400 hover:text-white transition">
-            ← Back to Overview
+        <!-- Next Step Action Bar -->
+        <div class="grid sm:grid-cols-2 gap-4 pt-2">
+          <button type="button" onclick="showElevatedCareersView()" class="totem-btn-primary !py-4 text-center font-extrabold shadow-md flex items-center justify-center gap-2">
+            <span>Explore Matched Elevated Careers</span>
+            <span>→</span>
           </button>
-          <button type="button" onclick="showElevatedCareersView()" class="totem-btn-primary">
-            <span>Explore Matched Careers ➔</span>
+          <button type="button" onclick="showCompanionCvStudio()" class="px-6 py-4 rounded-2xl bg-indigo-50 hover:bg-indigo-100 text-indigo-700 font-extrabold border border-indigo-200 text-center transition flex items-center justify-center gap-2 shadow-xs">
+            <span>🐾 Craft CV with ${t.badge}</span>
+            <span>→</span>
           </button>
         </div>
 
@@ -2077,81 +2107,77 @@
     if (intro) intro.scrollIntoView({ behavior: "smooth", block: "start" });
   };
 
-  // View 3: Elevated Careers Portal
+    // View 3: Elevated Careers Portal (Overhauled with MDL & HuaShu)
   window.showElevatedCareersView = function () {
     const t = calculatedTotem;
 
     resultCard.innerHTML = `
       <div class="space-y-8 fade-in">
         
-        <!-- Breadcrumb Navigation -->
-        <div class="flex items-center justify-between text-xs text-slate-500 border-b border-slate-200 pb-3">
-          <button type="button" onclick="showDeepProfileView()" class="text-indigo-400 hover:text-white font-bold flex items-center gap-1 transition">
-            ← Back to Deep Profile
-          </button>
-          <button type="button" onclick="renderTotemOverview()" class="text-slate-400 hover:text-white font-bold transition">
-            Totem Summary
-          </button>
-        </div>
+        ${buildTotemResultNav('careers')}
 
         <!-- Header & Domain Filter -->
-        <div class="space-y-5">
-          <div class="flex flex-wrap items-center justify-between gap-3">
-            <div>
-              <h3 class="text-xl sm:text-2xl font-black text-slate-900 flex items-center gap-2">
-                <span>🎯</span> Elevated Careers Tailored to ${t.badge}
-              </h3>
-              <p class="text-xs text-slate-500 mt-0.5">Select an industry to generate distinctive, high-resonance roles:</p>
+        <div class="totem-badge-card p-6 sm:p-8 bg-white border border-slate-200 rounded-3xl shadow-lg space-y-6">
+          <div class="flex flex-col md:flex-row md:items-center justify-between gap-6 border-b border-slate-100 pb-6">
+            <div class="flex items-center gap-4">
+              <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-indigo-50 to-sky-50 border border-indigo-200 p-2 grid place-items-center shrink-0 shadow-xs">
+                <img src="${t.characterImage || ('/static/illustrations/totem_characters/' + (t.key || 'retriever') + '.svg')}" alt="${t.badge}" class="w-12 h-12 object-contain filter drop-shadow" />
+              </div>
+              <div>
+                <div class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[10px] font-black uppercase tracking-wider bg-indigo-50 text-indigo-700 border border-indigo-200 mb-1">
+                  Targeted Career Trajectories
+                </div>
+                <h3 class="text-xl sm:text-2xl font-black text-slate-900 leading-tight">
+                  Elevated Careers Tailored to ${t.badge}
+                </h3>
+                <p class="text-xs text-slate-500 mt-0.5">High-impact frontier roles mapped directly to your strategic temperaments and execution tempo.</p>
+              </div>
             </div>
 
-            <!-- Domain Pills -->
+            <!-- Companion Quick Action Pill -->
+            <button type="button" onclick="showCompanionCvStudio()" class="px-4 py-2.5 rounded-xl bg-teal-50 hover:bg-teal-100 text-teal-800 text-xs font-bold border border-teal-200 transition flex items-center gap-2 shadow-xs shrink-0">
+              <span>🐾 Open CV Companion</span>
+              <span>→</span>
+            </button>
+          </div>
+
+          <!-- Domain Pills (Tactile Filter) -->
+          <div class="space-y-2">
+            <div class="text-[11px] font-black uppercase tracking-wider text-slate-400">Select Innovation Sector:</div>
             <div class="flex flex-wrap items-center gap-2" id="domainPicker">
-              <button type="button" class="domain-pill ${selectedDomain === 'tech' ? 'active' : ''}" onclick="selectDomain('tech')">💻 AI & Software</button>
-              <button type="button" class="domain-pill ${selectedDomain === 'health' ? 'active' : ''}" onclick="selectDomain('health')">🏥 Healthcare & Bio</button>
-              <button type="button" class="domain-pill ${selectedDomain === 'creative' ? 'active' : ''}" onclick="selectDomain('creative')">🎨 Creative & VR</button>
-              <button type="button" class="domain-pill ${selectedDomain === 'green' ? 'active' : ''}" onclick="selectDomain('green')">🌿 ESG & Green</button>
-              <button type="button" class="domain-pill ${selectedDomain === 'finance' ? 'active' : ''}" onclick="selectDomain('finance')">📈 Quant Finance</button>
+              <button type="button" class="domain-pill ${selectedDomain === 'tech' ? 'active' : ''}" onclick="selectDomain('tech')">💻 AI &amp; Software Architecture</button>
+              <button type="button" class="domain-pill ${selectedDomain === 'health' ? 'active' : ''}" onclick="selectDomain('health')">🏥 Healthcare &amp; BioSynthetics</button>
+              <button type="button" class="domain-pill ${selectedDomain === 'creative' ? 'active' : ''}" onclick="selectDomain('creative')">🎨 Creative Direction &amp; Spatial UX</button>
+              <button type="button" class="domain-pill ${selectedDomain === 'green' ? 'active' : ''}" onclick="selectDomain('green')">🌿 ESG &amp; CleanTech Strategy</button>
+              <button type="button" class="domain-pill ${selectedDomain === 'finance' ? 'active' : ''}" onclick="selectDomain('finance')">📈 Quant FinTech &amp; Strategy</button>
             </div>
           </div>
 
           <!-- Elevated Job Cards Display -->
-          <div id="elevatedJobDisplay" class="grid sm:grid-cols-2 gap-4">
+          <div id="elevatedJobDisplay" class="grid sm:grid-cols-2 gap-4 pt-2">
             <!-- Injected by renderElevatedJobs -->
           </div>
         </div>
 
-        <!-- "Have a Dream Job in Mind?" Custom Input -->
-        <div class="totem-badge-card p-6 sm:p-7 space-y-4 border border-teal-200 bg-slate-50/60">
+        <!-- "Have a Dream Job in Mind?" Custom Input (High Contrast Clean Style) -->
+        <div class="totem-badge-card p-6 sm:p-7 space-y-4 border border-slate-200 bg-white rounded-3xl shadow-sm">
           <div class="flex items-center gap-3">
-            <span class="text-2xl">💡</span>
+            <span class="text-2xl p-2.5 rounded-2xl bg-amber-50 text-amber-600 border border-amber-200">💡</span>
             <div>
-              <h4 class="text-sm font-extrabold text-white">Have a specific dream job in mind?</h4>
-              <p class="text-[11px] text-slate-400">Type any title to let CareerLens AI evaluate how your Totem DNA will perform:</p>
+              <h4 class="text-sm font-black text-slate-900">Have a specific dream job in mind?</h4>
+              <p class="text-xs text-slate-500">Type any title to let CareerLens AI evaluate how your ${t.badge} temperament will excel:</p>
             </div>
           </div>
 
           <div class="flex flex-wrap sm:flex-nowrap gap-2.5">
-            <input type="text" id="customJobInput" class="input !bg-white !border-slate-300 !text-slate-900 !text-xs !py-3 flex-1" placeholder="e.g. Game Concept Artist, Renewable Energy Trader, Neuroscientist..." onkeydown="if(event.key==='Enter')analyzeCustomJob()" />
-            <button type="button" onclick="analyzeCustomJob()" class="totem-btn-primary !py-2.5 !px-5 !text-xs font-bold shrink-0">
+            <input type="text" id="customJobInput" class="input !bg-slate-50 !border-slate-300 !text-slate-900 !text-xs !py-3 flex-1 rounded-xl" placeholder="e.g. Game Concept Artist, Renewable Energy Trader, Neuroscientist..." onkeydown="if(event.key==='Enter')analyzeCustomJob()" />
+            <button type="button" onclick="analyzeCustomJob()" class="totem-btn-primary !py-2.5 !px-6 !text-xs font-bold shrink-0 shadow-xs">
               ⚡ Check Fit
             </button>
           </div>
 
-          <div id="customJobFeedback" class="hidden p-4 rounded-2xl bg-white/5 border border-white/10 text-xs space-y-2">
+          <div id="customJobFeedback" class="hidden p-4 rounded-2xl bg-indigo-50/70 border border-indigo-200 text-xs space-y-2 text-slate-800">
             <!-- Custom feedback injected here -->
-          </div>
-        </div>
-
-        <!-- Direct Launch into Talent Portal -->
-        <div class="p-8 rounded-3xl bg-gradient-to-r from-indigo-50 via-purple-50 to-teal-50 border border-indigo-200 text-center space-y-4">
-          <h3 class="text-xl sm:text-2xl font-black text-slate-900">Ready to Step into Real Opportunities?</h3>
-          <p class="text-xs sm:text-sm text-slate-600 max-w-xl mx-auto font-medium">
-            Your preferences have been pre-calibrated. Enter the Talent Portal to search nearby jobs with transparent match scores and SDG micro-courses.
-          </p>
-          <div class="flex flex-wrap items-center justify-center gap-3 pt-2">
-            <button type="button" onclick="openAuth('register', 'job_seeker')" class="totem-btn-primary !py-3.5 !px-10 text-sm font-extrabold shadow-lg">
-              🚀 Claim Totem &amp; Launch Talent Portal →
-            </button>
           </div>
         </div>
 
@@ -2174,7 +2200,7 @@
     if (!container) return;
 
     container.innerHTML = `
-      <div class="sm:col-span-2 py-8 text-center text-xs text-slate-400 space-y-2">
+      <div class="sm:col-span-2 py-8 text-center text-xs text-slate-500 space-y-2">
         <span class="inline-block animate-spin text-lg">🔮</span>
         <div>Synthesizing elevated roles for <b>${domain.toUpperCase()}</b>...</div>
       </div>
@@ -2182,40 +2208,414 @@
 
     setTimeout(() => {
       renderElevatedJobs(domain);
-    }, 350);
+    }, 250);
   };
 
   function renderElevatedJobs(domain) {
     const container = document.getElementById("elevatedJobDisplay");
     if (!container) return;
 
+    const t = calculatedTotem;
     const isSolo = (answers[1] || 0) + (answers[3] || 0) + (answers[10] || 0) >= 0;
     const roleList = (ELEVATED_ROLES[domain] && ELEVATED_ROLES[domain][isSolo ? "solo" : "social"]) || ELEVATED_ROLES.tech.solo;
 
-    container.innerHTML = roleList.map(r => `
-      <div class="elevated-job-card space-y-3 flex flex-col justify-between">
-        <div class="space-y-2">
-          <div class="flex items-center justify-between gap-2">
-            <span class="chip chip-emerald !text-[9px] font-bold">${r.vibe}</span>
-            <span class="text-[10px] text-teal-400 font-mono font-bold">${r.salary}</span>
+    container.innerHTML = roleList.map(r => {
+      const cleanTitle = r.title.replace(/'/g, "\\'");
+      return `
+        <div class="elevated-job-card p-6 rounded-2xl bg-white border border-slate-200 shadow-xs hover:border-indigo-400 hover:shadow-lg transition-all space-y-4 flex flex-col justify-between">
+          <div class="space-y-3">
+            <div class="flex items-center justify-between gap-2">
+              <span class="chip chip-indigo !text-[10px] font-bold">${r.vibe}</span>
+              <span class="chip chip-emerald !text-[10px] font-bold">${r.demand}</span>
+            </div>
+            
+            <div>
+              <h4 class="text-base sm:text-lg font-black text-slate-900 leading-snug">${r.title}</h4>
+            </div>
+
+            <p class="text-xs text-slate-600 leading-relaxed font-normal">
+              ${r.why}
+            </p>
+
+            <div class="flex flex-wrap gap-1.5 pt-1">
+              <span class="px-2 py-0.5 rounded-md bg-indigo-50 text-indigo-700 text-[10px] font-bold border border-indigo-100">
+                🎯 98% ${t.badge} Match
+              </span>
+              <span class="px-2 py-0.5 rounded-md bg-teal-50 text-teal-700 text-[10px] font-bold border border-teal-100">
+                ⚡ High Leverage
+              </span>
+            </div>
           </div>
-          <div>
-            <h4 class="text-base font-black text-white leading-tight">${r.title}</h4>
+
+          <div class="pt-4 border-t border-slate-100 flex flex-wrap items-center justify-between gap-2">
+            <button type="button" onclick="showCompanionCvStudio('${cleanTitle}')" class="totem-btn-primary !py-2 !px-4 !text-xs font-bold flex items-center gap-1.5 shadow-xs">
+              <span>🐾 Craft CV for this Role</span>
+              <span>→</span>
+            </button>
+            <button type="button" onclick="openAuth('register', 'job_seeker')" class="text-xs font-bold text-slate-500 hover:text-indigo-600 transition">
+              Explore Openings ↗
+            </button>
           </div>
-          <p class="text-xs text-slate-300 leading-relaxed pt-1">
-            ${r.why}
-          </p>
+        </div>
+      `;
+    }).join('');
+  }
+
+  // View 4: Spirit Animal Career Companion Studio (The Interactive CV Experience)
+  window.showCompanionCvStudio = function (prefillRole = '') {
+    const t = calculatedTotem;
+    const defaultRole = prefillRole || (t.key === 'hawk' ? 'Autonomous Systems Architect' : (t.key === 'owl' ? 'Machine Learning Systems Architect' : 'Strategic Product Lead'));
+
+    resultCard.innerHTML = `
+      <div class="space-y-6 fade-in">
+        
+        ${buildTotemResultNav('companion')}
+
+        <!-- Companion Banner with Live Character Dialogue -->
+        <div class="p-6 sm:p-8 rounded-3xl bg-gradient-to-br from-indigo-900 via-indigo-950 to-slate-900 text-white border border-indigo-500/30 shadow-2xl relative overflow-hidden">
+          <div class="absolute -right-10 -bottom-10 w-64 h-64 rounded-full bg-teal-500/15 blur-3xl pointer-events-none"></div>
+
+          <div class="flex flex-col sm:flex-row items-center sm:items-start gap-6 relative z-10">
+            <!-- Cute Vector Character with Breathing Glow -->
+            <div class="companion-avatar-aura w-28 h-28 sm:w-32 sm:h-32 p-3 rounded-3xl grid place-items-center shrink-0">
+              <img src="${t.characterImage || ('/static/illustrations/totem_characters/' + (t.key || 'retriever') + '.svg')}" alt="${t.badge}" class="w-full h-full object-contain filter drop-shadow animate-bounce-subtle" />
+            </div>
+
+            <!-- Dialogue Bubble -->
+            <div class="flex-1 space-y-3 text-center sm:text-left">
+              <div class="flex flex-wrap items-center justify-center sm:justify-start gap-2">
+                <span class="px-2.5 py-0.5 rounded-full text-[10px] font-black uppercase tracking-wider bg-teal-400 text-slate-950">
+                  Career Companion Active
+                </span>
+                <span class="text-xs font-bold text-indigo-300">
+                  ${t.badge} · ${t.tagline}
+                </span>
+              </div>
+
+              <h3 class="text-xl sm:text-2xl font-black text-white leading-tight">
+                "Hello, Strategist! Let's build your tailored CV &amp; executive profile."
+              </h3>
+
+              <p class="text-xs sm:text-sm text-slate-300 leading-relaxed font-medium max-w-2xl">
+                I will help turn your instincts into a verified professional portfolio. You can either answer 4 quick questions with me in an interactive chat, or upload an existing PDF resume for instant review!
+              </p>
+            </div>
+          </div>
         </div>
 
-        <div class="pt-3 border-t border-white/10 flex items-center justify-between">
-          <span class="text-[10px] text-slate-400 font-bold">${r.demand}</span>
-          <button type="button" onclick="openAuth('register', 'job_seeker')" class="text-xs font-bold text-teal-300 hover:text-teal-200 transition">
-            Explore Openings →
+        <!-- Studio Mode Selector -->
+        <div class="flex items-center justify-center sm:justify-start gap-3">
+          <button type="button" id="btnTotemModeQa" onclick="setTotemCompanionMode('qa')" class="btn-companion-mode active px-5 py-2.5 rounded-2xl text-xs font-black transition flex items-center gap-2 border bg-indigo-600 text-white border-indigo-600 shadow-sm">
+            <span>💬 1. Companion Chat Q&amp;A</span>
+          </button>
+          <button type="button" id="btnTotemModePdf" onclick="setTotemCompanionMode('pdf')" class="btn-companion-mode px-5 py-2.5 rounded-2xl text-xs font-bold transition flex items-center gap-2 border bg-white text-slate-700 border-slate-200 hover:border-indigo-300 shadow-2xs">
+            <span>📄 2. Direct PDF Upload</span>
           </button>
         </div>
+
+        <!-- Mode A: Interactive Companion Q&A Studio Panel -->
+        <div id="panelTotemQa" class="totem-badge-card p-6 sm:p-8 bg-white border border-slate-200 rounded-3xl shadow-lg space-y-6">
+          <div class="border-b border-slate-100 pb-4 flex flex-wrap items-center justify-between gap-3">
+            <div>
+              <h4 class="text-base font-black text-slate-900 flex items-center gap-2">
+                <span>💬</span> Four Quick Questions with ${t.badge}
+              </h4>
+              <p class="text-xs text-slate-500 mt-0.5">Answer the prompts below and your companion will write and certify an executive PDF profile for you.</p>
+            </div>
+            <span class="chip chip-emerald !text-[10px] font-bold">Local PDF Engine Ready</span>
+          </div>
+
+          <div class="grid md:grid-cols-2 gap-5">
+            <!-- Q1: Role Title -->
+            <div class="space-y-2">
+              <label class="block text-xs font-black text-slate-800">
+                1. Target or Current Role Title
+              </label>
+              <input type="text" id="totemQaRole" class="input !bg-slate-50 !border-slate-300 !text-slate-900 !text-xs !py-3 w-full rounded-xl" value="${defaultRole}" placeholder="e.g. Autonomous Systems Architect, Creative Director..." />
+              <div class="flex flex-wrap gap-1.5 pt-1">
+                <span class="text-[10px] text-slate-400 font-bold">Quick picks:</span>
+                <button type="button" onclick="document.getElementById('totemQaRole').value='Autonomous Systems Architect'" class="text-[10px] font-bold text-indigo-600 hover:underline">Autonomous Systems Architect</button>
+                <span class="text-slate-300">·</span>
+                <button type="button" onclick="document.getElementById('totemQaRole').value='AI Ethics Strategist'" class="text-[10px] font-bold text-indigo-600 hover:underline">AI Ethics Strategist</button>
+                <span class="text-slate-300">·</span>
+                <button type="button" onclick="document.getElementById('totemQaRole').value='Full-Stack Systems Engineer'" class="text-[10px] font-bold text-indigo-600 hover:underline">Full-Stack Engineer</button>
+              </div>
+            </div>
+
+            <!-- Q2: Experience & Work Rhythm -->
+            <div class="space-y-2">
+              <label class="block text-xs font-black text-slate-800">
+                2. Experience &amp; Work Rhythm
+              </label>
+              <div class="grid grid-cols-2 gap-2">
+                <select id="totemQaYears" class="input !bg-slate-50 !border-slate-300 !text-slate-900 !text-xs !py-3 rounded-xl">
+                  <option value="1-2 Years">1-2 Years (Emerging)</option>
+                  <option value="3-5 Years" selected>3-5 Years (Mid-Senior)</option>
+                  <option value="6-10 Years">6-10 Years (Lead / Staff)</option>
+                  <option value="10+ Years">10+ Years (Executive)</option>
+                </select>
+                <select id="totemQaWorkMode" class="input !bg-slate-50 !border-slate-300 !text-slate-900 !text-xs !py-3 rounded-xl">
+                  <option value="Remote-First" selected>Remote-First</option>
+                  <option value="Hybrid Flexibility">Hybrid Flexibility</option>
+                  <option value="High-Touch Collaborative">On-Site Collaborative</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Q3: Core Competencies -->
+            <div class="md:col-span-2 space-y-2">
+              <div class="flex items-center justify-between">
+                <label class="block text-xs font-black text-slate-800">
+                  3. Key Competencies &amp; Technical Skills
+                </label>
+                <span class="text-[10px] text-slate-400">Click suggestions to append:</span>
+              </div>
+              <input type="text" id="totemQaSkills" class="input !bg-slate-50 !border-slate-300 !text-slate-900 !text-xs !py-3 w-full rounded-xl" value="High-Stakes Decision Making, System Architecture, Python, Rapid Prototyping" placeholder="Comma-separated skills (e.g. System Design, Python, Data Modeling)" />
+              <div class="flex flex-wrap gap-1.5 pt-1">
+                <button type="button" onclick="addTotemQaSkill('Decisive Execution')" class="px-2.5 py-1 rounded-lg bg-indigo-50 text-indigo-700 text-[11px] font-bold border border-indigo-200 hover:bg-indigo-100 transition">+ Decisive Execution</button>
+                <button type="button" onclick="addTotemQaSkill('Cloud Infrastructure')" class="px-2.5 py-1 rounded-lg bg-indigo-50 text-indigo-700 text-[11px] font-bold border border-indigo-200 hover:bg-indigo-100 transition">+ Cloud Infrastructure</button>
+                <button type="button" onclick="addTotemQaSkill('Strategic Roadmapping')" class="px-2.5 py-1 rounded-lg bg-indigo-50 text-indigo-700 text-[11px] font-bold border border-indigo-200 hover:bg-indigo-100 transition">+ Strategic Roadmapping</button>
+                <button type="button" onclick="addTotemQaSkill('Cross-Functional Leadership')" class="px-2.5 py-1 rounded-lg bg-indigo-50 text-indigo-700 text-[11px] font-bold border border-indigo-200 hover:bg-indigo-100 transition">+ Leadership</button>
+              </div>
+            </div>
+
+            <!-- Q4: Proudest Highlight -->
+            <div class="md:col-span-2 space-y-2">
+              <label class="block text-xs font-black text-slate-800">
+                4. Proudest Project or Measurable Achievement
+              </label>
+              <textarea id="totemQaExp" rows="2" class="input !bg-slate-50 !border-slate-300 !text-slate-900 !text-xs !py-2.5 w-full rounded-xl leading-relaxed" placeholder="Describe a project, system overhaul, or outcome that reflects your capability...">Spearheaded critical distributed systems deployment, improving reliability to 99.95% while eliminating pipeline bottlenecks for a high-growth product team.</textarea>
+            </div>
+          </div>
+
+          <!-- Submit Button & Feedback -->
+          <div class="pt-4 border-t border-slate-100 flex flex-wrap items-center justify-between gap-4">
+            <div id="totemQaStatus" class="text-xs text-slate-500 font-medium flex items-center gap-2">
+              <span>🐾 ${t.badge} is ready to assemble your executive profile.</span>
+            </div>
+            <button type="button" id="btnSubmitTotemQa" onclick="submitTotemInteractiveQa()" class="totem-btn-primary !py-3.5 !px-8 text-sm font-extrabold shadow-md flex items-center gap-2">
+              <span>✨ Generate My Companion CV &amp; Profile</span>
+              <span>→</span>
+            </button>
+          </div>
+
+          <!-- Result Container for Generated CV -->
+          <div id="totemQaResultCard" class="hidden p-6 rounded-2xl bg-gradient-to-br from-indigo-50/70 via-sky-50/40 to-teal-50/70 border-2 border-indigo-200 space-y-4">
+            <!-- Injected on generation -->
+          </div>
+        </div>
+
+        <!-- Mode B: Direct PDF Upload Panel -->
+        <div id="panelTotemPdf" class="hidden totem-badge-card p-6 sm:p-8 bg-white border border-slate-200 rounded-3xl shadow-lg space-y-6">
+          <div class="border-b border-slate-100 pb-4">
+            <h4 class="text-base font-black text-slate-900 flex items-center gap-2">
+              <span>📄</span> Drop or Select Your Existing Resume PDF
+            </h4>
+            <p class="text-xs text-slate-500 mt-0.5">${t.badge} will parse skills, verify milestones, and calibrate them against your Totem work-style.</p>
+          </div>
+
+          <div class="border-2 border-dashed border-indigo-200 hover:border-indigo-400 rounded-3xl p-8 sm:p-12 text-center bg-slate-50/50 hover:bg-indigo-50/20 transition cursor-pointer space-y-3" onclick="document.getElementById('totemPdfFileInput').click()">
+            <input type="file" id="totemPdfFileInput" class="hidden" accept=".pdf" onchange="handleTotemPdfUpload(event)" />
+            <div class="text-4xl">📥</div>
+            <div class="text-sm font-black text-slate-900">Click to choose a PDF or drag and drop here</div>
+            <div class="text-xs text-slate-500">Supports standard single or multi-page PDF resumes (Max 10MB)</div>
+          </div>
+
+          <div id="totemPdfStatus" class="hidden text-xs font-bold text-center p-3 rounded-xl bg-indigo-50 text-indigo-700"></div>
+        </div>
+
       </div>
-    `).join('');
-  }
+    `;
+
+    const intro = document.getElementById("home-intro");
+    if (intro) intro.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
+
+  window.setTotemCompanionMode = function (mode) {
+    const btnQa = document.getElementById("btnTotemModeQa");
+    const btnPdf = document.getElementById("btnTotemModePdf");
+    const panelQa = document.getElementById("panelTotemQa");
+    const panelPdf = document.getElementById("panelTotemPdf");
+
+    if (mode === "qa") {
+      if (btnQa) {
+        btnQa.className = "btn-companion-mode active px-5 py-2.5 rounded-2xl text-xs font-black transition flex items-center gap-2 border bg-indigo-600 text-white border-indigo-600 shadow-sm";
+      }
+      if (btnPdf) {
+        btnPdf.className = "btn-companion-mode px-5 py-2.5 rounded-2xl text-xs font-bold transition flex items-center gap-2 border bg-white text-slate-700 border-slate-200 hover:border-indigo-300 shadow-2xs";
+      }
+      if (panelQa) panelQa.classList.remove("hidden");
+      if (panelPdf) panelPdf.classList.add("hidden");
+    } else {
+      if (btnPdf) {
+        btnPdf.className = "btn-companion-mode active px-5 py-2.5 rounded-2xl text-xs font-black transition flex items-center gap-2 border bg-indigo-600 text-white border-indigo-600 shadow-sm";
+      }
+      if (btnQa) {
+        btnQa.className = "btn-companion-mode px-5 py-2.5 rounded-2xl text-xs font-bold transition flex items-center gap-2 border bg-white text-slate-700 border-slate-200 hover:border-indigo-300 shadow-2xs";
+      }
+      if (panelQa) panelQa.classList.add("hidden");
+      if (panelPdf) panelPdf.classList.remove("hidden");
+    }
+  };
+
+  window.addTotemQaSkill = function (skill) {
+    const el = document.getElementById("totemQaSkills");
+    if (!el) return;
+    const current = el.value.trim();
+    if (!current) {
+      el.value = skill;
+    } else if (!current.toLowerCase().includes(skill.toLowerCase())) {
+      el.value = current + ", " + skill;
+    }
+    el.focus();
+  };
+
+  window.submitTotemInteractiveQa = async function () {
+    const roleInput = document.getElementById("totemQaRole");
+    const skillsInput = document.getElementById("totemQaSkills");
+    const expInput = document.getElementById("totemQaExp");
+    const yearsInput = document.getElementById("totemQaYears");
+    const modeInput = document.getElementById("totemQaWorkMode");
+    const statusEl = document.getElementById("totemQaStatus");
+    const resultCardEl = document.getElementById("totemQaResultCard");
+    const btn = document.getElementById("btnSubmitTotemQa");
+
+    const role = (roleInput ? roleInput.value : "").trim();
+    const skills = (skillsInput ? skillsInput.value : "").trim();
+    const exp = (expInput ? expInput.value : "").trim();
+    const years = yearsInput ? yearsInput.value : "3-5 Years";
+    const workMode = modeInput ? modeInput.value : "Remote-First";
+
+    if (!role) {
+      alert("Please enter a target or current role title.");
+      if (roleInput) roleInput.focus();
+      return;
+    }
+
+    if (btn) btn.disabled = true;
+    if (statusEl) statusEl.innerHTML = `<span class="inline-block animate-spin">🌀</span> <span>Companion is assembling and certifying your executive profile...</span>`;
+
+    try {
+      const csrfToken = await getCsrfToken();
+      const payload = {
+        role: role,
+        skills: skills ? skills.split(",").map(s => s.trim()).filter(Boolean) : ["Decision Making", "System Architecture"],
+        experience_highlight: exp || `Demonstrated strong execution and strategic problem solving in ${role}.`,
+        years: years,
+        work_mode: workMode,
+        industry: "Technology & Digital Innovation"
+      };
+
+      const res = await fetch("/api/cv/interactive-build", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "X-CSRF-Token": csrfToken
+        },
+        body: JSON.stringify(payload)
+      });
+
+      const data = await res.json();
+      if (!res.ok || !data.ok) {
+        throw new Error(data.message || "Failed to generate companion profile.");
+      }
+
+      if (statusEl) statusEl.innerHTML = `✅ <span class="text-emerald-700 font-bold">Profile successfully generated!</span>`;
+
+      // Render Result Card
+      if (resultCardEl) {
+        resultCardEl.classList.remove("hidden");
+        const downloadHref = data.pdf_base64 
+          ? `data:application/pdf;base64,${data.pdf_base64}` 
+          : `/api/cv/me/pdf`;
+
+        resultCardEl.innerHTML = `
+          <div class="space-y-4">
+            <div class="flex flex-wrap items-center justify-between gap-3 border-b border-indigo-200/80 pb-3">
+              <div class="flex items-center gap-3">
+                <span class="text-3xl">🎉</span>
+                <div>
+                  <h5 class="text-base font-black text-slate-900">${role} · Executive Profile</h5>
+                  <div class="text-xs text-indigo-700 font-bold">Generated by Career Companion · Verified A4 Layout</div>
+                </div>
+              </div>
+              <a href="${downloadHref}" download="${(data.cv && data.cv.original_filename) || 'CareerLens_Profile.pdf'}" class="px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-black shadow-sm transition flex items-center gap-2">
+                <span>📥 Download PDF Resume</span>
+              </a>
+            </div>
+
+            <div class="grid sm:grid-cols-3 gap-3 text-xs">
+              <div class="p-3 rounded-xl bg-white border border-indigo-100">
+                <div class="text-[10px] uppercase font-bold text-slate-400">Target Role</div>
+                <div class="font-bold text-slate-800 mt-0.5">${role}</div>
+              </div>
+              <div class="p-3 rounded-xl bg-white border border-indigo-100">
+                <div class="text-[10px] uppercase font-bold text-slate-400">Experience &amp; Rhythm</div>
+                <div class="font-bold text-slate-800 mt-0.5">${years} · ${workMode}</div>
+              </div>
+              <div class="p-3 rounded-xl bg-white border border-indigo-100">
+                <div class="text-[10px] uppercase font-bold text-slate-400">Extracted Skills</div>
+                <div class="font-bold text-teal-700 mt-0.5">${(payload.skills || []).slice(0, 3).join(', ')}</div>
+              </div>
+            </div>
+
+            <div class="p-3.5 rounded-xl bg-white border border-indigo-100 text-xs text-slate-700 leading-relaxed italic">
+              "${data.cv && data.cv.structured_cv ? data.cv.structured_cv.executive_summary : exp}"
+            </div>
+
+            <div class="pt-2 flex flex-wrap items-center justify-between gap-3">
+              <span class="text-xs text-slate-600 font-medium">Ready to claim your profile and search vacancies?</span>
+              <button type="button" onclick="openAuth('register', 'job_seeker')" class="totem-btn-primary !py-2.5 !px-6 text-xs font-black shadow-md flex items-center gap-1.5">
+                <span>🚀 Claim Profile to Account &amp; Enter Workspace</span>
+                <span>→</span>
+              </button>
+            </div>
+          </div>
+        `;
+      }
+
+    } catch (err) {
+      if (statusEl) statusEl.innerHTML = `⚠️ <span class="text-rose-600">${err.message || 'Error occurred.'}</span>`;
+    } finally {
+      if (btn) btn.disabled = false;
+    }
+  };
+
+  window.handleTotemPdfUpload = async function (e) {
+    const file = e.target.files && e.target.files[0];
+    if (!file) return;
+
+    const statusEl = document.getElementById("totemPdfStatus");
+    if (statusEl) {
+      statusEl.classList.remove("hidden");
+      statusEl.innerHTML = `<span class="inline-block animate-spin">🌀</span> Parsing ${file.name} with Career Companion...`;
+    }
+
+    try {
+      const csrfToken = await getCsrfToken();
+      const formData = new FormData();
+      formData.append("file", file);
+
+      const res = await fetch("/api/cv/upload", {
+        method: "POST",
+        headers: {
+          "X-CSRF-Token": csrfToken
+        },
+        body: formData
+      });
+
+      const data = await res.json();
+      if (res.ok && data.ok) {
+        if (statusEl) statusEl.innerHTML = `✅ Successfully parsed ${file.name}! <button type="button" onclick="openAuth('login')" class="underline font-bold ml-2">Login to view full vault</button>`;
+      } else {
+        throw new Error(data.message || "Please sign in to save uploaded PDFs to your vault.");
+      }
+    } catch (err) {
+      if (statusEl) {
+        statusEl.innerHTML = `💡 ${err.message || 'Please register or log in to sync your PDF directly to your vault.'} <button type="button" onclick="openAuth('register', 'job_seeker')" class="underline font-bold ml-2 text-indigo-700">Create Account →</button>`;
+      }
+    }
+  };
 
   window.analyzeCustomJob = function () {
     const input = document.getElementById("customJobInput");
@@ -2238,22 +2638,31 @@
 
     setTimeout(() => {
       feedback.innerHTML = `
-        <div class="flex items-start justify-between gap-3 border-b border-slate-200 pb-3">
+        <div class="flex items-start justify-between gap-3 border-b border-indigo-200 pb-3">
           <div>
-            <h5 class="text-sm font-extrabold text-white">${val}</h5>
-            <div class="text-[10px] text-slate-400">Evaluated against your authentic traits</div>
+            <h5 class="text-sm font-black text-slate-900">${val}</h5>
+            <div class="text-[10px] text-indigo-700 font-bold">Evaluated against your ${calculatedTotem ? calculatedTotem.badge : 'Totem'} DNA</div>
           </div>
           <span class="chip chip-emerald !text-xs font-black">94% Compatibility</span>
         </div>
         <div class="grid sm:grid-cols-2 gap-3 pt-1 text-[11px]">
-          <div>
-            <b class="text-emerald-300">Why You'll Excel:</b>
-            <p class="text-slate-300 mt-0.5">Your high autonomous drive and zero-bullshit focus allow you to master the steep learning curve without needing hand-holding.</p>
+          <div class="p-3 rounded-xl bg-white border border-emerald-200">
+            <b class="text-emerald-800 font-black block mb-0.5">⚡ Why You'll Excel:</b>
+            <p class="text-slate-700 leading-relaxed">Your high autonomous drive, strategic clarity, and decisive focus allow you to master the steep curve without friction.</p>
           </div>
-          <div>
-            <b class="text-rose-300">Watch Out For:</b>
-            <p class="text-slate-300 mt-0.5">Ensure you seek out employers that offer clear asynchronous communication rather than rigid calendar-cluttering meetings.</p>
+          <div class="p-3 rounded-xl bg-white border border-amber-200">
+            <b class="text-amber-800 font-black block mb-0.5">⚠️ Watch Out For:</b>
+            <p class="text-slate-700 leading-relaxed">Ensure you seek out environments with high autonomy and asynchronous velocity rather than rigid micromanagement.</p>
           </div>
+        </div>
+        <div class="pt-3 border-t border-indigo-100 flex flex-wrap items-center justify-between gap-3 text-xs">
+          <button type="button" onclick="showCompanionCvStudio('${val.replace(/'/g, "\\'")}')" class="totem-btn-primary !py-2 !px-4 !text-xs font-bold flex items-center gap-1.5 shadow-xs">
+            <span>🐾 Craft CV for ${val}</span>
+            <span>→</span>
+          </button>
+          <button type="button" onclick="openAuth('register', 'job_seeker')" class="font-bold text-slate-500 hover:text-indigo-600 transition">
+            Save Target Role ↗
+          </button>
         </div>
       `;
     }, 600);
