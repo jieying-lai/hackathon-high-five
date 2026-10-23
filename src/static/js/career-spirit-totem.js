@@ -10,61 +10,61 @@
   const QUESTIONS = [
     {
       id: 1,
-      text: "Working from home gives you noticeably higher real productivity than sitting in an office surrounded by colleagues.",
+      text: "You feel noticeably more productive working quietly from home than in a bustling office.",
       dimension: "focus_energy", // + = Deep Focus / Solo, - = Social Synergy
       weight: 1.3
     },
     {
       id: 2,
-      text: "You believe coworkers should strictly remain professional teammates, rather than personal best friends.",
+      text: "You prefer keeping work relationships purely professional rather than making close personal friends.",
       dimension: "focus_energy", // + = Independent Boundary, - = Social Bonding
       weight: 1.0
     },
     {
       id: 3,
-      text: "You would rather spend 8 uninterrupted hours alone solving a deep logic puzzle than hosting a 20-person brainstorming session.",
+      text: "You enjoy solving complex logic problems on your own more than joining big group discussions.",
       dimension: "mind_logic", // + = Cold Logic & Data, - = Empathy & Intuition
       weight: 1.4
     },
     {
       id: 4,
-      text: "When assigned an ambiguous project with zero manuals, you feel thrilled by the autonomy rather than anxious.",
+      text: "You feel excited rather than nervous when given a project with no fixed rules or instructions.",
       dimension: "execution_tempo", // + = Agile & Autonomous, - = Orderly & Structured
       weight: 1.3
     },
     {
       id: 5,
-      text: "You easily notice when a teammate feels overwhelmed or insecure, and you naturally step in to reassure them.",
+      text: "You quickly notice when a teammate feels stressed and naturally step in to help them.",
       dimension: "mind_logic", // - = Empathy & Human Touch, + = Cold Logic
       weight: 1.4
     },
     {
       id: 6,
-      text: "You value shipping a bold, imperfect prototype today over spending two weeks polishing it behind closed doors.",
+      text: "You prefer launching a quick first draft today over spending weeks making it perfect.",
       dimension: "execution_tempo", // + = Agile & Autonomous, - = Orderly & Structured
       weight: 1.1
     },
     {
       id: 7,
-      text: "Following repetitive, predictable operational manuals every day drains your soul faster than heavy workloads.",
+      text: "Doing the exact same routine tasks every day drains your energy very quickly.",
       dimension: "mission_drive", // + = Pioneering Impact, - = Craft Mastery
       weight: 1.2
     },
     {
       id: 8,
-      text: "In a heated debate, finding the objective, unfiltered truth matters far more to you than protecting fragile egos.",
+      text: "In a team debate, getting to the honest truth matters more to you than pleasing everyone.",
       dimension: "mind_logic", // + = Cold Logic, - = Empathy & Harmony
       weight: 1.3
     },
     {
       id: 9,
-      text: "You want your daily work to tangibly improve human lives or environmental sustainability, not just generate corporate profit.",
+      text: "You want your everyday work to make a positive difference in the world, not just make money.",
       dimension: "mission_drive", // + = Pioneering Impact, - = Traditional Corporate
       weight: 1.5
     },
     {
       id: 10,
-      text: "After a chaotic week, your favorite recharge is retreating into your private digital or creative sanctuary rather than partying.",
+      text: "After a busy week, you recharge best with quiet solo time rather than going to a party.",
       dimension: "focus_energy", // + = Deep Focus, - = Social Synergy
       weight: 1.4
     }
@@ -497,7 +497,7 @@
   // 4. Global 3D Cities & Day in the Life Profiles
   const GLOBAL_CITIES = {
     kl: {
-      name: "Kuala Lumpur (TRX / Bangsar South / Cyberjaya)",
+      name: "Kuala Lumpur",
       country: "Malaysia",
       flag: "🇲🇾",
       vibe: "Tropical Energy, World-Class Street Food, Rapid ASEAN Tech Growth, Flexible Hybrid",
@@ -516,11 +516,11 @@
           skills: ["Kubernetes", "PyTorch", "GCP Vertex AI", "Terraform", "MLOps"],
           plog: "Morning sun reflecting off Exchange 106 at TRX. Grabbed iced kopi-o and freshly steamed bao before taking the automated MRT to the Cyberjaya Campus. Our morning standup focused on reducing cross-region LLM latency across Southeast Asian edge nodes. Enjoyed team banana leaf rice for lunch in Bangsar. Finished the sprint by 5:30 PM with zero production blockers, then hit the rooftop gym.",
           job_desc: {
-            summary: "负责企业级高可用 AI 基础设施与大语言模型部署架构，确保云端服务低延迟与高安全性。",
+            summary: "Architects enterprise cloud AI infrastructure and distributed LLM deployment pipelines for resilient, low-latency microservices.",
             tasks: [
-              "设计并编排多区域 Kubernetes 集群与分布式模型推理网格，支撑百万级并发请求",
-              "构建自动化 CI/CD 与 MLOps 流水线，实施模型权重漂移监测与动态自动扩缩容",
-              "与本地化安全合规团队协作，落地零信任架构与金融级数据主权保护方案"
+              "Orchestrate multi-region Kubernetes clusters and model serving grids to support high-throughput inference",
+              "Build automated CI/CD and MLOps pipelines with continuous model drift monitoring and auto-scaling",
+              "Collaborate with security teams to enforce zero-trust architecture and strict data sovereignty standards"
             ]
           },
           routine: [
@@ -556,11 +556,11 @@
           skills: ["Python", "XGBoost", "FastAPI", "PostgreSQL", "Fairness AI"],
           plog: "Working from the Bangsar South tech enclave. Morning meeting with our Shariah advisory council to review algorithmic fairness across micro-lending models. We proved our neural risk scorer reduces bias against gig workers by 24%. Relaxing afternoon prayer and matcha latte break in the vertical indoor gardens. Left work at 5:00 PM with an uplifting feeling of real social impact.",
           job_desc: {
-            summary: "构建符合道德准则的去偏见金融风控模型，帮助东盟普惠金融用户安全获得信贷支持。",
+            summary: "Builds auditable, bias-free machine learning credit risk and fraud detection models for ethical financial platforms.",
             tasks: [
-              "研发可解释机器学习模型（SHAP/LIME），对信贷风险与反欺诈评分进行可审计归因",
-              "持续监控风控算法在不同人口学群体间的公平性指标，杜绝非故意偏见",
-              "与产品和法务团队对接，保证模型符合马来西亚央行（BNM）AI 治理监管框架"
+              "Develop explainable AI pipelines (SHAP/LIME) for automated credit scoring and fraud attribution",
+              "Monitor algorithmic fairness across demographic groups to eliminate unintentional bias in lending",
+              "Ensure full compliance with central bank AI governance frameworks and ethical lending guidelines"
             ]
           },
           routine: [
@@ -591,16 +591,16 @@
             handle: "@rachel_cv_logistics",
             avatar: "👩🏻‍🔬",
             photo: "https://images.unsplash.com/photo-1580894732444-8ecded7900cd?auto=format&fit=crop&w=480&q=80",
-            bio: "Autonomous container vision & edge robotics deployment at Port Klang"
+            bio: "Deploying edge AI vision & robotics across ASEAN smart ports"
           },
           skills: ["Computer Vision", "YOLOv10", "TensorRT", "C++", "ROS2"],
-          plog: "Field day at Port Klang! High-speed multi-camera edge arrays sorting shipping containers in torrential tropical rain. Our latest transformer vision model maintained 99.8% barcode and hazard sign detection despite heavy fog. Back at our Petaling Jaya R&D lab by 3:00 PM for code review. Celebrating a successful deployment with durian and fresh coconut with the engineering team.",
+          plog: "Field test at Port Klang! Watching automated cranes move in torrential rain with our AI vision running at 99.8% precision. Celebrated with fresh coconuts with the team.",
           job_desc: {
-            summary: "负责海港与自动化仓储场景下的边缘计算机视觉算法研发与机器人感知系统集成。",
+            summary: "Develops edge computer vision models and autonomous perception systems for maritime ports and warehouse automation.",
             tasks: [
-              "训练并优化极端恶劣天气条件下的高帧率物体检测与追踪算法（YOLO/RT-DETR）",
-              "在 NVIDIA Jetson 工业级边缘计算单元上量化部署模型，功耗控制在 25W 以内",
-              "与自动化起重机和自主导引车（AGV）系统完成 ROS2 实时通信协议闭环"
+              "Train and deploy high-throughput YOLO and TensorRT vision models on ruggedized edge units",
+              "Integrate sensor feeds with automated guided vehicles (AGVs) and dock cranes via ROS2",
+              "Benchmark vision fault-tolerance under heavy tropical downpours and adverse harbor fog"
             ]
           },
           routine: [
@@ -625,7 +625,7 @@
       ]
     },
     singapore: {
-      name: "Singapore (Marina Bay / One-North)",
+      name: "Singapore",
       country: "Singapore",
       flag: "🇸🇬",
       vibe: "Futuristic Garden City, High-Efficiency Innovation, Hawker Delights, Global Finance Gateway",
@@ -644,11 +644,11 @@
           skills: ["PyTorch", "Rust", "Time-Series Transformers", "Reinforcement Learning", "Linux"],
           plog: "Brisk morning run around Marina Bay waterfront before the heat sets in. Caught the sunrise over the Singapore Flyer. Dropped by Lau Pa Sat for a fresh kopi-c. In the 38th-floor tower, we ran our agentic market simulations testing shock-resilience against sudden macroeconomic shifts. Strict company policy on zero after-hours emails means our team is fully disconnected and energized every evening.",
           job_desc: {
-            summary: "研发时间序列预测与强化学习量化策略，为跨国养老金及绿色可持续基金提供智能资产配置算法。",
+            summary: "Develops high-frequency time-series forecasting models and algorithmic strategies for ASEAN green bonds and ESG assets.",
             tasks: [
-              "构建多模态市场宏观数据流与时间序列 Transformer 预测模型",
-              "使用 Rust 编写亚毫秒级低延迟回测引擎与风控熔断机制",
-              "与 ESG 可持续投资团队合作，将碳足迹因子纳入资产组合最优化求解器"
+              "Train multi-modal market sequence transformers predicting intraday price spreads and liquidity flows",
+              "Build sub-millisecond execution engines in Rust with strict risk-limit verification",
+              "Coordinate with sustainable finance teams to quantify portfolio carbon intensity and transition risk"
             ]
           },
           routine: [
@@ -684,11 +684,11 @@
           skills: ["Deep Learning", "Thermodynamics ML", "IoT Telemetry", "Python", "Docker"],
           plog: "Working at our testbed in One-North Fusionopolis. Singapore is pioneering ultra-efficient data centers in hot, humid climates. Today our neural model learned to anticipate ambient tropical storms 40 minutes ahead, dynamically adjusting chilled-water cooling loops and saving 19.4% in power usage! Celebrated with iced sugarcane juice with the facilities crew.",
           job_desc: {
-            summary: "应用物理感知神经网络（PINN）与强化学习，动态调控热带数据中心冷却系统以极致降低 PUE 能耗指标。",
+            summary: "Applies physics-informed neural networks to optimize tropical data center cooling and lower Power Usage Effectiveness (PUE).",
             tasks: [
-              "处理数万个工业传感器流，建模复杂建筑流体力学与热交换动态响应",
-              "开发闭环安全控制策略，在保障服务器绝对安全的前提下最小化水冷能耗",
-              "撰写绿色数据中心国际能效认证审计报告，助力新加坡 2030 绿色发展蓝图"
+              "Train predictive thermal dynamics models on real-time server airflow and chilled-water loop sensors",
+              "Deploy autonomous closed-loop controllers to reduce data center power overhead during peak hours",
+              "Publish energy audit reports supporting Singapore's Green Data Centre Roadmap 2030"
             ]
           },
           routine: [
@@ -713,7 +713,7 @@
       ]
     },
     tokyo: {
-      name: "Tokyo (Shibuya / Roppongi / Nihonbashi)",
+      name: "Tokyo",
       country: "Japan",
       flag: "🇯🇵",
       vibe: "Cyberpunk Artisan Aesthetic, Ultimate Public Safety, Respectful Flow, Neon Izakaya Evenings",
@@ -732,11 +732,11 @@
           skills: ["PyTorch", "Unreal Engine 5", "C++", "Diffusion Models", "GLSL Shaders"],
           plog: "Crossed Shibuya Scramble at 9:30 AM with a warm canned matcha from the vending machine. Stepped into our studio overlooking the glowing billboards. Today we previewed our real-time neural world generator: artists paint a single stroke and the AI builds lush, living moss-covered torii gates with accurate volumetric rain shaders. Finished work on time and went for yakitori with the art team under glowing lanterns in Nonbei Yokocho.",
           job_desc: {
-            summary: "研发次世代游戏实时神经生成世界与具有情境记忆的非玩家角色（NPC）大模型驱动引擎。",
+            summary: "Builds real-time generative NPC behavioral intelligence and neural rendering shaders for next-generation interactive worlds.",
             tasks: [
-              "将 3D 高斯泼溅（Gaussian Splatting）与神经辐射场无缝集成至 UE5 实时渲染管线",
-              "设计 NPC 对话与行为树混合架构，实现拥有稳定人设与情感反应的智能角色",
-              "优化游戏主机与 PC 端的着色器性能，保证 4K 60FPS 帧率稳定运行"
+              "Integrate 3D Gaussian Splatting and neural radiance fields into Unreal Engine 5 render pipelines",
+              "Design hierarchical behavior trees enabling non-player characters to react authentically in real time",
+              "Optimize GPU compute and shader execution to maintain steady 4K 60FPS on consumer hardware"
             ]
           },
           routine: [
@@ -772,11 +772,11 @@
           skills: ["ROS2", "PyTorch", "Diffusion Policy", "C++", "Tactile Sensing"],
           plog: "Field testing at our Odaiba robotics showroom. Our bipedal assistant robot successfully folded laundry and poured hot green tea without spilling a drop, using our new diffusion-based tactile policy. Seeing an elderly visitor laugh with delight as the robot handed them a handkerchief was pure magic. Cleaned up our workspace, bowed to colleagues, and caught the clean, quiet Yurikamome monorail home.",
           job_desc: {
-            summary: "开发双足人形机器人全身运动规划与高灵巧度触觉-视觉多模态动作决策模型。",
+            summary: "Develops multi-modal tactile-vision policies for high-precision dual-arm humanoid robotic manipulation in cleanroom assembly.",
             tasks: [
-              "使用扩散策略（Diffusion Policy）与离线强化学习训练机器人灵巧手抓握技能",
-              "集成柔性触觉传感器反馈，实现对易碎物品（鸡蛋、纸杯、玻璃）的无损伤抓取",
-              "在真实生活场景中严格执行人机协作安全规范（ISO 13482）碰撞缓停保护"
+              "Train diffusion policies and reinforcement learning agents for micro-component grasping",
+              "Bridge sim-to-real transfer gaps using physics-based domain randomization pipelines",
+              "Ensure ISO 13482 collaborative robotic safety compliance with instantaneous emergency stop logic"
             ]
           },
           routine: [
@@ -801,7 +801,7 @@
       ]
     },
     seoul: {
-      name: "Seoul (Gangnam / Pangyo Techno Valley)",
+      name: "Seoul",
       country: "South Korea",
       flag: "🇰🇷",
       vibe: "Ultra-Fast 5G Lifestyle, K-Wave Digital Innovation, 24/7 Energy, Beautiful Mountain Trails",
@@ -820,11 +820,11 @@
           skills: ["PyTorch", "Gaussian Splatting", "Audio-to-LipSync", "CUDA", "FastAPI"],
           plog: "Morning express subway from Gangnam into Pangyo Techno Valley. Picked up an iced americano — essential fuel for Korean creators. Our studio creates real-time interactive virtual idols and digital human news anchors. Today our audio-driven speech synthesis model achieved zero-latency live lip synchronization across 12 languages simultaneously! Celebrated with Korean fried chicken and sparkling cider with the dev team.",
           job_desc: {
-            summary: "研发高拟真数字虚拟人实时音频驱动面部表情与动作合成神经生成算法。",
+            summary: "Develops neural audio-driven facial performance capture and real-time photorealistic 3D avatar synthesis.",
             tasks: [
-              "构建融合 3DMM 与神经辐射场的高帧率 4K 面部重定向与实时表情渲染网格",
-              "开发多语种声学特征到肌肉运动单元（Blendshapes）的低延迟端到端映射模型",
-              "在边缘移动设备端优化轻量级推理引擎，实现 60FPS 流畅实时交互"
+              "Synthesize high-framerate 4K volumetric neural face models using 3DMM and radiance field priors",
+              "Train end-to-end acoustic transformers mapping voice phonemes directly to expressive facial blendshapes",
+              "Optimize on-device neural inferencing to achieve 60FPS streaming latency on mobile chipsets"
             ]
           },
           routine: [
@@ -860,11 +860,11 @@
           skills: ["Computer Vision", "Vision Transformers", "C++", "PyTorch", "TensorRT"],
           plog: "High-tech cleanroom research center in Suwon. South Korea leads the world in cutting-edge memory and AI chip manufacturing. Today our vision transformer model detected nanometer-scale photolithography anomalies on 3nm silicon wafers in real time — boosting chip fabrication yields by 4.8%. Clean, precise, and profoundly impactful for the global computing ecosystem.",
           job_desc: {
-            summary: "应用先进视觉 Transformer 与电子显微镜成像，研发 3nm 半导体晶圆缺陷亚纳米级检测算法。",
+            summary: "Applies vision transformers to automated 3nm semiconductor wafer defect classification under EUV inspection tools.",
             tasks: [
-              "训练处理超高分辨率极紫外（EUV）扫描图像的少样本异常检测模型",
-              "在硬件专用 FPGA 上实现纳米级特征图并行卷积加速，吞吐量提升 300%",
-              "与晶圆厂工艺工程师紧密对接，建立缺陷溯源自动分类与根因闭环分析系统"
+              "Train ultra-high-resolution anomaly detection models on extreme ultraviolet (EUV) electron scans",
+              "Accelerate image tensor processing on dedicated FPGA inference arrays by over 300%",
+              "Work with fab process engineers to feed defect clusters back into yield-enhancement loops"
             ]
           },
           routine: [
@@ -889,7 +889,7 @@
       ]
     },
     amsterdam: {
-      name: "Amsterdam (Zuidas / Canal Ring / Science Park)",
+      name: "Amsterdam",
       country: "Netherlands",
       flag: "🇳🇱",
       vibe: "Canal Cycling, 36-Hour Workweek, Strict Work-Life Harmony, Direct & Friendly Culture",
@@ -908,11 +908,11 @@
           skills: ["Figma", "Design Systems", "Green Computing", "React", "User Research"],
           plog: "Bicycled 15 minutes along the leafy Prinsengracht canal past timber houseboats, stopping for fresh warm stroopwafels. Our timber-framed, solar-powered studio overlooks houseboats. Today's design sprint: redesigning enterprise software dashboards so that every user action consumes 40% fewer server CPU cycles. At 17:00 sharp, everyone closed laptops. We went kayaking through the canals into Vondelpark for an evening picnic.",
           job_desc: {
-            summary: "负责以人为本的绿色人机交互体验设计，将数字碳足迹指标融入企业产品核心体验中。",
+            summary: "Designs carbon-efficient digital interfaces and circular consumer product workflows for zero-waste European brands.",
             tasks: [
-              "制定低能耗数字产品设计规范（暗色模式自适应、按需加载、矢量优化）",
-              "开展广泛的用户可用性调研，评估自动化建议对用户决策自主权的影响",
-              "与全栈工程团队协作落地轻量化前端组件库，将页面每用户会话碳排减半"
+              "Establish low-energy design systems with dark mode presets and vector-based asset optimization",
+              "Conduct international user research to measure and reduce digital carbon footprints across touchpoints",
+              "Partner with sustainability engineers to audit and publish open lifecycle emission assessments"
             ]
           },
           routine: [
@@ -948,11 +948,11 @@
           skills: ["Python", "Graph Neural Networks", "Time Series", "Docker", "Pandas"],
           plog: "Commuted to Amsterdam Science Park by fast electric train. Today our models balanced high North Sea gust outputs into national residential battery banks, preventing 420 tons of fossil backup ignition! Dutch directness makes all meetings fast and productive: 15-minute standup, no vanity slide decks, pure problem-solving. Enjoyed a craft beer on the sunny terrace after 5:00 PM.",
           job_desc: {
-            summary: "应用图神经网络预测海上风电波动并实时调控全欧智能微电网与储能电池调度。",
+            summary: "Uses spatio-temporal graph neural networks to forecast North Sea offshore wind power and balance regional power grids.",
             tasks: [
-              "针对北海海上风电场构建超短期（0-4小时）风速与湍流多变量预测模型",
-              "设计分布式储能电池充放电最优控制算法，保障电网频率稳定在 50Hz",
-              "与荷兰能源运营商（TenneT）系统对接，落地自动化负荷削峰填谷策略"
+              "Train high-resolution short-term wind power prediction models from marine meteorological sensors",
+              "Optimize grid-scale battery charge/discharge cycles to maintain grid frequency at exactly 50Hz",
+              "Interface with transmission system operators (TenneT) for automated renewable dispatch"
             ]
           },
           routine: [
@@ -977,7 +977,7 @@
       ]
     },
     london: {
-      name: "London (Shoreditch / Kings Cross / Canary Wharf)",
+      name: "London",
       country: "United Kingdom",
       flag: "🇬🇧",
       vibe: "Historic Grandeur, Global Crossroads, Vibrant Street Markets, Friday Pub Traditions",
@@ -996,11 +996,11 @@
           skills: ["Python", "Docker", "Spatial Data", "Climate Scenarios", "SQL"],
           plog: "Red double-decker bus over London Bridge with views of the Tower of London and the Shard. Picked up a flat white in Borough Market. Our team models physical flood and extreme heat stress onto 20-year corporate sovereign debt. Lunch was artisan Ethiopian street food at Spitalfields. At 5:00 PM on Friday, the whole office walked to a 300-year-old historic riverside tavern to unwind.",
           job_desc: {
-            summary: "构建基于地球系统科学的气候金融风险量化模型，帮助养老金与机构投资者防范资产搁浅。",
+            summary: "Develops geospatial climate scenario models and stress-testing algorithms for institutional asset managers and regulators.",
             tasks: [
-              "集成卫星遥感与 IPCC 气候变化预测情景，建模极端洪水与风暴物理损失概率",
-              "研发债券投资组合碳强度与净零过渡风险测算算法",
-              "撰写符合英国央行审慎监管局（PRA）气候压力测试规范的合规分析系统"
+              "Model catastrophic flood, storm, and transition risks under IPCC global warming trajectories",
+              "Quantify fixed-income and sovereign debt resilience against multi-decade climate vulnerability",
+              "Draft regulatory stress-testing disclosures compliant with Bank of England PRA requirements"
             ]
           },
           routine: [
@@ -1036,11 +1036,11 @@
           skills: ["PyTorch", "AlphaFold", "BioPython", "Graph Networks", "HPC Clusters"],
           plog: "Kings Cross Knowledge Quarter — collaborating steps away from the Francis Crick Institute and British Library. Today our 3D geometric equivariant neural network designed a novel antibody binder for an autoimmune target with 10x higher simulated affinity. Stroll along Regent's Canal during lunch. Leaving at 5:30 PM to attend a chamber music recital at St Martin-in-the-Fields.",
           job_desc: {
-            summary: "应用三维等变图神经网络与扩散模型开展抗体与抗原靶点的全新结构计算设计。",
+            summary: "Applies 3D geometric diffusion models to antibody design and target-specific biological drug discovery.",
             tasks: [
-              "训练针对蛋白质-配体对接界面的几何深度学习生成模型",
-              "在国家级超级计算集群上运行大规模分子动力学模拟验证结合稳定性",
-              "与湿实验生物团队紧密对接，将计算候选分子推入体外实验亲和力筛选"
+              "Train structural graph neural networks on protein-antigen binding complexes to generate novel binders",
+              "Run large-scale molecular dynamics simulations across high-performance supercomputing clusters",
+              "Coordinate with experimental wet-lab biochemists to prioritize candidates for synthesis"
             ]
           },
           routine: [
@@ -1065,7 +1065,7 @@
       ]
     },
     paris: {
-      name: "Paris (Station F / Silicon Sentier / Le Marais)",
+      name: "Paris",
       country: "France",
       flag: "🇫🇷",
       vibe: "Haute Couture Innovation, Philosopher Spirit, Sunlit Seine Cafes, Artisan Sourdough",
@@ -1084,11 +1084,11 @@
           skills: ["PyTorch", "Cloth Simulation", "Diffusion 3D", "Blender", "Python"],
           plog: "Morning espresso and flaky butter croissant along the Canal Saint-Martin. Our creative studio in Le Marais bridges century-old French textile craftsmanship with frontier neural diffusion. Today, we generated fluid silk draping textures that react dynamically to runway light, reducing physical garment waste by 70%. Walked along the Seine river at golden hour listening to jazz accordion.",
           job_desc: {
-            summary: "将前沿生成式三维扩散模型与物理布料仿真融合，为顶级时装屋打造无损虚拟走秀与面料设计系统。",
+            summary: "Fuses 3D generative diffusion with classical French haute couture draping and sustainable zero-waste tailoring.",
             tasks: [
-              "构建基于神经隐式场（Neural Implicit Fields）的精细纺织品悬垂微孔模拟管线",
-              "训练保持服饰几何保真度与缝纫线精准约束的高分辨率图像生成对齐模型",
-              "与巴黎高级定制手工艺团队紧密协作，将虚拟模型转化为实体可持续环保剪裁版型"
+              "Construct neural implicit field representations capturing micro-scale fabric weave and physics draping",
+              "Train high-resolution diffusion generators conditioned on heritage archival embroidery motifs",
+              "Translate algorithmic drape geometries into production-ready physical patterns for atelier artisans"
             ]
           },
           routine: [
@@ -1113,7 +1113,7 @@
       ]
     },
     berlin: {
-      name: "Berlin (Mitte / Kreuzberg / Friedrichshain)",
+      name: "Berlin",
       country: "Germany",
       flag: "🇩🇪",
       vibe: "Bohemian Freedom, Thriving Open Source Culture, Sourdough Bakeries, Vibrant Music & Arts",
@@ -1132,11 +1132,11 @@
           skills: ["PyTorch", "Kubernetes", "Linux", "Rust", "Distributed Systems"],
           plog: "Biked past Museum Island into our sunlit Mitte loft studio. Club Mate soda and warm seeded sourdough bread from the neighborhood bakery. Our open-source team builds distributed training frameworks that dynamically shift heavy compute workloads to data centers where Nordic hydro or wind power is currently surplus. Closed the laptop at 17:00 to meet friends at an outdoor beer garden along the Spree river.",
           job_desc: {
-            summary: "构建开源分布式机器学习基础设施，利用欧洲绿色能源网动态调度大规模模型训练集群。",
+            summary: "Architects open-source distributed training infrastructure with dynamic carbon-aware workload scheduling.",
             tasks: [
-              "开发多节点高性能通信库优化（AllReduce/NCCL），降低跨机架通信开销",
-              "设计碳感知（Carbon-Aware）任务编排调度系统，根据实时电网碳排放因子自动平衡算力",
-              "维护活跃的开源开发者社区，审核全球贡献者的 pull requests 并保证严格代码质量"
+              "Profile and eliminate AllReduce and NCCL networking bottlenecks across multi-node GPU clusters",
+              "Implement carbon-aware schedulers that dynamically route training jobs to green power regions",
+              "Maintain core open-source machine learning repositories with automated continuous benchmarking"
             ]
           },
           routine: [
@@ -1161,7 +1161,7 @@
       ]
     },
     zurich: {
-      name: "Zurich (ETH Campus / Lake Zurich / Enge)",
+      name: "Zurich",
       country: "Switzerland",
       flag: "🇨🇭",
       vibe: "Crystal Alpine Air, Lakeside Bliss, Swiss Precision Engineering, High Trust & Quiet Excellence",
@@ -1180,11 +1180,11 @@
           skills: ["TinyML", "Embedded C", "PyTorch", "Biomedical Signal", "FPGA"],
           plog: "Morning train along shimmering Lake Zurich with snowcapped Alps towering in the distance. Swiss muesli with fresh mountain blueberries. In our cleanroom laboratory near ETH Zurich, we verified our ultra-low-power neural network chip: it runs real-time cardiac arrhythmia detection consuming only 400 microwatts of power. During our 1-hour lunch break, our whole research team went for a swim in the crystal-clear lake.",
           job_desc: {
-            summary: "研发超低功耗微瓦级边缘神经计算芯片与算法，应用于植入式心脏及神经医疗监测设备。",
+            summary: "Designs ultra-low-power spiking neural network chips and edge algorithms for implantable biomedical sensors.",
             tasks: [
-              "设计高压缩比脉冲神经网络（SNN）与量化感知剪枝（QAT）极简算子",
-              "在超低功耗集成电路（ASIC）上完成实时生理信号异常检测的软硬件协同设计",
-              "遵循瑞士与欧盟最高医疗器械安全标准（MDR/ISO 13485）完成长效植入验证"
+              "Design bio-inspired spiking neural network architectures with quantization-aware training",
+              "Synthesize sub-milliwatt custom ASICs for real-time cardiac arrhythmia and neural event detection",
+              "Ensure strict biocompatibility and functional safety under European Medical Device Regulation (MDR)"
             ]
           },
           routine: [
@@ -1209,7 +1209,7 @@
       ]
     },
     stockholm: {
-      name: "Stockholm (Kista Science City / Södermalm)",
+      name: "Stockholm",
       country: "Sweden",
       flag: "🇸🇪",
       vibe: "Nordic Minimalism, Pristine Archipelagos, Fika Coffee Rituals, Zero Hierarchy Work Culture",
@@ -1228,11 +1228,11 @@
           skills: ["PyTorch", "Hydrological ML", "Rust", "Time Series", "Docker"],
           plog: "Brisk morning walk across the Skeppsholmen wooden bridges overlooking historic sailing schooners. Fika coffee break with warm cinnamon cardamom buns (kanelbulle) with the team. Today our models balanced water flow across 14 Northern Swedish hydroelectric dams to store excess offshore Baltic wind power with 99.3% efficiency. Swedish culture values consensus and mutual trust — zero micromanagement, 100% focus.",
           job_desc: {
-            summary: "应用深度时序网络预测北极严寒天气下的水电蓄能与风电波动，构建北欧统一零碳调度智能体。",
+            summary: "Builds predictive hydrological models for Scandinavian river cascades and clean hydroelectric grid export.",
             tasks: [
-              "针对高纬度极寒气候条件开发融雪水量与高山冻土径流物理感知神经网络",
-              "构建多水库级联发电联合非线性优化算法，保障跨国北欧电网（Nord Pool）现货调度稳定",
-              "编写高鲁棒性 Rust 故障预测服务，实现大坝水闸与涡轮发电机组的预知性免维护"
+              "Analyze high-latitude satellite snowpack telemetry using temporal computer vision models",
+              "Formulate dynamic reservoir dispatch strategies for real-time trading on the Nord Pool spot market",
+              "Write resilient Rust telemetry microservices for remote dam monitoring and preventative maintenance"
             ]
           },
           routine: [
@@ -1257,7 +1257,7 @@
       ]
     },
     sf: {
-      name: "San Francisco (Mission / SOMA / South Park)",
+      name: "San Francisco",
       country: "United States",
       flag: "🇺🇸",
       vibe: "Frontier Innovation, Pacific Ocean Breezes, Entrepreneurial Spark, Outdoor Trails",
@@ -1276,11 +1276,11 @@
           skills: ["PyTorch", "CUDA", "3D Occupancy", "C++", "TensorRT"],
           plog: "Blue Bottle pour-over in the Mission District. Commuted to our testing warehouse in Potrero Hill. Today our autonomous perception models handled steep San Francisco hills with dense cable car tracks and fog without hesitation. Lunch was a legendary Mission carnitas burrito in the sun at Dolores Park. Off by 5:30 PM to go bouldering at Dogpatch Boulders.",
           job_desc: {
-            summary: "负责复杂城市道路全地形自动驾驶汽车实时三维占用网络（Occupancy Grid）感知算法研发。",
+            summary: "Develops 3D occupancy grid perception models for fully driverless urban robotaxis navigating dense city environments.",
             tasks: [
-              "训练处理多相机高帧率环视视频的端到端三维时空占用网络",
-              "优化极端天气（浓雾、刺眼逆光、大雨）条件下的长尾罕见障碍物检测与轨迹预测",
-              "利用 CUDA 深度优化核心注意力算子，将推理计算耗时压缩至 18ms 以内"
+              "Train foundation vision-language-action models on millions of multimodal driving hours",
+              "Enhance corner-case spatial reasoning in heavy fog, reflections, and aggressive pedestrian jaywalking",
+              "Optimize TensorRT CUDA kernels to maintain sub-18ms inference latency on automotive silicon"
             ]
           },
           routine: [
@@ -1316,11 +1316,11 @@
           skills: ["PyTorch", "RLHF", "DPO", "Kubernetes", "Python"],
           plog: "Working from our loft studio near South Park in SOMA. We're engineering automated constitutional AI critics that evaluate chain-of-thought mathematical reasoning without hallucination. Grabbed matcha at a local Japanese cafe. Walking around the grassy park discussing emergent reasoning bounds with visiting researchers. Left work on time for an ocean sunset view at Twin Peaks.",
           job_desc: {
-            summary: "构建基于强化学习与宪法式自我审查的基座大模型对齐机制，确保复杂推理输出的真实性与安全性。",
+            summary: "Aligns frontier multimodal foundation models through process-based reinforcement learning and automated red-teaming.",
             tasks: [
-              "设计并微调多维度奖励模型（Reward Model），对逻辑推理链进行过程式监督（PRM）",
-              "构建自动化红队测试沙箱，利用对抗性攻击样本测试模型的越狱防御韧性",
-              "与伦理安全研究员合作，制定符合国际通用安全标准的模型发布准入准则"
+              "Develop process-supervised reward models (PRM) to audit step-by-step mathematical reasoning",
+              "Build automated adversarial red-teaming agents that surface and patch emerging safety vectors",
+              "Draft frontier safety evaluation benchmarks across leading international AI research coalitions"
             ]
           },
           routine: [
@@ -1345,7 +1345,7 @@
       ]
     },
     ny: {
-      name: "New York (Manhattan / Brooklyn Silicon Alley)",
+      name: "New York",
       country: "United States",
       flag: "🇺🇸",
       vibe: "World Financial Epicenter, 24-Hour Pulse, Broadway Culture, Brooklyn Rooftop Skyline",
@@ -1364,11 +1364,11 @@
           skills: ["Rust", "C++", "SIMD", "Time Series", "Linux Kernel"],
           plog: "Morning subway into the Financial District. Stepped out past Trinity Church with a hot bagel and dark espresso. Our quantitative desk models cross-asset order flow and market microstructure across global stock and futures exchanges. We engineered zero-copy network kernel bypasses in Rust, cutting latency by 1.8 microseconds. Unwound with rooftop jazz in Brooklyn overlooking the Manhattan skyline lights.",
           job_desc: {
-            summary: "构建亚微秒级低延迟市场流动性与订单簿预测系统，优化千万级金融资产撮合与自动化对冲。",
+            summary: "Engineers sub-microsecond algorithmic order routing and liquidity forecasting engines for global equity markets.",
             tasks: [
-              "使用 Rust 与 C++ 编写内核旁路（Kernel Bypass/DPDK）网络驱动接收超高频逐笔行情",
-              "训练时间序列 Transformer 预测纳秒级跨市场价格冲击与流动性黑天鹅事件",
-              "与交易合规部门联合建立自动化熔断与做市商安全隔离机制"
+              "Develop ultra-low-latency C++ and Rust trading engines with kernel bypass (DPDK) architecture",
+              "Train time-series transformers predicting microsecond order-book shifts and market depth",
+              "Collaborate with compliance and risk officers to enforce automated circuit-breaker protections"
             ]
           },
           routine: [
@@ -1393,7 +1393,7 @@
       ]
     },
     sydney: {
-      name: "Sydney (Surry Hills / Barangaroo / Circular Quay)",
+      name: "Sydney",
       country: "Australia",
       flag: "🇦🇺",
       vibe: "Sunrise Ocean Surfing, Sun-Drenched Harbors, World-Class Specialty Coffee, Healthy Outdoor Living",
@@ -1412,11 +1412,11 @@
           skills: ["Computer Vision", "Underwater Robotics", "PyTorch", "Python", "ROS2"],
           plog: "6:00 AM sunrise surf at Bondi Beach — watching dolphins play in the green peeling waves. Quick shower, flat white from a Surry Hills laneway cafe, and into our sunny open-brick lab by 9:00 AM. We deployed our computer vision model onto autonomous underwater drones: it catalogs coral bleaching and marine biodiversity with 98.7% accuracy across thousands of square kilometers. Working in Australia means true health and sunshine every day.",
           job_desc: {
-            summary: "研发水下自主航行器（AUV）计算机视觉感知算法，实现大堡礁珊瑚健康度与海洋生物多样性自动监测。",
+            summary: "Deploys autonomous underwater vehicles (AUVs) with vision AI to monitor coral health across the Great Barrier Reef.",
             tasks: [
-              "针对水下光线色散与浑浊水体开发自适应图像增强与无监督色彩还原网络",
-              "训练细粒度珊瑚物种与白化阶段分类模型，实现百万张水下高分辨率照片的自动批注",
-              "与海洋生物学家协同制定生态恢复人工育苗投放点智能优化规划"
+              "Apply unsupervised neural color correction to compensate for underwater light scattering",
+              "Train fine-grained coral species classification and bleaching identification models",
+              "Collaborate with marine biologists to optimize autonomous robotic survey transects"
             ]
           },
           routine: [
@@ -1442,7 +1442,7 @@
       ]
     },
     toronto: {
-      name: "Toronto (Discovery District / Waterfront / Yorkville)",
+      name: "Toronto",
       country: "Canada",
       flag: "🇨🇦",
       vibe: "Diverse Cosmopolitan Hub, World-Leading Deep Learning Legacy, Lakeside Walks, Multicultural Feasts",
@@ -1461,11 +1461,11 @@
           skills: ["PyTorch", "MONAI", "Medical Imaging", "3D Convolutions", "DICOM"],
           plog: "Rode the King Street streetcar into Toronto's Discovery District. University of Toronto and Vector Institute are legendary epicenters of deep learning. Collaborating directly with radiologists at Princess Margaret Cancer Centre: our 3D volumetric model detected early-stage nodules with 99.1% sensitivity, cutting radiologist reading fatigue by 45%. Stopped by St. Lawrence Market for warm maple peameal bacon on a bun.",
           job_desc: {
-            summary: "开发三维医学影像（CT/MRI）深度学习病灶检测与分割算法，提高早期肿瘤筛查准确率。",
+            summary: "Develops deep learning segmentation algorithms for early 3D tumor detection in multi-parametric CT and MRI scans.",
             tasks: [
-              "使用 MONAI 与 PyTorch 构建处理全器官体积数据的多尺度三维注意力分割网络",
-              "应用贝叶斯蒙特卡洛 Dropout 评估模型诊断不确定性，标定需专家复审的高疑度病例",
-              "完成加拿大卫生部与 FDA 严格临床验证，确保算法对不同机型影像具备高度泛化性"
+              "Train multi-scale 3D volumetric segmentation models using MONAI and PyTorch architectures",
+              "Apply Monte Carlo dropout to quantify diagnostic prediction uncertainty for radiologists",
+              "Lead multi-center clinical validation trials meeting FDA and Health Canada medical standards"
             ]
           },
           routine: [
@@ -1490,7 +1490,7 @@
       ]
     },
     dubai: {
-      name: "Dubai (DIFC / Dubai Internet City / Marina)",
+      name: "Dubai",
       country: "United Arab Emirates",
       flag: "🇦🇪",
       vibe: "Futuristic Architectural Wonders, Desert Sunset Dune Drives, Global Crossroads, Zero Personal Income Tax",
@@ -1509,11 +1509,11 @@
           skills: ["PyTorch", "Trajectory Optimization", "C++", "ROS2", "5G Telemetry"],
           plog: "Morning views of the Burj Khalifa piercing through golden desert sunrise mist. Fresh cardamom karak chai at our DIFC innovation hub. Dubai has launched the world's first commercial autonomous air taxi passenger corridor. Today our 4D collision avoidance network safely rerouted 40 drone test flights around sudden desert thermal updrafts. Finished work at 5:00 PM for a sunset desert dune drive with friends.",
           job_desc: {
-            summary: "负责超大城市自主飞行器（eVTOL）空域调度与毫秒级四维防撞避障航线优化系统研发。",
+            summary: "Builds 4D collision avoidance and airspace routing systems for passenger eVTOL networks and vertiport hubs.",
             tasks: [
-              "构建多智能体强化学习算法，优化三维密集城市空域内的动态空域走廊分配",
-              "集成气象激光雷达数据预测沙漠突发沙尘暴与高空热气流，实时重构备降航线",
-              "与迪拜民航局（DCAA）严格对接，达成 100% 故障安全冗余航空安全认证"
+              "Optimize dynamic flight trajectories using multi-agent reinforcement learning in crowded corridors",
+              "Predict micro-scale desert thermal currents and sand squalls with radar lidar sensor fusion",
+              "Work closely with civil aviation authorities (DCAA) to guarantee 100% fail-safe airspace operations"
             ]
           },
           routine: [
@@ -1538,7 +1538,7 @@
       ]
     },
     saopaulo: {
-      name: "São Paulo (Faria Lima / Vila Madalena / Paulista)",
+      name: "São Paulo",
       country: "Brazil",
       flag: "🇧🇷",
       vibe: "Latin America Financial Powerhouse, Bohemian Murals, Passionate Samba Rhythms, Fresh Tropical Produce",
@@ -1557,11 +1557,11 @@
           skills: ["PyTorch", "Remote Sensing", "GIS", "Python", "Spatial ML"],
           plog: "Morning espresso with warm pão de queijo (Brazilian cheese bread) in bohemian Vila Madalena. São Paulo is the beating heart of Latin American technology. Our remote sensing algorithms monitor 12 million hectares of agricultural land, distinguishing between sustainable regenerative crop rotations and soil degradation. Celebrating a successful harvest prediction model with fresh açaí bowls on a sunny rooftop terrace.",
           job_desc: {
-            summary: "应用多光谱卫星遥感与深度时空图网络，构建全巴西农田土壤碳汇与可持续农业自动化监测系统。",
+            summary: "Builds orbital remote sensing models for sustainable tropical agriculture and automated carbon credit verification.",
             tasks: [
-              "训练处理多时相光学与雷达卫星影像的亚公顷级作物长势与干旱胁迫预测模型",
-              "研发森林退化与毁林早期预警算法，为国际绿色农业认证提供不可篡改遥感凭证",
-              "与巴西农业研究总署（Embrapa）合作，帮助数万中小农户智能优化水肥用量"
+              "Process multi-temporal satellite radar and optical imagery to forecast crop yields and drought risks",
+              "Develop automated native forest regeneration algorithms for verified carbon certification",
+              "Partner with agricultural research institutes to optimize precision drip irrigation for smallholders"
             ]
           },
           routine: [
@@ -1888,31 +1888,21 @@
           </button>
         </div>
 
-        <!-- Gateways to Separated Sections (Progressive Disclosure) -->
-        <div class="grid sm:grid-cols-2 gap-4 pt-2">
-          
-          <button type="button" onclick="showDeepProfileView()" class="totem-badge-card p-5 text-left hover:border-indigo-400/50 hover:bg-indigo-50/50 transition group space-y-2">
-            <div class="flex items-center justify-between">
-              <span class="text-2xl">🧬</span>
-              <span class="text-xs text-indigo-600 group-hover:translate-x-1 transition font-extrabold">Step In →</span>
+        <!-- Primary Action to Full Career DNA & Role Models -->
+        <div class="pt-3">
+          <button type="button" onclick="showDeepProfileView()" class="w-full totem-badge-card p-5 sm:p-6 text-left hover:border-indigo-400/50 hover:bg-indigo-50/70 transition group flex flex-col sm:flex-row sm:items-center justify-between gap-4 shadow-sm rounded-2xl">
+            <div class="flex items-center gap-4">
+              <span class="text-3xl p-3 rounded-2xl bg-indigo-500/10 text-indigo-600">🧬</span>
+              <div>
+                <h4 class="font-black text-slate-900 text-base group-hover:text-indigo-600 transition">Explore Your Full Career DNA &amp; Role Models</h4>
+                <p class="text-xs text-slate-500 mt-1">Discover your detailed work-style spectrum, hidden strengths, and iconic leaders who share your temperament</p>
+              </div>
             </div>
-            <div>
-              <h4 class="font-extrabold text-slate-900 text-sm">Deep Profile &amp; Role Models</h4>
-              <p class="text-[11px] text-slate-500 mt-0.5">Explore your MBTI dual-pole spectrum &amp; iconic figures</p>
-            </div>
+            <span class="inline-flex items-center gap-2 text-xs font-black text-indigo-600 bg-indigo-50 px-4 py-2.5 rounded-xl border border-indigo-200 group-hover:bg-indigo-600 group-hover:text-white transition shrink-0">
+              <span>View Full Report</span>
+              <span class="group-hover:translate-x-1 transition">→</span>
+            </span>
           </button>
-
-          <button type="button" onclick="showElevatedCareersView()" class="totem-badge-card p-5 text-left hover:border-teal-400/50 hover:bg-teal-50/50 transition group space-y-2">
-            <div class="flex items-center justify-between">
-              <span class="text-2xl">🎯</span>
-              <span class="text-xs text-teal-600 group-hover:translate-x-1 transition font-extrabold">Step In →</span>
-            </div>
-            <div>
-              <h4 class="font-extrabold text-slate-900 text-sm">Elevated Careers Portal</h4>
-              <p class="text-[11px] text-slate-500 mt-0.5">Custom job titles aligned with your temperament</p>
-            </div>
-          </button>
-
         </div>
 
       </div>
@@ -2342,7 +2332,7 @@
     }
 
     const container = document.getElementById("cityDetailsContainer");
-    const sideContainer = document.getElementById("cityRelatedRolesContainer");
+    const hubContainer = document.getElementById("cityHubInfoContainer") || document.getElementById("cityRelatedRolesContainer");
     if (!container) return;
 
     // Pick role: if not specified, choose randomly or default to first
@@ -2367,69 +2357,89 @@
 
     if (!selectedRole) return;
 
-    // Render Main Column: Active Role Plog / Vlog & Job Description with High-Res Photo
-    container.innerHTML = `
-      <div class="city-day-card p-6 sm:p-7 space-y-5 h-full flex flex-col justify-between fade-in text-slate-100">
-        <!-- Top Bar: Location & Active Persona -->
-        <div class="space-y-4">
-          <div class="flex flex-wrap items-center justify-between gap-3 border-b border-white/10 pb-4">
-            <div class="space-y-1">
-              <div class="flex items-center gap-2">
-                <span class="text-2xl">${c.flag || '🌍'}</span>
-                <span class="text-xs font-black uppercase tracking-wider text-teal-300 font-mono">${c.country}</span>
-                <span class="text-xs text-slate-500">·</span>
-                <span class="text-xs font-mono text-indigo-300">${c.roles ? c.roles.length : 1} Authentic Profiles</span>
+    // 1. Render Left Column: Hub Information & Role Switcher
+    if (hubContainer) {
+      hubContainer.innerHTML = `
+        <div class="space-y-3">
+          <div class="flex items-center justify-between gap-2 border-b border-white/10 pb-2.5">
+            <div class="flex items-center gap-2">
+              <span class="text-2xl">${c.flag || '🌍'}</span>
+              <div>
+                <h4 class="text-base font-black text-white tracking-tight">${c.name}, ${c.country}</h4>
+                <div class="text-[11px] font-mono text-teal-300 font-bold">${c.roles ? c.roles.length : 1} Featured Profiles</div>
               </div>
-              <h4 class="text-xl sm:text-2xl font-black text-white tracking-tight">${c.name}</h4>
             </div>
-
-            <button type="button" onclick="randomizeAtlasRole('${cityKey}')" class="atlas-shuffle-btn" title="Randomly discover another profession in this city">
-              <span>🎲</span><span>Explore Other Role in City</span>
+            <button type="button" onclick="surpriseAtlasCity()" class="text-xs text-indigo-300 hover:text-white font-mono flex items-center gap-1 transition" title="Teleport to another city">
+              <span>Next Hub →</span>
             </button>
           </div>
 
-          <!-- Persona & Lifestyle Plog Card with Professional Photo -->
+          <div class="text-xs text-slate-300 leading-relaxed">
+            <span class="text-teal-300 font-bold">Local Vibe:</span> ${c.vibe}
+          </div>
+
+          <div class="pt-2 border-t border-white/10 space-y-2">
+            <div class="text-[10px] uppercase tracking-wider font-mono text-indigo-300 font-extrabold">Professionals in ${c.name}</div>
+            <div class="grid gap-2">
+              ${(c.roles || []).map(r => {
+                const isSelected = r.id === selectedRole.id;
+                return `
+                  <button type="button" onclick="showCityCard('${cityKey}', '${r.id}')" class="p-2 sm:p-2.5 rounded-xl border flex items-center justify-between gap-2.5 text-left transition ${isSelected ? 'bg-teal-500/20 border-teal-400 text-white shadow-md' : 'bg-white/5 border-white/10 hover:bg-white/10 text-slate-300'}">
+                    <div class="flex items-center gap-2.5 min-w-0">
+                      <img src="${r.persona.photo}" alt="${r.persona.name}" class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl object-cover object-top border border-white/20 shrink-0" />
+                      <div class="min-w-0">
+                        <div class="text-xs font-black truncate">${r.persona.name}</div>
+                        <div class="text-[11px] text-teal-300 font-medium truncate">${r.title}</div>
+                      </div>
+                    </div>
+                    <span class="text-[10px] font-mono px-2 py-0.5 rounded shrink-0 ${isSelected ? 'bg-teal-400/30 text-teal-200 font-bold' : 'text-slate-400'}">${isSelected ? 'Active' : 'View →'}</span>
+                  </button>
+                `;
+              }).join('')}
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    // 2. Render Right Column: Active Role Hero Plog/Vlog & Visual Showcase
+    container.innerHTML = `
+      <div class="city-day-card p-6 sm:p-7 space-y-5 h-full flex flex-col justify-between fade-in text-slate-100">
+        <!-- Top Persona Showcase Card with Portrait Photo -->
+        <div class="space-y-4">
           <div class="p-5 sm:p-6 rounded-3xl bg-white/10 border border-white/15 space-y-4 shadow-xl backdrop-blur-xl">
-            <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-              <div class="flex items-center gap-4">
-                <div class="relative shrink-0">
-                  <img src="${selectedRole.persona.photo || 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=480&q=80'}" alt="${selectedRole.persona.name}" class="w-20 h-20 sm:w-24 sm:h-24 object-cover rounded-2xl border-2 border-teal-400/50 shadow-xl" loading="lazy" />
-                  <span class="absolute -bottom-1 -right-1 text-base p-1 bg-slate-900/90 rounded-full border border-white/20 leading-none shadow-md">${selectedRole.persona.avatar || '👩🏻‍💻'}</span>
-                </div>
-                <div>
-                  <div class="flex items-center gap-2 flex-wrap">
-                    <span class="font-black text-white text-base sm:text-lg">${selectedRole.persona.name}</span>
-                    <span class="text-[11px] font-mono text-teal-300 font-bold bg-teal-500/20 px-2.5 py-0.5 rounded-full border border-teal-400/30">${selectedRole.persona.handle}</span>
-                  </div>
-                  <div class="text-xs text-indigo-200 font-bold mt-0.5">${selectedRole.title}</div>
-                  <div class="text-[11px] text-slate-300 mt-1 max-w-md leading-relaxed">${selectedRole.persona.bio}</div>
-                </div>
+            <div class="flex flex-col sm:flex-row items-center sm:items-start gap-5">
+              <!-- Full Uncropped High-Res Portrait Photo -->
+              <div class="relative shrink-0">
+                <img src="${selectedRole.persona.photo || 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=480&q=80'}" alt="${selectedRole.persona.name}" class="w-32 h-44 sm:w-36 sm:h-48 object-cover object-top rounded-2xl border-2 border-teal-400/40 shadow-2xl" loading="lazy" />
+                <span class="absolute -bottom-2 -right-2 text-xl p-1 bg-slate-900/90 rounded-full border border-white/20 shadow-md">${selectedRole.persona.avatar || '👩🏻‍💻'}</span>
               </div>
-
-              <span class="inline-flex items-center gap-1.5 text-[11px] font-bold text-amber-300 bg-amber-500/15 px-3 py-1.5 rounded-full border border-amber-400/30 shrink-0">
-                <span>🎥</span><span>Lifestyle Vlog &amp; Plog</span>
-              </span>
+              
+              <div class="space-y-2 text-center sm:text-left min-w-0 flex-1">
+                <div class="flex flex-wrap items-center justify-center sm:justify-start gap-2">
+                  <h3 class="text-xl sm:text-2xl font-black text-white tracking-tight">${selectedRole.persona.name}</h3>
+                  <span class="text-xs font-mono text-teal-300 font-bold bg-teal-500/20 px-2.5 py-0.5 rounded-full border border-teal-400/30">${selectedRole.persona.handle}</span>
+                  <span class="text-[11px] font-bold text-amber-300 bg-amber-500/15 px-2.5 py-0.5 rounded-full border border-amber-400/30">Authentic Day</span>
+                </div>
+                <div class="text-sm font-extrabold text-teal-300">${selectedRole.title}</div>
+                <div class="text-xs text-indigo-200 font-mono">${selectedRole.industry} · ${c.name}, ${c.country}</div>
+                <p class="text-xs text-slate-300 leading-relaxed italic pt-1">"${selectedRole.persona.bio}"</p>
+              </div>
             </div>
 
-            <!-- First-person Plog Story -->
-            <div class="text-xs sm:text-sm text-slate-100 leading-relaxed italic bg-black/30 p-4 rounded-2xl border border-white/10 shadow-inner">
+            <!-- First-Person Lifestyle Caption (Visual-centric, short & punchy) -->
+            <div class="mt-4 text-xs sm:text-sm text-slate-100 leading-relaxed italic bg-black/30 p-4 rounded-2xl border border-white/10 shadow-inner">
               "${selectedRole.plog}"
-            </div>
-
-            <div class="flex flex-wrap items-center justify-between gap-2 text-xs pt-1">
-              <div class="text-slate-300">
-                <b class="text-teal-300 font-bold">Workplace Vibe:</b> ${c.vibe}
-              </div>
             </div>
           </div>
 
-          <!-- Job Description: What they primarily do -->
+          <!-- What They Do: Core Responsibilities & Impact -->
           <div class="atlas-job-box space-y-3">
             <div class="flex items-center justify-between">
               <div class="text-xs font-black uppercase tracking-wider text-indigo-300 flex items-center gap-1.5">
-                <span>💼</span><span>主要做什么 (Core Responsibilities &amp; Job Description)</span>
+                <span>💼</span><span>Core Responsibilities &amp; Impact</span>
               </div>
-              <span class="text-[11px] font-bold text-teal-300 font-mono bg-teal-500/15 px-2 py-0.5 rounded border border-teal-400/20">${selectedRole.industry || 'Tech Innovation'}</span>
+              <span class="text-[11px] font-bold text-teal-300 font-mono bg-teal-500/15 px-2 py-0.5 rounded border border-teal-400/20">${selectedRole.industry || 'Technology'}</span>
             </div>
             
             <p class="text-xs text-slate-200 leading-relaxed font-medium">
@@ -2445,7 +2455,7 @@
               `).join('')}
             </ul>
 
-            <div class="pt-2 flex flex-wrap gap-1.5">
+            <div class="pt-1 flex flex-wrap gap-1.5">
               ${(selectedRole.skills || []).map(s => `
                 <span class="text-[10px] font-mono font-bold bg-indigo-500/20 text-indigo-200 px-2.5 py-1 rounded-lg border border-indigo-400/30">${s}</span>
               `).join('')}
@@ -2456,11 +2466,11 @@
           <div class="space-y-3 pt-1">
             <div class="flex flex-wrap items-center justify-between gap-2">
               <div class="text-xs font-black uppercase tracking-wider text-teal-300 flex items-center gap-1.5">
-                <span>☀️</span><span>今日正能量作息 (Positive Daily Routine)</span>
+                <span>☀️</span><span>Positive Daily Routine &amp; Rhythm</span>
                 <span id="atlasRoutineVariantBadge" class="text-[10px] text-slate-300 font-mono lowercase bg-white/10 px-2 py-0.5 rounded-full border border-white/10">Daily Baseline</span>
               </div>
               <button type="button" onclick="shuffleAtlasRoutine()" class="atlas-shuffle-btn" title="Cycle through realistic positive day routines">
-                <span>🎲</span><span>切换作息风格 / Shuffle Routine</span>
+                <span>🎲</span><span>Shuffle Routine</span>
               </button>
             </div>
 
@@ -2478,7 +2488,7 @@
         </div>
 
         <!-- Footer Tags & CTA -->
-        <div class="pt-5 border-t border-white/10 flex flex-wrap items-center justify-between gap-3">
+        <div class="pt-4 border-t border-white/10 flex flex-wrap items-center justify-between gap-3">
           <div class="flex flex-wrap gap-1.5 text-[11px] text-slate-300 font-bold">
             ${selectedRole.tags.map(t => `<span class="bg-white/10 px-3 py-1 rounded-xl border border-white/15 text-slate-200">${t}</span>`).join('')}
           </div>
@@ -2486,44 +2496,7 @@
         </div>
       </div>
     `;
-
-    // Multi-person editorial masonry with authentic photos matching gender/role
-    if (sideContainer && c.roles) {
-      sideContainer.innerHTML = `
-        <div class="masonry-heading pb-3">
-          <span class="text-[10px] tracking-widest font-black uppercase text-teal-300 font-mono">PEOPLE &amp; POSSIBILITIES</span>
-          <h4 class="text-lg font-black text-white mt-1">Lives in ${c.country}</h4>
-          <p class="text-xs text-slate-300">Click any persona to step into their daily routine.</p>
-        </div>
-        <div class="grid sm:grid-cols-2 gap-3.5">
-          ${c.roles.map(r => {
-            const isSelected = r.id === selectedRole.id;
-            return `
-              <button type="button" class="person-story ${isSelected ? 'selected' : ''}" onclick="selectAtlasRole('${cityKey}', '${r.id}')" aria-pressed="${isSelected}">
-                <div class="person-scene relative overflow-hidden h-36 rounded-t-2xl">
-                  <img src="${r.persona.photo}" alt="${r.persona.name}" class="w-full h-full object-cover" loading="lazy" />
-                  <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-transparent"></div>
-                  <span class="absolute top-2 left-2 text-base p-1 bg-black/50 backdrop-blur-md rounded-lg">${r.persona.avatar || '✦'}</span>
-                  <div class="absolute bottom-2 left-2.5 right-2.5 text-left">
-                    <div class="text-xs font-black text-white leading-tight drop-shadow">${r.title}</div>
-                    <div class="text-[10px] text-teal-300 font-mono drop-shadow">${r.persona.name}</div>
-                  </div>
-                </div>
-                <div class="p-3 text-left space-y-1.5">
-                  <p class="text-[11px] text-slate-300 line-clamp-2 leading-relaxed">${r.plog}</p>
-                  <div class="flex items-center justify-between text-[10px] pt-1 border-t border-white/10">
-                    <span class="text-indigo-300 font-mono">${r.industry}</span>
-                    <b class="text-teal-300 font-bold">${isSelected ? '● Reading' : 'View Day →'}</b>
-                  </div>
-                </div>
-              </button>
-            `;
-          }).join('')}
-        </div>
-      `;
-    }
   };
-
 
   // Lightweight Interactive 3D Sphere on HTML5 Canvas
   function initGlobeVisual() {
