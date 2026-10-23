@@ -151,3 +151,7 @@
   .fr-matrix-row { grid-template-columns:minmax(78px,1.35fr) repeat(3,minmax(0,1fr)); }
   .fr-matrix-row>:nth-child(3) { display:none; }
 }
+
+.fr-dosm-banner { display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px; padding:14px 18px; border:1px solid #c7e5d8; border-radius:16px; background:#effbf5cc; margin-bottom:18px; font-size:12px; line-height:1.6; }
+.fr-dosm-banner strong { color:#0f5132; }
+.fr-dosm-banner a { font-weight:700; color:#146c43; text-decoration:underline; text-underline-offset:3px; }

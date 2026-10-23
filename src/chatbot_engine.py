@@ -168,22 +168,22 @@ def get_quick_prompts(user: dict | None) -> list[dict]:
     if not user:
         return [
             {"label": "✨ How Lumi Helps", "prompt": "What can you help me with?"},
+            {"label": "📊 DOSM 2025 Salaries", "prompt": "What is the official DOSM median salary for software engineers in Malaysia?"},
             {"label": "🔒 CV Privacy", "prompt": "How is my PDF CV protected?"},
-            {"label": "📈 Emerging Skills", "prompt": "What are the fastest rising AI skills?"},
             {"label": "💼 Explore Careers", "prompt": "How do I find matching roles?"},
         ]
     if user.get("role") == "hr_company":
         return [
             {"label": "🏆 Top Candidates", "prompt": "Who are the top-matched candidates for my open vacancies?"},
+            {"label": "⚖️ DOSM Fair Pay", "prompt": "What are the official DOSM 2025 salary benchmarks to ensure SDG 8 fair wages?"},
             {"label": "💡 Evaluate Aisha", "prompt": "How should I evaluate candidate Aisha Rahman and what should I ask?"},
             {"label": "🚀 Growth & Expansion", "prompt": "How should our company expand its hiring and business directions?"},
-            {"label": "📄 Submitted CVs", "prompt": "Which candidates applied and shared their PDF CV?"},
         ]
     return [
         {"label": "📍 Nearby Jobs", "prompt": "Are there any suitable jobs or companies nearby me based on my resume?"},
+        {"label": "📊 DOSM Salary Benchmark", "prompt": "What is the official 2025 DOSM salary benchmark for my role and state?"},
         {"label": "🎯 Role Matches", "prompt": "What is my #1 matched future role and missing skills?"},
         {"label": "🧭 Reskilling Plan", "prompt": "Recommend verified HRD Corp courses to close my skill gap."},
-        {"label": "📄 CV Summary", "prompt": "Summarize my uploaded PDF CV and extracted skills."},
     ]
 
 
@@ -642,16 +642,31 @@ def _generate_lumi_core(message: str, user: dict | None = None, history: list | 
                 "mascot": MASCOT_PROFILE,
             }
 
-        # Intent T1b: Malaysian Salary & Market Demand Benchmarks (trained on 68.4k JobStreet postings)
-        if any(k in low for k in ("salary", "pay", "compensation", "wage", "how much", "market demand")):
-            role_q = re.sub(r"\b(what|is|the|salary|pay|for|a|an|in|malaysia|average|monthly|how|much|does|earn|make)\b", " ", low)
+        # Intent T1b: Malaysian Salary & Market Demand Benchmarks (DOSM 2025 + 68.4k JobStreet postings)
+        if any(k in low for k in ("salary", "pay", "compensation", "wage", "how much", "market demand", "dosm")):
+            role_q = re.sub(r"\b(what|is|the|salary|pay|for|a|an|in|malaysia|average|monthly|how|much|does|earn|make|dosm|benchmark)\b", " ", low)
             role_q = re.sub(r"\s+", " ", role_q).strip() or (ctx.get("profile") or {}).get("current_role", "")
             ins = job_index.query_market_insights(query_text=role_q)
-            reply = (
-                f"🦉 **Malaysia Market Benchmark ({role_q.title() or 'All Sectors'}):**\n"
-                f"• **Monthly Salary Range:** **RM {ins['salary_p25']:,} – RM {ins['salary_p75']:,}** (Median **RM {ins['salary_median']:,}** )\n"
-                f"• **Active Openings:** **{ins['matching_openings']:,} jobs** · Top Skills: {', '.join(ins['top_skills'][:4])}"
-            )
+            dosm = lumi_knowledge.lookup_dosm_wages(low)
+
+            lines = [f"🦉 **Official Malaysia Wage & Demand Benchmark ({role_q.title() or 'All Sectors'}):**"]
+            if dosm.get("matched_occupation"):
+                m_occ = dosm["matched_occupation"]
+                lines.append(f"• **DOSM 2025 Official Benchmark ({m_occ['title']}):** Median **RM {m_occ['median_wage']:,.0f}/mo** (Mean: **RM {m_occ['mean_wage']:,.0f}**, ~{m_occ.get('workers_count_thousands', 0):,.0f}k workers nationwide)")
+            elif dosm.get("metadata"):
+                lines.append(f"• **National Median Wage (DOSM 2025):** **RM {dosm['metadata']['national_median_wage']:,.0f}/mo** (High Skilled: **RM 5,057/mo**)")
+
+            if dosm.get("matched_state"):
+                m_st = dosm["matched_state"]
+                lines.append(f"• **State Median ({m_st['name']}):** **RM {m_st['median_wage']:,.0f}/mo** (Mean: **RM {m_st['mean_wage']:,.0f}**)")
+
+            if any(k in low for k in ("degree", "tertiary", "spm", "education", "study", "graduate", "university")):
+                lines.append("• **Education Premium:** Tertiary graduates earn **+105.3%** more (SPM Median: RM 2,227 vs Degree/Diploma Median: **RM 4,571**).")
+
+            lines.append(f"• **Active Commercial Postings:** **RM {ins['salary_p25']:,} – RM {ins['salary_p75']:,}/mo** ({ins['matching_openings']:,} live vacancies)")
+            lines.append("• **Official Source:** *Department of Statistics Malaysia (DOSM) Salaries & Wages Survey Report 2025.*")
+
+            reply = "\n".join(lines)
             return {
                 "ok": True, "in_range": True, "reply": reply,
                 "actions": [

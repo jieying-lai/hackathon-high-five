@@ -1097,6 +1097,17 @@ def api_hr_revoke():
     return jsonify({"ok": ok}), (200 if ok else 404)
 
 
+@app.route("/api/benchmarks/dosm-wages", methods=["GET"])
+def api_dosm_wages():
+    """Return official DOSM 2025 Salaries & Wages Survey benchmarks."""
+    dosm_path = _SRC_DIR / "static" / "data" / "dosm_wages_2025.json"
+    if not dosm_path.exists():
+        return jsonify(ok=False, message="Benchmark dataset not found"), 404
+    with open(dosm_path, "r", encoding="utf-8") as f:
+        data = json.load(f)
+    return jsonify(ok=True, data=data)
+
+
 @app.route("/api/chat/context", methods=["GET"])
 def api_chat_context():
     user = session.get("user")
@@ -1105,6 +1116,12 @@ def api_chat_context():
         "mascot": chatbot_engine.MASCOT_PROFILE,
         "quick_prompts": chatbot_engine.get_quick_prompts(user),
         "portal": user["role"] if user else "guest",
+        "dosm_benchmarks": {
+            "national_median": 2940.0,
+            "professionals_median": 6124.0,
+            "tertiary_premium_pct": 105.3,
+            "source": "DOSM Salaries & Wages Survey 2025",
+        },
     })
 
 

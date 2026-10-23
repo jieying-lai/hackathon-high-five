@@ -536,6 +536,20 @@ def main():
     brain["stats"]["jobstreet_malaysia_companies"] = 20514
     brain["datasets_trained"].append("JobStreet Malaysia All Job Dataset (68,447 Jobs · 20,514 Companies)")
 
+    # ------------------------------------------------------------------
+    # 13. DOSM Official Salaries & Wages Survey 2025 (Government Benchmark)
+    # ------------------------------------------------------------------
+    dosm_json_path = os.path.join(ROOT, "src", "static", "data", "dosm_wages_2025.json")
+    if os.path.exists(dosm_json_path):
+        with open(dosm_json_path, "r", encoding="utf-8") as f:
+            dosm_data = json.load(f)
+        brain["dosm_wages_2025"] = dosm_data
+        brain["stats"]["dosm_states_benchmarked"] = len(dosm_data.get("states", {}))
+        brain["stats"]["dosm_occupations_benchmarked"] = len(dosm_data.get("occupations", {}))
+        brain["stats"]["dosm_national_median"] = dosm_data.get("metadata", {}).get("national_median_wage")
+        brain["datasets_trained"].append("DOSM Official Salaries & Wages Survey 2025 (Department of Statistics Malaysia)")
+        print(f"13. DOSM 2025 Benchmarks: {len(dosm_data.get('states', {}))} states, {len(dosm_data.get('occupations', {}))} occupations, national median RM {dosm_data.get('metadata', {}).get('national_median_wage')}")
+
     with gzip.open(OUT_PATH, "wt", encoding="utf-8", compresslevel=9) as g:
         json.dump(brain, g, ensure_ascii=False, separators=(",", ":"))
 

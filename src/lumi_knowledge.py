@@ -238,3 +238,89 @@ def lookup_resume_category_benchmark(query_or_industry: str) -> dict | None:
             elif "Arts" in cats:
                 best_cat = ("Arts", cats["Arts"])
     return {"category": best_cat[0], **best_cat[1]} if best_cat else None
+
+
+_DOSM_BENCHMARK = None
+
+
+def load_dosm_wages() -> dict:
+    """Load the official DOSM 2025 Salaries & Wages dataset."""
+    global _DOSM_BENCHMARK
+    if _DOSM_BENCHMARK is None:
+        p = os.path.join(os.path.dirname(os.path.abspath(__file__)), "static", "data", "dosm_wages_2025.json")
+        if os.path.exists(p):
+            with open(p, "r", encoding="utf-8") as f:
+                _DOSM_BENCHMARK = json.load(f)
+        else:
+            b = load_brain()
+            _DOSM_BENCHMARK = b.get("dosm_wages_2025") or {}
+    return _DOSM_BENCHMARK or {}
+
+
+def lookup_dosm_wages(query: str = "") -> dict:
+    """Look up official government wage benchmarks from DOSM 2025 Salaries & Wages Report."""
+    dosm = load_dosm_wages()
+    if not dosm:
+        return {}
+    meta = dosm.get("metadata", {})
+    states = dosm.get("states", {})
+    occs = dosm.get("occupations", {})
+    skills = dosm.get("skill_tiers", {})
+    edus = dosm.get("education_levels", {})
+
+    low = (query or "").lower()
+
+    # Check for state match
+    matched_state = None
+    state_aliases = {
+        "kl": "W.P.  Kuala Lumpur",
+        "kuala lumpur": "W.P.  Kuala Lumpur",
+        "putrajaya": "W.P. Putrajaya",
+        "labuan": "W.P. Labuan",
+        "penang": "Pulau Pinang",
+        "pulau pinang": "Pulau Pinang",
+        "selangor": "Selangor",
+        "johor": "Johor",
+        "perak": "Perak",
+        "kedah": "Kedah",
+        "melaka": "Melaka",
+        "malacca": "Melaka",
+        "negeri sembilan": "Negeri Sembilan",
+        "pahang": "Pahang",
+        "terengganu": "Terengganu",
+        "kelantan": "Kelantan",
+        "perlis": "Perlis",
+        "sabah": "Sabah",
+        "sarawak": "Sarawak",
+    }
+    for alias, formal in state_aliases.items():
+        if re.search(r"\b" + re.escape(alias) + r"\b", low):
+            matched_state = (formal, states.get(formal, {}))
+            break
+
+    # Check for occupation match
+    matched_occ = None
+    occ_keywords = {
+        "Professionals & AI / Software Engineers": ["engineer", "developer", "software", "ai", "data", "analyst", "doctor", "lawyer", "architect", "scientist", "professional"],
+        "Managers & Senior Executives": ["manager", "executive", "director", "head", "lead", "chief", "cto", "ceo", "cfo"],
+        "Technicians & Associate Professionals": ["technician", "associate", "assistant", "technical support", "it support"],
+        "Clerical Support Workers": ["clerk", "clerical", "admin", "receptionist", "secretary"],
+        "Service & Sales Workers": ["sales", "service", "retail", "customer service", "cashier", "marketing"],
+        "Craft & Related Trades Workers": ["craft", "artisan", "trades", "electrician", "plumber", "carpenter"],
+        "Plant & Machine Operators": ["operator", "machinist", "factory operator", "driver"],
+        "Elementary Occupations": ["cleaner", "helper", "laborer", "elementary"],
+    }
+    for occ_title, kws in occ_keywords.items():
+        if any(re.search(r"\b" + re.escape(kw) + r"\b", low) for kw in kws):
+            matched_occ = (occ_title, occs.get(occ_title, {}))
+            break
+
+    return {
+        "metadata": meta,
+        "matched_state": {"name": matched_state[0], **matched_state[1]} if matched_state else None,
+        "matched_occupation": {"title": matched_occ[0], **matched_occ[1]} if matched_occ else None,
+        "skill_tiers": skills,
+        "education_levels": edus,
+        "citation": "Department of Statistics Malaysia (DOSM) 2025 Salaries & Wages Survey",
+    }
+

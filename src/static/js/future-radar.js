@@ -130,10 +130,18 @@ window.FutureRadar = (() => {
         ${button('dataset','Malaysia · historical',!isRemote,'data-value="malaysia" data-radar-focus="malaysia"')}
       </div>
       <section class="fr-source-strip" aria-label="Source freshness">
-        <div><span class="fr-status-dot ${isRemote && remote.status !== 'cached'?'fr-offline':''}"></span><strong>${isRemote ? `Source: Remotive · ${remote.sample_size} postings` : 'Source: JobStreet Malaysia / Kaggle'}</strong>
-        <p>${isRemote ? `Retrieved ${esc(date(remote.fetched_at))} · latest posting ${esc(date(remote.latest_posted))}` : `Data through ${esc(date(historical.metadata.data_through))} · historical, not live`}</p></div>
+        <div><span class="fr-status-dot ${isRemote && remote.status !== 'cached'?'fr-offline':''}"></span><strong>${isRemote ? `Source: Remotive · ${remote.sample_size} postings` : 'Source: JobStreet Malaysia (68.4k jobs) & DOSM 2025 Benchmarks'}</strong>
+        <p>${isRemote ? `Retrieved ${esc(date(remote.fetched_at))} · latest posting ${esc(date(remote.latest_posted))}` : `Data through ${esc(date(historical.metadata.data_through))} · DOSM Salaries & Wages 2025 Verified`}</p></div>
         <a href="${esc(isRemote?remote.source_url:historical.source_url)}" target="_blank" rel="noopener noreferrer">Visit source ↗</a>
       </section>
+      ${!isRemote ? `
+      <div class="fr-dosm-banner" role="complementary" aria-label="Official DOSM 2025 Wage Benchmarks">
+        <div>
+          <span class="fr-status-dot"></span><strong>DOSM 2025 Official Malaysian Wage Benchmarks:</strong>
+          <span>National Median: <b>RM 2,940</b> · High-Skilled: <b>RM 5,057</b> · Tech/Professionals: <b>RM 6,124</b> · Tertiary Degree Premium: <b>+105.3%</b> (SPM RM 2,227 vs Degree RM 4,571).</span>
+        </div>
+        <a href="https://open.dosm.gov.my/publications/salaries_wages_2025" target="_blank" rel="noopener noreferrer">DOSM 2025 Report ↗</a>
+      </div>` : ''}
       ${isRemote && remote.error ? `<p class="fr-warning" role="status">${esc(remote.error)} ${remote.sample_size?'Showing the last saved sample with its original date.':'Try the historical Malaysia view while this source is unavailable.'}</p>` : ''}
       <p class="fr-scope">${esc(isRemote?remote.scope:historical.scope)} ${isRemote && remote.sample_size < 30 ? '<strong>Small sample: treat this as a starting point, not a market verdict.</strong>' : ''}</p>
       <section class="fr-futures" aria-labelledby="frFuturesTitle">

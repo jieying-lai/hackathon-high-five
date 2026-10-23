@@ -1,0 +1,304 @@
+{
+  "metadata": {
+    "title": "DOSM Official Salaries & Wages Survey 2025 Benchmarks",
+    "source": "Department of Statistics Malaysia (DOSM)",
+    "source_url": "https://open.dosm.gov.my/publications/salaries_wages_2025",
+    "latest_survey_year": 2025,
+    "extracted_at": "2026-10-23",
+    "national_median_wage": 2940.0,
+    "national_mean_wage": 3803.0,
+    "tertiary_education_premium_pct": 105.3,
+    "citation": "Official Government Benchmark from DOSM Salaries & Wages Survey Report 2025"
+  },
+  "states": {
+    "Malaysia": {
+      "median_wage": 2940.0,
+      "historical_trend": {
+        "2021": 2256.0,
+        "2022": 2429.0,
+        "2023": 2602.0,
+        "2024": 2793.0,
+        "2025": 2940.0
+      },
+      "mean_wage": 3803.0
+    },
+    "Johor": {
+      "median_wage": 2688.0,
+      "historical_trend": {
+        "2021": 2191.0,
+        "2022": 2216.0,
+        "2023": 2450.0,
+        "2024": 2582.0,
+        "2025": 2688.0
+      },
+      "mean_wage": 3609.0
+    },
+    "Kedah": {
+      "median_wage": 2255.0,
+      "historical_trend": {
+        "2021": 1621.0,
+        "2022": 1797.0,
+        "2023": 1885.0,
+        "2024": 2051.0,
+        "2025": 2255.0
+      },
+      "mean_wage": 3148.0
+    },
+    "Kelantan": {
+      "median_wage": 1860.0,
+      "historical_trend": {
+        "2021": 1568.0,
+        "2022": 1635.0,
+        "2023": 1750.0,
+        "2024": 1914.0,
+        "2025": 1860.0
+      },
+      "mean_wage": 3214.0
+    },
+    "Melaka": {
+      "median_wage": 2773.0,
+      "historical_trend": {
+        "2021": 2164.0,
+        "2022": 2280.0,
+        "2023": 2360.0,
+        "2024": 2528.0,
+        "2025": 2773.0
+      },
+      "mean_wage": 3549.0
+    },
+    "Negeri Sembilan": {
+      "median_wage": 2710.0,
+      "historical_trend": {
+        "2021": 2321.0,
+        "2022": 2334.0,
+        "2023": 2361.0,
+        "2024": 2503.0,
+        "2025": 2710.0
+      },
+      "mean_wage": 3730.0
+    },
+    "Pahang": {
+      "median_wage": 2578.0,
+      "historical_trend": {
+        "2021": 1897.0,
+        "2022": 2013.0,
+        "2023": 2276.0,
+        "2024": 2491.0,
+        "2025": 2578.0
+      },
+      "mean_wage": 3434.0
+    },
+    "Pulau Pinang": {
+      "median_wage": 3107.0,
+      "historical_trend": {
+        "2021": 2414.0,
+        "2022": 2477.0,
+        "2023": 2715.0,
+        "2024": 2934.0,
+        "2025": 3107.0
+      },
+      "mean_wage": 3912.0
+    },
+    "Perak": {
+      "median_wage": 2173.0,
+      "historical_trend": {
+        "2021": 1898.0,
+        "2022": 1901.0,
+        "2023": 2045.0,
+        "2024": 2050.0,
+        "2025": 2173.0
+      },
+      "mean_wage": 3233.0
+    },
+    "Perlis": {
+      "median_wage": 2013.0,
+      "historical_trend": {
+        "2021": 1713.0,
+        "2022": 1781.0,
+        "2023": 1820.0,
+        "2024": 2038.0,
+        "2025": 2013.0
+      },
+      "mean_wage": 3401.0
+    },
+    "Selangor": {
+      "median_wage": 3547.0,
+      "historical_trend": {
+        "2021": 2778.0,
+        "2022": 3109.0,
+        "2023": 3235.0,
+        "2024": 3350.0,
+        "2025": 3547.0
+      },
+      "mean_wage": 4258.0
+    },
+    "Terengganu": {
+      "median_wage": 2195.0,
+      "historical_trend": {
+        "2021": 1549.0,
+        "2022": 1703.0,
+        "2023": 1845.0,
+        "2024": 2021.0,
+        "2025": 2195.0
+      },
+      "mean_wage": 3208.0
+    },
+    "Sabah": {
+      "median_wage": 2482.0,
+      "historical_trend": {
+        "2021": 1899.0,
+        "2022": 2011.0,
+        "2023": 2059.0,
+        "2024": 2236.0,
+        "2025": 2482.0
+      },
+      "mean_wage": 3421.0
+    },
+    "Sarawak": {
+      "median_wage": 2707.0,
+      "historical_trend": {
+        "2021": 2036.0,
+        "2022": 2069.0,
+        "2023": 2276.0,
+        "2024": 2490.0,
+        "2025": 2707.0
+      },
+      "mean_wage": 3645.0
+    },
+    "W.P.  Kuala Lumpur": {
+      "median_wage": 3938.0,
+      "historical_trend": {
+        "2021": 2999.0,
+        "2022": 3301.0,
+        "2023": 3469.0,
+        "2024": 3687.0,
+        "2025": 3938.0
+      },
+      "mean_wage": 4955.0
+    },
+    "W.P. Labuan": {
+      "median_wage": 2688.0,
+      "historical_trend": {
+        "2021": 2573.0,
+        "2022": 2657.0,
+        "2023": 2735.0,
+        "2024": 2931.0,
+        "2025": 2688.0
+      },
+      "mean_wage": 3887.0
+    },
+    "W.P. Putrajaya": {
+      "median_wage": 4828.0,
+      "historical_trend": {
+        "2021": 3858.0,
+        "2022": 3995.0,
+        "2023": 4443.0,
+        "2024": 4598.0,
+        "2025": 4828.0
+      },
+      "mean_wage": 5417.0
+    }
+  },
+  "occupations": {
+    "Managers & Senior Executives": {
+      "malay_name": "Pengurus",
+      "workers_count_thousands": 330.5,
+      "median_wage": 6186.0,
+      "mean_wage": 7344.0
+    },
+    "Professionals & AI / Software Engineers": {
+      "malay_name": "Profesional",
+      "workers_count_thousands": 1945.4,
+      "median_wage": 6124.0,
+      "mean_wage": 6747.0
+    },
+    "Technicians & Associate Professionals": {
+      "malay_name": "Juruteknik dan profesional bersekutu",
+      "workers_count_thousands": 1527.9,
+      "median_wage": 3852.0,
+      "mean_wage": 4256.0
+    },
+    "Clerical Support Workers": {
+      "malay_name": "Pekerja sokongan perkeranian",
+      "workers_count_thousands": 1360.1,
+      "median_wage": 2693.0,
+      "mean_wage": 3029.0
+    },
+    "Service & Sales Workers": {
+      "malay_name": "Pekerja perkhidmatan dan jualan",
+      "workers_count_thousands": 2305.7,
+      "median_wage": 2035.0,
+      "mean_wage": 2687.0
+    },
+    "Skilled Agricultural & Forestry Workers": {
+      "malay_name": "Pekerja mahir pertanian, perhutanan, penternakan dan perikanan",
+      "workers_count_thousands": 87.7,
+      "median_wage": 1992.0,
+      "mean_wage": 2658.0
+    },
+    "Craft & Related Trades Workers": {
+      "malay_name": "Pekerja kemahiran dan pekerja pertukangan yang berkaitan",
+      "workers_count_thousands": 723.9,
+      "median_wage": 2173.0,
+      "mean_wage": 2619.0
+    },
+    "Plant & Machine Operators": {
+      "malay_name": "Operator mesin dan loji, dan pemasang",
+      "workers_count_thousands": 1290.8,
+      "median_wage": 2083.0,
+      "mean_wage": 2488.0
+    },
+    "Elementary Occupations": {
+      "malay_name": "Pekerja asas",
+      "workers_count_thousands": 809.7,
+      "median_wage": 1758.0,
+      "mean_wage": 2184.0
+    }
+  },
+  "skill_tiers": {
+    "High Skilled (Professionals & Managers)": {
+      "level": "Mahir",
+      "workers_count_thousands": 2217.6,
+      "median_wage": 5057.0,
+      "mean_wage": 5799.0
+    },
+    "Semi-Skilled (Technical & Clerical)": {
+      "level": "Separuh mahir",
+      "workers_count_thousands": 5768.1,
+      "median_wage": 2223.0,
+      "mean_wage": 2714.0
+    },
+    "Low Skilled (Elementary)": {
+      "level": "Berkemahiran rendah",
+      "workers_count_thousands": 809.7,
+      "median_wage": 1758.0,
+      "mean_wage": 2184.0
+    }
+  },
+  "education_levels": {
+    "No Formal Education": {
+      "level": "Tiada pendidikan rasmi",
+      "workers_count_thousands": 42.2,
+      "median_wage": 1642.0,
+      "mean_wage": 1973.0
+    },
+    "Primary": {
+      "level": "Rendah",
+      "workers_count_thousands": 327.5,
+      "median_wage": 1754.0,
+      "mean_wage": 2123.0
+    },
+    "Secondary (SPM / STPM / High School)": {
+      "level": "Menengah",
+      "workers_count_thousands": 5516.8,
+      "median_wage": 2227.0,
+      "mean_wage": 2729.0
+    },
+    "Tertiary (Degree & Diploma)": {
+      "level": "Tertiari",
+      "workers_count_thousands": 4495.1,
+      "median_wage": 4571.0,
+      "mean_wage": 5260.0
+    }
+  }
+}
