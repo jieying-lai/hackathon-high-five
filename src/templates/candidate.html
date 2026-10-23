@@ -279,10 +279,10 @@
 <link rel="stylesheet" href="/static/css/reskilling-plan.css?v=20261021-green-completion" />
 <link rel="stylesheet" href="/static/css/learning-controls.css?v=20261021-single-replacement" />
 <link rel="stylesheet" href="/static/css/learning-impact.css?v=20261021-community-pledges" />
-  <link rel="stylesheet" href="/static/css/career-spirit-totem.css?v=20261023-2" />
-<link rel="stylesheet" href="/static/css/career-earth.css?v=20261023" />
-<link rel="stylesheet" href="/static/css/aurora-experience.css?v=20261023-bento" />
-<script defer src="/static/js/aurora-experience.js?v=20261023-bento"></script>
+  <link rel="stylesheet" href="/static/css/career-spirit-totem.css?v=20261023-3" />
+<link rel="stylesheet" href="/static/css/career-earth.css?v=20261023-3" />
+<link rel="stylesheet" href="/static/css/aurora-experience.css?v=20261023-3" />
+<script defer src="/static/js/aurora-experience.js?v=20261023-3"></script>
 </head>
 <body class="responsive-ui responsive-talent min-h-screen">
   <div class="aurora"></div><div class="blob b1"></div><div class="blob b2"></div>
@@ -4976,35 +4976,21 @@ async function submit3AiVerificationAnswers() {
   <!-- Global 3D Work-Life Atlas Modal inside Candidate Portal -->
   <div id="globalAtlasModal" role="dialog" aria-modal="true" aria-label="Global work-life atlas" class="fixed inset-0 z-50 bg-slate-950/85 backdrop-blur-md flex items-center justify-center p-3 sm:p-6 hidden">
     <div class="global-atlas-container max-w-5xl w-full p-6 sm:p-8 space-y-6 max-h-[92vh] overflow-y-auto border border-white/20 shadow-2xl relative rounded-[2.25rem]">
-      <div class="flex items-center justify-between border-b border-white/10 pb-4">
+      <div class="flex flex-wrap items-center justify-between gap-4 border-b border-white/10 pb-4">
         <div>
-          <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-teal-500/20 text-teal-300 text-xs font-bold mb-1.5">
-            <span>🌍</span><span>Global Work-Life Atlas</span>
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-teal-500/15 border border-teal-400/30 text-teal-300 text-xs font-bold mb-1.5">
+            <span class="animate-pulse">🌍</span><span>Global Work-Life Atlas · 16 Frontier Tech Hubs</span>
           </div>
           <h3 class="text-xl sm:text-2xl font-black text-white">How Do Professionals in Your Field Live Worldwide?</h3>
-          <p class="text-xs text-slate-400 mt-0.5">Explore 10 cities through illustrative career stories. These are fictional examples, not verified interviews or live vacancies.</p>
+          <p class="text-xs text-slate-300 mt-0.5">Explore authentic career lifestyles, day-in-the-life plogs &amp; vlogs, and positive daily routines across global hubs</p>
         </div>
-        <button type="button" data-atlas-close aria-label="Close atlas" onclick="closeGlobalAtlas()" class="h-9 w-9 rounded-full bg-white/10 hover:bg-white/20 text-white font-bold grid place-items-center transition text-lg" title="Close Atlas">✕</button>
-      </div>
-
-      <!-- City Switcher with High-Contrast Visible Buttons -->
-      <div class="flex flex-wrap gap-2.5">
-        <button type="button" id="atlasBtn_kl" onclick="showCityCard('kl')" class="atlas-city-pill active">🇲🇾 Kuala Lumpur</button>
-        <button type="button" id="atlasBtn_singapore" onclick="showCityCard('singapore')" class="atlas-city-pill">🇸🇬 Singapore</button>
-        <button type="button" id="atlasBtn_tokyo" onclick="showCityCard('tokyo')" class="atlas-city-pill">🇯🇵 Tokyo</button>
-        <button type="button" id="atlasBtn_amsterdam" onclick="showCityCard('amsterdam')" class="atlas-city-pill">🇳🇱 Amsterdam</button>
-        <button type="button" id="atlasBtn_london" onclick="showCityCard('london')" class="atlas-city-pill">🇬🇧 London</button>
-
-
-
-        <button type="button" id="atlasBtn_sf" onclick="showCityCard('sf')" class="atlas-city-pill">🇺🇸 San Francisco</button>
-        <button type="button" id="atlasBtn_berlin" onclick="showCityCard('berlin')" class="atlas-city-pill">🇩🇪 Berlin</button>
-        <button type="button" id="atlasBtn_zurich" onclick="showCityCard('zurich')" class="atlas-city-pill">🇨🇭 Zurich</button>
-        <button type="button" id="atlasBtn_sydney" onclick="showCityCard('sydney')" class="atlas-city-pill">🇦🇺 Sydney</button>
-        <button type="button" id="atlasBtn_toronto" onclick="showCityCard('toronto')" class="atlas-city-pill">🇨🇦 Toronto</button>
-
-
-
+        <div class="flex items-center gap-3">
+          <button type="button" onclick="surpriseAtlasCity()" class="atlas-warp-btn" title="Randomly teleport to another city on the 3D globe">
+            <span class="text-base">🎲</span>
+            <span class="font-bold">随机漫游城市 · Warp to Random Hub</span>
+          </button>
+          <button type="button" data-atlas-close aria-label="Close atlas" onclick="closeGlobalAtlas()" class="h-10 w-10 rounded-full bg-white/10 hover:bg-white/20 text-white font-bold grid place-items-center transition text-lg border border-white/15" title="Close Atlas">✕</button>
+        </div>
       </div>
 
       <!-- Globe & Details Grid -->
@@ -5029,7 +5015,7 @@ async function submit3AiVerificationAnswers() {
     </div>
   </div>
 
-  <script src="/static/js/career-earth.js?v=20261023"></script>
-<script src="/static/js/career-spirit-totem.js?v=20261023-earth"></script>
+  <script src="/static/js/career-earth.js?v=20261023-3"></script>
+<script src="/static/js/career-spirit-totem.js?v=20261023-3"></script>
 </body>
 </html>

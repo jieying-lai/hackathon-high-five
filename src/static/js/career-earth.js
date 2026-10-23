@@ -1,7 +1,7 @@
 /* Career atlas: orthographic projection, local geography, pointer + keyboard input. */
 (function(){
 'use strict';
-const hubs=[['kl','Kuala Lumpur',3.139,101.686,'Asia/Kuala_Lumpur'],['singapore','Singapore',1.352,103.819,'Asia/Singapore'],['tokyo','Tokyo',35.676,139.65,'Asia/Tokyo'],['amsterdam','Amsterdam',52.367,4.904,'Europe/Amsterdam'],['london','London',51.507,-.127,'Europe/London'],['sf','San Francisco',37.774,-122.419,'America/Los_Angeles'],['berlin','Berlin',52.52,13.405,'Europe/Berlin'],['zurich','Zurich',47.376,8.541,'Europe/Zurich'],['sydney','Sydney',-33.868,151.209,'Australia/Sydney'],['toronto','Toronto',43.653,-79.383,'America/Toronto']];
+const hubs=[['kl','Kuala Lumpur',3.139,101.686,'Asia/Kuala_Lumpur'],['singapore','Singapore',1.352,103.819,'Asia/Singapore'],['tokyo','Tokyo',35.676,139.65,'Asia/Tokyo'],['seoul','Seoul',37.566,126.978,'Asia/Seoul'],['amsterdam','Amsterdam',52.367,4.904,'Europe/Amsterdam'],['london','London',51.507,-.127,'Europe/London'],['paris','Paris',48.856,2.352,'Europe/Paris'],['berlin','Berlin',52.52,13.405,'Europe/Berlin'],['zurich','Zurich',47.376,8.541,'Europe/Zurich'],['stockholm','Stockholm',59.329,18.068,'Europe/Stockholm'],['sf','San Francisco',37.774,-122.419,'America/Los_Angeles'],['ny','New York',40.712,-74.006,'America/New_York'],['sydney','Sydney',-33.868,151.209,'Australia/Sydney'],['toronto','Toronto',43.653,-79.383,'America/Toronto'],['dubai','Dubai',25.204,55.27,'Asia/Dubai'],['saopaulo','São Paulo',-23.55,-46.633,'America/Sao_Paulo']];
 const rad=Math.PI/180;
 function project(lat,lon,latitude,longitude){const p=lat*rad,l=(lon-longitude)*rad,c=latitude*rad;return [Math.cos(p)*Math.sin(l),-(Math.cos(c)*Math.sin(p)-Math.sin(c)*Math.cos(p)*Math.cos(l)),Math.sin(c)*Math.sin(p)+Math.cos(c)*Math.cos(p)*Math.cos(l)];}
 if(typeof module==='object'&&module.exports){module.exports={project,hubs};return;}
@@ -36,5 +36,5 @@ fetch('/static/data/earth-coastline.geojson').then(r=>{if(!r.ok)throw Error();re
 setInterval(()=>{if(visible&&!document.hidden)setClock();},60000);
 document.addEventListener('careerlens-motion',()=>wake());
 instance={select,pause(){visible=false;cancelAnimationFrame(frame);frame=0;},resume(){visible=true;resize();setClock();wake();}};resize();setClock();return instance;
-}};
+},hubs,select(key){if(instance)instance.select(key);}};
 })();

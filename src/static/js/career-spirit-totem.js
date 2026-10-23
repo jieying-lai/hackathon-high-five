@@ -506,7 +506,13 @@
           id: "kl_1",
           title: "AI Cloud Solutions Architect",
           industry: "Cloud & Enterprise AI",
-          persona: { name: "Maya Tan", handle: "@maya_kl_tech", avatar: "👩🏻‍💻", bio: "Building resilient distributed microservices & LLM pipelines across ASEAN" },
+          persona: {
+            name: "Maya Tan",
+            handle: "@maya_kl_tech",
+            avatar: "👩🏻‍💻",
+            photo: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=480&q=80",
+            bio: "Building resilient distributed microservices & LLM pipelines across ASEAN"
+          },
           skills: ["Kubernetes", "PyTorch", "GCP Vertex AI", "Terraform", "MLOps"],
           plog: "Morning sun reflecting off Exchange 106 at TRX. Grabbed iced kopi-o and freshly steamed bao before taking the automated MRT to the Cyberjaya Campus. Our morning standup focused on reducing cross-region LLM latency across Southeast Asian edge nodes. Enjoyed team banana leaf rice for lunch in Bangsar. Finished the sprint by 5:30 PM with zero production blockers, then hit the rooftop gym.",
           job_desc: {
@@ -532,13 +538,6 @@
               { time: "13:00", emoji: "🍜", text: "Curry laksa discovery in Chinatown with cross-functional product designers." },
               { time: "15:00", emoji: "🚀", text: "Pair programming: Optimizing Docker container cold start times on GPU nodes." },
               { time: "18:30", emoji: "🏸", text: "Evening friendly badminton match with community tech friends in PJ." }
-            ],
-            [
-              { time: "08:45", emoji: "🧘", text: "Quiet morning mindfulness & fresh tropical dragon fruit smoothie at home." },
-              { time: "10:30", emoji: "🛡️", text: "Security audit & ethical AI verification for new automated decision endpoints." },
-              { time: "13:30", emoji: "🥪", text: "Healthy grain bowl lunch while listening to a tech entrepreneurship podcast." },
-              { time: "15:45", emoji: "🎯", text: "Focused deep work: Fine-tuning LoRA adapters on local domain datasets." },
-              { time: "19:00", emoji: "🎨", text: "Attending a local Kuala Lumpur open-source tech mixer at Bangsar South." }
             ]
           ],
           tags: ["#TRXHub", "#ZeroOvertime", "#StreetFoodHeaven", "#CloudAI"]
@@ -547,7 +546,13 @@
           id: "kl_2",
           title: "Islamic Fintech & Risk ML Engineer",
           industry: "Digital Banking & Ethical Finance",
-          persona: { name: "Adam Farhan", handle: "@adam_fintech_my", avatar: "👨🏽‍💼", bio: "Shariah-compliant ethical algorithmic credit scoring & risk intelligence" },
+          persona: {
+            name: "Adam Farhan",
+            handle: "@adam_fintech_my",
+            avatar: "👨🏽‍💼",
+            photo: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=480&q=80",
+            bio: "Shariah-compliant ethical algorithmic credit scoring & risk intelligence"
+          },
           skills: ["Python", "XGBoost", "FastAPI", "PostgreSQL", "Fairness AI"],
           plog: "Working from the Bangsar South tech enclave. Morning meeting with our Shariah advisory council to review algorithmic fairness across micro-lending models. We proved our neural risk scorer reduces bias against gig workers by 24%. Relaxing afternoon prayer and matcha latte break in the vertical indoor gardens. Left work at 5:00 PM with an uplifting feeling of real social impact.",
           job_desc: {
@@ -581,7 +586,13 @@
           id: "kl_3",
           title: "Autonomous Logistics & Computer Vision Engineer",
           industry: "Smart Ports & Supply Chain",
-          persona: { name: "Rachel Lee", handle: "@rachel_cv_logistics", avatar: "👩🏻‍🔬", bio: "Autonomous container vision & edge robotics deployment at Port Klang" },
+          persona: {
+            name: "Rachel Lee",
+            handle: "@rachel_cv_logistics",
+            avatar: "👩🏻‍🔬",
+            photo: "https://images.unsplash.com/photo-1580894732444-8ecded7900cd?auto=format&fit=crop&w=480&q=80",
+            bio: "Autonomous container vision & edge robotics deployment at Port Klang"
+          },
           skills: ["Computer Vision", "YOLOv10", "TensorRT", "C++", "ROS2"],
           plog: "Field day at Port Klang! High-speed multi-camera edge arrays sorting shipping containers in torrential tropical rain. Our latest transformer vision model maintained 99.8% barcode and hazard sign detection despite heavy fog. Back at our Petaling Jaya R&D lab by 3:00 PM for code review. Celebrating a successful deployment with durian and fresh coconut with the engineering team.",
           job_desc: {
@@ -623,7 +634,13 @@
           id: "sg_1",
           title: "Quantitative AI & Algorithmic Strategist",
           industry: "Global Investment & Quantitative Research",
-          persona: { name: "Lucas Chen", handle: "@lucas_sg_quant", avatar: "👨🏻‍💻", bio: "Reinforcement learning for multi-asset portfolio optimization at Marina Bay" },
+          persona: {
+            name: "Lucas Chen",
+            handle: "@lucas_sg_quant",
+            avatar: "👨🏻‍💻",
+            photo: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=480&q=80",
+            bio: "Reinforcement learning for multi-asset portfolio optimization at Marina Bay"
+          },
           skills: ["PyTorch", "Rust", "Time-Series Transformers", "Reinforcement Learning", "Linux"],
           plog: "Brisk morning run around Marina Bay waterfront before the heat sets in. Caught the sunrise over the Singapore Flyer. Dropped by Lau Pa Sat for a fresh kopi-c. In the 38th-floor tower, we ran our agentic market simulations testing shock-resilience against sudden macroeconomic shifts. Strict company policy on zero after-hours emails means our team is fully disconnected and energized every evening.",
           job_desc: {
@@ -657,7 +674,13 @@
           id: "sg_2",
           title: "Tropical Data Center Green Cooling ML Lead",
           industry: "Clean Energy & Sustainable Infrastructure",
-          persona: { name: "Priya Nair", handle: "@priya_green_sg", avatar: "👩🏽‍🔬", bio: "AI-driven liquid cooling & thermodynamic optimization in tropical climates" },
+          persona: {
+            name: "Priya Nair",
+            handle: "@priya_green_sg",
+            avatar: "👩🏽‍🔬",
+            photo: "https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?auto=format&fit=crop&w=480&q=80",
+            bio: "AI-driven liquid cooling & thermodynamic optimization in tropical climates"
+          },
           skills: ["Deep Learning", "Thermodynamics ML", "IoT Telemetry", "Python", "Docker"],
           plog: "Working at our testbed in One-North Fusionopolis. Singapore is pioneering ultra-efficient data centers in hot, humid climates. Today our neural model learned to anticipate ambient tropical storms 40 minutes ahead, dynamically adjusting chilled-water cooling loops and saving 19.4% in power usage! Celebrated with iced sugarcane juice with the facilities crew.",
           job_desc: {
@@ -686,40 +709,6 @@
             ]
           ],
           tags: ["#GreenDataCenter", "#OneNorth", "#CleanEnergy", "#TropicalSustainability"]
-        },
-        {
-          id: "sg_3",
-          title: "Smart Mobility & Autonomous Transit Perception Engineer",
-          industry: "Urban Mobility & Smart Nation",
-          persona: { name: "Darren Goh", handle: "@darren_onenorth", avatar: "👨🏻‍💻", bio: "Autonomous shuttle fleet navigation & 3D semantic mapping for public transit" },
-          skills: ["C++", "ROS2", "LiDAR Odometry", "TensorRT", "SLAM"],
-          plog: "Testing our self-driving electric shuttles along designated One-North campus routes. Navigating safely around pedestrian crossings, sudden tropical downpours, and delivery robots. Seeing people smile as the shuttle smoothly yields to an elderly gentleman is the best validation. Finished code reviews early and grabbed laksa at Ghim Moh market.",
-          job_desc: {
-            summary: "负责城市公共交通自动驾驶微循环巴士的激光雷达（LiDAR）与多相机三维语义融合建图感知。",
-            tasks: [
-              "开发毫米波雷达与激光雷达的高精度时间同步及点云去噪过滤算法",
-              "在受限城市道路场景下实现亚米级高精地图实时定位（NDT/LOAM）",
-              "遵循陆路交通管理局（LTA）自动驾驶车辆安全准则，完成百万公里模拟路测"
-            ]
-          },
-          routine: [
-            { time: "08:45", emoji: "🚌", text: "Riding the autonomous test shuttle to work; logging sensor data on my laptop." },
-            { time: "10:15", emoji: "🗺️", text: "Point cloud HD map review: Validating new pedestrian curb annotations." },
-            { time: "12:45", emoji: "🍜", text: "Fragrant laksa and iced barley water at Ghim Moh hawker center." },
-            { time: "14:30", emoji: "🤖", text: "Simulating edge-case maneuvers with virtual delivery bots in Unreal Engine." },
-            { time: "18:00", emoji: "🚴", text: "Biking down the Rail Corridor surrounded by green jungle canopy." },
-            { time: "20:30", emoji: "🎸", text: "Playing acoustic guitar at home and relaxing with loved ones." }
-          ],
-          alternative_routines: [
-            [
-              { time: "07:45", emoji: "☕", text: "Fresh fruit and black coffee while reviewing night-shift autonomous road logs." },
-              { time: "09:30", emoji: "🚗", text: "Real-vehicle sensor calibration on test tracks with transport authority observers." },
-              { time: "13:00", emoji: "🍱", text: "Nasi padang with colleagues; discussing vehicle-to-infrastructure 5G telemetry." },
-              { time: "15:15", emoji: "💻", text: "Refactoring C++ multithreading queues to prevent buffer lag in camera streams." },
-              { time: "18:00", emoji: "🌇", text: "Catching the golden hour sunset at Henderson Waves walking trail." }
-            ]
-          ],
-          tags: ["#AutonomousTransit", "#SmartNation", "#RoboticsC++", "#OneNorth"]
         }
       ]
     },
@@ -733,7 +722,13 @@
           id: "tyo_1",
           title: "Neural Worldbuilder & Game AI Engineer",
           industry: "Interactive Entertainment & Generative Worlds",
-          persona: { name: "Kenji Sato", handle: "@kenji_shibuya_vlog", avatar: "👨🏻‍🎨", bio: "Procedural neural terrain & NPC behavior models in Shibuya creative studios" },
+          persona: {
+            name: "Kenji Sato",
+            handle: "@kenji_shibuya_vlog",
+            avatar: "👨🏻‍🎨",
+            photo: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=480&q=80",
+            bio: "Procedural neural terrain & NPC behavior models in Shibuya creative studios"
+          },
           skills: ["PyTorch", "Unreal Engine 5", "C++", "Diffusion Models", "GLSL Shaders"],
           plog: "Crossed Shibuya Scramble at 9:30 AM with a warm canned matcha from the vending machine. Stepped into our studio overlooking the glowing billboards. Today we previewed our real-time neural world generator: artists paint a single stroke and the AI builds lush, living moss-covered torii gates with accurate volumetric rain shaders. Finished work on time and went for yakitori with the art team under glowing lanterns in Nonbei Yokocho.",
           job_desc: {
@@ -767,7 +762,13 @@
           id: "tyo_2",
           title: "Autonomous Humanoid Robotics Perception Lead",
           industry: "Humanoid Robotics & Assistive Tech",
-          persona: { name: "Aoi Miyamoto", handle: "@aoi_robotics_tokyo", avatar: "👩🏻‍💻", bio: "Visual-motor policy learning for home & elderly assistive humanoid robots" },
+          persona: {
+            name: "Aoi Miyamoto",
+            handle: "@aoi_robotics_tokyo",
+            avatar: "👩🏻‍💻",
+            photo: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=480&q=80",
+            bio: "Visual-motor policy learning for home & elderly assistive humanoid robots"
+          },
           skills: ["ROS2", "PyTorch", "Diffusion Policy", "C++", "Tactile Sensing"],
           plog: "Field testing at our Odaiba robotics showroom. Our bipedal assistant robot successfully folded laundry and poured hot green tea without spilling a drop, using our new diffusion-based tactile policy. Seeing an elderly visitor laugh with delight as the robot handed them a handkerchief was pure magic. Cleaned up our workspace, bowed to colleagues, and caught the clean, quiet Yurikamome monorail home.",
           job_desc: {
@@ -796,40 +797,94 @@
             ]
           ],
           tags: ["#HumanoidRobotics", "#OdaibaBay", "#EmbodiedAI", "#SafeAutomation"]
-        },
+        }
+      ]
+    },
+    seoul: {
+      name: "Seoul (Gangnam / Pangyo Techno Valley)",
+      country: "South Korea",
+      flag: "🇰🇷",
+      vibe: "Ultra-Fast 5G Lifestyle, K-Wave Digital Innovation, 24/7 Energy, Beautiful Mountain Trails",
+      roles: [
         {
-          id: "tyo_3",
-          title: "High-Frequency Algorithmic Data Scientist",
-          industry: "Algorithmic Finance & Liquidity Modeling",
-          persona: { name: "Ren Tanaka", handle: "@ren_quant_tokyo", avatar: "👨🏻‍💻", bio: "Sub-microsecond order routing & liquidity graph models in historic Nihonbashi" },
-          skills: ["Rust", "Python", "Graph Neural Networks", "FPGA Acceleration", "Linux"],
-          plog: "Nihonbashi district — where 400 years of merchant history meets ultra-modern fiber optics. Morning begins with a traditional sencha green tea near the historic bridge. We analyzed liquidity fragmentation patterns across Tokyo financial exchanges. Our team maintains a disciplined, calm environment: no frantic shouting, just elegant mathematical rigor and precise engineering. Off by 5:30 PM for a calming stroll along the Sumida river.",
+          id: "sel_1",
+          title: "Generative Neuro-Avatar & Virtual Human Lead",
+          industry: "Digital Media & Virtual Production",
+          persona: {
+            name: "Min-Jun Park",
+            handle: "@minjun_gangnam_ai",
+            avatar: "👨🏻‍💻",
+            photo: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=480&q=80",
+            bio: "Real-time facial neural synthesis & multi-lingual speech synchronization in Pangyo"
+          },
+          skills: ["PyTorch", "Gaussian Splatting", "Audio-to-LipSync", "CUDA", "FastAPI"],
+          plog: "Morning express subway from Gangnam into Pangyo Techno Valley. Picked up an iced americano — essential fuel for Korean creators. Our studio creates real-time interactive virtual idols and digital human news anchors. Today our audio-driven speech synthesis model achieved zero-latency live lip synchronization across 12 languages simultaneously! Celebrated with Korean fried chicken and sparkling cider with the dev team.",
           job_desc: {
-            summary: "构建金融市场微观结构拓扑图与流动性预测算法，优化大额订单智能拆单与市场影响最小化。",
+            summary: "研发高拟真数字虚拟人实时音频驱动面部表情与动作合成神经生成算法。",
             tasks: [
-              "研发基于图神经网络（GNN）的跨交易所资产相关性动态传播图谱",
-              "与硬件团队协作将关键风控决策逻辑部署至低延迟 FPGA 计算板卡",
-              "对高频行情订单流进行反欺诈监测与虚假申报异常行为过滤"
+              "构建融合 3DMM 与神经辐射场的高帧率 4K 面部重定向与实时表情渲染网格",
+              "开发多语种声学特征到肌肉运动单元（Blendshapes）的低延迟端到端映射模型",
+              "在边缘移动设备端优化轻量级推理引擎，实现 60FPS 流畅实时交互"
             ]
           },
           routine: [
-            { time: "08:30", emoji: "🍵", text: "Hot sencha tea served in ceramic pottery; reviewing morning exchange liquidity." },
-            { time: "09:45", emoji: "📊", text: "Order book visualization sync: Analyzing market spread compression during volatility." },
-            { time: "12:15", emoji: "🍣", text: "Fresh chirashi sushi bowl at a century-old neighborhood restaurant in Nihonbashi." },
-            { time: "14:00", emoji: "⚡", text: "Optimizing lock-free data structures in Rust to prevent thread context switching." },
-            { time: "17:30", emoji: "🌊", text: "Walking along Sumida River terrace watching sunset boat cruises glide past." },
-            { time: "20:00", emoji: "🧘", text: "Mindfulness meditation and practicing Japanese calligraphy (Shodo) at home." }
+            { time: "08:45", emoji: "☕", text: "Iced americano at Pangyo Tech Valley cafe watching bright tech workers arrive." },
+            { time: "10:00", emoji: "✨", text: "Live streaming studio test: Evaluating digital human eye-contact tracking." },
+            { time: "12:30", emoji: "🍲", text: "Warm sundubu-jjigae (tofu stew) and kimchi lunch with creative animators." },
+            { time: "14:45", emoji: "⚡", text: "CUDA optimization: Reducing audio feature extraction latency to under 12ms." },
+            { time: "18:30", emoji: "🍗", text: "Chimaek (chicken & drinks) gathering in Gangnam under neon skyscraper lights." },
+            { time: "21:00", emoji: "🎧", text: "Listening to synth-pop beats while studying novel neural rendering whitepapers." }
           ],
           alternative_routines: [
             [
-              { time: "08:00", emoji: "🚴", text: "Cycling through quiet morning backstreets of Asakusa before the city awakens." },
-              { time: "09:30", emoji: "📈", text: "Calibrating graph convolutional networks for predictive liquidity depth." },
-              { time: "12:30", emoji: "🍜", text: "Handmade soba noodles with seasonal vegetable tempura near Tokyo Station." },
-              { time: "15:00", emoji: "🔒", text: "Security review of cryptographic key management systems for algorithmic feeds." },
-              { time: "18:00", emoji: "📖", text: "Reading history of Japanese industrial economics at a cozy bookstore cafe." }
+              { time: "07:30", emoji: "🏃", text: "Morning run along the Han River trail, feeling the cool autumn breeze." },
+              { time: "09:30", emoji: "💻", text: "Fine-tuning cross-lingual phonetic boundary models for Korean and English." },
+              { time: "13:00", emoji: "🍱", text: "Dolsot bibimbap lunch discussing K-content global distribution pipelines." },
+              { time: "15:30", emoji: "🔬", text: "Evaluating user perceptual realism scores in our human-computer interaction lab." },
+              { time: "19:00", emoji: "🧗", text: "Indoor rock climbing session in Seongsu-dong creative arts district." }
             ]
           ],
-          tags: ["#Nihonbashi", "#MathematicalRigor", "#RustQuant", "#ZenLife"]
+          tags: ["#PangyoValley", "#GangnamStyle", "#VirtualHumans", "#HanRiverRun"]
+        },
+        {
+          id: "sel_2",
+          title: "Semiconductor Defect Computer Vision Lead",
+          industry: "Advanced Semiconductor Manufacturing",
+          persona: {
+            name: "Ji-Woo Kim",
+            handle: "@jiwoo_ktech",
+            avatar: "👩🏻‍🔬",
+            photo: "https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=480&q=80",
+            bio: "Sub-nanometer wafer defect inspection with vision transformers in Suwon"
+          },
+          skills: ["Computer Vision", "Vision Transformers", "C++", "PyTorch", "TensorRT"],
+          plog: "High-tech cleanroom research center in Suwon. South Korea leads the world in cutting-edge memory and AI chip manufacturing. Today our vision transformer model detected nanometer-scale photolithography anomalies on 3nm silicon wafers in real time — boosting chip fabrication yields by 4.8%. Clean, precise, and profoundly impactful for the global computing ecosystem.",
+          job_desc: {
+            summary: "应用先进视觉 Transformer 与电子显微镜成像，研发 3nm 半导体晶圆缺陷亚纳米级检测算法。",
+            tasks: [
+              "训练处理超高分辨率极紫外（EUV）扫描图像的少样本异常检测模型",
+              "在硬件专用 FPGA 上实现纳米级特征图并行卷积加速，吞吐量提升 300%",
+              "与晶圆厂工艺工程师紧密对接，建立缺陷溯源自动分类与根因闭环分析系统"
+            ]
+          },
+          routine: [
+            { time: "08:15", emoji: "🚄", text: "Fast KTX train ride into Suwon; reviewing latest photolithography papers." },
+            { time: "09:30", emoji: "🔬", text: "Cleanroom wafer inspection: Validating sub-nanometer defect segmentation masks." },
+            { time: "12:15", emoji: "🍚", text: "Healthy Korean home-style banchan lunch in the high-tech campus cafeteria." },
+            { time: "14:00", emoji: "💻", text: "Refactoring inference pipelines to stream multi-gigapixel wafer images without lag." },
+            { time: "17:30", emoji: "🍵", text: "Relaxing traditional green tea break in historic Hwaseong Fortress park." },
+            { time: "20:00", emoji: "🧘", text: "Evening yoga and mindful stretching at home; resting well." }
+          ],
+          alternative_routines: [
+            [
+              { time: "07:45", emoji: "🚶", text: "Quiet morning stroll past Seoul Olympic Park rose gardens." },
+              { time: "09:30", emoji: "🤝", text: "Cross-functional engineering review with chip packaging specialists." },
+              { time: "13:00", emoji: "🍜", text: "Cold naengmyeon noodles lunch with team members." },
+              { time: "15:00", emoji: "⚡", text: "Benchmarking zero-shot defect classification on newly synthesized chip designs." },
+              { time: "18:00", emoji: "🎨", text: "Attending a modern ceramic pottery class in Insadong." }
+            ]
+          ],
+          tags: ["#SemiconductorAI", "#SuwonCampus", "#NanotechVision", "#KTechLeadership"]
         }
       ]
     },
@@ -843,7 +898,13 @@
           id: "ams_1",
           title: "Sustainable UX & Green AI Systems Designer",
           industry: "Green Tech & Human-Centered AI",
-          persona: { name: "Sofia van Dijk", handle: "@sofia_amsterdam_vibe", avatar: "👩🏼‍🎨", bio: "Designing low-carbon web interfaces & ethical human-AI interaction systems" },
+          persona: {
+            name: "Sofia van Dijk",
+            handle: "@sofia_amsterdam_vibe",
+            avatar: "👩🏼‍🎨",
+            photo: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=480&q=80",
+            bio: "Designing low-carbon web interfaces & ethical human-AI interaction systems"
+          },
           skills: ["Figma", "Design Systems", "Green Computing", "React", "User Research"],
           plog: "Bicycled 15 minutes along the leafy Prinsengracht canal past timber houseboats, stopping for fresh warm stroopwafels. Our timber-framed, solar-powered studio overlooks houseboats. Today's design sprint: redesigning enterprise software dashboards so that every user action consumes 40% fewer server CPU cycles. At 17:00 sharp, everyone closed laptops. We went kayaking through the canals into Vondelpark for an evening picnic.",
           job_desc: {
@@ -877,7 +938,13 @@
           id: "ams_2",
           title: "Clean Energy Grid Optimization Engineer",
           industry: "Renewable Energy & Smart Grids",
-          persona: { name: "Lars de Jong", handle: "@lars_energy_ams", avatar: "👨🏼‍💻", bio: "North Sea offshore wind power balancing & battery storage forecasting" },
+          persona: {
+            name: "Lars de Jong",
+            handle: "@lars_energy_ams",
+            avatar: "👨🏼‍💻",
+            photo: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=480&q=80",
+            bio: "North Sea offshore wind power balancing & battery storage forecasting"
+          },
           skills: ["Python", "Graph Neural Networks", "Time Series", "Docker", "Pandas"],
           plog: "Commuted to Amsterdam Science Park by fast electric train. Today our models balanced high North Sea gust outputs into national residential battery banks, preventing 420 tons of fossil backup ignition! Dutch directness makes all meetings fast and productive: 15-minute standup, no vanity slide decks, pure problem-solving. Enjoyed a craft beer on the sunny terrace after 5:00 PM.",
           job_desc: {
@@ -906,40 +973,6 @@
             ]
           ],
           tags: ["#OffshoreWind", "#SciencePark", "#36HourWeek", "#Renewables"]
-        },
-        {
-          id: "ams_3",
-          title: "Multilingual Ethical NLP & AI Safety Researcher",
-          industry: "AI Governance & Foundation Models",
-          persona: { name: "Anouk Bakker", handle: "@anouk_nlp_ams", avatar: "👩🏼‍🔬", bio: "Cultural inclusivity & bias audit for European multilingual foundation models" },
-          skills: ["Hugging Face", "PyTorch", "NLP", "Ethical AI", "Python"],
-          plog: "Working from our lab near the botanical gardens in Amsterdam East. We are auditing open foundation models to ensure smaller European languages (Dutch, Frisian, Basque, Gaelic) receive equal linguistic nuance and aren't overwritten by American cultural biases. Productive research hours followed by an evening bike ride across historic drawbridges to an open-air cinema.",
-          job_desc: {
-            summary: "负责多语言大语言模型文化包容性测评与对齐，保护区域语言多样性与人权合规标准。",
-            tasks: [
-              "构建涵盖欧洲 24 种官方语言的文化敏感性与刻板印象自动化测评基准",
-              "应用直接偏好优化（DPO）消除模型在少数族群历史文化表达上的系统性偏见",
-              "向欧盟《人工智能法案》（EU AI Act）合规委员会提交模型安全性透明度审查卷宗"
-            ]
-          },
-          routine: [
-            { time: "08:45", emoji: "🚲", text: "Gentle bike ride through Oosterpark listening to a linguistics audiobook." },
-            { time: "10:00", emoji: "📖", text: "Analyzing semantic embedding clusters across multilingual translation pairs." },
-            { time: "12:30", emoji: "🥗", text: "Salad bowl with fresh berries sitting near the historic De Gooyer windmill." },
-            { time: "14:15", emoji: "🔬", text: "Fine-tuning cultural alignment weights with reinforcement learning from human feedback." },
-            { time: "17:00", emoji: "🎬", text: "Attending an open-air documentary screening at Eye Filmmuseum across the river." },
-            { time: "20:45", emoji: "✍️", text: "Writing thoughts on ethical AI philosophy for personal Substack newsletter." }
-          ],
-          alternative_routines: [
-            [
-              { time: "08:30", emoji: "☕", text: "Pour-over Ethiopian coffee while inspecting synthetic benchmark evaluation scores." },
-              { time: "10:00", emoji: "🤝", text: "Virtual sync with Cambridge & Paris NLP ethicists on prompt injection defenses." },
-              { time: "13:00", emoji: "🥪", text: "Fresh sourdough lunch sitting by the canal bridge with colleagues." },
-              { time: "15:30", emoji: "💻", text: "Writing pytest suites for automated toxic output detection pipelines." },
-              { time: "18:00", emoji: "🪴", text: "Visiting the local plant nursery to pick up fresh trailing ivies for the flat." }
-            ]
-          ],
-          tags: ["#MultilingualNLP", "#EUAIAct", "#CulturalDiversity", "#AmsterdamEast"]
         }
       ]
     },
@@ -953,7 +986,13 @@
           id: "ldn_1",
           title: "Climate Carbon Quant & Portfolio Strategist",
           industry: "Sustainable Finance & Climate Risk",
-          persona: { name: "Charlotte Evans", handle: "@charlotte_ldn_quant", avatar: "👩🏼‍💼", bio: "Quantifying physical planetary climate risks for major UK pension portfolios" },
+          persona: {
+            name: "Charlotte Evans",
+            handle: "@charlotte_ldn_quant",
+            avatar: "👩🏼‍💼",
+            photo: "https://images.unsplash.com/photo-1567532939604-b6b5b0db2604?auto=format&fit=crop&w=480&q=80",
+            bio: "Quantifying physical planetary climate risks for major UK pension portfolios"
+          },
           skills: ["Python", "Docker", "Spatial Data", "Climate Scenarios", "SQL"],
           plog: "Red double-decker bus over London Bridge with views of the Tower of London and the Shard. Picked up a flat white in Borough Market. Our team models physical flood and extreme heat stress onto 20-year corporate sovereign debt. Lunch was artisan Ethiopian street food at Spitalfields. At 5:00 PM on Friday, the whole office walked to a 300-year-old historic riverside tavern to unwind.",
           job_desc: {
@@ -987,7 +1026,13 @@
           id: "ldn_2",
           title: "Genomics & Protein Folding Deep Learning Scientist",
           industry: "Biotech & Healthcare Innovation",
-          persona: { name: "Tariq Malik", handle: "@tariq_biotech_ldn", avatar: "👨🏽‍🔬", bio: "Diffusion models for antibody de novo design at Kings Cross Knowledge Quarter" },
+          persona: {
+            name: "Tariq Malik",
+            handle: "@tariq_biotech_ldn",
+            avatar: "👨🏽‍🔬",
+            photo: "https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?auto=format&fit=crop&w=480&q=80",
+            bio: "Diffusion models for antibody de novo design at Kings Cross Knowledge Quarter"
+          },
           skills: ["PyTorch", "AlphaFold", "BioPython", "Graph Networks", "HPC Clusters"],
           plog: "Kings Cross Knowledge Quarter — collaborating steps away from the Francis Crick Institute and British Library. Today our 3D geometric equivariant neural network designed a novel antibody binder for an autoimmune target with 10x higher simulated affinity. Stroll along Regent's Canal during lunch. Leaving at 5:30 PM to attend a chamber music recital at St Martin-in-the-Fields.",
           job_desc: {
@@ -1016,40 +1061,198 @@
             ]
           ],
           tags: ["#ProteinDesign", "#KingsCross", "#BiotechAI", "#RegentsCanal"]
-        },
+        }
+      ]
+    },
+    paris: {
+      name: "Paris (Station F / Silicon Sentier / Le Marais)",
+      country: "France",
+      flag: "🇫🇷",
+      vibe: "Haute Couture Innovation, Philosopher Spirit, Sunlit Seine Cafes, Artisan Sourdough",
+      roles: [
         {
-          id: "ldn_3",
-          title: "Generative Neural VFX & Cinema AI Lead",
-          industry: "Creative Arts & Film Production",
-          persona: { name: "Eleanor Vance", handle: "@eleanor_soho_vfx", avatar: "👩🏼‍🎨", bio: "Next-gen diffusion video synthesis for independent cinema in Soho" },
-          skills: ["PyTorch", "ComfyUI", "Nuke", "CUDA", "Python"],
-          plog: "Soho's cobbled alleyways and film editing suites. Coffee meetings at an artisan roastery discussing atmospheric digital set extensions for an upcoming indie sci-fi film. We deployed custom temporal consistency LoRA models so background rain and neon reflections don't flicker. London's creative density is unmatched: every conversation sparks a new cinematic idea.",
+          id: "par_1",
+          title: "Luxury AI & Haute Couture Generative Director",
+          industry: "Fashion Tech & Generative Design",
+          persona: {
+            name: "Amélie Laurent",
+            handle: "@amelie_paris_vfx",
+            avatar: "👩🏼‍🎨",
+            photo: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=480&q=80",
+            bio: "Physics-based cloth draping & neural texture synthesis in Le Marais ateliers"
+          },
+          skills: ["PyTorch", "Cloth Simulation", "Diffusion 3D", "Blender", "Python"],
+          plog: "Morning espresso and flaky butter croissant along the Canal Saint-Martin. Our creative studio in Le Marais bridges century-old French textile craftsmanship with frontier neural diffusion. Today, we generated fluid silk draping textures that react dynamically to runway light, reducing physical garment waste by 70%. Walked along the Seine river at golden hour listening to jazz accordion.",
           job_desc: {
-            summary: "负责电影后期视觉特效（VFX）领域的时间连续性神经视频生成与自动化调色合成系统研发。",
+            summary: "将前沿生成式三维扩散模型与物理布料仿真融合，为顶级时装屋打造无损虚拟走秀与面料设计系统。",
             tasks: [
-              "研发保持摄影机光流一致性的视频扩散模型与深度多通道控制插件（ControlNet）",
-              "构建导演专用无损提示词与视觉概念微调工作流，保证影视级画面分辨率",
-              "与特效艺术家团队协同，将 AI 工作流嵌入行业标准 Nuke/DaVinci 制作流水线"
+              "构建基于神经隐式场（Neural Implicit Fields）的精细纺织品悬垂微孔模拟管线",
+              "训练保持服饰几何保真度与缝纫线精准约束的高分辨率图像生成对齐模型",
+              "与巴黎高级定制手工艺团队紧密协作，将虚拟模型转化为实体可持续环保剪裁版型"
             ]
           },
           routine: [
-            { time: "09:15", emoji: "☕", text: "Specialty flat white in Dean Street Soho; chatting with independent directors." },
-            { time: "10:30", emoji: "🎬", text: "Screening room dailies: Reviewing neural background replacements at 4K resolution." },
-            { time: "13:00", emoji: "🍕", text: "Wood-fired sourdough pizza slice with fellow visual effects artists." },
-            { time: "15:00", emoji: "⚡", text: "Refining custom temporal cross-attention layers to eliminate pixel shimmering." },
-            { time: "18:00", emoji: "🍷", text: "Soho rooftop film gathering discussing independent British cinema futures." },
-            { time: "21:00", emoji: "🎧", text: "Listening to cinematic orchestral scores while journaling new narrative ideas." }
+            { time: "08:45", emoji: "🥐", text: "Warm pain au chocolat and double espresso beside Canal Saint-Martin." },
+            { time: "10:15", emoji: "🎨", text: "Atelier design review: Inspecting neural velvet reflections under virtual runway spotlights." },
+            { time: "12:45", emoji: "🥗", text: "Salade niçoise and chilled sparkling water in a quiet courtyard bistro." },
+            { time: "14:30", emoji: "🧵", text: "Physics-informed cloth simulation tuning: Eliminating cloth mesh clipping errors." },
+            { time: "18:00", emoji: "🍷", text: "Glass of Bordeaux wine with contemporary designers at an art gallery vernissage." },
+            { time: "20:30", emoji: "📚", text: "Reading history of French impressionism and sketching novel visual concepts." }
           ],
           alternative_routines: [
             [
-              { time: "08:30", emoji: "🚶", text: "Quiet morning stroll through Covent Garden cobblestones before tourists arrive." },
-              { time: "10:00", emoji: "🎨", text: "Fine-tuning film stock color science emulators using PyTorch neural LUTs." },
-              { time: "12:45", emoji: "🥗", text: "Fresh green salad bowl in Leicester Square garden." },
-              { time: "14:30", emoji: "💻", text: "Live demonstration of real-time neural inpainting to film studio producers." },
-              { time: "17:45", emoji: "🎞️", text: "Watching classic 35mm film screenings at the British Film Institute (BFI)." }
+              { time: "08:00", emoji: "🚴", text: "Biking along the Seine river past the Louvre under clear morning skies." },
+              { time: "09:45", emoji: "💻", text: "Pair programming: Accelerating custom CUDA optical flow kernels for video synthesis." },
+              { time: "13:00", emoji: "🥖", text: "Fresh jambon-beurre baguette sitting on the sunlit steps of the Palais Royal." },
+              { time: "15:15", emoji: "✨", text: "Live demonstration of real-time virtual fitting rooms to fashion house creative directors." },
+              { time: "18:30", emoji: "🎭", text: "Attending an experimental dance performance at the Opéra Garnier." }
             ]
           ],
-          tags: ["#SohoVFX", "#CinemaAI", "#LondonCreative", "#IndieFilm"]
+          tags: ["#StationF", "#HauteCoutureAI", "#LeMarais", "#ParisianLife"]
+        }
+      ]
+    },
+    berlin: {
+      name: "Berlin (Mitte / Kreuzberg / Friedrichshain)",
+      country: "Germany",
+      flag: "🇩🇪",
+      vibe: "Bohemian Freedom, Thriving Open Source Culture, Sourdough Bakeries, Vibrant Music & Arts",
+      roles: [
+        {
+          id: "ber_1",
+          title: "Open Source ML Infrastructure Engineer",
+          industry: "Developer Tools & Decentralized AI",
+          persona: {
+            name: "Felix Weber",
+            handle: "@felix_berlin_tech",
+            avatar: "👨🏼‍💻",
+            photo: "https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?auto=format&fit=crop&w=480&q=80",
+            bio: "Distributed PyTorch training clusters running on 100% European renewable energy"
+          },
+          skills: ["PyTorch", "Kubernetes", "Linux", "Rust", "Distributed Systems"],
+          plog: "Biked past Museum Island into our sunlit Mitte loft studio. Club Mate soda and warm seeded sourdough bread from the neighborhood bakery. Our open-source team builds distributed training frameworks that dynamically shift heavy compute workloads to data centers where Nordic hydro or wind power is currently surplus. Closed the laptop at 17:00 to meet friends at an outdoor beer garden along the Spree river.",
+          job_desc: {
+            summary: "构建开源分布式机器学习基础设施，利用欧洲绿色能源网动态调度大规模模型训练集群。",
+            tasks: [
+              "开发多节点高性能通信库优化（AllReduce/NCCL），降低跨机架通信开销",
+              "设计碳感知（Carbon-Aware）任务编排调度系统，根据实时电网碳排放因子自动平衡算力",
+              "维护活跃的开源开发者社区，审核全球贡献者的 pull requests 并保证严格代码质量"
+            ]
+          },
+          routine: [
+            { time: "08:45", emoji: "🚲", text: "Biking past historic Berlin Wall art and Museum Island under clear autumn skies." },
+            { time: "09:45", emoji: "🥐", text: "Club-Mate and fresh sourdough pretzel from a cozy bakery in Mitte." },
+            { time: "10:30", emoji: "💻", text: "Community PR review: Merging a 14% speedup in distributed gradient aggregation." },
+            { time: "13:00", emoji: "🥙", text: "Berlin Döner kebab at a beloved neighborhood spot with the engineering team." },
+            { time: "15:00", emoji: "⚡", text: "Deep work: Profiling InfiniBand RDMA packet latency on 128-GPU clusters." },
+            { time: "17:30", emoji: "🍻", text: "Relaxing with friends at an outdoor beer garden along the banks of the Spree river." }
+          ],
+          alternative_routines: [
+            [
+              { time: "08:00", emoji: "🏃", text: "Jogging through Tiergarten forest park, surrounded by massive green oaks." },
+              { time: "09:30", emoji: "☕", text: "Oat flat white in a quiet Kreuzberg cafe sketching cluster topology charts." },
+              { time: "12:30", emoji: "🥗", text: "Vegan falafel bowl lunch in a courtyard garden." },
+              { time: "15:00", emoji: "🔬", text: "Testing fault tolerance: Simulating sudden node dropouts during 70B model checkpointing." },
+              { time: "18:00", emoji: "🎧", text: "Attending an open modular synthesizer jamming session in Friedrichshain." }
+            ]
+          ],
+          tags: ["#BerlinMitte", "#OpenSourceAI", "#GreenCompute", "#Tiergarten"]
+        }
+      ]
+    },
+    zurich: {
+      name: "Zurich (ETH Campus / Lake Zurich / Enge)",
+      country: "Switzerland",
+      flag: "🇨🇭",
+      vibe: "Crystal Alpine Air, Lakeside Bliss, Swiss Precision Engineering, High Trust & Quiet Excellence",
+      roles: [
+        {
+          id: "zrh_1",
+          title: "Edge Neural Computing & Medical Implant AI Lead",
+          industry: "Medical Technology & High-Reliability AI",
+          persona: {
+            name: "Beat Meier",
+            handle: "@beat_zurich_ai",
+            avatar: "👨🏼‍🔬",
+            photo: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=480&q=80",
+            bio: "Sub-milliwatt neural processors for cardiac monitoring & neuro-implants at ETH"
+          },
+          skills: ["TinyML", "Embedded C", "PyTorch", "Biomedical Signal", "FPGA"],
+          plog: "Morning train along shimmering Lake Zurich with snowcapped Alps towering in the distance. Swiss muesli with fresh mountain blueberries. In our cleanroom laboratory near ETH Zurich, we verified our ultra-low-power neural network chip: it runs real-time cardiac arrhythmia detection consuming only 400 microwatts of power. During our 1-hour lunch break, our whole research team went for a swim in the crystal-clear lake.",
+          job_desc: {
+            summary: "研发超低功耗微瓦级边缘神经计算芯片与算法，应用于植入式心脏及神经医疗监测设备。",
+            tasks: [
+              "设计高压缩比脉冲神经网络（SNN）与量化感知剪枝（QAT）极简算子",
+              "在超低功耗集成电路（ASIC）上完成实时生理信号异常检测的软硬件协同设计",
+              "遵循瑞士与欧盟最高医疗器械安全标准（MDR/ISO 13485）完成长效植入验证"
+            ]
+          },
+          routine: [
+            { time: "08:15", emoji: "🚆", text: "Scenic train along Lake Zurich; gazing at the glistening water and distant Alps." },
+            { time: "09:30", emoji: "🔬", text: "Cleanroom testing of 400-microwatt neural sensor chips on cardiac simulation rigs." },
+            { time: "12:15", emoji: "🏊", text: "Quick dive and swim in Lake Zurich; crystal-clear alpine water refreshing the mind." },
+            { time: "14:00", emoji: "💻", text: "Mathematical modeling of spiked neural signal encoding for zero false alarms." },
+            { time: "17:30", emoji: "🚴", text: "Cycling home through quiet lakeside meadows; pure alpine air in the lungs." },
+            { time: "20:00", emoji: "🧀", text: "Fondue dinner with family, crisp local white wine, and quiet conversation." }
+          ],
+          alternative_routines: [
+            [
+              { time: "07:30", emoji: "🏃", text: "Uphill trail run up Uetliberg mountain overlooking the entire Zurich basin." },
+              { time: "09:30", emoji: "☕", text: "Hot espresso and fresh croissant at an ETH campus terrace cafe." },
+              { time: "11:00", emoji: "🤝", text: "Collaborative clinical review with surgeons from University Hospital Zurich." },
+              { time: "14:30", emoji: "⚡", text: "Refactoring assembly instructions to squeeze maximum battery longevity." },
+              { time: "18:00", emoji: "📖", text: "Reading Swiss engineering history and resting peacefully." }
+            ]
+          ],
+          tags: ["#LakeZurich", "#ETHZurich", "#MedicalAI", "#AlpineLife"]
+        }
+      ]
+    },
+    stockholm: {
+      name: "Stockholm (Kista Science City / Södermalm)",
+      country: "Sweden",
+      flag: "🇸🇪",
+      vibe: "Nordic Minimalism, Pristine Archipelagos, Fika Coffee Rituals, Zero Hierarchy Work Culture",
+      roles: [
+        {
+          id: "sto_1",
+          title: "Nordic Renewable Grid & Hydro AI Architect",
+          industry: "Clean Energy & Nordic Infrastructure",
+          persona: {
+            name: "Astrid Lindholm",
+            handle: "@astrid_nordic_ai",
+            avatar: "👩🏼‍💻",
+            photo: "https://images.unsplash.com/photo-1567532939604-b6b5b0db2604?auto=format&fit=crop&w=480&q=80",
+            bio: "AI hydroelectric reservoir balancing & Arctic wind forecasting across Sweden"
+          },
+          skills: ["PyTorch", "Hydrological ML", "Rust", "Time Series", "Docker"],
+          plog: "Brisk morning walk across the Skeppsholmen wooden bridges overlooking historic sailing schooners. Fika coffee break with warm cinnamon cardamom buns (kanelbulle) with the team. Today our models balanced water flow across 14 Northern Swedish hydroelectric dams to store excess offshore Baltic wind power with 99.3% efficiency. Swedish culture values consensus and mutual trust — zero micromanagement, 100% focus.",
+          job_desc: {
+            summary: "应用深度时序网络预测北极严寒天气下的水电蓄能与风电波动，构建北欧统一零碳调度智能体。",
+            tasks: [
+              "针对高纬度极寒气候条件开发融雪水量与高山冻土径流物理感知神经网络",
+              "构建多水库级联发电联合非线性优化算法，保障跨国北欧电网（Nord Pool）现货调度稳定",
+              "编写高鲁棒性 Rust 故障预测服务，实现大坝水闸与涡轮发电机组的预知性免维护"
+            ]
+          },
+          routine: [
+            { time: "08:30", emoji: "☕", text: "Morning dark roast filter coffee & kanelbulle in a Gamla Stan historic courtyard." },
+            { time: "10:00", emoji: "💧", text: "Hydrological reservoir simulation: Balancing Baltic storm wind inflows with hydro storage." },
+            { time: "12:30", emoji: "🐟", text: "Fresh smoked salmon and dill potatoes lunch overlooking Stockholm archipelago water." },
+            { time: "14:45", emoji: "💻", text: "Optimizing multi-agent reinforcement learning solvers for national power grid auctions." },
+            { time: "16:45", emoji: "⛵", text: "Laptops closed! Sailing out into the Stockholm archipelago with friends under sunset glow." },
+            { time: "20:00", emoji: "🔥", text: "Wood-fired sauna session followed by a refreshing dip in cold Baltic waters." }
+          ],
+          alternative_routines: [
+            [
+              { time: "07:45", emoji: "🏃", text: "Jogging along Djurgården island forest paths with dewy birch trees." },
+              { time: "09:30", emoji: "☕", text: "Team fika in our glass sunroom discussing Swedish open-source data initiatives." },
+              { time: "13:00", emoji: "🥗", text: "Warm root vegetable salad lunch at an organic Södermalm bakery." },
+              { time: "15:00", emoji: "⚡", text: "Validating sensor telemetry from Arctic wind farms operating at -25°C." },
+              { time: "18:00", emoji: "📖", text: "Curled up in a cozy armchair reading Scandinavian design and architecture journals." }
+            ]
+          ],
+          tags: ["#NordicFika", "#StockholmArchipelago", "#HydroCleanTech", "#LagomBalance"]
         }
       ]
     },
@@ -1063,7 +1266,13 @@
           id: "sf_1",
           title: "Autonomous Driving Perception Lead",
           industry: "Autonomous Vehicles & Robotics",
-          persona: { name: "Alex Rivera", handle: "@alex_sf_autonomy", avatar: "👨🏻‍💻", bio: "Multi-sensor camera & radar 3D occupancy forecasting across San Francisco hills" },
+          persona: {
+            name: "Alex Rivera",
+            handle: "@alex_sf_autonomy",
+            avatar: "👨🏻‍💻",
+            photo: "https://images.unsplash.com/photo-1501196354995-cbb51c65aaea?auto=format&fit=crop&w=480&q=80",
+            bio: "Multi-sensor camera & radar 3D occupancy forecasting across San Francisco hills"
+          },
           skills: ["PyTorch", "CUDA", "3D Occupancy", "C++", "TensorRT"],
           plog: "Blue Bottle pour-over in the Mission District. Commuted to our testing warehouse in Potrero Hill. Today our autonomous perception models handled steep San Francisco hills with dense cable car tracks and fog without hesitation. Lunch was a legendary Mission carnitas burrito in the sun at Dolores Park. Off by 5:30 PM to go bouldering at Dogpatch Boulders.",
           job_desc: {
@@ -1097,7 +1306,13 @@
           id: "sf_2",
           title: "Frontier LLM Alignment & Constitutional AI Engineer",
           industry: "Generative AI & Artificial General Intelligence",
-          persona: { name: "Chloe Zhang", handle: "@chloe_llm_sf", avatar: "👩🏻‍💻", bio: "RLHF reward modeling & automated red-teaming for reasoning foundation models" },
+          persona: {
+            name: "Chloe Zhang",
+            handle: "@chloe_llm_sf",
+            avatar: "👩🏻‍💻",
+            photo: "https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=480&q=80",
+            bio: "RLHF reward modeling & automated red-teaming for reasoning foundation models"
+          },
           skills: ["PyTorch", "RLHF", "DPO", "Kubernetes", "Python"],
           plog: "Working from our loft studio near South Park in SOMA. We're engineering automated constitutional AI critics that evaluate chain-of-thought mathematical reasoning without hallucination. Grabbed matcha at a local Japanese cafe. Walking around the grassy park discussing emergent reasoning bounds with visiting researchers. Left work on time for an ocean sunset view at Twin Peaks.",
           job_desc: {
@@ -1126,260 +1341,54 @@
             ]
           ],
           tags: ["#SOMA", "#SouthPark", "#LLMAlignment", "#TwinPeaks"]
-        },
-        {
-          id: "sf_3",
-          title: "Embodied Robotics Foundation Model Architect",
-          industry: "Robotics & Physical AI",
-          persona: { name: "Marcus Sterling", handle: "@marcus_robot_sf", avatar: "👨🏾‍💻", bio: "Cross-embodiment vision-language-action (VLA) foundation models" },
-          skills: ["PyTorch", "VLA Models", "JAX", "ROS2", "Python"],
-          plog: "Dogpatch makerspace warehouse! Today we deployed our open Vision-Language-Action foundation model across three different robot arms (different brands, different kinematics). Zero-shot generalization worked: when given the verbal command 'place the ripe avocado into the wooden bowl', all three arms completed it cleanly! High-fives all around, followed by craft IPAs at an outdoor patio by the water.",
-          job_desc: {
-            summary: "研发跨硬件构型的视觉-语言-动作（VLA）具身大模型，实现机器人零样本物理任务操作。",
-            tasks: [
-              "使用 JAX 训练大规模具身多模态基础网络，联合建模视觉场景理解与连续机械手轨迹",
-              "开发物理仿真器（Genesis/Isaac）到真实世界（Sim-to-Real）的领域泛化转换技术",
-              "建立严密的物理碰撞实时防护阻尼控制，确保机器人与人类安全共存"
-            ]
-          },
-          routine: [
-            { time: "08:15", emoji: "☕", text: "Black coffee from an old industrial warehouse roastery in Dogpatch." },
-            { time: "09:45", emoji: "🤖", text: "Live physical arm trials: Testing zero-shot grasping of irregular kitchen objects." },
-            { time: "12:30", emoji: "🌮", text: "Fish tacos by the waterfront pier, enjoying the cool bay breeze and maritime ships." },
-            { time: "14:30", emoji: "⚡", text: "Analyzing transformer attention rollout maps over physical manipulation trajectories." },
-            { time: "18:00", emoji: "🍺", text: "Team celebration at a Dogpatch brewery patio under outdoor string lights." },
-            { time: "20:45", emoji: "🛠️", text: "Home electronics workbench: Building open-source sensor kits for local high schools." }
-          ],
-          alternative_routines: [
-            [
-              { time: "08:00", emoji: "🚴", text: "Biking down the Embarcadero waterfront watching the morning ferries arrive." },
-              { time: "10:00", emoji: "🔬", text: "Benchmarking cross-embodiment transfer performance across diverse gripper types." },
-              { time: "13:00", emoji: "🥪", text: "Gourmet sourdough sandwich lunch discussing open robotics weights." },
-              { time: "15:00", emoji: "💻", text: "Refactoring JAX training loops to maximize TPU cluster utilization." },
-              { time: "18:15", emoji: "🌅", text: "Sunset walk through Crissy Field with views of Golden Gate Bridge." }
-            ]
-          ],
-          tags: ["#Dogpatch", "#EmbodiedAI", "#RoboticsVLA", "#Makerspace"]
         }
       ]
     },
-    berlin: {
-      name: "Berlin (Mitte / Kreuzberg / Friedrichshain)",
-      country: "Germany",
-      flag: "🇩🇪",
-      vibe: "Bohemian Freedom, Thriving Open Source Culture, Sourdough Bakeries, Vibrant Music & Arts",
+    ny: {
+      name: "New York (Manhattan / Brooklyn Silicon Alley)",
+      country: "United States",
+      flag: "🇺🇸",
+      vibe: "World Financial Epicenter, 24-Hour Pulse, Broadway Culture, Brooklyn Rooftop Skyline",
       roles: [
         {
-          id: "ber_1",
-          title: "Open Source ML Infrastructure Engineer",
-          industry: "Developer Tools & Decentralized AI",
-          persona: { name: "Felix Weber", handle: "@felix_berlin_tech", avatar: "👨🏼‍💻", bio: "Distributed PyTorch training clusters running on 100% European renewable energy" },
-          skills: ["PyTorch", "Kubernetes", "Linux", "Rust", "Distributed Systems"],
-          plog: "Biked past Museum Island into our sunlit Mitte loft studio. Club Mate soda and warm seeded sourdough bread from the neighborhood bakery. Our open-source team builds distributed training frameworks that dynamically shift heavy compute workloads to data centers where Nordic hydro or wind power is currently surplus. Closed the laptop at 17:00 to meet friends at an outdoor beer garden along the Spree river.",
+          id: "ny_1",
+          title: "High-Frequency Algorithmic Market Lead",
+          industry: "Quantitative Finance & Trading Intelligence",
+          persona: {
+            name: "Marcus Vance",
+            handle: "@marcus_ny_quant",
+            avatar: "👨🏾‍💼",
+            photo: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=480&q=80",
+            bio: "Sub-microsecond order execution & market microstructure modeling in Manhattan"
+          },
+          skills: ["Rust", "C++", "SIMD", "Time Series", "Linux Kernel"],
+          plog: "Morning subway into the Financial District. Stepped out past Trinity Church with a hot bagel and dark espresso. Our quantitative desk models cross-asset order flow and market microstructure across global stock and futures exchanges. We engineered zero-copy network kernel bypasses in Rust, cutting latency by 1.8 microseconds. Unwound with rooftop jazz in Brooklyn overlooking the Manhattan skyline lights.",
           job_desc: {
-            summary: "构建开源分布式机器学习基础设施，利用欧洲绿色能源网动态调度大规模模型训练集群。",
+            summary: "构建亚微秒级低延迟市场流动性与订单簿预测系统，优化千万级金融资产撮合与自动化对冲。",
             tasks: [
-              "开发多节点高性能通信库优化（AllReduce/NCCL），降低跨机架通信开销",
-              "设计碳感知（Carbon-Aware）任务编排调度系统，根据实时电网碳排放因子自动平衡算力",
-              "维护活跃的开源开发者社区，审核全球贡献者的 pull requests 并保证严格代码质量"
+              "使用 Rust 与 C++ 编写内核旁路（Kernel Bypass/DPDK）网络驱动接收超高频逐笔行情",
+              "训练时间序列 Transformer 预测纳秒级跨市场价格冲击与流动性黑天鹅事件",
+              "与交易合规部门联合建立自动化熔断与做市商安全隔离机制"
             ]
           },
           routine: [
-            { time: "08:45", emoji: "🚲", text: "Biking past historic Berlin Wall art and Museum Island under clear autumn skies." },
-            { time: "09:45", emoji: "🥐", text: "Club-Mate and fresh sourdough pretzel from a cozy bakery in Mitte." },
-            { time: "10:30", emoji: "💻", text: "Community PR review: Merging a 14% speedup in distributed gradient aggregation." },
-            { time: "13:00", emoji: "🥙", text: "Berlin Döner kebab at a beloved neighborhood spot with the engineering team." },
-            { time: "15:00", emoji: "⚡", text: "Deep work: Profiling InfiniBand RDMA packet latency on 128-GPU clusters." },
-            { time: "17:30", emoji: "🍻", text: "Relaxing with friends at an outdoor beer garden along the banks of the Spree river." }
+            { time: "07:15", emoji: "🥯", text: "Everything bagel with cream cheese & black drip coffee in Lower Manhattan." },
+            { time: "08:30", emoji: "📊", text: "Market open bell: Monitoring real-time order execution latencies across exchanges." },
+            { time: "12:15", emoji: "🥪", text: "Pastrami sandwich lunch walking around the historic Stone Street cobblestones." },
+            { time: "14:30", emoji: "⚡", text: "Profile-guided optimization of lock-free queue memory buffers in Rust." },
+            { time: "17:45", emoji: "🎷", text: "Ferry ride over to DUMBO, Brooklyn for rooftop live jazz with colleagues." },
+            { time: "20:30", emoji: "📖", text: "Reading game theory publications and resting well." }
           ],
           alternative_routines: [
             [
-              { time: "08:00", emoji: "🏃", text: "Jogging through Tiergarten forest park, surrounded by massive green oaks." },
-              { time: "09:30", emoji: "☕", text: "Oat flat white in a quiet Kreuzberg cafe sketching cluster topology charts." },
-              { time: "12:30", emoji: "🥗", text: "Vegan falafel bowl lunch in a courtyard garden." },
-              { time: "15:00", emoji: "🔬", text: "Testing fault tolerance: Simulating sudden node dropouts during 70B model checkpointing." },
-              { time: "18:00", emoji: "🎧", text: "Attending an open modular synthesizer jamming session in Friedrichshain." }
+              { time: "06:45", emoji: "🏃", text: "Morning run across Brooklyn Bridge with views of sunrise over the East River." },
+              { time: "09:00", emoji: "💻", text: "Simulating market flash crash scenarios with Monte Carlo distributed clusters." },
+              { time: "13:00", emoji: "🥗", text: "Healthy grain bowl lunch in Madison Square Park under spring elm trees." },
+              { time: "15:30", emoji: "🔬", text: "Benchmarking FPGA gate array synthesis for trading execution logic." },
+              { time: "19:00", emoji: "🎭", text: "Attending an off-Broadway musical theater performance with friends." }
             ]
           ],
-          tags: ["#BerlinMitte", "#OpenSourceAI", "#GreenCompute", "#Tiergarten"]
-        },
-        {
-          id: "ber_2",
-          title: "Spatial Neuro-Audio & Sound Synthesis Researcher",
-          industry: "Music Tech & Acoustic AI",
-          persona: { name: "Lena Fischer", handle: "@lena_sound_berlin", avatar: "👩🏼‍🎤", bio: "Generative diffusion models for 3D spatial audio & acoustic environment modeling" },
-          skills: ["PyTorch", "DSP", "Audio Diffusion", "Max/MSP", "C++"],
-          plog: "Berlin is the electronic music capital of the world. Our sound research studio in Friedrichshain develops neural audio diffusion models that synthesize full 3D binaural spatial soundscapes from textual descriptions. Today, legendary ambient electronic producers tested our acoustic plugin and were blown away by the organic analog warmth of the synthetic reverb. Finished early for an art gallery opening.",
-          job_desc: {
-            summary: "研发高保真三维空间音频神经合成算法，为沉浸式媒体与数字音乐制作带来前沿声学工具。",
-            tasks: [
-              "构建基于变分自编码器（VAE）与扩散模型的低延迟全频带音频生成网络",
-              "研发头部相关传输函数（HRTF）自适应神经拟合，实现耳机端逼真三维声场定位",
-              "与专业音乐制作人和声学工程师合作，确保合成音质达到母带级动态范围"
-            ]
-          },
-          routine: [
-            { time: "09:15", emoji: "☕", text: "Pour-over filter coffee in Friedrichshain; listening to dawn bird field recordings." },
-            { time: "10:30", emoji: "🎧", text: "Critical listening session on studio monitors: Evaluating phase coherence of audio diffusion." },
-            { time: "13:00", emoji: "🍜", text: "Vietnamese pho soup in a sunlit conservatory with sound designers." },
-            { time: "14:45", emoji: "🎹", text: "Connecting hardware modular synthesizers to our neural model via MIDI controllers." },
-            { time: "18:00", emoji: "🎨", text: "Visiting an experimental audio-visual installation exhibition in Kreuzberg." },
-            { time: "21:00", emoji: "🎶", text: "Composing ambient ambient electronic soundscapes in my home recording studio." }
-          ],
-          alternative_routines: [
-            [
-              { time: "08:30", emoji: "🚶", text: "Morning walk around Boxhagener Platz flea market browsing vintage vinyl records." },
-              { time: "10:00", emoji: "🔬", text: "Mathematical analysis of mel-spectrogram reconstruction loss functions." },
-              { time: "12:45", emoji: "🥪", text: "Warm rye bread sandwich with colleagues beside the historic canal." },
-              { time: "15:30", emoji: "💻", text: "Writing real-time C++ audio DSP plugins for digital audio workstations (DAWs)." },
-              { time: "18:30", emoji: "🚲", text: "Cycling home through quiet tree-lined avenues with a heart full of melody." }
-            ]
-          ],
-          tags: ["#Friedrichshain", "#SoundAI", "#MusicTech", "#SpatialAudio"]
-        },
-        {
-          id: "ber_3",
-          title: "Circular Economy & Industrial Material Vision Lead",
-          industry: "Clean Tech & Circular Manufacturing",
-          persona: { name: "Julian Schmidt", handle: "@julian_circular_ai", avatar: "👨🏼‍💻", bio: "Hyperspectral machine vision for high-speed automated textile & battery recycling" },
-          skills: ["Computer Vision", "Hyperspectral", "PyTorch", "Industrial Automation", "C++"],
-          plog: "Industrial testing facility in Charlottenburg. Germany's commitment to the circular economy means every piece of electronic waste and fabric must be reclaimed. Our hyperspectral vision cameras scan 20 discarded items per second, accurately classifying rare-earth battery chemistries and synthetic fabric blends with 99.4% purity. Seeing zero waste heading to incinerators is the ultimate motivation.",
-          job_desc: {
-            summary: "开发高光谱工业计算机视觉算法与自动化机械分选系统，实现废弃电子与纺织物的高纯度回收。",
-            tasks: [
-              "训练处理近红外与高光谱图像特征的轻量化卷积与变换器模型",
-              "设计高速工业流水线毫秒级视觉触发与高速气阀分选联动控制逻辑",
-              "与欧洲循环经济联盟对接，制定智能回收纯度检测行业质量标准"
-            ]
-          },
-          routine: [
-            { time: "08:15", emoji: "🚆", text: "S-Bahn train across Berlin; reading European environmental circularity reports." },
-            { time: "09:30", emoji: "🔬", text: "Testing hyperspectral sensor calibration on newly arrived lithium battery components." },
-            { time: "12:15", emoji: "🥗", text: "Lentil soup and whole grain bread in the industrial park green canteen." },
-            { time: "14:00", emoji: "⚡", text: "Optimizing sorting air jet timing to separate rare earth metals at 3 meters per second." },
-            { time: "17:15", emoji: "🚴", text: "Biking back along Charlottenburg canal; enjoying the reflection of weeping willows." },
-            { time: "20:00", emoji: "♟️", text: "Playing friendly chess games with neighborhood locals at a community cafe." }
-          ],
-          alternative_routines: [
-            [
-              { time: "08:00", emoji: "☕", text: "Strong black coffee and muesli while checking automated sorting purity metrics." },
-              { time: "10:00", emoji: "🤝", text: "Sync with recycling facility plant managers on continuous throughput milestones." },
-              { time: "13:00", emoji: "🥪", text: "Fresh sandwich lunch in the factory courtyard garden under sunny skies." },
-              { time: "15:00", emoji: "💻", text: "Training deep active learning models on ambiguous composite material samples." },
-              { time: "18:00", emoji: "🏃", text: "Evening jog through Volkspark Friedrichshain feeling energized." }
-            ]
-          ],
-          tags: ["#CircularEconomy", "#HyperspectralVision", "#ZeroWaste", "#Charlottenburg"]
-        }
-      ]
-    },
-    zurich: {
-      name: "Zurich (ETH Campus / Lake Zurich / Enge)",
-      country: "Switzerland",
-      flag: "🇨🇭",
-      vibe: "Crystal Alpine Air, Lakeside Bliss, Swiss Precision Engineering, High Trust & Quiet Excellence",
-      roles: [
-        {
-          id: "zrh_1",
-          title: "Edge Neural Computing & Medical Implant AI Lead",
-          industry: "Medical Technology & High-Reliability AI",
-          persona: { name: "Beat Meier", handle: "@beat_zurich_ai", avatar: "👨🏼‍🔬", bio: "Sub-milliwatt neural processors for cardiac monitoring & neuro-implants at ETH" },
-          skills: ["TinyML", "Embedded C", "PyTorch", "Biomedical Signal", "FPGA"],
-          plog: "Morning train along shimmering Lake Zurich with snowcapped Alps towering in the distance. Swiss muesli with fresh mountain blueberries. In our cleanroom laboratory near ETH Zurich, we verified our ultra-low-power neural network chip: it runs real-time cardiac arrhythmia detection consuming only 400 microwatts of power. During our 1-hour lunch break, our whole research team went for a swim in the crystal-clear lake.",
-          job_desc: {
-            summary: "研发超低功耗微瓦级边缘神经计算芯片与算法，应用于植入式心脏及神经医疗监测设备。",
-            tasks: [
-              "设计高压缩比脉冲神经网络（SNN）与量化感知剪枝（QAT）极简算子",
-              "在超低功耗集成电路（ASIC）上完成实时生理信号异常检测的软硬件协同设计",
-              "遵循瑞士与欧盟最高医疗器械安全标准（MDR/ISO 13485）完成长效植入验证"
-            ]
-          },
-          routine: [
-            { time: "08:15", emoji: "🚆", text: "Scenic train along Lake Zurich; gazing at the glistening water and distant Alps." },
-            { time: "09:30", emoji: "🔬", text: "Cleanroom testing of 400-microwatt neural sensor chips on cardiac simulation rigs." },
-            { time: "12:15", emoji: "🏊", text: "Quick dive and swim in Lake Zurich; crystal-clear alpine water refreshing the mind." },
-            { time: "14:00", emoji: "💻", text: "Mathematical modeling of spiked neural signal encoding for zero false alarms." },
-            { time: "17:30", emoji: "🚴", text: "Cycling home through quiet lakeside meadows; pure alpine air in the lungs." },
-            { time: "20:00", emoji: "🧀", text: "Fondue dinner with family, crisp local white wine, and quiet conversation." }
-          ],
-          alternative_routines: [
-            [
-              { time: "07:30", emoji: "🏃", text: "Uphill trail run up Uetliberg mountain overlooking the entire Zurich basin." },
-              { time: "09:30", emoji: "☕", text: "Hot espresso and fresh croissant at an ETH campus terrace cafe." },
-              { time: "11:00", emoji: "🤝", text: "Collaborative clinical review with surgeons from University Hospital Zurich." },
-              { time: "14:30", emoji: "⚡", text: "Refactoring assembly instructions to squeeze maximum battery longevity." },
-              { time: "18:00", emoji: "📖", text: "Reading Swiss engineering history and resting peacefully." }
-            ]
-          ],
-          tags: ["#LakeZurich", "#ETHZurich", "#MedicalAI", "#AlpineLife"]
-        },
-        {
-          id: "zrh_2",
-          title: "Sovereign AI & Confidential Computing Cryptographer",
-          industry: "Data Sovereignty & Privacy AI",
-          persona: { name: "Elena Rossi", handle: "@elena_swiss_privacy", avatar: "👩🏻‍💻", bio: "Zero-knowledge proofs & federated learning for European hospital networks" },
-          skills: ["Zero-Knowledge Proofs", "Rust", "Federated Learning", "PyTorch", "Linux"],
-          plog: "Working from our high-security center in Enge. Swiss privacy laws provide the world's highest trust foundation. Today, 14 major European cancer hospitals trained a collaborative diagnostic model across our zero-knowledge federated computing network — without a single patient record ever leaving its originating hospital. Trust, math, and precision solving real human problems.",
-          job_desc: {
-            summary: "构建基于零知识证明与同态加密的可信联邦学习系统，实现跨国医疗敏感数据的无泄漏协同计算。",
-            tasks: [
-              "设计基于安全多方计算（SMPC）与可信执行环境（TEE）的模型聚合验证协议",
-              "使用 Rust 编写高性能密码学证明生成工具，将验证开销压缩在毫秒量级",
-              "确保联邦学习架构完全符合瑞士联邦数据保护法（FADP）与 GDPR 严格要求"
-            ]
-          },
-          routine: [
-            { time: "08:30", emoji: "🚶", text: "Peaceful morning walk past stone historic fountains in the Old Town (Altstadt)." },
-            { time: "09:45", emoji: "🔒", text: "Audit of cryptographic zero-knowledge circuits for federated gradient verification." },
-            { time: "12:30", emoji: "🥗", text: "Fresh Swiss alpine salad and crusty bread in a quiet courtyard garden." },
-            { time: "14:15", emoji: "💻", text: "Benchmarking homomorphic encryption throughput across European server enclaves." },
-            { time: "17:15", emoji: "⛵", text: "Sailing on Lake Zurich with university club friends under golden late sun." },
-            { time: "20:30", emoji: "📚", text: "Reading modern cryptography literature and sipping soothing chamomile tea." }
-          ],
-          alternative_routines: [
-            [
-              { time: "08:00", emoji: "☕", text: "Strong double espresso with dark Swiss chocolate on a balcony facing the lake." },
-              { time: "09:30", emoji: "🤝", text: "Virtual security sync with European privacy commissioners and hospital directors." },
-              { time: "13:00", emoji: "🍜", text: "Warm noodle broth lunch discussing distributed consensus protocols." },
-              { time: "15:00", emoji: "⚡", text: "Profiling memory safety in Rust crates to eliminate any potential side-channel leaks." },
-              { time: "18:00", emoji: "🏔️", text: "Evening walk through hillside vineyards with panoramic views of the Alps." }
-            ]
-          ],
-          tags: ["#SwissPrivacy", "#ZeroKnowledge", "#ConfidentialComputing", "#Enge"]
-        },
-        {
-          id: "zrh_3",
-          title: "Glaciology & Alpine Climate Deep Modeling Scientist",
-          industry: "Earth Observation & Environmental Science",
-          persona: { name: "Florian Keller", handle: "@florian_glacier_ai", avatar: "👨🏼‍🔬", bio: "Satellite radar interferometry tracking glacier mass loss with 3D deep vision models" },
-          skills: ["Remote Sensing", "PyTorch", "SAR Interferometry", "Python", "GIS"],
-          plog: "Laboratory overlooking the Zurichberg hills. We process radar satellite data from the European Space Agency Sentinel constellation, generating daily sub-centimeter 3D mass tracking for all Swiss glaciers. Our AI models predict glacial runoff weeks in advance, protecting mountain villages from sudden flash floods and optimizing hydroelectric dams.",
-          job_desc: {
-            summary: "应用卫星合成孔径雷达（SAR）与三维深度学习网络，实时建模阿尔卑斯山冰川融水与地质滑坡风险。",
-            tasks: [
-              "开发多时相雷达干涉测量（InSAR）点云处理算法，监测高山冰层亚厘米级形变",
-              "将物理冰川融化动力学方程与深度神经网络融合，预测极端高温下的融水量",
-              "与瑞士联邦环境局对接，建立高山堰塞湖溢流自动化早期预警机制"
-            ]
-          },
-          routine: [
-            { time: "08:30", emoji: "🚡", text: "Riding the historic Polybahn funicular up to the campus viewpoint." },
-            { time: "09:45", emoji: "🛰️", text: "Processing overnight Sentinel-1 SAR imagery over the Aletsch Glacier." },
-            { time: "12:15", emoji: "🥪", text: "Alpine cheese and rye bread lunch sitting on the outdoor sun deck." },
-            { time: "14:00", emoji: "🏔️", text: "Simulating meltwater channel flow dynamics under projected summer heat waves." },
-            { time: "17:15", emoji: "🚴", text: "Fast coasting bike ride down through pine forests into Zurich center." },
-            { time: "19:45", emoji: "📸", text: "Developing landscape film photographs taken during weekend alpine treks." }
-          ],
-          alternative_routines: [
-            [
-              { time: "07:45", emoji: "🏃", text: "Morning trail jog along the Limmat river watching swans glide on glassy water." },
-              { time: "09:30", emoji: "💻", text: "Calibrating 3D convolutional networks on ground-penetrating radar depth soundings." },
-              { time: "12:45", emoji: "🍲", text: "Warm barley soup at a historic guild house restaurant in the old town." },
-              { time: "15:00", emoji: "📊", text: "Presenting hydrological forecast models to regional hydroelectric operators." },
-              { time: "18:00", emoji: "🏊", text: "Relaxing evening swim at the vintage wooden Flussbad Oberer Letten." }
-            ]
-          ],
-          tags: ["#Glaciology", "#EarthObservation", "#AlpineScience", "#Polybahn"]
+          tags: ["#WallStreet", "#DUMBO", "#RustQuant", "#ManhattanSkyline"]
         }
       ]
     },
@@ -1393,7 +1402,13 @@
           id: "syd_1",
           title: "Marine & Coral Reef Ecosystem AI Lead",
           industry: "Ocean Conservation & Environmental AI",
-          persona: { name: "Liam O'Connor", handle: "@liam_reef_ai", avatar: "👨🏼‍🔬", bio: "Autonomous underwater vehicle vision tracking Great Barrier Reef recovery" },
+          persona: {
+            name: "Liam O'Connor",
+            handle: "@liam_reef_ai",
+            avatar: "👨🏼‍🔬",
+            photo: "https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?auto=format&fit=crop&w=480&q=80",
+            bio: "Autonomous underwater vehicle vision tracking Great Barrier Reef recovery"
+          },
           skills: ["Computer Vision", "Underwater Robotics", "PyTorch", "Python", "ROS2"],
           plog: "6:00 AM sunrise surf at Bondi Beach — watching dolphins play in the green peeling waves. Quick shower, flat white from a Surry Hills laneway cafe, and into our sunny open-brick lab by 9:00 AM. We deployed our computer vision model onto autonomous underwater drones: it catalogs coral bleaching and marine biodiversity with 98.7% accuracy across thousands of square kilometers. Working in Australia means true health and sunshine every day.",
           job_desc: {
@@ -1419,78 +1434,10 @@
               { time: "09:00", emoji: "💻", text: "Synchronizing drone imagery feeds with satellite temperature anomaly overlays." },
               { time: "12:45", emoji: "🥪", text: "Sourdough toastie at a harbor cafe watching yachts glide past the Opera House." },
               { time: "15:00", emoji: "🔬", text: "Benchmarking edge inference performance on subsea pressure-resistant housings." },
-              { time: "18:00", emoji: "🏊", text: "Late afternoon swim at the ocean ocean rock pool; feeling thoroughly refreshed." }
+              { time: "18:00", emoji: "🏊", text: "Late afternoon swim at the ocean rock pool; feeling thoroughly refreshed." }
             ]
           ],
           tags: ["#BondiSurfing", "#ReefAI", "#SurryHills", "#OceanConservation"]
-        },
-        {
-          id: "syd_2",
-          title: "Renewable Microgrid & Distributed Energy ML Engineer",
-          industry: "Clean Tech & Solar Microgrids",
-          persona: { name: "Sophie Nguyen", handle: "@sophie_energy_syd", avatar: "👩🏻‍💻", bio: "Rooftop solar forecasting & neighborhood virtual power plants in Barangaroo" },
-          skills: ["Time Series", "PyTorch", "FastAPI", "GCP", "PostgreSQL"],
-          plog: "High-floor glass studio in Barangaroo overlooking Sydney Harbour Bridge. Australia has the highest per-capita rooftop solar penetration in the world. Our machine learning algorithms aggregate 80,000 suburban household batteries into a virtual power plant, feeding clean solar power back into the grid during hot summer afternoons. Leaving at 5:00 PM for an ocean swim at Bronte pool.",
-          job_desc: {
-            summary: "构建分布式家庭屋顶光伏与储能电池聚合预测系统，实现虚拟电厂（VPP）智能化电力现货竞价。",
-            tasks: [
-              "针对全澳数十万家庭逆变器数据流开发亚小时级光伏发电与负荷双向预测网络",
-              "设计博弈论强化学习算法，优化虚拟电厂在国家电力市场（NEM）的最优调度决策",
-              "与能源网络监管机构合作，保障分布式电网逆向潮流安全与电网电压稳定性"
-            ]
-          },
-          routine: [
-            { time: "07:30", emoji: "🏊", text: "Morning ocean dip at Bronte ocean baths with the warm morning sun." },
-            { time: "09:00", emoji: "☕", text: "Magic flat white coffee; checking suburban solar generation curves." },
-            { time: "10:30", emoji: "☀️", text: "Virtual Power Plant dispatch review: Shifting 45MWh of rooftop solar into community storage." },
-            { time: "12:30", emoji: "🍣", text: "Fresh sushi rolls by the waterfront promenade watching harbor ferries dock." },
-            { time: "14:45", emoji: "⚡", text: "Training gradient boosting models on cloud cover and temperature satellite feeds." },
-            { time: "17:00", emoji: "🚴", text: "Biking along the harbor cycleway to a seaside BBQ with neighborhood friends." }
-          ],
-          alternative_routines: [
-            [
-              { time: "07:00", emoji: "🧘", text: "Outdoor yoga on the grassy headland at Barangaroo Reserve overlooking the harbor." },
-              { time: "09:15", emoji: "💻", text: "Deploying updated microgrid forecasting endpoints on Google Cloud Kubernetes." },
-              { time: "13:00", emoji: "🥗", text: "Vietnamese rice paper rolls and green juice in the sunlit atrium." },
-              { time: "15:15", emoji: "📊", text: "Simulating electricity spot price spikes during peak heatwave demand periods." },
-              { time: "18:00", emoji: "⛵", text: "Sunset twilight sailing race with the local amateur yacht club." }
-            ]
-          ],
-          tags: ["#Barangaroo", "#SolarPower", "#VirtualPowerPlant", "#SydneyHarbour"]
-        },
-        {
-          id: "syd_3",
-          title: "Bushfire Risk Mapping & Early Detection AI Lead",
-          industry: "Public Safety & Satellite Earth Observation",
-          persona: { name: "Ben Walker", handle: "@ben_spatial_syd", avatar: "👨🏼‍💻", bio: "Thermal infrared satellite feeds & drone early wildfire detection" },
-          skills: ["Computer Vision", "Satellite Remote Sensing", "Python", "GIS", "C++"],
-          plog: "Redfern tech innovation hub. Protecting the Australian bushland and wildlife. Our team integrates geostationary thermal satellite streams with autonomous high-altitude spotter drones. Today our early detection model flagged an incipient lightning-induced ignition in the Blue Mountains in under 90 seconds, allowing local fire crews to extinguish it before it spread. A deeply rewarding day.",
-          job_desc: {
-            summary: "应用地球静止气象卫星热红外反演与无人机边缘视觉，构建全天候森林火险快速预警系统。",
-            tasks: [
-              "训练处理多通道高频卫星遥感数据的亚像元微小热异常火点识别卷积网络",
-              "结合地表植被干燥度指数（NDVI）、风速场与地形坡度动态预测山火蔓延路径",
-              "与乡村消防局（RFS）指挥中心系统集成，实现秒级警报自动推送与应急调度联动"
-            ]
-          },
-          routine: [
-            { time: "08:15", emoji: "🚆", text: "Train into Redfern; enjoying views of jacaranda trees in purple bloom." },
-            { time: "09:30", emoji: "🛰️", text: "Inspecting thermal infrared anomaly detections from Himawari-9 satellite." },
-            { time: "12:15", emoji: "🥪", text: "Turkish pide sandwich lunch in a leafy park watching cockatoos in the trees." },
-            { time: "14:00", emoji: "🔥", text: "Calibrating cellular automata fire spread simulation against historical fire grounds." },
-            { time: "17:30", emoji: "🏃", text: "Evening harbor run across the Sydney Harbour Bridge; sunset painting the sails." },
-            { time: "20:30", emoji: "🔭", text: "Backyard stargazing in the clear southern night sky, identifying the Southern Cross." }
-          ],
-          alternative_routines: [
-            [
-              { time: "07:30", emoji: "☕", text: "Iced long black coffee while checking overnight weather radar moisture maps." },
-              { time: "09:30", emoji: "🤝", text: "Debrief with emergency services coordinators on autonomous drone dispatch latency." },
-              { time: "13:00", emoji: "🥗", text: "Healthy grain bowl in Surry Hills courtyard with spatial mapping peers." },
-              { time: "15:00", emoji: "💻", text: "Optimizing geographic GeoJSON indexing in PostGIS for rapid spatial queries." },
-              { time: "18:00", emoji: "🎸", text: "Playing acoustic tunes around a beach bonfire with longtime friends." }
-            ]
-          ],
-          tags: ["#BushfireSafety", "#Redfern", "#SatelliteVision", "#HarbourLiving"]
         }
       ]
     },
@@ -1504,7 +1451,13 @@
           id: "tor_1",
           title: "Healthcare Medical Imaging & Oncology AI Lead",
           industry: "Medical Diagnostics & Clinical AI",
-          persona: { name: "David Kim", handle: "@david_toronto_med_ai", avatar: "👨🏻‍🔬", bio: "3D CT scan volumetric lung nodule detection with University Health Network" },
+          persona: {
+            name: "David Kim",
+            handle: "@david_toronto_med_ai",
+            avatar: "👨🏻‍🔬",
+            photo: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=480&q=80",
+            bio: "3D CT scan volumetric lung nodule detection with University Health Network"
+          },
           skills: ["PyTorch", "MONAI", "Medical Imaging", "3D Convolutions", "DICOM"],
           plog: "Rode the King Street streetcar into Toronto's Discovery District. University of Toronto and Vector Institute are legendary epicenters of deep learning. Collaborating directly with radiologists at Princess Margaret Cancer Centre: our 3D volumetric model detected early-stage nodules with 99.1% sensitivity, cutting radiologist reading fatigue by 45%. Stopped by St. Lawrence Market for warm maple peameal bacon on a bun.",
           job_desc: {
@@ -1533,74 +1486,102 @@
             ]
           ],
           tags: ["#DiscoveryDistrict", "#MedicalAI", "#VectorInstitute", "#TorontoLife"]
-        },
+        }
+      ]
+    },
+    dubai: {
+      name: "Dubai (DIFC / Dubai Internet City / Marina)",
+      country: "United Arab Emirates",
+      flag: "🇦🇪",
+      vibe: "Futuristic Architectural Wonders, Desert Sunset Dune Drives, Global Crossroads, Zero Personal Income Tax",
+      roles: [
         {
-          id: "tor_2",
-          title: "Quantum-Classical Hybrid ML Optimization Lead",
-          industry: "Quantum Computing & Advanced Analytics",
-          persona: { name: "Amira Patel", handle: "@amira_quantum_to", avatar: "👩🏽‍💻", bio: "Variational quantum eigensolvers for chemical material discovery at MaRS Hub" },
-          skills: ["PennyLane", "Qiskit", "PyTorch", "Quantum Algorithms", "Python"],
-          plog: "Working at the soaring glass atrium of MaRS Discovery District. Toronto has one of the world's highest concentrations of quantum computing talent. We are developing hybrid quantum-classical algorithms that simulate battery electrolyte degradation: classical neural nets handle representation, while quantum circuits calculate correlated electron ground states. Walked down to the waterfront at dusk to enjoy the fresh breeze off Lake Ontario.",
+          id: "dxb_1",
+          title: "Autonomous Aerial Fleet & Smart City Lead",
+          industry: "Urban Air Mobility & Autonomous Drones",
+          persona: {
+            name: "Tariq Al-Mansoor",
+            handle: "@tariq_dubai_fleet",
+            avatar: "👨🏽‍💻",
+            photo: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=480&q=80",
+            bio: "Autonomous electric vertical takeoff air taxi routing across Dubai skyscrapers"
+          },
+          skills: ["PyTorch", "Trajectory Optimization", "C++", "ROS2", "5G Telemetry"],
+          plog: "Morning views of the Burj Khalifa piercing through golden desert sunrise mist. Fresh cardamom karak chai at our DIFC innovation hub. Dubai has launched the world's first commercial autonomous air taxi passenger corridor. Today our 4D collision avoidance network safely rerouted 40 drone test flights around sudden desert thermal updrafts. Finished work at 5:00 PM for a sunset desert dune drive with friends.",
           job_desc: {
-            summary: "开发变分量子算法（VQE/QAOA）与经典神经网络混合求解器，加速新型清洁能源材料研发。",
+            summary: "负责超大城市自主飞行器（eVTOL）空域调度与毫秒级四维防撞避障航线优化系统研发。",
             tasks: [
-              "在 PennyLane 与 Qiskit 平台上设计抗噪声量子线路（NISQ）变分优化算子",
-              "将经典图神经网络与参数化量子电路级联，求解复杂分子轨道能量本征值",
-              "与量子硬件合作方开展真机基准评测，攻关量子纠错与线路深度压缩瓶颈"
+              "构建多智能体强化学习算法，优化三维密集城市空域内的动态空域走廊分配",
+              "集成气象激光雷达数据预测沙漠突发沙尘暴与高空热气流，实时重构备降航线",
+              "与迪拜民航局（DCAA）严格对接，达成 100% 故障安全冗余航空安全认证"
             ]
           },
           routine: [
-            { time: "08:45", emoji: "☕", text: "Double espresso in the sun-drenched MaRS atrium; sketching quantum circuit diagrams." },
-            { time: "10:15", emoji: "⚛️", text: "Quantum simulation run: Evaluating parameterized rotation gates on noisy simulator." },
-            { time: "12:45", emoji: "🍲", text: "Warm vegetarian butter chicken and garlic naan in the student hub food hall." },
-            { time: "14:30", emoji: "🔬", text: "Benchmarking convergence rates of classical gradient descent on quantum surfaces." },
-            { time: "17:30", emoji: "🌅", text: "Walking along Sugar Beach boardwalk watching sailboats cruise Lake Ontario." },
-            { time: "20:30", emoji: "♟️", text: "Playing rapid chess tournaments online while sipping hot Earl Grey tea." }
+            { time: "08:15", emoji: "🫖", text: "Hot spiced karak chai overlooking the glowing futuristic Museum of the Future." },
+            { time: "09:30", emoji: "🚁", text: "Live autonomous flight corridor simulation testing over Dubai Marina waterways." },
+            { time: "12:30", emoji: "🥙", text: "Fresh grilled shawarma and pomegranate juice at an open terrace restaurant in DIFC." },
+            { time: "14:15", emoji: "💻", text: "Simulating sudden microburst wind anomalies on eVTOL passenger drone stability." },
+            { time: "17:30", emoji: "🏜️", text: "Sunset 4x4 desert drive over golden sand dunes under a vast crimson sky." },
+            { time: "20:30", emoji: "🔭", text: "Relaxing by a desert camp under clear Arabian stars; drinking mint tea." }
           ],
           alternative_routines: [
             [
-              { time: "08:00", emoji: "🚴", text: "Cycling through the lush Don Valley trail surrounded by towering green trees." },
-              { time: "09:30", emoji: "💡", text: "Whiteboard brainstorming with University of Toronto quantum physicists." },
-              { time: "13:00", emoji: "🥗", text: "Crisp autumn apple and walnut salad bowl on the university campus lawn." },
-              { time: "15:15", emoji: "💻", text: "Writing test suites verifying unitary matrix preservation across quantum layers." },
-              { time: "18:30", emoji: "🎷", text: "Enjoying live acoustic jazz in the historic Distillery District cobblestones." }
+              { time: "07:00", emoji: "🏊", text: "Morning swim in the Arabian Gulf at Jumeirah Beach with gentle warm turquoise waves." },
+              { time: "09:30", emoji: "🤝", text: "Coordinating international drone safety protocols with European aviation authorities." },
+              { time: "13:00", emoji: "🥗", text: "Lebanese fattoush salad and hummus lunch with our flight controls team." },
+              { time: "15:00", emoji: "⚡", text: "Optimizing 5G ground-to-air telemetry packet latency on edge relay towers." },
+              { time: "18:30", emoji: "🌆", text: "Stroll along Dubai Marina promenade as evening luxury yachts glide under neon towers." }
             ]
           ],
-          tags: ["#MaRSHub", "#QuantumML", "#CleanEnergyMaterials", "#SugarBeach"]
-        },
+          tags: ["#DubaiFuture", "#UrbanAirMobility", "#BurjKhalifa", "#DesertSunset"]
+        }
+      ]
+    },
+    saopaulo: {
+      name: "São Paulo (Faria Lima / Vila Madalena / Paulista)",
+      country: "Brazil",
+      flag: "🇧🇷",
+      vibe: "Latin America Financial Powerhouse, Bohemian Murals, Passionate Samba Rhythms, Fresh Tropical Produce",
+      roles: [
         {
-          id: "tor_3",
-          title: "Multilingual Dialogue & Cultural Preservation AI Lead",
-          industry: "NLP & Digital Humanities",
-          persona: { name: "Ethan Tremblay", handle: "@ethan_nlu_to", avatar: "👨🏼‍💻", bio: "Indigenous language revitalization & low-resource dialogue systems in Yorkville" },
-          skills: ["PyTorch", "Hugging Face", "Low-Resource NLP", "Speech Recognition", "Python"],
-          plog: "Yorkville heritage building studio. Partnering directly with Indigenous community elders across Canada to build speech recognition and conversational tools for Cree, Inuktitut, and Ojibwe languages. Respecting cultural data sovereignty means the community retains 100% ownership of training data. Seeing young children practicing their ancestral language with our interactive conversational app is the greatest achievement of my career.",
+          id: "sp_1",
+          title: "AgTech Satellite & Amazon Climate AI Lead",
+          industry: "AgTech & Climate Remote Sensing",
+          persona: {
+            name: "Camila Silva",
+            handle: "@camila_agro_ai",
+            avatar: "👩🏻‍🔬",
+            photo: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=480&q=80",
+            bio: "Multispectral satellite radar tracking sustainable regenerative agriculture in Brazil"
+          },
+          skills: ["PyTorch", "Remote Sensing", "GIS", "Python", "Spatial ML"],
+          plog: "Morning espresso with warm pão de queijo (Brazilian cheese bread) in bohemian Vila Madalena. São Paulo is the beating heart of Latin American technology. Our remote sensing algorithms monitor 12 million hectares of agricultural land, distinguishing between sustainable regenerative crop rotations and soil degradation. Celebrating a successful harvest prediction model with fresh açaí bowls on a sunny rooftop terrace.",
           job_desc: {
-            summary: "研发低资源稀缺语种自动语音识别（ASR）与对话大模型，赋能原住民文化语言数字化抢救与传承。",
+            summary: "应用多光谱卫星遥感与深度时空图网络，构建全巴西农田土壤碳汇与可持续农业自动化监测系统。",
             tasks: [
-              "构建基于自监督语音表征（wav2vec/Whisper）的极少标注语种自适应迁移算法",
-              "落地社区主导的数据主权（CARE 原则）治理架构，保证训练数据仅用于社区指定用途",
-              "开发离线移动端轻量级语音互动教学应用，支持无网络偏远社区流畅使用"
+              "训练处理多时相光学与雷达卫星影像的亚公顷级作物长势与干旱胁迫预测模型",
+              "研发森林退化与毁林早期预警算法，为国际绿色农业认证提供不可篡改遥感凭证",
+              "与巴西农业研究总署（Embrapa）合作，帮助数万中小农户智能优化水肥用量"
             ]
           },
           routine: [
-            { time: "08:45", emoji: "🚶", text: "Walk through Yorkville leafy streets past Victorian brick houses and art galleries." },
-            { time: "10:00", emoji: "🎙️", text: "Acoustic audio alignment: Reviewing elder pronunciation audio files with linguists." },
-            { time: "12:30", emoji: "🥪", text: "Smoked meat sandwich and pickles at a neighborhood Jewish deli." },
-            { time: "14:15", emoji: "📱", text: "Testing offline speech recognition inference on lightweight Android tablets." },
-            { time: "17:30", emoji: "🌆", text: "Strolling through the Royal Ontario Museum grounds as evening lights glow." },
-            { time: "20:00", emoji: "📖", text: "Reading Indigenous historical poetry and feeling deep connection and purpose." }
+            { time: "08:15", emoji: "🧀", text: "Fresh hot pão de queijo and strong Brazilian cafezinho in Vila Madalena." },
+            { time: "09:30", emoji: "🛰️", text: "Processing overnight Sentinel-2 and PlanetScope multispectral satellite passes." },
+            { time: "12:30", emoji: "🍲", text: "Hearty feijoada lunch with fresh orange slices and farofa with colleagues." },
+            { time: "14:30", emoji: "🌿", text: "Validating soil moisture deep learning predictions against on-ground IoT sensors." },
+            { time: "17:45", emoji: "🎨", text: "Walking along Beco do Batman graffiti art alleys; lively street music filling the air." },
+            { time: "20:00", emoji: "💃", text: "Attending a local acoustic Bossa Nova live session at a neighborhood lounge." }
           ],
           alternative_routines: [
             [
-              { time: "08:00", emoji: "☕", text: "Warm cedar tea on the porch while reviewing cross-lingual phoneme embedding maps." },
-              { time: "09:45", emoji: "🤝", text: "Video conference with northern community educators on tablet app feedback." },
-              { time: "13:00", emoji: "🥗", text: "Wild rice and roasted squash bowl lunch with language researchers." },
-              { time: "15:00", emoji: "💻", text: "Fine-tuning CTC loss decoder for polysynthetic language word boundary recognition." },
-              { time: "18:00", emoji: "🏊", text: "Recreational swim at the university indoor aquatic center to unwind." }
+              { time: "07:30", emoji: "🏃", text: "Morning run through lush Ibirapuera Park past towering tropical palm trees." },
+              { time: "09:30", emoji: "💻", text: "Deploying updated spatial indexing algorithms on AWS cloud infrastructure." },
+              { time: "13:00", emoji: "🥣", text: "Thick fresh açaí bowl with banana and granola in the sunshine." },
+              { time: "15:15", emoji: "🤝", text: "Video conference with sustainable coffee cooperatives on precision irrigation." },
+              { time: "18:00", emoji: "🌇", text: "Watching the sun set over the vast São Paulo skyline from a high-rise terrace." }
             ]
           ],
-          tags: ["#LanguagePreservation", "#IndigenousTech", "#Yorkville", "#SocialGood"]
+          tags: ["#VilaMadalena", "#AgTechAI", "#IbirapueraPark", "#BossaNovaVibe"]
         }
       ]
     }
@@ -2307,7 +2288,11 @@
     document.querySelector(".atlas-story-detail")?.scrollIntoView({behavior:matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth",block:"start"});
   };
 
-  window.surpriseAtlasCity = function () { const keys=Object.keys(GLOBAL_CITIES).filter(k=>k!==currentAtlasCityKey); showCityCard(keys[Math.floor(Math.random()*keys.length)]); };
+  window.surpriseAtlasCity = function () {
+    const keys = Object.keys(GLOBAL_CITIES).filter(k => k !== currentAtlasCityKey);
+    const nextCity = keys[Math.floor(Math.random() * keys.length)];
+    showCityCard(nextCity);
+  };
 
   window.randomizeAtlasRole = function (cityKey) {
     const c = GLOBAL_CITIES[cityKey] || GLOBAL_CITIES.kl;
@@ -2331,10 +2316,10 @@
     if (!timelineContainer) return;
 
     timelineContainer.innerHTML = routine.map(item => `
-      <div class="flex items-start gap-2.5 bg-white/5 p-2 rounded-xl border border-white/10 hover:border-teal-400/30 transition">
-        <span class="font-mono text-teal-300 font-extrabold text-xs shrink-0 bg-white/10 px-2 py-0.5 rounded border border-white/15">${item.time}</span>
+      <div class="flex items-start gap-3 bg-white/5 hover:bg-white/10 p-3 rounded-2xl border border-white/10 transition">
+        <span class="font-mono text-teal-300 font-extrabold text-xs shrink-0 bg-teal-500/15 px-2.5 py-1 rounded-lg border border-teal-400/25">${item.time}</span>
         <div class="text-slate-100 text-xs leading-relaxed">
-          <span class="mr-1">${item.emoji || '✦'}</span>${item.text}
+          <span class="mr-1.5 text-sm">${item.emoji || '✦'}</span>${item.text}
         </div>
       </div>
     `).join('');
@@ -2348,16 +2333,17 @@
   window.showCityCard = function (cityKey, roleId = null) {
     const c = GLOBAL_CITIES[cityKey] || GLOBAL_CITIES.kl;
     currentAtlasCityKey = cityKey;
-    window.careerEarth?.select(cityKey);
+
+    // Smoothly fly and focus 3D globe to this city
+    if (window.CareerEarth?.select) {
+      window.CareerEarth.select(cityKey);
+    } else if (window.careerEarth?.select) {
+      window.careerEarth.select(cityKey);
+    }
 
     const container = document.getElementById("cityDetailsContainer");
     const sideContainer = document.getElementById("cityRelatedRolesContainer");
     if (!container) return;
-
-    // Toggle active pill highlight
-    document.querySelectorAll(".atlas-city-pill").forEach(el => {el.classList.remove("active");el.setAttribute("aria-pressed","false");});
-    const activeBtn = document.getElementById("atlasBtn_" + cityKey);
-    if (activeBtn) { activeBtn.classList.add("active"); activeBtn.setAttribute("aria-pressed","true"); }
 
     // Pick role: if not specified, choose randomly or default to first
     let selectedRole = null;
@@ -2365,62 +2351,68 @@
       selectedRole = c.roles.find(r => r.id === roleId);
     }
     if (!selectedRole && c.roles && c.roles.length > 0) {
-      selectedRole = c.roles[Math.floor(Math.random() * c.roles.length)];
+      selectedRole = c.roles[0];
     }
     currentAtlasRoleId = selectedRole ? selectedRole.id : null;
     currentAtlasRoutineIdx = 0;
 
     const isInsidePortal = Boolean(document.getElementById("profileTotemCard") || window.location.pathname.includes("workspace"));
     const actionBtnHtml = isInsidePortal
-      ? `<button type="button" onclick="closeGlobalAtlas(); if(typeof showTab==='function') showTab('jobs');" class="totem-btn-primary !py-2 !px-4 !text-xs font-bold shadow-md">
-           💼 Explore Similar Careers in Portal →
+      ? `<button type="button" onclick="closeGlobalAtlas(); if(typeof showTab==='function') showTab('jobs');" class="totem-btn-primary !py-2.5 !px-5 !text-xs font-bold rounded-xl shadow-lg">
+           💼 Explore Careers in Portal →
          </button>`
-      : `<button type="button" onclick="closeGlobalAtlas(); if(typeof openAuth==='function') openAuth('register', 'job_seeker'); else window.location.href='/#auth';" class="totem-btn-primary !py-2 !px-4 !text-xs font-bold shadow-md">
+      : `<button type="button" onclick="closeGlobalAtlas(); if(typeof openAuth==='function') openAuth('register', 'job_seeker'); else window.location.href='/#auth';" class="totem-btn-primary !py-2.5 !px-5 !text-xs font-bold rounded-xl shadow-lg">
            Sign Up &amp; Match Careers →
          </button>`;
 
     if (!selectedRole) return;
 
-    // Render Main Column: Active Role Plog / Vlog & Job Description
+    // Render Main Column: Active Role Plog / Vlog & Job Description with High-Res Photo
     container.innerHTML = `
       <div class="city-day-card p-6 sm:p-7 space-y-5 h-full flex flex-col justify-between fade-in text-slate-100">
         <!-- Top Bar: Location & Active Persona -->
         <div class="space-y-4">
-          <div class="flex flex-wrap items-center justify-between gap-3 border-b border-white/15 pb-4">
+          <div class="flex flex-wrap items-center justify-between gap-3 border-b border-white/10 pb-4">
             <div class="space-y-1">
               <div class="flex items-center gap-2">
-                <span class="text-xl">${c.flag || '🌍'}</span>
-                <span class="text-xs font-black uppercase tracking-wider text-teal-300">${c.country}</span>
-                <span class="text-xs text-slate-400">·</span>
-                <span class="text-xs font-mono text-indigo-300">${c.roles ? c.roles.length : 1} illustrative careers</span>
+                <span class="text-2xl">${c.flag || '🌍'}</span>
+                <span class="text-xs font-black uppercase tracking-wider text-teal-300 font-mono">${c.country}</span>
+                <span class="text-xs text-slate-500">·</span>
+                <span class="text-xs font-mono text-indigo-300">${c.roles ? c.roles.length : 1} Authentic Profiles</span>
               </div>
-              <h4 class="text-xl sm:text-2xl font-black text-white">${c.name}</h4>
+              <h4 class="text-xl sm:text-2xl font-black text-white tracking-tight">${c.name}</h4>
             </div>
 
             <button type="button" onclick="randomizeAtlasRole('${cityKey}')" class="atlas-shuffle-btn" title="Randomly discover another profession in this city">
-              <span>🎲</span><span>Random Role in City</span>
+              <span>🎲</span><span>Explore Other Role in City</span>
             </button>
           </div>
 
-          <!-- Persona & Lifestyle Plog Card -->
-          <div class="p-4 sm:p-5 rounded-2xl bg-white/10 border border-white/15 space-y-3 shadow-inner">
-            <div class="flex items-center justify-between">
-              <div class="flex items-center gap-3">
-                <span class="text-3xl p-1 bg-white/10 rounded-xl border border-white/10">${selectedRole.persona.avatar || '👩🏻‍💻'}</span>
+          <!-- Persona & Lifestyle Plog Card with Professional Photo -->
+          <div class="p-5 sm:p-6 rounded-3xl bg-white/10 border border-white/15 space-y-4 shadow-xl backdrop-blur-xl">
+            <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+              <div class="flex items-center gap-4">
+                <div class="relative shrink-0">
+                  <img src="${selectedRole.persona.photo || 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=480&q=80'}" alt="${selectedRole.persona.name}" class="w-20 h-20 sm:w-24 sm:h-24 object-cover rounded-2xl border-2 border-teal-400/50 shadow-xl" loading="lazy" />
+                  <span class="absolute -bottom-1 -right-1 text-base p-1 bg-slate-900/90 rounded-full border border-white/20 leading-none shadow-md">${selectedRole.persona.avatar || '👩🏻‍💻'}</span>
+                </div>
                 <div>
-                  <div class="flex items-center gap-2">
-                    <span class="font-black text-white text-sm sm:text-base">${selectedRole.persona.name}</span>
-                    <span class="text-[11px] font-mono text-teal-300 font-bold bg-teal-500/20 px-2 py-0.5 rounded-full border border-teal-400/30">${selectedRole.persona.handle}</span>
+                  <div class="flex items-center gap-2 flex-wrap">
+                    <span class="font-black text-white text-base sm:text-lg">${selectedRole.persona.name}</span>
+                    <span class="text-[11px] font-mono text-teal-300 font-bold bg-teal-500/20 px-2.5 py-0.5 rounded-full border border-teal-400/30">${selectedRole.persona.handle}</span>
                   </div>
-                  <div class="text-[11px] text-slate-300">${selectedRole.persona.bio}</div>
+                  <div class="text-xs text-indigo-200 font-bold mt-0.5">${selectedRole.title}</div>
+                  <div class="text-[11px] text-slate-300 mt-1 max-w-md leading-relaxed">${selectedRole.persona.bio}</div>
                 </div>
               </div>
-              <span class="text-[11px] font-bold text-amber-300 bg-amber-500/15 px-2.5 py-1 rounded-full border border-amber-400/30 shrink-0">
-                Illustrative day-in-the-life
+
+              <span class="inline-flex items-center gap-1.5 text-[11px] font-bold text-amber-300 bg-amber-500/15 px-3 py-1.5 rounded-full border border-amber-400/30 shrink-0">
+                <span>🎥</span><span>Lifestyle Vlog &amp; Plog</span>
               </span>
             </div>
 
-            <div class="text-xs sm:text-sm text-slate-200 leading-relaxed italic bg-black/25 p-3.5 rounded-xl border border-white/10">
+            <!-- First-person Plog Story -->
+            <div class="text-xs sm:text-sm text-slate-100 leading-relaxed italic bg-black/30 p-4 rounded-2xl border border-white/10 shadow-inner">
               "${selectedRole.plog}"
             </div>
 
@@ -2432,22 +2424,22 @@
           </div>
 
           <!-- Job Description: What they primarily do -->
-          <div class="atlas-job-box space-y-2.5">
+          <div class="atlas-job-box space-y-3">
             <div class="flex items-center justify-between">
               <div class="text-xs font-black uppercase tracking-wider text-indigo-300 flex items-center gap-1.5">
                 <span>💼</span><span>主要做什么 (Core Responsibilities &amp; Job Description)</span>
               </div>
-              <span class="text-[11px] font-bold text-slate-400 font-mono">${selectedRole.industry || 'Tech Innovation'}</span>
+              <span class="text-[11px] font-bold text-teal-300 font-mono bg-teal-500/15 px-2 py-0.5 rounded border border-teal-400/20">${selectedRole.industry || 'Tech Innovation'}</span>
             </div>
             
             <p class="text-xs text-slate-200 leading-relaxed font-medium">
               ${selectedRole.job_desc.summary}
             </p>
 
-            <ul class="space-y-1.5 text-xs text-slate-300">
+            <ul class="space-y-1.5 text-xs text-slate-200">
               ${selectedRole.job_desc.tasks.map(t => `
                 <li class="flex items-start gap-2">
-                  <span class="text-teal-400 text-sm leading-none shrink-0">✓</span>
+                  <span class="text-teal-400 text-sm leading-none shrink-0 font-bold">✓</span>
                   <span>${t}</span>
                 </li>
               `).join('')}
@@ -2455,17 +2447,17 @@
 
             <div class="pt-2 flex flex-wrap gap-1.5">
               ${(selectedRole.skills || []).map(s => `
-                <span class="text-[10px] font-mono font-bold bg-indigo-500/20 text-indigo-200 px-2 py-0.5 rounded border border-indigo-400/30">${s}</span>
+                <span class="text-[10px] font-mono font-bold bg-indigo-500/20 text-indigo-200 px-2.5 py-1 rounded-lg border border-indigo-400/30">${s}</span>
               `).join('')}
             </div>
           </div>
 
           <!-- Schedule Timeline with Dynamic Routine Shuffling -->
-          <div class="space-y-2.5 pt-1">
-            <div class="flex items-center justify-between">
+          <div class="space-y-3 pt-1">
+            <div class="flex flex-wrap items-center justify-between gap-2">
               <div class="text-xs font-black uppercase tracking-wider text-teal-300 flex items-center gap-1.5">
                 <span>☀️</span><span>今日正能量作息 (Positive Daily Routine)</span>
-                <span id="atlasRoutineVariantBadge" class="text-[10px] text-slate-400 font-mono lowercase bg-white/10 px-2 py-0.5 rounded-full border border-white/10">Daily Baseline</span>
+                <span id="atlasRoutineVariantBadge" class="text-[10px] text-slate-300 font-mono lowercase bg-white/10 px-2 py-0.5 rounded-full border border-white/10">Daily Baseline</span>
               </div>
               <button type="button" onclick="shuffleAtlasRoutine()" class="atlas-shuffle-btn" title="Cycle through realistic positive day routines">
                 <span>🎲</span><span>切换作息风格 / Shuffle Routine</span>
@@ -2474,10 +2466,10 @@
 
             <div id="atlasTimelineContainer" class="space-y-2 text-xs">
               ${selectedRole.routine.map(item => `
-                <div class="flex items-start gap-2.5 bg-white/5 p-2 rounded-xl border border-white/10 hover:border-teal-400/30 transition">
-                  <span class="font-mono text-teal-300 font-extrabold text-xs shrink-0 bg-white/10 px-2 py-0.5 rounded border border-white/15">${item.time}</span>
+                <div class="flex items-start gap-3 bg-white/5 hover:bg-white/10 p-3 rounded-2xl border border-white/10 transition">
+                  <span class="font-mono text-teal-300 font-extrabold text-xs shrink-0 bg-teal-500/15 px-2.5 py-1 rounded-lg border border-teal-400/25">${item.time}</span>
                   <div class="text-slate-100 text-xs leading-relaxed">
-                    <span class="mr-1">${item.emoji || '✦'}</span>${item.text}
+                    <span class="mr-1.5 text-sm">${item.emoji || '✦'}</span>${item.text}
                   </div>
                 </div>
               `).join('')}
@@ -2486,25 +2478,50 @@
         </div>
 
         <!-- Footer Tags & CTA -->
-        <div class="pt-4 border-t border-white/15 flex flex-wrap items-center justify-between gap-3">
+        <div class="pt-5 border-t border-white/10 flex flex-wrap items-center justify-between gap-3">
           <div class="flex flex-wrap gap-1.5 text-[11px] text-slate-300 font-bold">
-            ${selectedRole.tags.map(t => `<span class="bg-white/10 px-2.5 py-0.5 rounded-md border border-white/10 text-slate-200">${t}</span>`).join('')}
+            ${selectedRole.tags.map(t => `<span class="bg-white/10 px-3 py-1 rounded-xl border border-white/15 text-slate-200">${t}</span>`).join('')}
           </div>
           ${actionBtnHtml}
         </div>
       </div>
     `;
 
-    // Multi-person editorial masonry; each card opens the existing full story.
+    // Multi-person editorial masonry with authentic photos matching gender/role
     if (sideContainer && c.roles) {
-      const shuffled = [...c.roles].sort(() => Math.random() - .5);
-      sideContainer.innerHTML = `<div class="masonry-heading"><span>PEOPLE & POSSIBILITIES</span><h4>A few lives in ${c.country}</h4><p>Illustrative characters. Real reasons to be curious.</p></div><div class="atlas-masonry">${shuffled.map((r,i)=>`
-        <button class="person-story person-story-${i%3} ${r.id===selectedRole.id?'selected':''}" onclick="selectAtlasRole('${cityKey}','${r.id}')" aria-pressed="${r.id===selectedRole.id}">
-          <div class="person-scene" aria-hidden="true"><span>${r.persona.avatar||'✦'}</span><i>${['MAKE / CREATE','CONNECT / BUILD','EXPLORE / GROW'][i%3]}</i></div>
-          <div class="person-story-copy"><span class="person-name">${r.persona.name}</span><h5>${r.title}</h5><p>${r.plog.slice(0,[145,205,110][i%3])}…</p><small>${r.industry}</small><b>${r.id===selectedRole.id?'Reading this story':'Step into this day →'}</b></div>
-        </button>`).join('')}</div>`;
+      sideContainer.innerHTML = `
+        <div class="masonry-heading pb-3">
+          <span class="text-[10px] tracking-widest font-black uppercase text-teal-300 font-mono">PEOPLE &amp; POSSIBILITIES</span>
+          <h4 class="text-lg font-black text-white mt-1">Lives in ${c.country}</h4>
+          <p class="text-xs text-slate-300">Click any persona to step into their daily routine.</p>
+        </div>
+        <div class="grid sm:grid-cols-2 gap-3.5">
+          ${c.roles.map(r => {
+            const isSelected = r.id === selectedRole.id;
+            return `
+              <button type="button" class="person-story ${isSelected ? 'selected' : ''}" onclick="selectAtlasRole('${cityKey}', '${r.id}')" aria-pressed="${isSelected}">
+                <div class="person-scene relative overflow-hidden h-36 rounded-t-2xl">
+                  <img src="${r.persona.photo}" alt="${r.persona.name}" class="w-full h-full object-cover" loading="lazy" />
+                  <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-transparent"></div>
+                  <span class="absolute top-2 left-2 text-base p-1 bg-black/50 backdrop-blur-md rounded-lg">${r.persona.avatar || '✦'}</span>
+                  <div class="absolute bottom-2 left-2.5 right-2.5 text-left">
+                    <div class="text-xs font-black text-white leading-tight drop-shadow">${r.title}</div>
+                    <div class="text-[10px] text-teal-300 font-mono drop-shadow">${r.persona.name}</div>
+                  </div>
+                </div>
+                <div class="p-3 text-left space-y-1.5">
+                  <p class="text-[11px] text-slate-300 line-clamp-2 leading-relaxed">${r.plog}</p>
+                  <div class="flex items-center justify-between text-[10px] pt-1 border-t border-white/10">
+                    <span class="text-indigo-300 font-mono">${r.industry}</span>
+                    <b class="text-teal-300 font-bold">${isSelected ? '● Reading' : 'View Day →'}</b>
+                  </div>
+                </div>
+              </button>
+            `;
+          }).join('')}
+        </div>
+      `;
     }
-
   };
 
 
