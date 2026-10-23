@@ -45,6 +45,7 @@ from ai_matcher import load_json, match_user_to_roles
 import auth_db
 import cv_dataset_manager
 import predictions_engine
+import totem_ai_engine
 from auth_db import (authenticate_user, get_user_by_uid, init_db, register_user, update_user_password, update_user_profile)
 from trend_signals import get_trend_radar
 from utils import format_greeting
@@ -167,6 +168,58 @@ def admin_portal():
 
 
 # ------------------------------------------------------------------ auth
+
+@app.route("/api/totem/match", methods=["GET"])
+def api_totem_match():
+    totem = request.args.get("totem", "hawk")
+    domain = request.args.get("domain", "tech")
+    matches = totem_ai_engine.get_top_onet_matches(totem, domain, limit=4)
+    return jsonify({"ok": True, "totem": totem, "domain": domain, "matches": matches})
+
+
+@app.route("/api/totem/user", methods=["GET", "POST"])
+def api_totem_user():
+    user = session.get("user")
+    if not user:
+        return jsonify({"ok": False, "message": "Login required"}), 401
+    uid = user.get("unique_uid")
+    if request.method == "POST":
+        data = request.get_json(silent=True) or {}
+        totem_data = data.get("totem")
+        if totem_data:
+            session["user_totem"] = totem_data
+            try:
+                db = auth_db.get_db_connection()
+                cur = db.cursor()
+                cur.execute("SELECT role_details_json FROM users WHERE unique_uid=?", (uid,))
+                row = cur.fetchone()
+                details = json.loads(row[0] or "{}") if row and row[0] else {}
+                details["totem"] = totem_data
+                cur.execute("UPDATE users SET role_details_json=? WHERE unique_uid=?", (json.dumps(details), uid))
+                db.commit()
+                db.close()
+            except Exception:
+                pass
+            return jsonify({"ok": True, "totem": totem_data})
+        return jsonify({"ok": False, "message": "No totem data"}), 400
+
+    totem = session.get("user_totem")
+    if not totem:
+        try:
+            db = auth_db.get_db_connection()
+            cur = db.cursor()
+            cur.execute("SELECT role_details_json FROM users WHERE unique_uid=?", (uid,))
+            row = cur.fetchone()
+            if row and row[0]:
+                details = json.loads(row[0])
+                totem = details.get("totem")
+                if totem:
+                    session["user_totem"] = totem
+            db.close()
+        except Exception:
+            pass
+    return jsonify({"ok": True, "totem": totem})
+
 @app.route("/api/auth/register", methods=["POST"])
 def api_register():
     ok, msg, user_info = register_user(json_object())
@@ -543,6 +596,75 @@ def api_cv_upload():
     if not ok:
         return jsonify({"ok": False, "message": msg}), 400
     return jsonify({"ok": True, "message": msg, "cv": cv_data})
+
+
+@app.route("/api/cv/interactive-build", methods=["POST"])
+def api_cv_interactive_build():
+    user = session.get("user")
+    is_guest = False
+    if not user:
+        is_guest = True
+        user = {
+            "display_name": "Talent Explorer",
+            "username": "Explorer",
+            "email": "candidate@careerlens.ai",
+            "unique_uid": f"GUEST-{secrets.token_hex(4)}",
+            "role": "job_seeker"
+        }
+    body = json_object()
+    role = (body.get("role") or "Aspiring Professional").strip()
+    skills_raw = body.get("skills") or []
+    if isinstance(skills_raw, str):
+        skills = [s.strip() for s in skills_raw.replace("，", ",").split(",") if s.strip()]
+    else:
+        skills = [str(s).strip() for s in skills_raw if str(s).strip()]
+    if not skills:
+        skills = ["Communication", "Problem Solving", "Adaptability"]
+
+    experience_highlight = (body.get("experience_highlight") or "Led key project initiatives, collaborating across teams to deliver measurable outcomes.").strip()
+    work_mode = (body.get("work_mode") or "Hybrid").strip()
+    years = (body.get("years") or "1-2 Years").strip()
+    industry = (body.get("industry") or "Technology & Digital Innovation").strip()
+    summary = (body.get("summary") or f"Versatile and proactive {role} with strengths in {', '.join(skills[:3])}. Committed to high-impact problem solving and continuous skill advancement.").strip()
+
+    spec = {
+        "name": user.get("display_name") or user.get("username") or "Candidate",
+        "role": role,
+        "industry": industry,
+        "years": years,
+        "email": user.get("email") or "candidate@careerlens.ai",
+        "phone": "+60 12-345 6789",
+        "location": "Kuala Lumpur, Malaysia",
+        "work_mode": work_mode,
+        "summary": summary,
+        "experience": [experience_highlight],
+        "education": ["Bachelor's Degree / Professional Diploma in Related Discipline"],
+        "certifications": ["CareerLens AI Future-Ready Workforce Verified"],
+        "skills": skills[:15]
+    }
+
+    pdf_bytes = cv_engine.build_interactive_profile_pdf(spec)
+    safe_name = f"{(user.get('username') or 'User')}_AI_Profile.pdf"
+
+    ok, msg, cv_data = cv_engine.save_user_pdf_cv(
+        owner_uid=user["unique_uid"],
+        filename=safe_name,
+        pdf_bytes=pdf_bytes,
+        user_context=user,
+        allow_anon_stats=False
+    )
+    if not ok:
+        return jsonify({"ok": False, "message": msg}), 400
+    import base64
+    pdf_b64 = base64.b64encode(pdf_bytes).decode('ascii')
+    return jsonify({
+        "ok": True,
+        "message": "Profile created by your Career Companion!",
+        "cv": cv_data,
+        "pdf_base64": pdf_b64,
+        "is_guest": is_guest
+    })
+
 
 
 @app.route("/api/cv/me", methods=["PUT"])

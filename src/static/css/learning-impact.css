@@ -43,3 +43,19 @@
 .impact-error{color:#b75370;font-size:12px;margin:10px 0}
 @media(max-width:900px){.impact-badges{grid-auto-flow:column;grid-template-columns:none;grid-auto-columns:155px;overflow-x:auto;padding-bottom:10px;scroll-snap-type:x proximity}.impact-badge{scroll-snap-align:start}.impact-bank{grid-template-columns:1fr}.impact-piggy{flex-direction:row;gap:20px;text-align:left}.impact-piggy img{width:150px}}
 @media(max-width:540px){.learning-impact{padding:17px}.impact-heading h2{font-size:19px}.impact-bank{padding:17px}.impact-totals{grid-template-columns:1fr}.impact-totals>div{flex-direction:row;justify-content:space-between;align-items:center}.impact-piggy img{width:115px}.impact-piggy strong{font-size:24px}.impact-schedule>div{flex-direction:column;gap:4px}.impact-schedule dd{text-align:left}}
+
+.learning-celebrations{margin:0 0 16px;padding:0;overflow:hidden;min-width:0}
+.celebration-window{overflow:hidden;mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent)}
+.celebration-window:focus-visible{outline:2px solid #8b5cf6;outline-offset:-3px}
+.celebration-track{display:flex;width:max-content;animation:celebration-scroll 55s linear infinite}
+.celebration-track>ul{display:flex;flex-shrink:0;align-items:center;list-style:none;margin:0;padding:0}
+.celebration-item{display:flex;align-items:center;gap:12px;padding:12px 28px;white-space:nowrap;color:#67708c;font-size:13px}
+.celebration-item strong{color:#66458f;font-weight:800}
+.celebration-item b{display:inline-block;max-width:310px;overflow:hidden;text-overflow:ellipsis;vertical-align:bottom;color:#455571;font-weight:700}
+.celebration-item small{font-size:10px;background:#ffffffb0;padding:3px 7px;border-radius:12px;color:#82738f}
+.celebration-star{color:#a883df;font-size:21px}
+
+.learning-celebrations.is-paused .celebration-track,.learning-celebrations:hover .celebration-track,.celebration-window:focus-within .celebration-track{animation-play-state:paused}
+@keyframes celebration-scroll{to{transform:translateX(-50%)}}
+@media(max-width:640px){.celebration-item{padding:12px 20px;font-size:12px}.celebration-item b{max-width:190px}}
+@media(prefers-reduced-motion:reduce){.celebration-track{animation:none}.celebration-window{overflow-x:auto;mask-image:none}.celebration-track>ul[aria-hidden]{display:none}}

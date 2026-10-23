@@ -1,3 +1,5 @@
+> 更新：默认 Start.cmd 已改为轻量网站模式，不再下载或启动 Qwen。下方的大模型说明仅适用于显式设置 CAREERLENS_LOCAL_MODEL=1 的高级模式。给普通朋友使用，请部署一次网站并分享网址，见 [共享网站部署](SHARED_WEBSITE.zh-CN.md)。
+
 # 自己电脑一键运行：队友与 judges
 
 ## 开始使用

@@ -1,0 +1,811 @@
+/* ==========================================================================
+   CareerLens AI — Career Spirit Totem (MBTI-Style Interactive Discovery)
+   Light, High-Contrast Premium Theme (Clean Glassmorphism)
+   ========================================================================== */
+
+.totem-section {
+  position: relative;
+  overflow: hidden;
+  border-radius: 2.25rem;
+  background: linear-gradient(150deg, #ffffff 0%, #f8fafc 45%, #eff6ff 100%);
+  color: #0f172a;
+  border: 1.5px solid #e2e8f0;
+  box-shadow: 0 20px 50px -12px rgba(15, 23, 42, 0.08), 0 0 0 1px rgba(226, 232, 240, 0.8);
+}
+
+.totem-glow-1 {
+  position: absolute;
+  top: -8rem;
+  left: -8rem;
+  width: 26rem;
+  height: 26rem;
+  border-radius: 9999px;
+  background: radial-gradient(circle, rgba(99, 102, 241, 0.12) 0%, transparent 70%);
+  filter: blur(40px);
+  pointer-events: none;
+}
+
+.totem-glow-2 {
+  position: absolute;
+  bottom: -8rem;
+  right: -8rem;
+  width: 26rem;
+  height: 26rem;
+  border-radius: 9999px;
+  background: radial-gradient(circle, rgba(13, 148, 136, 0.12) 0%, transparent 70%);
+  filter: blur(40px);
+  pointer-events: none;
+}
+
+/* ==========================================================================
+   Hero CTA Buttons (High contrast, crystal clear)
+   ========================================================================== */
+.totem-btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.85rem 1.85rem;
+  font-size: 0.875rem;
+  font-weight: 800;
+  color: #ffffff !important;
+  background: linear-gradient(135deg, #4f46e5 0%, #6366f1 55%, #0d9488 100%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.3) !important;
+  border-radius: 1rem;
+  box-shadow: 0 10px 25px -5px rgba(79, 70, 229, 0.35);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  cursor: pointer;
+}
+.totem-btn-primary:hover {
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 14px 30px -4px rgba(79, 70, 229, 0.45);
+  background: linear-gradient(135deg, #4338ca 0%, #4f46e5 55%, #0f766e 100%) !important;
+}
+
+.totem-btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.85rem 1.75rem;
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: #1e293b !important;
+  background: #ffffff !important;
+  border: 1.5px solid #cbd5e1 !important;
+  border-radius: 1rem;
+  box-shadow: 0 2px 6px rgba(15, 23, 42, 0.04);
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+.totem-btn-secondary:hover {
+  background: #f8fafc !important;
+  border-color: #6366f1 !important;
+  color: #4f46e5 !important;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px -2px rgba(99, 102, 241, 0.15);
+}
+
+.totem-link-skip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #64748b !important;
+  padding: 0.5rem 0.85rem;
+  border-radius: 0.75rem;
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+.totem-link-skip:hover {
+  color: #0f172a !important;
+  background: rgba(15, 23, 42, 0.05);
+}
+
+/* ==========================================================================
+   5-point Likert Scale UI (High-Contrast Light Theme)
+   ========================================================================== */
+.likert-scale-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 1.5rem 1rem;
+  max-width: 520px;
+  margin: 0 auto;
+}
+
+.likert-btn {
+  position: relative;
+  border-radius: 9999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+  outline: none;
+  background: #ffffff;
+  border: 2px solid transparent;
+  box-shadow: 0 4px 10px rgba(15, 23, 42, 0.04);
+}
+
+.likert-btn:hover {
+  transform: scale(1.18);
+}
+
+.likert-btn.active {
+  transform: scale(1.24);
+  box-shadow: 0 0 18px currentColor;
+}
+
+/* 5 sizes from -2 to +2 */
+.likert-btn[data-val="-2"] {
+  width: 3.5rem;
+  height: 3.5rem;
+  border-color: #f43f5e;
+  color: #e11d48;
+  background: #fff1f2;
+}
+.likert-btn[data-val="-2"]:hover, .likert-btn[data-val="-2"].active {
+  background: #e11d48;
+  color: #ffffff;
+}
+
+.likert-btn[data-val="-1"] {
+  width: 2.85rem;
+  height: 2.85rem;
+  border-color: #fda4af;
+  color: #e11d48;
+  background: #fff1f2;
+}
+.likert-btn[data-val="-1"]:hover, .likert-btn[data-val="-1"].active {
+  background: #f43f5e;
+  color: #ffffff;
+}
+
+.likert-btn[data-val="0"] {
+  width: 2.3rem;
+  height: 2.3rem;
+  border-color: #cbd5e1;
+  color: #475569;
+  background: #f8fafc;
+}
+.likert-btn[data-val="0"]:hover, .likert-btn[data-val="0"].active {
+  background: #64748b;
+  color: #ffffff;
+}
+
+.likert-btn[data-val="1"] {
+  width: 2.85rem;
+  height: 2.85rem;
+  border-color: #99f6e4;
+  color: #0f766e;
+  background: #f0fdfa;
+}
+.likert-btn[data-val="1"]:hover, .likert-btn[data-val="1"].active {
+  background: #14b8a6;
+  color: #ffffff;
+}
+
+.likert-btn[data-val="2"] {
+  width: 3.5rem;
+  height: 3.5rem;
+  border-color: #6ee7b7;
+  color: #047857;
+  background: #ecfdf5;
+}
+.likert-btn[data-val="2"]:hover, .likert-btn[data-val="2"].active {
+  background: #059669;
+  color: #ffffff;
+}
+
+/* ==========================================================================
+   Totem Result Cards (Light, Clean Modern)
+   ========================================================================== */
+.totem-badge-card {
+  background: #ffffff;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 1.75rem;
+  box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.05);
+  transition: all 0.3s ease;
+}
+
+.totem-badge-card:hover {
+  border-color: #cbd5e1;
+  box-shadow: 0 16px 35px -8px rgba(99, 102, 241, 0.12);
+}
+
+/* Role Model Cards */
+.role-model-card {
+  background: #ffffff;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 1.25rem;
+  padding: 1.25rem;
+  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.03);
+  transition: transform 0.25s ease, border-color 0.25s ease;
+}
+
+.role-model-card:hover {
+  transform: translateY(-4px);
+  border-color: #818cf8;
+  box-shadow: 0 12px 28px -8px rgba(99, 102, 241, 0.15);
+}
+
+/* Domain Category Pills */
+.domain-pill {
+  padding: 0.65rem 1.2rem;
+  border-radius: 9999px;
+  font-size: 0.825rem;
+  font-weight: 700;
+  cursor: pointer;
+  background: #f1f5f9;
+  border: 1px solid #cbd5e1;
+  color: #334155;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.domain-pill:hover {
+  background: #e2e8f0;
+  color: #0f172a;
+  transform: translateY(-1px);
+}
+
+.domain-pill.active {
+  background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+  border-color: #6366f1;
+  color: #ffffff;
+  box-shadow: 0 4px 14px rgba(79, 70, 229, 0.3);
+}
+
+/* Job Recommendation Cards */
+.elevated-job-card {
+  background: #ffffff;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 1.5rem;
+  padding: 1.5rem;
+  box-shadow: 0 4px 14px rgba(15, 23, 42, 0.04);
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.elevated-job-card:hover {
+  border-color: #6366f1;
+  transform: translateY(-4px);
+  box-shadow: 0 16px 32px -8px rgba(99, 102, 241, 0.16);
+}
+
+/* MBTI Dual-Pole Spectrum Meters */
+.mbti-spectrum-row {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+  padding: 1.15rem 1.35rem;
+  border-radius: 1.25rem;
+  background: #f8fafc;
+  border: 1.5px solid #e2e8f0;
+  transition: all 0.2s ease;
+}
+.mbti-spectrum-row:hover {
+  background: #ffffff;
+  border-color: #cbd5e1;
+  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.04);
+}
+.mbti-pole-labels {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.8rem;
+  font-weight: 800;
+  color: #1e293b;
+}
+.mbti-spectrum-track {
+  height: 0.85rem;
+  border-radius: 9999px;
+  background: #090d16;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  display: flex;
+  overflow: hidden;
+  position: relative;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.6);
+}
+.mbti-pole-left-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #06b6d4 0%, #3b82f6 50%, #6366f1 100%);
+  border-radius: 9999px 0 0 9999px;
+  transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 0 14px rgba(6, 182, 212, 0.45);
+}
+.mbti-pole-right-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #f43f5e 0%, #fb7185 50%, #f59e0b 100%);
+  border-radius: 0 9999px 9999px 0;
+  transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 0 14px rgba(244, 63, 94, 0.45);
+}
+.role-model-avatar {
+  width: 3.5rem;
+  height: 3.5rem;
+  border-radius: 9999px;
+  object-fit: cover;
+  border: 2.5px solid #6366f1;
+  box-shadow: 0 4px 10px rgba(99, 102, 241, 0.2);
+}
+
+/* Subtle Shimmer for AI calculations */
+@keyframes totemShimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+.totem-shimmer {
+  background: linear-gradient(90deg, rgba(79, 70, 229, 0) 0%, rgba(79, 70, 229, 0.25) 50%, rgba(79, 70, 229, 0) 100%);
+  background-size: 200% 100%;
+  animation: totemShimmer 2.5s infinite;
+}
+
+/* ==========================================================================
+   Global Work-Life Atlas (Dark Immersive Theme with High-Contrast Buttons)
+   ========================================================================== */
+.global-atlas-container {
+  background: radial-gradient(120% 120% at 50% 0%, #111827 0%, #090d16 65%, #030712 100%) !important;
+  color: #f8fafc !important;
+  border: 1.5px solid rgba(255, 255, 255, 0.18) !important;
+  box-shadow: 0 30px 80px -15px rgba(0, 0, 0, 0.8) !important;
+}
+
+/* City Switcher High-Contrast Buttons */
+.atlas-city-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.55rem 1.15rem;
+  font-size: 0.8rem;
+  font-weight: 800;
+  color: #ffffff !important;
+  background: rgba(255, 255, 255, 0.12) !important;
+  border: 1.5px solid rgba(255, 255, 255, 0.3) !important;
+  border-radius: 0.85rem;
+  backdrop-filter: blur(8px);
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  cursor: pointer;
+}
+.atlas-city-pill:hover {
+  background: rgba(255, 255, 255, 0.25) !important;
+  border-color: #2dd4bf !important;
+  color: #ffffff !important;
+  transform: translateY(-1px);
+}
+.atlas-city-pill.active {
+  background: linear-gradient(135deg, #0d9488 0%, #4f46e5 100%) !important;
+  border-color: #2dd4bf !important;
+  box-shadow: 0 0 18px rgba(45, 212, 191, 0.5) !important;
+  color: #ffffff !important;
+}
+
+#totemGlobeContainer {
+  width: 100%;
+  height: 380px;
+  border-radius: 1.75rem;
+  background: radial-gradient(circle at 50% 50%, #0d1527 0%, #020617 100%);
+  position: relative;
+  overflow: hidden;
+  border: 1.5px solid rgba(255, 255, 255, 0.15);
+}
+
+.city-day-card {
+  background: rgba(17, 24, 39, 0.95);
+  border: 1.5px solid rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(20px);
+  border-radius: 1.5rem;
+  box-shadow: 0 20px 45px -10px rgba(0, 0, 0, 0.7);
+}
+
+/* ==========================================================================
+   Quiz Card & Result Box (Light Modern Aesthetic)
+   ========================================================================== */
+.totem-quiz-card-box, .totem-quiz-modal-box {
+  background: #ffffff !important;
+  border: 2px solid #e0e7ff !important;
+  border-radius: 2rem !important;
+  box-shadow: 0 25px 60px -15px rgba(15, 23, 42, 0.12), 0 0 0 1px rgba(224, 231, 255, 0.7) !important;
+  color: #0f172a !important;
+}
+
+.totem-result-card-box {
+  background: #ffffff !important;
+  border-radius: 2.25rem !important;
+  border: 1.5px solid #e2e8f0 !important;
+  box-shadow: 0 25px 60px -15px rgba(15, 23, 42, 0.08) !important;
+  color: #0f172a !important;
+}
+
+/* ==========================================================================
+   Global Atlas Multi-Role & Plog/Vlog UI
+   ========================================================================== */
+.atlas-role-card {
+  display: block;
+  width: 100%;
+  text-align: left;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1.5px solid rgba(255, 255, 255, 0.14);
+  border-radius: 1.15rem;
+  padding: 0.9rem 1.1rem;
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  color: #f1f5f9;
+}
+
+.atlas-role-card:hover {
+  background: rgba(255, 255, 255, 0.14);
+  border-color: #2dd4bf;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px -4px rgba(45, 212, 191, 0.25);
+}
+
+.atlas-role-card.active {
+  background: linear-gradient(135deg, rgba(13, 148, 136, 0.25) 0%, rgba(79, 70, 229, 0.25) 100%);
+  border-color: #2dd4bf;
+  box-shadow: 0 0 16px rgba(45, 212, 191, 0.35);
+}
+
+.atlas-shuffle-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  background: rgba(45, 212, 191, 0.12);
+  border: 1.5px solid rgba(45, 212, 191, 0.35);
+  color: #5eead4 !important;
+  padding: 0.35rem 0.85rem;
+  border-radius: 0.75rem;
+  font-size: 0.75rem;
+  font-weight: 800;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.atlas-shuffle-btn:hover {
+  background: rgba(45, 212, 191, 0.25);
+  border-color: #2dd4bf;
+  color: #ffffff !important;
+  transform: translateY(-1px);
+}
+
+.plog-vlog-feed-card {
+  background: rgba(15, 23, 42, 0.85);
+  border: 1.5px solid rgba(255, 255, 255, 0.16);
+  border-radius: 1.5rem;
+  padding: 1.5rem;
+  box-shadow: 0 15px 35px -8px rgba(0, 0, 0, 0.6);
+}
+
+.atlas-job-box {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 1.15rem;
+  padding: 1.15rem;
+}
+
+
+/* ==========================================================================
+   Spirit Animal Career Companion Onboarding Studio Styles
+   ========================================================================== */
+.btn-companion-mode {
+  cursor: pointer;
+  border-radius: 0.75rem;
+  font-weight: 800;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.btn-companion-mode:hover {
+  transform: translateY(-1px);
+}
+
+.animate-bounce-subtle {
+  animation: bounce-subtle 3s ease-in-out infinite;
+}
+
+@keyframes bounce-subtle {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+
+
+/* ==========================================================================
+   DESIGN SYSTEMS CONFLUENCE
+   1. Google Material Design Lite (MDL) - Surface Elevation, Depth & Tactile Feedback
+   2. HuaShu Design - Glassmorphism, Airy Spatial Rhythm, Delicate Translucency
+   3. Cathryn Lavery (Diagram Design) - Visual Roadmaps, Interconnected Flow Conduits
+   ========================================================================== */
+
+/* 1. Material Design Lite (MDL) Tactile Elevation System */
+.mat-elevation-1 {
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08), 0 1px 2px rgba(0, 0, 0, 0.12);
+  transition: box-shadow 0.25s cubic-bezier(0.4, 0, 0.2, 1), transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.mat-elevation-2 {
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1), 0 3px 6px rgba(0, 0, 0, 0.15);
+  transition: box-shadow 0.25s cubic-bezier(0.4, 0, 0.2, 1), transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.mat-elevation-3 {
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.12), 0 6px 6px rgba(0, 0, 0, 0.16);
+  transition: box-shadow 0.25s cubic-bezier(0.4, 0, 0.2, 1), transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.mat-elevation-4 {
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.15), 0 10px 10px rgba(0, 0, 0, 0.18);
+  transition: box-shadow 0.25s cubic-bezier(0.4, 0, 0.2, 1), transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.mat-elevation-hover:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 14px 28px rgba(15, 23, 42, 0.12), 0 10px 10px rgba(15, 23, 42, 0.08);
+}
+.mat-touch-feedback {
+  position: relative;
+  overflow: hidden;
+}
+.mat-touch-feedback::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.3) 10%, transparent 10.01%);
+  background-repeat: no-repeat;
+  background-position: 50%;
+  transform: scale(10, 10);
+  opacity: 0;
+  transition: transform 0.5s, opacity 0.8s;
+  pointer-events: none;
+}
+.mat-touch-feedback:active::after {
+  transform: scale(0, 0);
+  opacity: 0.35;
+  transition: 0s;
+}
+
+/* 2. HuaShu Design Translucency & Glass Surfaces */
+.huashu-glass-panel {
+  background: rgba(255, 255, 255, 0.78);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  box-shadow: 0 12px 32px 0 rgba(31, 38, 135, 0.07);
+}
+.huashu-glass-dark {
+  background: rgba(15, 23, 42, 0.78);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  box-shadow: 0 16px 40px 0 rgba(0, 0, 0, 0.4);
+}
+.huashu-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.025em;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.huashu-chip:hover {
+  transform: scale(1.03);
+}
+
+/* 3. Cathryn Lavery (Diagram Design) Connected Roadmaps & Flow Conduits */
+.diagram-journey-flow {
+  position: relative;
+  transition: all 0.3s ease;
+}
+.diagram-journey-flow:hover {
+  border-color: rgba(99, 102, 241, 0.4);
+  box-shadow: 0 8px 24px rgba(99, 102, 241, 0.12);
+}
+.diagram-conduit {
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+.diagram-conduit-line {
+  height: 2px;
+  background: linear-gradient(90deg, #6366f1, #06b6d4);
+  flex-grow: 1;
+  position: relative;
+  overflow: hidden;
+}
+.diagram-conduit-line::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -50%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, #ffffff, transparent);
+  animation: conduitFlow 2.5s infinite;
+}
+@keyframes conduitFlow {
+  0% { left: -50%; }
+  100% { left: 150%; }
+}
+.diagram-pulse-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 9999px;
+  background: #06b6d4;
+  box-shadow: 0 0 0 0 rgba(6, 182, 212, 0.7);
+  animation: diagramPulse 2s infinite;
+}
+@keyframes diagramPulse {
+  0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(6, 182, 212, 0.7); }
+  70% { transform: scale(1.15); box-shadow: 0 0 0 6px rgba(6, 182, 212, 0); }
+  100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(6, 182, 212, 0); }
+}
+
+/* Spirit Animal Companion Studio */
+.companion-bubble {
+  position: relative;
+  background: #ffffff;
+  border: 1.5px solid #e0e7ff;
+  border-radius: 1.5rem;
+  padding: 1.25rem 1.5rem;
+  box-shadow: 0 10px 25px -5px rgba(99, 102, 241, 0.08);
+}
+.companion-bubble::before {
+  content: "";
+  position: absolute;
+  top: 1.5rem;
+  left: -0.6rem;
+  width: 1.2rem;
+  height: 1.2rem;
+  background: #ffffff;
+  border-left: 1.5px solid #e0e7ff;
+  border-bottom: 1.5px solid #e0e7ff;
+  transform: rotate(45deg);
+}
+@media (max-width: 640px) {
+  .companion-bubble::before {
+    top: -0.6rem;
+    left: 2rem;
+    border-left: none;
+    border-bottom: none;
+    border-top: 1.5px solid #e0e7ff;
+    border-left: 1.5px solid #e0e7ff;
+    transform: rotate(45deg);
+  }
+}
+.companion-avatar-aura {
+  position: relative;
+  border-radius: 1.75rem;
+  background: linear-gradient(135deg, rgba(99, 102, 241, 0.12), rgba(6, 182, 212, 0.12));
+  border: 2px solid rgba(99, 102, 241, 0.3);
+  box-shadow: 0 12px 28px -6px rgba(99, 102, 241, 0.2);
+}
+.companion-avatar-aura img {
+  filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.12));
+  transition: transform 0.3s ease;
+}
+.companion-avatar-aura:hover img {
+  transform: scale(1.06) rotate(-2deg);
+}
+
+
+/* ==========================================================================
+   REFINED DESIGN SYSTEM TOKENS (HuaShu Glass, Modern Segmented Controls, Light Luxury)
+   ========================================================================== */
+
+/* Segmented Top Control */
+.totem-glass-nav-container {
+  background: rgba(255, 255, 255, 0.75);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  box-shadow: 0 4px 20px rgba(15, 23, 42, 0.04);
+}
+
+.totem-segmented-control {
+  background: rgba(241, 245, 249, 0.85);
+  backdrop-filter: blur(12px);
+  padding: 3px;
+  border-radius: 9999px;
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid rgba(226, 232, 240, 0.8);
+}
+
+.totem-tab-item {
+  padding: 0.45rem 1rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #64748b;
+  white-space: nowrap;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  border: 1px solid transparent;
+  cursor: pointer;
+}
+
+.totem-tab-item:hover {
+  color: #0f172a;
+  background: rgba(255, 255, 255, 0.5);
+}
+
+.totem-tab-item.active {
+  background: #ffffff;
+  color: #0f172a;
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.08);
+  border-color: rgba(226, 232, 240, 0.9);
+}
+
+.totem-tab-item.companion-tab.active {
+  background: #ffffff;
+  color: #0d9488;
+  border-color: #99f6e4;
+  box-shadow: 0 2px 10px rgba(13, 148, 136, 0.12);
+}
+
+/* Light Theme Companion Dialogue Studio */
+.companion-studio-card {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(24px) saturate(180%);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  border: 1.5px solid rgba(255, 255, 255, 0.95);
+  border-radius: 1.75rem;
+  box-shadow: 0 16px 40px -10px rgba(99, 102, 241, 0.07);
+}
+
+.companion-speech-bubble {
+  position: relative;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 1.25rem;
+  padding: 1.25rem 1.5rem;
+  box-shadow: 0 4px 16px rgba(15, 23, 42, 0.04);
+}
+
+.companion-speech-bubble::before {
+  content: "";
+  position: absolute;
+  top: 1.5rem;
+  left: -0.5rem;
+  width: 1rem;
+  height: 1rem;
+  background: #ffffff;
+  border-left: 1px solid #e2e8f0;
+  border-bottom: 1px solid #e2e8f0;
+  transform: rotate(45deg);
+}
+
+@media (max-width: 640px) {
+  .companion-speech-bubble::before {
+    top: -0.5rem;
+    left: 2rem;
+    border-left: 1px solid #e2e8f0;
+    border-top: 1px solid #e2e8f0;
+    border-bottom: none;
+    transform: rotate(45deg);
+  }
+}
+
+.companion-avatar-badge {
+  position: relative;
+  width: 5.5rem;
+  height: 5.5rem;
+  border-radius: 1.25rem;
+  background: linear-gradient(135deg, #eef2ff 0%, #f0fdf4 100%);
+  border: 2px solid #e0e7ff;
+  display: grid;
+  place-items: center;
+  box-shadow: 0 8px 20px -4px rgba(99, 102, 241, 0.15);
+  flex-shrink: 0;
+}
+
+.companion-avatar-badge img {
+  width: 4rem;
+  height: 4rem;
+  object-fit: contain;
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.08));
+}

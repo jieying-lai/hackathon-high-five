@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" width="100%" height="100%">
+  <defs>
+    <radialGradient id="foxGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#ffedd5" stop-opacity="0.95"/>
+      <stop offset="60%" stop-color="#fed7aa" stop-opacity="0.35"/>
+      <stop offset="100%" stop-color="#fed7aa" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="foxFur" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fb923c"/>
+      <stop offset="60%" stop-color="#f97316"/>
+      <stop offset="100%" stop-color="#ea580c"/>
+    </linearGradient>
+    <linearGradient id="foxScarf" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#10b981"/>
+      <stop offset="100%" stop-color="#059669"/>
+    </linearGradient>
+    <filter id="foxShadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="6" stdDeviation="6" flood-color="#9a3412" flood-opacity="0.2"/>
+    </filter>
+  </defs>
+
+  <circle cx="120" cy="120" r="105" fill="url(#foxGlow)"/>
+
+  <g filter="url(#foxShadow)">
+    <!-- Big Fluffy Fox Tail Behind Body -->
+    <path d="M 165,130 C 205,115 225,145 205,175 C 185,195 155,185 155,165 Z" fill="url(#foxFur)"/>
+    <!-- Tail White Tip -->
+    <path d="M 195,150 C 215,135 225,150 205,175 C 195,165 190,155 195,150 Z" fill="#ffffff"/>
+
+    <!-- Pointed Alert Ears -->
+    <path d="M 64,88 L 68,40 C 85,55 98,75 98,90 Z" fill="url(#foxFur)"/>
+    <path d="M 72,75 L 75,50 C 85,60 92,75 90,82 Z" fill="#ffffff"/>
+
+    <path d="M 176,88 L 172,40 C 155,55 142,75 142,90 Z" fill="url(#foxFur)"/>
+    <path d="M 168,75 L 165,50 C 155,60 148,75 150,82 Z" fill="#ffffff"/>
+
+    <!-- Head -->
+    <ellipse cx="120" cy="116" rx="64" ry="54" fill="url(#foxFur)"/>
+
+    <!-- Fluffy White Cheeks -->
+    <path d="M 58,124 C 54,108 80,105 92,120 C 104,135 110,146 120,146 C 130,146 136,135 148,120 C 160,105 186,108 182,124 C 178,142 152,154 120,154 C 88,154 62,142 58,124 Z" fill="#ffffff"/>
+
+    <!-- Large Sparkly Emerald/Amber Eyes -->
+    <circle cx="92" cy="108" r="12" fill="#1c1917"/>
+    <circle cx="92" cy="108" r="9" fill="#059669"/>
+    <circle cx="92" cy="108" r="6" fill="#064e3b"/>
+    <circle cx="89" cy="104" r="4" fill="#ffffff"/>
+    <circle cx="95" cy="112" r="1.8" fill="#ffffff"/>
+
+    <circle cx="148" cy="108" r="12" fill="#1c1917"/>
+    <circle cx="148" cy="108" r="9" fill="#059669"/>
+    <circle cx="148" cy="108" r="6" fill="#064e3b"/>
+    <circle cx="145" cy="104" r="4" fill="#ffffff"/>
+    <circle cx="151" cy="112" r="1.8" fill="#ffffff"/>
+
+    <!-- Cute Black Little Nose -->
+    <path d="M 120,126 C 117,122 114,124 116,128 L 120,132 L 124,128 C 126,124 123,122 120,126 Z" fill="#1c1917"/>
+
+    <!-- Sweet Fox Smile -->
+    <path d="M 114,136 C 117,139 120,139 120,136 C 120,139 123,139 126,136" fill="none" stroke="#7c2d12" stroke-width="2" stroke-linecap="round"/>
+
+    <!-- Soft Peach Blush -->
+    <ellipse cx="72" cy="126" rx="8" ry="5" fill="#f43f5e" opacity="0.32"/>
+    <ellipse cx="168" cy="126" rx="8" ry="5" fill="#f43f5e" opacity="0.32"/>
+
+    <!-- Cozy Knitted Mint Scarf -->
+    <path d="M 82,152 C 92,148 148,148 158,152 C 162,158 154,166 120,166 C 86,166 78,158 82,152 Z" fill="url(#foxScarf)"/>
+    <path d="M 132,158 L 136,182 C 136,186 148,186 148,182 L 144,158 Z" fill="#059669"/>
+  </g>
+</svg>

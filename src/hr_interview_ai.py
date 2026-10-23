@@ -39,8 +39,8 @@ def generate(owner_uid, payload):
         raise QuestionnaireError('Invalid interview question request.')
     vacancy, candidate = candidate_context(owner_uid, vacancy_id, candidate_id)
     values = dotenv_values(ENV_FILE) if ENV_FILE.exists() else {}
-    provider = (os.getenv('HR_INTERVIEW_PROVIDER') or values.get('HR_INTERVIEW_PROVIDER') or 'local').lower()
-    if provider not in ('local', 'gemini'):
+    provider = (os.getenv('HR_INTERVIEW_PROVIDER') or values.get('HR_INTERVIEW_PROVIDER') or 'rules').strip().lower()
+    if provider not in ('rules', 'local', 'gemini'):
         raise QuestionnaireError('The AI model configuration is invalid.', 503)
     key, model = ai_configuration() if provider == 'gemini' else ('', '')
     if provider == 'gemini' and not key:
@@ -54,13 +54,19 @@ def generate(owner_uid, payload):
     language = {'en':'English', 'ms':'Bahasa Malaysia', 'zh':'Simplified Chinese'}.get(payload.get('language'), 'English')
     # Exclude the name, contact details, demographics, salary and original PDF.
     context = {
-        'role': clean(vacancy['title']),
+        'role': clean(vacancy['title'], 150),
         'required_skills': [clean(s, 150) for s in vacancy['required_skills'][:30]],
         'cv_skills': [clean(s, 150) for s in candidate.get('skills', [])[:50]],
         'cv_projects': [clean(p, 1200) for p in candidate.get('projects', [])[:5]],
         'focus': clean(focus, 400),
         'previous_questions_to_avoid': [clean(q, 1200) for q in previous],
     }
+    if provider == 'rules':
+        from interview_questions_light import generate_questions
+        items = generate_questions(context, payload.get('language', 'en'))
+        candidate_context(owner_uid, vacancy_id, candidate_id)
+        return {'questions': items, 'provider': 'CV-based question builder', 'mode': 'rules',
+                'language': payload.get('language', 'en')}
     prompt = (
         f'Write exactly 4 fresh interview questions in {language}. Return JSON only as '
         '{"questions":["..."]}. Use only the supplied professional CV evidence and role requirements. '
