@@ -21,3 +21,21 @@ body.embedded{background:radial-gradient(at 15% 10%,#f5e5f3,transparent 55%),rad
 @media(max-width:760px){.embedded #studio>.progress-card{display:block;margin:12px 12px 0;padding:12px}.embedded #questionList{gap:8px;grid-template-columns:repeat(6,minmax(0,1fr))}.embedded .q-item{flex-direction:column;gap:6px;text-align:center}.embedded .q-item small{font-size:8px;line-height:1.4}.embedded .q-item span{width:24px;height:24px}}
 
 .embedded .studio-bar>.room-navigation{display:flex;align-items:center;flex-wrap:wrap;gap:8px;text-align:left}.embedded #changeSession{min-height:40px;color:#70508e;border-color:#cfb8e5;white-space:normal}.embedded .studio-bar{gap:12px;height:auto;min-height:82px;padding-top:12px;padding-bottom:12px}.embedded #sessionResetNote{background:#f4effa;border-radius:8px;padding:12px;margin-top:15px}@media(max-width:760px){.embedded .studio-bar{flex-wrap:wrap}.embedded .studio-bar>.room-navigation{width:100%;justify-content:space-between}.embedded .studio-bar>div:nth-child(2){text-align:left}.embedded #changeSession{font-size:10px;padding:9px 12px}}
+
+/* Center coaching vertically beside the interview and answer column. */
+@media(min-width:761px){.embedded .studio-layout>aside{align-self:center;min-width:0}.embedded .studio-layout>aside .coach-card{margin-top:0}}
+
+/* Setup stays bounded by the iframe viewport, including at enlarged browser zoom. */
+html:has(body.embedded),body.embedded{width:100%;min-width:0;max-width:100%;overflow-x:hidden}
+.embedded #setup{box-sizing:border-box;inset:0;width:min(660px,calc(100% - 24px));max-width:calc(100% - 24px);max-height:calc(100dvh - 24px);min-width:0;margin:auto;padding:28px;overflow-x:hidden;overflow-y:auto;overscroll-behavior:contain;scrollbar-gutter:stable}
+.embedded #setupForm,.embedded .form-grid,.embedded .form-grid>label,.embedded .application-picker{min-width:0;max-width:100%}
+.embedded #setup h2{font-size:clamp(23px,4.2vw,29px);line-height:1.3;overflow-wrap:break-word;padding-right:25px}
+.embedded #setup .eyebrow{padding-right:36px;line-height:1.6;letter-spacing:1.4px;font-size:9px}
+.embedded #setup input,.embedded #setup select,.embedded #setup textarea{box-sizing:border-box;min-width:0;max-width:100%;width:100%;font-size:13px}
+.embedded #setup select{text-overflow:ellipsis;white-space:nowrap;overflow:hidden;padding-right:28px}
+.embedded .form-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:14px 16px}
+.embedded .application-picker{padding:12px;margin-bottom:18px;overflow:hidden}
+.embedded .application-picker small{line-height:1.5;overflow-wrap:anywhere}
+.embedded #setup .close{position:absolute;top:8px;right:8px;min-width:40px;min-height:40px}
+@media(max-width:560px){.embedded #setup{width:calc(100% - 16px);max-width:calc(100% - 16px);max-height:calc(100dvh - 16px);padding:22px 16px;border-radius:16px}.embedded .form-grid{grid-template-columns:minmax(0,1fr);gap:13px}.embedded #setup h2{margin-top:14px}.embedded #setup .muted{margin-bottom:16px}.embedded #setup input,.embedded #setup select,.embedded #setup textarea{font-size:16px}.embedded #setup .notice{padding:12px 0}.embedded #setup .wide{min-height:44px}}
+@media(max-height:600px){.embedded #setup{max-height:calc(100dvh - 16px);padding-top:20px;padding-bottom:20px}}
