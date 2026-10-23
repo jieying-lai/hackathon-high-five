@@ -1,0 +1,169 @@
+[
+  {
+    "company_id":"co_3e808ece8227f5d4",
+    "company_name":"Deloitte",
+    "firm":"Deloitte",
+    "review_rows":232,
+    "valid_rating_rows":232,
+    "average_rating":3.56,
+    "valid_date_rows":232,
+    "earliest_review":"2010-06-20T00:00:00.000Z",
+    "latest_review":"2021-06-01T00:00:00.000Z",
+    "locations":[
+      "Ipoh",
+      "Johor Bahru",
+      "Kota Kinabalu",
+      "Kuala Lumpur",
+      "Kuching, Sarawak, Sarawak",
+      "Melaka",
+      "Petaling Jaya",
+      "Shah Alam"
+    ],
+    "source":"Glassdoor Job Reviews",
+    "status":"公司关联及地点待核对"
+  },
+  {
+    "company_id":"co_6bacc5973f8be576",
+    "company_name":"Marriott International",
+    "firm":"Marriott-International",
+    "review_rows":15,
+    "valid_rating_rows":15,
+    "average_rating":4.2,
+    "valid_date_rows":15,
+    "earliest_review":"2012-08-29T00:00:00.000Z",
+    "latest_review":"2021-03-26T00:00:00.000Z",
+    "locations":[
+      "Johor Bahru",
+      "Kota Kinabalu",
+      "Kuala Lumpur",
+      "Putrajaya"
+    ],
+    "source":"Glassdoor Job Reviews",
+    "status":"公司关联及地点待核对"
+  },
+  {
+    "company_id":"co_6fadffebe75b9196",
+    "company_name":"Oliver Wyman",
+    "firm":"Oliver-Wyman",
+    "review_rows":1,
+    "valid_rating_rows":1,
+    "average_rating":5.0,
+    "valid_date_rows":1,
+    "earliest_review":"2021-06-03T00:00:00.000Z",
+    "latest_review":"2021-06-03T00:00:00.000Z",
+    "locations":[
+      "Kuala Lumpur"
+    ],
+    "source":"Glassdoor Job Reviews",
+    "status":"公司关联及地点待核对"
+  },
+  {
+    "company_id":"co_8e3f5e915594cdb4",
+    "company_name":"Hilton",
+    "firm":"Hilton",
+    "review_rows":16,
+    "valid_rating_rows":16,
+    "average_rating":4.31,
+    "valid_date_rows":16,
+    "earliest_review":"2012-08-04T00:00:00.000Z",
+    "latest_review":"2021-02-06T00:00:00.000Z",
+    "locations":[
+      "Johor Bahru",
+      "Kota Kinabalu",
+      "Kuala Lumpur",
+      "Petaling Jaya"
+    ],
+    "source":"Glassdoor Job Reviews",
+    "status":"公司关联及地点待核对"
+  },
+  {
+    "company_id":"co_916a98f0fa2a39af",
+    "company_name":"IBM",
+    "firm":"IBM",
+    "review_rows":304,
+    "valid_rating_rows":304,
+    "average_rating":3.55,
+    "valid_date_rows":304,
+    "earliest_review":"2009-01-12T00:00:00.000Z",
+    "latest_review":"2021-05-31T00:00:00.000Z",
+    "locations":[
+      "Cyberjaya",
+      "Johor Bahru",
+      "Kuala Lumpur",
+      "Kuala Terengganu",
+      "Petaling Jaya",
+      "Putrajaya"
+    ],
+    "source":"Glassdoor Job Reviews",
+    "status":"公司关联及地点待核对"
+  },
+  {
+    "company_id":"co_9fbf261b62c1d7c0",
+    "company_name":"Microsoft",
+    "firm":"Microsoft",
+    "review_rows":26,
+    "valid_rating_rows":26,
+    "average_rating":3.88,
+    "valid_date_rows":26,
+    "earliest_review":"2011-06-20T00:00:00.000Z",
+    "latest_review":"2021-05-17T00:00:00.000Z",
+    "locations":[
+      "Ampang, Selangor Darul Ehsan, Selangor Darul Ehsan",
+      "Johor Bahru",
+      "Kuala Lumpur",
+      "Petaling Jaya"
+    ],
+    "source":"Glassdoor Job Reviews",
+    "status":"公司关联及地点待核对"
+  },
+  {
+    "company_id":"co_bbdefa2950f49882",
+    "company_name":"Google",
+    "firm":"Google",
+    "review_rows":12,
+    "valid_rating_rows":12,
+    "average_rating":4.0,
+    "valid_date_rows":12,
+    "earliest_review":"2016-01-01T00:00:00.000Z",
+    "latest_review":"2021-03-04T00:00:00.000Z",
+    "locations":[
+      "Kuala Lumpur",
+      "Petaling Jaya"
+    ],
+    "source":"Glassdoor Job Reviews",
+    "status":"公司关联及地点待核对"
+  },
+  {
+    "company_id":"co_bee10fcea1e42a2e",
+    "company_name":"CBRE",
+    "firm":"CBRE",
+    "review_rows":21,
+    "valid_rating_rows":21,
+    "average_rating":3.86,
+    "valid_date_rows":21,
+    "earliest_review":"2014-04-09T00:00:00.000Z",
+    "latest_review":"2021-05-25T00:00:00.000Z",
+    "locations":[
+      "Kuala Lumpur",
+      "Petaling Jaya"
+    ],
+    "source":"Glassdoor Job Reviews",
+    "status":"公司关联及地点待核对"
+  },
+  {
+    "company_id":"co_d329079a953efcaf",
+    "company_name":"The Salvation Army",
+    "firm":"The-Salvation-Army",
+    "review_rows":1,
+    "valid_rating_rows":1,
+    "average_rating":5.0,
+    "valid_date_rows":1,
+    "earliest_review":"2012-08-08T00:00:00.000Z",
+    "latest_review":"2012-08-08T00:00:00.000Z",
+    "locations":[
+      "Kuching, Sarawak, Sarawak"
+    ],
+    "source":"Glassdoor Job Reviews",
+    "status":"公司关联及地点待核对"
+  }
+]

@@ -1,0 +1,1480 @@
+{
+  "metadata": {
+    "title": "Environmental and Social Disclosures of Public Listed Companies in Malaysia: A Dataset",
+    "source_files": [
+      "Table A_Environmental and Social Score Calculation Formula.xlsx",
+      "Table C_Environmental and Social Score.xlsx"
+    ],
+    "years": [
+      2018,
+      2019,
+      2020
+    ],
+    "firm_count": 100,
+    "record_count": 300,
+    "maxima": {
+      "environment": 101.0,
+      "social": 90.0
+    },
+    "definition": "Historical disclosure scores based on GRI 300 and GRI 400. Governance is not measured."
+  },
+  "profiles": {
+    "co_f6924f8c98c2e6cd": {
+      "company_name": "Sunway Berhad",
+      "reported_company_name": "SUNWAY BHD",
+      "history": [
+        {
+          "year": 2018,
+          "environment": 16.0,
+          "social": 8.0
+        },
+        {
+          "year": 2019,
+          "environment": 39.0,
+          "social": 23.0
+        },
+        {
+          "year": 2020,
+          "environment": 28.0,
+          "social": 50.0
+        }
+      ],
+      "latest": {
+        "year": 2020,
+        "environment": 28.0,
+        "social": 50.0
+      },
+      "maxima": {
+        "environment": 101.0,
+        "social": 90.0
+      },
+      "match_method": "Name, punctuation and Berhad/Bhd normalization only"
+    },
+    "co_3c5b420c7c0b6f08": {
+      "company_name": "Alliance Bank Malaysia Berhad",
+      "reported_company_name": "ALLIANCE BANK MALAYSIA BERHAD",
+      "history": [
+        {
+          "year": 2018,
+          "environment": 0.0,
+          "social": 3.0
+        },
+        {
+          "year": 2019,
+          "environment": 0.0,
+          "social": 5.0
+        },
+        {
+          "year": 2020,
+          "environment": 0.0,
+          "social": 4.0
+        }
+      ],
+      "latest": {
+        "year": 2020,
+        "environment": 0.0,
+        "social": 4.0
+      },
+      "maxima": {
+        "environment": 101.0,
+        "social": 90.0
+      },
+      "match_method": "Name, punctuation and Berhad/Bhd normalization only"
+    },
+    "co_4a14119b213c3d88": {
+      "company_name": "Genting Malaysia Berhad",
+      "reported_company_name": "GENTING MALAYSIA BERHAD",
+      "history": [
+        {
+          "year": 2018,
+          "environment": 13.0,
+          "social": 5.0
+        },
+        {
+          "year": 2019,
+          "environment": 15.0,
+          "social": 9.0
+        },
+        {
+          "year": 2020,
+          "environment": 5.0,
+          "social": 0.0
+        }
+      ],
+      "latest": {
+        "year": 2020,
+        "environment": 5.0,
+        "social": 0.0
+      },
+      "maxima": {
+        "environment": 101.0,
+        "social": 90.0
+      },
+      "match_method": "Name, punctuation and Berhad/Bhd normalization only"
+    },
+    "co_cd770af0b98869ea": {
+      "company_name": "Public Bank Berhad",
+      "reported_company_name": "PUBLIC BANK BHD",
+      "history": [
+        {
+          "year": 2018,
+          "environment": 1.0,
+          "social": 10.0
+        },
+        {
+          "year": 2019,
+          "environment": 0.0,
+          "social": 4.0
+        },
+        {
+          "year": 2020,
+          "environment": 2.0,
+          "social": 13.0
+        }
+      ],
+      "latest": {
+        "year": 2020,
+        "environment": 2.0,
+        "social": 13.0
+      },
+      "maxima": {
+        "environment": 101.0,
+        "social": 90.0
+      },
+      "match_method": "Name, punctuation and Berhad/Bhd normalization only"
+    },
+    "co_86700e40dfb328a4": {
+      "company_name": "GAMUDA BERHAD",
+      "reported_company_name": "GAMUDA BHD",
+      "history": [
+        {
+          "year": 2018,
+          "environment": 7.0,
+          "social": 18.0
+        },
+        {
+          "year": 2019,
+          "environment": 12.0,
+          "social": 21.0
+        },
+        {
+          "year": 2020,
+          "environment": 2.0,
+          "social": 10.0
+        }
+      ],
+      "latest": {
+        "year": 2020,
+        "environment": 2.0,
+        "social": 10.0
+      },
+      "maxima": {
+        "environment": 101.0,
+        "social": 90.0
+      },
+      "match_method": "Name, punctuation and Berhad/Bhd normalization only"
+    },
+    "co_1fb5d5a9a5eecb7c": {
+      "company_name": "IJM Corporation Berhad",
+      "reported_company_name": "IJM CORPORATION BHD",
+      "history": [
+        {
+          "year": 2018,
+          "environment": 29.0,
+          "social": 11.0
+        },
+        {
+          "year": 2019,
+          "environment": 28.0,
+          "social": 14.0
+        },
+        {
+          "year": 2020,
+          "environment": 29.0,
+          "social": 14.0
+        }
+      ],
+      "latest": {
+        "year": 2020,
+        "environment": 29.0,
+        "social": 14.0
+      },
+      "maxima": {
+        "environment": 101.0,
+        "social": 90.0
+      },
+      "match_method": "Name, punctuation and Berhad/Bhd normalization only"
+    },
+    "co_fd2c7270d7f24f53": {
+      "company_name": "**Sime Darby Berhad",
+      "reported_company_name": "SIME DARBY BHD",
+      "history": [
+        {
+          "year": 2018,
+          "environment": 0.0,
+          "social": 3.0
+        },
+        {
+          "year": 2019,
+          "environment": 0.0,
+          "social": 1.0
+        },
+        {
+          "year": 2020,
+          "environment": 0.0,
+          "social": 5.0
+        }
+      ],
+      "latest": {
+        "year": 2020,
+        "environment": 0.0,
+        "social": 5.0
+      },
+      "maxima": {
+        "environment": 101.0,
+        "social": 90.0
+      },
+      "match_method": "Name, punctuation and Berhad/Bhd normalization only"
+    },
+    "co_7f90570c0082e174": {
+      "company_name": "Dutch Lady Milk Industries Berhad",
+      "reported_company_name": "DUTCH LADY MILK INDUSTRIES BERHAD",
+      "history": [
+        {
+          "year": 2018,
+          "environment": 2.0,
+          "social": 5.0
+        },
+        {
+          "year": 2019,
+          "environment": 3.0,
+          "social": 12.0
+        },
+        {
+          "year": 2020,
+          "environment": 6.0,
+          "social": 11.0
+        }
+      ],
+      "latest": {
+        "year": 2020,
+        "environment": 6.0,
+        "social": 11.0
+      },
+      "maxima": {
+        "environment": 101.0,
+        "social": 90.0
+      },
+      "match_method": "Name, punctuation and Berhad/Bhd normalization only"
+    },
+    "co_789ed1a74dd2ce30": {
+      "company_name": "Carlsberg Brewery Malaysia Bhd",
+      "reported_company_name": "CARLSBERG BREWERY MALAYSIA BHD",
+      "history": [
+        {
+          "year": 2018,
+          "environment": 1.0,
+          "social": 2.0
+        },
+        {
+          "year": 2019,
+          "environment": 3.0,
+          "social": 3.0
+        },
+        {
+          "year": 2020,
+          "environment": 6.0,
+          "social": 6.0
+        }
+      ],
+      "latest": {
+        "year": 2020,
+        "environment": 6.0,
+        "social": 6.0
+      },
+      "maxima": {
+        "environment": 101.0,
+        "social": 90.0
+      },
+      "match_method": "Name, punctuation and Berhad/Bhd normalization only"
+    },
+    "co_a99d4113670dc6e6": {
+      "company_name": "AEON Co. (M) Bhd.",
+      "reported_company_name": "AEON CO. (M) BHD",
+      "history": [
+        {
+          "year": 2018,
+          "environment": 8.0,
+          "social": 8.0
+        },
+        {
+          "year": 2019,
+          "environment": 9.0,
+          "social": 14.0
+        },
+        {
+          "year": 2020,
+          "environment": 5.0,
+          "social": 8.0
+        }
+      ],
+      "latest": {
+        "year": 2020,
+        "environment": 5.0,
+        "social": 8.0
+      },
+      "maxima": {
+        "environment": 101.0,
+        "social": 90.0
+      },
+      "match_method": "Name, punctuation and Berhad/Bhd normalization only"
+    },
+    "co_92c5e67f0c9df8fc": {
+      "company_name": "Affin Bank Berhad",
+      "reported_company_name": "AFFIN BANK BHD",
+      "history": [
+        {
+          "year": 2018,
+          "environment": 0.0,
+          "social": 3.0
+        },
+        {
+          "year": 2019,
+          "environment": 0.0,
+          "social": 1.0
+        },
+        {
+          "year": 2020,
+          "environment": 0.0,
+          "social": 10.0
+        }
+      ],
+      "latest": {
+        "year": 2020,
+        "environment": 0.0,
+        "social": 10.0
+      },
+      "maxima": {
+        "environment": 101.0,
+        "social": 90.0
+      },
+      "match_method": "Name, punctuation and Berhad/Bhd normalization only"
+    },
+    "co_37c3d1170b461d3f": {
+      "company_name": "Berjaya Land Berhad",
+      "reported_company_name": "BERJAYA LAND BHD",
+      "history": [
+        {
+          "year": 2018,
+          "environment": 6.0,
+          "social": 4.0
+        },
+        {
+          "year": 2019,
+          "environment": 7.0,
+          "social": 10.0
+        },
+        {
+          "year": 2020,
+          "environment": 1.0,
+          "social": 3.0
+        }
+      ],
+      "latest": {
+        "year": 2020,
+        "environment": 1.0,
+        "social": 3.0
+      },
+      "maxima": {
+        "environment": 101.0,
+        "social": 90.0
+      },
+      "match_method": "Name, punctuation and Berhad/Bhd normalization only"
+    },
+    "co_d2661c6c3fb45468": {
+      "company_name": "FGV Holdings Berhad",
+      "reported_company_name": "FGV HOLDINGS BHD",
+      "history": [
+        {
+          "year": 2018,
+          "environment": 23.0,
+          "social": 34.0
+        },
+        {
+          "year": 2019,
+          "environment": 20.0,
+          "social": 37.0
+        },
+        {
+          "year": 2020,
+          "environment": 18.0,
+          "social": 28.0
+        }
+      ],
+      "latest": {
+        "year": 2020,
+        "environment": 18.0,
+        "social": 28.0
+      },
+      "maxima": {
+        "environment": 101.0,
+        "social": 90.0
+      },
+      "match_method": "Name, punctuation and Berhad/Bhd normalization only"
+    },
+    "co_9166358f64ac0460": {
+      "company_name": "TIME dotCom Berhad",
+      "reported_company_name": "TIME DOTCOM BHD",
+      "history": [
+        {
+          "year": 2018,
+          "environment": 2.0,
+          "social": 6.0
+        },
+        {
+          "year": 2019,
+          "environment": 2.0,
+          "social": 13.0
+        },
+        {
+          "year": 2020,
+          "environment": 3.0,
+          "social": 9.0
+        }
+      ],
+      "latest": {
+        "year": 2020,
+        "environment": 3.0,
+        "social": 9.0
+      },
+      "maxima": {
+        "environment": 101.0,
+        "social": 90.0
+      },
+      "match_method": "Name, punctuation and Berhad/Bhd normalization only"
+    },
+    "co_129185e4847dd658": {
+      "company_name": "Malaysia Airports Holdings Berhad",
+      "reported_company_name": "MALAYSIA AIRPORTS HOLDINGS BHD",
+      "history": [
+        {
+          "year": 2018,
+          "environment": 27.0,
+          "social": 17.0
+        },
+        {
+          "year": 2019,
+          "environment": 12.0,
+          "social": 25.0
+        },
+        {
+          "year": 2020,
+          "environment": 18.0,
+          "social": 20.0
+        }
+      ],
+      "latest": {
+        "year": 2020,
+        "environment": 18.0,
+        "social": 20.0
+      },
+      "maxima": {
+        "environment": 101.0,
+        "social": 90.0
+      },
+      "match_method": "Name, punctuation and Berhad/Bhd normalization only"
+    },
+    "co_94af816511b6b964": {
+      "company_name": "Top Glove Corporation Berhad",
+      "reported_company_name": "TOP GLOVE CORPORATION BHD",
+      "history": [
+        {
+          "year": 2018,
+          "environment": 6.0,
+          "social": 18.0
+        },
+        {
+          "year": 2019,
+          "environment": 9.0,
+          "social": 9.0
+        },
+        {
+          "year": 2020,
+          "environment": 9.0,
+          "social": 22.0
+        }
+      ],
+      "latest": {
+        "year": 2020,
+        "environment": 9.0,
+        "social": 22.0
+      },
+      "maxima": {
+        "environment": 101.0,
+        "social": 90.0
+      },
+      "match_method": "Name, punctuation and Berhad/Bhd normalization only"
+    },
+    "co_48f66a6febf0f761": {
+      "company_name": "KPJ Healthcare Berhad",
+      "reported_company_name": "KPJ HEALTHCARE BHD",
+      "history": [
+        {
+          "year": 2018,
+          "environment": 3.0,
+          "social": 11.0
+        },
+        {
+          "year": 2019,
+          "environment": 4.0,
+          "social": 12.0
+        },
+        {
+          "year": 2020,
+          "environment": 2.0,
+          "social": 12.0
+        }
+      ],
+      "latest": {
+        "year": 2020,
+        "environment": 2.0,
+        "social": 12.0
+      },
+      "maxima": {
+        "environment": 101.0,
+        "social": 90.0
+      },
+      "match_method": "Name, punctuation and Berhad/Bhd normalization only"
+    },
+    "co_7c17fc466b6720da": {
+      "company_name": "Mah Sing Group Berhad",
+      "reported_company_name": "MAH SING GROUP BHD",
+      "history": [
+        {
+          "year": 2018,
+          "environment": 0.0,
+          "social": 1.0
+        },
+        {
+          "year": 2019,
+          "environment": 6.0,
+          "social": 4.0
+        },
+        {
+          "year": 2020,
+          "environment": 0.0,
+          "social": 6.0
+        }
+      ],
+      "latest": {
+        "year": 2020,
+        "environment": 0.0,
+        "social": 6.0
+      },
+      "maxima": {
+        "environment": 101.0,
+        "social": 90.0
+      },
+      "match_method": "Name, punctuation and Berhad/Bhd normalization only"
+    },
+    "co_d40cc1cd496854bd": {
+      "company_name": "GAS MALAYSIA BERHAD",
+      "reported_company_name": "GAS MALAYSIA BERHAD",
+      "history": [
+        {
+          "year": 2018,
+          "environment": 0.0,
+          "social": 3.0
+        },
+        {
+          "year": 2019,
+          "environment": 1.0,
+          "social": 5.0
+        },
+        {
+          "year": 2020,
+          "environment": 7.0,
+          "social": 6.0
+        }
+      ],
+      "latest": {
+        "year": 2020,
+        "environment": 7.0,
+        "social": 6.0
+      },
+      "maxima": {
+        "environment": 101.0,
+        "social": 90.0
+      },
+      "match_method": "Name, punctuation and Berhad/Bhd normalization only"
+    },
+    "co_38c5a095690aff94": {
+      "company_name": "Kossan Rubber Industries Berhad",
+      "reported_company_name": "KOSSAN RUBBER INDUSTRIES BHD",
+      "history": [
+        {
+          "year": 2018,
+          "environment": 1.0,
+          "social": 10.0
+        },
+        {
+          "year": 2019,
+          "environment": 1.0,
+          "social": 10.0
+        },
+        {
+          "year": 2020,
+          "environment": 1.0,
+          "social": 8.0
+        }
+      ],
+      "latest": {
+        "year": 2020,
+        "environment": 1.0,
+        "social": 8.0
+      },
+      "maxima": {
+        "environment": 101.0,
+        "social": 90.0
+      },
+      "match_method": "Name, punctuation and Berhad/Bhd normalization only"
+    },
+    "co_49dd2562f575bc2c": {
+      "company_name": "Press Metal Aluminium Holdings Berhad",
+      "reported_company_name": "PRESS METAL ALUMINIUM HOLDINGS BERHAD",
+      "history": [
+        {
+          "year": 2018,
+          "environment": 10.0,
+          "social": 14.0
+        },
+        {
+          "year": 2019,
+          "environment": 18.0,
+          "social": 9.0
+        },
+        {
+          "year": 2020,
+          "environment": 9.0,
+          "social": 13.0
+        }
+      ],
+      "latest": {
+        "year": 2020,
+        "environment": 9.0,
+        "social": 13.0
+      },
+      "maxima": {
+        "environment": 101.0,
+        "social": 90.0
+      },
+      "match_method": "Name, punctuation and Berhad/Bhd normalization only"
+    },
+    "co_3754a647ea38c5d6": {
+      "company_name": "TSH Resources Berhad",
+      "reported_company_name": "TSH RESOURCES BERHAD",
+      "history": [
+        {
+          "year": 2018,
+          "environment": 1.0,
+          "social": 8.0
+        },
+        {
+          "year": 2019,
+          "environment": 2.0,
+          "social": 8.0
+        },
+        {
+          "year": 2020,
+          "environment": 1.0,
+          "social": 5.0
+        }
+      ],
+      "latest": {
+        "year": 2020,
+        "environment": 1.0,
+        "social": 5.0
+      },
+      "maxima": {
+        "environment": 101.0,
+        "social": 90.0
+      },
+      "match_method": "Name, punctuation and Berhad/Bhd normalization only"
+    },
+    "co_e13d967db8b01d12": {
+      "company_name": "Hong Leong Bank Berhad",
+      "reported_company_name": "HONG LEONG BANK BHD",
+      "history": [
+        {
+          "year": 2018,
+          "environment": 13.0,
+          "social": 23.0
+        },
+        {
+          "year": 2019,
+          "environment": 16.0,
+          "social": 20.0
+        },
+        {
+          "year": 2020,
+          "environment": 24.0,
+          "social": 12.0
+        }
+      ],
+      "latest": {
+        "year": 2020,
+        "environment": 24.0,
+        "social": 12.0
+      },
+      "maxima": {
+        "environment": 101.0,
+        "social": 90.0
+      },
+      "match_method": "Name, punctuation and Berhad/Bhd normalization only"
+    },
+    "co_200a0ba162f155b2": {
+      "company_name": "BATU KAWAN BHD",
+      "reported_company_name": "BATU KAWAN BERHAD",
+      "history": [
+        {
+          "year": 2018,
+          "environment": 4.0,
+          "social": 11.0
+        },
+        {
+          "year": 2019,
+          "environment": 6.0,
+          "social": 7.0
+        },
+        {
+          "year": 2020,
+          "environment": 5.0,
+          "social": 8.0
+        }
+      ],
+      "latest": {
+        "year": 2020,
+        "environment": 5.0,
+        "social": 8.0
+      },
+      "maxima": {
+        "environment": 101.0,
+        "social": 90.0
+      },
+      "match_method": "Name, punctuation and Berhad/Bhd normalization only"
+    },
+    "co_1f5c3e29f3c27a88": {
+      "company_name": "My E.G. Services Bhd",
+      "reported_company_name": "MY E.G. SERVICES BHD",
+      "history": [
+        {
+          "year": 2018,
+          "environment": 1.0,
+          "social": 11.0
+        },
+        {
+          "year": 2019,
+          "environment": 2.0,
+          "social": 11.0
+        },
+        {
+          "year": 2020,
+          "environment": 4.0,
+          "social": 11.0
+        }
+      ],
+      "latest": {
+        "year": 2020,
+        "environment": 4.0,
+        "social": 11.0
+      },
+      "maxima": {
+        "environment": 101.0,
+        "social": 90.0
+      },
+      "match_method": "Name, punctuation and Berhad/Bhd normalization only"
+    },
+    "co_4c6d301ee3ec25ec": {
+      "company_name": "United Plantations Berhad",
+      "reported_company_name": "UNITED PLANTATIONS BHD",
+      "history": [
+        {
+          "year": 2018,
+          "environment": 21.0,
+          "social": 27.0
+        },
+        {
+          "year": 2019,
+          "environment": 15.0,
+          "social": 27.0
+        },
+        {
+          "year": 2020,
+          "environment": 15.0,
+          "social": 28.0
+        }
+      ],
+      "latest": {
+        "year": 2020,
+        "environment": 15.0,
+        "social": 28.0
+      },
+      "maxima": {
+        "environment": 101.0,
+        "social": 90.0
+      },
+      "match_method": "Name, punctuation and Berhad/Bhd normalization only"
+    },
+    "co_08ca24236db5a8de": {
+      "company_name": "Genting Berhad",
+      "reported_company_name": "GENTING BHD",
+      "history": [
+        {
+          "year": 2018,
+          "environment": 0.0,
+          "social": 0.0
+        },
+        {
+          "year": 2019,
+          "environment": 1.0,
+          "social": 4.0
+        },
+        {
+          "year": 2020,
+          "environment": 2.0,
+          "social": 0.0
+        }
+      ],
+      "latest": {
+        "year": 2020,
+        "environment": 2.0,
+        "social": 0.0
+      },
+      "maxima": {
+        "environment": 101.0,
+        "social": 90.0
+      },
+      "match_method": "Name, punctuation and Berhad/Bhd normalization only"
+    },
+    "co_53dd6b295fa137b7": {
+      "company_name": "Karex Berhad",
+      "reported_company_name": "KAREX BERHAD",
+      "history": [
+        {
+          "year": 2018,
+          "environment": 2.0,
+          "social": 4.0
+        },
+        {
+          "year": 2019,
+          "environment": 1.0,
+          "social": 3.0
+        },
+        {
+          "year": 2020,
+          "environment": 2.0,
+          "social": 7.0
+        }
+      ],
+      "latest": {
+        "year": 2020,
+        "environment": 2.0,
+        "social": 7.0
+      },
+      "maxima": {
+        "environment": 101.0,
+        "social": 90.0
+      },
+      "match_method": "Name, punctuation and Berhad/Bhd normalization only"
+    },
+    "co_3a71a933fe2c9968": {
+      "company_name": "UEM Edgenta Berhad",
+      "reported_company_name": "UEM EDGENTA BHD",
+      "history": [
+        {
+          "year": 2018,
+          "environment": 2.0,
+          "social": 14.0
+        },
+        {
+          "year": 2019,
+          "environment": 1.0,
+          "social": 5.0
+        },
+        {
+          "year": 2020,
+          "environment": 2.0,
+          "social": 6.0
+        }
+      ],
+      "latest": {
+        "year": 2020,
+        "environment": 2.0,
+        "social": 6.0
+      },
+      "maxima": {
+        "environment": 101.0,
+        "social": 90.0
+      },
+      "match_method": "Name, punctuation and Berhad/Bhd normalization only"
+    },
+    "co_53da2e829e9d9fd1": {
+      "company_name": "Dialog Group Bhd",
+      "reported_company_name": "DIALOG GROUP BERHAD",
+      "history": [
+        {
+          "year": 2018,
+          "environment": 0.0,
+          "social": 2.0
+        },
+        {
+          "year": 2019,
+          "environment": 3.0,
+          "social": 2.0
+        },
+        {
+          "year": 2020,
+          "environment": 5.0,
+          "social": 4.0
+        }
+      ],
+      "latest": {
+        "year": 2020,
+        "environment": 5.0,
+        "social": 4.0
+      },
+      "maxima": {
+        "environment": 101.0,
+        "social": 90.0
+      },
+      "match_method": "Name, punctuation and Berhad/Bhd normalization only"
+    },
+    "co_85f44d07f51de2c7": {
+      "company_name": "UEM Sunrise Berhad",
+      "reported_company_name": "UEM SUNRISE BERHAD",
+      "history": [
+        {
+          "year": 2018,
+          "environment": 0.0,
+          "social": 6.0
+        },
+        {
+          "year": 2019,
+          "environment": 0.0,
+          "social": 5.0
+        },
+        {
+          "year": 2020,
+          "environment": 0.0,
+          "social": 0.0
+        }
+      ],
+      "latest": {
+        "year": 2020,
+        "environment": 0.0,
+        "social": 0.0
+      },
+      "maxima": {
+        "environment": 101.0,
+        "social": 90.0
+      },
+      "match_method": "Name, punctuation and Berhad/Bhd normalization only"
+    },
+    "co_f3af15903be0a3d0": {
+      "company_name": "Eco World Development Group Berhad",
+      "reported_company_name": "ECO WORLD DEVELOPMENT GROUP BERHAD",
+      "history": [
+        {
+          "year": 2018,
+          "environment": 0.0,
+          "social": 5.0
+        },
+        {
+          "year": 2019,
+          "environment": 6.0,
+          "social": 5.0
+        },
+        {
+          "year": 2020,
+          "environment": 2.0,
+          "social": 3.0
+        }
+      ],
+      "latest": {
+        "year": 2020,
+        "environment": 2.0,
+        "social": 3.0
+      },
+      "maxima": {
+        "environment": 101.0,
+        "social": 90.0
+      },
+      "match_method": "Name, punctuation and Berhad/Bhd normalization only"
+    },
+    "co_693ddf988100f636": {
+      "company_name": "Hap Seng Consolidated Berhad",
+      "reported_company_name": "HAP SENG CONSOLIDATED BHD",
+      "history": [
+        {
+          "year": 2018,
+          "environment": 1.0,
+          "social": 17.0
+        },
+        {
+          "year": 2019,
+          "environment": 1.0,
+          "social": 12.0
+        },
+        {
+          "year": 2020,
+          "environment": 31.0,
+          "social": 32.0
+        }
+      ],
+      "latest": {
+        "year": 2020,
+        "environment": 31.0,
+        "social": 32.0
+      },
+      "maxima": {
+        "environment": 101.0,
+        "social": 90.0
+      },
+      "match_method": "Name, punctuation and Berhad/Bhd normalization only"
+    },
+    "co_21e02294a8bc14ff": {
+      "company_name": "Malaysian Resources Corporation Berhad",
+      "reported_company_name": "MALAYSIAN RESOURCES CORPORATION BERHAD",
+      "history": [
+        {
+          "year": 2018,
+          "environment": 0.0,
+          "social": 2.0
+        },
+        {
+          "year": 2019,
+          "environment": 2.0,
+          "social": 14.0
+        },
+        {
+          "year": 2020,
+          "environment": 0.0,
+          "social": 7.0
+        }
+      ],
+      "latest": {
+        "year": 2020,
+        "environment": 0.0,
+        "social": 7.0
+      },
+      "maxima": {
+        "environment": 101.0,
+        "social": 90.0
+      },
+      "match_method": "Name, punctuation and Berhad/Bhd normalization only"
+    },
+    "co_edb1b9d3e37af6d9": {
+      "company_name": "Boustead Holdings Berhad",
+      "reported_company_name": "BOUSTEAD HOLDINGS BHD",
+      "history": [
+        {
+          "year": 2018,
+          "environment": 1.0,
+          "social": 2.0
+        },
+        {
+          "year": 2019,
+          "environment": 2.0,
+          "social": 10.0
+        },
+        {
+          "year": 2020,
+          "environment": 1.0,
+          "social": 13.0
+        }
+      ],
+      "latest": {
+        "year": 2020,
+        "environment": 1.0,
+        "social": 13.0
+      },
+      "maxima": {
+        "environment": 101.0,
+        "social": 90.0
+      },
+      "match_method": "Name, punctuation and Berhad/Bhd normalization only"
+    },
+    "co_af31fed7bdbb44f1": {
+      "company_name": "Bumi Armada Berhad",
+      "reported_company_name": "BUMI ARMADA BHD",
+      "history": [
+        {
+          "year": 2018,
+          "environment": 0.0,
+          "social": 5.0
+        },
+        {
+          "year": 2019,
+          "environment": 3.0,
+          "social": 1.0
+        },
+        {
+          "year": 2020,
+          "environment": 5.0,
+          "social": 1.0
+        }
+      ],
+      "latest": {
+        "year": 2020,
+        "environment": 5.0,
+        "social": 1.0
+      },
+      "maxima": {
+        "environment": 101.0,
+        "social": 90.0
+      },
+      "match_method": "Name, punctuation and Berhad/Bhd normalization only"
+    },
+    "co_017355b85388b7d9": {
+      "company_name": "MSM Malaysia Holdings Berhad",
+      "reported_company_name": "MSM MALAYSIA HOLDINGS BERHAD",
+      "history": [
+        {
+          "year": 2018,
+          "environment": 3.0,
+          "social": 7.0
+        },
+        {
+          "year": 2019,
+          "environment": 19.0,
+          "social": 27.0
+        },
+        {
+          "year": 2020,
+          "environment": 23.0,
+          "social": 29.0
+        }
+      ],
+      "latest": {
+        "year": 2020,
+        "environment": 23.0,
+        "social": 29.0
+      },
+      "maxima": {
+        "environment": 101.0,
+        "social": 90.0
+      },
+      "match_method": "Name, punctuation and Berhad/Bhd normalization only"
+    },
+    "co_515df08f42beda2f": {
+      "company_name": "Scientex Bhd.",
+      "reported_company_name": "SCIENTEX BHD",
+      "history": [
+        {
+          "year": 2018,
+          "environment": 1.0,
+          "social": 3.0
+        },
+        {
+          "year": 2019,
+          "environment": 22.0,
+          "social": 33.0
+        },
+        {
+          "year": 2020,
+          "environment": 0.0,
+          "social": 18.0
+        }
+      ],
+      "latest": {
+        "year": 2020,
+        "environment": 0.0,
+        "social": 18.0
+      },
+      "maxima": {
+        "environment": 101.0,
+        "social": 90.0
+      },
+      "match_method": "Name, punctuation and Berhad/Bhd normalization only"
+    },
+    "co_e8b1bfb86a521473": {
+      "company_name": "UOA Development Bhd",
+      "reported_company_name": "UOA DEVELOPMENT BERHAD",
+      "history": [
+        {
+          "year": 2018,
+          "environment": 0.0,
+          "social": 3.0
+        },
+        {
+          "year": 2019,
+          "environment": 0.0,
+          "social": 3.0
+        },
+        {
+          "year": 2020,
+          "environment": 0.0,
+          "social": 2.0
+        }
+      ],
+      "latest": {
+        "year": 2020,
+        "environment": 0.0,
+        "social": 2.0
+      },
+      "maxima": {
+        "environment": 101.0,
+        "social": 90.0
+      },
+      "match_method": "Name, punctuation and Berhad/Bhd normalization only"
+    },
+    "co_98b68f0c8ca25983": {
+      "company_name": "MY E.G. SERVICES BERHAD",
+      "reported_company_name": "MY E.G. SERVICES BHD",
+      "history": [
+        {
+          "year": 2018,
+          "environment": 1.0,
+          "social": 11.0
+        },
+        {
+          "year": 2019,
+          "environment": 2.0,
+          "social": 11.0
+        },
+        {
+          "year": 2020,
+          "environment": 4.0,
+          "social": 11.0
+        }
+      ],
+      "latest": {
+        "year": 2020,
+        "environment": 4.0,
+        "social": 11.0
+      },
+      "maxima": {
+        "environment": 101.0,
+        "social": 90.0
+      },
+      "match_method": "Name, punctuation and Berhad/Bhd normalization only"
+    },
+    "co_a27e1578432e0354": {
+      "company_name": "Malakoff Corporation Berhad",
+      "reported_company_name": "MALAKOFF CORPORATION BERHAD",
+      "history": [
+        {
+          "year": 2018,
+          "environment": 17.0,
+          "social": 9.0
+        },
+        {
+          "year": 2019,
+          "environment": 13.0,
+          "social": 17.0
+        },
+        {
+          "year": 2020,
+          "environment": 18.0,
+          "social": 17.0
+        }
+      ],
+      "latest": {
+        "year": 2020,
+        "environment": 18.0,
+        "social": 17.0
+      },
+      "maxima": {
+        "environment": 101.0,
+        "social": 90.0
+      },
+      "match_method": "Name, punctuation and Berhad/Bhd normalization only"
+    },
+    "co_02c816cd5e71a84b": {
+      "company_name": "YTL Power International Berhad",
+      "reported_company_name": "YTL POWER INTERNATIONAL BHD",
+      "history": [
+        {
+          "year": 2018,
+          "environment": 1.0,
+          "social": 3.0
+        },
+        {
+          "year": 2019,
+          "environment": 1.0,
+          "social": 3.0
+        },
+        {
+          "year": 2020,
+          "environment": 0.0,
+          "social": 5.0
+        }
+      ],
+      "latest": {
+        "year": 2020,
+        "environment": 0.0,
+        "social": 5.0
+      },
+      "maxima": {
+        "environment": 101.0,
+        "social": 90.0
+      },
+      "match_method": "Name, punctuation and Berhad/Bhd normalization only"
+    },
+    "co_b610d6408fbcda7c": {
+      "company_name": "Bursa Malaysia Berhad",
+      "reported_company_name": "BURSA MALAYSIA BHD",
+      "history": [
+        {
+          "year": 2018,
+          "environment": 26.0,
+          "social": 20.0
+        },
+        {
+          "year": 2019,
+          "environment": 32.0,
+          "social": 14.0
+        },
+        {
+          "year": 2020,
+          "environment": 40.0,
+          "social": 22.0
+        }
+      ],
+      "latest": {
+        "year": 2020,
+        "environment": 40.0,
+        "social": 22.0
+      },
+      "maxima": {
+        "environment": 101.0,
+        "social": 90.0
+      },
+      "match_method": "Name, punctuation and Berhad/Bhd normalization only"
+    },
+    "co_3c6ca5e2603c532c": {
+      "company_name": "Heineken Malaysia Berhad",
+      "reported_company_name": "HEINEKEN MALAYSIA BERHAD",
+      "history": [
+        {
+          "year": 2018,
+          "environment": 5.0,
+          "social": 6.0
+        },
+        {
+          "year": 2019,
+          "environment": 8.0,
+          "social": 0.0
+        },
+        {
+          "year": 2020,
+          "environment": 3.0,
+          "social": 3.0
+        }
+      ],
+      "latest": {
+        "year": 2020,
+        "environment": 3.0,
+        "social": 3.0
+      },
+      "maxima": {
+        "environment": 101.0,
+        "social": 90.0
+      },
+      "match_method": "Name, punctuation and Berhad/Bhd normalization only"
+    },
+    "co_e6355153fb1e2c35": {
+      "company_name": "INARI AMERTRON BERHAD",
+      "reported_company_name": "INARI AMERTRON BERHAD",
+      "history": [
+        {
+          "year": 2018,
+          "environment": 8.0,
+          "social": 5.0
+        },
+        {
+          "year": 2019,
+          "environment": 39.0,
+          "social": 44.0
+        },
+        {
+          "year": 2020,
+          "environment": 42.0,
+          "social": 45.0
+        }
+      ],
+      "latest": {
+        "year": 2020,
+        "environment": 42.0,
+        "social": 45.0
+      },
+      "maxima": {
+        "environment": 101.0,
+        "social": 90.0
+      },
+      "match_method": "Name, punctuation and Berhad/Bhd normalization only"
+    },
+    "co_4c02c0176567715d": {
+      "company_name": "MISC Berhad",
+      "reported_company_name": "MISC BHD",
+      "history": [
+        {
+          "year": 2018,
+          "environment": 13.0,
+          "social": 10.0
+        },
+        {
+          "year": 2019,
+          "environment": 16.0,
+          "social": 10.0
+        },
+        {
+          "year": 2020,
+          "environment": 24.0,
+          "social": 14.0
+        }
+      ],
+      "latest": {
+        "year": 2020,
+        "environment": 24.0,
+        "social": 14.0
+      },
+      "maxima": {
+        "environment": 101.0,
+        "social": 90.0
+      },
+      "match_method": "Name, punctuation and Berhad/Bhd normalization only"
+    },
+    "co_576ecc84cecbcc98": {
+      "company_name": "Oriental Holdings Bhd",
+      "reported_company_name": "ORIENTAL HOLDINGS BHD",
+      "history": [
+        {
+          "year": 2018,
+          "environment": 0.0,
+          "social": 0.0
+        },
+        {
+          "year": 2019,
+          "environment": 0.0,
+          "social": 0.0
+        },
+        {
+          "year": 2020,
+          "environment": 0.0,
+          "social": 0.0
+        }
+      ],
+      "latest": {
+        "year": 2020,
+        "environment": 0.0,
+        "social": 0.0
+      },
+      "maxima": {
+        "environment": 101.0,
+        "social": 90.0
+      },
+      "match_method": "Name, punctuation and Berhad/Bhd normalization only"
+    }
+  }
+}

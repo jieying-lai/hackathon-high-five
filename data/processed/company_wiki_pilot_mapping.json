@@ -1,0 +1,126 @@
+[
+  {
+    "company_name": "IBM",
+    "wikipedia_title": "IBM",
+    "scope": "group",
+    "approved": true,
+    "review_note": "Reviewed article title, Wikidata entity description and official website; use as group background only."
+  },
+  {
+    "company_name": "Deloitte",
+    "wikipedia_title": "Deloitte",
+    "scope": "group",
+    "approved": true,
+    "review_note": "Reviewed article title, Wikidata entity description and official website; use as group background only."
+  },
+  {
+    "company_name": "Microsoft",
+    "wikipedia_title": "Microsoft",
+    "scope": "group",
+    "approved": true,
+    "review_note": "Reviewed article title, Wikidata entity description and official website; use as group background only."
+  },
+  {
+    "company_name": "CBRE",
+    "wikipedia_title": "CBRE Group",
+    "scope": "group",
+    "approved": false
+  },
+  {
+    "company_name": "Google",
+    "wikipedia_title": "Google",
+    "scope": "group",
+    "approved": false
+  },
+  {
+    "company_name": "Hilton",
+    "wikipedia_title": "Hilton Worldwide",
+    "scope": "group",
+    "approved": false
+  },
+  {
+    "company_name": "Marriott International",
+    "wikipedia_title": "Marriott International",
+    "scope": "group",
+    "approved": false
+  },
+  {
+    "company_name": "Oliver Wyman",
+    "wikipedia_title": "Oliver Wyman",
+    "scope": "group",
+    "approved": true,
+    "review_note": "Reviewed exact article title and Wikidata firm description. Multiple website candidates are withheld; group background only."
+  },
+  {
+    "company_name": "The Salvation Army",
+    "wikipedia_title": "The Salvation Army",
+    "scope": "organization",
+    "approved": false
+  },
+  {
+    "company_name": "RHB Banking Group",
+    "wikipedia_title": "RHB Bank",
+    "scope": "group",
+    "approved": false
+  },
+  {
+    "company_name": "Sunway Berhad",
+    "wikipedia_title": "Sunway Group",
+    "scope": "group",
+    "approved": false
+  },
+  {
+    "company_name": "Standard Chartered Bank",
+    "wikipedia_title": "Standard Chartered",
+    "scope": "group",
+    "approved": false
+  },
+  {
+    "company_name": "AmBank Group",
+    "wikipedia_title": "AmBank",
+    "scope": "group",
+    "approved": false
+  },
+  {
+    "company_name": "Malayan Banking Berhad (Maybank)",
+    "wikipedia_title": "Maybank",
+    "scope": "group",
+    "approved": false
+  },
+  {
+    "company_name": "Public Mutual Berhad",
+    "wikipedia_title": "Public Mutual",
+    "scope": "company",
+    "approved": false
+  },
+  {
+    "company_name": "Alliance Bank Malaysia Berhad",
+    "wikipedia_title": "Alliance Bank Malaysia",
+    "scope": "group",
+    "approved": false
+  },
+  {
+    "company_name": "Genting Malaysia Berhad",
+    "wikipedia_title": "Genting Malaysia Berhad",
+    "scope": "company",
+    "approved": false
+  },
+  {
+    "company_name": "Public Bank Berhad",
+    "wikipedia_title": "Public Bank Berhad",
+    "scope": "group",
+    "approved": false
+  },
+  {
+    "company_name": "Malayan Flour Mills Berhad",
+    "wikipedia_title": "Malayan Flour Mills",
+    "scope": "company",
+    "approved": false
+  },
+  {
+    "company_name": "Hong Leong Assurance Berhad",
+    "wikipedia_title": "Hong Leong Assurance",
+    "scope": "company",
+    "approved": false
+  }
+]

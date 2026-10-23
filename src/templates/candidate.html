@@ -283,8 +283,8 @@
 <link rel="stylesheet" href="/static/css/career-earth.css?v=20261023-5" />
 <link rel="stylesheet" href="/static/css/aurora-experience.css?v=20261023-5" />
 <script defer src="/static/js/aurora-experience.js?v=20261023-5"></script>
-<link rel="stylesheet" href="/static/css/company-insights.css?v=20261023-1" />
-<script src="/static/js/company-insights.js?v=20261023-1"></script>
+<link rel="stylesheet" href="/static/css/company-insights.css?v=20261023-26" />
+<script src="/static/js/company-insights.js?v=20261023-27"></script>
 </head>
 <body class="responsive-ui responsive-talent min-h-screen">
   <div class="aurora"></div><div class="blob b1"></div><div class="blob b2"></div>
@@ -2578,8 +2578,20 @@
         const container = document.getElementById('companyInsights');
         container.innerHTML = '<p role="status">Loading companies from your map…</p>';
         try {
-          if (!companiesList.length) await loadJobs();
-          await window.CompanyInsights.mount({container, companies: companiesList, identity: user.unique_uid,
+          await loadJobs();
+          const applicationResponse = await api('/api/cv/me');
+          const companyApplications = applicationResponse.ok ? (applicationResponse.data.cv?.applications || []) : [];
+          await window.CompanyInsights.mount({container, companies: companiesList, applications: companyApplications, identity: user.unique_uid,
+            loadCompanyJobs: async (company, offset = 0) => {
+              if (company.isExample) return {jobs:[], has_more:false};
+              const params = new URLSearchParams(companyRecommendationParams);
+              params.set('company', company.name);
+              params.set('offset', offset);
+              params.set('limit', 10);
+              const response = await api(`/api/jobs?${params}`);
+              if (!response.ok) throw new Error(response.data.message || 'Could not load recommended roles.');
+              return response.data;
+            },
             onMap: async company => { await showTab('jobs'); if (company) { highlightCompanyOnMap(company.id, true); document.getElementById('companyMap')?.scrollIntoView({block:'center'}); } },
             onJobs: async company => { selectedCompanyName=company.name; await showTab('jobs'); document.getElementById('jobsSectionCard')?.scrollIntoView({block:'start'}); }
           });
@@ -3035,6 +3047,7 @@
       ]}
     ];
 
+    let companyRecommendationParams = '';
     async function loadJobs(append = false) {
       if (!append) jobsOffset = 0;
       const params = new URLSearchParams();
@@ -3054,6 +3067,7 @@
       params.set('offset', jobsOffset);
       params.set('limit', 10);
 
+      companyRecommendationParams = params.toString();
       const r = await api(`/api/jobs?${params.toString()}`);
       if (!r.ok) throw new Error(r.data.message || 'Could not load vacancies. Please retry.');
 
