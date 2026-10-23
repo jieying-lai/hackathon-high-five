@@ -1,8 +1,15 @@
 """Publishing contracts; these checks do not contact or start a deployment."""
 from pathlib import Path
+import os
 import shlex
+import subprocess
+import sys
+import tempfile
 import tomllib
 import unittest
+from unittest.mock import patch
+
+from scripts import build_web
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -12,11 +19,61 @@ class PublishConfigurationTests(unittest.TestCase):
     def test_dependencies_are_installed_during_build_not_startup(self):
         config = tomllib.loads((ROOT / '.replit').read_text())
         deployment = config['deployment']
-        self.assertEqual(deployment['build'][:4], ['python', '-m', 'pip', 'install'])
-        self.assertIn('requirements-web.txt', deployment['build'])
+        self.assertEqual(deployment['build'], ['python', 'scripts/build_web.py'])
+        install = build_web.dependency_install_command()
+        self.assertIn(str(ROOT / 'requirements-web.txt'), install)
         command = shlex.join(deployment['run'])
         self.assertIn('scripts/serve_web.py', command)
         self.assertNotIn('pip install', command)
+
+    def test_only_implicit_hosting_install_is_disabled(self):
+        config = tomllib.loads((ROOT / '.replit').read_text())
+        self.assertIs(config['packager']['features']['enabledForHosting'], False)
+        install = build_web.dependency_install_command()
+        self.assertIn('--no-user', install)
+        destination = Path(install[install.index('--target') + 1])
+        self.assertEqual(destination.parent.name,
+                         f'python{sys.version_info.major}.{sys.version_info.minor}')
+        self.assertTrue(destination.is_relative_to(ROOT / '.pythonlibs'))
+        self.assertNotIn('--trusted-host', install)
+        self.assertNotIn('--no-index', install)
+
+    def test_install_failure_is_not_silently_ignored(self):
+        failure = subprocess.CalledProcessError(1, ['pip'])
+        with patch.object(build_web.subprocess, 'run', side_effect=failure) as run:
+            with self.assertRaises(subprocess.CalledProcessError):
+                build_web.main()
+            self.assertTrue(run.call_args.kwargs['check'])
+
+    def test_explicit_install_works_when_user_site_is_disabled(self):
+        # Resolve an empty fixture only: this exercises real pip without
+        # installing packages, changing the application, or downloading files.
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            requirements = root / 'requirements-web.txt'
+            requirements.write_text('# Empty dependency fixture\n')
+            baseline = [
+                sys.executable, '-s', '-m', 'pip', 'install',
+                '--dry-run', '--disable-pip-version-check', '-r', str(requirements),
+            ]
+            fixed = build_web.dependency_install_command(root)
+            fixed.insert(1, '-s')
+            fixed.extend(['--dry-run', '--disable-pip-version-check'])
+            with patch.dict(os.environ, {
+                'PIP_USER': 'true', 'PIP_TARGET': '', 'PYTHONNOUSERSITE': '1',
+            }):
+                broken = subprocess.run(baseline, cwd=root, capture_output=True,
+                                        text=True, timeout=30)
+                working = subprocess.run(fixed, cwd=root, capture_output=True,
+                                         text=True, timeout=30)
+            self.assertNotEqual(broken.returncode, 0)
+            # Nix may reject the destination before reaching pip's user-site
+            # check. The explicit project target must avoid either failure.
+            self.assertRegex(
+                broken.stderr,
+                'User site-packages are disabled|externally-managed-environment',
+            )
+            self.assertEqual(working.returncode, 0, working.stdout + working.stderr)
 
     def test_shared_constraints_are_reachable_from_each_environment(self):
         requirements = (

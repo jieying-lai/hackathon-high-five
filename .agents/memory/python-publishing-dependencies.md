@@ -5,9 +5,9 @@ description: Non-user Python package installation and dependency-audit resolutio
 
 Use a project-local package destination rather than user-site installation for both workspace setup and publishing.
 
-**Why:** Both the package installer and the publishing bootstrap failed with “Can not perform a '--user' install. User site-packages are disabled for this Python.” Configuring non-user installation into the project's Python package directory allowed installation to succeed. The publisher's automatic installation runs before the configured build command, so changing that command alone does not address this failure.
+**Why:** Both the package installer and the publishing bootstrap failed with “Can not perform a '--user' install. User site-packages are disabled for this Python.” Non-user environment settings fixed the workspace installer but subsequent hosted builds still failed in the automatic installation step, before the configured build command. Production-scoped pip environment settings alone did not fix that step.
 
-**How to apply:** Manage the pip environment through the environment tools, keep the destination relative to the project and consistent with the configured Python version, and verify imports with user-site loading disabled. Preserve the current deployment target while repairing this independent dependency problem.
+**How to apply:** Use the documented hosting-packager setting to replace only the implicit package-installation step with an explicit web dependency build. Pass non-user installation and a project-local target as command-line options, rather than relying only on environment inheritance; derive the Python package directory from the active interpreter. Keep the package firewall and security scan enabled. Test with user sites disabled; Nix can also reject a missing install target as an externally managed environment. A successful local regression test is not confirmation of a successful hosted build. Preserve the current deployment target while repairing this independent dependency problem.
 
 Check both the installed environment and a fresh dependency audit. Do not assume either proves the other is current.
 
