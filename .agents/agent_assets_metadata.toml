@@ -14,3 +14,17 @@ mtime_ms = 1792750048702
 storage_uri = "gcs://replit-rams-assets-sisko/rams/assets/repl:65063538-3981-41e4-9322-1409112a1959/80b302fe-df9a-40d2-8a8a-3af5351050e6/a7efdf28-3ab6-4217-8f87-53ef6247f9a4"
 storage_version_token = "1792750201230953"
 content_type = "text/html"
+
+[[outputs]]
+id = "u0PaAOmg03JGBscySSvsD"
+uri = "file://competitor-monitoring.md"
+type = "text"
+title = "CareerLens 每月竞品检查清单"
+description = "官方书签、约30分钟的手动检查流程、可复制的月检记录模板与下次检查指令。没有开启自动通知。"
+logical_id = "505c3547-0e0b-41c7-aef4-788188035022"
+content_hash = "sha256:760bcd0f8c7d410bddaef43f81090a9280e1615928741eb21f5444ffee22cef9"
+size = 3924
+mtime_ms = 1792750338245
+storage_uri = "gcs://replit-rams-assets-sisko/rams/assets/repl:65063538-3981-41e4-9322-1409112a1959/505c3547-0e0b-41c7-aef4-788188035022/bf8a539b-83eb-4315-b0ab-c43a69ee4de5"
+storage_version_token = "1792750364327273"
+content_type = "text/markdown"
