@@ -52,6 +52,7 @@
   background: linear-gradient(135deg, #4f46e5 0%, #6366f1 55%, #0d9488 100%) !important;
   border: 1px solid rgba(255, 255, 255, 0.3) !important;
   border-radius: 1rem;
+  min-height: 48px;
   box-shadow: 0 10px 25px -5px rgba(79, 70, 229, 0.35);
   transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
   cursor: pointer;
@@ -73,6 +74,7 @@
   background: #ffffff !important;
   border: 1.5px solid #cbd5e1 !important;
   border-radius: 1rem;
+  min-height: 48px;
   box-shadow: 0 2px 6px rgba(15, 23, 42, 0.04);
   transition: all 0.2s ease;
   cursor: pointer;
@@ -304,12 +306,22 @@
 .mbti-spectrum-track {
   height: 0.85rem;
   border-radius: 9999px;
-  background: #090d16;
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: #e9edf7;
+  border: 1px solid rgba(113, 128, 160, 0.24);
   display: flex;
   overflow: hidden;
   position: relative;
-  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.6);
+  box-shadow: inset 0 1px 3px rgba(43, 57, 86, 0.1);
+}
+.mbti-spectrum-track::after {
+  content: "";
+  position: absolute;
+  z-index: 2;
+  inset: -1px auto -1px 50%;
+  width: 2px;
+  background: #fff;
+  box-shadow: 0 0 0 1px rgba(79, 70, 229, 0.2), 0 0 8px rgba(79, 70, 229, 0.35);
+  pointer-events: none;
 }
 .mbti-pole-left-fill {
   height: 100%;
@@ -664,6 +676,39 @@
   transform: rotate(45deg);
 }
 @media (max-width: 640px) {
+  .mobile-snap-carousel {
+    display: flex !important;
+    align-items: stretch;
+    gap: 0.875rem;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x mandatory;
+    scroll-padding-inline: 1rem;
+    padding: 0 1rem 1rem;
+    margin-inline: -1rem;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+
+  .mobile-snap-carousel::-webkit-scrollbar {
+    display: none;
+  }
+
+  .mobile-snap-carousel > * {
+    flex: 0 0 min(84vw, 360px);
+    scroll-snap-align: start;
+  }
+
+  .mobile-snap-carousel:focus-visible {
+    outline: 3px solid #8b7be0;
+    outline-offset: 3px;
+  }
+
+  .role-model-card,
+  .elevated-job-card {
+    min-height: 100%;
+  }
+
   .companion-bubble::before {
     top: -0.6rem;
     left: 2rem;

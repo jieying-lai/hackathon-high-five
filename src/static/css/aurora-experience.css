@@ -56,3 +56,61 @@ body.motion-paused *,body.motion-paused:before{animation-play-state:paused!impor
 .tab.fade-in{animation:gentle-page-entry .32s ease-out}
 #totemResultCard .totem-btn-primary,#totemResultCard .totem-btn-primary *{color:#fff!important}
 @media(prefers-reduced-motion:reduce){.tab.fade-in{animation:none!important}}
+
+/* Light-glass landing surface and vector totem artwork. */
+.bento-earth {
+  background: linear-gradient(140deg, rgba(255,255,255,.94), rgba(226,247,241,.92) 58%, rgba(233,235,255,.94)) !important;
+  color: #25334e !important;
+  border-color: rgba(255,255,255,.96);
+  box-shadow: 0 16px 38px -18px rgba(67,91,130,.22);
+}
+.bento-earth :is(strong,p,b,.bento-kicker) { color: #34445f !important; }
+.bento-earth .bento-kicker { color: #397d74 !important; }
+.bento-earth b { color: #4d38b8 !important; }
+.bento-earth .bento-planet { color: rgba(79,155,143,.18); }
+.bento-card:active { transform: scale(.985); }
+.bento-card:focus-visible { outline: 3px solid #8173d5; outline-offset: 3px; }
+.totem-orbit span img {
+  width: 46px;
+  height: 46px;
+  object-fit: contain;
+  animation: totem-orbit-breathe 4s ease-in-out infinite alternate;
+}
+.totem-orbit span:nth-child(2) img { animation-delay: .45s; }
+.totem-orbit span:nth-child(3) img { animation-delay: .9s; }
+@keyframes totem-orbit-breathe { to { transform: translateY(-4px) scale(1.025); } }
+.identity-track span { display: inline-flex; align-items: center; gap: .6rem; }
+.identity-track span img { width: 22px; height: 22px; object-fit: contain; }
+.diagram-journey-flow { scroll-snap-type: x proximity; scrollbar-width: thin; }
+.diagram-journey-flow > li { list-style: none; scroll-snap-align: start; position: relative; }
+.diagram-journey-flow > li:not(:last-child)::after {
+  content: "→";
+  position: absolute;
+  right: -.9rem;
+  top: 50%;
+  color: #9b91d6;
+  font-weight: 800;
+  transform: translateY(-50%);
+}
+.journey-node { box-shadow: 0 5px 14px rgba(77,56,184,.16); animation: journey-node-pulse 3s ease-in-out infinite; }
+@keyframes journey-node-pulse { 50% { box-shadow: 0 7px 19px rgba(77,56,184,.24); } }
+@media(max-width:639px) {
+  .diagram-journey-flow { scroll-padding-inline: .75rem; column-gap: 1.25rem; }
+  .diagram-journey-flow > li { flex: 0 0 138px; }
+}
+@media(max-width:639px) {
+  .lumi-fab {
+    width: 56px;
+    height: 56px;
+    min-width: 48px;
+    min-height: 48px;
+    justify-content: center;
+    padding: 3px;
+    gap: 0;
+    right: max(12px, env(safe-area-inset-right));
+    bottom: max(12px, env(safe-area-inset-bottom));
+  }
+  .lumi-fab > div:not(.lumi-fab-avatar) { display: none; }
+  .lumi-fab-avatar { width: 48px; height: 48px; }
+  .lumi-fab-avatar img { width: 42px; height: 42px; }
+}

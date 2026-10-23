@@ -1964,9 +1964,9 @@
             </span>
           </div>
 
-          <div class="grid sm:grid-cols-2 gap-4">
+          <div class="role-model-carousel mobile-snap-carousel grid sm:grid-cols-2 gap-4" role="list" aria-label="Role models who share your work style" tabindex="0">
             ${t.roleModels.map(rm => `
-              <div class="p-5 rounded-2xl bg-slate-50/60 border border-slate-200/80 hover:bg-white hover:shadow-md transition space-y-3.5 flex flex-col justify-between">
+              <div class="role-model-card p-5 rounded-2xl bg-slate-50/60 border border-slate-200/80 hover:bg-white hover:shadow-md transition space-y-3.5 flex flex-col justify-between" role="listitem">
                 <div class="space-y-3">
                   <div class="flex items-center gap-3.5">
                     <img src="${rm.photo || '/static/illustrations/totem_characters/owl.svg'}" alt="${rm.name}" class="w-14 h-14 rounded-2xl object-cover border border-slate-200 shadow-xs shrink-0" onerror="this.src='/static/illustrations/totem_characters/owl.svg'" />
@@ -2152,7 +2152,7 @@
           </div>
 
           <!-- Elevated Job Cards Display -->
-          <div id="elevatedJobDisplay" class="grid sm:grid-cols-2 gap-4 pt-2">
+          <div id="elevatedJobDisplay" class="opportunity-carousel mobile-snap-carousel grid sm:grid-cols-2 gap-4 pt-2" role="list" aria-label="Career opportunities based on your work style" tabindex="0">
             <!-- Injected by renderElevatedJobs -->
           </div>
         </div>
@@ -2219,7 +2219,7 @@
     container.innerHTML = roleList.map(r => {
       const cleanTitle = r.title.replace(/'/g, "\\'");
       return `
-        <div class="elevated-job-card p-6 rounded-2xl bg-white border border-slate-200 shadow-xs hover:border-indigo-400 hover:shadow-lg transition-all space-y-4 flex flex-col justify-between">
+        <div class="elevated-job-card p-6 rounded-2xl bg-white border border-slate-200 shadow-xs hover:border-indigo-400 hover:shadow-lg transition-all space-y-4 flex flex-col justify-between" role="listitem">
           <div class="space-y-3">
             <div class="flex items-center justify-between gap-2">
               <span class="chip chip-indigo !text-[10px] font-bold">${r.vibe}</span>
@@ -2777,6 +2777,7 @@
     }
     currentAtlasRoleId = selectedRole ? selectedRole.id : null;
     currentAtlasRoutineIdx = 0;
+    document.querySelector("#globalAtlasModal .atlas-explorer-story")?.classList.add("atlas-story-open");
 
     const isInsidePortal = Boolean(document.getElementById("profileTotemCard") || window.location.pathname.includes("workspace"));
     const actionBtnHtml = isInsidePortal

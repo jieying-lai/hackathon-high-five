@@ -1,6 +1,6 @@
 /* ==========================================================================
    CareerLens AI — Career Earth & Global Atlas Styles
-   Ultra-Luminous Harmony, Frosted Glass & Cohesive Cyber Palette
+   Pale aurora glass, warm clarity & optimistic discovery
    ========================================================================== */
 
 /* Discovery Route */
@@ -67,23 +67,24 @@
    ========================================================================== */
 #globalAtlasModal {
   z-index: 1000;
-  background: rgba(8, 14, 28, 0.85) !important;
-  backdrop-filter: blur(24px) !important;
+  background: rgba(222, 231, 247, 0.46) !important;
+  backdrop-filter: blur(18px) saturate(1.08) !important;
 }
 
 #globalAtlasModal .global-atlas-container {
   max-width: 1200px;
-  background: radial-gradient(130% 120% at 50% 0%, #151f38 0%, #0d1527 50%, #070c18 100%) !important;
-  color: #f8fafc !important;
+  background: linear-gradient(145deg, rgba(255,255,255,.94), rgba(241,247,255,.88)) !important;
+  color: #25334e !important;
   border-radius: 2.25rem !important;
-  border: 1.5px solid rgba(255, 255, 255, 0.16) !important;
-  box-shadow: 0 35px 100px -15px rgba(0, 0, 0, 0.8), 0 0 50px rgba(45, 212, 191, 0.14) !important;
+  border: 1px solid rgba(255, 255, 255, .94) !important;
+  box-shadow: 0 28px 72px -24px rgba(45, 57, 91, .28), 0 1px 0 rgba(255,255,255,.9) inset !important;
   padding: 30px;
   scroll-behavior: smooth;
+  backdrop-filter: blur(24px) saturate(1.12) !important;
 }
 
 #globalAtlasModal h3 {
-  color: #ffffff !important;
+  color: #25334e !important;
   font-size: clamp(22px, 2.5vw, 32px);
   line-height: 1.2;
   letter-spacing: -0.025em;
@@ -91,9 +92,9 @@
 }
 
 #globalAtlasModal [data-atlas-close] {
-  color: #ffffff;
-  background: rgba(255, 255, 255, 0.12);
-  border: 1.5px solid rgba(255, 255, 255, 0.2);
+  color: #344565;
+  background: rgba(255, 255, 255, .72);
+  border: 1px solid rgba(111, 128, 162, .22);
   border-radius: 50%;
   min-width: 44px;
   height: 44px;
@@ -104,9 +105,9 @@
 }
 
 #globalAtlasModal [data-atlas-close]:hover {
-  background: rgba(255, 255, 255, 0.25);
-  border-color: #2dd4bf;
-  transform: rotate(90deg) scale(1.08);
+  background: #fff;
+  border-color: #6e9f9a;
+  transform: rotate(6deg) scale(1.04);
 }
 
 /* Warp / Teleport Random City Button */
@@ -117,11 +118,11 @@
   padding: 0.7rem 1.4rem;
   font-size: 0.825rem;
   font-weight: 800;
-  color: #ffffff !important;
-  background: linear-gradient(135deg, rgba(45, 212, 191, 0.25) 0%, rgba(99, 102, 241, 0.3) 100%) !important;
-  border: 1.5px solid rgba(45, 212, 191, 0.55) !important;
+  color: #315a62 !important;
+  background: linear-gradient(135deg, rgba(220, 247, 239, .88), rgba(231, 235, 255, .9)) !important;
+  border: 1px solid rgba(105, 159, 153, .38) !important;
   border-radius: 9999px !important;
-  box-shadow: 0 4px 20px rgba(45, 212, 191, 0.35) !important;
+  box-shadow: 0 5px 16px rgba(74, 111, 128, .12) !important;
   cursor: pointer;
   transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
   position: relative;
@@ -130,9 +131,9 @@
 
 .atlas-warp-btn:hover {
   transform: translateY(-2px) scale(1.03);
-  border-color: #2dd4bf !important;
-  background: linear-gradient(135deg, rgba(45, 212, 191, 0.4) 0%, rgba(99, 102, 241, 0.45) 100%) !important;
-  box-shadow: 0 0 30px rgba(45, 212, 191, 0.65) !important;
+  border-color: #79aaa1 !important;
+  background: linear-gradient(135deg, #e4f8f1, #eeefff) !important;
+  box-shadow: 0 9px 22px rgba(74, 111, 128, .17) !important;
 }
 
 .atlas-warp-btn:active {
@@ -162,14 +163,15 @@
 
 /* 3D Earth Stage */
 .earth-stage {
-  background: radial-gradient(circle at 50% 45%, #182b46 0%, #0c1628 85%) !important;
-  color: #e2e8f0;
+  background: linear-gradient(150deg, rgba(255,255,255,.82), rgba(234,243,250,.78)) !important;
+  color: #33435e;
   border-radius: 2rem;
   overflow: hidden;
   padding: 24px;
   position: relative;
-  border: 1.5px solid rgba(255, 255, 255, 0.14);
-  box-shadow: inset 0 0 40px rgba(0, 0, 0, 0.5);
+  border: 1px solid rgba(255, 255, 255, .96);
+  box-shadow: 0 12px 32px rgba(54, 75, 112, .09), inset 0 1px 0 #fff;
+  backdrop-filter: blur(18px);
 }
 
 .earth-heading {
@@ -180,11 +182,11 @@
   font-size: 11px;
   font-weight: 800;
   letter-spacing: 0.12em;
-  color: #94a3b8;
+  color: #697995;
 }
 
 .earth-heading span:last-child {
-  color: #2dd4bf;
+  color: #428c80;
   letter-spacing: 0;
   font-family: monospace;
 }
@@ -211,7 +213,7 @@
 #earthStatus {
   font-size: 11px;
   text-align: center;
-  color: #94a3b8;
+  color: #697995;
   margin: 8px 0 16px;
   font-family: monospace;
 }
@@ -226,39 +228,40 @@
   min-height: 40px;
   min-width: 40px;
   padding: 8px 16px;
-  border: 1.5px solid rgba(255, 255, 255, 0.18);
+  border: 1px solid rgba(105, 125, 157, .24);
   border-radius: 9999px;
-  background: rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, .72);
   backdrop-filter: blur(12px);
   font-size: 12px;
   font-weight: 800;
-  color: #f1f5f9;
+  color: #344565;
   cursor: pointer;
   transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .earth-controls button:hover {
-  background: rgba(45, 212, 191, 0.2);
-  border-color: #2dd4bf;
-  color: #ffffff;
+  background: rgba(220, 246, 239, .95);
+  border-color: #7eaaa2;
+  color: #2e6961;
   transform: translateY(-1px);
 }
 
 /* City Day Card (Main Story Column) */
 #globalAtlasModal .city-day-card {
-  background: rgba(255, 255, 255, 0.05) !important;
+  background: rgba(255, 255, 255, .76) !important;
   backdrop-filter: blur(24px) !important;
-  border: 1.5px solid rgba(255, 255, 255, 0.14) !important;
+  border: 1px solid rgba(255, 255, 255, .96) !important;
   border-radius: 2rem !important;
   padding: 28px !important;
-  color: #f8fafc !important;
-  box-shadow: 0 20px 50px -10px rgba(0, 0, 0, 0.5) !important;
+  color: #2c3b56 !important;
+  box-shadow: 0 14px 36px rgba(49, 66, 103, .10) !important;
+  backdrop-filter: blur(20px) saturate(1.08) !important;
   animation: atlas-enter 0.35s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 #globalAtlasModal .atlas-job-box {
-  background: rgba(255, 255, 255, 0.05) !important;
-  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+  background: rgba(241, 247, 252, .78) !important;
+  border: 1px solid rgba(115, 135, 164, .18) !important;
   border-radius: 1.5rem !important;
   padding: 1.4rem !important;
 }
@@ -267,9 +270,9 @@
   display: inline-flex;
   align-items: center;
   gap: 0.4rem;
-  background: rgba(45, 212, 191, 0.12) !important;
-  border: 1.5px solid rgba(45, 212, 191, 0.4) !important;
-  color: #5eead4 !important;
+  background: rgba(224, 246, 239, .92) !important;
+  border: 1px solid rgba(83, 145, 133, .35) !important;
+  color: #33756d !important;
   padding: 0.45rem 1rem !important;
   border-radius: 9999px !important;
   font-size: 0.75rem !important;
@@ -279,9 +282,9 @@
 }
 
 #globalAtlasModal .atlas-shuffle-btn:hover {
-  background: rgba(45, 212, 191, 0.28) !important;
-  border-color: #2dd4bf !important;
-  color: #ffffff !important;
+  background: #d9f3eb !important;
+  border-color: #78a99f !important;
+  color: #285f59 !important;
   transform: translateY(-1px);
 }
 
@@ -292,34 +295,35 @@
   text-align: left;
   border-radius: 1.5rem;
   overflow: hidden;
-  border: 1.5px solid rgba(255, 255, 255, 0.14);
-  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, .92);
+  background: rgba(255, 255, 255, .73);
   backdrop-filter: blur(16px);
-  color: #f1f5f9;
+  color: #34445f;
+  box-shadow: 0 8px 22px rgba(48, 69, 107, .07);
   transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
   cursor: pointer;
 }
 
 .person-story:hover {
   transform: translateY(-3px);
-  border-color: #2dd4bf;
-  box-shadow: 0 12px 30px -5px rgba(45, 212, 191, 0.25);
+  border-color: #83afa7;
+  box-shadow: 0 12px 26px -8px rgba(58, 109, 112, .22);
 }
 
 .person-story.selected {
-  border-color: #2dd4bf;
-  background: linear-gradient(135deg, rgba(45, 212, 191, 0.15) 0%, rgba(99, 102, 241, 0.18) 100%);
-  box-shadow: 0 0 25px rgba(45, 212, 191, 0.4);
+  border-color: #73a69c;
+  background: linear-gradient(135deg, rgba(225, 247, 240, .95), rgba(238, 239, 255, .94));
+  box-shadow: 0 8px 22px rgba(58, 109, 112, .15);
 }
 
 .atlas-story-detail > summary {
   cursor: pointer;
   padding: 16px 20px;
-  border: 1.5px solid rgba(255, 255, 255, 0.14);
+  border: 1px solid rgba(255, 255, 255, .92);
   border-radius: 1.25rem;
-  background: rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, .76);
   backdrop-filter: blur(16px);
-  color: #f1f5f9;
+  color: #34445f;
   font-size: 13px;
   font-weight: 800;
   margin: 14px 0;
@@ -327,8 +331,8 @@
 }
 
 .atlas-story-detail > summary:hover {
-  border-color: #2dd4bf;
-  color: #2dd4bf;
+  border-color: #83afa7;
+  color: #387a70;
 }
 
 @keyframes atlas-enter {
@@ -343,3 +347,39 @@
   #globalAtlasModal .global-atlas-container { padding: 18px; border-radius: 1.5rem; }
   #globalAtlasModal #totemGlobeContainer { height: 300px !important; }
 }
+
+@media (max-width: 560px) {
+  #globalAtlasModal .global-atlas-container { width: calc(100vw - 20px); max-height: calc(100dvh - 20px); overflow-y: auto; padding: 16px; }
+  .earth-stage { padding: 16px; border-radius: 1.4rem; }
+  #globalAtlasModal .city-day-card { padding: 20px !important; border-radius: 1.4rem !important; }
+  .earth-controls { flex-wrap: wrap; }
+}
+
+@media (max-width: 640px) {
+  #globalAtlasModal .atlas-explorer-story.atlas-story-open {
+    position: fixed;
+    z-index: 1020;
+    inset: auto 10px max(10px, env(safe-area-inset-bottom));
+    max-height: min(44dvh, 360px);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    border-radius: 1.5rem;
+    box-shadow: 0 18px 48px rgba(45, 57, 91, .22);
+    animation: atlas-drawer-rise .32s cubic-bezier(.2,.75,.25,1) both;
+  }
+
+  #globalAtlasModal .atlas-explorer-story.atlas-story-open .city-day-card {
+    max-height: min(44dvh, 360px);
+    overflow-y: auto;
+  }
+}
+
+@keyframes atlas-drawer-rise {
+  from { opacity: 0; transform: translateY(24px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+#globalAtlasModal :is(.text-white,.text-slate-100,.text-slate-200,.text-slate-300) { color: #34445f !important; }
+#globalAtlasModal .person-story :is(h4,h5,p,small,span) { color: #34445f; }
+#globalAtlasModal :is(button,a,summary) { -webkit-tap-highlight-color: transparent; }
+#globalAtlasModal :is(button,a,summary):active { transform: translateY(0) scale(.985); }
