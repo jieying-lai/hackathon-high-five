@@ -8,6 +8,7 @@ packages = ["glibcLocales"]
 
 [deployment]
 run = ["sh", "-c", "pip install -q -r requirements-web.txt && HR_INTERVIEW_PROVIDER=rules HOST=0.0.0.0 python scripts/serve_web.py"]
+deploymentTarget = "autoscale"
 
 [[ports]]
 localPort = 5000
