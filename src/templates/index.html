@@ -10,10 +10,10 @@
   <link rel="stylesheet" href="/static/css/theme.css?v=20261020-questionnaire-1" />
   <link rel="stylesheet" href="/static/css/responsive.css?v=20261020-minimal-2" />
 <link rel="stylesheet" href="/static/css/home-features.css?v=3" />
-  <link rel="stylesheet" href="/static/css/career-spirit-totem.css?v=20261023-3" />
-<link rel="stylesheet" href="/static/css/career-earth.css?v=20261023-3" />
-<link rel="stylesheet" href="/static/css/aurora-experience.css?v=20261023-3" />
-<script defer src="/static/js/aurora-experience.js?v=20261023-3"></script>
+  <link rel="stylesheet" href="/static/css/career-spirit-totem.css?v=20261023-4" />
+<link rel="stylesheet" href="/static/css/career-earth.css?v=20261023-4" />
+<link rel="stylesheet" href="/static/css/aurora-experience.css?v=20261023-4" />
+<script defer src="/static/js/aurora-experience.js?v=20261023-4"></script>
 </head>
 <body class="responsive-ui responsive-home min-h-screen">
   <div class="aurora"></div><div class="blob b1"></div><div class="blob b2"></div>
@@ -53,6 +53,32 @@
         <p class="first-impression-copy">You don’t need your whole life figured out. Discover your work style, step into someone else’s working day, and find a next move worth getting excited about.</p>
         <div class="hero-actions"><button onclick="startTotemQuiz()" class="impression-primary">Find my work style <span>↗</span></button><button onclick="openGlobalAtlas()" class="impression-secondary">Explore a working day →</button></div>
         <p class="hero-reassurance">No account needed to explore · No right or wrong answers</p>
+                <!-- Diagrammatic Journey Map (Cathryn Lavery / Diagram Design) -->
+        <div class="diagram-journey-flow max-w-2xl mx-auto my-6 p-3 sm:p-4 rounded-2xl bg-white/75 backdrop-blur-md border border-indigo-100/80 shadow-xs flex items-center justify-between text-left gap-2 sm:gap-4 overflow-x-auto">
+          <div class="flex items-center gap-2.5 flex-1 min-w-[130px]">
+            <span class="h-8 w-8 rounded-xl bg-indigo-600 text-white font-black text-xs grid place-items-center shadow-xs shrink-0">01</span>
+            <div>
+              <div class="text-[10px] font-mono text-indigo-600 uppercase font-bold tracking-wider">Discovery</div>
+              <div class="text-xs font-black text-slate-900 leading-tight">Spirit Totem</div>
+            </div>
+          </div>
+          <span class="text-indigo-300 font-bold shrink-0 text-sm select-none">──→</span>
+          <div class="flex items-center gap-2.5 flex-1 min-w-[130px]">
+            <span class="h-8 w-8 rounded-xl bg-teal-600 text-white font-black text-xs grid place-items-center shadow-xs shrink-0">02</span>
+            <div>
+              <div class="text-[10px] font-mono text-teal-600 uppercase font-bold tracking-wider">Exploration</div>
+              <div class="text-xs font-black text-slate-900 leading-tight">3D World Atlas</div>
+            </div>
+          </div>
+          <span class="text-indigo-300 font-bold shrink-0 text-sm select-none">──→</span>
+          <div class="flex items-center gap-2.5 flex-1 min-w-[130px]">
+            <span class="h-8 w-8 rounded-xl bg-purple-600 text-white font-black text-xs grid place-items-center shadow-xs shrink-0">03</span>
+            <div>
+              <div class="text-[10px] font-mono text-purple-600 uppercase font-bold tracking-wider">Opportunity</div>
+              <div class="text-xs font-black text-slate-900 leading-tight">AI Reskilling</div>
+            </div>
+          </div>
+        </div>
         <nav class="discovery-bento" aria-label="Explore CareerLens features">
           <button class="bento-card bento-quiz" onclick="startTotemQuiz()"><span class="bento-kicker">01 / MEET YOURSELF</span><strong>Your work style.<br>Your kind of future.</strong><p>A playful quiz to explore what gives you energy.</p><div class="totem-orbit" aria-hidden="true"><span>🦉</span><span>🦊</span><span>🐋</span></div><b>Discover my totem ↗</b></button>
           <button class="bento-card bento-earth" onclick="openGlobalAtlas()"><span class="bento-kicker">02 / OPEN YOUR WORLD</span><strong>Different places.<br>Different possibilities.</strong><p>Explore the globe through people, careers and everyday rituals.</p><div class="bento-planet" aria-hidden="true">◎<i></i></div><b>Take me somewhere ↗</b></button>
@@ -796,8 +822,8 @@
     </div>
   </div>
 
-  <script src="/static/js/career-earth.js?v=20261023-3"></script>
-<script src="/static/js/career-spirit-totem.js?v=20261023-3"></script>
+  <script src="/static/js/career-earth.js?v=20261023-4"></script>
+<script src="/static/js/career-spirit-totem.js?v=20261023-4"></script>
   <!-- Global 3D Work-Life Atlas Modal -->
   <div id="globalAtlasModal" role="dialog" aria-modal="true" aria-label="Global work-life atlas" class="fixed inset-0 z-50 bg-slate-950/85 backdrop-blur-md flex items-center justify-center p-3 sm:p-6 hidden">
     <div class="global-atlas-container max-w-6xl w-full p-6 sm:p-8 space-y-6 max-h-[92vh] overflow-y-auto border border-white/20 shadow-2xl relative rounded-[2.25rem]">
@@ -812,7 +838,7 @@
         <div class="flex items-center gap-3">
           <button type="button" onclick="surpriseAtlasCity()" class="atlas-warp-btn" title="Randomly teleport to another city on the 3D globe">
             <span class="text-base">🎲</span>
-            <span class="font-bold">随机漫游城市 · Warp to Random Hub</span>
+            <span class="font-bold">Explore Random Hub</span>
           </button>
           <button type="button" data-atlas-close aria-label="Close atlas" onclick="closeGlobalAtlas()" class="h-10 w-10 rounded-full bg-white/10 hover:bg-white/20 text-white font-bold grid place-items-center transition text-lg border border-white/15" title="Close Atlas">✕</button>
         </div>
@@ -820,21 +846,34 @@
 
       <!-- Globe & Details Grid -->
       <div class="atlas-explorer-grid">
-        <!-- Main Column: Active Role Plog/Vlog, Job Desc & Positive Routine -->
-        <div class="atlas-explorer-story"><div id="cityRelatedRolesContainer" aria-live="polite"></div><details class="atlas-story-detail" open><summary>Inside the selected working day</summary><div id="cityDetailsContainer">
-          <!-- Injected active role Plog/Vlog card -->
-        </div></details></div>
-
-        <!-- Side Column: 3D Interactive Sphere & Other Roles in Hub -->
+        <!-- Left Column: 3D Earth Stage + Hub Information & Persona Selector -->
         <div class="atlas-explorer-map space-y-4">
           <div class="earth-stage">
-            <div class="earth-heading"><span>THE WORK-LIFE ATLAS</span><span id="earthClock" aria-live="polite"></span></div>
+            <div class="earth-heading">
+              <span class="tracking-widest">THE WORK-LIFE ATLAS</span>
+              <span id="earthClock" aria-live="polite"></span>
+            </div>
             <div id="totemGlobeContainer"><canvas id="globeCanvas"></canvas></div>
             <p id="earthStatus" role="status">Loading coastlines…</p>
-            <div class="earth-controls" aria-label="Globe controls"><button id="earthZoomIn" aria-label="Zoom in">+</button><button id="earthZoomOut" aria-label="Zoom out">−</button><button id="earthReset">Recenter</button><button id="earthRotate">Rotate</button></div>
+            <div class="earth-controls" aria-label="Globe controls">
+              <button id="earthZoomIn" aria-label="Zoom in">+</button>
+              <button id="earthZoomOut" aria-label="Zoom out">−</button>
+              <button id="earthReset">Recenter</button>
+              <button id="earthRotate">Rotate</button>
+            </div>
           </div>
 
+          <!-- Hub Quick Info & Role Selector Card (Left side under globe) -->
+          <div id="cityHubInfoContainer" class="p-4 sm:p-5 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-md space-y-3">
+            <!-- Injected by showCityCard -->
+          </div>
+        </div>
 
+        <!-- Right Column: Active Role Hero Plog/Vlog, Visual Showcase & Positive Routine -->
+        <div class="atlas-explorer-story">
+          <div id="cityDetailsContainer">
+            <!-- Injected active role Hero Showcase card -->
+          </div>
         </div>
       </div>
     </div>

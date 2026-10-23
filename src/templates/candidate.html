@@ -279,10 +279,10 @@
 <link rel="stylesheet" href="/static/css/reskilling-plan.css?v=20261021-green-completion" />
 <link rel="stylesheet" href="/static/css/learning-controls.css?v=20261021-single-replacement" />
 <link rel="stylesheet" href="/static/css/learning-impact.css?v=20261021-community-pledges" />
-  <link rel="stylesheet" href="/static/css/career-spirit-totem.css?v=20261023-3" />
-<link rel="stylesheet" href="/static/css/career-earth.css?v=20261023-3" />
-<link rel="stylesheet" href="/static/css/aurora-experience.css?v=20261023-3" />
-<script defer src="/static/js/aurora-experience.js?v=20261023-3"></script>
+  <link rel="stylesheet" href="/static/css/career-spirit-totem.css?v=20261023-4" />
+<link rel="stylesheet" href="/static/css/career-earth.css?v=20261023-4" />
+<link rel="stylesheet" href="/static/css/aurora-experience.css?v=20261023-4" />
+<script defer src="/static/js/aurora-experience.js?v=20261023-4"></script>
 </head>
 <body class="responsive-ui responsive-talent min-h-screen">
   <div class="aurora"></div><div class="blob b1"></div><div class="blob b2"></div>
@@ -429,29 +429,37 @@
             <div data-outline-label="Your career journey" id="journey" class="journey-grid relative mt-6"></div>
           </div>
           <nav class="career-quick-actions" aria-label="Career shortcuts">
-<button onclick="showTab('profile')" class="group relative overflow-hidden border border-indigo-100 hover:border-indigo-300">
-  <span class="quick-icon inline-flex items-center justify-center px-2 py-0.5 rounded-lg text-xs font-black bg-gradient-to-r from-indigo-500 to-indigo-700 text-white shadow-xs">01</span>
-  <strong class="text-slate-900 group-hover:text-indigo-600 transition">My profile</strong>
-  <small class="text-slate-500">Update your professional story</small>
-  <span aria-hidden="true" class="text-indigo-500 font-bold group-hover:translate-x-1 transition">→</span>
+<button onclick="showTab('profile')" class="group relative overflow-hidden bg-white/80 backdrop-blur-md border border-indigo-100 hover:border-indigo-300 p-5 rounded-2xl shadow-xs hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
+  <div class="flex items-center justify-between mb-2">
+    <span class="inline-flex items-center justify-center h-7 w-7 rounded-xl text-xs font-black bg-indigo-50 text-indigo-700 border border-indigo-200">01</span>
+    <span aria-hidden="true" class="text-indigo-400 font-bold group-hover:translate-x-1 transition text-sm">→</span>
+  </div>
+  <strong class="text-slate-900 group-hover:text-indigo-600 transition text-sm font-black block">My profile</strong>
+  <small class="text-slate-500 text-xs mt-0.5 block">Update your professional story</small>
 </button>
-<button onclick="showTab('cv-review')" class="group relative overflow-hidden border border-pink-100 hover:border-pink-300">
-  <span class="quick-icon inline-flex items-center justify-center px-2 py-0.5 rounded-lg text-xs font-black bg-gradient-to-r from-pink-500 to-rose-600 text-white shadow-xs">02</span>
-  <strong class="text-slate-900 group-hover:text-pink-600 transition">Review my CV</strong>
-  <small class="text-slate-500">Check and refine your extracted details</small>
-  <span aria-hidden="true" class="text-pink-500 font-bold group-hover:translate-x-1 transition">→</span>
+<button onclick="showTab('cv-review')" class="group relative overflow-hidden bg-white/80 backdrop-blur-md border border-pink-100 hover:border-pink-300 p-5 rounded-2xl shadow-xs hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
+  <div class="flex items-center justify-between mb-2">
+    <span class="inline-flex items-center justify-center h-7 w-7 rounded-xl text-xs font-black bg-pink-50 text-pink-700 border border-pink-200">02</span>
+    <span aria-hidden="true" class="text-pink-400 font-bold group-hover:translate-x-1 transition text-sm">→</span>
+  </div>
+  <strong class="text-slate-900 group-hover:text-pink-600 transition text-sm font-black block">Review my CV</strong>
+  <small class="text-slate-500 text-xs mt-0.5 block">Check and refine extracted details</small>
 </button>
-<button onclick="showTab('jobs')" class="group relative overflow-hidden border border-amber-100 hover:border-amber-300">
-  <span class="quick-icon inline-flex items-center justify-center px-2 py-0.5 rounded-lg text-xs font-black bg-gradient-to-r from-amber-500 to-orange-500 text-white shadow-xs">03</span>
-  <strong class="text-slate-900 group-hover:text-amber-600 transition">Find opportunities</strong>
-  <small class="text-slate-500">Explore vacancies for your next move</small>
-  <span aria-hidden="true" class="text-amber-500 font-bold group-hover:translate-x-1 transition">→</span>
+<button onclick="showTab('jobs')" class="group relative overflow-hidden bg-white/80 backdrop-blur-md border border-amber-100 hover:border-amber-300 p-5 rounded-2xl shadow-xs hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
+  <div class="flex items-center justify-between mb-2">
+    <span class="inline-flex items-center justify-center h-7 w-7 rounded-xl text-xs font-black bg-amber-50 text-amber-700 border border-amber-200">03</span>
+    <span aria-hidden="true" class="text-amber-400 font-bold group-hover:translate-x-1 transition text-sm">→</span>
+  </div>
+  <strong class="text-slate-900 group-hover:text-amber-600 transition text-sm font-black block">Find opportunities</strong>
+  <small class="text-slate-500 text-xs mt-0.5 block">Explore vacancies for your next move</small>
 </button>
-<button onclick="showTab('applications')" class="group relative overflow-hidden border border-teal-100 hover:border-teal-300">
-  <span class="quick-icon inline-flex items-center justify-center px-2 py-0.5 rounded-lg text-xs font-black bg-gradient-to-r from-teal-500 to-emerald-600 text-white shadow-xs">04</span>
-  <strong class="text-slate-900 group-hover:text-teal-600 transition">My applications</strong>
-  <small class="text-slate-500">Manage applications and CV access</small>
-  <span aria-hidden="true" class="text-teal-500 font-bold group-hover:translate-x-1 transition">→</span>
+<button onclick="showTab('applications')" class="group relative overflow-hidden bg-white/80 backdrop-blur-md border border-teal-100 hover:border-teal-300 p-5 rounded-2xl shadow-xs hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
+  <div class="flex items-center justify-between mb-2">
+    <span class="inline-flex items-center justify-center h-7 w-7 rounded-xl text-xs font-black bg-teal-50 text-teal-700 border border-teal-200">04</span>
+    <span aria-hidden="true" class="text-teal-400 font-bold group-hover:translate-x-1 transition text-sm">→</span>
+  </div>
+  <strong class="text-slate-900 group-hover:text-teal-600 transition text-sm font-black block">My applications</strong>
+  <small class="text-slate-500 text-xs mt-0.5 block">Manage applications and CV access</small>
 </button>
 </nav>
 
@@ -464,7 +472,7 @@
               </div>
               <h3 class="text-lg sm:text-xl font-black text-white">How Do Professionals in Your Field Live Worldwide?</h3>
               <p class="text-xs text-slate-300 leading-relaxed">
-                Spin the interactive 3D globe to discover real work-life balance, salaries, living costs, and daily routines across Kuala Lumpur, Tokyo, Amsterdam, and London.
+                Spin the interactive 3D globe to discover authentic career cultures, day-in-the-life plogs, and positive daily routines across 16 world frontier hubs.
               </p>
             </div>
             <button type="button" onclick="openGlobalAtlas()" class="totem-btn-primary !py-3 !px-6 text-xs font-black tracking-wide shrink-0 shadow-md">
@@ -3904,13 +3912,24 @@
         { label: 'Plan', tab: 'plan', done: visited.has('plan') },
         { label: 'Passport', tab: 'passport', done: visited.has('passport') },
       ];
-      journey.innerHTML = steps.map((s, i) => `
-        <button onclick="showTab('${s.tab}')" class="text-left tint ${s.done ? 'tint-teal' : 'tint-indigo'} rounded-2xl p-3 lift group">
-          <div class="flex items-center gap-2.5">
-            <span class="inline-flex items-center justify-center h-6 w-6 rounded-lg text-xs font-black shadow-xs ${s.done ? 'bg-emerald-500 text-white' : 'bg-gradient-to-r ' + stepColors[i] + ' text-white'}">${s.done ? '✓' : '0' + (i + 1)}</span>
-            <div class="text-xs font-extrabold text-slate-900 group-hover:text-indigo-600 transition">${s.label}</div>
-          </div>
-        </button>`).join('');
+      journey.innerHTML = `
+        <div class="journey-diagram-pipeline flex items-center justify-between gap-2 overflow-x-auto pb-1">
+          ${steps.map((s, i) => `
+            <div class="flex items-center gap-1.5 flex-1 min-w-[125px]">
+              <button onclick="showTab('${s.tab}')" class="journey-node w-full text-left p-3 rounded-2xl border transition-all duration-300 group ${s.done ? 'bg-emerald-50/80 border-emerald-300 shadow-xs' : 'bg-white/80 border-indigo-100 hover:border-indigo-300 hover:shadow-md'}">
+                <div class="flex items-center gap-2">
+                  <span class="inline-flex items-center justify-center h-6 w-6 rounded-lg text-[11px] font-black shrink-0 ${s.done ? 'bg-emerald-500 text-white shadow-xs' : 'bg-indigo-600 text-white shadow-xs'}">${s.done ? '✓' : '0' + (i + 1)}</span>
+                  <div class="min-w-0">
+                    <div class="text-xs font-black truncate text-slate-800 group-hover:text-indigo-600 transition">${s.label}</div>
+                    <div class="text-[10px] font-mono text-slate-400 uppercase tracking-wider">${s.done ? 'Complete' : 'Step In'}</div>
+                  </div>
+                </div>
+              </button>
+              ${i < steps.length - 1 ? '<span class="text-indigo-200 font-bold shrink-0 text-sm hidden sm:inline select-none">→</span>' : ''}
+            </div>
+          `).join('')}
+        </div>
+      `;
       
       const kpiItems = [
         {
@@ -4987,7 +5006,7 @@ async function submit3AiVerificationAnswers() {
         <div class="flex items-center gap-3">
           <button type="button" onclick="surpriseAtlasCity()" class="atlas-warp-btn" title="Randomly teleport to another city on the 3D globe">
             <span class="text-base">🎲</span>
-            <span class="font-bold">随机漫游城市 · Warp to Random Hub</span>
+            <span class="font-bold">Explore Random Hub</span>
           </button>
           <button type="button" data-atlas-close aria-label="Close atlas" onclick="closeGlobalAtlas()" class="h-10 w-10 rounded-full bg-white/10 hover:bg-white/20 text-white font-bold grid place-items-center transition text-lg border border-white/15" title="Close Atlas">✕</button>
         </div>
@@ -4995,27 +5014,40 @@ async function submit3AiVerificationAnswers() {
 
       <!-- Globe & Details Grid -->
       <div class="atlas-explorer-grid">
-        <!-- Main Column: Active Role Plog/Vlog, Job Desc & Positive Routine -->
-        <div class="atlas-explorer-story"><div id="cityRelatedRolesContainer" aria-live="polite"></div><details class="atlas-story-detail" open><summary>Inside the selected working day</summary><div id="cityDetailsContainer">
-          <!-- Injected active role Plog/Vlog card -->
-        </div></details></div>
-
-        <!-- Side Column: 3D Interactive Sphere & Other Roles in Hub -->
+        <!-- Left Column: 3D Earth Stage + Hub Information & Persona Selector -->
         <div class="atlas-explorer-map space-y-4">
           <div class="earth-stage">
-            <div class="earth-heading"><span>THE WORK-LIFE ATLAS</span><span id="earthClock" aria-live="polite"></span></div>
+            <div class="earth-heading">
+              <span class="tracking-widest">THE WORK-LIFE ATLAS</span>
+              <span id="earthClock" aria-live="polite"></span>
+            </div>
             <div id="totemGlobeContainer"><canvas id="globeCanvas"></canvas></div>
             <p id="earthStatus" role="status">Loading coastlines…</p>
-            <div class="earth-controls" aria-label="Globe controls"><button id="earthZoomIn" aria-label="Zoom in">+</button><button id="earthZoomOut" aria-label="Zoom out">−</button><button id="earthReset">Recenter</button><button id="earthRotate">Rotate</button></div>
+            <div class="earth-controls" aria-label="Globe controls">
+              <button id="earthZoomIn" aria-label="Zoom in">+</button>
+              <button id="earthZoomOut" aria-label="Zoom out">−</button>
+              <button id="earthReset">Recenter</button>
+              <button id="earthRotate">Rotate</button>
+            </div>
           </div>
 
+          <!-- Hub Quick Info & Role Selector Card (Left side under globe) -->
+          <div id="cityHubInfoContainer" class="p-4 sm:p-5 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-md space-y-3">
+            <!-- Injected by showCityCard -->
+          </div>
+        </div>
 
+        <!-- Right Column: Active Role Hero Plog/Vlog, Visual Showcase & Positive Routine -->
+        <div class="atlas-explorer-story">
+          <div id="cityDetailsContainer">
+            <!-- Injected active role Hero Showcase card -->
+          </div>
         </div>
       </div>
     </div>
   </div>
 
-  <script src="/static/js/career-earth.js?v=20261023-3"></script>
-<script src="/static/js/career-spirit-totem.js?v=20261023-3"></script>
+  <script src="/static/js/career-earth.js?v=20261023-4"></script>
+<script src="/static/js/career-spirit-totem.js?v=20261023-4"></script>
 </body>
 </html>
