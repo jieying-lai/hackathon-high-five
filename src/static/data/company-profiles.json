@@ -1,1 +1,244 @@
-{}
+{
+  "by_company_name": {
+    "microsoft": {
+      "legal_name": "Microsoft (Malaysia) Sdn Bhd",
+      "description": "Microsoft (Malaysia) Sdn Bhd began operations in Malaysia in July 1992. It supports businesses and communities with software, cloud services and technology solutions.",
+      "website_url": "https://www.microsoft.com/malaysia",
+      "checked_at": "2026-10-23",
+      "facts": [
+        [
+          "Incorporated (Experian)",
+          "8 July 1992"
+        ],
+        [
+          "Malaysia office",
+          "Menara Shell, Brickfields, Kuala Lumpur"
+        ],
+        [
+          "Managing Director",
+          "Laurence Si · appointed 1 July 2024"
+        ],
+        [
+          "Parent corporation",
+          "Microsoft Corporation · founded 1975, Redmond, Washington"
+        ]
+      ],
+      "parent_description": "Microsoft Corporation is an American multinational technology company whose products and services include software, cloud computing, consumer electronics and personal computers.",
+      "source_note": "Incorporation date follows Experian. EMIS lists 7 August 1992 instead; a current SSM extract has not been checked. The Menara Shell address is listed by EMIS. Office information may change. Parent-company background is separate from the Malaysian entity.",
+      "sources": [
+        [
+          "Microsoft Malaysia",
+          "https://news.microsoft.com/en-my/microsoft-in-malaysia/"
+        ],
+        [
+          "Microsoft executive team",
+          "https://news.microsoft.com/en-my/microsoft-malaysia-executive-team/"
+        ],
+        [
+          "Managing Director appointment",
+          "https://news.microsoft.com/source/asia/2024/04/05/microsoft-appoints-laurence-si-to-lead-malaysia/"
+        ],
+        [
+          "MIDA: Microsoft in Malaysia",
+          "https://www.mida.gov.my/microsoft-in-malaysia/"
+        ],
+        [
+          "Experian company profile",
+          "https://buy.experian.com.my/index.php/buy-report/malaysia-company/244003/microsoft-malaysia-sdn-bhd"
+        ],
+        [
+          "EMIS company profile",
+          "https://www.emis.com/php/company-profile/MY/Microsoft__Malaysia__Sdn_Bhd_en_4191066.html"
+        ]
+      ],
+      "registration_number": "199201012500 / 244003-A",
+      "external_interviews": [
+        {
+          "title": "Senior Software Engineer interview",
+          "location": "Microsoft Malaysia · Demo scenario",
+          "posted_date": "",
+          "interview_date": "",
+          "outcome": "Accepted offer",
+          "experience": "Positive experience",
+          "difficulty": "Difficult interview",
+          "application": "In this demo scenario, the candidate applies through an employee referral and completes a four-week interview process.",
+          "interview": "This demo scenario includes five rounds covering coding, data structures and algorithms, low-level design and high-level design, with a focus on clear reasoning and trade-offs.",
+          "source_note": "Demo scenario adapted from a supplied interview screenshot for interface demonstration. It is not a verified Microsoft Malaysia experience and does not contribute to ratings.",
+          "is_demo": true
+        }
+      ]
+    },
+    "nexusdigital": {
+      "description": "NexusDigital is a results-driven digital marketing agency based in Kuala Lumpur, serving Malaysian SMEs since 2016. It brings SEO specialists, Google Ads experts, web developers, social media strategists and video producers together to deliver an integrated digital presence focused on measurable growth.",
+      "facts": [
+        [
+          "Based in",
+          "Kuala Lumpur, Malaysia"
+        ],
+        [
+          "Serving SMEs since",
+          "2016"
+        ],
+        [
+          "Focus",
+          "Integrated digital marketing"
+        ]
+      ],
+      "services": [
+        "SEO",
+        "Google Ads",
+        "Web development",
+        "Social media strategy",
+        "Video production"
+      ],
+      "highlights": [
+        [
+          "Results-driven",
+          "Strategies tied to measurable KPIs and business outcomes."
+        ],
+        [
+          "Client-first",
+          "A focus on clients’ long-term growth and success."
+        ],
+        [
+          "Local experts",
+          "Knowledge of the Malaysian market and consumer behaviour."
+        ],
+        [
+          "Transparent",
+          "Clear monthly reporting on results and investment."
+        ]
+      ],
+      "source_note": "Profile overview supplied for this company. These describe the agency’s services and approach, not employee benefits."
+    },
+    "nexus digital": {
+      "description": "NexusDigital is a results-driven digital marketing agency based in Kuala Lumpur, serving Malaysian SMEs since 2016. It brings SEO specialists, Google Ads experts, web developers, social media strategists and video producers together to deliver an integrated digital presence focused on measurable growth.",
+      "facts": [
+        [
+          "Based in",
+          "Kuala Lumpur, Malaysia"
+        ],
+        [
+          "Serving SMEs since",
+          "2016"
+        ],
+        [
+          "Focus",
+          "Integrated digital marketing"
+        ]
+      ],
+      "services": [
+        "SEO",
+        "Google Ads",
+        "Web development",
+        "Social media strategy",
+        "Video production"
+      ],
+      "highlights": [
+        [
+          "Results-driven",
+          "Strategies tied to measurable KPIs and business outcomes."
+        ],
+        [
+          "Client-first",
+          "A focus on clients’ long-term growth and success."
+        ],
+        [
+          "Local experts",
+          "Knowledge of the Malaysian market and consumer behaviour."
+        ],
+        [
+          "Transparent",
+          "Clear monthly reporting on results and investment."
+        ]
+      ],
+      "source_note": "Profile overview supplied for this company. These describe the agency’s services and approach, not employee benefits."
+    },
+    "nexus digital sdn bhd": {
+      "description": "NexusDigital is a results-driven digital marketing agency based in Kuala Lumpur, serving Malaysian SMEs since 2016. It brings SEO specialists, Google Ads experts, web developers, social media strategists and video producers together to deliver an integrated digital presence focused on measurable growth.",
+      "facts": [
+        [
+          "Based in",
+          "Kuala Lumpur, Malaysia"
+        ],
+        [
+          "Serving SMEs since",
+          "2016"
+        ],
+        [
+          "Focus",
+          "Integrated digital marketing"
+        ]
+      ],
+      "services": [
+        "SEO",
+        "Google Ads",
+        "Web development",
+        "Social media strategy",
+        "Video production"
+      ],
+      "highlights": [
+        [
+          "Results-driven",
+          "Strategies tied to measurable KPIs and business outcomes."
+        ],
+        [
+          "Client-first",
+          "A focus on clients’ long-term growth and success."
+        ],
+        [
+          "Local experts",
+          "Knowledge of the Malaysian market and consumer behaviour."
+        ],
+        [
+          "Transparent",
+          "Clear monthly reporting on results and investment."
+        ]
+      ],
+      "source_note": "Profile overview supplied for this company. These describe the agency’s services and approach, not employee benefits."
+    },
+    "nexus digital & finance sdn bhd": {
+      "description": "NexusDigital is a results-driven digital marketing agency based in Kuala Lumpur, serving Malaysian SMEs since 2016. It brings SEO specialists, Google Ads experts, web developers, social media strategists and video producers together to deliver an integrated digital presence focused on measurable growth.",
+      "facts": [
+        [
+          "Based in",
+          "Kuala Lumpur, Malaysia"
+        ],
+        [
+          "Serving SMEs since",
+          "2016"
+        ],
+        [
+          "Focus",
+          "Integrated digital marketing"
+        ]
+      ],
+      "services": [
+        "SEO",
+        "Google Ads",
+        "Web development",
+        "Social media strategy",
+        "Video production"
+      ],
+      "highlights": [
+        [
+          "Results-driven",
+          "Strategies tied to measurable KPIs and business outcomes."
+        ],
+        [
+          "Client-first",
+          "A focus on clients’ long-term growth and success."
+        ],
+        [
+          "Local experts",
+          "Knowledge of the Malaysian market and consumer behaviour."
+        ],
+        [
+          "Transparent",
+          "Clear monthly reporting on results and investment."
+        ]
+      ],
+      "source_note": "Profile overview supplied for this company. These describe the agency’s services and approach, not employee benefits."
+    }
+  }
+}

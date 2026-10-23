@@ -141,6 +141,10 @@ def api_role(role):
     return decorator
 
 
+from company_reviews import register_company_reviews
+register_company_reviews(app, api_role)
+
+
 # ------------------------------------------------------------------ pages
 @app.route("/")
 def index():
