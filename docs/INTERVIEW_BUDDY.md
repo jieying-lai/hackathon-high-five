@@ -8,7 +8,7 @@ Choose English or Chinese questions and feedback. Six role-based questions cover
 
 Coaching is rule-based and explicitly identified in the room. It detects common skill-gap responses, brief answers and mentions of actions or outcomes, then offers a truthful editable response structure. It does not judge technical correctness or use a generative AI model. Bracketed placeholders must be filled with genuine experiences. There are no competence scores, hiring predictions, CV updates or employer sharing.
 
-Answers remain in frame memory until page refresh; closing and reopening the overlay preserves the session. Only buddy coordinates are stored in localStorage. Browser speech playback and optional browser speech recognition depend on platform support and permissions. Speech recognition may use the browser vendor's service. Text entry always remains available. Closing the room stops playback and recognition. Downloading notes is optional.
+Answers remain in frame memory while the room is open. Closing the overlay unloads the room and clears its current practice; reopening always starts at the company/role setup page. Only buddy coordinates are stored in localStorage. Browser speech playback and optional browser speech recognition depend on platform support and permissions. Speech recognition may use the browser vendor's service. Text entry always remains available. Closing the room stops playback and recognition. Downloading notes is optional.
 
 ## Validation
 
