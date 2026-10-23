@@ -293,6 +293,8 @@
 <link rel="stylesheet" href="/static/css/atlas-inline.css?v=20261025-inline-1" />
 <script defer src="/static/js/future-radar.js?v=20261024-matrix-1"></script>
 <script src="/static/js/company-insights.js?v=20261023-1"></script>
+<link rel="stylesheet" href="/static/css/career-practice.css?v=20261023-1">
+<script defer src="/static/js/career-practice.js?v=20261023-1"></script>
 </head>
 <body class="responsive-ui responsive-talent min-h-screen">
   <div class="aurora"></div><div class="blob b1"></div><div class="blob b2"></div>
@@ -441,6 +443,7 @@
             </details>
           </div>
           <div id="careerActions" data-outline-label="Your next action"></div>
+          <section class="practice-entry" aria-label="Career practice"><div><span class="practice-kicker">LESS GUESSING. MORE TRYING.</span><h2>Could you enjoy the actual work?</h2><p>Try a short, realistic task in data, customer experience or sustainability. Leave with a draft you can improve.</p></div><button type="button" class="btn btn-primary" data-career-practice>Try a work task ↗</button></section>
           <nav class="career-quick-actions" aria-label="Career shortcuts">
 <button onclick="showTab('profile')" class="group relative overflow-hidden bg-white/80 backdrop-blur-md border border-indigo-100 hover:border-indigo-300 p-5 rounded-2xl shadow-xs hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
   <div class="flex items-center justify-between mb-2">
@@ -2807,16 +2810,16 @@
               </div>
             </div>
             <span class="chip chip-emerald !text-[10px] font-extrabold uppercase tracking-wider shrink-0">
-              ${esc(app.hr_decision || 'Submitted')}
+              ${esc(app.delivery_confirmed === false ? 'Delivery unconfirmed' : (app.hr_decision || 'Submitted'))}
             </span>
           </div>
           <div class="flex flex-wrap items-center justify-between gap-2 pt-2 border-t border-slate-100 text-xs">
             <div class="flex flex-wrap items-center gap-1.5">
               <span class="chip ${app.share_organised_cv ? 'chip-indigo' : 'chip-slate'} !text-[10px]">
-                ${app.share_organised_cv ? '✓ Organised CV Shared' : 'CV Private'}
+                ${app.delivery_confirmed === false ? 'Local record only' : (app.share_organised_cv ? '✓ Organised CV Shared' : 'CV Private')}
               </span>
               <span class="chip ${app.share_original_pdf ? 'chip-teal' : 'chip-slate'} !text-[10px]">
-                ${app.share_original_pdf ? '✓ Original PDF Shared' : 'PDF Private'}
+                ${app.delivery_confirmed === false ? 'No connected recipient' : (app.share_original_pdf ? '✓ Original PDF Shared' : 'PDF Private')}
               </span>
             </div>
             <button type="button" data-application-followup data-company="${esc(app.company_name)}" data-role="${esc(app.vacancy_title)}" data-applied="${esc(app.applied_at || '')}" class="btn btn-soft !text-indigo-700 !border-indigo-200 !text-[11px] !py-1 !px-2.5 font-bold transition">Prepare follow-up</button>
@@ -3841,7 +3844,12 @@
             </div>
 
             <!-- Action Footer -->
-            ${app.applied ? `
+            ${!canApply && /^JS-[0-9]+$/.test(String(v.jobstreet_id || '')) ? `
+              <div class="rounded-2xl p-3 bg-white/80 border border-slate-200 space-y-2">
+                <p class="text-xs text-slate-600">${app.applied ? 'Previously saved locally; employer delivery is unconfirmed. ' : ''}Check availability and submit on JobStreet.</p>
+                <a class="btn btn-primary" href="https://my.jobstreet.com/job/${encodeURIComponent(String(v.jobstreet_id || '').replace(/^JS-/, ''))}" target="_blank" rel="noopener noreferrer">Continue on JobStreet ↗</a>
+              </div>
+            ` : !canApply ? `<p class="text-xs text-slate-600">Applications are unavailable for this listing.</p>` : app.applied ? `
               <div class="rounded-2xl px-3.5 py-2.5 bg-white/80 border border-amber-400/80 flex flex-wrap items-center justify-between gap-2 text-xs">
                 <div class="text-[11px] text-slate-700">
                   <b class="text-red-600 font-black uppercase">Applied</b> · Status: <b>${esc(app.hr_decision || 'Pending Review')}</b>
@@ -3866,15 +3874,14 @@
       if (!job) return;
       activeApplyJob = job;
 
-      // Auto-confirm reviewed status so candidate is never blocked from applying
-      if (cvRecord && !isReviewed()) {
-        try {
-          await postJson('/api/cv/me', {
-            review_confirmed: true,
-            expected_file_sha256: cvRecord.file_sha256
-          }, 'PUT');
-          await loadMyCv();
-        } catch (_) {}
+      if (job.can_apply_in_app !== true) {
+        toast('Continue on the original listing to apply. Availability is confirmed there.', 'err');
+        return;
+      }
+      if (!cvRecord || !isReviewed()) {
+        toast('Review your CV details before sharing them with an employer.', 'err');
+        await showTab(cvRecord ? 'cv-review' : 'cv-upload');
+        return;
       }
 
       amTitle.textContent = `${job.title} · ${job.company_name}`;
@@ -3884,10 +3891,10 @@
       amMeta.textContent = `${job.vacancy_uid || job.jobstreet_id || 'ID: ' + job.id} · ${salText} · ${job.location || 'Malaysia'}`;
 
       // Populate Applicant Information Preview Box with clean phone formatting (prevents double +60)
-      const candName = user?.full_name || (document.getElementById('pName')?.value) || 'Aisha Rahman';
-      const candRole = (document.getElementById('pRole')?.value) || user?.role_details?.current_role || 'Junior Financial Auditor';
-      const candEmail = user?.email || (document.getElementById('pEmail')?.value) || 'name@example.com';
-      const rawPhone = (document.getElementById('pPhone')?.value) || user?.phone || '12-348 9921';
+      const candName = user?.full_name || (document.getElementById('pName')?.value) || 'Not provided';
+      const candRole = (document.getElementById('pRole')?.value) || user?.role_details?.current_role || 'Not provided';
+      const candEmail = user?.email || (document.getElementById('pEmail')?.value) || 'Not provided';
+      const rawPhone = (document.getElementById('pPhone')?.value) || user?.phone || '';
       const candPhone = String(rawPhone).replace(/^(\+?60\s*)+/g, '').trim();
       const prevEl = document.getElementById('amApplicantPreview');
       if (prevEl) {
@@ -3895,15 +3902,15 @@
           <div class="flex items-center gap-1.5"><span class="text-slate-400">Name:</span><b class="text-slate-900">${esc(candName)}</b></div>
           <div class="flex items-center gap-1.5"><span class="text-slate-400">Target Role:</span><b class="text-slate-900">${esc(candRole)}</b></div>
           <div class="flex items-center gap-1.5 truncate"><span class="text-slate-400">Email:</span><span class="text-slate-700">${esc(candEmail)}</span></div>
-          <div class="flex items-center gap-1.5"><span class="text-slate-400">Phone:</span><span class="text-slate-700 font-bold">+60 ${esc(candPhone)}</span></div>
+          <div class="flex items-center gap-1.5"><span class="text-slate-400">Phone:</span><span class="text-slate-700 font-bold">${candPhone ? "+60 " + esc(candPhone) : "Not provided"}</span></div>
         `;
       }
 
       const app = job.application || {};
-      // Default to true so user is never blocked with "Choose what to share" error
-      amShareOrg.checked = true;
-      amSharePdf.checked = app.applied ? Boolean(app.share_original_pdf) : Boolean(cvRecord?.file_sha256);
-      if (job.salary_min) amSalary.value = job.salary_min;
+      // Only preserve permissions previously chosen for this application.
+      amShareOrg.checked = Boolean(app.applied && app.share_organised_cv);
+      amSharePdf.checked = Boolean(app.applied && app.share_original_pdf);
+      amSalary.value = job.salary_min || '';
       amNote.value = app.cover_note || (job.title ? `Hello ${job.company_name} hiring team, I am interested in applying for the ${job.title} position. My background aligns well with your team requirements.` : '');
       applyReturnFocus = document.activeElement;
       applyModalWrap.classList.remove('hidden');
@@ -3924,7 +3931,7 @@
     function showApplySuccessModal(job, appInfo, submittedDetails) {
       const modal = document.getElementById('applySuccessModal');
       if (!modal) return;
-      const refId = appInfo.application_uid || `APP-2026-${Math.random().toString(36).substring(2, 8).toUpperCase()}`;
+      const refId = appInfo.application_uid || 'Reference unavailable';
       document.getElementById('asmJobTitle').textContent = job.title;
       document.getElementById('asmCompany').textContent = job.company_name;
       document.getElementById('asmRefId').textContent = refId;
@@ -3932,7 +3939,7 @@
       document.getElementById('asmSalary').textContent = submittedDetails.salary ? `RM ${Number(submittedDetails.salary).toLocaleString()}` : 'Negotiable upon interview';
       document.getElementById('asmAvail').textContent = submittedDetails.availability || '1 month';
       document.getElementById('asmNote').textContent = submittedDetails.note || '(No additional note)';
-      document.getElementById('asmSharing').textContent = submittedDetails.sharedPdf ? 'Full PDF CV + Verified Skills Summary' : 'Verified Skills & Experience Summary';
+      document.getElementById('asmSharing').textContent = [submittedDetails.sharedOrg && 'Reviewed CV summary', submittedDetails.sharedPdf && 'Original PDF'].filter(Boolean).join(' + ');
       modal.classList.remove('hidden');
     }
 
@@ -3944,13 +3951,7 @@
       if (!activeApplyJob || applicationBusy) return;
       if (!amShareOrg.checked && !amSharePdf.checked) return toast('Please select at least one CV resource to share.', 'err');
       
-      // Auto-confirm reviewed profile if needed
-      if (cvRecord && !isReviewed()) {
-        try {
-          await postJson('/api/cv/me', { review_confirmed: true, expected_file_sha256: cvRecord.file_sha256 }, 'PUT');
-          await loadMyCv();
-        } catch (_) {}
-      }
+      if (!isReviewed()) return toast('Please review and confirm your CV before applying.', 'err');
 
       applicationBusy = true; submitApplicationBtn.disabled = true;
       try {
@@ -4103,7 +4104,7 @@
         { label: 'Plan', tab: 'plan', done: visited.has('plan') },
         { label: 'Passport', tab: 'passport', done: visited.has('passport') },
       ];
-      document.getElementById('dashboardChecklistProgress').textContent = `${steps.filter(step => step.done).length} / ${steps.length} checkpoints`;
+      document.getElementById('dashboardChecklistProgress').textContent = `${steps.filter(step => step.done).length} of ${steps.length} explored or completed`;
       journey.innerHTML = `
         <div class="journey-diagram-pipeline flex items-center justify-between gap-2 overflow-x-auto pb-1">
           ${steps.map((s, i) => `
@@ -4669,11 +4670,6 @@
       const me = await api('/api/auth/me'); user = me.data?.user;
       if (!me.ok || !user) { window.location.href = '/'; return; }
       if (user.role === 'hr_company') { window.location.href = '/workspace'; return; }
-      window.LearningImpact?.initialize?.({identity:user.unique_uid});
-      renderDiscoveryLearning();
-      window.PomodoroTimer?.mount?.({identity:user.unique_uid, container:document.getElementById('learningPomodoro'),floating:true});
-      if (typeof syncGrowthHeaderOffset === 'function') syncGrowthHeaderOffset();
-      window.PagePosition?.initialize?.({identity:user.unique_uid,portal:'talent',getView:()=>current,isValid:id=>typeof id==='string'&&!!document.getElementById('tab-'+id)});
       renderAccountProfileCard();
       try { answers = JSON.parse(localStorage.getItem(ansKey()) || '{}'); } catch (e) { answers = {}; }
       const optional = async (label, work) => {

@@ -294,8 +294,9 @@ def _job_payload(idx, i, dist, score, matched, is_match, applied=None):
         "key": js_uid,
         "id": applied["vid"] if applied else None,
         "source": "jobstreet",
-        "can_apply_in_app": True,
-        "application_channel": "in_app",
+        "can_apply_in_app": False,
+        "application_channel": "external",
+        "external_apply_url": f"https://my.jobstreet.com/job/{j[0]}",
         "application_notice": "",
         "jobstreet_id": js_uid,
         "vacancy_uid": js_uid,
@@ -486,6 +487,16 @@ def search_nearby(candidate_uid, lat, lng, radius_km=10.0, mode="matched", categ
         "has_more": offset + limit < total,
         "dataset": stats(),
     }
+
+
+def external_application_url(js_uid):
+    match = re.fullmatch(r"(?:JS-)?([0-9]+)", str(js_uid))
+    if not match:
+        return None
+    job_id = int(match.group(1))
+    if job_id not in load_index()["by_id"]:
+        return None
+    return f"https://my.jobstreet.com/job/{job_id}"
 
 
 def materialize_vacancy(js_uid):

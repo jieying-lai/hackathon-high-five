@@ -901,54 +901,12 @@ def api_geocode_reverse():
 @app.route("/api/jobs/js/<js_uid>/apply", methods=["POST"])
 @api_role("job_seeker")
 def api_jobs_apply_jobstreet(js_uid):
-    """Apply to JobStreet dataset vacancy by ensuring it exists in vacancies and recording application."""
-    vid = job_index.materialize_vacancy(js_uid)
-    if not vid:
+    """Imported listings have no connected recipient: never manufacture delivery."""
+    url = job_index.external_application_url(js_uid)
+    if not url:
         return jsonify(ok=False, message="Vacancy not found."), 404
-    user = session["user"]
-    candidate_uid = user["unique_uid"]
-    candidate_name = user["full_name"]
-
-    payload = json_object()
-    cover_note = payload.get("cover_note") or ""
-    available_in = payload.get("available_in") or "1 month"
-    salary = payload.get("salary_expectation") or 0
-    share_org = bool(payload.get("share_organised_cv", True))
-    share_pdf = bool(payload.get("share_original_pdf", False))
-
-    conn = auth_db.get_db_connection()
-    try:
-        now = datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M UTC")
-        existing = conn.execute(
-            "SELECT id, application_uid FROM job_applications WHERE vacancy_id = ? AND candidate_uid = ?",
-            (vid, candidate_uid),
-        ).fetchone()
-        if existing:
-            app_uid = existing["application_uid"]
-            conn.execute(
-                """UPDATE job_applications SET candidate_name = ?, share_organised_cv = ?, share_original_pdf = ?,
-                   cover_note = ?, salary_expectation = ?, available_in = ? WHERE id = ?""",
-                (candidate_name, int(share_org), int(share_pdf), str(cover_note).strip(), int(salary), str(available_in).strip(), existing["id"]),
-            )
-        else:
-            app_uid = f"APP-{uuid.uuid4().hex[:16].upper()}"
-            conn.execute(
-                """INSERT INTO job_applications (
-                    application_uid, vacancy_id, candidate_uid, candidate_name, share_organised_cv,
-                    share_original_pdf, cover_note, salary_expectation, available_in, hr_decision, applied_at
-                   ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, 'Submitted', ?)""",
-                (app_uid, vid, candidate_uid, candidate_name, int(share_org), int(share_pdf),
-                 str(cover_note).strip(), int(salary), str(available_in).strip(), now),
-            )
-        conn.commit()
-    finally:
-        conn.close()
-
-    return jsonify(
-        ok=True,
-        message="Application submitted successfully! Your CV profile has been recorded for this vacancy.",
-        application={"application_uid": app_uid, "vacancy_id": vid, "applied_at": now}
-    )
+    return jsonify(ok=False, application_channel="external", external_apply_url=url,
+                   message="Continue on JobStreet to check availability and submit your application."), 409
 
 
 @app.route("/api/jobs/<int:vid>/apply", methods=["POST"])
