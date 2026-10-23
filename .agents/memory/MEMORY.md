@@ -4,3 +4,4 @@
 - [Workspace visual direction](workspace-visual-direction.md) — aurora gradients, soft pixel texture and clear glass across talent and employer; not dominant green/sage.
 - [Outcome-focused interactions](outcome-focused-interactions.md) — prioritize real, reversible actions over ornamental engagement; private reflections are not certified skills or hiring evidence.
 - [Publishing intent](publishing-intent.md) — user selected Autoscale; align configuration with that choice rather than silently switching deployment plans.
+- [Python publishing dependencies](python-publishing-dependencies.md) — automatic pip installation needs a project-local non-user destination; check declared and installed dependencies separately.
