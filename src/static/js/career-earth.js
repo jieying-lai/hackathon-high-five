@@ -1,0 +1,38 @@
+/* Career atlas: orthographic projection, local geography, pointer + keyboard input. */
+(function(){
+'use strict';
+const hubs=[['kl','Kuala Lumpur',3.139,101.686,'Asia/Kuala_Lumpur'],['singapore','Singapore',1.352,103.819,'Asia/Singapore'],['tokyo','Tokyo',35.676,139.65,'Asia/Tokyo'],['amsterdam','Amsterdam',52.367,4.904,'Europe/Amsterdam'],['london','London',51.507,-.127,'Europe/London'],['sf','San Francisco',37.774,-122.419,'America/Los_Angeles'],['berlin','Berlin',52.52,13.405,'Europe/Berlin'],['zurich','Zurich',47.376,8.541,'Europe/Zurich'],['sydney','Sydney',-33.868,151.209,'Australia/Sydney'],['toronto','Toronto',43.653,-79.383,'America/Toronto']];
+const rad=Math.PI/180;
+function project(lat,lon,latitude,longitude){const p=lat*rad,l=(lon-longitude)*rad,c=latitude*rad;return [Math.cos(p)*Math.sin(l),-(Math.cos(c)*Math.sin(p)-Math.sin(c)*Math.cos(p)*Math.cos(l)),Math.sin(c)*Math.sin(p)+Math.cos(c)*Math.cos(p)*Math.cos(l)];}
+if(typeof module==='object'&&module.exports){module.exports={project,hubs};return;}
+let instance;
+window.CareerEarth={mount(canvas){if(instance)return instance;const ctx=canvas.getContext('2d');if(!ctx)return null;
+let lat=12,lon=105,zoom=1,selected='kl',running=false,frame=0,last=0,w=400,h=400,paths=[],hits=[],drag=null,moved=false,target=null,visible=true;
+const reduced=matchMedia('(prefers-reduced-motion: reduce)');
+const status=document.getElementById('earthStatus'),clock=document.getElementById('earthClock');
+canvas.tabIndex=0;canvas.setAttribute('role','img');canvas.setAttribute('aria-label','Interactive career globe. Arrow keys rotate. Plus and minus zoom. Select a city using the location buttons.');
+function resize(){const r=canvas.getBoundingClientRect();w=r.width;h=r.height;const d=Math.min(devicePixelRatio||1,2);canvas.width=Math.round(w*d);canvas.height=Math.round(h*d);ctx.setTransform(d,0,0,d,0,0);draw();}
+function point(a,b){const p=project(a,b,lat,lon),r=Math.min(w,h)*.39*zoom;return [w/2+p[0]*r,h/2+p[1]*r,p[2]];}
+function line(coords,color){ctx.beginPath();let on=false;for(const c of coords){const p=point(c[1],c[0]);if(p[2]<.01){on=false;continue;}if(on)ctx.lineTo(p[0],p[1]);else ctx.moveTo(p[0],p[1]);on=true;}ctx.strokeStyle=color;ctx.stroke();}
+function draw(){if(!w||!h)return;ctx.clearRect(0,0,w,h);const r=Math.min(w,h)*.39*zoom;const glow=ctx.createRadialGradient(w/2,h/2,r*.85,w/2,h/2,r*1.13);glow.addColorStop(0,'#40cfcf35');glow.addColorStop(1,'#40cfcf00');ctx.fillStyle=glow;ctx.fillRect(0,0,w,h);
+ctx.save();ctx.beginPath();ctx.arc(w/2,h/2,r,0,Math.PI*2);ctx.clip();const ocean=ctx.createLinearGradient(0,0,w,h);ocean.addColorStop(0,'#173c53');ocean.addColorStop(1,'#071c2d');ctx.fillStyle=ocean;ctx.fillRect(0,0,w,h);ctx.lineWidth=.65;
+for(let a=-60;a<=60;a+=30)line(Array.from({length:181},(_,i)=>[-180+i*2,a]),'#80c9d326');for(let b=-180;b<180;b+=30)line(Array.from({length:91},(_,i)=>[b,-90+i*2]),'#80c9d326');
+ctx.lineWidth=1.25;paths.forEach(p=>line(p,'#99d7c6'));ctx.restore();ctx.strokeStyle='#6ed9d97a';ctx.lineWidth=1;ctx.beginPath();ctx.arc(w/2,h/2,r,0,Math.PI*2);ctx.stroke();hits=[];
+for(const hub of hubs){const p=point(hub[2],hub[3]);if(p[2]<.08)continue;const active=hub[0]===selected;ctx.beginPath();ctx.arc(p[0],p[1],active?7:4,0,Math.PI*2);ctx.fillStyle=active?'#ffd18a':'#80e6d1';ctx.fill();hits.push({hub,x:p[0],y:p[1]});if(active){ctx.strokeStyle='#ffd18a80';ctx.beginPath();ctx.arc(p[0],p[1],13,0,Math.PI*2);ctx.stroke();ctx.font='600 12px sans-serif';ctx.fillStyle='#fff';ctx.fillText(hub[1],Math.min(p[0]+17,w-110),p[1]-14);}}
+}
+function tick(t){frame=0;if(!visible||document.hidden)return;const dt=Math.min(t-last||16,50);last=t;if(target){lon+=(target.lon-lon)*.12;lat+=(target.lat-lat)*.12;if(Math.abs(target.lon-lon)+Math.abs(target.lat-lat)<.1)target=null;}else if(running&&!drag&&!reduced.matches)lon+=dt*.0025;draw();if(target||(running&&!reduced.matches))frame=requestAnimationFrame(tick);}
+function wake(){if(!frame&&visible&&!document.hidden)frame=requestAnimationFrame(tick);}
+function setClock(){const c=hubs.find(c=>c[0]===selected);if(clock)clock.textContent=c[1]+' · '+new Intl.DateTimeFormat('en-GB',{timeZone:c[4],hour:'2-digit',minute:'2-digit'}).format(new Date())+' local time';}
+function select(key){const hub=hubs.find(h=>h[0]===key);if(!hub)return;selected=key;running=false;document.getElementById('earthRotate').textContent='Rotate';const end=lon+((((hub[3]-lon+180)%360)+360)%360-180);target={lat:hub[2],lon:end};if(reduced.matches){lat=target.lat;lon=target.lon;target=null;}setClock();draw();wake();}
+canvas.addEventListener('pointerdown',e=>{canvas.setPointerCapture(e.pointerId);drag={x:e.clientX,y:e.clientY};moved=false;target=null;running=false;document.getElementById('earthRotate').textContent='Rotate';});
+canvas.addEventListener('pointermove',e=>{if(!drag)return;const dx=e.clientX-drag.x,dy=e.clientY-drag.y;if(Math.abs(dx)+Math.abs(dy)>2)moved=true;lon-=dx*.3;lat=Math.max(-80,Math.min(80,lat+dy*.3));drag={x:e.clientX,y:e.clientY};draw();});
+canvas.addEventListener('pointerup',e=>{if(!moved){const r=canvas.getBoundingClientRect();const near=hits.map(p=>({...p,d:Math.hypot(p.x-(e.clientX-r.left),p.y-(e.clientY-r.top))})).sort((a,b)=>a.d-b.d)[0];if(near&&near.d<22)window.showCityCard(near.hub[0]);}drag=null;});canvas.addEventListener('pointercancel',()=>drag=null);
+function scale(delta){zoom=Math.max(.75,Math.min(1.55,zoom+delta));draw();}
+canvas.addEventListener('keydown',e=>{if(!['ArrowLeft','ArrowRight','ArrowUp','ArrowDown','+','-','='].includes(e.key))return;e.preventDefault();target=null;running=false;if(e.key==='ArrowLeft')lon-=10;if(e.key==='ArrowRight')lon+=10;if(e.key==='ArrowUp')lat=Math.min(80,lat+10);if(e.key==='ArrowDown')lat=Math.max(-80,lat-10);if(e.key==='+'||e.key==='=')scale(.1);if(e.key==='-')scale(-.1);draw();});
+document.getElementById('earthZoomIn').onclick=()=>scale(.15);document.getElementById('earthZoomOut').onclick=()=>scale(-.15);document.getElementById('earthReset').onclick=()=>{zoom=1;select(selected);};document.getElementById('earthRotate').onclick=e=>{running=!running;target=null;e.currentTarget.textContent=running?'Pause':'Rotate';wake();};
+new ResizeObserver(resize).observe(canvas);document.addEventListener('visibilitychange',()=>{if(document.hidden){cancelAnimationFrame(frame);frame=0;}else wake();});
+fetch('/static/data/earth-coastline.geojson').then(r=>{if(!r.ok)throw Error();return r.json();}).then(data=>{paths=data.features.flatMap(f=>f.geometry.type==='MultiLineString'?f.geometry.coordinates:[f.geometry.coordinates]);status.textContent='Drag to explore · Select a glowing city';draw();}).catch(()=>status.textContent='Map outlines unavailable. City selection still works.');
+setInterval(()=>{if(visible&&!document.hidden)setClock();},60000);
+instance={select,pause(){visible=false;cancelAnimationFrame(frame);frame=0;},resume(){visible=true;resize();setClock();wake();}};resize();setClock();return instance;
+}};
+})();

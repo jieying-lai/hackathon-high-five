@@ -2281,11 +2281,15 @@
     const modal = document.getElementById("globalAtlasModal");
     if (modal) {
       modal.classList.remove("hidden");
-      showCityCard("kl");
+      window.atlasReturnFocus = document.activeElement;
+      document.body.style.overflow = 'hidden';
+      modal.querySelector('[data-atlas-close]')?.focus();
+      showCityCard(currentAtlasCityKey);
+      window.careerEarth?.resume();
       if (!globeInitialized) {
         setTimeout(() => {
           initGlobeVisual();
-          globeInitialized = true;
+          globeInitialized = Boolean(window.careerEarth);
         }, 100);
       }
     }
@@ -2294,7 +2298,21 @@
   window.closeGlobalAtlas = function () {
     const modal = document.getElementById("globalAtlasModal");
     if (modal) modal.classList.add("hidden");
+    window.careerEarth?.pause();
+    document.body.style.overflow = '';
+    window.atlasReturnFocus?.focus();
   };
+  document.addEventListener('keydown', e => {
+    const modal = document.getElementById('globalAtlasModal');
+    if (!modal || modal.classList.contains('hidden')) return;
+    if (e.key === 'Escape') { closeGlobalAtlas(); return; }
+    if (e.key === 'Tab') {
+      const items = [...modal.querySelectorAll('button,a[href],canvas[tabindex],input,select')].filter(el => !el.disabled && el.getClientRects().length);
+      const first=items[0], last=items[items.length-1];
+      if(e.shiftKey && document.activeElement===first){e.preventDefault();last?.focus();}
+      else if(!e.shiftKey && document.activeElement===last){e.preventDefault();first?.focus();}
+    }
+  });
 
   let currentAtlasCityKey = "kl";
   let currentAtlasRoleId = null;
@@ -2343,15 +2361,16 @@
   window.showCityCard = function (cityKey, roleId = null) {
     const c = GLOBAL_CITIES[cityKey] || GLOBAL_CITIES.kl;
     currentAtlasCityKey = cityKey;
+    window.careerEarth?.select(cityKey);
 
     const container = document.getElementById("cityDetailsContainer");
     const sideContainer = document.getElementById("cityRelatedRolesContainer");
     if (!container) return;
 
     // Toggle active pill highlight
-    document.querySelectorAll(".atlas-city-pill").forEach(el => el.classList.remove("active"));
+    document.querySelectorAll(".atlas-city-pill").forEach(el => {el.classList.remove("active");el.setAttribute("aria-pressed","false");});
     const activeBtn = document.getElementById("atlasBtn_" + cityKey);
-    if (activeBtn) activeBtn.classList.add("active");
+    if (activeBtn) { activeBtn.classList.add("active"); activeBtn.setAttribute("aria-pressed","true"); }
 
     // Pick role: if not specified, choose randomly or default to first
     let selectedRole = null;
@@ -2386,7 +2405,7 @@
                 <span class="text-xl">${c.flag || '🌍'}</span>
                 <span class="text-xs font-black uppercase tracking-wider text-teal-300">${c.country}</span>
                 <span class="text-xs text-slate-400">·</span>
-                <span class="text-xs font-mono text-indigo-300">${c.roles ? c.roles.length : 1} Authentic Roles</span>
+                <span class="text-xs font-mono text-indigo-300">${c.roles ? c.roles.length : 1} illustrative careers</span>
               </div>
               <h4 class="text-xl sm:text-2xl font-black text-white">${c.name}</h4>
             </div>
@@ -2410,7 +2429,7 @@
                 </div>
               </div>
               <span class="text-[11px] font-bold text-amber-300 bg-amber-500/15 px-2.5 py-1 rounded-full border border-amber-400/30 shrink-0">
-                🎥 Lifestyle Plog / Vlog
+                Illustrative day-in-the-life
               </span>
             </div>
 
@@ -2525,141 +2544,7 @@
 
   // Lightweight Interactive 3D Sphere on HTML5 Canvas
   function initGlobeVisual() {
-    const canvas = document.getElementById("globeCanvas");
-    if (!canvas) return;
-    const ctx = canvas.getContext("2d");
-
-    let width = canvas.parentElement.clientWidth || 400;
-    let height = canvas.parentElement.clientHeight || 380;
-    canvas.width = width * window.devicePixelRatio;
-    canvas.height = height * window.devicePixelRatio;
-    ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
-
-    const radius = Math.min(width, height) * 0.38;
-    const centerX = width / 2;
-    const centerY = height / 2;
-
-    const points = [];
-    const numPoints = 280;
-    for (let i = 0; i < numPoints; i++) {
-      const theta = Math.acos(2 * Math.random() - 1);
-      const phi = Math.random() * Math.PI * 2;
-      points.push({
-        x: radius * Math.sin(theta) * Math.cos(phi),
-        y: radius * Math.sin(theta) * Math.sin(phi),
-        z: radius * Math.cos(theta)
-      });
-    }
-
-    const cities = [
-      { name: "KL", key: "kl", lat: 3.139, lon: 101.686 },
-      { name: "Singapore", key: "singapore", lat: 1.352, lon: 103.819 },
-      { name: "Tokyo", key: "tokyo", lat: 35.676, lon: 139.650 },
-      { name: "Amsterdam", key: "amsterdam", lat: 52.367, lon: 4.904 },
-      { name: "London", key: "london", lat: 51.507, lon: -0.127 },
-      { name: "San Francisco", key: "sf", lat: 37.774, lon: -122.419 },
-      { name: "Berlin", key: "berlin", lat: 52.520, lon: 13.405 },
-      { name: "Zurich", key: "zurich", lat: 47.376, lon: 8.541 },
-      { name: "Sydney", key: "sydney", lat: -33.868, lon: 151.209 },
-      { name: "Toronto", key: "toronto", lat: 43.653, lon: -79.383 }
-    ];
-
-    let rotY = 0;
-    let rotX = 0.2;
-    let isDragging = false;
-    let lastMouseX = 0;
-    let lastMouseY = 0;
-
-    canvas.addEventListener("mousedown", e => {
-      isDragging = true;
-      lastMouseX = e.clientX;
-      lastMouseY = e.clientY;
-    });
-
-    window.addEventListener("mouseup", () => { isDragging = false; });
-    window.addEventListener("mousemove", e => {
-      if (!isDragging) return;
-      const dx = e.clientX - lastMouseX;
-      const dy = e.clientY - lastMouseY;
-      rotY += dx * 0.005;
-      rotX += dy * 0.005;
-      lastMouseX = e.clientX;
-      lastMouseY = e.clientY;
-    });
-
-    function draw() {
-      ctx.clearRect(0, 0, width, height);
-
-      if (!isDragging) {
-        rotY += 0.004;
-      }
-
-      const grad = ctx.createRadialGradient(centerX, centerY, radius * 0.8, centerX, centerY, radius * 1.05);
-      grad.addColorStop(0, "rgba(99, 102, 241, 0.08)");
-      grad.addColorStop(1, "rgba(20, 184, 166, 0.0)");
-      ctx.fillStyle = grad;
-      ctx.beginPath();
-      ctx.arc(centerX, centerY, radius, 0, Math.PI * 2);
-      ctx.fill();
-
-      ctx.strokeStyle = "rgba(255, 255, 255, 0.06)";
-      ctx.lineWidth = 1.5;
-      ctx.beginPath();
-      ctx.arc(centerX, centerY, radius, 0, Math.PI * 2);
-      ctx.stroke();
-
-      const cosY = Math.cos(rotY), sinY = Math.sin(rotY);
-      const cosX = Math.cos(rotX), sinX = Math.sin(rotX);
-
-      points.forEach(p => {
-        let x1 = p.x * cosY + p.z * sinY;
-        let z1 = -p.x * sinY + p.z * cosY;
-        let y2 = p.y * cosX - z1 * sinX;
-        let z2 = p.y * sinX + z1 * cosX;
-
-        if (z2 > 0) {
-          const alpha = Math.min(1, Math.max(0.1, z2 / radius));
-          ctx.fillStyle = `rgba(167, 139, 250, ${alpha * 0.6})`;
-          ctx.beginPath();
-          ctx.arc(centerX + x1, centerY + y2, 1.4, 0, Math.PI * 2);
-          ctx.fill();
-        }
-      });
-
-      cities.forEach(city => {
-        const phi = (city.lon * Math.PI) / 180;
-        const theta = ((90 - city.lat) * Math.PI) / 180;
-        const cx = radius * Math.sin(theta) * Math.cos(phi);
-        const cy = -radius * Math.cos(theta);
-        const cz = radius * Math.sin(theta) * Math.sin(phi);
-
-        let x1 = cx * cosY + cz * sinY;
-        let z1 = -cx * sinY + cz * cosY;
-        let y2 = cy * cosX - z1 * sinX;
-        let z2 = cy * sinX + z1 * cosX;
-
-        if (z2 > 0) {
-          const px = centerX + x1;
-          const py = centerY + y2;
-
-          ctx.fillStyle = "#2dd4bf";
-          ctx.shadowColor = "#2dd4bf";
-          ctx.shadowBlur = 10;
-          ctx.beginPath();
-          ctx.arc(px, py, 4.5, 0, Math.PI * 2);
-          ctx.fill();
-          ctx.shadowBlur = 0;
-
-          ctx.fillStyle = "#ffffff";
-          ctx.font = "bold 11px Plus Jakarta Sans, sans-serif";
-          ctx.fillText(`📍 ${city.name}`, px + 8, py + 3);
-        }
-      });
-
-      requestAnimationFrame(draw);
-    }
-
-    draw();
+    window.careerEarth = window.CareerEarth?.mount(document.getElementById('globeCanvas'));
   }
 
 })();

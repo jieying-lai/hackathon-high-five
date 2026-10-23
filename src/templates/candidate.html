@@ -280,6 +280,7 @@
 <link rel="stylesheet" href="/static/css/learning-controls.css?v=20261021-single-replacement" />
 <link rel="stylesheet" href="/static/css/learning-impact.css?v=20261021-community-pledges" />
   <link rel="stylesheet" href="/static/css/career-spirit-totem.css?v=20261023-2" />
+<link rel="stylesheet" href="/static/css/career-earth.css?v=20261023" />
 </head>
 <body class="responsive-ui responsive-talent min-h-screen">
   <div class="aurora"></div><div class="blob b1"></div><div class="blob b2"></div>
@@ -4971,7 +4972,7 @@ async function submit3AiVerificationAnswers() {
   </div>
 
   <!-- Global 3D Work-Life Atlas Modal inside Candidate Portal -->
-  <div id="globalAtlasModal" class="fixed inset-0 z-50 bg-slate-950/85 backdrop-blur-md flex items-center justify-center p-3 sm:p-6 hidden">
+  <div id="globalAtlasModal" role="dialog" aria-modal="true" aria-label="Global work-life atlas" class="fixed inset-0 z-50 bg-slate-950/85 backdrop-blur-md flex items-center justify-center p-3 sm:p-6 hidden">
     <div class="global-atlas-container max-w-5xl w-full p-6 sm:p-8 space-y-6 max-h-[92vh] overflow-y-auto border border-white/20 shadow-2xl relative rounded-[2.25rem]">
       <div class="flex items-center justify-between border-b border-white/10 pb-4">
         <div>
@@ -4979,9 +4980,9 @@ async function submit3AiVerificationAnswers() {
             <span>🌍</span><span>Global Work-Life Atlas</span>
           </div>
           <h3 class="text-xl sm:text-2xl font-black text-white">How Do Professionals in Your Field Live Worldwide?</h3>
-          <p class="text-xs text-slate-400 mt-0.5">Explore authentic career lifestyles, day-in-the-life plogs &amp; vlogs, and positive daily routines across global hubs</p>
+          <p class="text-xs text-slate-400 mt-0.5">Explore 10 cities through illustrative career stories. These are fictional examples, not verified interviews or live vacancies.</p>
         </div>
-        <button type="button" onclick="closeGlobalAtlas()" class="h-9 w-9 rounded-full bg-white/10 hover:bg-white/20 text-white font-bold grid place-items-center transition text-lg" title="Close Atlas">✕</button>
+        <button type="button" data-atlas-close aria-label="Close atlas" onclick="closeGlobalAtlas()" class="h-9 w-9 rounded-full bg-white/10 hover:bg-white/20 text-white font-bold grid place-items-center transition text-lg" title="Close Atlas">✕</button>
       </div>
 
       <!-- City Switcher with High-Contrast Visible Buttons -->
@@ -5005,19 +5006,19 @@ async function submit3AiVerificationAnswers() {
       </div>
 
       <!-- Globe & Details Grid -->
-      <div class="grid lg:grid-cols-12 gap-6 items-start">
+      <div class="atlas-explorer-grid">
         <!-- Main Column: Active Role Plog/Vlog, Job Desc & Positive Routine -->
-        <div class="lg:col-span-7" id="cityDetailsContainer">
+        <div class="atlas-explorer-story" id="cityDetailsContainer">
           <!-- Injected active role Plog/Vlog card -->
         </div>
 
         <!-- Side Column: 3D Interactive Sphere & Other Roles in Hub -->
-        <div class="lg:col-span-5 space-y-4">
-          <div id="totemGlobeContainer" class="flex items-center justify-center !h-52 rounded-2xl relative overflow-hidden border border-white/20">
-            <canvas id="globeCanvas" class="w-full h-full cursor-grab"></canvas>
-            <div class="absolute bottom-2 left-3 text-[10px] text-teal-300 font-mono bg-slate-900/80 px-2.5 py-1 rounded-md border border-white/10">
-              ✦ Interactive 3D Sphere · Drag to rotate
-            </div>
+        <div class="atlas-explorer-map space-y-4">
+          <div class="earth-stage">
+            <div class="earth-heading"><span>THE WORK-LIFE ATLAS</span><span id="earthClock" aria-live="polite"></span></div>
+            <div id="totemGlobeContainer"><canvas id="globeCanvas"></canvas></div>
+            <p id="earthStatus" role="status">Loading coastlines…</p>
+            <div class="earth-controls" aria-label="Globe controls"><button id="earthZoomIn" aria-label="Zoom in">+</button><button id="earthZoomOut" aria-label="Zoom out">−</button><button id="earthReset">Recenter</button><button id="earthRotate">Rotate</button></div>
           </div>
 
           <div id="cityRelatedRolesContainer" class="space-y-3">
@@ -5028,6 +5029,7 @@ async function submit3AiVerificationAnswers() {
     </div>
   </div>
 
-  <script src="/static/js/career-spirit-totem.js?v=20261023-2"></script>
+  <script src="/static/js/career-earth.js?v=20261023"></script>
+<script src="/static/js/career-spirit-totem.js?v=20261023-earth"></script>
 </body>
 </html>

@@ -11,6 +11,7 @@
   <link rel="stylesheet" href="/static/css/responsive.css?v=20261020-minimal-2" />
 <link rel="stylesheet" href="/static/css/home-features.css?v=3" />
   <link rel="stylesheet" href="/static/css/career-spirit-totem.css?v=20261023-2" />
+<link rel="stylesheet" href="/static/css/career-earth.css?v=20261023" />
 </head>
 <body class="responsive-ui responsive-home min-h-screen">
   <div class="aurora"></div><div class="blob b1"></div><div class="blob b2"></div>
@@ -52,7 +53,7 @@
 
         <!-- Engaging Subtitle -->
         <p class="text-slate-600 text-sm sm:text-base leading-relaxed max-w-2xl mx-auto font-medium">
-          No dry resumes. No corporate jargon. Take a 2-minute non-judgmental quiz to unlock your workplace archetype, connect with legendary role models, and explore elevated future-ready roles tailored to your exact DNA.
+          Start with curiosity, not a perfect CV. Discover your work preferences, explore how different careers feel, then take one practical step toward your future.
         </p>
 
         <!-- Main Actions -->
@@ -70,6 +71,11 @@
           </button>
         </div>
 
+        <nav class="discovery-route" aria-label="Choose your next step">
+          <button onclick="startTotemQuiz()"><span>01 / DISCOVER</span><strong>What feels like you?</strong><small>A short quiz. No right or wrong answers.</small><b>Find my work style →</b></button>
+          <button onclick="openGlobalAtlas()"><span>02 / EXPLORE</span><strong>Life beyond the job title.</strong><small>Turn the globe. Discover a different working day.</small><b>Explore the earth →</b></button>
+          <button onclick="skipTotemQuiz()"><span>03 / BEGIN</span><strong>Make your next move.</strong><small>Your CV, career opportunities and learning path.</small><b>Go to my workspace →</b></button>
+        </nav>
         <!-- 6 Totem Archetype Badges Teaser -->
         <div class="grid grid-cols-3 sm:grid-cols-6 gap-3 pt-6 border-t border-white/10 max-w-2xl mx-auto text-center">
           <div class="p-3 rounded-2xl bg-white/[0.06] border border-white/[0.12] hover:bg-white/[0.12] hover:border-teal-400/40 hover:-translate-y-0.5 transition shadow-sm">
@@ -854,21 +860,23 @@
     </div>
   </div>
 
-  <script src="/static/js/career-spirit-totem.js?v=20261023-2"></script>
+  <script src="/static/js/career-earth.js?v=20261023"></script>
+<script src="/static/js/career-spirit-totem.js?v=20261023-earth"></script>
   <!-- Global 3D Work-Life Atlas Modal -->
-  <div id="globalAtlasModal" class="fixed inset-0 z-50 bg-slate-950/85 backdrop-blur-md flex items-center justify-center p-3 sm:p-6 hidden">
+  <div id="globalAtlasModal" role="dialog" aria-modal="true" aria-label="Global work-life atlas" class="fixed inset-0 z-50 bg-slate-950/85 backdrop-blur-md flex items-center justify-center p-3 sm:p-6 hidden">
     <div class="global-atlas-container max-w-6xl w-full p-6 sm:p-8 space-y-6 max-h-[92vh] overflow-y-auto border border-white/20 shadow-2xl relative rounded-[2.25rem]">
       <div class="flex items-center justify-between border-b border-white/10 pb-4">
         <div>
           <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-teal-500/20 text-teal-300 text-xs font-bold mb-1.5">
             <span>🌍</span><span>Global Work-Life Atlas</span>
           </div>
-          <h3 class="text-xl sm:text-2xl font-black text-white">How Do People in Your Field Live Around the World?</h3>
-          <p class="text-xs text-slate-400 mt-0.5">Explore authentic career lifestyles, day-in-the-life plogs &amp; vlogs, and positive daily routines across global hubs</p>
+          <h3 class="text-xl sm:text-2xl font-black text-white">A world of work. A life of your own.</h3>
+          <p class="text-xs text-slate-400 mt-0.5">Explore 10 cities through illustrative career stories. These are fictional examples, not verified interviews or live vacancies.</p>
         </div>
-        <button type="button" onclick="closeGlobalAtlas()" class="text-slate-400 hover:text-white text-2xl font-bold p-2 transition">✕</button>
+        <button type="button" data-atlas-close aria-label="Close atlas" onclick="closeGlobalAtlas()" class="text-slate-400 hover:text-white text-2xl font-bold p-2 transition">✕</button>
       </div>
 
+      <nav class="atlas-route" aria-label="Your exploration"><span><b>01</b> Choose a place</span><span><b>02</b> Meet a career</span><span><b>03</b> Imagine your day</span></nav>
       <!-- City Switcher -->
       <div class="flex flex-wrap gap-2">
         <button type="button" id="atlasBtn_kl" onclick="showCityCard('kl')" class="atlas-city-pill active">🇲🇾 Kuala Lumpur</button>
@@ -887,19 +895,19 @@
       </div>
 
       <!-- Globe & Details Grid -->
-      <div class="grid lg:grid-cols-12 gap-6 items-start">
+      <div class="atlas-explorer-grid">
         <!-- Main Column: Active Role Plog/Vlog, Job Desc & Positive Routine -->
-        <div class="lg:col-span-7" id="cityDetailsContainer">
+        <div class="atlas-explorer-story" id="cityDetailsContainer">
           <!-- Injected active role Plog/Vlog card -->
         </div>
 
         <!-- Side Column: 3D Interactive Sphere & Other Roles in Hub -->
-        <div class="lg:col-span-5 space-y-4">
-          <div id="totemGlobeContainer" class="flex items-center justify-center !h-52 rounded-2xl relative overflow-hidden border border-white/20">
-            <canvas id="globeCanvas" class="w-full h-full cursor-grab"></canvas>
-            <div class="absolute bottom-2 left-3 text-[10px] text-teal-300 font-mono bg-slate-900/80 px-2.5 py-1 rounded-md border border-white/10">
-              ✦ Interactive 3D Sphere · Drag to rotate
-            </div>
+        <div class="atlas-explorer-map space-y-4">
+          <div class="earth-stage">
+            <div class="earth-heading"><span>THE WORK-LIFE ATLAS</span><span id="earthClock" aria-live="polite"></span></div>
+            <div id="totemGlobeContainer"><canvas id="globeCanvas"></canvas></div>
+            <p id="earthStatus" role="status">Loading coastlines…</p>
+            <div class="earth-controls" aria-label="Globe controls"><button id="earthZoomIn" aria-label="Zoom in">+</button><button id="earthZoomOut" aria-label="Zoom out">−</button><button id="earthReset">Recenter</button><button id="earthRotate">Rotate</button></div>
           </div>
 
           <div id="cityRelatedRolesContainer" class="space-y-3">
