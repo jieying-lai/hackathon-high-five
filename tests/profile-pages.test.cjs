@@ -48,7 +48,8 @@ test('missing account details do not impersonate demo contact or employment deta
   for(const id of ['accCardRole','accCardIndustry','accCardWorkMode','accCardPhone','accCardLocation'])assert.equal(elements[id].textContent,'Not added');
 });
 test('profile, upload, review and application controls belong to distinct sections',()=>{
-  const sections=Object.fromEntries([...html.matchAll(/<section id="tab-([^"]+)"[^>]*>([\s\S]*?)<\/section>/g)].map(m=>[m[1],m[2]]));
+  const starts=[...html.matchAll(/<section id="tab-([^"]+)"[^>]*>/g)];
+  const sections=Object.fromEntries(starts.map((m,i)=>[m[1],html.slice(m.index,starts[i+1]?.index ?? html.length)]));
   assert.match(sections.profile,/id="accCardName"/);
   assert.match(sections.profile,/id="profileHighlights"/);
   assert.doesNotMatch(sections.profile,/id="(?:pdfInput|pSummary|activeSharesList)"/);

@@ -516,7 +516,7 @@ def get_user_cv(owner_uid: str) -> dict | None:
     apps = conn.execute(
         """SELECT a.vacancy_id, a.application_uid, a.share_organised_cv, a.share_original_pdf,
                   a.hr_decision, a.applied_at, v.title AS vacancy_title, v.status AS vacancy_status,
-                  u.role_details_json AS employer_details
+                  u.role_details_json AS employer_details, u.role AS employer_role, v.vacancy_uid
              FROM job_applications a JOIN vacancies v ON v.id = a.vacancy_id
              LEFT JOIN users u ON u.unique_uid = v.owner_uid WHERE a.candidate_uid = ? ORDER BY a.id DESC""",
         (owner_uid,),
@@ -527,6 +527,7 @@ def get_user_cv(owner_uid: str) -> dict | None:
     applications = []
     for app in apps:
         item = dict(app)
+        item["delivery_confirmed"] = item.pop("employer_role") == "hr_company" and not str(item["vacancy_uid"]).startswith("JS-")
         employer_details = json.loads(item.pop("employer_details") or "{}")
         item["company_name"] = employer_details.get("company_name") or "Employer"
         item["share_organised_cv"] = bool(item["share_organised_cv"])
