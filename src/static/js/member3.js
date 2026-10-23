@@ -445,7 +445,7 @@
   const byEnglish = new Map(vocabulary.map(row => [row[0], row]));
   const reverse = new Map(vocabulary.flatMap(row => row.map(text => [text, row[0]])));
   let language = 'en';
-  try { language = localStorage.getItem('cl_language') || 'en'; } catch (_) {}
+  try { language = localStorage.getItem('careerlens_language') || localStorage.getItem('cl_language') || 'en'; } catch (_) {}
   if (!['en','ms','zh'].includes(language)) language = 'en';
   const originals = new WeakMap();
   const renderedSources = new Map();
@@ -543,11 +543,30 @@
     portalViewport.addEventListener('change', placeLanguageSelector);
   } else document.body.prepend(toolbar);
   const selector = toolbar.querySelector('select'); selector.value = language;
-  selector.addEventListener('change', () => {
-    language = selector.value;
-    try { localStorage.setItem('cl_language', language); } catch (_) {}
+  function updateLanguageButtons() {
+    document.querySelectorAll('.lang-opt-btn[data-lang]').forEach(button => {
+      const selected = button.dataset.lang === language;
+      button.setAttribute('aria-pressed', String(selected));
+      button.classList.toggle('!bg-white', selected);
+      button.classList.toggle('!text-indigo-700', selected);
+      button.classList.toggle('ring-2', selected);
+      button.classList.toggle('ring-indigo-500', selected);
+      button.classList.toggle('shadow-sm', selected);
+    });
+  }
+  function setLanguage(nextLanguage) {
+    if (!['en', 'ms', 'zh'].includes(nextLanguage)) return;
+    language = nextLanguage;
+    selector.value = language;
+    try {
+      localStorage.setItem('cl_language', language);
+      localStorage.setItem('careerlens_language', language);
+    } catch (_) {}
+    updateLanguageButtons();
     apply();
-  });
+  }
+  selector.addEventListener('change', () => setLanguage(selector.value));
+  updateLanguageButtons();
   const styles = document.createElement('style');
   styles.textContent = '.language-toolbar{display:flex;justify-content:flex-end;align-items:center;gap:12px;padding:10px 24px;background:transparent;color:#334155;border-bottom:0;font:600 12px system-ui;position:relative;z-index:40}.language-toolbar select{padding:6px 10px;border:1px solid #cbd5e1;border-radius:8px;background:transparent;color:#0f172a}#scenarioSlider{accent-color:#6366f1;min-height:32px}summary{cursor:pointer}button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,summary:focus-visible{outline:3px solid #6366f1;outline-offset:3px}.trend-radar{max-width:430px;margin:auto;display:block;width:100%;height:auto}';
   document.head.append(styles);
@@ -570,6 +589,6 @@
     }
     chart.innerHTML = `<h2 class="text-sm font-extrabold">Benchmark trend radar</h2><p class="hint">Illustrative growth (%) · not live job-market measurements</p><svg viewBox="0 0 420 325" class="trend-radar" role="img" aria-labelledby="radarTitle radarDesc"><title id="radarTitle">Benchmark trend radar</title><desc id="radarDesc">${rows.map((r,i)=>`${esc(r.skill)}: ${values[i]}%`).join('; ')}</desc>${[27.5,55,82.5,110].map(r=>`<polygon points="${points(r)}" fill="none" stroke="#cbd5e1"/>`).join('')}<path d="M210 50V270M100 160H320" stroke="#cbd5e1"/><polygon id="radarData" points="${dataPoints}" fill="#6366f1" fill-opacity=".22" stroke="#4f46e5" stroke-width="3"/><g fill="#334155" font-size="12" text-anchor="middle"><text x="210" y="30">LLM / RAG</text><text x="365" y="165">AI risk</text><text x="210" y="298">Automation</text><text x="52" y="165">Sustainability</text></g></svg>`;
   };
-  window.careerLensLocale = {apply, translate, getLanguage: () => language};
+  window.careerLensLocale = {apply, translate, setLanguage, getLanguage: () => language};
   apply();
 })();

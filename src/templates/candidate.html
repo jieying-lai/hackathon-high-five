@@ -4723,7 +4723,7 @@
   </script>
 <script src="/static/js/questionnaire-i18n.js?v=20261023-1"></script>
 <script src="/static/js/portal-i18n.js?v=20261023-celebrations"></script>
-<script src="/static/js/member3.js?v=20261022-feature-language-4"></script>
+<script src="/static/js/member3.js?v=20261023-language-sync"></script>
 <script>
   let generatedVerificationQ = [];
 
@@ -4994,9 +4994,12 @@ async function submit3AiVerificationAnswers() {
     });
 
     function setAppLanguage(lang) {
-      if (typeof window.setLanguage === 'function') {
+      if (typeof window.careerLensLocale?.setLanguage === 'function') {
+        window.careerLensLocale.setLanguage(lang);
+      } else if (typeof window.setLanguage === 'function') {
         window.setLanguage(lang);
       } else {
+        localStorage.setItem('cl_language', lang);
         localStorage.setItem('careerlens_language', lang);
       }
       const label = lang === 'zh' ? '中文' : lang === 'ms' ? 'Bahasa Melayu' : 'English';
