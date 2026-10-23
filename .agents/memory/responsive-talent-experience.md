@@ -9,6 +9,8 @@ Secondary navigation must also fit phones across Explore Careers, My Profile and
 
 Apply the same viewport-fit requirement to the company workspace: secondary tabs, company profile actions, header controls and account dialogs must remain readable and usable on phones.
 
+Global work-life exploration is a normal inline tab below navigation, not a popup. Show a compact overview first; city context, role responsibilities, profile stories and routines should expand on demand. Preserve lightweight interaction rather than presenting long static text.
+
 **Why:** The user repeatedly reported unreadable dashboard content and overlapping atlas content on phones.
 
 **How to apply:** Check narrow phone widths as well as desktop when changing these screens. Verify actual rendered layout rather than relying only on stylesheet assertions.

@@ -1595,6 +1595,7 @@
 
   // State
   let currentStep = 0;
+  let answerAdvanceTimer = null;
   let answers = {};
   let calculatedTotem = null;
   let selectedDomain = "tech";
@@ -1654,6 +1655,7 @@
   };
 
   window.recordAnswer = function (questionId, value) {
+    clearTimeout(answerAdvanceTimer);
     answers[questionId] = parseInt(value, 10);
 
     const btns = document.querySelectorAll(".likert-btn");
@@ -1661,7 +1663,8 @@
       b.classList.toggle("active", b.getAttribute("data-val") === String(value));
     });
 
-    setTimeout(() => {
+    answerAdvanceTimer = setTimeout(() => {
+      if (currentStep !== questionId) return;
       if (questionId < QUESTIONS.length) {
         renderQuestion(questionId + 1);
       } else {
@@ -1671,6 +1674,7 @@
   };
 
   window.prevQuestion = function () {
+    clearTimeout(answerAdvanceTimer);
     if (currentStep > 1) {
       renderQuestion(currentStep - 1);
     }
@@ -2666,51 +2670,33 @@
     }, 600);
   };
 
-  // View 4: Dedicated Global Work-Life Atlas Modal
+  // Global is a regular workspace tab. Legacy open/close hooks remain navigational.
   window.openGlobalAtlas = function () {
-    const modal = document.getElementById("globalAtlasModal");
-    if (modal) {
-      modal.classList.remove("hidden");
-      const panel = modal.querySelector('.global-atlas-container');
-      const header = modal.querySelector('.atlas-modal-header');
-      if (panel && header && !modal.atlasHeaderObserver && typeof ResizeObserver !== 'undefined') {
-        modal.atlasHeaderObserver = new ResizeObserver(() => {
-          panel.style.setProperty('--atlas-header-height', `${header.getBoundingClientRect().height + 16}px`);
-        });
-        modal.atlasHeaderObserver.observe(header);
-      }
-      window.atlasReturnFocus = document.activeElement;
-      document.body.style.overflow = 'hidden';
-      modal.querySelector('[data-atlas-close]')?.focus();
+    if (typeof window.showTab === 'function') return window.showTab('atlas');
+  };
+
+  window.mountGlobalAtlas = function () {
+    const atlas = document.getElementById('globalAtlasModal');
+    const slot = document.getElementById('atlasPanelSlot');
+    if (!atlas || !slot) return;
+    if (atlas.parentElement !== slot) slot.appendChild(atlas);
+    atlas.classList.remove('hidden');
+    if (!atlas.dataset.mounted) {
       showCityCard(currentAtlasCityKey);
-      window.careerEarth?.resume();
-      if (!globeInitialized) {
-        setTimeout(() => {
-          initGlobeVisual();
-          globeInitialized = Boolean(window.careerEarth);
-        }, 100);
-      }
+      atlas.dataset.mounted = 'true';
     }
+    if (!globeInitialized) {
+      initGlobeVisual();
+      globeInitialized = Boolean(window.careerEarth);
+    }
+    window.careerEarth?.resume();
   };
 
   window.closeGlobalAtlas = function () {
-    const modal = document.getElementById("globalAtlasModal");
-    if (modal) modal.classList.add("hidden");
     window.careerEarth?.pause();
-    document.body.style.overflow = '';
-    window.atlasReturnFocus?.focus();
+    const section = document.getElementById('tab-atlas');
+    if (section && !section.classList.contains('hidden') && typeof window.showTab === 'function') return window.showTab('jobs');
   };
-  document.addEventListener('keydown', e => {
-    const modal = document.getElementById('globalAtlasModal');
-    if (!modal || modal.classList.contains('hidden')) return;
-    if (e.key === 'Escape') { closeGlobalAtlas(); return; }
-    if (e.key === 'Tab') {
-      const items = [...modal.querySelectorAll('button,a[href],canvas[tabindex],input,select')].filter(el => !el.disabled && el.getClientRects().length);
-      const first=items[0], last=items[items.length-1];
-      if(e.shiftKey && document.activeElement===first){e.preventDefault();last?.focus();}
-      else if(!e.shiftKey && document.activeElement===last){e.preventDefault();first?.focus();}
-    }
-  });
 
   let currentAtlasCityKey = "kl";
   let currentAtlasRoleId = null;
@@ -2765,9 +2751,10 @@
 
   window.showCityCard = function (cityKey, roleId = null) {
     const c = GLOBAL_CITIES[cityKey] || GLOBAL_CITIES.kl;
+    cityKey = GLOBAL_CITIES[cityKey] ? cityKey : "kl";
     currentAtlasCityKey = cityKey;
 
-    // Smoothly fly and focus 3D globe to this city
+    // Keep the globe and the inline city explorer in sync.
     if (window.CareerEarth?.select) {
       window.CareerEarth.select(cityKey);
     } else if (window.careerEarth?.select) {
@@ -2778,7 +2765,6 @@
     const hubContainer = document.getElementById("cityHubInfoContainer") || document.getElementById("cityRelatedRolesContainer");
     if (!container) return;
 
-    // Pick role: if not specified, choose randomly or default to first
     let selectedRole = null;
     if (roleId && c.roles) {
       selectedRole = c.roles.find(r => r.id === roleId);
@@ -2788,157 +2774,110 @@
     }
     currentAtlasRoleId = selectedRole ? selectedRole.id : null;
     currentAtlasRoutineIdx = 0;
-    document.querySelector("#globalAtlasModal .atlas-explorer-story")?.classList.add("atlas-story-open");
-
-    const isInsidePortal = Boolean(document.getElementById("profileTotemCard") || window.location.pathname.includes("workspace"));
-    const actionBtnHtml = isInsidePortal
-      ? `<button type="button" onclick="closeGlobalAtlas(); if(typeof showTab==='function') showTab('jobs');" class="totem-btn-primary !py-2.5 !px-5 !text-xs font-bold rounded-xl shadow-lg">
-           💼 Explore Careers in Portal →
-         </button>`
-      : `<button type="button" onclick="closeGlobalAtlas(); if(typeof openAuth==='function') openAuth('register', 'job_seeker'); else window.location.href='/#auth';" class="totem-btn-primary !py-2.5 !px-5 !text-xs font-bold rounded-xl shadow-lg">
-           Sign Up &amp; Match Careers →
-         </button>`;
 
     if (!selectedRole) return;
 
-    // 1. Render Left Column: Hub Information & Role Switcher
     if (hubContainer) {
       hubContainer.innerHTML = `
-        <div class="space-y-3">
-          <div class="flex items-center justify-between gap-2 border-b border-white/10 pb-2.5">
-            <div class="flex items-center gap-2">
-              <span class="text-2xl">${c.flag || '🌍'}</span>
-              <div>
-                <h4 class="text-base font-black text-white tracking-tight">${c.name}, ${c.country}</h4>
-                <div class="text-[11px] font-mono text-teal-300 font-bold">${c.roles ? c.roles.length : 1} Featured Profiles</div>
-              </div>
-            </div>
-            <button type="button" onclick="surpriseAtlasCity()" class="text-xs text-indigo-300 hover:text-white font-mono flex items-center gap-1 transition" title="Teleport to another city">
-              <span>Next Hub →</span>
-            </button>
-          </div>
-
-          <div class="text-xs text-slate-300 leading-relaxed">
-            <span class="text-teal-300 font-bold">Local Vibe:</span> ${c.vibe}
-          </div>
-
-          <div class="pt-2 border-t border-white/10 space-y-2">
-            <div class="text-[10px] uppercase tracking-wider font-mono text-indigo-300 font-extrabold">Professionals in ${c.name}</div>
-            <div class="grid gap-2">
-              ${(c.roles || []).map(r => {
-                const isSelected = r.id === selectedRole.id;
-                return `
-                  <button type="button" onclick="showCityCard('${cityKey}', '${r.id}')" class="p-2 sm:p-2.5 rounded-xl border flex items-center justify-between gap-2.5 text-left transition ${isSelected ? 'bg-teal-500/20 border-teal-400 text-white shadow-md' : 'bg-white/5 border-white/10 hover:bg-white/10 text-slate-300'}">
-                    <div class="flex items-center gap-2.5 min-w-0">
-                      <img src="${r.persona.photo}" alt="${r.persona.name}" class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl object-cover object-top border border-white/20 shrink-0" />
-                      <div class="min-w-0">
-                        <div class="text-xs font-black truncate">${r.persona.name}</div>
-                        <div class="text-[11px] text-teal-300 font-medium truncate">${r.title}</div>
-                      </div>
-                    </div>
-                    <span class="text-[10px] font-mono px-2 py-0.5 rounded shrink-0 ${isSelected ? 'bg-teal-400/30 text-teal-200 font-bold' : 'text-slate-400'}">${isSelected ? 'Active' : 'View →'}</span>
-                  </button>
-                `;
-              }).join('')}
+        <div class="atlas-hub">
+          <div class="atlas-hub-heading">
+            <div>
+              <span class="atlas-kicker">Explore a work-life hub</span>
+              <h4>${c.name}<span>, ${c.country}</span></h4>
             </div>
           </div>
+
+          <label class="atlas-field">
+            <span>City</span>
+            <select aria-label="Choose a global work-life city" onchange="showCityCard(this.value)">
+              ${Object.entries(GLOBAL_CITIES).map(([key, city]) => `
+                <option value="${key}" ${key === cityKey ? "selected" : ""}>${city.name}, ${city.country}</option>
+              `).join("")}
+            </select>
+          </label>
+
+          <div class="atlas-role-heading">
+            <span>Featured roles</span>
+            <button type="button" onclick="randomizeAtlasRole('${cityKey}')" class="atlas-small-action" title="Pick a different role at random">Shuffle</button>
+          </div>
+          <div class="atlas-role-list" role="group" aria-label="Featured roles in ${c.name}">
+            ${(c.roles || []).map(r => {
+              const isSelected = r.id === selectedRole.id;
+              return `
+                <button type="button" aria-pressed="${isSelected}" onclick="showCityCard('${cityKey}', '${r.id}')" class="atlas-role-option${isSelected ? " is-selected" : ""}">
+                  <span class="atlas-role-copy">
+                    <strong>${r.title}</strong>
+                    <small>${r.persona.name}</small>
+                  </span>
+                  <span class="atlas-role-state">${isSelected ? "Selected" : "View"}</span>
+                </button>
+              `;
+            }).join("")}
+          </div>
+          <details class="atlas-disclosure atlas-city-vibe">
+            <summary>City feel</summary>
+            <p>${c.vibe || "Explore the local work-life context."}</p>
+          </details>
         </div>
       `;
     }
 
-    // 2. Render Right Column: Active Role Hero Plog/Vlog & Visual Showcase
-    container.innerHTML = `
-      <div class="city-day-card p-6 sm:p-7 space-y-5 h-full flex flex-col justify-between fade-in text-slate-100">
-        <!-- Top Persona Showcase Card with Portrait Photo -->
-        <div class="space-y-4">
-          <div class="atlas-persona-panel p-5 sm:p-6 rounded-3xl bg-white/10 border border-white/15 space-y-4 shadow-xl backdrop-blur-xl">
-            <div class="atlas-persona-layout flex flex-col sm:flex-row items-center sm:items-start gap-5">
-              <!-- Full Uncropped High-Res Portrait Photo -->
-              <div class="relative shrink-0">
-                <img src="${selectedRole.persona.photo || 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=480&q=80'}" alt="${selectedRole.persona.name}" class="atlas-persona-photo w-32 h-44 sm:w-36 sm:h-48 object-cover object-top rounded-2xl border-2 border-teal-400/40 shadow-2xl" loading="lazy" />
-                <span class="absolute -bottom-2 -right-2 text-xl p-1 bg-slate-900/90 rounded-full border border-white/20 shadow-md">${selectedRole.persona.avatar || '👩🏻‍💻'}</span>
-              </div>
-              
-              <div class="atlas-persona-copy space-y-2 text-center sm:text-left min-w-0 flex-1">
-                <div class="flex flex-wrap items-center justify-center sm:justify-start gap-2">
-                  <h3 class="text-xl sm:text-2xl font-black text-white tracking-tight">${selectedRole.persona.name}</h3>
-                  <span class="text-xs font-mono text-teal-300 font-bold bg-teal-500/20 px-2.5 py-0.5 rounded-full border border-teal-400/30">${selectedRole.persona.handle}</span>
-                  <span class="text-[11px] font-bold text-amber-300 bg-amber-500/15 px-2.5 py-0.5 rounded-full border border-amber-400/30">Authentic Day</span>
-                </div>
-                <div class="text-sm font-extrabold text-teal-300">${selectedRole.title}</div>
-                <div class="text-xs text-indigo-200 font-mono">${selectedRole.industry} · ${c.name}, ${c.country}</div>
-                <p class="text-xs text-slate-300 leading-relaxed italic pt-1">"${selectedRole.persona.bio}"</p>
-              </div>
-            </div>
-
-            <!-- First-Person Lifestyle Caption (Visual-centric, short & punchy) -->
-            <div class="mt-4 text-xs sm:text-sm text-slate-100 leading-relaxed italic bg-black/30 p-4 rounded-2xl border border-white/10 shadow-inner">
-              "${selectedRole.plog}"
-            </div>
-          </div>
-
-          <!-- What They Do: Core Responsibilities & Impact -->
-          <div class="atlas-job-box space-y-3">
-            <div class="flex items-center justify-between">
-              <div class="text-xs font-black uppercase tracking-wider text-indigo-300 flex items-center gap-1.5">
-                <span>💼</span><span>Core Responsibilities &amp; Impact</span>
-              </div>
-              <span class="text-[11px] font-bold text-teal-300 font-mono bg-teal-500/15 px-2 py-0.5 rounded border border-teal-400/20">${selectedRole.industry || 'Technology'}</span>
-            </div>
-            
-            <p class="text-xs text-slate-200 leading-relaxed font-medium">
-              ${selectedRole.job_desc.summary}
-            </p>
-
-            <ul class="space-y-1.5 text-xs text-slate-200">
-              ${selectedRole.job_desc.tasks.map(t => `
-                <li class="flex items-start gap-2">
-                  <span class="text-teal-400 text-sm leading-none shrink-0 font-bold">✓</span>
-                  <span>${t}</span>
-                </li>
-              `).join('')}
-            </ul>
-
-            <div class="pt-1 flex flex-wrap gap-1.5">
-              ${(selectedRole.skills || []).map(s => `
-                <span class="text-[10px] font-mono font-bold bg-indigo-500/20 text-indigo-200 px-2.5 py-1 rounded-lg border border-indigo-400/30">${s}</span>
-              `).join('')}
-            </div>
-          </div>
-
-          <!-- Schedule Timeline with Dynamic Routine Shuffling -->
-          <div class="space-y-3 pt-1">
-            <div class="flex flex-wrap items-center justify-between gap-2">
-              <div class="text-xs font-black uppercase tracking-wider text-teal-300 flex items-center gap-1.5">
-                <span>☀️</span><span>Positive Daily Routine &amp; Rhythm</span>
-                <span id="atlasRoutineVariantBadge" class="text-[10px] text-slate-300 font-mono lowercase bg-white/10 px-2 py-0.5 rounded-full border border-white/10">Daily Baseline</span>
-              </div>
-              <button type="button" onclick="shuffleAtlasRoutine()" class="atlas-shuffle-btn" title="Cycle through realistic positive day routines">
-                <span>🎲</span><span>Shuffle Routine</span>
-              </button>
-            </div>
-
-            <div id="atlasTimelineContainer" class="space-y-2 text-xs">
-              ${selectedRole.routine.map(item => `
-                <div class="flex items-start gap-3 bg-white/5 hover:bg-white/10 p-3 rounded-2xl border border-white/10 transition">
-                  <span class="font-mono text-teal-300 font-extrabold text-xs shrink-0 bg-teal-500/15 px-2.5 py-1 rounded-lg border border-teal-400/25">${item.time}</span>
-                  <div class="text-slate-100 text-xs leading-relaxed">
-                    <span class="mr-1.5 text-sm">${item.emoji || '✦'}</span>${item.text}
-                  </div>
-                </div>
-              `).join('')}
-            </div>
-          </div>
-        </div>
-
-        <!-- Footer Tags & CTA -->
-        <div class="pt-4 border-t border-white/10 flex flex-wrap items-center justify-between gap-3">
-          <div class="flex flex-wrap gap-1.5 text-[11px] text-slate-300 font-bold">
-            ${selectedRole.tags.map(t => `<span class="bg-white/10 px-3 py-1 rounded-xl border border-white/15 text-slate-200">${t}</span>`).join('')}
-          </div>
-          ${actionBtnHtml}
-        </div>
+    const routineItems = (selectedRole.routine || []).map(item => `
+      <div class="atlas-routine-item">
+        <time>${item.time}</time>
+        <span>${item.text}</span>
       </div>
+    `).join("");
+    const skills = (selectedRole.skills || []).slice(0,3).map(skill => `<span class="atlas-skill-chip">${skill}</span>`).join("");
+    const allSkills = (selectedRole.skills || []).map(skill => `<span class="atlas-skill-chip">${skill}</span>`).join("");
+    const summary = selectedRole.job_desc?.summary || selectedRole.plog || "";
+    const preview = summary.length > 115 ? summary.slice(0,112).replace(/\s+\S*$/, '') + '…' : summary;
+    const tasks = (selectedRole.job_desc?.tasks || []).map(task => `<li>${task}</li>`).join("");
+    const tags = (selectedRole.tags || []).map(tag => `<span class="atlas-meta-chip">${tag}</span>`).join("");
+
+    container.innerHTML = `
+      <article class="city-day-card atlas-city-card">
+        <header class="atlas-person-summary">
+          ${selectedRole.persona.photo ? `<img class="atlas-persona-photo" src="${selectedRole.persona.photo}" alt="" loading="lazy" />` : ""}
+          <div class="atlas-persona-copy">
+            <span class="atlas-kicker">${selectedRole.industry || "Career profile"} · ${c.name}</span>
+            <h3>${selectedRole.persona.name}</h3>
+            <p class="atlas-role-title">${selectedRole.title}</p>
+            <p class="atlas-person-meta">${selectedRole.persona.handle || ""}${selectedRole.persona.handle ? " · " : ""}${c.country}</p>
+          </div>
+        </header>
+        <p class="atlas-summary">${preview}</p>
+        <div class="atlas-skill-list" aria-label="Skills">${skills}</div>
+
+        <details class="atlas-disclosure">
+          <summary>About this role</summary>
+          <div class="atlas-disclosure-body">
+            <p>${summary}</p>
+            ${selectedRole.skills?.length > 3 ? `<div class="atlas-skill-list">${allSkills}</div>` : ''}
+            ${tags ? `<div class="atlas-meta-list">${tags}</div>` : ''}
+            <p>${selectedRole.job_desc?.summary || ""}</p>
+            ${tasks ? `<ul class="atlas-task-list">${tasks}</ul>` : ""}
+          </div>
+        </details>
+        <details class="atlas-disclosure">
+          <summary>Meet ${selectedRole.persona.name}</summary>
+          <div class="atlas-disclosure-body">
+            <p>${selectedRole.persona.bio || ""}</p>
+            ${selectedRole.plog ? `<blockquote>${selectedRole.plog}</blockquote>` : ""}
+          </div>
+        </details>
+        <details class="atlas-disclosure atlas-routine-disclosure">
+          <summary>Explore a day in the routine</summary>
+          <div class="atlas-disclosure-body">
+            <div class="atlas-routine-heading">
+              <span id="atlasRoutineVariantBadge">Daily baseline</span>
+              <button type="button" onclick="shuffleAtlasRoutine()" class="atlas-shuffle-btn">Shuffle</button>
+            </div>
+            <div id="atlasTimelineContainer" class="atlas-routine-list">${routineItems}</div>
+          </div>
+        </details>
+        <p class="atlas-source-note">Illustrative profiles · not verified interviews.</p>
+      </article>
     `;
   };
 

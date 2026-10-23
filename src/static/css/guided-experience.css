@@ -441,7 +441,23 @@ body.responsive-home #landing {
 }
 
 /* The guided screens share one outer page scroll, including the conversation. */
-#totemResultCard, #guidedDraftResume { scroll-margin-top: 150px; }
+#totemResultCard, #guidedDraftResume { scroll-margin-top: 90px; }
+.guided-extra { margin:14px 0; border:1px solid #ffffffd9; border-radius:16px; background:#ffffff75; padding:0 15px; text-align:left; }
+.guided-flow h2[tabindex="-1"]:focus { outline:none; }
+.guided-extra summary { cursor:pointer; min-height:44px; display:flex; align-items:center; justify-content:space-between; gap:12px; font-size:12px; font-weight:700; color:#675487; }
+.guided-extra summary::after { content:"+"; font-size:18px; }
+.guided-extra[open] summary::after { content:"−"; }
+.guided-extra>p { font-size:13px; line-height:1.7; color:#655d79; padding-bottom:15px; }
+.guided-extra[open] :is(p,dl) { animation:cl-soft-arrive .2s ease-out; }
+.cv-dialog-options button { transition:transform .16s ease,background .16s ease,border-color .16s ease; }
+.cv-dialog-options button:hover { border-color:#ac91d2; background:#f4efffcc; transform:translateY(-1px); }
+.cv-dialog-options button:active { transform:scale(.985); }
+.cv-dialog-message { animation:cl-soft-arrive .2s ease-out; }
+.cv-dialog-progress>span { transition:width .2s ease; }
+@media(prefers-reduced-motion:reduce) {
+  .guided-extra[open] :is(p,dl), .cv-dialog-message { animation:none; }
+  .cv-dialog-options button,.cv-dialog-progress>span { transition:none; transform:none; }
+}
 .guided-flow > * + * { margin-top: 20px; }
 .guided-progress { justify-content: space-between; flex-wrap: wrap; font-size: 11px; }
 .guided-progress::before { display: none; }

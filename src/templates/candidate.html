@@ -282,12 +282,13 @@
 <link rel="stylesheet" href="/static/css/career-spirit-totem.css?v=20261023-9" />
   <link rel="stylesheet" href="/static/css/career-earth.css?v=20261023-11" />
   <link rel="stylesheet" href="/static/css/aurora-experience.css?v=20261023-11" />
-  <link rel="stylesheet" href="/static/css/guided-experience.css?v=20261024-2" />
+  <link rel="stylesheet" href="/static/css/guided-experience.css?v=20261025-flow-1" />
 <script defer src="/static/js/aurora-experience.js?v=20261023-5"></script>
 <link rel="stylesheet" href="/static/css/company-insights.css?v=20261023-1" />
 <link rel="stylesheet" href="/static/css/talent-workspace.css?v=20261024-2" />
 <link rel="stylesheet" href="/static/css/future-radar.css?v=20261024-matrix-1" />
 <link rel="stylesheet" href="/static/css/workspace-aurora.css?v=20261025-2" />
+<link rel="stylesheet" href="/static/css/atlas-inline.css?v=20261025-inline-1" />
 <script defer src="/static/js/future-radar.js?v=20261024-matrix-1"></script>
 <script src="/static/js/company-insights.js?v=20261023-1"></script>
 </head>
@@ -1422,6 +1423,10 @@
           <nav class="growth-navigation" data-careers-navigation aria-label="Explore Careers"></nav>
           <div id="companyInsights"></div>
         </section>
+        <section id="tab-atlas" class="tab hidden space-y-6">
+          <nav class="growth-navigation" data-careers-navigation aria-label="Explore Careers"></nav>
+          <div id="atlasPanelSlot"></div>
+        </section>
         <section id="tab-radar" class="tab hidden space-y-6">
 
           <nav class="growth-navigation" data-careers-navigation aria-label="Explore Careers"></nav>
@@ -2086,6 +2091,7 @@
       { id: 'passport', ico: '🌱', label: 'SDG Passport', eyebrow: 'Sustainable career impact', title: 'Your SDG career passport' },
     ];
     const EXTRA_TABS = {
+      atlas: {id:'atlas', ico:'◎', label:'Global', eyebrow:'Explore the world', title:'Work, around the world'},
       companies: {id:'companies', ico:'🏢', label:'Company Insights', eyebrow:'Explore employers', title:'Find a workplace that fits you'},
       'cv-upload': {id:'cv-upload', ico:'📄', label:'Upload CV', eyebrow:'Private CV vault', title:'Upload your CV'},
       'cv-review': {id:'cv-review', ico:'✏️', label:'Review & edit CV', eyebrow:'Private CV vault', title:'Review & edit your CV'},
@@ -2505,12 +2511,13 @@
         EXTRA_TABS['applications'],
         EXTRA_TABS.jobs,
         EXTRA_TABS.companies,
+        EXTRA_TABS.atlas,
         ...NAV.slice(3),
       ];
       buildPortalNavigation(renderItems, [
         { label: 'Dashboard', ids: ['dash'], ico: '🏠', primaryId: 'dash' },
         { label: 'My Profile', ids: ['profile', 'cv-review', 'quest', 'applications'], ico: '👤', primaryId: 'profile' },
-        { label: 'Explore Careers', ids: ['jobs', 'companies', 'radar', 'match'], ico: '🧭', primaryId: 'jobs' },
+        { label: 'Explore Careers', ids: ['jobs', 'companies', 'radar', 'match', 'atlas'], ico: '🧭', primaryId: 'jobs' },
         { label: 'My Growth', ids: ['plan', 'discover', 'saved', 'completed', 'passport'], ico: '🌱', primaryId: 'plan' }
       ]);
     }
@@ -2535,6 +2542,8 @@
       } catch (_) { /* Navigation helpers */ }
       if (id === 'plan') renderPlan();
       if (id === 'radar') renderRadar();
+      if (id === 'atlas') window.mountGlobalAtlas?.();
+      else window.careerEarth?.pause();
       if (id === 'discover') renderDiscoveryLearning();
       if (id === 'saved') renderSavedCourses();
       if (id === 'completed') renderCompletedLearning();
@@ -4477,12 +4486,13 @@
         { id: 'companies', label: 'Company insights' },
         { id: 'radar', label: 'Future skills radar' },
         { id: 'match', label: 'Future-role matches' },
+        { id: 'atlas', label: 'Global' },
       ];
       document.querySelectorAll('[data-careers-navigation]').forEach(nav => {
         nav.innerHTML = items.map(item => `
           <button type="button" onclick="showTab('${item.id}')" ${current === item.id ? 'aria-current="page"' : ''}>
             <span>${esc(item.label)}</span>
-          </button>`).join('') + '<button type="button" onclick="openGlobalAtlas()"><span>Global work-life atlas</span></button>';
+          </button>`).join('');
       });
       window.careerLensLocale?.apply();
     }
@@ -5171,22 +5181,17 @@ async function submit3AiVerificationAnswers() {
   </div>
 
   <!-- Global 3D Work-Life Atlas Modal inside Candidate Portal -->
-  <div id="globalAtlasModal" role="dialog" aria-modal="true" aria-label="Global work-life atlas" class="fixed inset-0 z-50 bg-slate-950/85 backdrop-blur-md flex items-center justify-center p-3 sm:p-6 hidden">
+  <div id="globalAtlasModal" role="region" aria-label="Global work-life atlas" class="atlas-inline hidden">
     <div class="global-atlas-container max-w-5xl w-full p-6 sm:p-8 space-y-6 max-h-[92vh] overflow-y-auto border border-white/20 shadow-2xl relative rounded-[2.25rem]">
       <div class="atlas-modal-header flex flex-wrap items-center justify-between gap-4 border-b border-white/10 pb-4">
         <div class="atlas-modal-heading">
-          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-teal-500/15 border border-teal-400/30 text-teal-300 text-xs font-bold mb-1.5">
-            <span class="animate-pulse">🌍</span><span>Global Work-Life Atlas · 16 Frontier Tech Hubs</span>
-          </div>
-          <h3 class="text-xl sm:text-2xl font-black text-white">How Do Professionals in Your Field Live Worldwide?</h3>
-          <p class="text-xs text-slate-300 mt-0.5">Explore authentic career lifestyles, day-in-the-life plogs &amp; vlogs, and positive daily routines across global hubs</p>
+          <h3 class="text-xl sm:text-2xl font-black">A new city. A different day.</h3>
+          <p class="text-xs mt-1">Pick a city. Explore a role.</p>
         </div>
         <div class="atlas-modal-actions flex items-center gap-3">
           <button type="button" onclick="surpriseAtlasCity()" class="atlas-warp-btn" title="Randomly teleport to another city on the 3D globe">
-            <span class="text-base">🎲</span>
-            <span class="font-bold">Explore Random Hub</span>
+            <span class="font-bold">Surprise me ↗</span>
           </button>
-          <button type="button" data-atlas-close aria-label="Close atlas" onclick="closeGlobalAtlas()" class="h-10 w-10 rounded-full bg-white/10 hover:bg-white/20 text-white font-bold grid place-items-center transition text-lg border border-white/15" title="Close Atlas">✕</button>
         </div>
       </div>
 
@@ -5196,7 +5201,7 @@ async function submit3AiVerificationAnswers() {
         <div class="atlas-explorer-map space-y-4">
           <div class="earth-stage">
             <div class="earth-heading">
-              <span class="tracking-widest">THE WORK-LIFE ATLAS</span>
+              <span class="tracking-widest">EXPLORE</span>
               <span id="earthClock" aria-live="polite"></span>
             </div>
             <div id="totemGlobeContainer"><canvas id="globeCanvas"></canvas></div>
@@ -5204,7 +5209,7 @@ async function submit3AiVerificationAnswers() {
             <div class="earth-controls" aria-label="Globe controls">
               <button id="earthZoomIn" aria-label="Zoom in">+</button>
               <button id="earthZoomOut" aria-label="Zoom out">−</button>
-              <button id="earthReset">Recenter</button>
+              <button id="earthReset">Reset</button>
               <button id="earthRotate">Rotate</button>
             </div>
           </div>
@@ -5226,8 +5231,8 @@ async function submit3AiVerificationAnswers() {
   </div>
 
   <script src="/static/js/career-earth.js?v=20261023-5"></script>
-  <script src="/static/js/career-spirit-totem.js?v=20261024-2"></script>
-<script src="/static/js/guided-career-flow.js?v=20261024-2"></script>
+  <script src="/static/js/career-spirit-totem.js?v=20261025-inline-1"></script>
+<script src="/static/js/guided-career-flow.js?v=20261025-auto-1"></script>
 <script src="/static/js/experience-builder.js?v=20261023-fresh-grad"></script>
 <div id="applicationFollowupModal" class="fixed inset-0 z-[70] hidden items-center justify-center bg-slate-950/60 p-4" role="dialog" aria-modal="true" aria-labelledby="applicationFollowupTitle">
   <div class="modal p-6 sm:p-8 space-y-4 max-w-2xl w-full" onclick="event.stopPropagation()">

@@ -7,12 +7,12 @@
   }[c]));
   const sectors = {tech: 'Technology', health: 'Healthcare', creative: 'Creative', green: 'Climate & sustainability', finance: 'Finance'};
   const questions = [
-    {key: 'role', title: 'What role would you like to work towards?', help: 'Keep your suggested direction, or type a role that feels more like you.', type: 'text', max: 120},
-    {key: 'years', title: 'Where are you in your journey?', help: 'There is no wrong starting point.', options: ['Still studying', 'Just starting', '1–2 years', '3–5 years', '6+ years']},
-    {key: 'work_mode', title: 'Where do you do your best work?', help: 'Choose the work setting you would prefer.', options: ['Remote', 'Hybrid', 'On-site']},
-    {key: 'skills', title: 'What can you bring to the table?', help: 'Choose skills you actually have. You can add your own, too.', options: ['Communication', 'Problem solving', 'Data analysis', 'Design', 'Programming', 'Project coordination'], type: 'skills'},
-    {key: 'experience_highlight', title: 'Tell me about something you are proud of.', help: 'A class project, volunteer contribution, or work achievement all count. Use your own words—no impressive numbers needed.', type: 'textarea', max: 2000, optional: true},
-    {key: 'education', title: 'What have you been learning?', help: 'Add a qualification, course, or subject you are studying. It is fine to leave this for later.', type: 'textarea', max: 1000, optional: true}
+    {key: 'role', title: 'Your next role?', help: 'Keep this direction, or type another.', type: 'text', max: 120},
+    {key: 'years', title: 'Where are you now?', options: ['Still studying', 'Just starting', '1–2 years', '3–5 years', '6+ years']},
+    {key: 'work_mode', title: 'Your preferred setup?', options: ['Remote', 'Hybrid', 'On-site']},
+    {key: 'skills', title: 'What are your strengths?', help: 'Choose a few skills you have.', options: ['Communication', 'Problem solving', 'Data analysis', 'Design', 'Programming', 'Project coordination'], type: 'skills'},
+    {key: 'experience_highlight', title: 'A moment you are proud of?', help: 'Work, study or volunteering. Your own words.', type: 'textarea', max: 2000, optional: true},
+    {key: 'education', title: 'What have you studied?', help: 'A qualification, course or subject.', type: 'textarea', max: 1000, optional: true}
   ];
   let state = {sector: 'tech', selectedRole: 0, model: -1, busy: false};
   let root;
@@ -51,14 +51,20 @@
       if (action === 'role') { state.selectedRole = Number(button.dataset.index); careers(false); }
       if (action === 'choice') {
         const q = questions[state.draft.step];
+        if (!q || !root.contains(button)) return;
         if (q.type === 'skills') {
           const chosen = new Set(state.draft.answers.skills || []);
           chosen.has(button.dataset.value) ? chosen.delete(button.dataset.value) : chosen.add(button.dataset.value);
           state.draft.answers.skills = [...chosen];
         } else state.draft.answers[q.key] = button.dataset.value;
         state.error = '';
-        persist();
-        renderCv(false);
+        if (q.type === 'skills') {
+          persist();
+          renderCv(false);
+          root.querySelector(`[data-guided-action="choice"][data-value="${CSS.escape(button.dataset.value)}"]`)?.focus({preventScroll:true});
+        } else {
+          nextQuestion();
+        }
       }
       if (action === 'next') nextQuestion();
       if (action === 'skip') { state.draft.answers[questions[state.draft.step].key] = ''; state.draft.step++; persist(); renderCv(); }
@@ -87,7 +93,7 @@
   }
   function show(step, content, shouldScroll = true) {
     root.innerHTML = `<div class="guided-flow" data-guided-step="${step}">
-      <div class="guided-progress"><span>YOUR NEXT CHAPTER</span><span>${['Your style', 'Your personality', 'Your direction', 'Your story'][step - 1]} · ${step} / 4</span></div>
+      ${step === 4 ? '' : `<div class="guided-progress"><span>YOUR NEXT CHAPTER</span><span>${['Your style', 'Your personality', 'Your direction'][step - 1]} · ${step} / 4</span></div>`}
       ${content}</div>`;
     if (shouldScroll) {
       root.scrollIntoView({behavior: 'instant', block: 'start'});
@@ -101,9 +107,9 @@
       <div class="guided-animal-orb"><img src="${escape(image())}" alt="" /></div>
       <p class="guided-eyebrow">Meet your work-style companion</p>
       <h2>${escape(state.t.badge)}</h2><p class="guided-tagline">${escape(state.t.tagline)}</p>
-      <p class="guided-description">${escape(state.t.brief)}</p>
       <div class="guided-strengths">${(state.t.strengths || []).slice(0, 3).map(s => `<span>${escape(s)}</span>`).join('')}</div>
-      <p class="guided-note">A reflection of your answers, not a fixed label or a clinical personality assessment.</p>
+      <details class="guided-extra"><summary>About this style</summary><p>${escape(state.t.brief)}</p></details>
+      <p class="guided-note">A reflection, not a fixed label or clinical assessment.</p>
       ${onward('deep')}</section>`);
   }
   function deep(shouldScroll = true) {
@@ -112,7 +118,6 @@
     const selected = models[state.model];
     show(2, `<section class="glass-panel">
       <p class="guided-eyebrow">A little more you</p><h2>Your personality spectrum</h2>
-      <p class="guided-description">Different strengths, in your own balance.</p>
       <div class="guided-spectrum">${Object.values(poles).map((p, i) => {
         const pct = Math.max(0, Math.min(100, Number(p.leftPct) || 0));
         return `<div class="spectrum-row" style="--tube-hue:${i * 25}deg">
@@ -123,7 +128,7 @@
       }).join('')}</div>
     </section><section class="glass-panel">
       <p class="guided-eyebrow">Shared sparks</p><h2>Who walks your path?</h2>
-      <p class="guided-description">Tap a person to discover their story. These are inspirations, not predictions.</p>
+      <p class="guided-note">Tap a story. Inspiration, not prediction.</p>
       <div class="role-model-grid">${models.map((model, i) => `<button type="button" class="role-model-choice" data-guided-action="model" data-index="${i}" aria-expanded="${state.model === i}" aria-pressed="${state.model === i}" aria-controls="guidedRoleModelDetail">
         <img src="${escape(model.photo || image())}" alt="" loading="lazy" /><strong>${escape(model.name)}</strong><span>${state.model === i ? 'Close story −' : 'Read story +'}</span>
       </button>`).join('')}</div>
@@ -150,15 +155,14 @@
     const list = roleList();
     show(3, `<section class="glass-panel">
       <p class="guided-eyebrow">Possibilities, not boxes</p><h2>Where could you go next?</h2>
-      <p class="guided-description">Choose a direction that makes you curious.</p>
       <label class="guided-sector-label" for="guidedSector">Explore a field</label>
       <select id="guidedSector">${Object.entries(sectors).map(([key, title]) => `<option value="${key}" ${state.sector === key ? 'selected' : ''}>${title}</option>`).join('')}</select>
       <div class="career-visual-grid">${list.map((role, i) => `<button type="button" class="career-visual-card ${i === state.selectedRole ? 'selected' : ''}" data-guided-action="role" data-index="${i}" aria-pressed="${i === state.selectedRole}">
         <span class="career-card-art">${careerArt(i)}</span><span class="career-card-copy"><span class="guided-eyebrow">${escape(role.vibe)}</span>
-        <strong>${escape(role.title)}</strong><span>${i === state.selectedRole ? escape(role.why) : 'Tap to explore this direction'}</span>
-        <small>${i === state.selectedRole ? 'Selected direction' : 'Explore direction'}</small></span>
+        <strong>${escape(role.title)}</strong><small>${i === state.selectedRole ? 'Selected ✓' : 'Explore →'}</small></span>
       </button>`).join('')}</div>
-      <p class="guided-note">Work-style inspiration only. Actual suitability depends on your skills, interests, and role requirements.</p>
+      ${list[state.selectedRole] ? `<details class="guided-extra"><summary>Why this direction?</summary><p>${escape(list[state.selectedRole].why)}</p></details>` : ''}
+      <p class="guided-note">Explore a possibility—not a job-fit assessment.</p>
       ${onward('cv', !list.length)}</section>`, shouldScroll);
   }
   function cv(prefillRole = '') {
@@ -176,6 +180,7 @@
     const step = Math.min(questions.length, Math.max(0, Number(draft.step) || 0));
     draft.step = step;
     const q = questions[step];
+    const singleChoice = q?.options && q.type !== 'skills';
     const answers = draft.answers;
     const review = !q;
     const current = q ? answers[q.key] : '';
@@ -184,23 +189,23 @@
       `<input id="guidedAnswer" class="cv-dialog-input" data-guided-input="${q.key}" maxlength="${q.max}" value="${escape(current || '')}" autocomplete="off" />`}` : '';
     const options = q?.options ? `<div class="cv-dialog-options">${q.options.map(value => {
       const selected = q.type === 'skills' ? (answers.skills || []).includes(value) : current === value;
-      return `<button type="button" data-guided-action="choice" data-value="${escape(value)}" aria-pressed="${selected}">${escape(value)}<span aria-hidden="true">${selected ? '✓' : '+'}</span></button>`;
+      return `<button type="button" data-guided-action="choice" data-value="${escape(value)}" aria-pressed="${selected}">${escape(value)}<span aria-hidden="true">${selected ? '✓' : singleChoice ? '→' : '+'}</span></button>`;
     }).join('')}</div>` : '';
     show(4, `<section class="cv-dialog">
-      <div class="cv-companion-heading"><img src="${escape(image())}" alt="" /><div><p class="guided-eyebrow">Your career companion</p><span>${review ? 'Your story, ready for the next step' : `Chapter ${step + 1} of ${questions.length}`}</span></div></div>
+      <div class="cv-companion-heading"><img src="${escape(image())}" alt="" /><div><p class="guided-eyebrow">Your story</p><span>${review ? 'Review' : `${step + 1} / ${questions.length}`}</span></div></div>
       <div class="cv-dialog-progress" role="progressbar" aria-label="CV conversation progress" aria-valuemin="0" aria-valuemax="${questions.length}" aria-valuenow="${step}"><span style="display:block;width:${step / questions.length * 100}%"></span></div>
-      ${step > 0 ? '<button type="button" class="guided-back" data-guided-action="back">← Back</button>' : ''}
-      <div class="cv-dialog-message" aria-live="polite"><h2>${review ? 'Look what we put together.' : escape(q.title)}</h2><p>${review ? 'Only the details you shared will go into your CV. You can go back to change anything.' : escape(q.help)}</p></div>
-      ${review ? `<dl class="cv-dialog-preview">${questions.map(item => {
+      ${step > 0 ? '<button type="button" class="guided-back" data-guided-action="back">← Back</button>' : state.roles ? '<button type="button" class="guided-back" data-guided-action="careers">← Directions</button>' : ''}
+      <div class="cv-dialog-message" aria-live="polite"><h2>${review ? 'Your story is ready.' : escape(q.title)}</h2>${review ? '<p>Only what you shared. Edit any answer.</p>' : q.help ? `<p>${escape(q.help)}</p>` : ''}</div>
+      ${review ? `<details class="guided-extra"><summary>Review your answers</summary><dl class="cv-dialog-preview">${questions.map(item => {
         const value = item.key === 'skills' ? combinedSkills().join(', ') : answers[item.key];
         return `<div><dt>${({role:'Your direction',years:'Your experience',work_mode:'Preferred setting',skills:'Your skills',experience_highlight:'Your highlight',education:'Your learning'})[item.key]}</dt><dd>${escape(value || 'Not added')}</dd></div>`;
-      }).join('')}</dl>
+      }).join('')}</dl></details>
       ${state.existingCv ? `<label class="guided-replace-warning"><input type="checkbox" data-guided-replace ${state.replace ? 'checked' : ''} /> I agree to replace my current CV. This also withdraws earlier applications and revokes employer access; I will need to apply again to share the new version.</label>` : ''}
-      <p class="guided-note">${document.getElementById('profileTotemCard') ? 'Continue creates and saves your CV in your private workspace.' : 'Continue to sign in and save your story. Your draft stays in this browser tab until then.'}</p>` :
-      `${input}${options}${q.type === 'skills' ? `<label for="guidedSkills" class="guided-sector-label">Or add your own (separate with commas)</label><input id="guidedSkills" class="cv-dialog-input" data-guided-input="extra_skills" maxlength="800" value="${escape(answers.extra_skills || '')}" placeholder="For example: Excel, video editing" />` : ''}
-      ${q.optional ? '<button type="button" class="guided-back" data-guided-action="skip">Leave this for later</button>' : ''}`}
+      <p class="guided-note">${document.getElementById('profileTotemCard') ? 'Continue saves your CV privately.' : 'Sign in next to save. Your draft stays in this tab.'}</p>` :
+      `${input}${options}${q.type === 'skills' ? `<label for="guidedSkills" class="guided-sector-label">Add a skill (comma-separated)</label><input id="guidedSkills" class="cv-dialog-input" data-guided-input="extra_skills" maxlength="800" value="${escape(answers.extra_skills || '')}" placeholder="Excel, video editing…" />` : ''}
+      ${q.optional ? '<button type="button" class="guided-back" data-guided-action="skip">Skip for now</button>' : ''}`}
       <p class="guided-error" role="status">${escape(state.error || '')}</p>
-      ${onward(review ? 'finish' : 'next', state.busy || (review && state.existingCv && !state.replace))}
+      ${singleChoice ? '' : onward(review ? 'finish' : 'next', state.busy || (review && state.existingCv && !state.replace))}
     </section>`, shouldScroll);
   }
   function combinedSkills() {
@@ -223,7 +228,7 @@
       return;
     }
     state.draft.step++;
-    persist();
+    if (!persist()) state.draft.step--;
     renderCv();
   }
   async function finish() {

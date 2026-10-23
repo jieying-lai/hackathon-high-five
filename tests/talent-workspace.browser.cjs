@@ -58,7 +58,7 @@ const delay = ms => new Promise(r=>setTimeout(r,ms));
     await evaluate('quickLogin("job_seeker");true');
     await wait('location.pathname==="/workspace" && typeof user!=="undefined" && !!user && typeof showTab==="function"');
     await wait('typeof analysed!=="undefined" && analysed && !!roles.length');
-    for(const tab of ['dash','jobs','companies','profile','cv-review','quest','applications','plan','discover','saved','completed','passport','radar']){
+    for(const tab of ['dash','jobs','companies','atlas','profile','cv-review','quest','applications','plan','discover','saved','completed','passport','radar']){
       await evaluate(`showTab(${JSON.stringify(tab)}).then(()=>true)`);
       if(tab==='radar')await wait('!!document.querySelector(".fr-scenario-grid")');
       await delay(250);
@@ -94,6 +94,26 @@ const delay = ms => new Promise(r=>setTimeout(r,ms));
       }
     }
     await viewport(390);
+    await evaluate('openGlobalAtlas();true');
+    await wait('!!document.querySelector("#tab-atlas .atlas-role-option")');
+    assert.equal(await evaluate('document.getElementById("globalAtlasModal").parentElement.id'),'atlasPanelSlot');
+    assert.equal(await evaluate('document.getElementById("globalAtlasModal").getAttribute("role")'),'region');
+    assert.equal(await evaluate('document.getElementById("globalAtlasModal").hasAttribute("aria-modal")'),false);
+    assert.notEqual(await evaluate('getComputedStyle(document.body).overflowY'),'hidden','Inline atlas must not lock page scrolling');
+    assert.equal(await evaluate('document.querySelectorAll("#tab-atlas details[open]").length'),0);
+    assert(await evaluate('document.querySelector("#tab-atlas canvas").getBoundingClientRect().height>100'));
+    await evaluate('showCityCard("tokyo");true');
+    assert.equal(await evaluate('document.querySelector(".atlas-field select").value'),'tokyo');
+    assert.match(await evaluate('document.querySelector(".atlas-hub h4").innerText'),/Tokyo/);
+    await click('.atlas-role-option:last-child');
+    assert.equal(await evaluate('document.querySelectorAll(".atlas-role-option[aria-pressed=true]").length'),1);
+    await click('.atlas-routine-disclosure summary');
+    assert.equal(await evaluate('document.querySelector(".atlas-routine-disclosure").open'),true);
+    await evaluate('shuffleAtlasRoutine();true');
+    assert.match(await evaluate('document.getElementById("atlasRoutineVariantBadge").innerText'),/Variation/);
+    await screenshot('inline-atlas-mobile');
+    await evaluate('showTab("jobs").then(()=>true)');
+    assert.equal(await evaluate('document.getElementById("tab-atlas").classList.contains("hidden")'),true);
     await evaluate('showTab("profile").then(()=>true)');
     await evaluate('openProfileTotemQuizModal();true');
     assert.match(await evaluate('document.getElementById("profileQuizCardBody").innerText'),/Question 1/);
@@ -112,7 +132,7 @@ const delay = ms => new Promise(r=>setTimeout(r,ms));
     await evaluate('showTab("radar").then(()=>true)');
     assert.equal(await evaluate('getComputedStyle(document.getElementById("legacyRadar")).display'),'none');
     assert.equal(await evaluate('document.querySelectorAll("#tab-dash [onclick*=openGlobalAtlas]").length'),0);
-    assert.equal(await evaluate('document.querySelectorAll("#tab-radar [data-careers-navigation] [onclick*=openGlobalAtlas]").length'),1);
+    assert.equal(await evaluate('document.querySelectorAll("#tab-radar [data-careers-navigation] button[onclick*=atlas]").length'),1);
     assert.equal(await evaluate('document.querySelectorAll(".fr-scenario-grid button").length'),3);
     assert.equal(await evaluate('document.querySelectorAll(".fr-planning-controls input[type=range]").length'),3);
     assert(await evaluate('Boolean(document.querySelector(".fr-matrix [role=cell] button"))'));
@@ -225,6 +245,6 @@ const delay = ms => new Promise(r=>setTimeout(r,ms));
     assert.deepEqual(errors,[],'Unhandled browser errors: '+errors.join('\n'));
     console.log(process.env.EMPLOYER_ONLY
       ? 'PASS: 6 employer screens at 320/390/768/1366px; four overview subtabs; unclipped company actions and navigation; company profile modal; no unhandled errors.'
-      : 'PASS: 13 talent and 6 employer screens at 320/390/768/1366px; all company overview tabs; company profile modal; live timeline/adoption/budget matrix and keyboard focus; unchanged observations; evidence links and persistent followed skills; no unhandled errors.');
+      : 'PASS: 14 talent and 6 employer screens at 320/390/768/1366px; inline atlas city/role/routine controls without modal or scroll lock; company overview/profile; interactive matrix; unchanged observations; no unhandled errors.');
   } finally {ws?.close();browser.kill();}
 })().catch(error=>{console.error(error);process.exitCode=1;});
