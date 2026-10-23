@@ -78,6 +78,11 @@
 .disclosure-body {padding:0 20px 20px}
 .career-disclosure .profile-section-heading {display:none}
 .career-disclosure .border-t {border-top:0;padding-top:0}
+#tab-dash .dashboard-welcome-card {padding:clamp(16px,2.4vw,32px)}
+#tab-dash .dashboard-welcome-copy {position:relative;z-index:1;max-width:64rem}
+#tab-dash .dashboard-welcome-kicker {font-size:15px;line-height:1.4;font-weight:700;color:#334155}
+#tab-dash #dashHello {margin:0;color:#172554;font-size:clamp(1.55rem,2.3vw,2rem);line-height:1.2;letter-spacing:-.02em;word-break:normal;overflow-wrap:normal}
+#tab-dash #dashSub {margin:.4rem 0 0;color:#334155;font-size:1rem;line-height:1.55;max-width:64ch}
 :is(#tab-profile,#tab-cv-review,#tab-dash) :is(button,summary,a):focus-visible {outline:3px solid #818cf8;outline-offset:3px}
 #tab-profile .profile-account-card {background:linear-gradient(135deg,#fff,#f5f3ff)}
 #tab-profile .profile-overview {grid-template-columns:repeat(3,minmax(0,1fr))}
@@ -86,6 +91,10 @@
 #tab-cv-review .profile-section-heading {margin-top:0;padding-top:0;border:0}
 @media(max-width:1023px){.career-quick-actions{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:639px){
+  #tab-dash .dashboard-welcome-card {padding:16px!important;border-radius:20px}
+  #tab-dash .dashboard-welcome-kicker {font-size:15px}
+  #tab-dash #dashHello {font-size:clamp(1.5rem,6vw,1.75rem);line-height:1.24;letter-spacing:-.015em}
+  #tab-dash #dashSub {font-size:16px;line-height:1.55}
  .career-quick-actions{gap:10px}.career-quick-actions button{padding:14px;border-radius:16px}.career-quick-actions small{display:none}
  #tab-dash #journey{grid-template-columns:repeat(2,minmax(0,1fr))}
  #tab-profile .profile-overview{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}

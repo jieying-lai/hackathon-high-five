@@ -270,7 +270,7 @@
       text-overflow: ellipsis !important;
     }
  </style>
-<link rel="stylesheet" href="/static/css/profile.css?v=20261022-dashboard-review" />
+<link rel="stylesheet" href="/static/css/profile.css?v=20261023-dashboard-welcome-mobile-1" />
 <link rel="stylesheet" href="/static/css/responsive.css?v=20261023-talent-fullscreen-1" />
 <link rel="stylesheet" href="/static/css/page-outline.css?v=20261021-menu-outline-v2" />
 <link rel="stylesheet" href="/static/css/pomodoro.css?v=20261021-buddy-tooltip" />
@@ -423,11 +423,13 @@
         </section>
 
         <section id="tab-dash" class="tab space-y-6">
-          <div class="glass rounded-3xl p-6 sm:p-8 relative overflow-hidden">
+          <div class="dashboard-welcome-card glass rounded-3xl p-6 sm:p-8 relative overflow-hidden">
             <div class="absolute -right-10 -top-10 h-48 w-48 rounded-full bg-gradient-to-br from-pink-300/50 to-indigo-300/50 blur-2xl"></div>
-            <div class="relative space-y-1"><div class="text-sm text-slate-500 font-semibold">Welcome back</div>
+            <div class="dashboard-welcome-copy relative space-y-1">
+              <div class="dashboard-welcome-kicker">Welcome back</div>
               <h2 id="dashHello" data-no-translate class="text-2xl font-extrabold">Your career dashboard</h2>
-              <p id="dashSub" class="text-sm text-slate-600"></p></div>
+              <p id="dashSub"></p>
+            </div>
             <div data-outline-label="Your career journey" id="journey" class="journey-grid relative mt-6"></div>
           </div>
           <nav class="career-quick-actions" aria-label="Career shortcuts">
