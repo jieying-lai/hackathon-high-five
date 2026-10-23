@@ -1,0 +1,1 @@
+- [Responsive talent experience](responsive-talent-experience.md) — phone readability and viewport fit are explicit requirements, not optional polish.

@@ -2668,6 +2668,14 @@
     const modal = document.getElementById("globalAtlasModal");
     if (modal) {
       modal.classList.remove("hidden");
+      const panel = modal.querySelector('.global-atlas-container');
+      const header = modal.querySelector('.atlas-modal-header');
+      if (panel && header && !modal.atlasHeaderObserver && typeof ResizeObserver !== 'undefined') {
+        modal.atlasHeaderObserver = new ResizeObserver(() => {
+          panel.style.setProperty('--atlas-header-height', `${header.getBoundingClientRect().height + 16}px`);
+        });
+        modal.atlasHeaderObserver.observe(header);
+      }
       window.atlasReturnFocus = document.activeElement;
       document.body.style.overflow = 'hidden';
       modal.querySelector('[data-atlas-close]')?.focus();
@@ -2840,7 +2848,7 @@
       <div class="city-day-card p-6 sm:p-7 space-y-5 h-full flex flex-col justify-between fade-in text-slate-100">
         <!-- Top Persona Showcase Card with Portrait Photo -->
         <div class="space-y-4">
-          <div class="p-5 sm:p-6 rounded-3xl bg-white/10 border border-white/15 space-y-4 shadow-xl backdrop-blur-xl">
+          <div class="atlas-persona-panel p-5 sm:p-6 rounded-3xl bg-white/10 border border-white/15 space-y-4 shadow-xl backdrop-blur-xl">
             <div class="atlas-persona-layout flex flex-col sm:flex-row items-center sm:items-start gap-5">
               <!-- Full Uncropped High-Res Portrait Photo -->
               <div class="relative shrink-0">
