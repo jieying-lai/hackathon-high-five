@@ -1,0 +1,471 @@
+/* CareerLens talent workspace — quiet, deliberate surfaces with clear next steps. */
+:root {
+  --talent-ink: #173b43;
+  --talent-muted: #59747a;
+  --talent-paper: #f4f7f3;
+  --talent-line: #d7e5df;
+  --talent-teal: #176c68;
+  --talent-teal-deep: #155653;
+  --talent-coral: #c76852;
+  --talent-wash: #e8f2ed;
+}
+
+body.responsive-talent {
+  color: var(--talent-ink);
+  background-color: var(--talent-paper);
+}
+
+.responsive-talent .portal-content {
+  background:
+    radial-gradient(ellipse at 87% 4%, rgba(207, 231, 220, .38), transparent 29rem),
+    linear-gradient(180deg, rgba(249, 250, 246, .76), rgba(244, 247, 243, .82));
+}
+
+.responsive-talent main.candidate-dashboard-main {
+  width: min(100%, 1560px);
+  margin-inline: auto;
+  padding-inline: clamp(1rem, 2.5vw, 2.5rem);
+}
+
+.responsive-talent #pgEyebrow {
+  color: var(--talent-teal);
+  letter-spacing: .16em;
+}
+
+.responsive-talent #pgTitle {
+  color: var(--talent-ink);
+  letter-spacing: -.04em;
+}
+
+/* Section navigation is a compact, wrapping control surface at every width. */
+.responsive-talent .growth-navigation {
+  position: relative;
+  inset: auto;
+  z-index: 5;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: .45rem;
+  overflow: visible;
+  flex-wrap: initial;
+  width: 100%;
+  min-width: 0;
+  margin: 0 0 1.15rem;
+  padding: .45rem;
+  border: 1px solid rgba(197, 218, 208, .9);
+  border-radius: 1.1rem;
+  background: rgba(249, 251, 247, .92);
+  box-shadow: 0 8px 24px rgba(31, 74, 69, .07);
+  backdrop-filter: blur(14px);
+}
+
+.responsive-talent .growth-navigation button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 0;
+  min-height: 48px;
+  padding: .65rem .7rem;
+  border: 1px solid transparent;
+  border-radius: .78rem;
+  background: transparent;
+  color: #4e6c70;
+  font-size: clamp(.72rem, .9vw, .83rem);
+  font-weight: 750;
+  line-height: 1.25;
+  text-align: center;
+  white-space: normal;
+  overflow-wrap: anywhere;
+  transition: transform .16s ease, opacity .16s ease;
+}
+
+.responsive-talent .growth-navigation button:hover {
+  color: var(--talent-teal-deep);
+  border-color: #d1e2d9;
+  background: #edf5ef;
+}
+
+.responsive-talent .growth-navigation button[aria-current="page"] {
+  border-color: var(--talent-teal-deep);
+  color: #fff;
+  background: var(--talent-teal-deep);
+  box-shadow: 0 4px 10px rgba(21, 86, 83, .16);
+}
+
+.responsive-talent .growth-navigation button:focus-visible,
+.responsive-talent :is(#tab-profile, #tab-cv-upload, #tab-cv-review, #tab-applications, #tab-quest, #tab-dash) :is(button, a, input, select, textarea, summary):focus-visible {
+  outline: 3px solid rgba(199, 104, 82, .62);
+  outline-offset: 3px;
+}
+
+.responsive-talent .growth-navigation button:active {
+  transform: translateY(1px);
+}
+
+@media (max-width: 1023px) {
+  .responsive-talent .growth-navigation {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+@media (min-width: 1024px) {
+  .responsive-talent .growth-navigation:has(>button:nth-child(5):last-child) {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 639px) {
+  .responsive-talent .growth-navigation button:last-child:nth-child(odd) {
+    grid-column: 1 / -1;
+  }
+  .responsive-talent .growth-navigation {
+    position: relative;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: .4rem;
+    margin-bottom: .85rem;
+    padding: .4rem;
+    border-radius: 1rem;
+  }
+  .responsive-talent .growth-navigation button {
+    min-height: 48px;
+    padding: .62rem .45rem;
+    font-size: .76rem;
+    line-height: 1.3;
+  }
+}
+
+/* Dashboard: a warm, low-noise overview. Real metrics remain the visual anchor. */
+.responsive-talent .dashboard-checklist { margin-top:20px; border-top:1px solid #c6ddd1; padding-top:13px; }
+.responsive-talent .dashboard-checklist summary { cursor:pointer; min-height:44px; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:8px; font-size:12px; font-weight:750; color:#245f58; }
+.responsive-talent .dashboard-checklist summary::after { content:"+"; font-size:20px; }
+.responsive-talent .dashboard-checklist[open] summary::after { content:"−"; }
+.responsive-talent .dashboard-checklist summary span { margin-left:auto; color:#637d74; font-size:11px; font-weight:500; }
+.responsive-talent .dashboard-checklist summary:focus-visible,
+.responsive-talent .profile-account-reference summary:focus-visible { outline:3px solid #81b7a6; outline-offset:3px; }
+.responsive-talent .profile-account-reference summary { cursor:pointer; padding-block:8px; color:#44766c; }
+.responsive-talent .profile-account-reference span { display:block; padding-top:6px; }
+@media(max-width:700px) {
+  .responsive-talent .pomodoro-floating.pomodoro-inline { position:relative!important; inset:auto!important; width:100%!important; max-width:none; height:auto!important; max-height:none; z-index:1; padding:12px 15px!important; border:1px solid #dfddd4!important; border-radius:17px!important; background:#fffaf4!important; box-shadow:none!important; overflow:hidden!important; }
+  .responsive-talent .pomodoro-inline .pomodoro-head,
+  .responsive-talent .pomodoro-inline[data-collapsed=true] .pomodoro-head { flex-direction:row; gap:10px; align-items:center; cursor:default; touch-action:auto; }
+  .responsive-talent .pomodoro-inline .pomodoro-head>span:first-child,
+  .responsive-talent .pomodoro-inline[data-collapsed=true] .pomodoro-head>span:first-child { width:32px; height:32px; filter:none; cursor:pointer; }
+  .responsive-talent .pomodoro-inline .pomodoro-title,
+  .responsive-talent .pomodoro-inline[data-collapsed=true] .pomodoro-title { display:block; font-size:12px; }
+  .responsive-talent .pomodoro-inline .pomodoro-mini,
+  .responsive-talent .pomodoro-inline[data-collapsed=true] .pomodoro-mini { order:0; font-size:14px; }
+  .responsive-talent .pomodoro-inline .pomodoro-toggle,
+  .responsive-talent .pomodoro-inline[data-collapsed=true] .pomodoro-toggle { display:grid; width:44px; height:44px; }
+  .responsive-talent .pomodoro-inline .pomodoro-resize-handle { display:none; }
+  .responsive-talent .pomodoro-inline .pomodoro-body { max-height:none; overflow:visible; }
+}
+.responsive-talent #tab-dash {
+  --dashboard-gap: clamp(1rem, 2vw, 1.5rem);
+  gap: var(--dashboard-gap);
+}
+
+.responsive-talent #tab-dash .dashboard-welcome-card {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  padding: clamp(1.25rem, 3vw, 2.25rem);
+  border: 1px solid #d6e6dd;
+  border-radius: 1.55rem;
+  background:
+    radial-gradient(circle at 88% 12%, rgba(193, 222, 208, .48), transparent 16rem),
+    linear-gradient(120deg, #f9fbf6 0%, #eaf3ed 100%);
+  box-shadow: 0 16px 42px rgba(29, 72, 67, .075);
+}
+
+.responsive-talent #tab-dash .dashboard-welcome-card > .absolute {
+  display: none;
+}
+
+.responsive-talent #tab-dash .dashboard-welcome-kicker {
+  color: var(--talent-coral);
+  font-size: .68rem;
+  font-weight: 850;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+}
+
+.responsive-talent #tab-dash #dashHello {
+  max-width: 22ch;
+  margin-top: .3rem;
+  color: var(--talent-ink);
+  font-size: clamp(1.7rem, 3.2vw, 2.65rem);
+  font-weight: 800;
+  letter-spacing: -.055em;
+  line-height: 1.08;
+}
+
+.responsive-talent #tab-dash #dashSub {
+  max-width: 58ch;
+  margin-top: .65rem;
+  color: #557076;
+  font-size: clamp(.88rem, 1.2vw, 1rem);
+  line-height: 1.65;
+}
+
+.responsive-talent #tab-dash #journey {
+  margin-top: clamp(1.15rem, 2.2vw, 1.7rem);
+}
+
+.responsive-talent #tab-dash #kpis {
+  gap: .8rem;
+}
+
+.responsive-talent #tab-dash #kpis > * {
+  min-width: 0;
+  border: 1px solid #dce8e1;
+  border-radius: 1.15rem;
+  background: rgba(252, 253, 249, .9);
+  box-shadow: 0 7px 20px rgba(33, 73, 67, .045);
+}
+
+.responsive-talent #tab-dash #dashTop,
+.responsive-talent #tab-dash .lg\:col-span-2.tint {
+  border: 1px solid #dce8e1;
+  border-radius: 1.3rem;
+  background: rgba(250, 252, 248, .94);
+  box-shadow: 0 8px 24px rgba(33, 73, 67, .05);
+}
+
+.responsive-talent #tab-dash .lg\:col-span-2.tint {
+  border-color: #ead9d0;
+  background: linear-gradient(145deg, #fbf0eb, #f8f6ef);
+}
+
+.responsive-talent #tab-dash .career-quick-actions {
+  gap: .75rem;
+}
+
+.responsive-talent #tab-dash .career-quick-actions button {
+  min-height: 138px;
+  padding: clamp(.95rem, 1.6vw, 1.25rem);
+  border-color: #d9e6df;
+  border-radius: 1.15rem;
+  background: rgba(251, 252, 248, .92);
+  box-shadow: 0 5px 18px rgba(30, 71, 65, .045);
+}
+
+.responsive-talent #tab-dash .career-quick-actions button:hover {
+  border-color: #9abdb0;
+  box-shadow: 0 12px 24px rgba(30, 71, 65, .1);
+}
+
+.responsive-talent #tab-dash .career-quick-actions button > div:first-child > span:first-child {
+  width: 2rem;
+  height: 2rem;
+  border-color: #d3e3da;
+  border-radius: .7rem;
+  background: #eaf3ed;
+  color: var(--talent-teal-deep);
+}
+
+.responsive-talent #tab-dash .career-quick-actions strong {
+  color: var(--talent-ink);
+  font-size: .9rem;
+}
+
+.responsive-talent #tab-dash .career-quick-actions small {
+  color: var(--talent-muted);
+  font-size: .75rem;
+}
+
+/* Profile surfaces: less chrome, stronger hierarchy, complete content at narrow widths. */
+.responsive-talent #tab-profile,
+.responsive-talent #tab-cv-upload,
+.responsive-talent #tab-cv-review,
+.responsive-talent #tab-applications,
+.responsive-talent #tab-quest {
+  --profile-gap: clamp(1rem, 2vw, 1.4rem);
+  color: var(--talent-ink);
+}
+
+.responsive-talent :is(#tab-profile, #tab-cv-upload, #tab-cv-review, #tab-applications, #tab-quest) .glass {
+  border-color: var(--talent-line);
+  border-radius: 1.25rem;
+  box-shadow: 0 8px 24px rgba(28, 69, 64, .045);
+}
+
+.responsive-talent #tab-profile .profile-account-card {
+  background: linear-gradient(140deg, #fbfcf8, #edf4ef);
+}
+
+.responsive-talent #tab-profile .profile-account-meta {
+  color: var(--talent-muted);
+}
+
+.responsive-talent #tab-profile .profile-overview > div {
+  min-width: 0;
+  border-color: #dce8e1;
+  border-radius: .9rem;
+  background: rgba(255, 255, 255, .74);
+}
+
+.responsive-talent #tab-profile .profile-overview :is(div, span, b) {
+  overflow-wrap: anywhere;
+}
+
+.responsive-talent .career-disclosure {
+  border-color: #d9e6df;
+  border-radius: 1rem;
+  background: rgba(255, 255, 255, .58);
+}
+
+.responsive-talent .career-disclosure > summary {
+  min-height: 56px;
+  padding: .9rem 1rem;
+  color: var(--talent-ink);
+}
+
+.responsive-talent .career-disclosure > summary:after {
+  color: var(--talent-teal);
+}
+
+.responsive-talent .career-disclosure > summary small {
+  color: var(--talent-muted);
+}
+
+.responsive-talent .disclosure-body {
+  padding: 0 1rem 1rem;
+}
+
+.responsive-talent :is(#tab-profile, #tab-cv-upload, #tab-cv-review, #tab-applications, #tab-quest) .btn {
+  min-height: 44px;
+}
+
+.responsive-talent :is(#tab-profile, #tab-cv-upload, #tab-cv-review, #tab-applications, #tab-quest) :is(input:not([type="checkbox"]):not([type="radio"]), select, textarea) {
+  min-width: 0;
+  max-width: 100%;
+}
+
+.responsive-talent :is(#tab-profile, #tab-cv-upload, #tab-cv-review, #tab-applications, #tab-quest) .profile-section-heading {
+  border-color: var(--talent-line);
+}
+
+.responsive-talent #tab-applications .profile-privacy {
+  border: 1px solid #bedbd0;
+  border-radius: 1.2rem;
+  background: #eaf5ef;
+}
+
+.responsive-talent #tab-applications .profile-privacy p,
+.responsive-talent #tab-applications .profile-sharing-grid p {
+  max-width: 68ch;
+}
+
+.responsive-talent #tab-applications .profile-sharing-grid > div {
+  min-width: 0;
+  border-color: var(--talent-line);
+  border-radius: 1.2rem;
+  background: rgba(252, 253, 249, .92);
+}
+
+.responsive-talent #tab-applications .profile-sharing-grid :is(label, button) {
+  overflow-wrap: anywhere;
+}
+
+.responsive-talent #tab-applications #nRecipient,
+.responsive-talent #tab-applications #nExpiry {
+  width: 100%;
+}
+
+.responsive-talent #tab-cv-review #cvReviewPanel {
+  border-color: #d7e4db;
+  background: #edf4ef;
+}
+
+.responsive-talent #tab-cv-review [data-no-translate] {
+  border-color: #dce5df;
+  border-radius: 1.15rem;
+  background: #f4f7f3;
+  box-shadow: none;
+}
+
+.responsive-talent #tab-cv-review :is(.pref-section-card, .profile-history > div) {
+  min-width: 0;
+  border-color: var(--talent-line);
+  border-radius: 1rem;
+}
+
+.responsive-talent #tab-cv-review .pref-card-header {
+  gap: .7rem;
+}
+
+.responsive-talent #tab-cv-review .profile-save-actions {
+  border-color: var(--talent-line);
+}
+
+.responsive-talent #tab-quest .questionnaire-fields,
+.responsive-talent #tab-quest #ai3QuestionsContainer,
+.responsive-talent #tab-quest #roleRecommendationPanel {
+  min-width: 0;
+}
+
+@media (max-width: 639px) {
+  .responsive-talent #tab-dash .career-quick-actions {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .responsive-talent #tab-dash .career-quick-actions button {
+    min-height: 112px;
+    padding: .85rem;
+  }
+  .responsive-talent #tab-dash .career-quick-actions small {
+    display: block;
+    font-size: .68rem;
+    line-height: 1.4;
+  }
+  .responsive-talent #tab-dash .career-quick-actions strong {
+    font-size: .82rem;
+  }
+  .responsive-talent #tab-dash #kpis {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .responsive-talent #tab-profile .profile-account-card > div:first-child {
+    gap: 1rem;
+  }
+  .responsive-talent #tab-profile .profile-overview {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .responsive-talent #tab-profile .profile-overview > div {
+    padding: .75rem;
+  }
+  .responsive-talent #tab-applications .profile-sharing-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .responsive-talent #tab-applications .profile-sharing-grid > div {
+    padding: 1rem;
+  }
+  .responsive-talent #tab-applications .profile-privacy {
+    padding: 1rem;
+  }
+  .responsive-talent #tab-cv-review .profile-editor,
+  .responsive-talent #tab-cv-upload .profile-upload {
+    padding: 1rem !important;
+  }
+}
+
+@media (max-width: 359px) {
+  .responsive-talent main.candidate-dashboard-main {
+    padding-inline: .65rem;
+  }
+  .responsive-talent .growth-navigation button {
+    padding-inline: .35rem;
+    font-size: .72rem;
+  }
+  .responsive-talent #tab-profile .profile-account-meta {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .responsive-talent #tab-profile .profile-overview {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .responsive-talent #tab-applications .profile-privacy > div {
+    align-items: flex-start;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .responsive-talent .growth-navigation button {
+    transition: none;
+  }
+}

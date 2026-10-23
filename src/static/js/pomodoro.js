@@ -151,6 +151,9 @@ window.PomodoroTimer = (() => {
     tomato.addEventListener('pointerenter',event=>{if(event.pointerType!=='touch')showTip();});
     tomato.addEventListener('pointerleave',hideTip);tomato.addEventListener('focus',showTip);tomato.addEventListener('blur',hideTip);
     tomato.addEventListener('keydown',event=>{if(event.key==='Escape')hideTip();});
+    tomato.addEventListener('click',()=>{
+      if(container.classList.contains('pomodoro-inline')&&container.dataset.collapsed==='true')expand();
+    });
     let point={x:18,y:window.innerHeight-90},size={width:300,height:null},drag=null,resizing=null;
     try{
       const saved=JSON.parse(localStorage.getItem(key)||'null');
@@ -160,6 +163,18 @@ window.PomodoroTimer = (() => {
     }catch{}
     const persist=()=>{try{localStorage.setItem(key,JSON.stringify({...point,...size}));}catch{}};
     function reposition(){
+      const inline=window.matchMedia('(max-width: 700px)').matches;
+      container.classList.toggle('pomodoro-inline',inline);
+      if(inline){
+        const section=document.querySelector('#tab-plan:not(.hidden), #tab-discover:not(.hidden)');
+        const navigation=section?.querySelector('[data-growth-navigation]');
+        if(navigation && container.parentElement!==section)navigation.after(container);
+        head.setAttribute('aria-label',tr('Focus timer'));
+        hideTip();
+        return;
+      }
+      if(container.parentElement!==document.body)document.body.appendChild(container);
+      head.setAttribute('aria-label',tr('Move Pomodoro buddy with arrow keys. Press Home to return to the left.'));
       container.style.setProperty('--buddy-width',Math.min(size.width,Math.max(0,window.innerWidth-24))+'px');
       container.style.setProperty('--buddy-height',size.height===null?'auto':Math.min(size.height,Math.max(0,window.innerHeight-24))+'px');
       container.dataset.compact=String(size.width<280||(size.height!==null&&size.height<440));
@@ -173,6 +188,7 @@ window.PomodoroTimer = (() => {
     }
     head.addEventListener('pointerdown',event=>{
       hideTip();
+      if(container.classList.contains('pomodoro-inline'))return;
       if(event.button!==0||event.target.closest('button,a,input,select'))return;
       if(container.dataset.collapsed==='true'&&event.target!==head.firstElementChild)return;
       reposition();drag={id:event.pointerId,x:event.clientX,y:event.clientY,startX:point.x,startY:point.y,moved:false,collapsed:container.dataset.collapsed==='true'};
@@ -195,6 +211,7 @@ window.PomodoroTimer = (() => {
     head.addEventListener('keydown',event=>{
       if((event.target===head.firstElementChild||event.target===head)&&container.dataset.collapsed==='true'&&(event.key==='Enter'||event.key===' ')){event.preventDefault();expand();return;}
       if(event.target!==head)return;
+      if(container.classList.contains('pomodoro-inline'))return;
       const step=event.shiftKey?48:16;
       if(event.key==='Home')point={x:18,y:window.innerHeight-container.getBoundingClientRect().height-18};
       else if(event.key==='ArrowLeft')point.x-=step;

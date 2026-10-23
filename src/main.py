@@ -48,6 +48,7 @@ import predictions_engine
 import totem_ai_engine
 from auth_db import (authenticate_user, get_user_by_uid, init_db, register_user, update_user_password, update_user_profile)
 from trend_signals import get_trend_radar
+from market_signals import get_market_signals
 from utils import format_greeting
 
 app = Flask(__name__, template_folder="templates", static_folder="static")
@@ -934,6 +935,12 @@ def api_radar_ai_insights():
         skills=user_skills
     )
     return jsonify({"ok": True, "insights": insights})
+
+@app.route("/api/market/signals", methods=["GET"])
+def api_market_signals():
+    """Public source evidence only; no CVs, identities or signup gate."""
+    return jsonify(get_market_signals())
+
 
 @app.route("/api/trends", methods=["GET"])
 @api_role("job_seeker")

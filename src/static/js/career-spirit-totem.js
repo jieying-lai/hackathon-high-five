@@ -2947,8 +2947,6 @@
     window.careerEarth = window.CareerEarth?.mount(document.getElementById('globeCanvas'));
   }
 
-})();
-
   // =========================================================================
   // Candidate Profile Totem Card & In-Portal Retake Quiz (Zero Redirect/Logout)
   // =========================================================================
@@ -2963,21 +2961,18 @@
     try {
       const res = await fetch("/api/totem/user");
       const data = await res.json();
-      if (data && data.ok && data.totem) {
-        totem = data.totem;
-        localStorage.setItem("careerlens_totem_data", JSON.stringify(totem));
+      if (!res.ok || !data.ok) throw new Error("Your work style could not load.");
+      if (data.totem && TOTEMS[data.totem.key]) {
+        totem = TOTEMS[data.totem.key];
       }
-    } catch (e) {}
-
-    if (!totem) {
-      const local = localStorage.getItem("careerlens_totem_data");
-      if (local) {
-        try { totem = JSON.parse(local); } catch (e) {}
-      }
+    } catch (e) {
+      cardBody.innerHTML = '<p role="alert">Your saved work style could not load.</p><button type="button" class="btn btn-soft mt-3" onclick="initCandidateTotemProfile()">Try again</button>';
+      return;
     }
 
     if (!totem) {
-      totem = TOTEMS.hawk; // default starter
+      cardBody.innerHTML = '<div class="profile-style-empty"><h4 class="text-lg font-bold">What helps you do your best work?</h4><p class="text-sm text-slate-500 mt-2">Answer ten short questions to explore your preferences. This is a reflection tool, not a psychological assessment.</p><button type="button" class="btn btn-primary mt-4" onclick="openProfileTotemQuizModal()">Discover my work style</button></div>';
+      return;
     }
 
     renderProfileTotemCard(totem);
@@ -3005,8 +3000,8 @@
         <div class="md:col-span-8 space-y-4">
           <div class="space-y-2">
             <div class="flex items-center justify-between text-xs font-black text-slate-800">
-              <span class="flex items-center gap-1.5"><span>📊</span><span>Work-Style Vector Coordinates</span></span>
-              <span class="text-[11px] text-teal-700 font-bold bg-teal-50 px-2 py-0.5 rounded-md border border-teal-200">O*NET 30.3 Calibrated</span>
+              <span>Archetype preferences</span>
+              <span class="text-[11px] text-teal-700">Reflection, not an assessment</span>
             </div>
             
             <div class="grid sm:grid-cols-2 gap-2 text-xs">
@@ -3015,7 +3010,7 @@
                   <span>Deep Focus</span><span>Social Synergy</span>
                 </div>
                 <div class="h-2 rounded-full bg-slate-200 overflow-hidden">
-                  <div class="h-full bg-gradient-to-r from-indigo-500 to-indigo-600 rounded-full" style="width: ${(t.mbti && t.mbti.focus_energy) ? t.mbti.focus_energy.left_pct : 68}%"></div>
+                  <div class="h-full bg-gradient-to-r from-indigo-500 to-indigo-600 rounded-full" style="width: ${t.mbtiPoles.energy.leftPct}%"></div>
                 </div>
               </div>
 
@@ -3024,7 +3019,7 @@
                   <span>Cold Logic</span><span>Human Empathy</span>
                 </div>
                 <div class="h-2 rounded-full bg-slate-200 overflow-hidden">
-                  <div class="h-full bg-gradient-to-r from-teal-500 to-teal-600 rounded-full" style="width: ${(t.mbti && t.mbti.mind_logic) ? t.mbti.mind_logic.left_pct : 75}%"></div>
+                  <div class="h-full bg-gradient-to-r from-teal-500 to-teal-600 rounded-full" style="width: ${t.mbtiPoles.mind.leftPct}%"></div>
                 </div>
               </div>
 
@@ -3033,7 +3028,7 @@
                   <span>High Velocity</span><span>Methodical</span>
                 </div>
                 <div class="h-2 rounded-full bg-slate-200 overflow-hidden">
-                  <div class="h-full bg-gradient-to-r from-purple-500 to-purple-600 rounded-full" style="width: ${(t.mbti && t.mbti.execution_tempo) ? t.mbti.execution_tempo.left_pct : 82}%"></div>
+                  <div class="h-full bg-gradient-to-r from-purple-500 to-purple-600 rounded-full" style="width: ${t.mbtiPoles.tempo.leftPct}%"></div>
                 </div>
               </div>
 
@@ -3042,7 +3037,7 @@
                   <span>Frontier Autonomy</span><span>Collaborative</span>
                 </div>
                 <div class="h-2 rounded-full bg-slate-200 overflow-hidden">
-                  <div class="h-full bg-gradient-to-r from-sky-500 to-sky-600 rounded-full" style="width: ${(t.mbti && t.mbti.mission_drive) ? t.mbti.mission_drive.left_pct : 70}%"></div>
+                  <div class="h-full bg-gradient-to-r from-sky-500 to-sky-600 rounded-full" style="width: ${t.mbtiPoles.drive.leftPct}%"></div>
                 </div>
               </div>
             </div>
@@ -3050,13 +3045,9 @@
 
           <!-- Bottom: Matched Elevated Roles Quick Badges -->
           <div class="pt-3 border-t border-slate-200 flex flex-wrap items-center justify-between gap-2">
-            <div class="flex flex-wrap items-center gap-1.5 text-xs">
-              <span class="text-slate-500 font-bold text-[11px]">Primary Resonance:</span>
-              <span class="chip chip-teal !text-[11px] font-bold">Tech Project Manager</span>
-              <span class="chip chip-indigo !text-[11px] font-bold">Systems Architect</span>
-            </div>
-            <button type="button" onclick="if(typeof showTab==='function') showTab('jobs');" class="text-xs text-indigo-700 hover:text-indigo-900 font-extrabold flex items-center gap-1">
-              Find Matching Vacancies →
+            <p class="text-xs text-slate-500">Your preferences can evolve. Explore roles using your skills and experience too.</p>
+            <button type="button" onclick="if(typeof showTab==='function') showTab('match');" class="text-xs text-indigo-700 hover:text-indigo-900 font-extrabold flex items-center gap-1">
+              Explore career options →
             </button>
           </div>
         </div>
@@ -3176,8 +3167,8 @@
             🔮
           </div>
         </div>
-        <h4 class="text-lg font-black text-slate-900">Updating Your Career DNA Profile...</h4>
-        <p class="text-xs text-slate-500">Recalibrating O*NET 30.3 occupational fit scores</p>
+        <h4 class="text-lg font-black text-slate-900">Saving your work-style reflection…</h4>
+        <p class="text-xs text-slate-500">Keep exploring as your preferences change.</p>
       </div>
     `;
 
@@ -3200,21 +3191,25 @@
       else chosenTotem = "hawk";
 
       const t = TOTEMS[chosenTotem] || TOTEMS.hawk;
-      localStorage.setItem("careerlens_totem_data", JSON.stringify(t));
-
       try {
-        await fetch("/api/totem/user", {
+        const response = await fetch("/api/totem/user", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ totem: t })
         });
-      } catch (e) {}
+        const saved = await response.json();
+        if (!response.ok || !saved.ok) throw new Error("Your work style could not be saved.");
+        try { localStorage.setItem("careerlens_totem_data", JSON.stringify(t)); } catch (_) {}
+      } catch (e) {
+        body.innerHTML = '<div role="alert" class="p-6"><h4 class="text-lg font-bold">Your work style was not saved.</h4><p class="text-sm mt-2">Your answers are still here. Please try again.</p><button type="button" class="btn btn-primary mt-4" onclick="finishProfileQuiz()">Retry save</button></div>';
+        return;
+      }
 
       renderProfileTotemCard(t);
       closeProfileTotemQuizModal();
 
       if (typeof toast === "function") {
-        toast(`✨ Career Totem updated to ${t.badge}!`);
+        toast(`Your work style was saved: ${t.badge}.`);
       }
     }, 1000);
   };
@@ -3225,3 +3220,4 @@
       window.initCandidateTotemProfile();
     }
   });
+})();

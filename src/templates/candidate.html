@@ -285,6 +285,9 @@
   <link rel="stylesheet" href="/static/css/guided-experience.css?v=20261024-2" />
 <script defer src="/static/js/aurora-experience.js?v=20261023-5"></script>
 <link rel="stylesheet" href="/static/css/company-insights.css?v=20261023-1" />
+<link rel="stylesheet" href="/static/css/talent-workspace.css?v=20261024-2" />
+<link rel="stylesheet" href="/static/css/future-radar.css?v=20261024-1" />
+<script defer src="/static/js/future-radar.js?v=20261024-2"></script>
 <script src="/static/js/company-insights.js?v=20261023-1"></script>
 </head>
 <body class="responsive-ui responsive-talent min-h-screen">
@@ -296,9 +299,6 @@
       <a href="/" class="portal-brand"><img src="/static/brand/careerlens_logo_icon.svg" alt="" /><span>CareerLens AI<small>Talent Portal</small></span></a>
       <nav id="sideNav" class="desktop-navigation" aria-label="Section navigation"></nav>
       <div class="portal-account flex items-center gap-2.5">
-        <button type="button" onclick="openGlobalAtlas()" class="h-9 px-3.5 rounded-2xl bg-gradient-to-r from-teal-500/10 to-indigo-500/10 hover:from-teal-500/20 hover:to-indigo-500/20 border border-teal-200/90 text-teal-900 text-xs font-black flex items-center gap-1.5 transition cursor-pointer shadow-xs" title="Explore 3D Global Work-Life Atlas">
-          <span class="text-base">🌍</span><span class="hidden sm:inline">Global Atlas</span>
-        </button>
         <button type="button" class="notification-button" data-notification-button onclick="showTab('notifications')" aria-label="Interview notifications" title="Interview notifications"><span aria-hidden="true">🔔</span><span class="notification-label">Interview notifications</span></button>
         <div data-language-slot="desktop"></div>
 
@@ -431,7 +431,10 @@
               <h2 id="dashHello" data-no-translate class="text-2xl font-extrabold">Your career dashboard</h2>
               <p id="dashSub"></p>
             </div>
-            <div data-outline-label="Your career journey" id="journey" class="journey-grid relative mt-6"></div>
+            <details class="dashboard-checklist">
+              <summary>Career checklist <span id="dashboardChecklistProgress"></span></summary>
+              <div data-outline-label="Your career journey" id="journey" class="journey-grid relative mt-6"></div>
+            </details>
           </div>
           <nav class="career-quick-actions" aria-label="Career shortcuts">
 <button onclick="showTab('profile')" class="group relative overflow-hidden bg-white/80 backdrop-blur-md border border-indigo-100 hover:border-indigo-300 p-5 rounded-2xl shadow-xs hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
@@ -468,23 +471,6 @@
 </button>
 </nav>
 
-          <!-- Featured: 3D Global Work-Life Atlas Exploration Card -->
-          <div class="glass p-5 sm:p-6 rounded-3xl border border-teal-200/80 bg-gradient-to-r from-slate-900 via-indigo-950 to-slate-900 text-white shadow-lg flex flex-wrap items-center justify-between gap-4">
-            <div class="space-y-1.5 max-w-xl">
-              <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-teal-500/20 text-teal-300 text-xs font-black">
-                <span>🌍</span><span>Global Work-Life Atlas</span>
-                <span class="text-[10px] text-teal-200 bg-teal-400/20 px-2 py-0.5 rounded-full">Interactive 3D</span>
-              </div>
-              <h3 class="text-lg sm:text-xl font-black text-white">How Do Professionals in Your Field Live Worldwide?</h3>
-              <p class="text-xs text-slate-300 leading-relaxed">
-                Spin the interactive 3D globe to discover authentic career cultures, day-in-the-life plogs, and positive daily routines across 16 world frontier hubs.
-              </p>
-            </div>
-            <button type="button" onclick="openGlobalAtlas()" class="totem-btn-primary !py-3 !px-6 text-xs font-black tracking-wide shrink-0 shadow-md">
-              <span>🌍</span><span>Explore 3D Atlas →</span>
-            </button>
-          </div>
-
           <div data-outline-label="Career snapshot" id="kpis" class="grid grid-cols-2 lg:grid-cols-4 gap-4"></div>
           <div class="grid lg:grid-cols-5 gap-6">
             <div data-outline-label="Top role matches" id="dashTop" class="lg:col-span-3 glass rounded-3xl p-6"></div>
@@ -507,12 +493,13 @@
                   <div class="flex flex-wrap items-center gap-2">
                     <h2 id="accCardName" class="text-xl font-extrabold text-slate-900" data-no-translate>User</h2>
                     <span id="accCardBadge" class="chip chip-indigo">Talent Account</span>
-                    <span class="chip chip-emerald">Account registered</span>
                   </div>
                   <div class="profile-account-meta text-xs text-slate-500 mt-1">
-                    <span>ID: <b id="accCardUid" class="font-mono text-slate-700" data-no-translate></b></span>
                     <span>Email: <b id="accCardEmail" class="text-slate-700" data-no-translate></b></span>
-                    <span>Joined: <span id="accCardJoined" class="text-slate-600" data-no-translate></span></span>
+                    <details class="profile-account-reference"><summary>Account details</summary>
+                      <span>ID: <b id="accCardUid" class="font-mono text-slate-700" data-no-translate></b></span>
+                      <span>Joined: <span id="accCardJoined" class="text-slate-600" data-no-translate></span></span>
+                    </details>
                   </div>
                 </div>
               </div>
@@ -576,11 +563,10 @@
                 </div>
                 <div>
                   <div class="flex flex-wrap items-center gap-2">
-                    <h3 class="text-base sm:text-lg font-black text-slate-900">Career Spirit Totem &amp; MBTI Archetype</h3>
-                    <span class="chip chip-indigo">Verified DNA</span>
-                    <span class="chip chip-emerald text-[10px]">Read-Only Identity</span>
+                    <h3 class="text-base sm:text-lg font-black text-slate-900">Your work style</h3>
+                    <span class="chip chip-indigo">Career style</span>
                   </div>
-                  <p class="text-xs text-slate-500 mt-0.5">Psychological work-style vector &amp; O*NET 30.3 occupational compatibility</p>
+                  <p class="text-xs text-slate-500 mt-0.5">Your work-style profile and related occupations.</p>
                 </div>
               </div>
               <div class="flex items-center gap-2">
@@ -600,7 +586,7 @@
 
           <div class="glass rounded-3xl p-6 sm:p-7 space-y-4" data-outline-label="Achievements & skills">
             <h2 class="text-lg font-extrabold">Achievements &amp; professional skills</h2>
-            <p class="text-sm text-slate-500">From your saved CV profile. These details are self-reported, not independently verified.</p>
+            <p class="text-sm text-slate-500">CV details are self-reported and not independently verified.</p>
             <div id="profileHighlights" class="grid md:grid-cols-2 gap-5"></div>
             <div class="flex flex-wrap gap-3 border-t border-slate-200 pt-4">
               <button class="btn btn-soft" onclick="showTab('cv-review')">Edit CV details →</button>
@@ -620,17 +606,17 @@
                 <div class="w-24 h-24 sm:w-28 sm:h-28 rounded-3xl bg-white/10 backdrop-blur-md border-2 border-teal-400/50 p-2.5 grid place-items-center shadow-2xl hover:scale-105 transition-transform duration-300">
                   <img id="companionAvatarImg" src="/static/illustrations/totem_characters/retriever.svg" alt="Career Companion" class="w-full h-full object-contain filter drop-shadow" />
                 </div>
-                <span id="companionRolePill" class="absolute -bottom-2 -right-2 text-[10px] font-mono font-black bg-teal-400 text-slate-950 px-2 py-0.5 rounded-full shadow">✦ Companion</span>
+                <span id="companionRolePill" class="absolute -bottom-2 -right-2 text-[10px] font-mono font-black bg-teal-400 text-slate-950 px-2 py-0.5 rounded-full shadow">Companion</span>
               </div>
               <div class="space-y-2.5 flex-1 text-center sm:text-left min-w-0">
                 <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-teal-500/20 text-teal-300 text-xs font-mono font-bold">
-                  <span>💬</span><span id="companionBadgeName">The Solar Golden Retriever</span>
+                  <span>💬</span><span id="companionBadgeName">CV profile</span>
                 </div>
                 <h3 id="companionGreetingTitle" class="text-lg sm:text-2xl font-black text-white tracking-tight">
-                  "Hand me your CV or let's chat to build your story!"
+                  Build your CV profile
                 </h3>
                 <p id="companionGreetingBody" class="text-xs sm:text-sm text-slate-300 leading-relaxed max-w-2xl">
-                  Whether you have a polished PDF resume ready or prefer sharing your superpowers through a friendly 2-minute chat, I will synthesize your strengths into a verified, future-ready profile.
+                  Upload a PDF or answer a few prompts, then review and edit your details.
                 </p>
                 <!-- Mode Switcher Tabs -->
                 <div class="flex flex-wrap items-center justify-center sm:justify-start gap-2.5 pt-2">
@@ -650,11 +636,10 @@
             <div class="flex flex-wrap items-center justify-between gap-3 border-b border-slate-200/80 pb-3">
               <div>
                 <h4 class="text-base font-black text-slate-900 flex items-center gap-2">
-                  <span>🪄</span><span>Interactive Profile Synthesizer</span>
+                  <span>🪄</span><span>Build from a few details</span>
                 </h4>
-                <p class="text-xs text-slate-500 mt-0.5">Answer 4 quick prompts—your companion will format, structure, and assemble your CV.</p>
+                <p class="text-xs text-slate-500 mt-0.5">Add your role, skills and experience to create an editable CV draft.</p>
               </div>
-              <span class="chip chip-teal !text-xs font-bold">Instant Companion Synthesis</span>
             </div>
 
             <!-- Question 1: Role / Target Position -->
@@ -677,7 +662,7 @@
             <!-- Question 2: Skills & Superpowers -->
             <div class="space-y-2">
               <label class="text-xs font-black text-slate-800 flex items-center justify-between">
-                <span>2. Core Skills &amp; Superpowers (Comma separated):</span>
+                <span>2. Core Skills (comma separated):</span>
                 <span class="text-[10px] text-teal-600 font-bold">Tap to add ↓</span>
               </label>
               <input type="text" id="qaSkills" class="input w-full text-slate-800" placeholder="e.g. Python, React, TypeScript, SQL, Figma, Docker" />
@@ -781,7 +766,7 @@
               <h2 class="text-xl font-black text-slate-900 tracking-tight flex items-center gap-2">
                 <span>📑</span><span>Review your professional story</span>
               </h2>
-              <p class="text-xs text-slate-500 mt-0.5">Work through one section at a time. Check the original PDF, refine your details, then save your reviewed CV.</p>
+              <p class="text-xs text-slate-500 mt-0.5">Review your details and save changes before sharing your CV.</p>
             </div>
             <div class="flex items-center gap-2">
               <a id="viewMyPdfBtn" href="/api/cv/me/pdf" target="_blank" rel="noopener" class="btn btn-soft !py-1.5 !px-3 !text-xs font-bold hidden flex items-center gap-1.5 shadow-xs">
@@ -843,9 +828,7 @@
                 </div>
                 <div id="cvAIAvailability" class="chip chip-indigo !text-[11px] font-bold">⚡ AI Ready</div>
               </div>
-              <p class="text-xs text-slate-600 leading-relaxed">
-                Use our domain-trained AI engine to intelligently polish your extracted CV draft into recruiter-ready format before saving.
-              </p>
+              <p class="text-xs text-slate-600 leading-relaxed">Optional editing assistance. Review every change before saving.</p>
               <div class="pt-2 flex flex-wrap items-center justify-between gap-3 border-t border-indigo-100/80">
                 <label class="flex items-center gap-2 text-xs text-slate-700 cursor-pointer font-medium select-none">
                   <input id="cvAIConsent" type="checkbox" checked class="rounded text-indigo-600 focus:ring-indigo-500" />
@@ -888,7 +871,7 @@
               </div>
               <div class="flex flex-wrap items-center gap-2">
                 <button id="experienceBuilderDraft" type="button" class="btn btn-primary !py-2 !px-4 !text-xs font-bold">Create an editable CV bullet</button>
-                <span class="text-[11px] text-slate-500">This draft only uses the details you enter. Review it before adding it to your profile.</span>
+                <span class="text-[11px] text-slate-500">Review the draft before adding it to your profile.</span>
               </div>
               <div id="experienceBuilderResult" class="hidden space-y-2" aria-live="polite">
                 <label for="experienceBuilderBullet" class="text-xs font-extrabold text-slate-700">Review and edit your CV bullet</label>
@@ -921,7 +904,7 @@
                   <span class="text-xl">🪪</span>
                   <div>
                     <h4 class="text-sm font-extrabold text-slate-900">Identity &amp; Contact Details</h4>
-                    <p class="text-xs text-slate-500">Primary contact information used by prospective employers for verification and outreach.</p>
+                    <p class="text-xs text-slate-500">Contact details for your profile.</p>
                   </div>
                 </div>
                 <span class="pref-card-badge">👤 Contact Info</span>
@@ -930,19 +913,16 @@
                 <div class="pref-field-wrapper">
                   <label for="pName" class="label"><span>👤</span><span>Full Legal Name</span><span class="text-rose-500">*</span></label>
                   <input id="pName" maxlength="200" required class="input" placeholder="e.g. Aisha binti Rahman" oninput="validatePersonalField('pName')" />
-                  <p class="pref-field-hint">As displayed on official identification and credentials.</p>
                   <div id="err_pName" class="text-[11px] text-rose-500 font-semibold hidden mt-1">Please enter your full name.</div>
                 </div>
                 <div class="pref-field-wrapper">
                   <label for="pRole" class="label"><span>💼</span><span>Target / Current Occupation</span><span class="text-rose-500">*</span></label>
                   <input id="pRole" maxlength="300" required class="input" placeholder="e.g. Junior Financial Auditor" oninput="validatePersonalField('pRole')" />
-                  <p class="pref-field-hint">Primary profession benchmarked for AI scoring and job radar.</p>
                   <div id="err_pRole" class="text-[11px] text-rose-500 font-semibold hidden mt-1">Please enter your occupation.</div>
                 </div>
                 <div class="pref-field-wrapper">
                   <label for="pEmail" class="label"><span>✉️</span><span>Primary Email Address</span><span class="text-rose-500">*</span></label>
                   <input id="pEmail" type="email" maxlength="254" required class="input" autocomplete="off" placeholder="name@example.com" oninput="validatePersonalField('pEmail')" />
-                  <p class="pref-field-hint">For system interview notifications and application tracking.</p>
                   <div id="err_pEmail" class="text-[11px] text-rose-500 font-semibold hidden mt-1">Please enter a valid email address.</div>
                 </div>
                 <div class="pref-field-wrapper">
@@ -957,7 +937,6 @@
                 <div class="pref-field-wrapper sm:col-span-2">
                   <label for="pLocation" class="label"><span>📍</span><span>Current Location / State of Residence</span><span class="text-rose-500">*</span></label>
                   <input id="pLocation" maxlength="300" required class="input" placeholder="e.g. W.P. Kuala Lumpur, Bangsar" oninput="validatePersonalField('pLocation')" />
-                  <p class="pref-field-hint">Used for geographic commute calculations and nearby employer matching.</p>
                   <div id="err_pLocation" class="text-[11px] text-rose-500 font-semibold hidden mt-1">Please enter your location or state.</div>
                 </div>
               </div>
@@ -970,7 +949,7 @@
                   <span class="text-xl">🎯</span>
                   <div>
                     <h4 class="text-sm font-extrabold text-slate-900">Career Preferences &amp; Workplace Style</h4>
-                    <p class="text-xs text-slate-500">Define your target industry domain, workplace flexibility, and qualification credentials.</p>
+                    <p class="text-xs text-slate-500">Set your target industry and work preferences.</p>
                   </div>
                 </div>
                 <span class="pref-card-badge !bg-emerald-50 !text-emerald-700">💼 Preferences</span>
@@ -992,7 +971,6 @@
                     <option value="General">🎯 General Management &amp; Operations</option>
                     <option value="Others">✨ Others / Specialized Disciplines</option>
                   </select>
-                  <p class="pref-field-hint">Anchors your industry benchmark cohort and trend demand.</p>
                   <div id="err_pIndustry" class="text-[11px] text-rose-500 font-semibold hidden mt-1">Please select an industry sector.</div>
                 </div>
                 <div class="pref-field-wrapper">
@@ -1003,7 +981,6 @@
                     <option value="Remote">🏠 100% Remote-First / Work From Anywhere</option>
                     <option value="On-site">🏢 On-site / Office-Based Workplace</option>
                   </select>
-                  <p class="pref-field-hint">Filters opportunities matching your daily lifestyle.</p>
                   <div id="err_pMode" class="text-[11px] text-rose-500 font-semibold hidden mt-1">Please select a preferred work mode.</div>
                 </div>
                 <div class="pref-field-wrapper">
@@ -1017,13 +994,11 @@
                     <option value="Doctor">🔬 Doctorate / PhD / Postdoctoral</option>
                     <option value="Professional Qualification">⭐ Professional Cert (ACCA / CFA / CPA / PMP)</option>
                   </select>
-                  <p class="pref-field-hint">Used to evaluate qualification parity for verified postings.</p>
                   <div id="err_pEdu" class="text-[11px] text-rose-500 font-semibold hidden mt-1">Please select your qualification level.</div>
                 </div>
                 <div class="pref-field-wrapper">
                   <label for="pYears" class="label"><span>⏳</span><span>Total Years of Experience</span><span class="text-rose-500">*</span></label>
                   <input id="pYears" type="number" min="0" max="60" step="0.5" required placeholder="0" class="input" oninput="validatePersonalField('pYears')" />
-                  <p class="pref-field-hint">Enter 0 for fresh graduates or entry-level starters.</p>
                   <div id="err_pYears" class="text-[11px] text-rose-500 font-semibold hidden mt-1">Please enter years of experience (0 or more).</div>
                 </div>
               </div>
@@ -1035,7 +1010,6 @@
                 <h3 class="text-base font-extrabold text-slate-900 flex items-center gap-2">
                   <span>💼</span><span>Experience &amp; Qualifications</span>
                 </h3>
-                <p class="text-xs text-slate-500">Structured history extracted from your CV. You can edit or add new entries directly.</p>
               </div>
               <div class="profile-history grid sm:grid-cols-2 gap-4">
                 <div class="bg-white/80 rounded-2xl p-4 border border-slate-200/80 shadow-xs space-y-2">
@@ -1082,7 +1056,6 @@
                   <span class="text-base">⚡</span>
                   <label for="skillInput" class="text-sm font-extrabold text-slate-900">Extracted Skills &amp; Competencies</label>
                 </div>
-                <span class="text-xs text-slate-400">Click × on any chip to remove</span>
               </div>
               <div id="skillChips" class="flex flex-wrap gap-2 min-h-[36px] p-2 bg-slate-50/70 rounded-2xl border border-slate-200/70"></div>
               <div class="relative">
@@ -1128,7 +1101,7 @@
 
           <nav class="growth-navigation" data-profile-navigation aria-label="My Profile"></nav>
           <div class="flex flex-wrap items-center justify-between gap-3">
-            <p class="text-sm text-slate-600">Track your applications and control who can view your CV.</p>
+            <p class="text-sm text-slate-600">Applications and CV access.</p>
             <button class="btn btn-primary" onclick="showTab('jobs')">Find jobs →</button>
           </div>
           <div class="profile-privacy tint tint-teal rounded-3xl p-5 flex flex-wrap items-center justify-between gap-4">
@@ -1150,11 +1123,11 @@
             </label>
           </div>
 
-          <div data-outline-label="Sharing & access" class="profile-section-heading"><h2>Sharing &amp; access</h2><p>Choose who can view your CV and review their access below.</p></div>
+          <div data-outline-label="Sharing & access" class="profile-section-heading"><h2>Sharing &amp; access</h2></div>
           <div class="profile-sharing-grid">
 <div class="glass rounded-3xl p-6 space-y-3">
                 <div class="text-sm font-extrabold">My applications & employer access</div>
-                <p class="text-xs text-slate-500">Each application grants access only to that vacancy's company account. Withdrawal blocks future access here; it cannot retract copies already downloaded.</p>
+                <p class="text-xs text-slate-500">Access is limited to the company on each application. Withdrawal blocks future access, but cannot retract downloaded copies.</p>
                 <div id="activeSharesList" class="space-y-3"></div>
                 <div class="flex flex-wrap gap-2 border-t border-slate-200 pt-3">
                   <button id="exportCvBtn" onclick="exportMyCv()" class="btn btn-soft !text-xs" disabled>Export profile JSON</button>
@@ -1163,13 +1136,13 @@
               </div>
 <div class="glass rounded-3xl p-6 space-y-3">
                 <div class="text-sm font-extrabold">Share with someone you choose</div>
-                <p class="text-xs text-slate-600">The recipient needs a CareerLens account. Only that signed-in account can open the link. No email is sent.</p>
+                <p class="text-xs text-slate-600">Only the recipient’s signed-in CareerLens account can open the link. No email is sent.</p>
                 <label class="label" for="nRecipient">Recipient account email</label><input id="nRecipient" type="email" required class="input" placeholder="mentor@example.com" />
                 <label class="flex gap-2 text-xs"><input id="nSummary" type="checkbox" /> Share reviewed summary, including contact details</label>
                 <label class="flex gap-2 text-xs"><input id="nPdf" type="checkbox" /> Share complete original PDF</label>
                 <label class="label" for="nExpiry">Access expires after</label><select id="nExpiry" class="input"><option value="1">1 day</option><option value="7" selected>7 days</option><option value="30">30 days</option></select>
                 <button id="namedShareBtn" onclick="createNamedShare()" class="btn btn-primary !text-xs">Create recipient access</button>
-                <p class="text-[11px] text-slate-500">Editing or replacing the CV ends existing grants. Revoking access cannot retract copies already saved by a recipient.</p>
+                <p class="text-[11px] text-slate-500">Editing or replacing your CV ends active grants. Revoking access cannot retract saved copies.</p>
                 <div id="namedSharesList" class="space-y-2"></div><div id="receivedSharesList" class="space-y-2"></div>
                 <details><summary class="text-xs font-bold cursor-pointer">Recent recipient access</summary><div id="namedShareEvents" class="mt-2 space-y-1"></div></details>
               </div>
@@ -1179,7 +1152,6 @@
                 <div class="flex items-center justify-between">
                   <div>
                     <div class="text-sm font-extrabold">Employer CV access log</div>
-                    <div class="text-[11px] text-slate-500">Recorded employer accesses through this app</div>
                   </div>
                   <span id="accessCountBadge" class="chip chip-slate">0 views</span>
                 </div>
@@ -1396,7 +1368,6 @@
                   <span class="chip chip-teal">3 Skill Questions</span>
                 </div>
                 <h3 class="text-base font-extrabold text-slate-900 mt-1">3 AI Verification Questions</h3>
-                <p class="text-xs text-slate-500">Targeted scenarios generated based on your uploaded CV and target role.</p>
               </div>
               <button id="btnGenerate3Q" type="button" onclick="generate3AiVerificationQuestions()" class="btn btn-primary !py-2 !px-4 !text-xs">
                 ⚡ Generate My 3 Questions
@@ -1438,7 +1409,6 @@
               <div id="roleRecommendations"></div>
             </div>
             <div class="flex flex-wrap items-center justify-between gap-3 pt-4 border-t border-slate-200/70">
-              <span class="text-xs text-slate-500 font-medium">✓ Answers are instantly benchmarked for role matching</span>
               <button type="submit" class="btn btn-primary !py-2.5 !px-6 !text-xs font-bold">
                 💾 Save &amp; Confirm Basic Information →
               </button>
@@ -1454,6 +1424,9 @@
         <section id="tab-radar" class="tab hidden space-y-6">
 
           <nav class="growth-navigation" data-careers-navigation aria-label="Explore Careers"></nav>
+          <div id="futureRadarApp" data-outline-label="Market signals and future scenarios"></div>
+          <!-- Retained only for the role-matching scenario engine and its compatibility tests. -->
+          <div hidden inert aria-hidden="true" id="legacyRadar">
         <!-- 1. Top Hero Header: Clean & Punchy -->
         <div class="glass rounded-3xl p-6 flex flex-wrap items-center justify-between gap-4">
           <div>
@@ -1599,6 +1572,7 @@
         <div id="trendBadge" class="hidden"></div>
         <div id="trendScenarioLabel" class="hidden"></div>
         <div id="analysisStatus" class="hidden"></div>
+          </div>
         </section>
 
         <section id="tab-match" class="tab hidden space-y-5">
@@ -2089,7 +2063,7 @@
   <script src="/static/js/learning-impact.js?v=20261023-top-celebrations"></script>
   <script src="/static/js/discovery-learning.js?v=20261022-recommendation-route-fix"></script>
   <script src="/static/js/sdg-passport.js?v=20261022-feature-language-4"></script>
-  <script src="/static/js/pomodoro.js?v=20261021-buddy-tooltip"></script>
+  <script src="/static/js/pomodoro.js?v=20261024-inline-phone"></script>
   <script src="/static/js/common.js?v=20261021-menu-outline-v2"></script>
 
   <script src="/static/js/vault-shares.js?v=20261023-1"></script>
@@ -2559,6 +2533,7 @@
         renderGrowthNavigation();
       } catch (_) { /* Navigation helpers */ }
       if (id === 'plan') renderPlan();
+      if (id === 'radar') renderRadar();
       if (id === 'discover') renderDiscoveryLearning();
       if (id === 'saved') renderSavedCourses();
       if (id === 'completed') renderCompletedLearning();
@@ -4105,6 +4080,7 @@
         { label: 'Plan', tab: 'plan', done: visited.has('plan') },
         { label: 'Passport', tab: 'passport', done: visited.has('passport') },
       ];
+      document.getElementById('dashboardChecklistProgress').textContent = `${steps.filter(step => step.done).length} of ${steps.length} complete`;
       journey.innerHTML = `
         <div class="journey-diagram-pipeline flex items-center justify-between gap-2 overflow-x-auto pb-1">
           ${steps.map((s, i) => `
@@ -4114,7 +4090,7 @@
                   <span class="inline-flex items-center justify-center h-6 w-6 rounded-lg text-[11px] font-black shrink-0 ${s.done ? 'bg-emerald-500 text-white shadow-xs' : 'bg-indigo-600 text-white shadow-xs'}">${s.done ? '✓' : '0' + (i + 1)}</span>
                   <div class="min-w-0">
                     <div class="text-xs font-black truncate text-slate-800 group-hover:text-indigo-600 transition">${s.label}</div>
-                    <div class="text-[10px] font-mono text-slate-400 uppercase tracking-wider">${s.done ? 'Complete' : 'Step In'}</div>
+                    ${s.done ? '<div class="text-[10px] text-emerald-700">Complete</div>' : ''}
                   </div>
                 </div>
               </button>
@@ -4291,6 +4267,13 @@
 
     /* ---------- radar ---------- */
     function renderRadar(live = false) {
+      if (window.FutureRadar) {
+        if (current === 'radar') window.FutureRadar.mount({
+          identity: user?.unique_uid,
+          onLearn: () => showTab('plan')
+        });
+        return;
+      }
       if (!trend) return;
       window.renderTrendRadar?.(trend);
       loadAiRadarInsights();
@@ -4473,15 +4456,15 @@
     }
     function renderProfileNavigation() {
       const items = [
-        { id: 'profile', ico: '👤', label: 'Profile Details' },
-        { id: 'cv-review', ico: '✏️', label: 'Review CV' },
-        { id: 'quest', ico: '📝', label: 'Questionnaire' },
-        { id: 'applications', ico: '📨', label: 'My Applications' },
+        { id: 'profile', label: 'Profile details' },
+        { id: 'cv-review', label: 'Review CV' },
+        { id: 'quest', label: 'Questionnaire' },
+        { id: 'applications', label: 'Applications' },
       ];
       document.querySelectorAll('[data-profile-navigation]').forEach(nav => {
         nav.innerHTML = items.map(item => `
           <button type="button" onclick="showTab('${item.id}')" ${current === item.id ? 'aria-current="page"' : ''}>
-            <span aria-hidden="true">${item.ico}</span> <span>${esc(item.label)}</span>
+            <span>${esc(item.label)}</span>
           </button>`).join('');
       });
       window.careerLensLocale?.apply();
@@ -4489,16 +4472,16 @@
 
     function renderCareersNavigation() {
       const items = [
-        { id: 'jobs', ico: '📍', label: 'Nearby Jobs & Map' },
-        { id: 'companies', ico: '🏢', label: 'Company Insights' },
-        { id: 'radar', ico: '📡', label: 'Future Skills Radar' },
-        { id: 'match', ico: '🎯', label: 'Future-Role Matches' },
+        { id: 'jobs', label: 'Nearby jobs & map' },
+        { id: 'companies', label: 'Company insights' },
+        { id: 'radar', label: 'Future skills radar' },
+        { id: 'match', label: 'Future-role matches' },
       ];
       document.querySelectorAll('[data-careers-navigation]').forEach(nav => {
         nav.innerHTML = items.map(item => `
           <button type="button" onclick="showTab('${item.id}')" ${current === item.id ? 'aria-current="page"' : ''}>
-            <span aria-hidden="true">${item.ico}</span> <span>${esc(item.label)}</span>
-          </button>`).join('');
+            <span>${esc(item.label)}</span>
+          </button>`).join('') + '<button type="button" onclick="openGlobalAtlas()"><span>Global work-life atlas</span></button>';
       });
       window.careerLensLocale?.apply();
     }
@@ -4506,7 +4489,7 @@
     function renderGrowthNavigation() {
       const items=NAV.filter(item=>['plan','discover','saved','completed','passport'].includes(item.id));
       document.querySelectorAll('[data-growth-navigation]').forEach(nav=>{
-        nav.innerHTML=items.map(item=>`<button type="button" onclick="showTab('${item.id}')" ${current===item.id?'aria-current="page"':''}><span aria-hidden="true">${item.ico}</span> <span>${esc(item.label)}</span></button>`).join('');
+        nav.innerHTML=items.map(item=>`<button type="button" onclick="showTab('${item.id}')" ${current===item.id?'aria-current="page"':''}><span>${esc(item.label)}</span></button>`).join('');
       });
       window.careerLensLocale?.apply();
     }
@@ -5242,7 +5225,7 @@ async function submit3AiVerificationAnswers() {
   </div>
 
   <script src="/static/js/career-earth.js?v=20261023-5"></script>
-<script src="/static/js/career-spirit-totem.js?v=20261024-1"></script>
+  <script src="/static/js/career-spirit-totem.js?v=20261024-2"></script>
 <script src="/static/js/guided-career-flow.js?v=20261024-2"></script>
 <script src="/static/js/experience-builder.js?v=20261023-fresh-grad"></script>
 <div id="applicationFollowupModal" class="fixed inset-0 z-[70] hidden items-center justify-center bg-slate-950/60 p-4" role="dialog" aria-modal="true" aria-labelledby="applicationFollowupTitle">
@@ -5265,40 +5248,40 @@ async function submit3AiVerificationAnswers() {
     // =========================================================================
     const COMPANION_MASCOTS = {
       retriever: {
-        badge: "The Solar Golden Retriever",
+        badge: "CV profile",
         img: "/static/illustrations/totem_characters/retriever.svg",
-        greeting: "Woof! Hand me your CV or let's chat to build your story!",
-        body: "I'm your high-empathy culture companion. Tell me what energizes you, and I'll synthesize your strengths into an inspiring, future-ready profile!"
+        greeting: "Build your CV profile",
+        body: "Upload a PDF or enter a few details, then review your profile before sharing."
       },
       owl: {
-        badge: "The Obsidian Night Owl",
+        badge: "CV profile",
         img: "/static/illustrations/totem_characters/owl.svg",
-        greeting: "Greetings! Let's architect a logic-backed career profile.",
-        body: "I'm your systems architect companion. Let's map out your core technical skills, clean achievements, and structural expertise."
+        greeting: "Build your CV profile",
+        body: "Upload a PDF or enter a few details, then review your profile before sharing."
       },
       leopard: {
-        badge: "The Cyber Snow Leopard",
+        badge: "CV profile",
         img: "/static/illustrations/totem_characters/leopard.svg",
-        greeting: "Hey! Ready to fast-track your high-velocity skills?",
-        body: "I'm your independent explorer companion. Share your sharpest project highlights and tools—we will build a bold profile in 2 minutes."
+        greeting: "Build your CV profile",
+        body: "Upload a PDF or enter a few details, then review your profile before sharing."
       },
       whale: {
-        badge: "The Deep Sea Whale",
+        badge: "CV profile",
         img: "/static/illustrations/totem_characters/whale.svg",
-        greeting: "Hello! Let's showcase your true purpose & lasting impact.",
-        body: "I'm your purpose seeker companion. Let's bring out the real-world difference you make and your long-term career mission."
+        greeting: "Build your CV profile",
+        body: "Upload a PDF or enter a few details, then review your profile before sharing."
       },
       fox: {
-        badge: "The Aurora Arctic Fox",
+        badge: "CV profile",
         img: "/static/illustrations/totem_characters/fox.svg",
-        greeting: "Hi there! Let's craft an inventive, creative showcase!",
-        body: "I'm your creative mind companion. We'll turn your versatile skills and rapid experiments into a standout portfolio summary."
+        greeting: "Build your CV profile",
+        body: "Upload a PDF or enter a few details, then review your profile before sharing."
       },
       hawk: {
-        badge: "The Stratosphere Hawk",
+        badge: "CV profile",
         img: "/static/illustrations/totem_characters/hawk.svg",
-        greeting: "Welcome! Let's set a commanding trajectory for your career.",
-        body: "I'm your strategic visionary companion. Hand me your credentials or outline your target horizon to construct your executive profile."
+        greeting: "Build your CV profile",
+        body: "Upload a PDF or enter a few details, then review your profile before sharing."
       }
     };
 
@@ -5318,7 +5301,7 @@ async function submit3AiVerificationAnswers() {
 
       if (img) img.src = mascot.img;
       if (badge) badge.textContent = mascot.badge;
-      if (title) title.textContent = `"${mascot.greeting}"`;
+      if (title) title.textContent = mascot.greeting;
       if (body) body.textContent = mascot.body;
     }
 
@@ -5389,7 +5372,7 @@ async function submit3AiVerificationAnswers() {
       }
 
       if (btn) btn.disabled = true;
-      if (statusEl) statusEl.textContent = "Companion is assembling and certifying your profile…";
+      if (statusEl) statusEl.textContent = "Creating your CV profile…";
 
       try {
         const payload = {
@@ -5409,7 +5392,7 @@ async function submit3AiVerificationAnswers() {
         cvRecord = res.data.cv;
         profileDirty = false;
         renderCvVault();
-        toast("🎉 Your companion successfully synthesized your structured profile!");
+        toast("Your CV profile is ready to review.");
         await showTab("cv-review");
         await refreshVaultDependents();
       } catch (err) {
