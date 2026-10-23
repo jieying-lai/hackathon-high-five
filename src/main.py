@@ -45,6 +45,7 @@ from ai_matcher import load_json, match_user_to_roles
 import auth_db
 import cv_dataset_manager
 import predictions_engine
+import totem_ai_engine
 from auth_db import (authenticate_user, get_user_by_uid, init_db, register_user, update_user_password, update_user_profile)
 from trend_signals import get_trend_radar
 from utils import format_greeting
@@ -167,6 +168,58 @@ def admin_portal():
 
 
 # ------------------------------------------------------------------ auth
+
+@app.route("/api/totem/match", methods=["GET"])
+def api_totem_match():
+    totem = request.args.get("totem", "hawk")
+    domain = request.args.get("domain", "tech")
+    matches = totem_ai_engine.get_top_onet_matches(totem, domain, limit=4)
+    return jsonify({"ok": True, "totem": totem, "domain": domain, "matches": matches})
+
+
+@app.route("/api/totem/user", methods=["GET", "POST"])
+def api_totem_user():
+    user = session.get("user")
+    if not user:
+        return jsonify({"ok": False, "message": "Login required"}), 401
+    uid = user.get("unique_uid")
+    if request.method == "POST":
+        data = request.get_json(silent=True) or {}
+        totem_data = data.get("totem")
+        if totem_data:
+            session["user_totem"] = totem_data
+            try:
+                db = auth_db.get_db_connection()
+                cur = db.cursor()
+                cur.execute("SELECT role_details_json FROM users WHERE unique_uid=?", (uid,))
+                row = cur.fetchone()
+                details = json.loads(row[0] or "{}") if row and row[0] else {}
+                details["totem"] = totem_data
+                cur.execute("UPDATE users SET role_details_json=? WHERE unique_uid=?", (json.dumps(details), uid))
+                db.commit()
+                db.close()
+            except Exception:
+                pass
+            return jsonify({"ok": True, "totem": totem_data})
+        return jsonify({"ok": False, "message": "No totem data"}), 400
+
+    totem = session.get("user_totem")
+    if not totem:
+        try:
+            db = auth_db.get_db_connection()
+            cur = db.cursor()
+            cur.execute("SELECT role_details_json FROM users WHERE unique_uid=?", (uid,))
+            row = cur.fetchone()
+            if row and row[0]:
+                details = json.loads(row[0])
+                totem = details.get("totem")
+                if totem:
+                    session["user_totem"] = totem
+            db.close()
+        except Exception:
+            pass
+    return jsonify({"ok": True, "totem": totem})
+
 @app.route("/api/auth/register", methods=["POST"])
 def api_register():
     ok, msg, user_info = register_user(json_object())
