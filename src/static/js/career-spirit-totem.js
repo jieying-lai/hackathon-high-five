@@ -2841,14 +2841,14 @@
         <!-- Top Persona Showcase Card with Portrait Photo -->
         <div class="space-y-4">
           <div class="p-5 sm:p-6 rounded-3xl bg-white/10 border border-white/15 space-y-4 shadow-xl backdrop-blur-xl">
-            <div class="flex flex-col sm:flex-row items-center sm:items-start gap-5">
+            <div class="atlas-persona-layout flex flex-col sm:flex-row items-center sm:items-start gap-5">
               <!-- Full Uncropped High-Res Portrait Photo -->
               <div class="relative shrink-0">
-                <img src="${selectedRole.persona.photo || 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=480&q=80'}" alt="${selectedRole.persona.name}" class="w-32 h-44 sm:w-36 sm:h-48 object-cover object-top rounded-2xl border-2 border-teal-400/40 shadow-2xl" loading="lazy" />
+                <img src="${selectedRole.persona.photo || 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=480&q=80'}" alt="${selectedRole.persona.name}" class="atlas-persona-photo w-32 h-44 sm:w-36 sm:h-48 object-cover object-top rounded-2xl border-2 border-teal-400/40 shadow-2xl" loading="lazy" />
                 <span class="absolute -bottom-2 -right-2 text-xl p-1 bg-slate-900/90 rounded-full border border-white/20 shadow-md">${selectedRole.persona.avatar || '👩🏻‍💻'}</span>
               </div>
               
-              <div class="space-y-2 text-center sm:text-left min-w-0 flex-1">
+              <div class="atlas-persona-copy space-y-2 text-center sm:text-left min-w-0 flex-1">
                 <div class="flex flex-wrap items-center justify-center sm:justify-start gap-2">
                   <h3 class="text-xl sm:text-2xl font-black text-white tracking-tight">${selectedRole.persona.name}</h3>
                   <span class="text-xs font-mono text-teal-300 font-bold bg-teal-500/20 px-2.5 py-0.5 rounded-full border border-teal-400/30">${selectedRole.persona.handle}</span>
