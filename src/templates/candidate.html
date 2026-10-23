@@ -283,6 +283,8 @@
 <link rel="stylesheet" href="/static/css/career-earth.css?v=20261023-4" />
 <link rel="stylesheet" href="/static/css/aurora-experience.css?v=20261023-4" />
 <script defer src="/static/js/aurora-experience.js?v=20261023-4"></script>
+<link rel="stylesheet" href="/static/css/company-insights.css?v=20261023-1" />
+<script src="/static/js/company-insights.js?v=20261023-1"></script>
 </head>
 <body class="responsive-ui responsive-talent min-h-screen">
   <div class="aurora"></div><div class="blob b1"></div><div class="blob b2"></div>
@@ -1280,6 +1282,10 @@
 
         </section>
 
+        <section id="tab-companies" class="tab hidden space-y-6">
+          <nav class="growth-navigation" data-careers-navigation aria-label="Explore Careers"></nav>
+          <div id="companyInsights"></div>
+        </section>
         <section id="tab-radar" class="tab hidden space-y-6">
 
           <nav class="growth-navigation" data-careers-navigation aria-label="Explore Careers"></nav>
@@ -1940,6 +1946,7 @@
       { id: 'passport', ico: '🌱', label: 'SDG Passport', eyebrow: 'Sustainable career impact', title: 'Your SDG career passport' },
     ];
     const EXTRA_TABS = {
+      companies: {id:'companies', ico:'🏢', label:'Company Insights', eyebrow:'Explore employers', title:'Find a workplace that fits you'},
       'cv-upload': {id:'cv-upload', ico:'📄', label:'Upload CV', eyebrow:'Private CV vault', title:'Upload your CV'},
       'cv-review': {id:'cv-review', ico:'✏️', label:'Review & edit CV', eyebrow:'Private CV vault', title:'Review & edit your CV'},
       applications: {id:'applications', ico:'📨', label:'Applications & sharing', eyebrow:'Your applications', title:'Applications & sharing'},
@@ -2357,12 +2364,13 @@
         EXTRA_TABS['cv-review'],
         EXTRA_TABS['applications'],
         EXTRA_TABS.jobs,
+        EXTRA_TABS.companies,
         ...NAV.slice(3),
       ];
       buildPortalNavigation(renderItems, [
         { label: 'Dashboard', ids: ['dash'], ico: '🏠', primaryId: 'dash' },
         { label: 'My Profile', ids: ['profile', 'cv-review', 'quest', 'applications'], ico: '👤', primaryId: 'profile' },
-        { label: 'Explore Careers', ids: ['jobs', 'radar', 'match'], ico: '🧭', primaryId: 'jobs' },
+        { label: 'Explore Careers', ids: ['jobs', 'companies', 'radar', 'match'], ico: '🧭', primaryId: 'jobs' },
         { label: 'My Growth', ids: ['plan', 'discover', 'saved', 'completed', 'passport'], ico: '🌱', primaryId: 'plan' }
       ]);
     }
@@ -2402,6 +2410,19 @@
       if (id === 'jobs') {
         await loadJobs();
         setTimeout(() => { if (leafletMap) leafletMap.invalidateSize(); }, 120);
+      }
+      if (id === 'companies') {
+        const container = document.getElementById('companyInsights');
+        container.innerHTML = '<p role="status">Loading companies from your map…</p>';
+        try {
+          if (!companiesList.length) await loadJobs();
+          await window.CompanyInsights.mount({container, companies: companiesList, identity: user.unique_uid,
+            onMap: async company => { await showTab('jobs'); if (company) { highlightCompanyOnMap(company.id, true); document.getElementById('companyMap')?.scrollIntoView({block:'center'}); } },
+            onJobs: async company => { selectedCompanyName=company.name; await showTab('jobs'); document.getElementById('jobsSectionCard')?.scrollIntoView({block:'start'}); }
+          });
+        } catch (error) {
+          container.innerHTML = '<p role="alert">Could not load companies. Please reopen Company Insights to retry.</p>';
+        }
       }
       if (id === 'passport') renderPassport();
       if (!options.restore) {
@@ -4298,6 +4319,7 @@
     function renderCareersNavigation() {
       const items = [
         { id: 'jobs', ico: '📍', label: 'Nearby Jobs & Map' },
+        { id: 'companies', ico: '🏢', label: 'Company Insights' },
         { id: 'radar', ico: '📡', label: 'Future Skills Radar' },
         { id: 'match', ico: '🎯', label: 'Future-Role Matches' },
       ];
