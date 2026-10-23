@@ -281,6 +281,8 @@
 <link rel="stylesheet" href="/static/css/learning-impact.css?v=20261021-community-pledges" />
   <link rel="stylesheet" href="/static/css/career-spirit-totem.css?v=20261023-2" />
 <link rel="stylesheet" href="/static/css/career-earth.css?v=20261023" />
+<link rel="stylesheet" href="/static/css/aurora-experience.css?v=20261023-bento" />
+<script defer src="/static/js/aurora-experience.js?v=20261023-bento"></script>
 </head>
 <body class="responsive-ui responsive-talent min-h-screen">
   <div class="aurora"></div><div class="blob b1"></div><div class="blob b2"></div>
@@ -5008,9 +5010,9 @@ async function submit3AiVerificationAnswers() {
       <!-- Globe & Details Grid -->
       <div class="atlas-explorer-grid">
         <!-- Main Column: Active Role Plog/Vlog, Job Desc & Positive Routine -->
-        <div class="atlas-explorer-story" id="cityDetailsContainer">
+        <div class="atlas-explorer-story"><div id="cityRelatedRolesContainer" aria-live="polite"></div><details class="atlas-story-detail" open><summary>Inside the selected working day</summary><div id="cityDetailsContainer">
           <!-- Injected active role Plog/Vlog card -->
-        </div>
+        </div></details></div>
 
         <!-- Side Column: 3D Interactive Sphere & Other Roles in Hub -->
         <div class="atlas-explorer-map space-y-4">
@@ -5021,9 +5023,7 @@ async function submit3AiVerificationAnswers() {
             <div class="earth-controls" aria-label="Globe controls"><button id="earthZoomIn" aria-label="Zoom in">+</button><button id="earthZoomOut" aria-label="Zoom out">−</button><button id="earthReset">Recenter</button><button id="earthRotate">Rotate</button></div>
           </div>
 
-          <div id="cityRelatedRolesContainer" class="space-y-3">
-            <!-- Injected related roles for this country -->
-          </div>
+
         </div>
       </div>
     </div>

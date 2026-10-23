@@ -1766,23 +1766,7 @@
   }
 
   function finishQuiz() {
-    quizCard.innerHTML = `
-      <div class="py-14 text-center space-y-6 fade-in">
-        <div class="relative w-20 h-20 mx-auto">
-          <div class="absolute inset-0 rounded-full bg-gradient-to-tr from-teal-400 to-indigo-500 animate-spin blur-md opacity-50"></div>
-          <div class="relative w-20 h-20 rounded-full bg-white border border-slate-200 grid place-items-center text-3xl shadow-sm">
-            🔮
-          </div>
-        </div>
-        <div class="space-y-2">
-          <h3 class="text-xl font-black text-slate-900">Synthesizing Your Authentic Totem DNA...</h3>
-          <p class="text-xs text-slate-500">Calibrating psychological vector coordinates across O*NET 30.3 global career models</p>
-        </div>
-        <div class="w-48 mx-auto bg-slate-200 h-2 rounded-full overflow-hidden">
-          <div class="totem-shimmer h-full bg-gradient-to-r from-teal-500 to-indigo-600 rounded-full w-full"></div>
-        </div>
-      </div>
-    `;
+    quizCard.innerHTML = `<div role="status" aria-live="polite" class="quiz-loading"><p>Putting your work-style reflection together…</p><div class="skeleton-surface skeleton-avatar"></div><div class="skeleton-surface skeleton-line"></div><div class="skeleton-surface skeleton-line short"></div><div class="skeleton-surface skeleton-panel"></div></div>`;
 
     setTimeout(() => {
       calculateResult();
@@ -1865,7 +1849,7 @@
               <div class="relative w-36 h-36 mx-auto grid place-items-center rounded-3xl bg-gradient-to-br from-indigo-500/20 to-teal-500/20 border border-white/20 shadow-2xl backdrop-blur-md">
                 <span class="text-6xl filter drop-shadow-lg">${t.icon}</span>
                 <span class="absolute -bottom-2 -right-2 px-2.5 py-0.5 rounded-full bg-teal-500 text-slate-900 text-[10px] font-black uppercase tracking-wider">
-                  Verified Match
+                  Work-style reflection
                 </span>
               </div>
               <div>
@@ -2320,7 +2304,10 @@
 
   window.selectAtlasRole = function (cityKey, roleId) {
     showCityCard(cityKey, roleId);
+    document.querySelector(".atlas-story-detail")?.scrollIntoView({behavior:matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth",block:"start"});
   };
+
+  window.surpriseAtlasCity = function () { const keys=Object.keys(GLOBAL_CITIES).filter(k=>k!==currentAtlasCityKey); showCityCard(keys[Math.floor(Math.random()*keys.length)]); };
 
   window.randomizeAtlasRole = function (cityKey) {
     const c = GLOBAL_CITIES[cityKey] || GLOBAL_CITIES.kl;
@@ -2378,7 +2365,7 @@
       selectedRole = c.roles.find(r => r.id === roleId);
     }
     if (!selectedRole && c.roles && c.roles.length > 0) {
-      selectedRole = c.roles[0];
+      selectedRole = c.roles[Math.floor(Math.random() * c.roles.length)];
     }
     currentAtlasRoleId = selectedRole ? selectedRole.id : null;
     currentAtlasRoutineIdx = 0;
@@ -2508,37 +2495,16 @@
       </div>
     `;
 
-    // Render Side Column: Other Roles in Hub
+    // Multi-person editorial masonry; each card opens the existing full story.
     if (sideContainer && c.roles) {
-      sideContainer.innerHTML = `
-        <div class="space-y-2.5">
-          <div class="flex items-center justify-between text-xs font-black uppercase tracking-wider text-slate-300 px-1">
-            <span>📌 Related Roles in ${c.country}</span>
-            <span class="text-teal-400 font-mono">${c.roles.length} Roles</span>
-          </div>
-
-          <div class="space-y-2">
-            ${c.roles.map(r => {
-              const isActive = r.id === selectedRole.id;
-              return `
-                <button type="button" onclick="selectAtlasRole('${cityKey}', '${r.id}')" class="atlas-role-card ${isActive ? 'active' : ''}">
-                  <div class="flex items-center justify-between gap-2">
-                    <div class="flex items-center gap-2.5">
-                      <span class="text-2xl">${r.persona.avatar || '👩🏻‍💻'}</span>
-                      <div>
-                        <div class="text-xs font-extrabold text-white leading-tight">${r.title}</div>
-                        <div class="text-[10px] text-slate-300">${r.persona.name} · ${r.industry}</div>
-                      </div>
-                    </div>
-                    <span class="text-xs ${isActive ? 'text-teal-300 font-bold' : 'text-slate-400'}">${isActive ? '● Active' : 'View →'}</span>
-                  </div>
-                </button>
-              `;
-            }).join('')}
-          </div>
-        </div>
-      `;
+      const shuffled = [...c.roles].sort(() => Math.random() - .5);
+      sideContainer.innerHTML = `<div class="masonry-heading"><span>PEOPLE & POSSIBILITIES</span><h4>A few lives in ${c.country}</h4><p>Illustrative characters. Real reasons to be curious.</p></div><div class="atlas-masonry">${shuffled.map((r,i)=>`
+        <button class="person-story person-story-${i%3} ${r.id===selectedRole.id?'selected':''}" onclick="selectAtlasRole('${cityKey}','${r.id}')" aria-pressed="${r.id===selectedRole.id}">
+          <div class="person-scene" aria-hidden="true"><span>${r.persona.avatar||'✦'}</span><i>${['MAKE / CREATE','CONNECT / BUILD','EXPLORE / GROW'][i%3]}</i></div>
+          <div class="person-story-copy"><span class="person-name">${r.persona.name}</span><h5>${r.title}</h5><p>${r.plog.slice(0,[145,205,110][i%3])}…</p><small>${r.industry}</small><b>${r.id===selectedRole.id?'Reading this story':'Step into this day →'}</b></div>
+        </button>`).join('')}</div>`;
     }
+
   };
 
 

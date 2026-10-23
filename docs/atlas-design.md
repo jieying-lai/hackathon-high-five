@@ -17,3 +17,12 @@ The entry journey is Discover (optional quiz), Explore (work-life atlas), Begin 
 - Coastline: Natural Earth, public domain. https://www.naturalearthdata.com/about/terms-of-use/ ; downloaded from https://github.com/nvkelso/natural-earth-vector/blob/master/geojson/ne_110m_coastline.geojson on 2026-10-23.
 
 This update changes the entry flow and atlas in both public and talent views. It does not claim to redesign every employer/admin screen or add global vacancy coverage.
+
+## Aurora / bento iteration
+- Hero now leads with “Find work that feels like you”, a direct work-style CTA and an optional atlas route.
+- Feature bento uses two large discovery cards and three compact utility cards, consistent spacing and corner radii.
+- Atlas keeps its 10 curated city destinations; selecting a place picks an illustrative role and reshuffles a three-person masonry feed. Opening a card uses the existing detailed story and routines. No invented live interviews or new job availability.
+- Amber city pulse, slow ambient gradients, a repeated work-style brand strip and subtle background parallax; pause control and reduced-motion handling included. Globe rendering capped around 30 fps, stopped while hidden.
+- Skeletons cover map/image loading and the existing quiz result transition, not artificial full-page delays. Server-rendered content remains available immediately.
+- Shared glass/aurora styling loaded in the landing, talent, employer and admin templates. Existing portal workflows unchanged.
+- Browser checks: full 10-answer quiz, random atlas destination, person-card detail navigation, 390px mobile no horizontal document/modal overflow, no captured script errors. Projection tests: 4 passed.

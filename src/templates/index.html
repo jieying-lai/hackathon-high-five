@@ -12,6 +12,8 @@
 <link rel="stylesheet" href="/static/css/home-features.css?v=3" />
   <link rel="stylesheet" href="/static/css/career-spirit-totem.css?v=20261023-2" />
 <link rel="stylesheet" href="/static/css/career-earth.css?v=20261023" />
+<link rel="stylesheet" href="/static/css/aurora-experience.css?v=20261023-bento" />
+<script defer src="/static/js/aurora-experience.js?v=20261023-bento"></script>
 </head>
 <body class="responsive-ui responsive-home min-h-screen">
   <div class="aurora"></div><div class="blob b1"></div><div class="blob b2"></div>
@@ -46,86 +48,20 @@
       <!-- Welcome View (Combines Title & Totem Discovery) -->
       <div id="totemWelcomeCard" class="relative z-10 text-center max-w-3xl mx-auto space-y-6">
         
-        <!-- Main Headline (Elevated & Magnetic Light Theme) -->
-        <h1 class="text-3xl sm:text-5xl lg:text-[3.5rem] font-black text-slate-900 tracking-tight leading-[1.12]">
-          Find your place in the <span class="bg-gradient-to-r from-teal-600 via-indigo-600 to-purple-600 bg-clip-text text-transparent">AI era</span>
-        </h1>
-
-        <!-- Engaging Subtitle -->
-        <p class="text-slate-600 text-sm sm:text-base leading-relaxed max-w-2xl mx-auto font-medium">
-          Start with curiosity, not a perfect CV. Discover your work preferences, explore how different careers feel, then take one practical step toward your future.
-        </p>
-
-        <!-- Main Actions -->
-        <div class="flex flex-wrap items-center justify-center gap-4 pt-2">
-          <button type="button" onclick="startTotemQuiz()" class="totem-btn-primary">
-            <span>✨</span>
-            <span>Awaken Career Totem</span>
-          </button>
-          <button type="button" onclick="openAuth('login')" class="totem-btn-secondary">
-            Sign In Directly
-          </button>
-          <button type="button" onclick="skipTotemQuiz()" class="totem-link-skip">
-            <span>Explore Portals</span>
-            <span>↓</span>
-          </button>
-        </div>
-
-        <nav class="discovery-route" aria-label="Choose your next step">
-          <button onclick="startTotemQuiz()"><span>01 / DISCOVER</span><strong>What feels like you?</strong><small>A short quiz. No right or wrong answers.</small><b>Find my work style →</b></button>
-          <button onclick="openGlobalAtlas()"><span>02 / EXPLORE</span><strong>Life beyond the job title.</strong><small>Turn the globe. Discover a different working day.</small><b>Explore the earth →</b></button>
-          <button onclick="skipTotemQuiz()"><span>03 / BEGIN</span><strong>Make your next move.</strong><small>Your CV, career opportunities and learning path.</small><b>Go to my workspace →</b></button>
+        <div class="hero-eyebrow">YOUR FUTURE IS MORE THAN A JOB TITLE</div>
+        <h1 class="first-impression-title">Find work that<br><em>feels like you.</em></h1>
+        <p class="first-impression-copy">You don’t need your whole life figured out. Discover your work style, step into someone else’s working day, and find a next move worth getting excited about.</p>
+        <div class="hero-actions"><button onclick="startTotemQuiz()" class="impression-primary">Find my work style <span>↗</span></button><button onclick="openGlobalAtlas()" class="impression-secondary">Explore a working day →</button></div>
+        <p class="hero-reassurance">No account needed to explore · No right or wrong answers</p>
+        <nav class="discovery-bento" aria-label="Explore CareerLens features">
+          <button class="bento-card bento-quiz" onclick="startTotemQuiz()"><span class="bento-kicker">01 / MEET YOURSELF</span><strong>Your work style.<br>Your kind of future.</strong><p>A playful quiz to explore what gives you energy.</p><div class="totem-orbit" aria-hidden="true"><span>🦉</span><span>🦊</span><span>🐋</span></div><b>Discover my totem ↗</b></button>
+          <button class="bento-card bento-earth" onclick="openGlobalAtlas()"><span class="bento-kicker">02 / OPEN YOUR WORLD</span><strong>Different places.<br>Different possibilities.</strong><p>Explore the globe through people, careers and everyday rituals.</p><div class="bento-planet" aria-hidden="true">◎<i></i></div><b>Take me somewhere ↗</b></button>
+          <button class="bento-card" onclick="openAuth('login')"><span class="bento-symbol" aria-hidden="true">↗</span><span class="bento-kicker">03 / CAREER OPPORTUNITIES</span><strong>Find your next move.</strong><p>Explore vacancies and follow your applications.</p><b>Explore my workspace →</b></button>
+          <button class="bento-card" onclick="openAuth('login')"><span class="bento-symbol" aria-hidden="true">▤</span><span class="bento-kicker">04 / PRIVATE CV VAULT</span><strong>Make your story clear.</strong><p>Upload, organise and review your CV. You control sharing.</p><b>Open my CV workspace →</b></button>
+          <button class="bento-card bento-growth" onclick="openAuth('login')"><span class="bento-kicker">05 / MY GROWTH</span><strong>Small steps. Real momentum.</strong><p>Build skills with learning pathways, focus sessions and a record of your progress.</p><b>Build my next chapter →</b></button>
         </nav>
-        <!-- 6 Totem Archetype Badges Teaser -->
-        <div class="grid grid-cols-3 sm:grid-cols-6 gap-3 pt-6 border-t border-white/10 max-w-2xl mx-auto text-center">
-          <div class="p-3 rounded-2xl bg-white/[0.06] border border-white/[0.12] hover:bg-white/[0.12] hover:border-teal-400/40 hover:-translate-y-0.5 transition shadow-sm">
-            <div class="text-2xl">🦉</div>
-            <div class="text-[11px] font-bold text-white mt-1.5">Night Owl</div>
-            <div class="text-[9px] text-teal-300 font-mono font-semibold">Systems</div>
-          </div>
-          <div class="p-3 rounded-2xl bg-white/[0.06] border border-white/[0.12] hover:bg-white/[0.12] hover:border-indigo-400/40 hover:-translate-y-0.5 transition shadow-sm">
-            <div class="text-2xl">🦮</div>
-            <div class="text-[11px] font-bold text-white mt-1.5">Retriever</div>
-            <div class="text-[9px] text-indigo-300 font-mono font-semibold">Empathy</div>
-          </div>
-          <div class="p-3 rounded-2xl bg-white/[0.06] border border-white/[0.12] hover:bg-white/[0.12] hover:border-purple-400/40 hover:-translate-y-0.5 transition shadow-sm">
-            <div class="text-2xl">🐆</div>
-            <div class="text-[11px] font-bold text-white mt-1.5">Leopard</div>
-            <div class="text-[9px] text-purple-300 font-mono font-semibold">Autonomy</div>
-          </div>
-          <div class="p-3 rounded-2xl bg-white/[0.06] border border-white/[0.12] hover:bg-white/[0.12] hover:border-teal-400/40 hover:-translate-y-0.5 transition shadow-sm">
-            <div class="text-2xl">🐋</div>
-            <div class="text-[11px] font-bold text-white mt-1.5">Titan Whale</div>
-            <div class="text-[9px] text-teal-300 font-mono font-semibold">Purpose</div>
-          </div>
-          <div class="p-3 rounded-2xl bg-white/[0.06] border border-white/[0.12] hover:bg-white/[0.12] hover:border-pink-400/40 hover:-translate-y-0.5 transition shadow-sm">
-            <div class="text-2xl">🦊</div>
-            <div class="text-[11px] font-bold text-white mt-1.5">Arctic Fox</div>
-            <div class="text-[9px] text-pink-300 font-mono font-semibold">Aesthetics</div>
-          </div>
-          <div class="p-3 rounded-2xl bg-white/[0.06] border border-white/[0.12] hover:bg-white/[0.12] hover:border-amber-400/40 hover:-translate-y-0.5 transition shadow-sm">
-            <div class="text-2xl">🦅</div>
-            <div class="text-[11px] font-bold text-white mt-1.5">Hawk</div>
-            <div class="text-[9px] text-amber-300 font-mono font-semibold">Command</div>
-          </div>
-        </div>
-
-        <!-- Focused Impact Metrics at Bottom -->
-        <div class="grid grid-cols-3 gap-4 pt-6 border-t border-white/10 max-w-xl mx-auto text-center">
-          <div>
-            <div class="text-xl sm:text-2xl font-black text-teal-300 tracking-tight">56% <span class="text-xs font-normal text-slate-400">/ 26%</span></div>
-            <div class="text-[11px] text-slate-400 mt-0.5 font-medium">use AI vs trained</div>
-          </div>
-          <div>
-            <div class="text-xl sm:text-2xl font-black text-indigo-300 tracking-tight">600k+</div>
-            <div class="text-[11px] text-slate-400 mt-0.5 font-medium">workers to reskill</div>
-          </div>
-          <div>
-            <div class="text-xl sm:text-2xl font-black text-pink-300 tracking-tight">SDG 4 · 8</div>
-            <div class="text-[11px] text-slate-400 mt-0.5 font-medium">impact alignment</div>
-          </div>
-        </div>
-
+        <div class="identity-marquee" aria-label="CareerLens work styles"><div class="identity-track"><span>✦ CAREERLENS</span><span>🦉 SYSTEMS THINKER</span><span>🦮 PEOPLE CONNECTOR</span><span>🐆 INDEPENDENT EXPLORER</span><span>🐋 PURPOSE SEEKER</span><span>🦊 CREATIVE MIND</span><span>🦅 DIRECTION SETTER</span><span aria-hidden="true">✦ CAREERLENS</span><span aria-hidden="true">🦉 SYSTEMS THINKER</span><span aria-hidden="true">🦮 PEOPLE CONNECTOR</span><span aria-hidden="true">🐆 INDEPENDENT EXPLORER</span><span aria-hidden="true">🐋 PURPOSE SEEKER</span><span aria-hidden="true">🦊 CREATIVE MIND</span><span aria-hidden="true">🦅 DIRECTION SETTER</span></div></div>
+        <button class="motion-toggle" type="button" aria-pressed="false">Pause ambient motion</button>
       </div>
 
       <!-- Quiz Card Container (Rendered dynamically by career-spirit-totem.js) -->
@@ -876,7 +812,7 @@
         <button type="button" data-atlas-close aria-label="Close atlas" onclick="closeGlobalAtlas()" class="text-slate-400 hover:text-white text-2xl font-bold p-2 transition">✕</button>
       </div>
 
-      <nav class="atlas-route" aria-label="Your exploration"><span><b>01</b> Choose a place</span><span><b>02</b> Meet a career</span><span><b>03</b> Imagine your day</span></nav>
+      <button class="atlas-surprise" type="button" onclick="surpriseAtlasCity()">✦ Surprise me with a place</button><nav class="atlas-route" aria-label="Your exploration"><span><b>01</b> Choose a place</span><span><b>02</b> Meet a career</span><span><b>03</b> Imagine your day</span></nav>
       <!-- City Switcher -->
       <div class="flex flex-wrap gap-2">
         <button type="button" id="atlasBtn_kl" onclick="showCityCard('kl')" class="atlas-city-pill active">🇲🇾 Kuala Lumpur</button>
@@ -897,9 +833,9 @@
       <!-- Globe & Details Grid -->
       <div class="atlas-explorer-grid">
         <!-- Main Column: Active Role Plog/Vlog, Job Desc & Positive Routine -->
-        <div class="atlas-explorer-story" id="cityDetailsContainer">
+        <div class="atlas-explorer-story"><div id="cityRelatedRolesContainer" aria-live="polite"></div><details class="atlas-story-detail" open><summary>Inside the selected working day</summary><div id="cityDetailsContainer">
           <!-- Injected active role Plog/Vlog card -->
-        </div>
+        </div></details></div>
 
         <!-- Side Column: 3D Interactive Sphere & Other Roles in Hub -->
         <div class="atlas-explorer-map space-y-4">
@@ -910,9 +846,7 @@
             <div class="earth-controls" aria-label="Globe controls"><button id="earthZoomIn" aria-label="Zoom in">+</button><button id="earthZoomOut" aria-label="Zoom out">−</button><button id="earthReset">Recenter</button><button id="earthRotate">Rotate</button></div>
           </div>
 
-          <div id="cityRelatedRolesContainer" class="space-y-3">
-            <!-- Injected related roles for this country -->
-          </div>
+
         </div>
       </div>
     </div>
