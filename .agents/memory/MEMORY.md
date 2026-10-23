@@ -1,3 +1,4 @@
 - [Responsive talent experience](responsive-talent-experience.md) — phone readability and viewport fit are explicit requirements, not optional polish.
 - [Guided discovery scope](guided-discovery-scope.md) — simple homepage and one-primary-action quiz journey; conversational CV collection precedes login.
 - [Market evidence boundaries](market-evidence-boundaries.md) — keep measured observations, source freshness and geography separate from hypothetical future learning priorities.
+- [Workspace visual direction](workspace-visual-direction.md) — aurora gradients, soft pixel texture and clear glass across talent and employer; not dominant green/sage.

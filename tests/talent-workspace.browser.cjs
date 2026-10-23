@@ -54,6 +54,7 @@ const delay = ms => new Promise(r=>setTimeout(r,ms));
     await viewport(390);
     await send('Page.navigate',{url:`https://${process.env.REPLIT_DEV_DOMAIN}/`});
     await wait('typeof quickLogin==="function"');
+    if (!process.env.EMPLOYER_ONLY) {
     await evaluate('quickLogin("job_seeker");true');
     await wait('location.pathname==="/workspace" && typeof user!=="undefined" && !!user && typeof showTab==="function"');
     await wait('typeof analysed!=="undefined" && analysed && !!roles.length');
@@ -113,6 +114,34 @@ const delay = ms => new Promise(r=>setTimeout(r,ms));
     assert.equal(await evaluate('document.querySelectorAll("#tab-dash [onclick*=openGlobalAtlas]").length'),0);
     assert.equal(await evaluate('document.querySelectorAll("#tab-radar [data-careers-navigation] [onclick*=openGlobalAtlas]").length'),1);
     assert.equal(await evaluate('document.querySelectorAll(".fr-scenario-grid button").length'),3);
+    assert.equal(await evaluate('document.querySelectorAll(".fr-planning-controls input[type=range]").length'),3);
+    assert(await evaluate('Boolean(document.querySelector(".fr-matrix [role=cell] button"))'));
+    const initialMatrix = await evaluate('document.getElementById("frMatrixPresentation").innerText');
+    await evaluate('document.getElementById("frHorizon").focus();true');
+    await send('Input.dispatchKeyEvent',{type:'keyDown',key:'ArrowRight',code:'ArrowRight',windowsVirtualKeyCode:39});
+    await send('Input.dispatchKeyEvent',{type:'keyUp',key:'ArrowRight',code:'ArrowRight',windowsVirtualKeyCode:39});
+    assert.equal(await evaluate('document.getElementById("frHorizon").value'),'30');
+    assert.equal(await evaluate('document.activeElement.id'),'frHorizon','Range focus must survive live updates');
+    for(const [id,value] of [['frHorizon',60],['frAdoption',100],['frHours',8]]){
+      await evaluate(`(()=>{const el=document.getElementById("${id}");el.value="${value}";el.dispatchEvent(new Event("input",{bubbles:true}));return true;})()`);
+    }
+    assert.notEqual(await evaluate('document.getElementById("frMatrixPresentation").innerText'),initialMatrix);
+    assert.match(await evaluate('document.querySelector(".fr-planning-insight").innerText'),/60 months.*8-hour/s);
+    await click('[data-radar-action="matrix-unit"][data-value="share"]');
+    assert.match(await evaluate('document.querySelector(".fr-matrix-legend").innerText'),/Share of practice/);
+    await viewport(390);
+    await evaluate('document.querySelector(".fr-planning").scrollIntoView({behavior:"instant",block:"start"});true');
+    await screenshot('aurora-radar-matrix-mobile');
+    await evaluate('document.querySelector(".fr-matrix").scrollIntoView({behavior:"instant",block:"start"});true');
+    await screenshot('aurora-radar-matrix-cells-mobile');
+    await viewport(1366);
+    await evaluate('document.querySelector(".fr-planning").scrollIntoView({behavior:"instant",block:"start"});true');
+    await screenshot('aurora-radar-matrix-desktop');
+    await click('[data-radar-action="reset-planning"]');
+    assert.equal(await evaluate('document.getElementById("frHorizon").value'),'24');
+    assert.equal(await evaluate('document.getElementById("frAdoption").value'),'50');
+    assert.equal(await evaluate('document.getElementById("frHours").value'),'4');
+    await viewport(390);
     const observed=await evaluate('(async()=>{const d=await(await fetch("/api/market/signals")).json();return Object.fromEntries(d.remote.rows.map(r=>[r.skill,r.share_pct]));})()');
     for(const lens of ['steady','copilot','accelerated']){
       await click(`[data-radar-action="scenario"][data-value="${lens}"]`);
@@ -148,7 +177,54 @@ const delay = ms => new Promise(r=>setTimeout(r,ms));
     await wait('!!document.querySelector(".fr-scenario-grid")');
     await click('[data-radar-action="filter"][data-value="followed"]');
     assert.equal(await evaluate('document.querySelectorAll(".fr-signal").length'),1);
+    // Sign out through the real endpoint before the homepage's signed-in redirect.
+    await evaluate('(async()=>{const response=await fetch("/api/auth/logout",{method:"POST"});if(!response.ok)throw new Error("Logout failed");return true;})()');
+    }
+    // Switch roles through the existing demo login, never by bypassing authentication.
+    await send('Page.navigate',{url:`https://${process.env.REPLIT_DEV_DOMAIN}/`});
+    await wait('typeof quickLogin==="function" && location.pathname==="/"');
+    await evaluate('quickLogin("hr_company");true');
+    await wait('location.pathname==="/workspace" && document.body?.classList.contains("responsive-employer") && typeof user!=="undefined" && !!user && typeof showTab==="function"');
+    for(const tab of ['overview','vacancies','screening','heatmap','shortlisting','reskill']){
+      await evaluate(`showTab(${JSON.stringify(tab)}).then(()=>true)`);
+      await delay(300);
+      for(const width of [320,390,768,1366]){
+        await viewport(width);
+        const layout=await evaluate(`(()=>{
+          const section=document.getElementById('tab-${tab}');
+          const nav=section.querySelector('.overview-subnav,.screening-nav');
+          const buttons=nav?[...nav.querySelectorAll('button')]:[];
+          const profile=section.querySelector('[data-outline-label="Company profile"]');
+          const profileButtons=profile?[...profile.querySelectorAll('button')]:[];
+          const clipped=[...buttons,...profileButtons].filter(el=>{
+            const b=el.getBoundingClientRect();
+            return b.width && (b.left < -1 || b.right>innerWidth+1 || el.scrollWidth>el.clientWidth+2);
+          }).map(el=>el.textContent.trim());
+          return {width:innerWidth,scroll:document.documentElement.scrollWidth,clipped,navScroll:nav?nav.scrollWidth-nav.clientWidth:0};
+        })()`);
+        assert(layout.scroll<=layout.width+1,`employer ${tab}@${width} overflows: ${JSON.stringify(layout)}`);
+        assert.equal(layout.navScroll,0,`employer ${tab}@${width} navigation scrolls`);
+        assert.deepEqual(layout.clipped,[],`employer ${tab}@${width} clipped controls`);
+        if(width===390){
+          await evaluate('window.scrollTo({top:0,behavior:"instant"});true');
+          await screenshot('aurora-employer-'+tab+'-mobile');
+        }
+      }
+    }
+    await viewport(390);
+    await evaluate('showTab("overview").then(()=>true)');
+    for(const subtab of ['ovtab-pulse','ovtab-analytics','ovtab-strategy','ovtab-podium']){
+      await evaluate(`showOvTab("${subtab}");true`);
+      assert.equal(await evaluate(`document.getElementById("${subtab}").classList.contains("hidden")`),false);
+      assert(await evaluate('document.documentElement.scrollWidth<=innerWidth+1'),`employer subtab ${subtab} overflows`);
+    }
+    await evaluate('showOvTab("ovtab-pulse");openAccountModal();true');
+    assert(await evaluate('!document.getElementById("accountModalWrap").classList.contains("hidden")'));
+    assert(await evaluate('document.documentElement.scrollWidth<=innerWidth+1'),'company profile modal overflows');
+    await screenshot('aurora-employer-profile-mobile');
     assert.deepEqual(errors,[],'Unhandled browser errors: '+errors.join('\n'));
-    console.log('PASS: 13 talent screens at 320/390/768/1366px; readable wrapping navigation; atlas access; three scenarios preserve observed values; evidence links; followed skills survive reload; historical window comparison; source refresh; no unhandled errors.');
+    console.log(process.env.EMPLOYER_ONLY
+      ? 'PASS: 6 employer screens at 320/390/768/1366px; four overview subtabs; unclipped company actions and navigation; company profile modal; no unhandled errors.'
+      : 'PASS: 13 talent and 6 employer screens at 320/390/768/1366px; all company overview tabs; company profile modal; live timeline/adoption/budget matrix and keyboard focus; unchanged observations; evidence links and persistent followed skills; no unhandled errors.');
   } finally {ws?.close();browser.kill();}
 })().catch(error=>{console.error(error);process.exitCode=1;});
