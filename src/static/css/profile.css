@@ -96,7 +96,11 @@
   #tab-dash #dashHello {font-size:clamp(1.5rem,6vw,1.75rem);line-height:1.24;letter-spacing:-.015em}
   #tab-dash #dashSub {font-size:16px;line-height:1.55}
  .career-quick-actions{gap:10px}.career-quick-actions button{padding:14px;border-radius:16px}.career-quick-actions small{display:none}
- #tab-dash #journey{grid-template-columns:repeat(2,minmax(0,1fr))}
+  #tab-dash #journey{display:block}
+  #tab-dash #journey .journey-diagram-pipeline{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));align-items:stretch;justify-content:initial;overflow:visible;gap:8px}
+  #tab-dash #journey .journey-diagram-pipeline>div{min-width:0;flex:none}
+  #tab-dash #journey .journey-diagram-pipeline .journey-node{min-height:68px;height:100%;padding:10px}
+  #tab-dash #journey .journey-diagram-pipeline .journey-node .truncate{white-space:normal;overflow:visible;text-overflow:clip;overflow-wrap:normal}
  #tab-profile .profile-overview{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
  #tab-profile .profile-overview>div{padding:12px}
  :is(#tab-profile,#tab-cv-review) .glass{padding:18px!important;border-radius:20px}

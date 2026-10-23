@@ -61,6 +61,10 @@
  .responsive-ui .landing-actions{flex-wrap:wrap;max-width:100%}
 }
 @media(max-width:47.99rem){
+  .responsive-talent .portal-mobile-header>div:first-child{flex-wrap:nowrap}
+  .responsive-talent .portal-mobile-header>div:first-child>div:first-child{flex:1 1 auto;flex-wrap:nowrap}
+  .responsive-talent .portal-mobile-header #mobileCurrentSection{display:none!important}
+  .responsive-talent .portal-mobile-actions{margin-left:auto;flex:0 0 auto;flex-wrap:nowrap;max-width:none}
   .responsive-talent main.candidate-dashboard-main{padding:.75rem;padding-bottom:max(3.5rem,calc(2.5rem + env(safe-area-inset-bottom)))!important}
  .responsive-ui .truncate{white-space:normal;overflow:visible;text-overflow:clip;overflow-wrap:anywhere}
  .responsive-ui :is(h1,h2,h3,p,label,summary,.btn,.chip){overflow-wrap:anywhere}
