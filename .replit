@@ -1,4 +1,4 @@
-run = "pip install -q -r requirements.txt && HOST=0.0.0.0 python src/main.py"
+run = "pip install -q -r requirements-web.txt && HR_INTERVIEW_PROVIDER=rules HOST=0.0.0.0 python scripts/serve_web.py"
 entrypoint = "src/main.py"
 modules = ["python-3.11"]
 
@@ -6,7 +6,7 @@ modules = ["python-3.11"]
 channel = "stable-24_05"
 
 [deployment]
-run = ["sh", "-c", "pip install -q -r requirements.txt && HOST=0.0.0.0 python src/main.py"]
+run = ["sh", "-c", "pip install -q -r requirements-web.txt && HR_INTERVIEW_PROVIDER=rules HOST=0.0.0.0 python scripts/serve_web.py"]
 
 [[ports]]
 localPort = 5000

@@ -25,6 +25,10 @@ window.LearningImpact=(()=>{
   function paint(){
     if(!view||!view.container?.isConnected||view.identity!==activeIdentity)return;
     const {identity,container,locale}=view,state=account(identity),data=state.data,tr=s=>locale?.translate(s)||s;
+    if(view.celebrationContainer?.isConnected){
+      view.celebrationContainer.innerHTML=window.LearningCelebrations?.markup(identity,data?.demo===true,tr)||'';
+      window.LearningCelebrations?.bind(view.celebrationContainer,identity,tr);
+    }
     if(!data){
       container.innerHTML=`<section class="learning-impact"><h2>${esc(tr('Learning milestones'))}</h2><p role="status">${esc(tr(state.error||'Syncing your learning milestones…'))}</p>${state.error?`<button type="button" class="btn btn-soft" data-impact-retry>${esc(tr('Retry'))}</button>`:''}<div class="impact-bank"><div class="impact-piggy"><img src="/static/illustrations/learning-piggy-empty.png" width="1254" height="1254" alt="${esc(tr('A little piggy bank for shared kindness'))}"><div><span>${esc(tr('Your unlocked pledge'))}</span><strong>—</strong><p>${esc(tr('Funded by CareerLens, not charged to you.'))}</p></div></div></div></section>`;
       container.querySelector('[data-impact-retry]')?.addEventListener('click',()=>sync(identity));return;
