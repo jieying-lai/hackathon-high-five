@@ -1039,11 +1039,11 @@
           <td class="py-3 px-4 text-slate-300">${esc(a.company_name)}</td>
           <td class="py-3 px-4">
             <span class="inline-flex items-center gap-1 font-black text-amber-300 bg-amber-950/60 px-2 py-0.5 rounded-md border border-amber-500/30 text-xs">
-              ${a.match_score}% Match
+              ${a.match_score == null ? 'Not scored' : esc(a.match_score) + '% alignment'}
             </span>
           </td>
           <td class="py-3 px-4 text-slate-300 text-[11px]">
-            <div>${esc(a.work_mode)} · RM ${a.salary_expectation}</div>
+            <div>${esc(a.work_mode)} · ${a.salary_expectation == null ? 'Salary not specified' : 'RM ' + esc(a.salary_expectation)}</div>
             <div class="text-slate-400">Avail: ${esc(a.available_in)}</div>
           </td>
           <td class="py-3 px-4">

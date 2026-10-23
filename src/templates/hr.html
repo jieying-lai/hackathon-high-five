@@ -62,6 +62,7 @@
 <link rel="stylesheet" href="/static/css/aurora-experience.css?v=20261023-11" />
 <link rel="stylesheet" href="/static/css/guided-experience.css?v=20261024-2" />
 <link rel="stylesheet" href="/static/css/workspace-aurora.css?v=20261025-2" />
+<link rel="stylesheet" href="/static/css/hiring-review.css?v=20261025-1" />
 <script defer src="/static/js/aurora-experience.js?v=20261023-bento"></script>
 </head>
 <body class="responsive-ui responsive-employer hr min-h-screen company-comparison-portal">
@@ -136,7 +137,7 @@
                   <div>
                     <div class="flex flex-wrap items-center gap-2">
                       <h2 id="hrCardName" class="text-xl font-extrabold text-slate-900" data-no-translate>Employer Company</h2>
-                      <span class="chip chip-teal">Verified Employer</span>
+                      <span class="chip chip-teal">Company account</span>
                       <span class="chip chip-emerald">Company Workspace</span>
                     </div>
                     <div class="text-xs text-slate-500 mt-1 flex flex-wrap items-center gap-2">
@@ -332,47 +333,51 @@
             <div class="flex items-center gap-3"><span class="text-xs font-bold text-slate-500">Vacancy</span><select id="scVacancy" onchange="loadScreen(this.value)" class="input vacancy-picker"></select></div>
             <div data-outline-label="Screening filters" id="typeFilter" class="seg"></div>
           </div>
+          <div class="screening-tools glass rounded-2xl p-4">
+            <label class="screening-search"><span>Find a candidate</span><input id="screenSearch" class="input" type="search" placeholder="Name, candidate type, or shared role evidence" oninput="setScreenSearch(this.value)" /></label>
+            <label class="screening-status"><span>Decision status</span><select id="screenDecisionFilter" class="input" onchange="setScreenDecisionFilter(this.value)">
+              <option value="All">All decisions</option><option>Pending</option><option>Shortlist</option><option>Needs review</option><option>Hold</option>
+            </select></label>
+          </div>
           <div data-outline-label="Screening summary" id="scSummary" class="grid grid-cols-2 lg:grid-cols-4 gap-4"></div>
-          <!-- HR Decision Status Legend & Review Workflow Guide -->
-          <div data-outline-label="Decision guide" class="glass rounded-3xl p-5 border border-slate-200/80 bg-white/70 space-y-3">
-            <div class="flex flex-wrap items-center justify-between gap-2">
-              <div class="text-xs font-extrabold text-slate-900 flex items-center gap-2">
-                <span class="text-base">⚖️</span>
-                <span>HR Decision Status Legend &amp; Review Workflow</span>
-              </div>
-              <span class="text-[11px] text-slate-500 font-medium">Decisions update pipeline instantly &amp; sync to shortlisted candidates</span>
-            </div>
+          <details data-outline-label="Decision guide" class="screening-guide glass rounded-2xl">
+            <summary><span>Decision guide</span><small>Human review is required · decisions are browser-only</small></summary>
+            <div class="screening-guide-content">
+              <p>Matching estimates help organise review; they are not hiring likelihoods or decisions. Review role-relevant, explicitly shared evidence and apply the same criteria consistently.</p>
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
               <div class="p-3 rounded-2xl border border-amber-200/90 bg-amber-50/60 space-y-1">
                 <div class="flex items-center justify-between">
-                  <span class="chip chip-amber !text-[11px] font-extrabold">🟡 Pending</span>
+                  <span class="chip chip-amber !text-[11px] font-extrabold">Pending</span>
                   <span class="text-[10px] text-amber-800 font-bold">Default Status</span>
                 </div>
-                <p class="text-[11px] text-amber-900 leading-snug"><b>Initial Queue:</b> Newly received CV profile awaiting primary HR criteria review.</p>
+                <p class="text-[11px] text-amber-900 leading-snug"><b>Initial queue:</b> Awaiting primary criteria review.</p>
               </div>
               <div class="p-3 rounded-2xl border border-emerald-200/90 bg-emerald-50/60 space-y-1">
                 <div class="flex items-center justify-between">
-                  <span class="chip chip-emerald !text-[11px] font-extrabold">🟢 Shortlist</span>
-                  <span class="text-[10px] text-emerald-800 font-bold">Interview Ready</span>
+                  <span class="chip chip-emerald !text-[11px] font-extrabold">Shortlist</span>
+                  <span class="text-[10px] text-emerald-800 font-bold">Consider next step</span>
                 </div>
-                <p class="text-[11px] text-emerald-900 leading-snug"><b>Qualified Profile:</b> Exceeds core requirements; unlocked for 1st/2nd round interviews.</p>
+                <p class="text-[11px] text-emerald-900 leading-snug">A human reviewer has chosen to consider an interview.</p>
               </div>
               <div class="p-3 rounded-2xl border border-sky-200/90 bg-sky-50/60 space-y-1">
                 <div class="flex items-center justify-between">
-                  <span class="chip !text-[11px] font-extrabold" style="background:#e0f2fe;color:#0369a1;border:1px solid #7dd3fc;">🔵 Needs Review</span>
+                  <span class="chip !text-[11px] font-extrabold" style="background:#e0f2fe;color:#0369a1;border:1px solid #7dd3fc;">Needs review</span>
                   <span class="text-[10px] text-sky-800 font-bold">Clarification</span>
                 </div>
-                <p class="text-[11px] text-sky-950 leading-snug"><b>Verification Needed:</b> High potential with specific CV gaps requiring interviewer confirmation.</p>
+                <p class="text-[11px] text-sky-950 leading-snug">Clarify evidence with the candidate; do not infer ability from missing details.</p>
               </div>
               <div class="p-3 rounded-2xl border border-slate-200/90 bg-slate-50/70 space-y-1">
                 <div class="flex items-center justify-between">
-                  <span class="chip chip-slate !text-[11px] font-extrabold">⚪ Hold</span>
-                  <span class="text-[10px] text-slate-600 font-bold">Talent Reserve</span>
+                  <span class="chip chip-slate !text-[11px] font-extrabold">Hold</span>
+                  <span class="text-[10px] text-slate-600 font-bold">Revisit later</span>
                 </div>
-                <p class="text-[11px] text-slate-700 leading-snug"><b>Passive Pool:</b> Retained in company database for adjacent or future department openings.</p>
+                <p class="text-[11px] text-slate-700 leading-snug">Keep for a later review where appropriate.</p>
               </div>
             </div>
-          </div>
+            <p class="screening-local-note">These decision labels are saved in this browser only. They are not persisted server truth and do not sync automatically.</p>
+            </div>
+          </details>
+          <section id="screenReview" class="screen-review glass rounded-3xl p-5" aria-label="Current candidate review"></section>
           <div data-outline-label="Candidate screening" class="glass rounded-3xl overflow-hidden">
             <div class="overflow-x-auto table-scroll" tabindex="0" role="region" aria-label="Scrollable data table"><table class="screening-table w-full text-left text-xs">
               <thead><tr class="bg-slate-50/80 text-slate-500 border-b border-slate-200"><th class="py-3 px-4 w-12">#</th><th class="py-3 px-4">Candidate</th><th class="py-3 px-4">Relevant exp.</th><th class="py-3 px-4 min-w-[9rem]">Match</th><th class="py-3 px-4">To confirm</th><th class="py-3 px-4">Suggested action</th><th class="py-3 px-4">HR decision</th><th class="py-3 px-4">Actions</th></tr></thead>
@@ -698,9 +703,11 @@
     ];
     const TONE = { emerald: 'chip-emerald', indigo: 'chip-indigo', amber: 'chip-amber', slate: 'chip-slate' };
     const DECISIONS = ['Pending', 'Shortlist', 'Needs review', 'Hold'];
+    function hrJsArg(value) { return esc(JSON.stringify(String(value ?? ''))); }
     const TYPES = ['All', 'Fresh Graduate', 'Experienced Worker', 'Career Changer'];
 
     let user = null, vacancies = [], scrn = null, selectedVid = null, typeFilter = 'All', heat = null, assignments = [];
+    let screenSearch = '', screenDecisionFilter = 'All', screenReviewCid = null;
     let reqSkills = [], prefSkills = [], decisions = {}, current = 'overview', loaded = {};
     let shortlistScreens = new Map(), shortlistVersion = 0, shortlistError = '';
 
@@ -871,10 +878,12 @@
     let screenPage = 1;
     const SCREEN_PAGE_SIZE = 10;
     function setScreenPage(p) {
-      screenPage = p;
+      const rows = filteredScreenRows();
+      screenPage = Math.max(1, Math.min(Math.ceil(rows.length / SCREEN_PAGE_SIZE) || 1, Number(p) || 1));
+      screenReviewCid = rows[(screenPage - 1) * SCREEN_PAGE_SIZE]?.candidate_id ?? null;
       renderScreen();
       const wrap = document.querySelector('[data-outline-label="Candidate screening"]');
-      if (wrap) wrap.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      if (wrap) wrap.scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'nearest' });
     }
 
     function renderScreeningNavigation() {
@@ -1006,24 +1015,69 @@
       document.getElementById('typeFilter').innerHTML = TYPES.map(t => `<button onclick="setType('${t}')" class="${t === typeFilter ? 'on' : ''}">${t === 'Experienced Worker' ? 'Experienced' : t}</button>`).join('');
     }
     function setType(t) { typeFilter = t; screenPage = 1; renderScreenSelect(); renderScreen(); }
+    function setScreenSearch(value) {
+      screenSearch = String(value || '');
+      screenPage = 1;
+      renderScreen();
+      const input = document.getElementById('screenSearch');
+      if (input) {
+        input.focus();
+        input.setSelectionRange(input.value.length, input.value.length);
+      }
+    }
+    function setScreenDecisionFilter(value) { screenDecisionFilter = value; screenPage = 1; renderScreen(); }
+    function resetScreenFilters() {
+      typeFilter = 'All'; screenSearch = ''; screenDecisionFilter = 'All'; screenPage = 1; screenReviewCid = null;
+      renderScreenSelect(); renderScreen();
+    }
+    function screenReviewStep(direction) {
+      if (!scrn) return;
+      const rows = filteredScreenRows();
+      if (!rows.length) return;
+      let currentIndex = rows.findIndex(row => String(row.candidate_id) === String(screenReviewCid));
+      currentIndex = Math.max(0, Math.min(rows.length - 1, currentIndex + direction));
+      screenReviewCid = rows[currentIndex].candidate_id;
+      screenPage = Math.floor(currentIndex / SCREEN_PAGE_SIZE) + 1;
+      renderScreen();
+      document.getElementById('screenReview')?.scrollIntoView({ block: 'start', behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
+    }
+    function filteredScreenRows() {
+      if (!scrn || !Array.isArray(scrn.results)) return [];
+      const query = screenSearch.trim().toLocaleLowerCase();
+      return scrn.results.filter(row => {
+        const decision = decisions[decKey(scrn.vacancy.id, row.candidate_id)] || 'Pending';
+        if (typeFilter !== 'All' && row.type !== typeFilter) return false;
+        if (screenDecisionFilter !== 'All' && decision !== screenDecisionFilter) return false;
+        if (query) {
+          const searchable = [row.name, row.type, row.application_uid, row.action, ...(row.to_confirm || [])].filter(Boolean).join(' ').toLocaleLowerCase();
+          if (!searchable.includes(query)) return false;
+        }
+        return true;
+      });
+    }
     async function loadScreen(id) {
-      if (!id || isNaN(Number(id))) { scrn = null; return renderScreen(); }
-      selectedVid = Number(id); const r = await api(`/api/hr/vacancies/${id}/screen`);
+      if (!id || isNaN(Number(id))) { scrn = null; screenReviewCid = null; return renderScreen(); }
+      selectedVid = Number(id); screenReviewCid = null; screenPage = 1; const r = await api(`/api/hr/vacancies/${id}/screen`);
       scrn = r.ok ? r.data : null;
       if (scrn) shortlistScreens.set(Number(id), screenShortlistRows(scrn));
       renderScreen();
     }
     function renderScreen() {
-      if (!scrn) { scSummary.innerHTML = ''; scRows.innerHTML = '<tr><td colspan="8" class="p-10 text-center text-slate-500">Create or select a vacancy to screen candidates.</td></tr>'; fairNote.textContent = ''; return; }
+      if (!scrn) { scSummary.innerHTML = ''; scRows.innerHTML = '<tr><td colspan="8" class="p-10 text-center text-slate-500">Create or select a vacancy to screen candidates.</td></tr>'; document.getElementById('screenReview').innerHTML = '<div class="screen-review-empty"><strong>Choose a vacancy to begin</strong><span>Candidate review will use only the shared screening details for that vacancy.</span></div>'; scPagination.innerHTML = ''; scPagination.classList.add('hidden'); fairNote.textContent = ''; return; }
+      const rows = filteredScreenRows();
       const sum = scrn.summary.by_action;
       const tiles = [
+        ['Candidates in view', rows.length, 'indigo'],
         ['Total screened', scrn.summary.total, 'indigo'],
         ['Priority review', sum['Priority human review'] || 0, 'emerald'],
         ['Confirm skills', sum['Confirm skills with follow-up'] || 0, 'amber'],
         ['Average match', scrn.summary.average_score + '%', 'teal'],
       ];
       scSummary.innerHTML = tiles.map(t => `<div class="tint tint-${t[2]} rounded-2xl p-4"><div class="text-[11px] font-bold text-slate-500">${t[0]}</div><div class="text-3xl font-extrabold mt-1">${t[1]}</div></div>`).join('');
-      const rows = scrn.results.filter(r => typeFilter === 'All' || r.type === typeFilter);
+      const searchBox = document.getElementById('screenSearch');
+      const decisionFilter = document.getElementById('screenDecisionFilter');
+      if (searchBox && searchBox.value !== screenSearch) searchBox.value = screenSearch;
+      if (decisionFilter) decisionFilter.value = screenDecisionFilter;
       const totalCount = rows.length;
       const totalPages = Math.ceil(totalCount / SCREEN_PAGE_SIZE) || 1;
       if (screenPage > totalPages) screenPage = totalPages;
@@ -1031,6 +1085,31 @@
       const startIdx = (screenPage - 1) * SCREEN_PAGE_SIZE;
       const endIdx = Math.min(startIdx + SCREEN_PAGE_SIZE, totalCount);
       const pagedRows = rows.slice(startIdx, endIdx);
+      if (rows.length && !rows.some(row => String(row.candidate_id) === String(screenReviewCid))) {
+        screenReviewCid = rows[startIdx]?.candidate_id ?? rows[0].candidate_id;
+      }
+      const activeReviewIndex = rows.findIndex(row => String(row.candidate_id) === String(screenReviewCid));
+      const review = rows[activeReviewIndex] || null;
+      const reviewDecision = review ? (decisions[decKey(scrn.vacancy.id, review.candidate_id)] || 'Pending') : '';
+      document.getElementById('screenReview').innerHTML = review ? `
+        <div class="screen-review-head">
+          <div><span class="screen-review-kicker">Current candidate · ${activeReviewIndex + 1} of ${totalCount}</span>
+            <h2 data-no-translate>${esc(review.name)}</h2><p>${esc(review.type)} · ${esc(scrn.vacancy.title)}</p></div>
+          <div class="screen-review-nav"><button type="button" onclick="screenReviewStep(-1)" ${activeReviewIndex <= 0 ? 'disabled' : ''} aria-label="Previous candidate">Previous</button>
+            <button type="button" onclick="screenReviewStep(1)" ${activeReviewIndex >= totalCount - 1 ? 'disabled' : ''} aria-label="Next candidate">Next</button></div>
+        </div>
+        <div class="screen-review-body">
+          <div class="screen-review-score"><span>Matching estimate</span><strong>${review.score}%</strong><small>Not a hiring likelihood or decision</small></div>
+          <div class="screen-review-context"><strong>Evidence to clarify</strong>
+            ${review.to_confirm?.length ? `<p>${review.to_confirm.map(item => esc(item)).join(' · ')}</p><small>These are details to ask about, not proof of a skill gap.</small>` : '<p>No clarification items were flagged in the shared profile.</p>'}
+          </div>
+          <div class="screen-review-decision"><label for="reviewDecision">Human decision</label><select id="reviewDecision" class="input" onchange="confirmScreenDecision('${esc(review.candidate_id)}', this.value)">${DECISIONS.map(value => `<option ${value === reviewDecision ? 'selected' : ''}>${value}</option>`).join('')}</select>
+            <small>Saved in this browser only; not synced to the server.</small></div>
+        </div>
+        <div class="screen-review-actions">
+          <button type="button" onclick="openInsight('${esc(review.candidate_id)}')" class="btn btn-soft">Open shared insight</button>
+          <button type="button" onclick="openInterviewForCandidate(${hrJsArg(review.candidate_id)}, ${hrJsArg(review.name)}, ${hrJsArg(scrn.vacancy.title)})" class="btn btn-soft">Invite to interview</button>
+        </div>` : `<div class="screen-review-empty"><strong>No candidate matches these filters.</strong><span>Try a broader search or reset the screening filters.</span><button type="button" onclick="resetScreenFilters()">Reset filters</button></div>`;
 
       scRows.innerHTML = pagedRows.length ? pagedRows.map((r, i) => {
         const itemIdx = startIdx + i + 1;
@@ -1046,7 +1125,7 @@
             <div data-no-translate class="font-extrabold text-sm">${esc(r.name)}</div>
             <div class="flex flex-wrap items-center gap-1.5 mt-0.5">
               <span class="chip chip-slate">${esc(r.type)}</span>
-              ${r.score >= 85 ? '<span class="chip screening-highlight-badge">★ High match</span>' : ''}
+              ${r.score >= 85 ? '<span class="chip screening-highlight-badge">High match</span>' : ''}
               ${appliedBadges}
             </div>
           </td>
@@ -1054,16 +1133,18 @@
           <td data-label="Match" class="py-3.5 px-4"><div class="flex items-center gap-2"><span class="font-extrabold text-sm w-10">${r.score}%</span><div class="bar flex-1 ${r.score >= 85 ? 'emerald' : r.score >= 70 ? 'teal' : r.score >= 55 ? '' : 'rose'}"><i style="width:${r.score}%"></i></div></div></td>
           <td data-label="To confirm" class="py-3.5 px-4">${r.to_confirm.length ? `<div class="flex flex-wrap gap-1">${r.to_confirm.slice(0, 2).map(s => `<span class="chip chip-amber">${esc(s)}</span>`).join('')}${r.to_confirm.length > 2 ? `<span class="chip chip-slate">+${r.to_confirm.length - 2}</span>` : ''}</div>` : '<span class="chip chip-emerald">All covered</span>'}</td>
           <td data-label="Suggested action" class="py-3.5 px-4"><span class="chip ${TONE[r.tone]}">${esc(r.action)}</span></td>
-          <td data-label="HR decision" class="py-3.5 px-4"><select class="input !py-1.5 !text-[11px] !w-auto" onchange="setDecision('${r.candidate_id}',this.value)">${DECISIONS.map(d => `<option ${d === dec ? 'selected' : ''}>${d}</option>`).join('')}</select></td>
+          <td data-label="HR decision" class="py-3.5 px-4"><select class="input !py-1.5 !text-[11px] !w-auto" onchange="confirmScreenDecision('${esc(r.candidate_id)}',this.value)">${DECISIONS.map(d => `<option ${d === dec ? 'selected' : ''}>${d}</option>`).join('')}</select></td>
           <td data-label="Actions" class="py-3.5 px-4">
             <div class="screening-actions flex items-center gap-1.5">
-              ${r.is_applied_user && r.share_organised_cv ? `<button onclick="openOrganisedCv(${r.application_id})" class="btn btn-hr !py-1.5 !px-2.5 !text-[11px]" data-no-translate>📄 CV</button>` : ''}
+              ${r.is_applied_user && r.share_organised_cv ? `<button onclick="openOrganisedCv(${r.application_id})" class="btn btn-hr !py-1.5 !px-2.5 !text-[11px]" data-no-translate>CV</button>` : ''}
               <button onclick="openInsight('${r.candidate_id}')" class="btn btn-soft !py-1.5">Insight</button>
-              <button onclick="openInterviewForCandidate('${r.candidate_id}', '${esc(r.name).replace(/'/g, "\\'")}', '${esc(scrn.vacancy.title).replace(/'/g, "\\'")}')" class="btn btn-soft !py-1.5 !px-2.5 !text-[11px] text-teal-700 font-bold" title="Invite to Online or In-Person Interview">📅 Invite</button>
+              <button onclick="openInterviewForCandidate(${hrJsArg(r.candidate_id)}, ${hrJsArg(r.name)}, ${hrJsArg(scrn.vacancy.title)})" class="btn btn-soft !py-1.5 !px-2.5 !text-[11px] text-teal-700 font-bold" title="Invite to Online or In-Person Interview">Invite</button>
             </div>
           </td></tr>`;
-      }).join('') : '<tr><td colspan="8" class="p-8 text-center text-slate-500">No candidates in this group.</td></tr>';
-      scRows.innerHTML += (scrn.restricted_applications || []).map(r => `<tr><td colspan="8" class="p-4 border-t"><b>${esc(r.candidate_name)}</b> · ${esc(r.application_uid)}<p class="text-xs text-slate-500">${esc(r.notice)}</p>${r.pdf_url ? `<a class="btn btn-soft !text-xs mt-2" href="${esc(r.pdf_url)}" target="_blank" rel="noopener">Open explicitly shared original PDF</a>` : ''}</td></tr>`).join('');
+      }).join('') : `<tr><td colspan="8" class="screen-empty-cell"><strong>No candidates match these filters.</strong><span>Search only checks shared screening details. Reset filters to see the full list.</span><button type="button" onclick="resetScreenFilters()">Reset filters</button></td></tr>`;
+      if (!screenSearch.trim() && screenDecisionFilter === 'All' && typeFilter === 'All') {
+        scRows.innerHTML += (scrn.restricted_applications || []).map(r => `<tr><td colspan="8" class="p-4 border-t"><b>${esc(r.candidate_name)}</b> · ${esc(r.application_uid)}<p class="text-xs text-slate-500">${esc(r.notice)}</p>${r.pdf_url ? `<a class="btn btn-soft !text-xs mt-2" href="${esc(r.pdf_url)}" target="_blank" rel="noopener">Open explicitly shared original PDF</a>` : ''}</td></tr>`).join('');
+      }
 
       if (totalCount > 0) {
         let pageBtns = '';
@@ -1072,7 +1153,7 @@
         }
         scPagination.innerHTML = `
           <div class="text-xs text-slate-500 font-medium">
-            Showing <b class="text-slate-800">${startIdx + 1}</b>–<b class="text-slate-800">${endIdx}</b> of <b class="text-slate-800">${totalCount}</b> candidates (10 per page)
+            Showing <b class="text-slate-800">${startIdx + 1}</b>–<b class="text-slate-800">${endIdx}</b> of <b class="text-slate-800">${totalCount}</b> matching candidates (10 per page)
           </div>
           <div class="flex items-center gap-1.5">
             <button type="button" onclick="setScreenPage(${screenPage - 1})" ${screenPage <= 1 ? 'disabled' : ''} class="btn btn-soft !py-1 !px-2.5 !text-xs font-bold ${screenPage <= 1 ? 'opacity-40 cursor-not-allowed' : ''}">‹ Prev</button>
@@ -1086,7 +1167,15 @@
         scPagination.classList.add('hidden');
       }
 
-      fairNote.textContent = '⚖️ ' + scrn.fairness_note;
+      fairNote.textContent = scrn.fairness_note || 'Review role-relevant evidence consistently. Matching estimates are not hiring decisions.';
+    }
+
+    function confirmScreenDecision(candidateId, value) {
+      const previous = getCandidateDecision(scrn?.vacancy.id, candidateId);
+      if (value === previous) return;
+      const accepted = window.confirm(`Save “${value}” as your browser-only decision for this candidate? This does not sync to the server.`);
+      if (!accepted) { renderScreen(); return; }
+      setDecision(candidateId, value);
     }
     function screenShortlistRows(data) {
       return (data.results || []).map(c=>({...c,id:c.candidate_id,vacancy_id:data.vacancy.id,position:data.vacancy.title,
@@ -1169,47 +1258,23 @@
 
       insight.innerHTML = `
         <div class="flex items-start justify-between gap-3"><div><div class="text-[11px] font-extrabold uppercase tracking-wider text-teal-700">Candidate insight</div>
-          <h2 class="text-2xl font-extrabold" data-no-translate>${esc(r.name)}</h2><div class="flex flex-wrap gap-1.5 mt-1"><span class="chip chip-slate">${esc(r.type)}</span><span class="chip chip-slate font-mono" data-no-translate>${esc(r.candidate_id)}</span><span class="chip chip-pink">Synthetic profile</span></div></div>
+          <h2 class="text-2xl font-extrabold" data-no-translate>${esc(r.name)}</h2><div class="flex flex-wrap gap-1.5 mt-1"><span class="chip chip-slate">${esc(r.type)}</span><span class="chip chip-slate font-mono" data-no-translate>${esc(r.candidate_id)}</span><span class="chip chip-pink">${r.is_applied_user ? 'Applied candidate' : 'Synthetic demo profile'}</span></div></div>
           <button onclick="closeInsight()" class="text-slate-400 hover:text-slate-700 text-xl font-bold">✕</button></div>
         ${cvAccessBlock}
         <div class="tint tint-teal rounded-2xl p-4 flex items-center gap-4"><div class="ring" style="--p:${r.score};--c:${ringColor(r.score)}"><span>${r.score}%</span></div>
           <div><div class="text-[11px] font-bold text-slate-500">Match for ${esc(scrn.vacancy.title)}</div><span class="chip ${TONE[r.tone]} mt-1">${esc(r.action)}</span></div></div>
 
-        <!-- Trained AI Strategic Talent Fit & Business Contribution Analysis -->
         <div class="tint tint-indigo rounded-2xl p-4 space-y-2.5">
-          <div class="flex items-center justify-between">
-            <div class="text-xs font-extrabold text-indigo-950 flex items-center gap-1.5">
-              <span>🤖</span> <span>Trained AI Strategic Contribution Advisory</span>
-            </div>
-            <span class="chip chip-emerald text-[10px] font-bold">Strategic Fit</span>
-          </div>
-          <div class="text-xs text-slate-700 space-y-2">
-            <div>
-              <b class="text-slate-900">Professional Mastery &amp; Depth:</b>
-              <span class="text-slate-600">${r.score >= 80 ? 'Advanced Senior Specialist with proven execution across complex deliverables.' : 'Competent Practitioner with strong execution agility and high learning velocity.'}</span>
-            </div>
-            <div class="space-y-1">
-              <b class="text-slate-900">Strategic Value to ${esc(user?.role_details?.company_name || 'Our Company')}:</b>
-              <ul class="list-disc pl-4 text-[11px] text-slate-600 space-y-1">
-                <li><b>Immediate Operational Value:</b> Directly fulfills ${esc(r.matched_required.slice(0, 3).join(', ') || 'core role technical requirements')}, minimizing ramp-up time.</li>
-                <li><b>Business Transformation:</b> Applied ability to automate repetitive workflows and streamline department output cycles.</li>
-                <li><b>Cross-Team Synergies:</b> Bridges technical tools with business decision-makers, elevating overall team delivery quality.</li>
-              </ul>
-            </div>
-            <div class="pt-1.5 border-t border-indigo-200/60 text-[11px] text-slate-500 flex items-center justify-between">
-              <span><b>💡 Key Verification Point:</b> Confirm ${(r.to_confirm || []).slice(0, 2).join(' and ') || 'system scalability'} at interview.</span>
-            </div>
-          </div>
-          <div class="pt-2">
-            <button onclick="openInterviewForCandidate('${r.candidate_id}', '${esc(r.name).replace(/'/g, "\\'")}', '${esc(scrn.vacancy.title).replace(/'/g, "\\'")}')" class="btn btn-hr w-full !py-2 text-xs font-bold flex items-center justify-center gap-1.5">
-              <span>📅</span> <span>Invite to Interview (Online / In-Person)</span>
-            </button>
-          </div>
+          <h3 class="text-sm font-extrabold text-indigo-950">Start with evidence, then ask</h3>
+          <p class="text-xs text-slate-600">${esc((r.to_confirm || []).length
+            ? 'Ask for an example of ' + r.to_confirm.slice(0, 2).join(' and ') + '. Missing information is not proof of missing ability.'
+            : 'Ask for an example demonstrating a listed skill. A keyword match does not prove proficiency.')}</p>
+          <p class="text-xs text-slate-500">Matching estimates do not establish seniority, business impact or likelihood of success.</p>
         </div>
-        <div class="space-y-2.5"><div class="text-xs font-extrabold">Why this score</div>${r.breakdown.map(b => `<div><div class="flex justify-between text-[11px] mb-0.5"><span class="font-bold text-slate-600">${b.label}</span><span class="font-extrabold">${b.pts}/${b.max}</span></div><div class="bar teal"><i style="width:${Math.round(100 * b.pts / b.max)}%"></i></div></div>`).join('')}</div>
-        <div><div class="text-xs font-extrabold mb-2">Strengths backed by CV evidence</div><div class="flex flex-wrap gap-1.5">${[...r.matched_required, ...r.matched_preferred].map(s => `<span class="chip chip-emerald">✓ ${esc(s)}</span>`).join('') || '<span class="text-xs text-slate-400">None matched yet</span>'}</div></div>
+        <details class="screening-guide"><summary>How this score is calculated</summary><div class="space-y-2.5">${r.breakdown.map(b => `<div><div class="flex justify-between text-[11px] mb-0.5"><span class="font-bold text-slate-600">${esc(b.label)}</span><span class="font-extrabold">${esc(b.pts)}/${esc(b.max)}</span></div><div class="bar teal"><i style="width:${Math.round(100 * b.pts / b.max)}%"></i></div></div>`).join('')}</div></details>
+        <div><div class="text-xs font-extrabold mb-2">Skills mentioned in the shared profile</div><div class="flex flex-wrap gap-1.5">${[...r.matched_required, ...r.matched_preferred].map(s => `<span class="chip chip-emerald">✓ ${esc(s)}</span>`).join('') || '<span class="text-xs text-slate-400">None matched yet</span>'}</div></div>
         <div class="tint tint-amber rounded-2xl p-4"><div class="text-xs font-extrabold mb-1">To confirm</div><p class="text-[11px] text-slate-600 mb-2">Not on the CV does not mean the candidate cannot do it. Ask first.</p>
-          <div class="flex flex-wrap gap-1.5">${r.to_confirm.map(s => `<span class="chip chip-amber">${esc(s)}</span>`).join('') || '<span class="chip chip-emerald">Everything required is evidenced</span>'}</div></div>
+          <div class="flex flex-wrap gap-1.5">${r.to_confirm.map(s => `<span class="chip chip-amber">${esc(s)}</span>`).join('') || '<span class="chip chip-emerald">No listed gaps</span>'}</div></div>
         <div class="grid grid-cols-2 gap-3 text-xs"><div class="bg-white/80 rounded-xl p-3 border"><div class="text-slate-400 text-[10px] font-bold">Salary expectation</div><div class="font-extrabold">${rm(r.salary_expectation)}</div><div class="text-[11px] text-slate-500">${esc(r.salary_fit)}</div></div>
           <div class="bg-white/80 rounded-xl p-3 border"><div class="text-slate-400 text-[10px] font-bold">Availability · Mode</div><div class="font-extrabold">${esc(r.available_in)}</div><div class="text-[11px] text-slate-500">${r.work_modes.map(esc).join(' / ')} · ${esc(r.location)}</div></div></div>
         <div><div class="text-xs font-extrabold mb-1">Career motivation</div><p class="text-xs text-slate-600" data-no-translate>${esc(r.motivation)}</p></div>

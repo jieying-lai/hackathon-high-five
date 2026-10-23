@@ -38,7 +38,11 @@ const delay = ms => new Promise(r=>setTimeout(r,ms));
       return r.result.value;
     };
     const wait=async expression=>{
-      for(let i=0;i<200;i++){if(await evaluate(expression))return;await delay(100);}
+      for(let i=0;i<200;i++){
+        try{if(await evaluate(expression))return;}
+        catch(error){if(!/navigated or closed|Execution context was destroyed|Cannot find context/.test(error.message))throw error;}
+        await delay(100);
+      }
       throw Error('Timed out: '+expression);
     };
     const click=selector=>evaluate(`document.querySelector(${JSON.stringify(selector)}).click();true`);

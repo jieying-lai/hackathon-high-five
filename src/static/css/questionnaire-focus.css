@@ -1,0 +1,30 @@
+#commonQ .q-card[hidden] { display: none !important; }
+#commonQ:has(.q-card[hidden]) { grid-template-columns: minmax(0, 1fr); max-width: 760px; margin-inline: auto; }
+.questionnaire-focus-controls {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  scroll-margin-top: 100px;
+}
+.questionnaire-focus-controls > div { display: flex; align-items: center; gap: 10px; }
+.questionnaire-focus-controls [role="status"] { font-size: 13px; color: #525c77; font-weight: 700; }
+.questionnaire-focus-controls button {
+  min-height: 44px; padding: 9px 15px; border-radius: 16px;
+  border: 1px solid #ffffffed; background: #ffffffa6; color: #45417c;
+  box-shadow: 0 3px 12px #514e8c0b; font-size: 13px; font-weight: 700;
+  transition: background .16s ease, transform .16s ease;
+}
+.questionnaire-focus-controls button:hover:not(:disabled) { background: white; transform: translateY(-1px); }
+.questionnaire-focus-controls button:focus-visible { outline: 3px solid #695fc5; outline-offset: 3px; }
+.questionnaire-focus-controls button:disabled { opacity: .45; cursor: not-allowed; }
+#commonQ .q-card:not([hidden]) { animation: preference-arrive .18s ease-out; }
+.dashboard-snapshot > summary { padding-block: 16px; }
+.dashboard-snapshot > div { margin-top: 16px; }
+.dashboard-snapshot button:focus-visible { outline: 3px solid #695fc5; outline-offset: 3px; }
+@keyframes preference-arrive { from { opacity: .5; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+@media (prefers-reduced-motion: reduce) {
+  #commonQ .q-card:not([hidden]) { animation: none; }
+  .questionnaire-focus-controls button { transition: none; }
+}

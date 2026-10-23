@@ -12,6 +12,7 @@ import os
 import io
 import json
 import secrets
+import sqlite3
 import uuid
 from datetime import datetime, timezone, timedelta
 from functools import wraps
@@ -31,6 +32,7 @@ except Exception:
 from flask import Flask, jsonify, redirect, render_template, request, send_file, session
 
 import career_pathways
+import career_actions
 import course_recommender
 import learning_impact
 import chatbot_engine
@@ -52,7 +54,7 @@ from market_signals import get_market_signals
 from utils import format_greeting
 
 app = Flask(__name__, template_folder="templates", static_folder="static")
-app.secret_key = os.getenv("FLASK_SECRET_KEY") or secrets.token_hex(32)
+app.secret_key = os.getenv("SESSION_SECRET") or os.getenv("FLASK_SECRET_KEY") or secrets.token_hex(32)
 app.config.update(
     # Pick up edited pages on refresh without enabling the debug server.
     TEMPLATES_AUTO_RELOAD=True,
@@ -120,6 +122,7 @@ init_db()
 hr_engine.init_hr_tables()
 cv_engine.init_cv_tables()
 vault_sharing.init_share_tables()
+career_actions.init_tables()
 
 
 def api_role(role):
@@ -462,6 +465,58 @@ def api_update_password():
 # ------------------------------------------------------------------ Talent Portal APIs
 def _owner():
     return session["user"]["unique_uid"]
+
+
+@app.route("/api/career-actions", methods=["GET", "POST"])
+@api_role("job_seeker")
+def api_career_actions():
+    try:
+        if request.method == "GET":
+            response = jsonify(career_actions.snapshot(_owner()))
+            response.headers["Cache-Control"] = "no-store"
+            return response
+        action = career_actions.create(_owner(), request.get_json(silent=True))
+        return jsonify(ok=True, action=action), 201
+    except career_actions.ActionLimit as exc:
+        return jsonify(ok=False, message=str(exc)), 429
+    except ValueError as exc:
+        return jsonify(ok=False, message=str(exc)), 400
+    except sqlite3.Error:
+        app.logger.exception("Career action storage unavailable")
+        return jsonify(ok=False, message="Your actions could not be loaded or saved. Please retry."), 503
+
+
+@app.route("/api/career-actions/preferences", methods=["PATCH"])
+@api_role("job_seeker")
+def api_career_action_preferences():
+    try:
+        return jsonify(career_actions.preferences(_owner(), request.get_json(silent=True)))
+    except ValueError as exc:
+        return jsonify(ok=False, message=str(exc)), 400
+    except sqlite3.Error:
+        app.logger.exception("Career action preferences unavailable")
+        return jsonify(ok=False, message="Your preferences could not be saved. Please retry."), 503
+
+
+@app.route("/api/career-actions/<identifier>", methods=["PATCH", "DELETE"])
+@api_role("job_seeker")
+def api_career_action_update(identifier):
+    try:
+        if request.method == "DELETE":
+            if not career_actions.remove(_owner(), identifier):
+                return jsonify(ok=False, message="Action not found."), 404
+            return jsonify(ok=True)
+        action = career_actions.update(_owner(), identifier, request.get_json(silent=True))
+        if not action:
+            return jsonify(ok=False, message="Action not found."), 404
+        return jsonify(ok=True, action=action)
+    except career_actions.ActionLimit as exc:
+        return jsonify(ok=False, message=str(exc)), 429
+    except ValueError as exc:
+        return jsonify(ok=False, message=str(exc)), 400
+    except sqlite3.Error:
+        app.logger.exception("Career action update unavailable")
+        return jsonify(ok=False, message="Your action could not be saved. Please retry."), 503
 
 
 @app.route('/api/questionnaire/catalog')

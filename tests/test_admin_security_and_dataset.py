@@ -1,6 +1,8 @@
 """Unit tests for Admin Dataset import, PII security vault, and AI Content Guard."""
 
 import unittest
+import sqlite3
+from unittest.mock import patch
 from src.main import app
 import src.auth_db as auth_db
 import src.cv_dataset_manager as cv_dataset_manager
@@ -49,22 +51,38 @@ class TestAdminSecurityAndDataset(unittest.TestCase):
         self.assertGreaterEqual(s_data["pagination"]["total"], 1)
 
     def test_applications_pagination_and_masking(self):
-        # 1. Fetch applications
-        res = self.client.get("/api/admin/applications?page=1&per_page=15")
-        self.assertEqual(res.status_code, 200)
-        data = res.get_json()
-        self.assertTrue(data["ok"])
-        self.assertGreaterEqual(data["pagination"]["total"], 1)
-        # Verify unmasked by default for admin
-        first_app = data["applications"][0]
-        self.assertFalse(first_app["is_masked"])
-        self.assertNotIn("*", first_app["candidate_name"])
+        # A synthetic, isolated SQL fixture: never require or modify real applications.
+        def connection():
+            conn = sqlite3.connect(":memory:")
+            conn.row_factory = sqlite3.Row
+            conn.executescript("""
+              CREATE TABLE job_applications (id,application_uid,vacancy_id,candidate_uid,candidate_name,
+                salary_expectation,available_in,hr_decision,applied_at,cover_note);
+              CREATE TABLE vacancies (id,title,department,work_mode,location,owner_uid);
+              CREATE TABLE users (unique_uid,full_name,role_details_json);
+              INSERT INTO job_applications VALUES (1,'QA-APP',1,'QA-USER','Test Candidate',
+                NULL,NULL,'Pending','2026-10-23','A spreadsheet project');
+              INSERT INTO vacancies VALUES (1,'Financial Analyst',NULL,NULL,NULL,'QA-HR');
+            """)
+            return conn
 
-        # Verify masked when reveal=0 requested
-        m_res = self.client.get("/api/admin/applications?page=1&per_page=15&reveal=0")
-        m_data = m_res.get_json()
-        self.assertTrue(m_data["applications"][0]["is_masked"])
-        self.assertIn("*", m_data["applications"][0]["candidate_name"])
+        with patch("src.main.auth_db.get_db_connection", side_effect=connection):
+            res = self.client.get("/api/admin/applications?page=1&per_page=15")
+            self.assertEqual(res.status_code, 200)
+            data = res.get_json()
+            self.assertTrue(data["ok"])
+            self.assertEqual(data["pagination"]["total"], 1)
+            first_app = data["applications"][0]
+            self.assertFalse(first_app["is_masked"])
+            self.assertEqual(first_app["candidate_name"], "Test Candidate")
+            self.assertIsNone(first_app["match_score"])
+            self.assertIsNone(first_app["salary_expectation"])
+            self.assertEqual(first_app["company_name"], "Company not specified")
+            m_data = self.client.get("/api/admin/applications?page=1&per_page=15&reveal=0").get_json()
+            self.assertTrue(m_data["applications"][0]["is_masked"])
+            self.assertIn("*", m_data["applications"][0]["candidate_name"])
+            self.assertNotIn("Test Candidate", str(m_data))
+            self.assertNotIn("raw_name", str(m_data))
 
     def test_pii_masking_helpers(self):
         self.assertEqual(mask_email("aisha.rahman@careerlens.my"), "a***n@careerlens.my")

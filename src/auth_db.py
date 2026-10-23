@@ -677,7 +677,7 @@ def list_all_applications(
     items = []
     for r in rows:
         hr_data = json.loads(r["hr_details"] or "{}")
-        company = hr_data.get("company_name") or "Nexus Digital & Finance Sdn Bhd"
+        company = hr_data.get("company_name") or "Company not specified"
         raw_name = r["candidate_name"]
         safety = validate_content(f"{raw_name} {r['cover_note'] or ''} {r['vacancy_title'] or ''}", context="application")
 
@@ -688,18 +688,19 @@ def list_all_applications(
             "vacancy_title": r["vacancy_title"] or "Role Vacancy",
             "company_name": company,
             "department": r["department"] or "General",
-            "location": r["location"] or "Malaysia",
-            "work_mode": r["work_mode"] or "Hybrid",
+            "location": r["location"] or "Not specified",
+            "work_mode": r["work_mode"] or "Not specified",
             "candidate_uid": r["candidate_uid"],
             "candidate_name": mask_name(raw_name) if mask_pii else raw_name,
             "raw_name": raw_name,
-            "salary_expectation": r["salary_expectation"] or 4500,
-            "available_in": r["available_in"] or "Immediate",
+            "salary_expectation": r["salary_expectation"],
+            "available_in": r["available_in"] or "Not specified",
             "hr_decision": r["hr_decision"] or "Pending Review",
             "applied_at": r["applied_at"],
             "ai_safety_status": safety["status"],
             "ai_risk_score": safety["risk_score"],
-            "match_score": 88 if "Financial" in (r["vacancy_title"] or "") else (92 if "Software" in (r["vacancy_title"] or "") else 85),
+            # This listing has no scored application snapshot. Never infer a score from a job title.
+            "match_score": None,
             "is_masked": mask_pii,
         })
 
@@ -720,7 +721,7 @@ def list_all_applications(
     elif sort_by == "applied_at":
         items.sort(key=lambda x: str(x["applied_at"]), reverse=reverse)
     elif sort_by == "match_score":
-        items.sort(key=lambda x: x["match_score"], reverse=reverse)
+        items.sort(key=lambda x: x["match_score"] if x["match_score"] is not None else -1, reverse=reverse)
     else:
         items.sort(key=lambda x: x["id"], reverse=reverse)
 
@@ -734,7 +735,8 @@ def list_all_applications(
     end = start + per_page
 
     return {
-        "applications": items[start:end],
+        # raw_name is an internal search/sort key, never part of a masked API response.
+        "applications": [{key: value for key, value in item.items() if key != "raw_name"} for item in items[start:end]],
         "total": total,
         "page": page,
         "per_page": per_page,

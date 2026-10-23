@@ -1,0 +1,16 @@
+uploads = []
+generated = []
+
+[[outputs]]
+id = "DdwoZtGdnzSpvRg4O2xp_"
+uri = "file://reports/careerlens-market-review-2026-10-23.html"
+type = "html"
+title = "CareerLens 竞争力与商业化审查"
+description = "中文完整报告：本地竞品对比、现实问题、收费假设、核心交互升级、测试范围与商业化前的缺口。附官方来源，手机可阅读。"
+logical_id = "80b302fe-df9a-40d2-8a8a-3af5351050e6"
+content_hash = "sha256:e0f5dc36a44754a69ebb7605bac24d6683400d693864b09bfc85a57bb0d8da1e"
+size = 15321
+mtime_ms = 1792750048702
+storage_uri = "gcs://replit-rams-assets-sisko/rams/assets/repl:65063538-3981-41e4-9322-1409112a1959/80b302fe-df9a-40d2-8a8a-3af5351050e6/a7efdf28-3ab6-4217-8f87-53ef6247f9a4"
+storage_version_token = "1792750201230953"
+content_type = "text/html"

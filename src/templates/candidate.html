@@ -288,6 +288,8 @@
 <link rel="stylesheet" href="/static/css/talent-workspace.css?v=20261024-2" />
 <link rel="stylesheet" href="/static/css/future-radar.css?v=20261024-matrix-1" />
 <link rel="stylesheet" href="/static/css/workspace-aurora.css?v=20261025-2" />
+<link rel="stylesheet" href="/static/css/career-actions.css?v=20261023-actions-1" />
+<link rel="stylesheet" href="/static/css/questionnaire-focus.css?v=20261023-focus-1" />
 <link rel="stylesheet" href="/static/css/atlas-inline.css?v=20261025-inline-1" />
 <script defer src="/static/js/future-radar.js?v=20261024-matrix-1"></script>
 <script src="/static/js/company-insights.js?v=20261023-1"></script>
@@ -438,6 +440,7 @@
               <div data-outline-label="Your career journey" id="journey" class="journey-grid relative mt-6"></div>
             </details>
           </div>
+          <div id="careerActions" data-outline-label="Your next action"></div>
           <nav class="career-quick-actions" aria-label="Career shortcuts">
 <button onclick="showTab('profile')" class="group relative overflow-hidden bg-white/80 backdrop-blur-md border border-indigo-100 hover:border-indigo-300 p-5 rounded-2xl shadow-xs hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
   <div class="flex items-center justify-between mb-2">
@@ -473,6 +476,8 @@
 </button>
 </nav>
 
+          <details class="guided-extra dashboard-snapshot">
+            <summary>Your career snapshot</summary>
           <div data-outline-label="Career snapshot" id="kpis" class="grid grid-cols-2 lg:grid-cols-4 gap-4"></div>
           <div class="grid lg:grid-cols-5 gap-6">
             <div data-outline-label="Top role matches" id="dashTop" class="lg:col-span-3 glass rounded-3xl p-6"></div>
@@ -481,6 +486,7 @@
               <div id="nextStep" class="space-y-3"></div>
             </div>
           </div>
+          </details>
         </section>
 
         <section id="tab-profile" class="tab hidden space-y-6">
@@ -1354,7 +1360,7 @@
           <div class="glass rounded-3xl p-6 flex items-center gap-5">
             <div id="qRing" class="ring"><span>0%</span></div>
             <div class="flex-1">
-              <div class="text-sm font-extrabold">Application Questionnaire &amp; Skill Verification</div>
+              <div class="text-sm font-extrabold">Your preferences &amp; practice</div>
               <div id="qProgText" class="text-xs text-slate-500"></div>
               <div class="bar mt-2"><i id="qBar" style="width:0%"></i></div>
             </div>
@@ -1362,57 +1368,58 @@
           <label id="questionnaireExternalConsentLabel" class="hidden flex gap-2 text-xs text-slate-600"><input id="questionnaireExternalConsent" type="checkbox" onchange="scheduleRoleRecommendation()" />Allow Google Gemini to process my reviewed CV summary, work/project details and questionnaire answers for role suggestions and questions. Optional; local processing sends nothing to Google.</label>
 
           <!-- Dedicated 3 AI Skill Verification Questions Module -->
-          <div class="glass rounded-3xl p-6 space-y-5">
+          <details class="glass rounded-3xl p-5 space-y-5" id="optionalSkillPractice">
+            <summary class="min-h-[44px] cursor-pointer text-sm font-bold">Optional skill practice</summary>
             <div class="flex flex-wrap items-center justify-between gap-3 border-b border-slate-200/70 pb-4">
               <div>
                 <div class="flex items-center gap-2">
-                  <span class="chip chip-indigo">✨ AI Verification</span>
-                  <span class="chip chip-teal">3 Skill Questions</span>
+                  <span class="chip chip-indigo">Skill practice</span>
+                  <span class="chip chip-teal">3 scenarios</span>
                 </div>
-                <h3 class="text-base font-extrabold text-slate-900 mt-1">3 AI Verification Questions</h3>
+                <h3 class="text-base font-extrabold text-slate-900 mt-1">Try a real-world scenario</h3>
               </div>
               <button id="btnGenerate3Q" type="button" onclick="generate3AiVerificationQuestions()" class="btn btn-primary !py-2 !px-4 !text-xs">
-                ⚡ Generate My 3 Questions
+                Try 3 questions
               </button>
             </div>
 
             <div data-outline-label="Skill verification" id="ai3QuestionsContainer" class="space-y-4">
               <div class="text-xs text-slate-400 text-center py-4">
-                Click "Generate My 3 Questions" above to load customized skill verification scenarios.
+                Short practice based on your skills. Feedback is not a qualification.
               </div>
             </div>
 
             <div id="ai3SubmitBox" class="hidden flex items-center justify-between pt-3 border-t border-slate-200/70">
               <span id="ai3StatusMsg" class="text-xs font-bold text-slate-500"></span>
               <button type="button" onclick="submit3AiVerificationAnswers()" class="btn btn-primary !py-2 !px-4 !text-xs">
-                Submit Answers &amp; Get Score →
+                Get practice feedback →
               </button>
             </div>
-          </div>
+          </details>
 
           <!-- Basic Common Questions -->
-          <form data-outline-label="Common questions" id="questionnaireBasics" class="glass rounded-3xl p-6 space-y-6" onsubmit="event.preventDefault();continueQuestionnaire()">
+          <form data-outline-label="Common questions" id="questionnaireBasics" class="glass rounded-3xl p-6 space-y-6" novalidate onsubmit="event.preventDefault();continueQuestionnaire()">
             <div class="flex flex-wrap items-center justify-between gap-3 border-b border-slate-200/70 pb-4">
               <div>
                 <div class="flex items-center gap-2 mb-1">
-                  <span class="chip chip-indigo">📋 Foundation Survey</span>
-                  <span class="chip chip-teal">11 Guided Questions</span>
+                  <span class="chip chip-indigo">Your preferences</span>
                 </div>
-                <h3 class="text-base font-extrabold text-slate-900">CareerLens Core Questionnaire</h3>
-                <p class="text-xs text-slate-500">All fields are required. Select your preferred field first to unlock tailored role suggestions and district options.</p>
+                <h3 class="text-base font-extrabold text-slate-900">What works for you?</h3>
+                <p class="text-xs text-slate-500">Choose to move on. Go back anytime.</p>
               </div>
               <div class="flex items-center gap-2">
                 <span class="text-xs text-slate-400 font-medium hidden sm:inline">⚡ Auto-saved locally</span>
               </div>
             </div>
+            <div id="questionnaireFocusControls" class="questionnaire-focus-controls"></div>
             <div id="commonQ" class="questionnaire-fields"></div>
             <div id="roleRecommendationPanel" class="role-suggestion-panel">
               <div id="roleRecommendationStatus" role="status" aria-live="polite"></div>
               <div id="roleRecommendations"></div>
             </div>
-            <div class="flex flex-wrap items-center justify-between gap-3 pt-4 border-t border-slate-200/70">
+            <div data-questionnaire-submit class="flex flex-wrap items-center justify-between gap-3 pt-4 border-t border-slate-200/70">
               <button type="submit" class="btn btn-primary !py-2.5 !px-6 !text-xs font-bold">
-                💾 Save &amp; Confirm Basic Information →
+                Confirm preferences →
               </button>
             </div>
           </form>
@@ -1677,7 +1684,7 @@
         <div class="flex items-start justify-between gap-3 border-b border-slate-200/70 pb-3">
           <div>
             <div class="flex items-center gap-2">
-              <span class="chip chip-indigo !text-[10px] uppercase tracking-wider font-extrabold">⚡ Verified Fast-Track Apply</span>
+              <span class="chip chip-indigo !text-[10px] uppercase tracking-wider font-extrabold">Review &amp; apply</span>
               <span class="chip chip-teal !text-[10px]">Consent-Gated</span>
             </div>
             <h3 id="amTitle" class="text-xl font-extrabold mt-1 text-slate-900">Apply for Role</h3>
@@ -1703,7 +1710,7 @@
           </div>
           <label class="flex items-start gap-2.5 text-xs text-slate-700 cursor-pointer">
             <input id="amShareOrg" type="checkbox" checked class="mt-0.5 rounded text-teal-600 focus:ring-teal-500" />
-            <span><b>Share verified CV summary</b> (including contact details, matched skills, education, work experience &amp; credentials)</span>
+            <span><b>Share my reviewed CV summary</b> (including contact details, matched skills, education, work experience &amp; credentials)</span>
           </label>
           <label class="flex items-start gap-2.5 text-xs text-slate-700 cursor-pointer">
             <input id="amSharePdf" type="checkbox" class="mt-0.5 rounded text-teal-600 focus:ring-teal-500" />
@@ -2067,6 +2074,7 @@
   <script src="/static/js/learning-path.js?v=20261023-top-celebrations"></script>
   <script src="/static/js/learning-celebrations.js?v=20261023-top-celebrations"></script>
   <script src="/static/js/learning-impact.js?v=20261023-top-celebrations"></script>
+  <script src="/static/js/career-actions.js?v=20261023-actions-1"></script>
   <script src="/static/js/discovery-learning.js?v=20261022-recommendation-route-fix"></script>
   <script src="/static/js/sdg-passport.js?v=20261022-feature-language-4"></script>
   <script src="/static/js/pomodoro.js?v=20261024-inline-phone"></script>
@@ -2074,7 +2082,7 @@
 
   <script src="/static/js/vault-shares.js?v=20261023-1"></script>
   <script src="/static/js/interviews.js?v=20261021-saved-notification"></script>
-  <script src="/static/js/questionnaire.js?v=20261022-language-copy"></script>
+  <script src="/static/js/questionnaire.js?v=20261023-focus-1"></script>
   <script src="/static/js/scenario-slider.js?v=20261021-continuous"></script>
   <script>
     const NAV = [
@@ -2764,7 +2772,7 @@
       pCertifications.value = entryText(st.certifications);
       cvSeekerType.textContent = st.seeker_type || 'Not specified';
       aiHighlights.innerHTML = (st.ai_highlights || []).map(h => `<li class="text-slate-600" data-no-translate>${esc(h)}</li>`).join('');
-      cvReviewHeading.textContent = isReviewed() ? 'Profile Verified & Ready' : 'Review Extracted Profile Information';
+      cvReviewHeading.textContent = isReviewed() ? 'Your reviewed profile' : 'Check your extracted details';
       extractionMethod.textContent = present ? `Extracted via ${(st.extraction_method || 'Smart resume parser')}. Please ensure your details match your experience.` : 'Upload a PDF to extract your structured profile.';
       reviewWarnings.innerHTML = (st.review_warnings || []).map(w => `<li class="text-slate-600">${esc(typeof w === 'string' ? w : w.message || JSON.stringify(w))}</li>`).join('');
       reviewConfirm.checked = false;
@@ -4072,7 +4080,12 @@
     function renderDash() {
       const top = roles[0], role = roles[selected];
       dashHello.textContent = user ? user.full_name : '';
-      dashSub.textContent = analysed ? 'Here is your latest career snapshot.' : 'Complete the steps below to unlock your full plan.';
+      dashSub.textContent = analysed ? 'One useful next step, at your pace.' : 'Start with your story. Explore at your pace.';
+      window.CareerActions?.mount(document.getElementById('careerActions'), {
+        identity: user?.unique_uid, roles, selected, cvReady: Boolean(cvRecord),
+        cvReviewed: isReviewed(), onNavigate: tab => showTab(tab),
+        onRole: index => { selected = index; if (window.planRole) planRole.value = index; },
+      });
       const answered = answeredCount();
       const stepColors = [
         'from-indigo-500 to-indigo-700',
@@ -4090,7 +4103,7 @@
         { label: 'Plan', tab: 'plan', done: visited.has('plan') },
         { label: 'Passport', tab: 'passport', done: visited.has('passport') },
       ];
-      document.getElementById('dashboardChecklistProgress').textContent = `${steps.filter(step => step.done).length} of ${steps.length} complete`;
+      document.getElementById('dashboardChecklistProgress').textContent = `${steps.filter(step => step.done).length} / ${steps.length} checkpoints`;
       journey.innerHTML = `
         <div class="journey-diagram-pipeline flex items-center justify-between gap-2 overflow-x-auto pb-1">
           ${steps.map((s, i) => `
@@ -4100,7 +4113,7 @@
                   <span class="inline-flex items-center justify-center h-6 w-6 rounded-lg text-[11px] font-black shrink-0 ${s.done ? 'bg-emerald-500 text-white shadow-xs' : 'bg-indigo-600 text-white shadow-xs'}">${s.done ? '✓' : '0' + (i + 1)}</span>
                   <div class="min-w-0">
                     <div class="text-xs font-black truncate text-slate-800 group-hover:text-indigo-600 transition">${s.label}</div>
-                    ${s.done ? '<div class="text-[10px] text-emerald-700">Complete</div>' : ''}
+                     ${s.done ? `<div class="text-[10px] text-emerald-700">${i < 2 ? 'Reviewed' : 'Viewed'}</div>` : ''}
                   </div>
                 </div>
               </button>
@@ -4112,7 +4125,7 @@
       
       const kpiItems = [
         {
-          title: 'Best match',
+          title: 'Profile alignment',
           val: top ? top.match_score + '%' : '—',
           sub: top ? esc(top.title) : 'Run analysis',
           icon: '🎯',
@@ -4130,13 +4143,13 @@
           hint: 'Open reskilling plan →',
         },
         {
-          title: 'Learning hours',
+          title: 'Estimated learning',
           val: role ? role.estimated_total_hours : '—',
-          sub: 'verified courses',
+          sub: 'catalog hours, not a deadline',
           icon: '⏱️',
           theme: 'amber',
           tab: 'discover',
-          hint: 'Explore verified catalog →',
+          hint: 'Explore learning →',
         },
         {
           title: 'Questionnaire',
@@ -4529,7 +4542,7 @@
 
         if (window.planStats) {
             planStats.innerHTML = `
-                <span class="chip chip-amber">⏳ ${r.estimated_total_hours || 40} hours</span>
+                <span class="chip chip-amber">${r.estimated_total_hours == null ? 'Hours not specified' : esc(r.estimated_total_hours) + ' estimated hours'}</span>
                 <span class="chip chip-indigo">${(r.ordered_pathway || []).length} mapped courses</span>
             `;
         }
@@ -4709,8 +4722,8 @@ async function generate3AiVerificationQuestions() {
     const container = document.getElementById('ai3QuestionsContainer');
 
     btn.disabled = true;
-    btn.innerHTML = "⏳ Generating...";
-    container.innerHTML = `<div class="text-xs text-indigo-600 font-bold text-center py-6">Analyzing CV and generating 3 targeted verification scenarios...</div>`;
+    btn.textContent = "Preparing…";
+    container.innerHTML = `<div role="status" class="text-xs text-indigo-600 font-bold text-center py-6">Preparing your practice scenarios…</div>`;
 
     try {
         const res = await postJson('/api/questionnaire/generate-3-verification-questions', {
@@ -4722,7 +4735,7 @@ async function generate3AiVerificationQuestions() {
             generatedVerificationQ = res.data.questions;
             render3AiQuestions(generatedVerificationQ, res.data.provider);
             document.getElementById('ai3SubmitBox').classList.remove('hidden');
-            toast("3 AI Verification questions successfully generated!");
+            toast("Your practice questions are ready.");
         } else {
             container.innerHTML = `<div class="text-xs text-rose-600 font-bold text-center py-4">Failed to generate questions. Please try again.</div>`;
         }
@@ -4730,13 +4743,13 @@ async function generate3AiVerificationQuestions() {
         container.innerHTML = `<div class="text-xs text-rose-600 font-bold text-center py-4">Network error while generating questions.</div>`;
     } finally {
         btn.disabled = false;
-        btn.innerHTML = "⚡ Regenerate Questions";
+        btn.textContent = "Try different questions";
     }
 }
 
 function render3AiQuestions(questions, provider) {
     const container = document.getElementById('ai3QuestionsContainer');
-    const badge = provider ? `<div class="flex items-center justify-between pb-1 text-[11px] text-indigo-600 font-semibold"><span>🎯 Role-tailored Competency Scenarios</span><span class="chip chip-emerald !text-[9px] font-mono">⚡ ${esc(provider)}</span></div>` : '';
+    const badge = provider ? `<div class="flex flex-wrap items-center justify-between gap-2 pb-1 text-[11px] text-indigo-600 font-semibold"><span>Practice, not certification</span><span class="chip chip-indigo !text-[10px]">${esc(provider)}</span></div>` : '';
     container.innerHTML = badge + questions.map((q, idx) => `
         <div class="tint tint-indigo rounded-2xl p-4 space-y-2 border border-indigo-100">
             <div class="flex items-center justify-between">
@@ -4756,8 +4769,16 @@ async function submit3AiVerificationAnswers() {
     });
 
     const statusMsg = document.getElementById('ai3StatusMsg');
-    statusMsg.textContent = "⏳ Submitting answers...";
+    if (!answers.length || answers.some(item => !item.answer.trim())) {
+        statusMsg.textContent = "Add an answer to each scenario first.";
+        return;
+    }
+    const button = document.querySelector('#ai3SubmitBox button');
+    if (button.disabled) return;
+    button.disabled = true;
+    statusMsg.textContent = "Preparing feedback…";
 
+    try {
     const res = await postJson('/api/questionnaire/submit-3-verification-answers', { 
         answers,
         target_role: (document.getElementById('pRole') ? pRole.value : '') || "Professional",
@@ -4769,13 +4790,18 @@ async function submit3AiVerificationAnswers() {
         if (res.data.feedback) {
             feedbackHtml = `<p class="text-[11px] text-slate-600 font-medium mt-1 leading-snug">${esc(res.data.feedback)}</p>`;
         }
-        statusMsg.innerHTML = `<span class="text-emerald-600 font-bold">✅ Verification score: ${res.data.verification_score}/100</span>${feedbackHtml}`;
+        statusMsg.innerHTML = `<span class="text-indigo-700 font-bold">Practice feedback: ${esc(res.data.verification_score)}/100</span><p class="text-xs text-slate-500">A practice indicator, not verified competency or a hiring score.</p>${feedbackHtml}`;
         if (typeof saveUserWorkspaceProgress === 'function') {
             saveUserWorkspaceProgress('ai_verification_complete', res.data);
         }
-        toast("Verification answers evaluated!");
+        toast("Your practice feedback is ready.");
     } else {
         statusMsg.innerHTML = `<span class="text-rose-600 font-bold">❌ Submission failed. Try again.</span>`;
+    }
+    } catch (_) {
+        statusMsg.textContent = "Could not get feedback. Your answers are still here. Try again.";
+    } finally {
+        button.disabled = false;
     }
 }
 </script>

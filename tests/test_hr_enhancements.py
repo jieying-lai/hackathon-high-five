@@ -60,12 +60,13 @@ class TestHrEnhancements(unittest.TestCase):
         self.assertIn("renderScreeningNavigation", html)
         self.assertIn("screening-nav", html)
 
-        # 3. Decision Status Legend with 4 color badges
-        self.assertIn("HR Decision Status Legend", html)
-        self.assertIn("🟡 Pending", html)
-        self.assertIn("🟢 Shortlist", html)
-        self.assertIn("🔵 Needs Review", html)
-        self.assertIn("⚪ Hold", html)
+        # 3. Concise disclosure plus explicit human decisions, not decorative badges.
+        self.assertIn("screening-guide", html)
+        self.assertIn("screenReview", html)
+        self.assertIn("confirmScreenDecision", html)
+        self.assertIn("browser-only", html)
+        for status in ("Pending", "Shortlist", "Needs review", "Hold"):
+            self.assertIn(status, html)
 
         # 4. Chart.js & Analytics
         self.assertIn("chart.js", html.lower())

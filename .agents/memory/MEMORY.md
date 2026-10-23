@@ -2,3 +2,4 @@
 - [Guided discovery scope](guided-discovery-scope.md) — simple homepage and one-primary-action quiz journey; conversational CV collection precedes login.
 - [Market evidence boundaries](market-evidence-boundaries.md) — keep measured observations, source freshness and geography separate from hypothetical future learning priorities.
 - [Workspace visual direction](workspace-visual-direction.md) — aurora gradients, soft pixel texture and clear glass across talent and employer; not dominant green/sage.
+- [Outcome-focused interactions](outcome-focused-interactions.md) — prioritize real, reversible actions over ornamental engagement; private reflections are not certified skills or hiring evidence.

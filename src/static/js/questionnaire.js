@@ -1,4 +1,7 @@
 let questionnaireCatalog = null;
+let questionnaireFocusId = null;
+let questionnaireFocusMode = true;
+let questionnaireDraftSaved = true;
 const ansKey = () => `cl_answers_${user ? user.unique_uid : 'guest'}`;
 
 function questionnaireFieldDefinitions() {
@@ -23,8 +26,8 @@ function questionnaireOptions(id) {
 }
 
 function persistQuestionnaireAnswers() {
-  try { localStorage.setItem(ansKey(), JSON.stringify(answers)); }
-  catch (_) { document.getElementById('qProgText').textContent = 'Your browser could not save this draft. Keep this page open.'; }
+  try { localStorage.setItem(ansKey(), JSON.stringify(answers)); questionnaireDraftSaved = true; }
+  catch (_) { questionnaireDraftSaved = false; }
 }
 
 async function loadQuestionnaireCatalog() {
@@ -72,6 +75,10 @@ function setAnswer(id, value) {
   }
   persistQuestionnaireAnswers();
   updateQProgress();
+  if (questionnaireFocusMode && id === questionnaireFocusId &&
+      questionnaireFieldDefinitions().find(q => q.id === id)?.type !== 'text' && value) {
+    moveQuestionnaireFocus(1);
+  }
 }
 
 function updateQProgress() {
@@ -79,110 +86,66 @@ function updateQProgress() {
   const done = answeredCount(), pct = Math.min(100, Math.round(100 * done / total));
   document.getElementById('qRing').style.setProperty('--p', pct);
   document.querySelector('#qRing span').textContent = pct + '%';
-  document.getElementById('qProgText').textContent = `${done} of ${total} answered · draft saved on this device`;
+  document.getElementById('qProgText').textContent = `${done} / ${total} answered · ${questionnaireDraftSaved ? 'saved on this device' : 'not saved — keep this page open'}`;
   document.getElementById('qBar').style.width = pct + '%';
 }
 
 const QUESTION_META = {
-  c1: { icon: '🎓', category: 'Career Stage', hint: 'Calibrates role seniority, expected learning curves, and benchmark percentiles.' },
-  cField: { icon: '🏢', category: 'Target Industry', hint: 'Unlocks tailored roles, industry competencies, and local salary brackets.' },
-  c2: { icon: '💼', category: 'Target Role', hint: 'Your target occupation for AI gap analysis and relevant nearby openings.' },
-  c3: { icon: '⚡', category: 'Career Motivation', hint: 'Helps match company culture and growth opportunities with your priorities.' },
+  c1: { icon: '🎓', category: 'Career Stage', hint: 'Choose the stage closest to yours.' },
+  cField: { icon: '🏢', category: 'Target Industry', hint: 'Which field would you like to explore?' },
+  c2: { icon: '💼', category: 'Target Role', hint: 'A direction to explore, not a commitment.' },
+  c3: { icon: '⚡', category: 'Career Motivation', hint: 'What matters most in your next move?' },
   cState: { icon: '📍', category: 'Location / State', hint: 'Sets your geographic focal point across Malaysia.' },
   c4: { icon: '🗺️', category: 'District / Area', hint: 'Narrows down local commute radius and employer cluster proximity.' },
   cAreaOther: { icon: '✍️', category: 'Specific Area', hint: 'Type your specific town or township name.' },
   cMode: { icon: '🌐', category: 'Workplace Mode', hint: 'Specify your ideal balance between on-site and remote flexibility.' },
-  c5: { icon: '💰', category: 'Expected Salary', hint: 'Compared anonymously with current market medians and employer budgets.' },
+  c5: { icon: '💰', category: 'Expected Salary', hint: 'Your preferred range, not a salary forecast.' },
   c6: { icon: '⏱️', category: 'Availability', hint: 'Informs hiring teams of your transition timeline and notice period.' },
   c7: { icon: '🤝', category: 'Work Style', hint: 'Aligns your autonomous vs. team collaboration preferences.' },
   c8: { icon: '🎯', category: '3–5 Year Horizon', hint: 'Guides AI to recommend upskilling pathways and leadership milestones.' },
 };
 
 function formatOptionDisplay(qId, val) {
-  if (!val) return '';
-  const MAPS = {
-    c1: {
-      'Fresh Graduate': '🎓 Fresh Graduate / Entry Level',
-      'Working Professional': '💼 Working Professional / Experienced',
-      'Career Changer': '🔄 Career Changer / Domain Transition',
-    },
-    cField: {
-      'Finance & Accounting': '📊 Finance & Accounting',
-      'IT & Software': '💻 IT & Software Engineering',
-      'Marketing & PR': '📢 Marketing, PR & Digital Media',
-      'HR & Administration': '👥 HR, Talent & Office Administration',
-      'Engineering': '⚙️ Engineering & Manufacturing',
-      'Healthcare': '🏥 Healthcare & Life Sciences',
-      'Education & EdTech': '📚 Education & EdTech',
-      'Supply Chain & Logistics': '🚚 Supply Chain & Logistics',
-      'ESG & Sustainability': '🌱 ESG & Renewable Energy',
-      'General': '🎯 General Management & Operations',
-      'Others': '✨ Other Specialized Fields',
-    },
-    c3: {
-      'Use my current skills': '⚡ Leverage & deepen existing core expertise',
-      'Career growth': '📈 Accelerate advancement & career seniority',
-      'Better salary': '💰 Maximize compensation & financial rewards',
-      'Career change': '🚀 Pivot into a high-growth domain',
-      'Interest in this profession': '❤️ Genuine passion & long-term dedication',
-    },
-    cState: {
-      'W.P. Kuala Lumpur': '🏙️ W.P. Kuala Lumpur',
-      'Selangor': '🏡 Selangor',
-      'Penang': '🌊 Penang (Pulau Pinang)',
-      'Johor': '🌴 Johor',
-      'Perak': '⛰️ Perak',
-      'Melaka': '🏛️ Melaka',
-      'Negeri Sembilan': '🌳 Negeri Sembilan',
-      'Pahang': '🌲 Pahang',
-      'Kedah': '🌾 Kedah',
-      'Kelantan': '🕌 Kelantan',
-      'Terengganu': '🏖️ Terengganu',
-      'Perlis': '☀️ Perlis',
-      'Sabah': '🏔️ Sabah (East Malaysia)',
-      'Sarawak': '🦜 Sarawak (East Malaysia)',
-      'W.P. Putrajaya': '🏛️ W.P. Putrajaya',
-      'W.P. Labuan': '🚢 W.P. Labuan',
-    },
-    cMode: {
-      'Hybrid': '🏢 / 🏠 Hybrid (Office + Remote Flexibility)',
-      'On-site': '🏢 On-site / Office Collaboration',
-      'Remote': '🏠 100% Remote-First / Work From Anywhere',
-    },
-    c5: {
-      'Below RM 3,000': '💵 Below RM 3,000 / Entry Bracket',
-      'RM 3,000 – 4,000': '💵 RM 3,000 – RM 4,000',
-      'RM 4,000 – 6,000': '💵 RM 4,000 – RM 6,000',
-      'RM 6,000 – 8,000': '💵 RM 6,000 – RM 8,000',
-      'RM 8,000+': '💎 RM 8,000+ / Senior Tier',
-      'Prefer to discuss': '💬 Open / Negotiable upon offer',
-    },
-    c6: {
-      'Immediately': '⚡ Immediately Available / Ready to Start',
-      '2 weeks': '⏱️ 2 Weeks Notice Period',
-      '1 month': '📅 1 Month Notice Period (Standard)',
-      '2+ months': '🗓️ 2+ Months / Extended Notice',
-    },
-    c7: {
-      'Independent work': '🎯 Autonomous & Deep Solo Ownership',
-      'Team work': '🤝 Highly Collaborative & Cross-Functional Team',
-      'A mix of both': '⚖️ Balanced (Independent Drive + Team Sync)',
-    },
-    c8: {
-      'Develop specialist expertise': '🏆 Senior Subject Matter Expert (SME)',
-      'Move into management': '👥 People Leadership & Team Management',
-      'Change career field': '🧭 Transition to Emerging Disciplines',
-      'Start a business': '🚀 Launch Venture / Entrepreneurship',
-      'Still exploring': '🔭 Exploring Diverse High-Growth Paths',
-    },
-  };
+  return String(val ?? '');
+}
 
-  if (MAPS[qId] && MAPS[qId][val]) return MAPS[qId][val];
-  if (qId === 'c2') return `💼 ${val}`;
-  if (qId === 'c4') return val === 'Other area' ? '📍 Other area (Specify below)' : `📍 ${val}`;
-  if (qId === 'cField' && (!MAPS.cField || !MAPS.cField[val])) return `🏢 ${val}`;
-  if (qId === 'cState' && (!MAPS.cState || !MAPS.cState[val])) return `📍 ${val}`;
-  return val;
+function applyQuestionnaireFocus() {
+  const definitions = questionnaireFieldDefinitions();
+  if (!definitions.some(q => q.id === questionnaireFocusId)) {
+    questionnaireFocusId = definitions.find(q => !answers[q.id])?.id || definitions[0]?.id;
+  }
+  const index = definitions.findIndex(q => q.id === questionnaireFocusId);
+  document.querySelectorAll('#commonQ .q-card').forEach(card => {
+    card.hidden = questionnaireFocusMode && card.dataset.questionId !== questionnaireFocusId;
+  });
+  const controls = document.getElementById('questionnaireFocusControls');
+  if (controls) controls.innerHTML = `
+    <div><span role="status" aria-live="polite">${questionnaireFocusMode ? `${index + 1} / ${definitions.length}` : 'All preferences'}</span>
+      <button type="button" onclick="toggleQuestionnaireFocus()">${questionnaireFocusMode ? 'See all' : 'One at a time'}</button></div>
+    ${questionnaireFocusMode ? `<div><button type="button" onclick="moveQuestionnaireFocus(-1)" ${index <= 0 ? 'disabled' : ''}>Back</button>
+      ${index < definitions.length - 1 ? '<button type="button" onclick="moveQuestionnaireFocus(1)">Next →</button>' : ''}</div>` : ''}`;
+  document.querySelector('[data-questionnaire-submit]')?.classList.toggle(
+    'hidden', questionnaireFocusMode && index < definitions.length - 1);
+}
+
+function toggleQuestionnaireFocus() {
+  questionnaireFocusMode = !questionnaireFocusMode;
+  applyQuestionnaireFocus();
+}
+
+function moveQuestionnaireFocus(direction) {
+  const definitions = questionnaireFieldDefinitions();
+  const index = definitions.findIndex(q => q.id === questionnaireFocusId);
+  const input = document.getElementById('question-' + questionnaireFocusId);
+  if (direction > 0 && (!input || input.disabled || !input.reportValidity())) return;
+  questionnaireFocusId = definitions[Math.max(0, Math.min(definitions.length - 1, index + direction))]?.id;
+  applyQuestionnaireFocus();
+  if (current === 'quest') {
+    document.getElementById('question-' + questionnaireFocusId)?.focus({preventScroll: true});
+    document.getElementById('questionnaireFocusControls')?.scrollIntoView({
+      block: 'start', behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth',
+    });
+  }
 }
 
 function renderQuestionnaire() {
@@ -202,7 +165,7 @@ function renderQuestionnaire() {
       ? `<input id="question-${q.id}" name="${q.id}" type="text" minlength="2" maxlength="100" required class="input" value="${esc(value)}" placeholder="e.g. Subang Jaya, Bayan Lepas" oninput="setAnswer('${q.id}',this.value)" />`
       : `<select id="question-${q.id}" name="${q.id}" class="input" required ${disabled ? 'disabled' : ''} onchange="setAnswer('${q.id}',this.value)"><option value="">${disabled ? (q.id === 'c2' ? '👉 Choose the field above first' : '👉 Choose the state above first') : 'Select an option…'}</option>${questionnaireOptions(q.id).map(option => `<option value="${esc(option)}" ${option === value ? 'selected' : ''}>${esc(formatOptionDisplay(q.id, option))}</option>`).join('')}</select>`;
 
-    return `<div class="q-card ${isAnswered ? 'q-card-answered' : ''} ${disabled ? 'q-card-disabled' : ''}">
+    return `<div data-question-id="${q.id}" class="q-card ${isAnswered ? 'q-card-answered' : ''} ${disabled ? 'q-card-disabled' : ''}">
       <div class="q-card-header">
         <span class="q-card-badge">${meta.icon} ${esc(meta.category)}</span>
         <span class="q-card-status">${disabled ? '🔒 Dependent' : isAnswered ? '✓ Answered' : 'Required'}</span>
@@ -218,13 +181,26 @@ function renderQuestionnaire() {
   }).join('');
   document.getElementById('question-c2').parentElement.append(recommendationPanel);
   updateQProgress();
+  applyQuestionnaireFocus();
+  document.getElementById('question-cAreaOther')?.addEventListener('keydown', event => {
+    if (questionnaireFocusMode && event.key === 'Enter') {
+      event.preventDefault();
+      moveQuestionnaireFocus(1);
+    }
+  });
   scheduleRoleRecommendation();
 }
 
 function continueQuestionnaire() {
   if (!questionnaireCatalog) return;
   const form = document.getElementById('questionnaireBasics');
-  if (!form.reportValidity()) return;
+  const invalid = Array.from(form.elements).find(input => input.willValidate && !input.validity.valid);
+  if (invalid) {
+    questionnaireFocusId = invalid.name;
+    applyQuestionnaireFocus();
+    invalid.reportValidity();
+    return;
+  }
   persistQuestionnaireAnswers();
   updateQProgress();
   toast('Basic information saved on this device.');
