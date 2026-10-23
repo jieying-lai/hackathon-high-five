@@ -7,6 +7,7 @@ async function check(language){
  vm.createContext(context);vm.runInContext(fs.readFileSync('src/static/interview-room/app.js','utf8'),context);
  await new Promise(resolve=>setImmediate(resolve));assert.equal(el('setup').open,true);assert.equal(el('interviewLanguage').value,language);assert(el('application').innerHTML.includes('&lt;Company&gt;'));el('application').value='0';el('application').onchange();assert.equal(el('company').value,application.company_name);assert.equal(el('customRole').value,'Frontend Developer');
  el('interviewLanguage').value=language;el('level').value='Entry level';el('jd').value='Build tested, accessible websites.';el('setupForm').onsubmit({preventDefault(){}});assert.equal(el('studio').hidden,false);assert.equal(el('answerPanel').hidden,false);assert.equal(el('feedbackPanel').hidden,false);assert(el('question').textContent.includes('Frontend Developer'));
+ el('answer').value='Draft kept while changing settings';el('changeSession').onclick();assert.equal(el('setup').open,true);el('closeSetup').onclick();assert.equal(el('setup').open,false);assert.equal(el('answer').value,'Draft kept while changing settings');
  el('answer').value='';el('submitAnswer').onclick();assert.equal(el('answer').readOnly,false);
  for(let i=0;i<6;i++){
   el('answer').value=i===1?(language==='zh'?'我不会 React。':"I have no experience with React."):(language==='zh'?'我在项目中负责这个任务，先确认问题，再进行测试，最后完成交付。':'In a real project I clarified the goal, tested the change, and delivered the result.');

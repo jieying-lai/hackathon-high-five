@@ -15,7 +15,7 @@
   const key='cl_interview_buddy_position_v1';
   function language(){return document.getElementById('uiLanguage')?.value||document.documentElement.lang||'en';}
   function label(){const cn=language().startsWith('zh');buddy.querySelector('.interview-buddy-label').textContent=cn?'模拟面试':'Interview Buddy';buddy.setAttribute('aria-label',cn?'打开模拟面试。拖动或使用方向键移动。':'Open interview simulator. Drag or use arrow keys to move.');buddy.querySelector('.interview-buddy-tip').innerHTML=cn?'练习下一场面试<br><small>拖动移动 · 点击打开</small>':'Practice your next interview<br><small>Drag to move · Click to open</small>';}
-  function open(){if(buddy.hidden||modal.open)return;opener=document.activeElement;if(!frame.hasAttribute('src'))frame.src='/static/interview-room/index.html?v=20261023-5&lang='+encodeURIComponent(language());modal.showModal();frame.contentWindow?.postMessage({type:'careerlens-interview-resume'},location.origin);close.focus();}
+  function open(){if(buddy.hidden||modal.open)return;opener=document.activeElement;if(!frame.hasAttribute('src'))frame.src='/static/interview-room/index.html?v=20261023-7&lang='+encodeURIComponent(language());modal.showModal();frame.contentWindow?.postMessage({type:'careerlens-interview-resume'},location.origin);close.focus();}
   function shut(){if(modal.open)modal.close();}
   close.addEventListener('click',shut);
   modal.addEventListener('close',()=>{frame.contentWindow?.postMessage({type:'careerlens-interview-pause'},location.origin);opener?.focus();});
