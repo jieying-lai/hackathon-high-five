@@ -273,6 +273,35 @@ def _build_pdf_bytes(spec: dict) -> bytes:
     return bytes(pdf.output())
 
 
+def _clean_str(s: str) -> str:
+    if not isinstance(s, str):
+        return ""
+    s = s.replace("’", "'").replace("‘", "'").replace("“", '"').replace("”", '"').replace("—", "-").replace("–", "-")
+    return s.encode("latin-1", "replace").decode("latin-1")
+
+
+def build_interactive_profile_pdf(spec: dict) -> bytes:
+    """Build a valid synthetic PDF resume bytes from interactive companion Q&A."""
+    cleaned = {
+        "name": _clean_str(spec.get("name", "Candidate")),
+        "role": _clean_str(spec.get("role", "Professional")),
+        "industry": _clean_str(spec.get("industry", "Technology & Innovation")),
+        "years": _clean_str(spec.get("years", "1-2 Years")),
+        "email": _clean_str(spec.get("email", "candidate@careerlens.ai")),
+        "phone": _clean_str(spec.get("phone", "+60 12-345 6789")),
+        "location": _clean_str(spec.get("location", "Kuala Lumpur, Malaysia")),
+        "work_mode": _clean_str(spec.get("work_mode", "Hybrid")),
+        "summary": _clean_str(spec.get("summary", "")),
+        "experience": [_clean_str(x) for x in spec.get("experience", []) if _clean_str(x)] or ["Led key project initiatives, collaborating across teams to deliver measurable outcomes."],
+        "education": [_clean_str(x) for x in spec.get("education", []) if _clean_str(x)] or ["Bachelor's Degree / Professional Diploma in Related Discipline"],
+        "certifications": [_clean_str(x) for x in spec.get("certifications", []) if _clean_str(x)] or ["CareerLens AI Future-Ready Workforce Verified"],
+        "projects": [_clean_str(x) for x in spec.get("projects", []) if _clean_str(x)] or ["CareerLens AI Portfolio: Domain project delivering measurable operational improvements."],
+        "skills": [_clean_str(x) for x in spec.get("skills", []) if _clean_str(x)] or ["Communication", "Problem Solving", "Adaptability"],
+    }
+    return _build_pdf_bytes(cleaned)
+
+
+
 def ensure_sample_pdfs() -> list[dict]:
     """Ensure synthetic sample PDFs exist in `static/sample_cvs/` and return metadata."""
     os.makedirs(SAMPLE_PDF_DIR, exist_ok=True)

@@ -480,3 +480,27 @@
   border-radius: 1.15rem;
   padding: 1.15rem;
 }
+
+
+/* ==========================================================================
+   Spirit Animal Career Companion Onboarding Studio Styles
+   ========================================================================== */
+.btn-companion-mode {
+  cursor: pointer;
+  border-radius: 0.75rem;
+  font-weight: 800;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.btn-companion-mode:hover {
+  transform: translateY(-1px);
+}
+
+.animate-bounce-subtle {
+  animation: bounce-subtle 3s ease-in-out infinite;
+}
+
+@keyframes bounce-subtle {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}

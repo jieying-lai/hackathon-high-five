@@ -279,10 +279,10 @@
 <link rel="stylesheet" href="/static/css/reskilling-plan.css?v=20261021-green-completion" />
 <link rel="stylesheet" href="/static/css/learning-controls.css?v=20261021-single-replacement" />
 <link rel="stylesheet" href="/static/css/learning-impact.css?v=20261023-top-celebrations" />
-<link rel="stylesheet" href="/static/css/career-spirit-totems.css?v=20261023-4" />
-<link rel="stylesheet" href="/static/css/career-earth.css?v=20261023-4" />
-<link rel="stylesheet" href="/static/css/aurora-experience.css?v=20261023-4" />
-<script defer src="/static/js/aurora-experience.js?v=20261023-4"></script>
+<link rel="stylesheet" href="/static/css/career-spirit-totems.css?v=20261023-5" />
+<link rel="stylesheet" href="/static/css/career-earth.css?v=20261023-5" />
+<link rel="stylesheet" href="/static/css/aurora-experience.css?v=20261023-5" />
+<script defer src="/static/js/aurora-experience.js?v=20261023-5"></script>
 <link rel="stylesheet" href="/static/css/company-insights.css?v=20261023-1" />
 <script src="/static/js/company-insights.js?v=20261023-1"></script>
 </head>
@@ -605,18 +605,135 @@
             </div>
           </div>
         </section>
-        <section id="tab-cv-upload" class="tab hidden space-y-6">
+                <section id="tab-cv-upload" class="tab hidden space-y-6">
 
           <nav class="growth-navigation" data-profile-navigation aria-label="My Profile"></nav>
-          <p class="text-sm text-slate-600">Upload a PDF, then continue to the separate review page to check and edit the extracted details.</p>
 
+          <!-- Spirit Animal Career Companion Guide Banner -->
+          <div id="companionCvHeader" class="p-6 sm:p-7 rounded-3xl bg-gradient-to-r from-slate-900 via-indigo-950 to-slate-900 text-white border border-indigo-400/30 shadow-xl relative overflow-hidden">
+            <div class="absolute -right-6 -bottom-6 w-56 h-56 rounded-full bg-teal-500/15 blur-3xl pointer-events-none"></div>
+            <div class="flex flex-col sm:flex-row items-center sm:items-start gap-5 relative z-10">
+              <div class="relative shrink-0">
+                <div class="w-24 h-24 sm:w-28 sm:h-28 rounded-3xl bg-white/10 backdrop-blur-md border-2 border-teal-400/50 p-2.5 grid place-items-center shadow-2xl hover:scale-105 transition-transform duration-300">
+                  <img id="companionAvatarImg" src="/static/illustrations/totem_characters/retriever.svg" alt="Career Companion" class="w-full h-full object-contain filter drop-shadow" />
+                </div>
+                <span id="companionRolePill" class="absolute -bottom-2 -right-2 text-[10px] font-mono font-black bg-teal-400 text-slate-950 px-2 py-0.5 rounded-full shadow">✦ Companion</span>
+              </div>
+              <div class="space-y-2.5 flex-1 text-center sm:text-left min-w-0">
+                <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-teal-500/20 text-teal-300 text-xs font-mono font-bold">
+                  <span>💬</span><span id="companionBadgeName">The Solar Golden Retriever</span>
+                </div>
+                <h3 id="companionGreetingTitle" class="text-lg sm:text-2xl font-black text-white tracking-tight">
+                  "Hand me your CV or let's chat to build your story!"
+                </h3>
+                <p id="companionGreetingBody" class="text-xs sm:text-sm text-slate-300 leading-relaxed max-w-2xl">
+                  Whether you have a polished PDF resume ready or prefer sharing your superpowers through a friendly 2-minute chat, I will synthesize your strengths into a verified, future-ready profile.
+                </p>
+                <!-- Mode Switcher Tabs -->
+                <div class="flex flex-wrap items-center justify-center sm:justify-start gap-2.5 pt-2">
+                  <button type="button" id="btnModeQa" onclick="setUploadMode('qa')" class="btn-companion-mode active px-4 py-2 rounded-xl text-xs font-black transition-all flex items-center gap-2 bg-gradient-to-r from-teal-500 to-indigo-600 text-white shadow-md">
+                    <span>💬</span><span>Interactive Q&amp;A Chat</span>
+                  </button>
+                  <button type="button" id="btnModePdf" onclick="setUploadMode('pdf')" class="btn-companion-mode px-4 py-2 rounded-xl text-xs font-black transition-all flex items-center gap-2 bg-white/10 hover:bg-white/20 text-slate-200 border border-white/15">
+                    <span>📄</span><span>Upload PDF Resume</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
 
+          <!-- Mode A: Interactive Q&A Profile Synthesizer Panel -->
+          <div id="panelUploadQa" class="glass rounded-3xl p-6 sm:p-8 space-y-6 border-2 border-indigo-100 shadow-sm fade-in">
+            <div class="flex flex-wrap items-center justify-between gap-3 border-b border-slate-200/80 pb-3">
+              <div>
+                <h4 class="text-base font-black text-slate-900 flex items-center gap-2">
+                  <span>🪄</span><span>Interactive Profile Synthesizer</span>
+                </h4>
+                <p class="text-xs text-slate-500 mt-0.5">Answer 4 quick prompts—your companion will format, structure, and assemble your CV.</p>
+              </div>
+              <span class="chip chip-teal !text-xs font-bold">Instant Companion Synthesis</span>
+            </div>
 
+            <!-- Question 1: Role / Target Position -->
+            <div class="space-y-2">
+              <label class="text-xs font-black text-slate-800 flex items-center justify-between">
+                <span>1. Target Role or Current Profession:</span>
+                <span class="text-[10px] text-indigo-600 font-bold">Tap to quick-fill ↓</span>
+              </label>
+              <input type="text" id="qaRole" class="input w-full font-bold text-slate-800" placeholder="e.g. Full Stack Software Engineer / Product Manager" />
+              <div class="flex flex-wrap gap-1.5 pt-1" id="roleSuggestions">
+                <button type="button" onclick="fillQaRole('Software Engineer')" class="chip chip-soft hover:chip-indigo text-xs">Software Engineer</button>
+                <button type="button" onclick="fillQaRole('AI / Machine Learning Engineer')" class="chip chip-soft hover:chip-indigo text-xs">AI / ML Engineer</button>
+                <button type="button" onclick="fillQaRole('Product Manager')" class="chip chip-soft hover:chip-indigo text-xs">Product Manager</button>
+                <button type="button" onclick="fillQaRole('UI/UX Designer')" class="chip chip-soft hover:chip-indigo text-xs">UI/UX Designer</button>
+                <button type="button" onclick="fillQaRole('Data &amp; Business Analyst')" class="chip chip-soft hover:chip-indigo text-xs">Data Analyst</button>
+                <button type="button" onclick="fillQaRole('Cybersecurity Specialist')" class="chip chip-soft hover:chip-indigo text-xs">Cybersecurity</button>
+              </div>
+            </div>
 
-<div data-outline-label="CV upload" class="profile-upload glass rounded-3xl p-6 space-y-4">
+            <!-- Question 2: Skills & Superpowers -->
+            <div class="space-y-2">
+              <label class="text-xs font-black text-slate-800 flex items-center justify-between">
+                <span>2. Core Skills &amp; Superpowers (Comma separated):</span>
+                <span class="text-[10px] text-teal-600 font-bold">Tap to add ↓</span>
+              </label>
+              <input type="text" id="qaSkills" class="input w-full text-slate-800" placeholder="e.g. Python, React, TypeScript, SQL, Figma, Docker" />
+              <div class="flex flex-wrap gap-1.5 pt-1" id="skillSuggestions">
+                <button type="button" onclick="addQaSkill('Python')" class="chip chip-soft hover:chip-teal text-xs">+ Python</button>
+                <button type="button" onclick="addQaSkill('React')" class="chip chip-soft hover:chip-teal text-xs">+ React</button>
+                <button type="button" onclick="addQaSkill('TypeScript')" class="chip chip-soft hover:chip-teal text-xs">+ TypeScript</button>
+                <button type="button" onclick="addQaSkill('SQL')" class="chip chip-soft hover:chip-teal text-xs">+ SQL</button>
+                <button type="button" onclick="addQaSkill('Cloud / AWS')" class="chip chip-soft hover:chip-teal text-xs">+ Cloud / AWS</button>
+                <button type="button" onclick="addQaSkill('Figma')" class="chip chip-soft hover:chip-teal text-xs">+ Figma</button>
+                <button type="button" onclick="addQaSkill('FastAPI')" class="chip chip-soft hover:chip-teal text-xs">+ FastAPI</button>
+                <button type="button" onclick="addQaSkill('Project Leadership')" class="chip chip-soft hover:chip-teal text-xs">+ Leadership</button>
+              </div>
+            </div>
+
+            <!-- Question 3: Key Experience / Proud Achievement -->
+            <div class="space-y-2">
+              <label class="text-xs font-black text-slate-800">
+                3. Proud Achievement, Key Project, or Past Work Highlight:
+              </label>
+              <textarea id="qaExperience" rows="3" class="input w-full text-xs text-slate-800 leading-relaxed" placeholder="Tell your companion what you built or accomplished! E.g. Led redesign of mobile check-out flow improving user retention by 25%; built automated data ingestion pipelines with team."></textarea>
+            </div>
+
+            <!-- Question 4: Experience Level & Work Mode -->
+            <div class="grid sm:grid-cols-2 gap-4">
+              <div class="space-y-1.5">
+                <label class="text-xs font-black text-slate-800">Experience Level:</label>
+                <select id="qaYears" class="input w-full text-xs font-bold">
+                  <option value="Student / Fresh Graduate">Student / Fresh Graduate</option>
+                  <option value="1-2 Years">Junior (1-2 Years)</option>
+                  <option value="3-5 Years" selected>Mid-Level (3-5 Years)</option>
+                  <option value="5+ Years">Senior / Lead (5+ Years)</option>
+                </select>
+              </div>
+              <div class="space-y-1.5">
+                <label class="text-xs font-black text-slate-800">Preferred Work Style:</label>
+                <select id="qaWorkMode" class="input w-full text-xs font-bold">
+                  <option value="Hybrid Flexibility" selected>Hybrid Flexibility</option>
+                  <option value="Remote First">Remote First</option>
+                  <option value="On-site Collaborative">On-site Collaborative</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Action Button -->
+            <div class="pt-3 border-t border-slate-200/80 flex flex-wrap items-center justify-between gap-3">
+              <span id="qaCompanionStatus" class="text-xs text-indigo-700 font-bold" aria-live="polite"></span>
+              <button type="button" id="btnSubmitQa" onclick="submitInteractiveQa()" class="btn btn-primary !py-3 !px-7 text-xs font-black tracking-wide shadow-md flex items-center gap-2">
+                <span>✨</span><span>Let Companion Assemble My Profile →</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Mode B: Direct PDF CV Upload Panel -->
+          <div id="panelUploadPdf" class="hidden space-y-4">
+            <div data-outline-label="CV upload" class="profile-upload glass rounded-3xl p-6 space-y-4">
                 <div class="flex items-center justify-between">
                   <div>
-                    <div class="text-sm font-extrabold">1. Upload your PDF CV</div>
+                    <div class="text-sm font-extrabold">Upload your PDF CV</div>
                     <div class="text-xs text-slate-500">Text-based PDF · maximum 8 MB</div>
                   </div>
                   <span class="chip chip-pink">.PDF ONLY</span>
@@ -647,7 +764,11 @@
                   <div id="samplePdfList" class="space-y-2"></div>
                 </div>
               </div>
-          <button class="btn btn-soft" onclick="showTab('cv-review')">Review my existing CV →</button>
+          </div>
+
+          <div class="flex items-center justify-between pt-2">
+            <button class="btn btn-soft" onclick="showTab('cv-review')">Review my existing CV →</button>
+          </div>
         </section>
         <section id="tab-cv-review" class="tab hidden space-y-6">
 
@@ -2443,6 +2564,7 @@
       if (id === 'notifications') loadInvitations(false);
       if (id === 'dash') renderDash();
       if (id === 'profile') renderAccountProfileCard();
+      if (id === 'cv-upload' && typeof initCompanionUpload === 'function') initCompanionUpload();
       if (['profile','cv-upload','cv-review','applications'].includes(id)) {
         try { await loadMyCv(); renderProfileHighlights(); }
         catch (error) { toast('CV data could not refresh. Your saved edits are kept. Please try again.', 'err'); }
@@ -5112,8 +5234,8 @@ async function submit3AiVerificationAnswers() {
     </div>
   </div>
 
-  <script src="/static/js/career-earth.js?v=20261023-4"></script>
-<script src="/static/js/career-spirit-totem.js?v=20261023-4"></script>
+  <script src="/static/js/career-earth.js?v=20261023-5"></script>
+<script src="/static/js/career-spirit-totem.js?v=20261023-5"></script>
 <script src="/static/js/experience-builder.js?v=20261023-fresh-grad"></script>
 <div id="applicationFollowupModal" class="fixed inset-0 z-[70] hidden items-center justify-center bg-slate-950/60 p-4" role="dialog" aria-modal="true" aria-labelledby="applicationFollowupTitle">
   <div class="modal p-6 sm:p-8 space-y-4 max-w-2xl w-full" onclick="event.stopPropagation()">
@@ -5128,6 +5250,173 @@ async function submit3AiVerificationAnswers() {
     <div class="flex flex-wrap items-center gap-3"><button type="button" id="applicationFollowupCopy" class="btn btn-primary !py-2 !px-4 !text-xs font-bold">Copy follow-up</button><span id="applicationFollowupStatus" class="text-xs text-slate-600" role="status"></span></div>
   </div>
 </div>
-<script src="/static/js/application-followup.js?v=20261023-mvp"></script>
+<script src="/static/js/application-followup.js?v=20261023-mvp">
+
+    // =========================================================================
+    // Spirit Animal Career Companion & Interactive Q&A Onboarding Studio
+    // =========================================================================
+    const COMPANION_MASCOTS = {
+      retriever: {
+        badge: "The Solar Golden Retriever",
+        img: "/static/illustrations/totem_characters/retriever.svg",
+        greeting: "Woof! Hand me your CV or let's chat to build your story!",
+        body: "I'm your high-empathy culture companion. Tell me what energizes you, and I'll synthesize your strengths into an inspiring, future-ready profile!"
+      },
+      owl: {
+        badge: "The Obsidian Night Owl",
+        img: "/static/illustrations/totem_characters/owl.svg",
+        greeting: "Greetings! Let's architect a logic-backed career profile.",
+        body: "I'm your systems architect companion. Let's map out your core technical skills, clean achievements, and structural expertise."
+      },
+      leopard: {
+        badge: "The Cyber Snow Leopard",
+        img: "/static/illustrations/totem_characters/leopard.svg",
+        greeting: "Hey! Ready to fast-track your high-velocity skills?",
+        body: "I'm your independent explorer companion. Share your sharpest project highlights and tools—we will build a bold profile in 2 minutes."
+      },
+      whale: {
+        badge: "The Deep Sea Whale",
+        img: "/static/illustrations/totem_characters/whale.svg",
+        greeting: "Hello! Let's showcase your true purpose & lasting impact.",
+        body: "I'm your purpose seeker companion. Let's bring out the real-world difference you make and your long-term career mission."
+      },
+      fox: {
+        badge: "The Aurora Arctic Fox",
+        img: "/static/illustrations/totem_characters/fox.svg",
+        greeting: "Hi there! Let's craft an inventive, creative showcase!",
+        body: "I'm your creative mind companion. We'll turn your versatile skills and rapid experiments into a standout portfolio summary."
+      },
+      hawk: {
+        badge: "The Stratosphere Hawk",
+        img: "/static/illustrations/totem_characters/hawk.svg",
+        greeting: "Welcome! Let's set a commanding trajectory for your career.",
+        body: "I'm your strategic visionary companion. Hand me your credentials or outline your target horizon to construct your executive profile."
+      }
+    };
+
+    function initCompanionUpload() {
+      let totem = null;
+      try {
+        const stored = localStorage.getItem("careerlens_totem_data");
+        if (stored) totem = JSON.parse(stored);
+      } catch (e) {}
+
+      const mascot = (totem && COMPANION_MASCOTS[totem.key]) ? COMPANION_MASCOTS[totem.key] : COMPANION_MASCOTS.retriever;
+
+      const img = document.getElementById("companionAvatarImg");
+      const badge = document.getElementById("companionBadgeName");
+      const title = document.getElementById("companionGreetingTitle");
+      const body = document.getElementById("companionGreetingBody");
+
+      if (img) img.src = mascot.img;
+      if (badge) badge.textContent = mascot.badge;
+      if (title) title.textContent = `"${mascot.greeting}"`;
+      if (body) body.textContent = mascot.body;
+    }
+
+    function setUploadMode(mode) {
+      const panelQa = document.getElementById("panelUploadQa");
+      const panelPdf = document.getElementById("panelUploadPdf");
+      const btnQa = document.getElementById("btnModeQa");
+      const btnPdf = document.getElementById("btnModePdf");
+
+      if (mode === 'qa') {
+        if (panelQa) panelQa.classList.remove("hidden");
+        if (panelPdf) panelPdf.classList.add("hidden");
+        if (btnQa) {
+          btnQa.className = "px-4 py-2 rounded-xl text-xs font-black transition-all flex items-center gap-2 bg-gradient-to-r from-teal-500 to-indigo-600 text-white shadow-md";
+        }
+        if (btnPdf) {
+          btnPdf.className = "px-4 py-2 rounded-xl text-xs font-black transition-all flex items-center gap-2 bg-white/10 hover:bg-white/20 text-slate-200 border border-white/15";
+        }
+      } else {
+        if (panelQa) panelQa.classList.add("hidden");
+        if (panelPdf) panelPdf.classList.remove("hidden");
+        if (btnPdf) {
+          btnPdf.className = "px-4 py-2 rounded-xl text-xs font-black transition-all flex items-center gap-2 bg-gradient-to-r from-teal-500 to-indigo-600 text-white shadow-md";
+        }
+        if (btnQa) {
+          btnQa.className = "px-4 py-2 rounded-xl text-xs font-black transition-all flex items-center gap-2 bg-white/10 hover:bg-white/20 text-slate-200 border border-white/15";
+        }
+      }
+    }
+
+    function fillQaRole(role) {
+      const input = document.getElementById("qaRole");
+      if (input) {
+        input.value = role;
+        input.focus();
+      }
+    }
+
+    function addQaSkill(skill) {
+      const input = document.getElementById("qaSkills");
+      if (!input) return;
+      let current = input.value.split(",").map(s => s.strip ? s.strip() : s.trim()).filter(Boolean);
+      if (!current.some(s => s.toLowerCase() === skill.toLowerCase())) {
+        current.push(skill);
+      }
+      input.value = current.join(", ");
+    }
+
+    async function submitInteractiveQa() {
+      const roleInput = document.getElementById("qaRole");
+      const skillsInput = document.getElementById("qaSkills");
+      const expInput = document.getElementById("qaExperience");
+      const yearsInput = document.getElementById("qaYears");
+      const modeInput = document.getElementById("qaWorkMode");
+      const statusEl = document.getElementById("qaCompanionStatus");
+      const btn = document.getElementById("btnSubmitQa");
+
+      const role = (roleInput ? roleInput.value : "").trim();
+      const skills = (skillsInput ? skillsInput.value : "").trim();
+      const exp = (expInput ? expInput.value : "").trim();
+      const years = yearsInput ? yearsInput.value : "1-2 Years";
+      const workMode = modeInput ? modeInput.value : "Hybrid Flexibility";
+
+      if (!role) {
+        toast("Please enter your current or target role.", "err");
+        if (roleInput) roleInput.focus();
+        return;
+      }
+
+      if (btn) btn.disabled = true;
+      if (statusEl) statusEl.textContent = "Companion is assembling and certifying your profile…";
+
+      try {
+        const payload = {
+          role: role,
+          skills: skills ? skills.split(",").map(s => s.trim()).filter(Boolean) : ["Critical Thinking", "Problem Solving"],
+          experience_highlight: exp || `Demonstrated strong execution and teamwork in ${role} projects.`,
+          years: years,
+          work_mode: workMode,
+          industry: "Technology & Digital Innovation"
+        };
+
+        const res = await postJson("/api/cv/interactive-build", payload);
+        if (!res.ok || !res.data || !res.data.ok || !res.data.cv) {
+          throw new Error((res.data && res.data.message) || "Could not assemble profile. Please retry.");
+        }
+
+        cvRecord = res.data.cv;
+        profileDirty = false;
+        renderCvVault();
+        toast("🎉 Your companion successfully synthesized your structured profile!");
+        await showTab("cv-review");
+        await refreshVaultDependents();
+      } catch (err) {
+        toast(err.message || "Failed to generate profile.", "err");
+        if (statusEl) statusEl.textContent = err.message;
+      } finally {
+        if (btn) btn.disabled = false;
+      }
+    }
+
+    // Call initCompanionUpload on tab show and DOM ready
+    window.addEventListener("DOMContentLoaded", () => {
+      initCompanionUpload();
+    });
+
+</script>
 </body>
 </html>

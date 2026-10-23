@@ -598,6 +598,58 @@ def api_cv_upload():
     return jsonify({"ok": True, "message": msg, "cv": cv_data})
 
 
+@app.route("/api/cv/interactive-build", methods=["POST"])
+@api_role("job_seeker")
+def api_cv_interactive_build():
+    user = session["user"]
+    body = json_object()
+    role = (body.get("role") or "Aspiring Professional").strip()
+    skills_raw = body.get("skills") or []
+    if isinstance(skills_raw, str):
+        skills = [s.strip() for s in skills_raw.replace("，", ",").split(",") if s.strip()]
+    else:
+        skills = [str(s).strip() for s in skills_raw if str(s).strip()]
+    if not skills:
+        skills = ["Communication", "Problem Solving", "Adaptability"]
+
+    experience_highlight = (body.get("experience_highlight") or "Led key project initiatives, collaborating across teams to deliver measurable outcomes.").strip()
+    work_mode = (body.get("work_mode") or "Hybrid").strip()
+    years = (body.get("years") or "1-2 Years").strip()
+    industry = (body.get("industry") or "Technology & Digital Innovation").strip()
+    summary = (body.get("summary") or f"Versatile and proactive {role} with strengths in {', '.join(skills[:3])}. Committed to high-impact problem solving and continuous skill advancement.").strip()
+
+    spec = {
+        "name": user.get("display_name") or user.get("username") or "Candidate",
+        "role": role,
+        "industry": industry,
+        "years": years,
+        "email": user.get("email") or "candidate@careerlens.ai",
+        "phone": "+60 12-345 6789",
+        "location": "Kuala Lumpur, Malaysia",
+        "work_mode": work_mode,
+        "summary": summary,
+        "experience": [experience_highlight],
+        "education": ["Bachelor's Degree / Professional Diploma in Related Discipline"],
+        "certifications": ["CareerLens AI Future-Ready Workforce Verified"],
+        "skills": skills[:15]
+    }
+
+    pdf_bytes = cv_engine.build_interactive_profile_pdf(spec)
+    safe_name = f"{(user.get('username') or 'User')}_AI_Profile.pdf"
+
+    ok, msg, cv_data = cv_engine.save_user_pdf_cv(
+        owner_uid=user["unique_uid"],
+        filename=safe_name,
+        pdf_bytes=pdf_bytes,
+        user_context=user,
+        allow_anon_stats=False
+    )
+    if not ok:
+        return jsonify({"ok": False, "message": msg}), 400
+    return jsonify({"ok": True, "message": "Profile created by your Career Companion!", "cv": cv_data})
+
+
+
 @app.route("/api/cv/me", methods=["PUT"])
 @api_role("job_seeker")
 def api_cv_update():

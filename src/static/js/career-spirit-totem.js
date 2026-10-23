@@ -74,6 +74,7 @@
   const TOTEMS = {
     owl: {
       key: "owl",
+      characterImage: "/static/illustrations/totem_characters/owl.svg",
       icon: "🦉",
       badge: "The Obsidian Night Owl",
       tagline: "The Deep-Focus Systems Architect",
@@ -115,6 +116,7 @@
     },
     retriever: {
       key: "retriever",
+      characterImage: "/static/illustrations/totem_characters/retriever.svg",
       icon: "🦮",
       badge: "The Solar Golden Retriever",
       tagline: "The High-Empathy Culture Weaver",
@@ -156,6 +158,7 @@
     },
     leopard: {
       key: "leopard",
+      characterImage: "/static/illustrations/totem_characters/leopard.svg",
       icon: "🐆",
       badge: "The Cyber Snow Leopard",
       tagline: "The Autonomous Frontier Pioneer",
@@ -197,6 +200,7 @@
     },
     whale: {
       key: "whale",
+      characterImage: "/static/illustrations/totem_characters/whale.svg",
       icon: "🐋",
       badge: "The Deep-Sea Titan Whale",
       tagline: "The Purpose-Driven Societal Anchor",
@@ -238,6 +242,7 @@
     },
     fox: {
       key: "fox",
+      characterImage: "/static/illustrations/totem_characters/fox.svg",
       icon: "🦊",
       badge: "The Luminary Arctic Fox",
       tagline: "The Aesthetic & Narrative Alchemist",
@@ -279,6 +284,7 @@
     },
     hawk: {
       key: "hawk",
+      characterImage: "/static/illustrations/totem_characters/hawk.svg",
       icon: "🦅",
       badge: "The Stratosphere Hawk",
       tagline: "The Strategic Decisive Commander",
@@ -1828,7 +1834,7 @@
             <!-- Left: Avatar & Single-line Title -->
             <div class="md:col-span-5 text-center space-y-4">
               <div class="relative w-36 h-36 mx-auto grid place-items-center rounded-3xl bg-gradient-to-br from-indigo-500/20 to-teal-500/20 border border-white/20 shadow-2xl backdrop-blur-md">
-                <span class="text-6xl filter drop-shadow-lg">${t.icon}</span>
+                <img src="${t.characterImage || ('/static/illustrations/totem_characters/' + (t.key || 'retriever') + '.svg')}" alt="${t.badge}" class="w-28 h-28 object-contain filter drop-shadow-md hover:scale-105 transition-transform duration-300" />
                 <span class="absolute -bottom-2 -right-2 px-2.5 py-0.5 rounded-full bg-teal-500 text-slate-900 text-[10px] font-black uppercase tracking-wider">
                   Work-style reflection
                 </span>
@@ -2548,7 +2554,7 @@
         <!-- Left: Totem Avatar & Title -->
         <div class="md:col-span-4 text-center space-y-3 bg-slate-50/80 p-5 rounded-2xl border border-slate-200/90 shadow-xs">
           <div class="relative w-24 h-24 mx-auto grid place-items-center rounded-2xl bg-gradient-to-br from-indigo-500/10 to-teal-500/10 border border-indigo-200/80 shadow-sm">
-            <span class="text-5xl filter drop-shadow">${t.icon || "🦅"}</span>
+            <img src="${t.characterImage || ('/static/illustrations/totem_characters/' + (t.key || 'retriever') + '.svg')}" alt="${t.badge || 'Totem'}" class="w-20 h-20 object-contain filter drop-shadow hover:scale-105 transition-transform" />
           </div>
           <div>
             <h4 class="text-xl font-black text-slate-900 tracking-tight" data-no-translate>${t.badge || "The Stratosphere Hawk"}</h4>
