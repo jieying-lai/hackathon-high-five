@@ -733,6 +733,47 @@
                 </div>
               </div>
             </div>
+            <section class="rounded-2xl border border-teal-200/90 bg-gradient-to-r from-teal-50/70 via-white to-indigo-50/50 p-4 sm:p-5 space-y-4 shadow-xs" aria-labelledby="experienceBuilderTitle">
+              <div class="flex items-start gap-3">
+                <span class="text-xl" aria-hidden="true">🎓</span>
+                <div>
+                  <h3 id="experienceBuilderTitle" class="font-extrabold text-sm text-slate-900">Fresh Graduate Experience Builder</h3>
+                  <p class="text-[11px] text-slate-600 mt-1">Turn an assignment, final-year project, club activity, volunteering or internship into clear evidence of what you can do.</p>
+                </div>
+              </div>
+              <div class="grid sm:grid-cols-2 gap-3">
+                <label class="text-xs font-bold text-slate-700">Experience or project name
+                  <input id="experienceBuilderName" class="input mt-1" maxlength="180" placeholder="e.g. Final-year data analysis project" />
+                </label>
+                <label class="text-xs font-bold text-slate-700">Type of experience
+                  <select id="experienceBuilderType" class="input mt-1">
+                    <option>Assignment</option><option>Final-year project</option><option>Club activity</option><option>Volunteering</option><option>Internship</option><option>Personal project</option><option>Other</option>
+                  </select>
+                </label>
+                <label class="text-xs font-bold text-slate-700 sm:col-span-2">What did you personally do?
+                  <textarea id="experienceBuilderContribution" class="input mt-1" rows="2" maxlength="1200" placeholder="Describe your own tasks and contribution. You can write in your own words."></textarea>
+                </label>
+                <label class="text-xs font-bold text-slate-700">Tools or skills you used
+                  <input id="experienceBuilderSkills" class="input mt-1" maxlength="300" placeholder="e.g. Excel, data cleaning, teamwork" />
+                </label>
+                <label class="text-xs font-bold text-slate-700">Outcome or result (optional)
+                  <input id="experienceBuilderOutcome" class="input mt-1" maxlength="500" placeholder="e.g. Presented findings to the class" />
+                </label>
+              </div>
+              <div class="flex flex-wrap items-center gap-2">
+                <button id="experienceBuilderDraft" type="button" class="btn btn-primary !py-2 !px-4 !text-xs font-bold">Create an editable CV bullet</button>
+                <span class="text-[11px] text-slate-500">This draft only uses the details you enter. Review it before adding it to your profile.</span>
+              </div>
+              <div id="experienceBuilderResult" class="hidden space-y-2" aria-live="polite">
+                <label for="experienceBuilderBullet" class="text-xs font-extrabold text-slate-700">Review and edit your CV bullet</label>
+                <textarea id="experienceBuilderBullet" class="input" rows="3" maxlength="1200"></textarea>
+                <div class="flex flex-wrap gap-2">
+                  <button id="experienceBuilderAdd" type="button" class="btn btn-soft !py-2 !px-4 !text-xs font-bold">Add to Projects &amp; achievements</button>
+                  <button id="experienceBuilderCopy" type="button" class="btn btn-soft !py-2 !px-4 !text-xs font-bold">Copy draft</button>
+                  <span id="experienceBuilderStatus" class="text-xs text-slate-600 self-center" role="status"></span>
+                </div>
+              </div>
+            </section>
             <!-- Professional Summary -->
             <div class="tint tint-indigo rounded-2xl p-4 sm:p-5 space-y-2.5">
               <div class="flex items-center justify-between">
@@ -2634,6 +2675,7 @@
                 ${app.share_original_pdf ? '✓ Original PDF Shared' : 'PDF Private'}
               </span>
             </div>
+            <button type="button" data-application-followup data-company="${esc(app.company_name)}" data-role="${esc(app.vacancy_title)}" data-applied="${esc(app.applied_at || '')}" class="btn btn-soft !text-indigo-700 !border-indigo-200 !text-[11px] !py-1 !px-2.5 font-bold transition">Prepare follow-up</button>
             <button data-revoke-share onclick="withdrawJobApplication(${Number(app.vacancy_id)})" class="btn btn-soft !text-rose-600 hover:!bg-rose-50 !border-rose-200 !text-[11px] !py-1 !px-2.5 font-bold transition">
               Withdraw Application
             </button>
@@ -5049,5 +5091,20 @@ async function submit3AiVerificationAnswers() {
 
   <script src="/static/js/career-earth.js?v=20261023-4"></script>
 <script src="/static/js/career-spirit-totem.js?v=20261023-4"></script>
+<script src="/static/js/experience-builder.js?v=20261023-fresh-grad"></script>
+<div id="applicationFollowupModal" class="fixed inset-0 z-[70] hidden items-center justify-center bg-slate-950/60 p-4" role="dialog" aria-modal="true" aria-labelledby="applicationFollowupTitle">
+  <div class="modal p-6 sm:p-8 space-y-4 max-w-2xl w-full" onclick="event.stopPropagation()">
+    <div class="flex items-start justify-between gap-3">
+      <div><h2 id="applicationFollowupTitle" class="text-lg font-extrabold text-slate-900">Prepare a polite follow-up</h2><p id="applicationFollowupContext" class="text-xs text-slate-500 mt-1"></p></div>
+      <button type="button" id="applicationFollowupClose" class="btn btn-soft !py-1.5 !px-3" aria-label="Close">✕</button>
+    </div>
+    <label for="applicationFollowupSubject" class="block text-xs font-extrabold text-slate-700">Email subject</label>
+    <input id="applicationFollowupSubject" class="input" maxlength="300" />
+    <label for="applicationFollowupDraft" class="block text-xs font-extrabold text-slate-700">Email draft</label>
+    <textarea id="applicationFollowupDraft" class="input" rows="9" maxlength="4000"></textarea>
+    <div class="flex flex-wrap items-center gap-3"><button type="button" id="applicationFollowupCopy" class="btn btn-primary !py-2 !px-4 !text-xs font-bold">Copy follow-up</button><span id="applicationFollowupStatus" class="text-xs text-slate-600" role="status"></span></div>
+  </div>
+</div>
+<script src="/static/js/application-followup.js?v=20261023-mvp"></script>
 </body>
 </html>
