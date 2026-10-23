@@ -1702,9 +1702,6 @@
 
         <!-- Question Prompt -->
         <div class="py-4 text-center max-w-xl mx-auto space-y-3">
-          <span class="text-xs font-black uppercase tracking-widest text-indigo-700 bg-indigo-50 px-3 py-1 rounded-full border border-indigo-200">
-            Workplace Preference
-          </span>
           <h3 class="text-xl sm:text-2xl font-black text-slate-900 leading-snug">
             "${q.text}"
           </h3>
@@ -1872,13 +1869,7 @@
                 </div>
               </div>
 
-              <!-- Retake Button (Compact, sleek dark-glass) -->
-              <div class="flex items-center gap-3 pt-2">
-                <button type="button" onclick="retakeTotemQuiz()" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-300 hover:text-white bg-white/10 hover:bg-white/15 border border-white/20 transition shadow-xs">
-                  <span>🔄</span>
-                  <span>Retake</span>
-                </button>
-              </div>
+
 
             </div>
           </div>
@@ -1976,62 +1967,93 @@
           </div>
         </div>
 
-        <!-- MBTI-Style Dual-Pole Personality Spectrum -->
-        <div class="totem-badge-card p-6 sm:p-8 space-y-6">
-          <div>
-            <h3 class="text-lg font-extrabold text-white flex items-center gap-2">
-              <span>🧪</span> Your Personality Spectrum Breakdown
-            </h3>
-            <p class="text-xs text-slate-500 mt-0.5">Classic dual-pole continuum calibrated from your questionnaire vectors</p>
+        <!-- MBTI-Style Dual-Pole Personality Spectrum (Material & HuaShu Precision) -->
+        <div class="totem-badge-card p-6 sm:p-8 space-y-6 rounded-3xl border border-white/20 shadow-xl bg-slate-900/80 backdrop-blur-xl">
+          <div class="flex flex-wrap items-center justify-between gap-3 border-b border-white/10 pb-3">
+            <div>
+              <h3 class="text-lg font-black text-white flex items-center gap-2">
+                <span>⚡</span> Your Personality Spectrum Breakdown
+              </h3>
+              <p class="text-xs text-slate-300 mt-0.5">High-precision dual-pole vectors calibrated from your behavioral choices</p>
+            </div>
+            <span class="px-3 py-1 rounded-full text-[10px] font-mono font-bold bg-indigo-500/20 text-indigo-300 border border-indigo-400/30">O*NET Dimension Calibrated</span>
           </div>
 
-          <div class="space-y-3.5">
+          <div class="space-y-4 pt-1">
             
             <!-- Pole 1: Energy & Focus -->
-            <div class="mbti-spectrum-row">
-              <div class="mbti-pole-labels">
-                <span class="${t.mbtiPoles.energy.leftPct >= 50 ? 'text-indigo-300 font-bold' : 'text-slate-400'}">${t.mbtiPoles.energy.leftName} (${t.mbtiPoles.energy.leftPct}%)</span>
-                <span class="${t.mbtiPoles.energy.rightPct > 50 ? 'text-teal-300 font-bold' : 'text-slate-400'}">(${t.mbtiPoles.energy.rightPct}%) ${t.mbtiPoles.energy.rightName}</span>
+            <div class="mbti-spectrum-row space-y-2">
+              <div class="mbti-pole-labels flex items-center justify-between text-xs font-black">
+                <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg ${t.mbtiPoles.energy.leftPct >= 50 ? 'bg-indigo-500/25 text-indigo-200 border border-indigo-400/40 shadow-xs' : 'text-slate-400 bg-white/5'}">
+                  <span>${t.mbtiPoles.energy.leftName}</span>
+                  <span class="font-mono text-cyan-300 font-extrabold">${t.mbtiPoles.energy.leftPct}%</span>
+                </span>
+                <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg ${t.mbtiPoles.energy.rightPct > 50 ? 'bg-rose-500/25 text-rose-200 border border-rose-400/40 shadow-xs' : 'text-slate-400 bg-white/5'}">
+                  <span class="font-mono text-amber-300 font-extrabold">${t.mbtiPoles.energy.rightPct}%</span>
+                  <span>${t.mbtiPoles.energy.rightName}</span>
+                </span>
               </div>
-              <div class="mbti-spectrum-track">
-                <div class="mbti-pole-left-fill" style="width: ${t.mbtiPoles.energy.leftPct}%"></div>
-                <div class="mbti-pole-right-fill" style="width: ${t.mbtiPoles.energy.rightPct}%"></div>
+              <div class="mbti-spectrum-track relative h-3.5 rounded-full bg-slate-950/70 border border-white/15 p-0.5 overflow-hidden flex shadow-inner">
+                <div class="mbti-pole-left-fill h-full rounded-l-full" style="width: ${t.mbtiPoles.energy.leftPct}%"></div>
+                <div class="mbti-pole-right-fill h-full rounded-r-full" style="width: ${t.mbtiPoles.energy.rightPct}%"></div>
+                <div class="absolute inset-y-0 left-1/2 w-0.5 bg-white/30 z-10 -translate-x-1/2 pointer-events-none"></div>
               </div>
             </div>
 
             <!-- Pole 2: Mind & Processing -->
-            <div class="mbti-spectrum-row">
-              <div class="mbti-pole-labels">
-                <span class="${t.mbtiPoles.mind.leftPct >= 50 ? 'text-indigo-300 font-bold' : 'text-slate-400'}">${t.mbtiPoles.mind.leftName} (${t.mbtiPoles.mind.leftPct}%)</span>
-                <span class="${t.mbtiPoles.mind.rightPct > 50 ? 'text-teal-300 font-bold' : 'text-slate-400'}">(${t.mbtiPoles.mind.rightPct}%) ${t.mbtiPoles.mind.rightName}</span>
+            <div class="mbti-spectrum-row space-y-2">
+              <div class="mbti-pole-labels flex items-center justify-between text-xs font-black">
+                <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg ${t.mbtiPoles.mind.leftPct >= 50 ? 'bg-indigo-500/25 text-indigo-200 border border-indigo-400/40 shadow-xs' : 'text-slate-400 bg-white/5'}">
+                  <span>${t.mbtiPoles.mind.leftName}</span>
+                  <span class="font-mono text-cyan-300 font-extrabold">${t.mbtiPoles.mind.leftPct}%</span>
+                </span>
+                <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg ${t.mbtiPoles.mind.rightPct > 50 ? 'bg-rose-500/25 text-rose-200 border border-rose-400/40 shadow-xs' : 'text-slate-400 bg-white/5'}">
+                  <span class="font-mono text-amber-300 font-extrabold">${t.mbtiPoles.mind.rightPct}%</span>
+                  <span>${t.mbtiPoles.mind.rightName}</span>
+                </span>
               </div>
-              <div class="mbti-spectrum-track">
-                <div class="mbti-pole-left-fill" style="width: ${t.mbtiPoles.mind.leftPct}%"></div>
-                <div class="mbti-pole-right-fill" style="width: ${t.mbtiPoles.mind.rightPct}%"></div>
+              <div class="mbti-spectrum-track relative h-3.5 rounded-full bg-slate-950/70 border border-white/15 p-0.5 overflow-hidden flex shadow-inner">
+                <div class="mbti-pole-left-fill h-full rounded-l-full" style="width: ${t.mbtiPoles.mind.leftPct}%"></div>
+                <div class="mbti-pole-right-fill h-full rounded-r-full" style="width: ${t.mbtiPoles.mind.rightPct}%"></div>
+                <div class="absolute inset-y-0 left-1/2 w-0.5 bg-white/30 z-10 -translate-x-1/2 pointer-events-none"></div>
               </div>
             </div>
 
             <!-- Pole 3: Execution Tempo -->
-            <div class="mbti-spectrum-row">
-              <div class="mbti-pole-labels">
-                <span class="${t.mbtiPoles.tempo.leftPct >= 50 ? 'text-indigo-300 font-bold' : 'text-slate-400'}">${t.mbtiPoles.tempo.leftName} (${t.mbtiPoles.tempo.leftPct}%)</span>
-                <span class="${t.mbtiPoles.tempo.rightPct > 50 ? 'text-teal-300 font-bold' : 'text-slate-400'}">(${t.mbtiPoles.tempo.rightPct}%) ${t.mbtiPoles.tempo.rightName}</span>
+            <div class="mbti-spectrum-row space-y-2">
+              <div class="mbti-pole-labels flex items-center justify-between text-xs font-black">
+                <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg ${t.mbtiPoles.tempo.leftPct >= 50 ? 'bg-indigo-500/25 text-indigo-200 border border-indigo-400/40 shadow-xs' : 'text-slate-400 bg-white/5'}">
+                  <span>${t.mbtiPoles.tempo.leftName}</span>
+                  <span class="font-mono text-cyan-300 font-extrabold">${t.mbtiPoles.tempo.leftPct}%</span>
+                </span>
+                <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg ${t.mbtiPoles.tempo.rightPct > 50 ? 'bg-rose-500/25 text-rose-200 border border-rose-400/40 shadow-xs' : 'text-slate-400 bg-white/5'}">
+                  <span class="font-mono text-amber-300 font-extrabold">${t.mbtiPoles.tempo.rightPct}%</span>
+                  <span>${t.mbtiPoles.tempo.rightName}</span>
+                </span>
               </div>
-              <div class="mbti-spectrum-track">
-                <div class="mbti-pole-left-fill" style="width: ${t.mbtiPoles.tempo.leftPct}%"></div>
-                <div class="mbti-pole-right-fill" style="width: ${t.mbtiPoles.tempo.rightPct}%"></div>
+              <div class="mbti-spectrum-track relative h-3.5 rounded-full bg-slate-950/70 border border-white/15 p-0.5 overflow-hidden flex shadow-inner">
+                <div class="mbti-pole-left-fill h-full rounded-l-full" style="width: ${t.mbtiPoles.tempo.leftPct}%"></div>
+                <div class="mbti-pole-right-fill h-full rounded-r-full" style="width: ${t.mbtiPoles.tempo.rightPct}%"></div>
+                <div class="absolute inset-y-0 left-1/2 w-0.5 bg-white/30 z-10 -translate-x-1/2 pointer-events-none"></div>
               </div>
             </div>
 
             <!-- Pole 4: Mission Drive -->
-            <div class="mbti-spectrum-row">
-              <div class="mbti-pole-labels">
-                <span class="${t.mbtiPoles.drive.leftPct >= 50 ? 'text-indigo-300 font-bold' : 'text-slate-400'}">${t.mbtiPoles.drive.leftName} (${t.mbtiPoles.drive.leftPct}%)</span>
-                <span class="${t.mbtiPoles.drive.rightPct > 50 ? 'text-teal-300 font-bold' : 'text-slate-400'}">(${t.mbtiPoles.drive.rightPct}%) ${t.mbtiPoles.drive.rightName}</span>
+            <div class="mbti-spectrum-row space-y-2">
+              <div class="mbti-pole-labels flex items-center justify-between text-xs font-black">
+                <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg ${t.mbtiPoles.drive.leftPct >= 50 ? 'bg-indigo-500/25 text-indigo-200 border border-indigo-400/40 shadow-xs' : 'text-slate-400 bg-white/5'}">
+                  <span>${t.mbtiPoles.drive.leftName}</span>
+                  <span class="font-mono text-cyan-300 font-extrabold">${t.mbtiPoles.drive.leftPct}%</span>
+                </span>
+                <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg ${t.mbtiPoles.drive.rightPct > 50 ? 'bg-rose-500/25 text-rose-200 border border-rose-400/40 shadow-xs' : 'text-slate-400 bg-white/5'}">
+                  <span class="font-mono text-amber-300 font-extrabold">${t.mbtiPoles.drive.rightPct}%</span>
+                  <span>${t.mbtiPoles.drive.rightName}</span>
+                </span>
               </div>
-              <div class="mbti-spectrum-track">
-                <div class="mbti-pole-left-fill" style="width: ${t.mbtiPoles.drive.leftPct}%"></div>
-                <div class="mbti-pole-right-fill" style="width: ${t.mbtiPoles.drive.rightPct}%"></div>
+              <div class="mbti-spectrum-track relative h-3.5 rounded-full bg-slate-950/70 border border-white/15 p-0.5 overflow-hidden flex shadow-inner">
+                <div class="mbti-pole-left-fill h-full rounded-l-full" style="width: ${t.mbtiPoles.drive.leftPct}%"></div>
+                <div class="mbti-pole-right-fill h-full rounded-r-full" style="width: ${t.mbtiPoles.drive.rightPct}%"></div>
+                <div class="absolute inset-y-0 left-1/2 w-0.5 bg-white/30 z-10 -translate-x-1/2 pointer-events-none"></div>
               </div>
             </div>
 
@@ -2668,9 +2690,6 @@
 
         <!-- Question Prompt -->
         <div class="py-4 text-center max-w-xl mx-auto space-y-2">
-          <span class="text-[11px] font-black uppercase tracking-wider text-indigo-700 bg-indigo-50 px-3 py-1 rounded-full border border-indigo-200">
-            Workplace Preference
-          </span>
           <h3 class="text-xl sm:text-2xl font-black text-slate-900 leading-snug">
             "${q.text}"
           </h3>
