@@ -37,9 +37,13 @@ function postJson(url, body, method = 'POST') {
 function toast(message, type = 'ok') {
   const el = document.createElement('div');
   el.className = `toast ${type}`;
+  el.setAttribute('role', type === 'err' ? 'alert' : 'status');
+  el.setAttribute('aria-atomic', 'true');
   el.textContent = window.careerLensLocale?.translate(message) ?? message;
   document.body.appendChild(el);
-  setTimeout(() => el.remove(), 2800);
+  // Keep concurrent notices readable instead of stacking them on one another.
+  document.querySelectorAll('.toast').forEach(notice => { if (notice !== el) notice.remove(); });
+  setTimeout(() => { el.classList.add('fluid-exit'); setTimeout(() => el.remove(), 220); }, type === 'err' ? 6000 : 3500);
 }
 
 function localizedConfirm(message) {
