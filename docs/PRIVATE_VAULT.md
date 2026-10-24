@@ -92,7 +92,7 @@ Tests use generated synthetic PDFs and disposable databases. They cover parsing,
 With Python and project dependencies installed:
 
 ```powershell
-python -m pip install -r requirements.txt
+python -m pip install -r requirements-web.txt
 python -m unittest discover tests -v
 python src/main.py
 ```

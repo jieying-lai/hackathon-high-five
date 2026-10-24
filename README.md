@@ -141,7 +141,7 @@ Explain how your project uses AI to solve the problem and what makes it valuable
 ├── .gitignore
 ├── .replit                  # Replit run configuration
 ├── LICENSE
-├── requirements.txt         # Python dependencies
+├── requirements-base.txt    # Shared Python dependencies
 └── README.md
 ```
 
@@ -177,7 +177,7 @@ python -m venv venv
 source venv/bin/activate        # Windows: venv\Scripts\activate
 
 # 3. Install dependencies
-pip install -r requirements.txt
+pip install -r requirements-web.txt
 
 # 4. Configure environment variables
 cp .env.example .env            # then fill in your values
@@ -263,7 +263,7 @@ This project is licensed under the [Apache License 2.0](LICENSE).
 
 ### CV questionnaire: ready after cloning
 
-The questionnaire works without an API key or model download. Install `requirements.txt`, start `python src/main.py`, use the Talent demo login and upload one of the supplied sample PDF CVs. Both role suggestions and the second-step CV questions run on the server locally. Answers remain saved per user in the browser.
+The questionnaire works without an API key or model download. Install `requirements-web.txt`, start `python src/main.py`, use the Talent demo login and upload one of the supplied sample PDF CVs. Both role suggestions and the second-step CV questions run on the server locally. Answers remain saved per user in the browser.
 
 The default `QUESTIONNAIRE_PROVIDER=local` matches CV evidence against the role competency catalog and builds four questions from the CV, skill gaps, chosen role and basic answers. The UI labels this as rules-based local CV analysis, not generative AI. Suggestions explain matched skills and skills to confirm; they are not hiring decisions or proof of professional eligibility.
 

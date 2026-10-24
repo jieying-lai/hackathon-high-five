@@ -1,5 +1,5 @@
 # Install into the website/model server environment, not on judges' computers.
--r ../requirements.txt
+-r ../requirements-base.txt
 gunicorn==23.0.0
 transformers==5.20.2
 peft==0.21.2

@@ -1,5 +1,5 @@
 # Website and CPU model runtime. No RunPod or paid API is required by the launcher.
--r requirements.txt
+-r requirements-base.txt
 torch==2.6.0
 transformers==5.20.2
 peft==0.21.2

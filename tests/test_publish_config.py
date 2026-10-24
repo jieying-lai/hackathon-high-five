@@ -26,7 +26,10 @@ class PublishConfigurationTests(unittest.TestCase):
         self.assertIn('scripts/serve_web.py', command)
         self.assertNotIn('pip install', command)
 
-    def test_only_implicit_hosting_install_is_disabled(self):
+    def test_explicit_build_avoids_root_requirements_autodetection(self):
+        self.assertFalse((ROOT / 'requirements.txt').exists())
+        self.assertIn('-r requirements-base.txt',
+                      (ROOT / 'requirements-web.txt').read_text())
         config = tomllib.loads((ROOT / '.replit').read_text())
         self.assertIs(config['packager']['features']['enabledForHosting'], False)
         install = build_web.dependency_install_command()
@@ -77,7 +80,7 @@ class PublishConfigurationTests(unittest.TestCase):
 
     def test_shared_constraints_are_reachable_from_each_environment(self):
         requirements = (
-            'requirements.txt', 'requirements-local.txt', 'requirements-web.txt',
+            'requirements-base.txt', 'requirements-local.txt', 'requirements-web.txt',
             'runpod/requirements-cv.txt', 'runpod/requirements-judges.txt',
             'scripts/training-requirements.txt',
         )
@@ -106,7 +109,7 @@ class PublishConfigurationTests(unittest.TestCase):
         self.assertIn('-r runpod/requirements-cv.txt', image)
 
     def test_web_does_not_install_the_local_model_stack(self):
-        dependencies = (ROOT / 'requirements.txt').read_text().splitlines()
+        dependencies = (ROOT / 'requirements-base.txt').read_text().splitlines()
         for line in dependencies:
             if line.startswith('#'):
                 continue

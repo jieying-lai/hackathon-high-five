@@ -11,6 +11,12 @@ Use a project-local package destination rather than user-site installation for b
 
 Check both the installed environment and a fresh dependency audit. Do not assume either proves the other is current.
 
+Use named web/local manifests and a shared base manifest rather than reintroducing a root `requirements.txt` while the automatic hosting installer is unresolved.
+
+**Why:** Hosted logs showed root-requirements installation failing before the explicit build. The Python toolchain's pip configuration forces user-site installation. Moving the shared list preserves every dependency and security constraint while avoiding that particular auto-detection input; this remains a proposed hosted workaround until a new publish confirms it.
+
+**How to apply:** Keep web/local/worker includes connected to the shared manifest, retain security scanning, and validate the explicit build. Do not equate a successful workspace build with a successful publish or claim the hosted workaround is confirmed without fresh logs.
+
 **Why:** Patched installed libraries did not prevent the audit from flagging older versions resolved from dependency manifests. Shared constraints alone did not clear every finding; declaring the relevant PDF/HTTPS dependency floors explicitly in the consuming requirements did.
 
 **How to apply:** Update actual dependency declarations and their compatible parents, then inspect the new audit. Keep security checks enabled and retain local/GPU features rather than hiding their manifests. Inspect advisory affected ranges when the scanner omits a suggested fixed version; that omission does not necessarily mean every newer release is affected.
