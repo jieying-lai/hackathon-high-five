@@ -1,0 +1,39 @@
+/* Focused fixes for the merged talent and employer journeys. */
+#companionCvHeader{background:linear-gradient(125deg,#f0fdfa,#eef2ff 65%,#faf5ff)!important;color:#172554!important;border-color:#c7d2fe;box-shadow:0 12px 30px #312e810c}
+#companionGreetingTitle{color:#172554!important}#companionGreetingBody{color:#475569!important}
+#companionBadgeName{color:#4338ca!important;background:#e0e7ff!important}
+#btnModeQa,#btnModePdf{color:#334155!important;background:#fff!important;border:1px solid #cbd5e1!important;min-height:44px}
+#btnModeQa[aria-pressed=true],#btnModePdf[aria-pressed=true]{background:#4338ca!important;color:white!important;border-color:#4338ca!important}
+.growth-action-layout{display:grid;grid-template-columns:minmax(0,1fr) 290px;gap:20px;align-items:start}.growth-focus{min-width:0}.growth-focus>.hint{margin-bottom:12px}
+.growth-navigation{overflow-x:auto;flex-wrap:nowrap!important;gap:8px;scrollbar-width:thin;padding-bottom:5px}.growth-navigation>button{flex:none;white-space:nowrap}
+.match-intro h2{font-size:clamp(22px,3vw,30px);font-weight:800;color:#172554}.match-intro p{margin-top:6px;color:#475569;font-size:14px}
+#roleCards article{min-width:0;background:linear-gradient(155deg,#fff,#f5f7ff)!important}#roleCards h3{white-space:normal;overflow:visible;overflow-wrap:anywhere}
+#roleCards .chip,#tab-applications .chip{white-space:normal;max-width:100%;height:auto;overflow-wrap:anywhere}
+#tab-cv-review .profile-editor{max-width:1040px;margin-inline:auto}#tab-cv-review .career-disclosure summary{min-height:52px;padding-block:14px}
+#tab-cv-review textarea{line-height:1.6}#tab-cv-review .profile-editor>div{min-width:0}
+#tab-applications .profile-sharing-grid{grid-template-columns:minmax(0,1fr)}#tab-applications .profile-privacy{padding:20px}
+.snapshot-intro{margin:12px 0 18px;max-width:65ch}
+@media(max-width:767px){
+ .growth-action-layout{grid-template-columns:minmax(0,1fr)}.growth-focus .pomodoro-art{display:none}.growth-focus .pomodoro-clock{font-size:36px}
+ #companionCvHeader{padding:20px!important}#companionCvHeader .w-24{width:64px;height:64px}#companionCvHeader .gap-5{gap:14px}
+ #tab-cv-review .profile-editor{padding:18px!important}#tab-cv-review .profile-editor>div>div{min-width:0}#tab-cv-review .profile-editor .flex{flex-wrap:wrap}
+ #roleCards{grid-template-columns:minmax(0,1fr);gap:16px}#roleCards article{padding:18px!important;gap:16px}#roleCards article>.space-y-4>.flex:first-child{display:block}#roleCards article>.space-y-4>.flex:first-child>.text-center{display:flex;align-items:center;gap:10px;margin-top:12px;text-align:left}#roleCards .h-12{width:36px;height:36px}#roleCards .grid{grid-template-columns:minmax(0,1fr)}
+ #tab-applications .glass{padding:18px!important}#tab-applications .profile-privacy>label{flex-shrink:1;line-height:1.5}#tab-applications .flex{flex-wrap:wrap}
+ .growth-navigation>button{padding:10px 12px!important;font-size:12px!important;min-height:44px}
+ body.responsive-employer .portal-mobile-header{display:grid!important;grid-template-columns:1fr 44px;align-items:center;padding:6px 12px;gap:6px}
+ body.responsive-employer .portal-mobile-header>div:first-child{padding:0!important;min-width:0;gap:4px}
+ body.responsive-employer .portal-mobile-header>div:first-child>div:first-child{min-width:0}
+ body.responsive-employer .portal-mobile-header>div:first-child>div:first-child>.text-sm{display:none}
+ body.responsive-employer .portal-mobile-actions{display:flex;gap:2px;flex-wrap:nowrap!important}
+ body.responsive-employer .mobile-profile-label,body.responsive-employer #navToggle>span:last-child{display:none}
+ body.responsive-employer .mobile-nav-bar{padding:0!important;border:0!important;min-height:44px}
+ body.responsive-employer #navToggle{padding:0!important;width:44px!important;min-width:44px!important;height:44px}
+ body.responsive-employer #topNav{grid-column:1/-1;max-height:70dvh;overflow-y:auto}
+ body.responsive-employer .portal-mobile-actions button{min-width:44px!important;min-height:44px!important;padding:6px!important}
+ .tab{min-width:0}.tab .input{max-width:100%}.tab p{overflow-wrap:anywhere}
+}
+
+.growth-navigation{display:flex!important;padding:10px!important;border-radius:16px!important} .growth-navigation>button{min-width:max-content!important}
+.growth-navigation{overflow-x:auto!important;overflow-y:hidden!important;max-width:100%;min-width:0}
+@media(max-width:767px){body.responsive-employer .portal-mobile-header>div:first-child{flex-wrap:nowrap!important}body.responsive-employer .portal-mobile-header>div:first-child>div{width:auto!important;flex-basis:auto!important}body.responsive-employer .portal-mobile-actions{margin:0!important}.overview-subnav{display:flex!important;flex-wrap:nowrap!important;overflow-x:auto!important;gap:6px!important;padding:8px!important}.overview-subnav>button{flex:0 0 auto!important;width:auto!important;white-space:nowrap!important;padding:10px!important;font-size:12px!important}.overview-subnav>button>span:last-child{max-width:145px;white-space:normal}}
+@media(max-width:767px){body.responsive-employer .overview-subnav{display:flex!important;flex-wrap:nowrap!important;overflow-x:auto!important;gap:6px!important;padding:8px!important}body.responsive-employer .overview-subnav>button{flex:0 0 auto!important;width:auto!important;max-width:170px;padding:10px!important;font-size:12px!important}}
