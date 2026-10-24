@@ -26,7 +26,7 @@
 | **GitHub Repository** | [https://github.com/jieying-lai/hackathon-high-five](https://github.com/jieying-lai/hackathon-high-five) |
 | **Live Demo**         | [https://hackathon-high-five.replit.app](https://hackathon-high-five.replit.app)           |
 | **Slide Deck**        | [https://canva.link/06fo5mo1rxbw21m](https://canva.link/06fo5mo1rxbw21m)                 |
-| **Demo Video (5–7 min)** | [https://youtu.be/M-Yc2lB4FvA](https://youtu.be/M-Yc2lB4FvA)                             |
+| **Demo Video** | [https://youtu.be/M-Yc2lB4FvA](https://youtu.be/M-Yc2lB4FvA)                             |
 | **RunPod Endpoint**   | [https://api.runpod.ai/v2/](https://api.runpod.ai/v2/) (Serverless Qwen2.5 LoRA Worker)   |
 
 ---
