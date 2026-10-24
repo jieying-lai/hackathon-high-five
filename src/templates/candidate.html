@@ -299,6 +299,7 @@
 <script defer src="/static/js/interview-buddy.js?v=20261023-14"></script>
 <link rel="stylesheet" href="/static/css/fluid-experience.css?v=20261024-1">
 <script defer src="/static/js/fluid-experience.js?v=20261024-1"></script>
+<link rel="stylesheet" href="/static/css/mobile-flow-fixes.css?v=20261024-1">
 </head>
 <body class="responsive-ui responsive-talent min-h-screen">
   <div class="aurora"></div><div class="blob b1"></div><div class="blob b2"></div>
@@ -446,8 +447,8 @@
               <div data-outline-label="Your career journey" id="journey" class="journey-grid relative mt-6"></div>
             </details>
           </div>
-          <div id="careerActions" data-outline-label="Your next action"></div>
-          <section class="practice-entry" aria-label="Career practice"><div><span class="practice-kicker">LESS GUESSING. MORE TRYING.</span><h2>Could you enjoy the actual work?</h2><p>Try a short, realistic task in data, customer experience or sustainability. Leave with a draft you can improve.</p></div><button type="button" class="btn btn-primary" data-career-practice>Try a work task ↗</button></section>
+
+
           <nav class="career-quick-actions" aria-label="Career shortcuts">
 <button onclick="showTab('profile')" class="group relative overflow-hidden bg-white/80 backdrop-blur-md border border-indigo-100 hover:border-indigo-300 p-5 rounded-2xl shadow-xs hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
   <div class="flex items-center justify-between mb-2">
@@ -484,7 +485,7 @@
 </nav>
 
           <details class="guided-extra dashboard-snapshot">
-            <summary>Your career snapshot</summary>
+            <summary>Your career snapshot</summary><p class="hint snapshot-intro">Complete your profile and explore career paths to build your progress. Achievements reflect what you have actually completed.</p>
           <div data-outline-label="Career snapshot" id="kpis" class="grid grid-cols-2 lg:grid-cols-4 gap-4"></div>
           <div class="grid lg:grid-cols-5 gap-6">
             <div data-outline-label="Top role matches" id="dashTop" class="lg:col-span-3 glass rounded-3xl p-6"></div>
@@ -635,10 +636,10 @@
                 </p>
                 <!-- Mode Switcher Tabs -->
                 <div class="flex flex-wrap items-center justify-center sm:justify-start gap-2.5 pt-2">
-                  <button type="button" id="btnModeQa" onclick="setUploadMode('qa')" class="btn-companion-mode active px-4 py-2 rounded-xl text-xs font-black transition-all flex items-center gap-2 bg-gradient-to-r from-teal-500 to-indigo-600 text-white shadow-md">
+                  <button type="button" id="btnModeQa" aria-pressed="true" onclick="setUploadMode('qa')" class="btn-companion-mode active px-4 py-2 rounded-xl text-xs font-black transition-all flex items-center gap-2 bg-gradient-to-r from-teal-500 to-indigo-600 text-white shadow-md">
                     <span>💬</span><span>Interactive Q&amp;A Chat</span>
                   </button>
-                  <button type="button" id="btnModePdf" onclick="setUploadMode('pdf')" class="btn-companion-mode px-4 py-2 rounded-xl text-xs font-black transition-all flex items-center gap-2 bg-white/10 hover:bg-white/20 text-slate-200 border border-white/15">
+                  <button type="button" id="btnModePdf" aria-pressed="false" onclick="setUploadMode('pdf')" class="btn-companion-mode px-4 py-2 rounded-xl text-xs font-black transition-all flex items-center gap-2 bg-white/10 hover:bg-white/20 text-slate-200 border border-white/15">
                     <span>📄</span><span>Upload PDF Resume</span>
                   </button>
                 </div>
@@ -779,16 +780,16 @@
           <div class="flex flex-wrap items-center justify-between gap-3">
             <div>
               <h2 class="text-xl font-black text-slate-900 tracking-tight flex items-center gap-2">
-                <span>📑</span><span>Review your professional story</span>
+                <span>📑</span><span>Review & save your CV</span>
               </h2>
-              <p class="text-xs text-slate-500 mt-0.5">Review your details and save changes before sharing your CV.</p>
+              <p class="text-xs text-slate-500 mt-0.5">Check your summary, details and skills. Save when ready to share.</p>
             </div>
             <div class="flex items-center gap-2">
               <a id="viewMyPdfBtn" href="/api/cv/me/pdf" target="_blank" rel="noopener" class="btn btn-soft !py-1.5 !px-3 !text-xs font-bold hidden flex items-center gap-1.5 shadow-xs">
                 <span>👁️</span><span>View Original PDF</span>
               </a>
               <button type="button" class="btn btn-soft !py-1.5 !px-3 !text-xs font-bold flex items-center gap-1.5 shadow-xs" onclick="showTab('cv-upload')">
-                <span>📄</span><span>Replace PDF</span>
+                <span>📄</span><span>Upload / replace PDF</span>
               </button>
             </div>
           </div>
@@ -828,7 +829,7 @@
               </details>
             </div>
 
-            <!-- Sleek Modern AI Profile Enhancer Card -->
+<details class="career-disclosure"><summary>Polish your draft with AI (optional)</summary><div class="disclosure-body">            <!-- Sleek Modern AI Profile Enhancer Card -->
             <div class="rounded-2xl border border-purple-200/90 bg-gradient-to-r from-purple-50/80 via-indigo-50/60 to-pink-50/50 p-4 sm:p-5 space-y-3 shadow-xs" data-no-translate>
               <div class="flex flex-wrap items-center justify-between gap-2">
                 <div class="flex items-center gap-2.5">
@@ -857,7 +858,7 @@
                 </div>
               </div>
             </div>
-            <section class="rounded-2xl border border-teal-200/90 bg-gradient-to-r from-teal-50/70 via-white to-indigo-50/50 p-4 sm:p-5 space-y-4 shadow-xs" aria-labelledby="experienceBuilderTitle">
+            </div></details><details class="career-disclosure"><summary>Add a project or first work experience</summary><div class="disclosure-body"><section class="rounded-2xl border border-teal-200/90 bg-gradient-to-r from-teal-50/70 via-white to-indigo-50/50 p-4 sm:p-5 space-y-4 shadow-xs" aria-labelledby="experienceBuilderTitle">
               <div class="flex items-start gap-3">
                 <span class="text-xl" aria-hidden="true">🎓</span>
                 <div>
@@ -897,7 +898,7 @@
                   <span id="experienceBuilderStatus" class="text-xs text-slate-600 self-center" role="status"></span>
                 </div>
               </div>
-            </section>
+            </section></div></details>
             <!-- Professional Summary -->
             <div class="tint tint-indigo rounded-2xl p-4 sm:p-5 space-y-2.5">
               <div class="flex items-center justify-between">
@@ -911,7 +912,7 @@
               <ul id="aiHighlights" class="space-y-1 text-[11px] text-slate-600 pt-1"></ul>
             </div>
 
-<details class="career-disclosure" open><summary><span><strong>Contact & career preferences</strong><small>Your contact details, target occupation, and work preferences</small></span><span class="chip chip-indigo !text-[11px] !py-0.5 !px-2.5 ml-auto mr-2 select-none">9 Active Fields</span></summary><div class="disclosure-body space-y-4 pt-2">
+<details class="career-disclosure"><summary><span><strong>Contact & career preferences</strong><small>Your contact details, target occupation, and work preferences</small></span><span class="chip chip-indigo !text-[11px] !py-0.5 !px-2.5 ml-auto mr-2 select-none">Required details</span></summary><div class="disclosure-body space-y-4 pt-2">
             <!-- Card 1: Contact & Identity Details -->
             <div class="pref-section-card">
               <div class="pref-card-header">
@@ -926,17 +927,17 @@
               </div>
               <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div class="pref-field-wrapper">
-                  <label for="pName" class="label"><span>👤</span><span>Full Legal Name</span><span class="text-rose-500">*</span></label>
+                  <label for="pName" class="label"><span>👤</span><span>Full name</span><span class="text-rose-500">*</span></label>
                   <input id="pName" maxlength="200" required class="input" placeholder="e.g. Aisha binti Rahman" oninput="validatePersonalField('pName')" />
                   <div id="err_pName" class="text-[11px] text-rose-500 font-semibold hidden mt-1">Please enter your full name.</div>
                 </div>
                 <div class="pref-field-wrapper">
-                  <label for="pRole" class="label"><span>💼</span><span>Target / Current Occupation</span><span class="text-rose-500">*</span></label>
+                  <label for="pRole" class="label"><span>💼</span><span>Occupation</span><span class="text-rose-500">*</span></label>
                   <input id="pRole" maxlength="300" required class="input" placeholder="e.g. Junior Financial Auditor" oninput="validatePersonalField('pRole')" />
                   <div id="err_pRole" class="text-[11px] text-rose-500 font-semibold hidden mt-1">Please enter your occupation.</div>
                 </div>
                 <div class="pref-field-wrapper">
-                  <label for="pEmail" class="label"><span>✉️</span><span>Primary Email Address</span><span class="text-rose-500">*</span></label>
+                  <label for="pEmail" class="label"><span>✉️</span><span>Email</span><span class="text-rose-500">*</span></label>
                   <input id="pEmail" type="email" maxlength="254" required class="input" autocomplete="off" placeholder="name@example.com" oninput="validatePersonalField('pEmail')" />
                   <div id="err_pEmail" class="text-[11px] text-rose-500 font-semibold hidden mt-1">Please enter a valid email address.</div>
                 </div>
@@ -950,7 +951,7 @@
                   <div id="err_pPhone" class="text-[11px] text-rose-500 font-semibold hidden mt-1">Enter a valid Malaysian phone (e.g. 11-23456789).</div>
                 </div>
                 <div class="pref-field-wrapper sm:col-span-2">
-                  <label for="pLocation" class="label"><span>📍</span><span>Current Location / State of Residence</span><span class="text-rose-500">*</span></label>
+                  <label for="pLocation" class="label"><span>📍</span><span>Location</span><span class="text-rose-500">*</span></label>
                   <input id="pLocation" maxlength="300" required class="input" placeholder="e.g. W.P. Kuala Lumpur, Bangsar" oninput="validatePersonalField('pLocation')" />
                   <div id="err_pLocation" class="text-[11px] text-rose-500 font-semibold hidden mt-1">Please enter your location or state.</div>
                 </div>
@@ -971,7 +972,7 @@
               </div>
               <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div class="pref-field-wrapper">
-                  <label for="pIndustry" class="label"><span>🏢</span><span>Target Industry Sector</span><span class="text-rose-500">*</span></label>
+                  <label for="pIndustry" class="label"><span>🏢</span><span>Industry</span><span class="text-rose-500">*</span></label>
                   <select id="pIndustry" required class="input" onchange="validatePersonalField('pIndustry')">
                     <option value="">Select your industry sector…</option>
                     <option value="Finance & Accounting">📊 Finance &amp; Accounting</option>
@@ -999,7 +1000,7 @@
                   <div id="err_pMode" class="text-[11px] text-rose-500 font-semibold hidden mt-1">Please select a preferred work mode.</div>
                 </div>
                 <div class="pref-field-wrapper">
-                  <label for="pEdu" class="label"><span>🎓</span><span>Highest Qualification Level</span><span class="text-rose-500">*</span></label>
+                  <label for="pEdu" class="label"><span>🎓</span><span>Qualification</span><span class="text-rose-500">*</span></label>
                   <select id="pEdu" required class="input" onchange="validatePersonalField('pEdu')">
                     <option value="">Select qualification level…</option>
                     <option value="Bachelor's Degree">🎓 Bachelor's Degree / Honours</option>
@@ -1012,7 +1013,7 @@
                   <div id="err_pEdu" class="text-[11px] text-rose-500 font-semibold hidden mt-1">Please select your qualification level.</div>
                 </div>
                 <div class="pref-field-wrapper">
-                  <label for="pYears" class="label"><span>⏳</span><span>Total Years of Experience</span><span class="text-rose-500">*</span></label>
+                  <label for="pYears" class="label"><span>⏳</span><span>Years of experience</span><span class="text-rose-500">*</span></label>
                   <input id="pYears" type="number" min="0" max="60" step="0.5" required placeholder="0" class="input" oninput="validatePersonalField('pYears')" />
                   <div id="err_pYears" class="text-[11px] text-rose-500 font-semibold hidden mt-1">Please enter years of experience (0 or more).</div>
                 </div>
@@ -1128,7 +1129,7 @@
                   <span class="chip chip-indigo">Private by default</span>
                 </div>
                 <p class="text-xs text-slate-600 mt-1 leading-relaxed">
-                  Your PDF and organised profile are available to your signed-in account. An employer receives only the summary and/or PDF you choose to share when applying to its vacancy. Aggregate publication is currently disabled; your optional statistics preference is off by default. You can export your profile, withdraw sharing, or delete your vault below.
+                  Private until you share. Choose a reviewed summary, PDF, or both for each recipient. Manage access below; revoking access cannot remove copies already saved.
                 </p>
               </div>
             </div>
@@ -1149,7 +1150,7 @@
                   <button id="deleteCvBtn" onclick="deleteMyCv()" class="btn btn-danger !text-xs" disabled>Delete my vault</button>
                 </div>
               </div>
-<div class="glass rounded-3xl p-6 space-y-3">
+<details class="career-disclosure"><summary>Share with a mentor or another recipient</summary><div class="disclosure-body"><div class="glass rounded-3xl p-6 space-y-3">
                 <div class="text-sm font-extrabold">Share with someone you choose</div>
                 <p class="text-xs text-slate-600">Only the recipient’s signed-in CareerLens account can open the link. No email is sent.</p>
                 <label class="label" for="nRecipient">Recipient account email</label><input id="nRecipient" type="email" required class="input" placeholder="mentor@example.com" />
@@ -1160,7 +1161,7 @@
                 <p class="text-[11px] text-slate-500">Editing or replacing your CV ends active grants. Revoking access cannot retract saved copies.</p>
                 <div id="namedSharesList" class="space-y-2"></div><div id="receivedSharesList" class="space-y-2"></div>
                 <details><summary class="text-xs font-bold cursor-pointer">Recent recipient access</summary><div id="namedShareEvents" class="mt-2 space-y-1"></div></details>
-              </div>
+              </div></div></details>
           </div>
 <!-- Employer Access Audit Log -->
               <div class="glass rounded-3xl p-6 space-y-3">
@@ -1282,7 +1283,7 @@
                 <span id="compCountBadge" class="chip chip-indigo">0 companies</span>
                 <span id="rangeSummaryBadge" class="chip chip-emerald !text-[11px]">0 matched</span>
               </div>
-              
+
               <!-- Display Scope, 3-Map Switcher & Sector Filter beside Map -->
               <div class="flex flex-wrap items-center gap-2.5">
                 <!-- 3-Map Style Switcher (Instant 1-Click switch, NO API key popup) -->
@@ -1602,7 +1603,9 @@
             <span class="chip chip-slate">Scores are estimates</span>
           </div>
           <!-- JobGalaxy Style Career Progression & Mobility Matrix (Powered by ONET 29.0) -->
-          <div class="glass rounded-3xl p-6 space-y-5 border border-indigo-100 shadow-sm">
+          <div class="match-intro"><h2>Find your next direction</h2><p>Compare your fit, choose a role, and build the skills to get there.</p></div>
+<div data-outline-label="Role matches" id="roleCards" class="grid lg:grid-cols-2 gap-5"></div>
+        <details class="career-disclosure"><summary>Explore career progression</summary><div class="glass rounded-3xl p-6 space-y-5 border border-indigo-100 shadow-sm">
             <div class="flex flex-wrap items-center justify-between gap-3 border-b border-slate-200/80 pb-4">
               <div class="flex items-center gap-3">
                 <div class="h-11 w-11 rounded-2xl bg-indigo-600 text-white font-black text-xl grid place-items-center shadow">🗺️</div>
@@ -1643,19 +1646,16 @@
                 <div id="pathwayLateralsList" class="space-y-2"></div>
               </div>
             </div>
-          </div>
-
-          <div data-outline-label="Role matches" id="roleCards" class="grid lg:grid-cols-2 gap-5"></div>
-        </section>
+          </div></details></section>
 
         <section id="tab-plan" class="tab hidden space-y-6">
           <nav class="growth-navigation" data-growth-navigation aria-label="My Growth"></nav>
-          <p class="growth-intro">Build the skills for your target role. Start with your next learning goal, then follow the path below.</p>
+          <div class="growth-action-layout"><div id="careerActions" data-outline-label="Your next action"></div><div class="growth-focus"><p class="hint">Choose one action, then focus for 25 minutes.</p><aside id="learningPomodoro" hidden aria-label="Pomodoro study timer"></aside></div></div><section class="practice-entry" aria-label="Career practice"><div><span class="practice-kicker">LESS GUESSING. MORE TRYING.</span><h2>Could you enjoy the actual work?</h2><p>Try a short, realistic task in data, customer experience or sustainability. Leave with a draft you can improve.</p></div><button type="button" class="btn btn-primary" data-career-practice>Try a work task ↗</button></section><p class="growth-intro">Build the skills for your target role. Start with your next learning goal, then follow the path below.</p>
           <section class="reskilling-overview glass" aria-label="Your learning overview">
             <div class="reskilling-target"><label for="planRole">Target role</label><select data-outline-label="Target role" id="planRole" onchange="selectRole(this.value,false)" class="input"></select><div id="planStats" class="flex flex-wrap gap-2"></div></div>
             <div class="reskilling-progress"><div id="learningProgress" class="space-y-3"></div><button type="button" class="reskilling-achievements" onclick="showTab('completed')"><span>✓ Completed Learning</span><b id="completedLearningCount" data-no-translate>0</b><span aria-hidden="true">→</span></button></div>
           </section>
-          <aside id="learningPomodoro" hidden aria-label="Pomodoro study timer"></aside>
+
           <div class="glass rounded-3xl p-6 reskilling-path"><div class="growth-path-heading"><div><h2 class="text-sm font-extrabold">Step-by-step path</h2><p class="hint">These courses are recommended based on your selected target role and the skills you still need to improve.</p><p class="hint">Follow the cards from left to right. Open a step for details.</p></div></div><div data-outline-label="Learning pathway" id="timeline" class="timeline learning-path-horizontal" tabindex="0" aria-label="Learning steps, scroll horizontally"></div></div>
           <section id="learningGoal" class="reskilling-next" data-outline-label="Your next learning goal" aria-label="Your next learning goal"></section>
           <details class="growth-tool"><summary>🌱 How this path connects to the SDGs</summary><div id="planSdg" class="space-y-4"></div></details>
@@ -1828,7 +1828,7 @@
   <div id="accountModalWrap" class="hidden">
     <div class="overlay !p-4" onclick="closeAccountModal(event)">
       <div class="modal !p-0 shadow-2xl rounded-2xl border border-slate-200 bg-white overflow-hidden flex flex-col" style="max-width: 620px; width: 100%; max-height: 90vh;" onclick="event.stopPropagation()">
-        
+
         <!-- Header -->
         <div class="px-6 py-4 border-b border-slate-100 flex items-center justify-between bg-slate-50/80">
           <div class="flex items-center gap-2.5">
@@ -1863,7 +1863,7 @@
                 </button>
               </div>
               <p id="modalTopRoleSubtitle" class="text-xs text-slate-500 font-medium mt-0.5">Junior Financial Auditor</p>
-              
+
               <!-- Joined datetime is after the line of ID -->
               <div class="text-[11px] text-slate-500 mt-1 space-y-0.5 font-mono">
                 <div>ID: <span id="modalUid" class="font-bold text-slate-700"></span></div>
@@ -1897,10 +1897,10 @@
 
         <!-- Scrollable Form Body -->
         <div class="overflow-y-auto px-6 py-4 flex-1 space-y-4">
-          
+
           <!-- Section 1: Professional Profile Form -->
           <form id="formAccountProfile" class="space-y-4" onsubmit="event.preventDefault();submitAccountProfile();" novalidate>
-            
+
             <div class="grid sm:grid-cols-2 gap-3.5">
               <div>
                 <label class="label !text-xs !mb-1 font-semibold text-slate-700" for="accFullName">Full Name *</label>
@@ -1908,7 +1908,7 @@
                 <div id="errFullName" class="text-[11px] text-rose-500 font-semibold hidden mt-1">Please enter your full name (min 2 chars).</div>
               </div>
               <div>
-                <label class="label !text-xs !mb-1 font-semibold text-slate-700" for="accEmail">Primary Email Address *</label>
+                <label class="label !text-xs !mb-1 font-semibold text-slate-700" for="accEmail">Email *</label>
                 <input id="accEmail" type="email" required class="input !py-2 !text-xs" placeholder="name@example.com" oninput="validateField(this, 'email')" />
                 <div id="errEmail" class="text-[11px] text-rose-500 font-semibold hidden mt-1">Please enter a valid email address.</div>
               </div>
@@ -2531,7 +2531,7 @@
       ];
       buildPortalNavigation(renderItems, [
         { label: 'Dashboard', ids: ['dash'], ico: '🏠', primaryId: 'dash' },
-        { label: 'My Profile', ids: ['profile', 'cv-review', 'quest', 'applications'], ico: '👤', primaryId: 'profile' },
+        { label: 'My Profile', ids: ['profile', 'quest', 'cv-upload', 'cv-review', 'applications'], ico: '👤', primaryId: 'profile' },
         { label: 'Explore Careers', ids: ['jobs', 'companies', 'radar', 'match', 'atlas'], ico: '🧭', primaryId: 'jobs' },
         { label: 'My Growth', ids: ['plan', 'discover', 'saved', 'completed', 'passport'], ico: '🌱', primaryId: 'plan' }
       ]);
@@ -2564,7 +2564,7 @@
       if (id === 'discover') renderDiscoveryLearning();
       if (id === 'saved') renderSavedCourses();
       if (id === 'completed') renderCompletedLearning();
-      window.PomodoroTimer?.setVisible(document.getElementById('learningPomodoro'),id==='plan'||id==='discover');
+      window.PomodoroTimer?.setVisible(document.getElementById('learningPomodoro'),id==='plan');
       if (id === 'quest') scheduleRoleRecommendation();
       if (id === 'notifications') loadInvitations(false);
       if (id === 'dash') renderDash();
@@ -2978,6 +2978,7 @@
         const section = pName.closest('details');
         if (section) section.open = true;
         const firstInvalid = [pName,pRole,pEmail,pPhone,pLocation,pIndustry,pMode,pEdu,pYears].find(el => !validatePersonalField(el.id));
+        if (firstInvalid?.closest) { const section = firstInvalid.closest('details'); if (section) section.open = true; }
         firstInvalid?.focus();
         toast('Please fill in all required personal & career contact details before saving.', 'err');
         return;
@@ -3970,7 +3971,7 @@
     async function submitJobApplication() {
       if (!activeApplyJob || applicationBusy) return;
       if (!amShareOrg.checked && !amSharePdf.checked) return toast('Please select at least one CV resource to share.', 'err');
-      
+
       if (!isReviewed()) return toast('Please review and confirm your CV before applying.', 'err');
 
       applicationBusy = true; submitApplicationBtn.disabled = true;
@@ -3999,7 +4000,7 @@
           cover_note: noteVal,
         });
         if (!ok || !data.ok) throw new Error(data.message || 'Could not submit application.');
-        
+
         closeApplyModal();
         await loadJobs();
         await loadMyCv();
@@ -4117,8 +4118,8 @@
         'from-sky-500 to-blue-600'
       ];
       const steps = [
-        { label: 'CV profile', tab: cvRecord ? 'cv-review' : 'cv-upload', done: isReviewed() },
         { label: 'Questionnaire', tab: 'quest', done: answered >= questionnaireFieldDefinitions().length },
+        { label: 'CV profile', tab: cvRecord ? 'cv-review' : 'cv-upload', done: isReviewed() },
         { label: 'AI Radar', tab: 'radar', done: visited.has('radar') },
         { label: 'Matches', tab: 'match', done: visited.has('match') },
         { label: 'Plan', tab: 'plan', done: visited.has('plan') },
@@ -4143,7 +4144,7 @@
           `).join('')}
         </div>
       `;
-      
+
       const kpiItems = [
         {
           title: 'Profile alignment',
@@ -4205,8 +4206,8 @@
             <div class="min-w-0 flex-1"><div class="text-sm font-extrabold truncate">${esc(r.title)}</div><div class="text-[11px] text-slate-500">${esc(r.industry)} · ${r.skills_gap.length} skills to build</div></div>
             <button onclick="selectRole(${i},true)" class="btn btn-soft !py-1.5">Plan</button></div>`).join('')}</div>`
         : '<div class="text-sm text-slate-500">Save your profile to generate matches.</div>';
-      const nxt = !analysed ? ['Prepare your CV', cvRecord ? 'cv-review' : 'cv-upload', 'Upload a PDF and review the details to get started.']
-        : answered < questionnaireFieldDefinitions().length ? ['Answer the questionnaire', 'quest', 'Help us verify your practical depth.']
+      const nxt = !analysed ? ['Complete your profile', 'profile', 'Add your background, then explore roles that fit you.']
+
         : !visited.has('plan') ? ['Open your reskilling plan', 'plan', 'Follow an ordered, verified learning path.']
         : ['View your SDG passport', 'passport', 'See the impact of your chosen path.'];
       nextStep.innerHTML = `<div class="text-lg font-extrabold">${nxt[0]}</div><p class="text-xs text-slate-600">${nxt[2]}</p>
@@ -4424,7 +4425,7 @@
                     </div>
                   </div>
                 </div>
-                
+
                 <!-- Circular Fit Score Display -->
                 <div class="text-center shrink-0">
                   <div class="ring !w-14 !h-14" style="--p:${score};--c:${ringColor(score)}">
@@ -4446,9 +4447,9 @@
               </div>
 
               <!-- Matched Strengths Tags -->
-              ${r.matched_core_skills.length ? `
+<details class="role-skill-details"><summary>Skills to build · ${r.skills_gap.length}</summary><div class="space-y-4 mt-3">              ${r.matched_core_skills.length ? `
                 <div class="space-y-1.5">
-                  <div class="text-[10px] font-extrabold text-slate-400 uppercase tracking-wider">Your Verified Strengths</div>
+                  <div class="text-[10px] font-extrabold text-slate-400 uppercase tracking-wider">Skills listed in your profile</div>
                   <div class="flex flex-wrap gap-1.5">
                     ${r.matched_core_skills.map(s => `<span class="chip chip-emerald !text-[11px] font-bold">✓ ${esc(s)}</span>`).join('')}
                   </div>
@@ -4464,7 +4465,8 @@
                 </div>
               </div>
 
-              <details class="text-xs">
+              </div></details>
+<details class="text-xs">
                 <summary class="cursor-pointer font-extrabold text-indigo-700">${esc(localize('Why this score?'))}</summary>
                 <div class="mt-2 space-y-1">
                   <p class="text-slate-500">${esc(localize('Fit score uses profile-listed skills and stated preferences. CV mentions are not proof of proficiency. Market demand is shown separately.'))}</p>
@@ -4501,8 +4503,9 @@
     function renderProfileNavigation() {
       const items = [
         { id: 'profile', label: 'Profile details' },
-        { id: 'cv-review', label: 'Review CV' },
         { id: 'quest', label: 'Questionnaire' },
+        { id: 'cv-upload', label: 'Add CV' },
+        { id: 'cv-review', label: 'Review & save' },
         { id: 'applications', label: 'Applications' },
       ];
       document.querySelectorAll('[data-profile-navigation]').forEach(nav => {
@@ -4557,6 +4560,7 @@
       window.LearningImpact.sync(user.unique_uid);
     }
     function renderPlan() {
+      window.CareerActions?.mount(document.getElementById('careerActions'), {identity:user?.unique_uid, roles, selected, cvReady:Boolean(cvRecord), cvReviewed:isReviewed(), onNavigate:tab=>showTab(tab), onRole:index=>{selected=index; planRole.value=index; renderPlan();}});
         document.getElementById('completedLearningCount').textContent=window.LearningPath.completedCourses(user.unique_uid,roles).length;
         const r = roles[selected]; 
         if (!r) return;
@@ -4706,7 +4710,7 @@
         if(window.ResizeObserver){const observer=new ResizeObserver(syncGrowthHeaderOffset);document.querySelectorAll('.portal-desktop-header,.portal-mobile-header').forEach(header=>observer.observe(header));}
         window.addEventListener('resize',syncGrowthHeaderOffset);
       });
-      await optional('Study timer', () => window.PomodoroTimer?.mount({identity:user.unique_uid,container:document.getElementById('learningPomodoro'),floating:true}));
+      await optional('Study timer', () => window.PomodoroTimer?.mount({identity:user.unique_uid,container:document.getElementById('learningPomodoro'),floating:false}));
       skillInput.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ',') { e.preventDefault(); addSkill(skillInput.value); skillInput.value = ''; } });
       await Promise.all([
         optional('Skill suggestions', async () => {
@@ -5292,7 +5296,8 @@ async function submit3AiVerificationAnswers() {
     <div class="flex flex-wrap items-center gap-3"><button type="button" id="applicationFollowupCopy" class="btn btn-primary !py-2 !px-4 !text-xs font-bold">Copy follow-up</button><span id="applicationFollowupStatus" class="text-xs text-slate-600" role="status"></span></div>
   </div>
 </div>
-<script src="/static/js/application-followup.js?v=20261023-mvp">
+<script src="/static/js/application-followup.js?v=20261023-mvp"></script>
+<script>
 
     // =========================================================================
     // Spirit Animal Career Companion & Interactive Q&A Onboarding Studio
@@ -5336,13 +5341,17 @@ async function submit3AiVerificationAnswers() {
       }
     };
 
-    function initCompanionUpload() {
+    async function initCompanionUpload() {
       let totem = null;
       try {
         const stored = localStorage.getItem("careerlens_totem_data");
         if (stored) totem = JSON.parse(stored);
       } catch (e) {}
 
+      try {
+        const response = await fetch('/api/totem/user');
+        if (response.ok) { const data = await response.json(); if (data.totem) totem = data.totem; }
+      } catch (_) { /* Keep the quiz companion when offline. */ }
       const mascot = (totem && COMPANION_MASCOTS[totem.key]) ? COMPANION_MASCOTS[totem.key] : COMPANION_MASCOTS.retriever;
 
       const img = document.getElementById("companionAvatarImg");
@@ -5362,6 +5371,8 @@ async function submit3AiVerificationAnswers() {
       const btnQa = document.getElementById("btnModeQa");
       const btnPdf = document.getElementById("btnModePdf");
 
+      btnQa?.setAttribute('aria-pressed', String(mode === 'qa'));
+      btnPdf?.setAttribute('aria-pressed', String(mode === 'pdf'));
       if (mode === 'qa') {
         if (panelQa) panelQa.classList.remove("hidden");
         if (panelPdf) panelPdf.classList.add("hidden");
@@ -5428,11 +5439,11 @@ async function submit3AiVerificationAnswers() {
       try {
         const payload = {
           role: role,
-          skills: skills ? skills.split(",").map(s => s.trim()).filter(Boolean) : ["Critical Thinking", "Problem Solving"],
-          experience_highlight: exp || `Demonstrated strong execution and teamwork in ${role} projects.`,
+          skills: skills ? skills.split(",").map(s => s.trim()).filter(Boolean) : [],
+          experience_highlight: exp,
           years: years,
           work_mode: workMode,
-          industry: "Technology & Digital Innovation"
+          industry: ""
         };
 
         const res = await postJson("/api/cv/interactive-build", payload);

@@ -66,6 +66,7 @@
 <script defer src="/static/js/aurora-experience.js?v=20261023-bento"></script>
 <link rel="stylesheet" href="/static/css/fluid-experience.css?v=20261024-1">
 <script defer src="/static/js/fluid-experience.js?v=20261024-1"></script>
+<link rel="stylesheet" href="/static/css/mobile-flow-fixes.css?v=20261024-1">
 </head>
 <body class="responsive-ui responsive-employer hr min-h-screen company-comparison-portal">
   <div class="aurora"></div><div class="blob b1"></div><div class="blob b2"></div>
@@ -93,7 +94,7 @@
       <header class="portal-mobile-header sticky top-0 sidebar-dark">
         <div class="flex items-center justify-between px-4 py-2.5">
           <div class="flex items-center gap-2"><img src="/static/brand/careerlens_logo_icon.svg" class="h-9 w-9 rounded-xl" alt="" /><div class="text-sm text-white"><b>CareerLens AI</b><small id="mobileCompanyName" data-no-translate class="block text-xs"></small></div></div>
-          <div class="portal-mobile-actions"><button type="button" onclick="openAccountModal()" class="btn !py-1 !px-2.5 text-xs bg-teal-500/20 text-teal-100 border border-teal-400/30 font-bold flex items-center gap-1" title="Company Profile"><span>⚙️</span><span>Profile</span></button><button type="button" class="notification-button" data-notification-button onclick="openInterviewResponses()" aria-label="Interview notifications" title="Interview notifications"><span aria-hidden="true">🔔</span></button><div data-language-slot="mobile"></div><button onclick="signOut()" class="btn !py-1.5 bg-white/10 text-white">Sign out</button></div>
+          <div class="portal-mobile-actions"><button type="button" onclick="openAccountModal()" class="btn !py-1 !px-2.5 text-xs bg-teal-500/20 text-teal-100 border border-teal-400/30 font-bold flex items-center gap-1" title="Company Profile" aria-label="Company profile"><span>⚙️</span><span class="mobile-profile-label">Profile</span></button><button type="button" class="notification-button" data-notification-button onclick="openInterviewResponses()" aria-label="Interview notifications" title="Interview notifications"><span aria-hidden="true">🔔</span></button><div data-language-slot="mobile"></div><button onclick="signOut()" aria-label="Sign out" class="btn !py-1.5 bg-white/10 text-white">↪</button></div>
         </div>
         <div class="mobile-nav-bar">
           <button id="navToggle" type="button" class="nav-toggle" aria-label="Toggle navigation" aria-expanded="false" aria-controls="topNav">
