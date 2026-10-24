@@ -97,8 +97,8 @@ CareerLens AI establishes a bidirectional, future-ready workforce intelligence e
 ├── submission/                                    # Official SDC Hackathon 2026 submission deliverables
 │   ├── SDC2026_HighFive_Preliminary.pdf          # Phase 1 Preliminary Project Proposal
 │   ├── SDC2026_HighFive_TechDeclaration.pdf      # Technical Tools & Datasets Declaration
-│   ├── SDC2026_HighFive_Replit_POU.pdf           # Replit proof of use
-│   └── SDC2026_HighFive_Runpod_POU.pdf           # RunPod proof of use
+│   ├── SDC2026_HighFive_Replit_Prove_of_Use.pdf           # Replit proof of use
+│   └── SDC2026_HighFive_Runpod_Prove_of_Use.pdf           # RunPod proof of use
 ├── tests/                                         # Comprehensive automated test suite
 │   ├── test_utils.py                             # Core utility & helper unit tests
 │   ├── test_market_signals.py                    # Labor market & radar trajectory tests
@@ -190,7 +190,7 @@ python -m unittest discover tests
 - **Collaborative Development**: Team members utilized Replit's real-time workspace and multiplayer coding to rapidly prototype responsive HTML5/Tailwind views and debug endpoints across devices.
 - **Environment & Secrets Isolation**: Sensitive production keys, database sessions, and API tokens are managed securely via Replit Secrets.
 
-📄 **Proof of Use**: [`submission/SDC2026_HighFive_Replit_POU.pdf`](submission/SDC2026_HighFive_Replit_POU.pdf)
+📄 **Proof of Use**: [`submission/SDC2026_HighFive_Replit_Prove_of_Use.pdf`](submission/SDC2026_HighFive_Replit_Prove_of_Use.pdf)
 
 ---
 
@@ -208,7 +208,7 @@ curl -X POST https://api.runpod.ai/v2/$RUNPOD_ENDPOINT_ID/runsync \
   -d '{"input": {"prompt": "Generate interview question for Data Engineer with SQL and Python gaps."}}'
 ```
 
-📄 **Proof of Use**: [`submission/SDC2026_HighFive_Runpod_POU.pdf`](submission/SDC2026_HighFive_Runpod_POU.pdf)
+📄 **Proof of Use**: [`submission/SDC2026_HighFive_Runpod_Prove_of_Use.pdf`](submission/SDC2026_HighFive_Runpod_Prove_of_Use.pdf)
 
 ---
 
@@ -245,8 +245,8 @@ curl -X POST https://api.runpod.ai/v2/$RUNPOD_ENDPOINT_ID/runsync \
 - [x] Team name (`High Five`), domain (`Domain 1`) and SDG tracks (`SDG 4, 8, 10`) filled in
 - [x] Slide deck link added (`https://canva.link/06fo5mo1rxbw21m`)
 - [x] Demo video link added (`https://youtu.be/M-Yc2lB4FvA`)
-- [x] Replit used, with proof of use in `submission/SDC2026_HighFive_Replit_POU.pdf`
-- [x] RunPod used, with proof of use in `submission/SDC2026_HighFive_Runpod_POU.pdf`
+- [x] Replit used, with proof of use in `submission/SDC2026_HighFive_Replit_Prove_of_Use.pdf`
+- [x] RunPod used, with proof of use in `submission/SDC2026_HighFive_Runpod_Prove_of_Use.pdf`
 - [x] Preliminary submission completed in `submission/SDC2026_HighFive_Preliminary.pdf`
 - [x] Technology declaration completed in `submission/SDC2026_HighFive_TechDeclaration.pdf`
 - [x] Submission files renamed with team name (`HighFive`)
