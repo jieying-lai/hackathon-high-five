@@ -1,0 +1,22 @@
+---
+name: Python publishing dependencies
+description: Non-user Python package installation and dependency-audit resolution during publishing.
+---
+
+Use a project-local package destination rather than user-site installation for both workspace setup and publishing.
+
+**Why:** Both the package installer and the publishing bootstrap failed with “Can not perform a '--user' install. User site-packages are disabled for this Python.” Non-user environment settings fixed the workspace installer but subsequent hosted builds still failed in the automatic installation step, before the configured build command. Production-scoped pip environment settings alone did not fix that step.
+
+**How to apply:** Pass non-user installation and a project-local target as command-line options in the explicit build, rather than relying only on environment inheritance; derive the Python package directory from the active interpreter. However, hosted logs confirmed that `packager.features.enabledForHosting=false` did NOT suppress the automatic `pip install -r requirements.txt` step in this project. Do not present that setting or passing local tests as a verified hosted fix. If the automatic step still fails before the explicit build runs, investigate the platform installer or contact Replit Support with the build logs instead of repeatedly retrying unchanged settings. Keep the package firewall and security scan enabled. Test with user sites disabled; Nix can also reject a missing install target as an externally managed environment. Preserve the current deployment target while repairing this independent dependency problem.
+
+Check both the installed environment and a fresh dependency audit. Do not assume either proves the other is current.
+
+Use named web/local manifests and a shared base manifest rather than reintroducing a root `requirements.txt` while the automatic hosting installer is unresolved.
+
+**Why:** Hosted logs showed root-requirements installation failing before the explicit build. The Python toolchain's pip configuration forces user-site installation. Moving the shared list preserves every dependency and security constraint while avoiding that particular auto-detection input; this remains a proposed hosted workaround until a new publish confirms it.
+
+**How to apply:** Keep web/local/worker includes connected to the shared manifest, retain security scanning, and validate the explicit build. Do not equate a successful workspace build with a successful publish or claim the hosted workaround is confirmed without fresh logs.
+
+**Why:** Patched installed libraries did not prevent the audit from flagging older versions resolved from dependency manifests. Shared constraints alone did not clear every finding; declaring the relevant PDF/HTTPS dependency floors explicitly in the consuming requirements did.
+
+**How to apply:** Update actual dependency declarations and their compatible parents, then inspect the new audit. Keep security checks enabled and retain local/GPU features rather than hiding their manifests. Inspect advisory affected ranges when the scanner omits a suggested fixed version; that omission does not necessarily mean every newer release is affected.

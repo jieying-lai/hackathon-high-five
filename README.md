@@ -109,6 +109,7 @@ CareerLens AI establishes a bidirectional, future-ready workforce intelligence e
 ├── .replit                                        # Replit execution & container configuration
 ├── LICENSE                                        # Apache License 2.0
 ├── requirements.txt                              # Full production dependencies
+├── requirements-web.txt                          # Production web deployment dependencies
 └── README.md
 ```
 

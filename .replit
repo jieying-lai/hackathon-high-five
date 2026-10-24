@@ -4,14 +4,20 @@ modules = ["python-3.11", "nodejs-24"]
 
 [nix]
 channel = "stable-24_05"
-packages = ["glibcLocales"]
+packages = ["cacert", "glibcLocales"]
 
 [deployment]
-run = ["sh", "-c", "pip install -q -r requirements-web.txt && HR_INTERVIEW_PROVIDER=rules HOST=0.0.0.0 python scripts/serve_web.py"]
+build = ["python", "scripts/build_web.py"]
+run = ["sh", "-c", "HR_INTERVIEW_PROVIDER=rules HOST=0.0.0.0 python scripts/serve_web.py"]
+deploymentTarget = "gce"
+ignorePorts = false
 
 [[ports]]
 localPort = 5000
 externalPort = 80
+
+[packager.features]
+enabledForHosting = false
 
 [workflows]
 runButton = "Project"
@@ -36,3 +42,13 @@ outputType = "webview"
 task = "shell.exec"
 args = "HOST=0.0.0.0 HR_INTERVIEW_PROVIDER=rules python src/main.py"
 waitForPort = 5000
+
+[userenv]
+
+[userenv.development]
+PIP_TARGET = ".pythonlibs/lib/python3.11/site-packages"
+PIP_USER = "false"
+
+[userenv.production]
+PIP_TARGET = ".pythonlibs/lib/python3.11/site-packages"
+PIP_USER = "false"

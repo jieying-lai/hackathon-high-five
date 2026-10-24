@@ -29,7 +29,7 @@ def main():
     full_model = os.getenv('CAREERLENS_LOCAL_MODEL') == '1'
     requirements = ROOT / ('requirements-local.txt' if full_model else 'requirements-web.txt')
     signature = hashlib.sha256(b'local-runtime-v2' + platform.platform().encode() +
-        (ROOT / 'requirements.txt').read_bytes() + requirements.read_bytes()).hexdigest()
+        (ROOT / 'requirements-base.txt').read_bytes() + requirements.read_bytes()).hexdigest()
     marker = runtime / 'installed.txt'
     if created or not marker.exists() or marker.read_text().strip() != signature:
         print('Installing ' + ('website and AI' if full_model else 'lightweight website') + ' dependencies.', flush=True)
